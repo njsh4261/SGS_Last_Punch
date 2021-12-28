@@ -1,10 +1,6 @@
 # Config
 
----
-
 ## 코딩 스타일
-
----
 - Java 코딩 스타일
   - `LastPunchStyle.xml`: Intellij에서 사용할 수 있는 코딩 스타일 설정 파일
   - [Google Java Code Style](https://google.github.io/styleguide/javaguide.html) 을 참조했음

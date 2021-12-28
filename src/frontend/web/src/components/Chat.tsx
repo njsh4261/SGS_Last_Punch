@@ -6,6 +6,17 @@ const Container = styled.main`
   background-color: beige;
 `;
 
+const ChannelHeader = styled.article`
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 20px;
+  border-bottom: 1px solid grey;
+  background: white;
+`;
+
+const ChannelInfo = styled.section``;
+const MemberInfo = styled.button``;
+
 const MessageListContainer = styled.article`
   overflow: scroll;
   height: 90%;
@@ -15,6 +26,9 @@ const MessageListContainer = styled.article`
 const MessageBox = styled.section`
   display: flex;
   padding: 8px 20px;
+  &:hover {
+    background: grey;
+  }
 `;
 
 const InputContainer = styled.article`
@@ -45,7 +59,6 @@ const Chat = () => {
     setMsg(e.target.value);
   const msgSubmitHandler = () => {
     // socket.send(msg), get response
-    // if success
     setMsgList([...msgList, msg]);
     setMsg(`temp${msgList.length}`);
     scrollToBottom();
@@ -55,6 +68,10 @@ const Chat = () => {
 
   return (
     <Container>
+      <ChannelHeader>
+        <ChannelInfo>dump channel</ChannelInfo>
+        <MemberInfo>member</MemberInfo>
+      </ChannelHeader>
       <MessageListContainer>
         <div>chatting channel</div>
         <div>----</div>

@@ -2,8 +2,9 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.main`
-  height: 90vh;
-  background-color: beige;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `;
 
 const ChannelHeader = styled.article`
@@ -18,8 +19,8 @@ const ChannelInfo = styled.section``;
 const MemberInfo = styled.button``;
 
 const MessageListContainer = styled.article`
+  flex: 1;
   overflow: scroll;
-  height: 90%;
   background-color: skyblue;
 `;
 
@@ -32,10 +33,7 @@ const MessageBox = styled.section`
 `;
 
 const InputContainer = styled.article`
-  position: fixed;
-  bottom: 0px;
-  left: 0;
-  right: 0;
+  flex-shrink: 0;
   padding: 8px 20px;
   background-color: grey;
 `;

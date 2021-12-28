@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  body {
+  html, body, body>div {
     font-family: "Helvetica", "Arial", sans-serif;
     line-height: 1.5;
     overflow: hidden;

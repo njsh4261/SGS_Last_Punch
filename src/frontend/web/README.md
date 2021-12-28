@@ -1,46 +1,32 @@
-# Getting Started with Create React App
+## 도커로 실행
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br>
 
-## Available Scripts
+### 도커 설치
 
-In the project directory, you can run:
+- 주소: https://www.docker.com/get-started
 
-### `npm start`
+- 설치 확인은 cmd 창에 `docker -v`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<br>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 이미지 파일 빌드 및 시작
 
-### `npm test`
+- README가 있는 위치에서 `docker-compose up -d --build`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- http://localhost:3000 접속
 
-### `npm run build`
+### 명령어 정리
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+"build:image": "docker-compose up -d --build",
+"remove:image": "docker rmi web_reactdockerize",
+"start:container": "docker-compose up -d",
+"clear:container": "docker rm -f reactdockerize",
+"stop:container": "docker stop reactdockerize",
+"restart:container": "docker start reactdockerize",
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- npm이 깔려있다면 key 부분의 명령어 사용 가능(e.g. `npm run build:image`)
+- 외에도 `package.json` 참고하여 명령어 사용가능
+- **npm이 깔려있지 않다면 value 부분의 docker command 사용!**

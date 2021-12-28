@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  reactdockerize:
+    container_name: reactdockerize
+    build:
+      context: . # docker build 명령을 실행할 디렉토리 경로
+      dockerfile: Dockerfile # 빌드에 사용할 설정 파일
+    volumes:
+      - ".:/app" # mappig local:docker
+      - "/app/node_modules" # Anonymous volumes: save data (docker directory -> local)
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development

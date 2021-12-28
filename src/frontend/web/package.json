@@ -20,7 +20,18 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:image": "docker-compose up -d --build",
+    "remove:image": "docker rmi web_reactdockerize",
+    "start:container": "docker-compose up -d",
+    "clear:container": "docker rm -f reactdockerize",
+    "stop:container": "docker stop reactdockerize",
+    "restart:container": "docker start reactdockerize",
+    
+    "docker:build": "run-s build:image",
+    "docker:run": "run-s clear:container start:container",
+    "docker:restart": "run-s stop:container restart:container",
+    "docker:clear": "run-s clear:container remove:image"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +57,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1"
   }
 }

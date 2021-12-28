@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.main`
@@ -44,9 +44,7 @@ const Input = styled.input`
   border: none;
 `;
 
-const End = styled.article`
-  height: 47px;
-`;
+const End = styled.article``;
 
 const Chat = () => {
   const endRef = useRef<null | HTMLDivElement>(null);
@@ -59,10 +57,13 @@ const Chat = () => {
     // socket.send(msg), get response
     setMsgList([...msgList, msg]);
     setMsg(`temp${msgList.length}`);
-    scrollToBottom();
   };
   const scrollToBottom = () =>
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [msgList]);
 
   return (
     <Container>

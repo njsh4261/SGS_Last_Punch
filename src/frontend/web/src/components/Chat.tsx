@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import arrowDropDownIcon from '../arrowDropDown.svg';
 
 const Container = styled.main`
   display: flex;
@@ -9,39 +10,75 @@ const Container = styled.main`
 
 const ChannelHeader = styled.article`
   display: flex;
+  flex-shrink: 0;
   justify-content: space-between;
   padding: 8px 20px;
-  border-bottom: 1px solid grey;
-  background: white;
+  border-bottom: 1px solid #e6e6e6;
 `;
 
-const ChannelInfo = styled.section``;
-const MemberInfo = styled.button``;
+const ChannelInfo = styled.section`
+  width: 100%;
+  display: flex;
+  &:hover {
+    background: #f8f8f8f6;
+    cursor: pointer;
+  }
+`;
+const ChannelName = styled.article`
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  margin-left: -8px;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 20px;
+
+  @media only screen and (max-width: 400px) {
+    width: 50vw;
+  }
+  @media only screen and (min-width: 400px) and (max-width: 650px) {
+    width: 65vw;
+  }
+  @media only screen and (min-width: 650px) {
+    width: 80vw;
+  }
+`;
+const ArrowDropDownIcon = styled.article`
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  align-self: center;
+  margin-right: 14px;
+  background-image: url(${arrowDropDownIcon});
+`;
+
+const MemberInfo = styled.button`
+  flex: 0 0 auto;
+`;
 
 const MessageListContainer = styled.article`
   flex: 1;
   overflow: scroll;
-  background-color: skyblue;
 `;
 
 const MessageBox = styled.section`
   display: flex;
   padding: 8px 20px;
   &:hover {
-    background: grey;
+    background: #f8f8f8;
   }
 `;
 
 const InputContainer = styled.article`
   flex-shrink: 0;
   padding: 8px 20px;
-  background-color: grey;
 `;
 
 const Input = styled.input`
   width: 100%;
   height: 25px;
-  border: none;
 `;
 
 const End = styled.article``;
@@ -68,12 +105,18 @@ const Chat = () => {
   return (
     <Container>
       <ChannelHeader>
-        <ChannelInfo>dump channel</ChannelInfo>
+        <ChannelInfo>
+          <ChannelName>
+            dump channeldump channeldump channeldump channeldump channeldump
+            channeldump channeldump channeldump channeldump channeldump
+            channeldump channel
+          </ChannelName>
+          <ArrowDropDownIcon></ArrowDropDownIcon>
+        </ChannelInfo>
+
         <MemberInfo>member</MemberInfo>
       </ChannelHeader>
       <MessageListContainer>
-        <div>chatting channel</div>
-        <div>----</div>
         {msgList?.map((msg, idx) => (
           <MessageBox key={idx}>{msg}</MessageBox>
         ))}

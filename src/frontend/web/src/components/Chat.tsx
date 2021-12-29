@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import arrowDropDownIcon from '../icon/arrowDropDown.svg';
+import expandIcon from '../icon/expand_more_black_24dp.svg';
 import ChatInput from './ChatInput';
 
 const Container = styled.main`
@@ -52,7 +52,7 @@ const ArrowDropDownIcon = styled.article`
   height: 20px;
   align-self: center;
   margin-right: 14px;
-  background-image: url(${arrowDropDownIcon});
+  background-image: url(${expandIcon});
   background-repeat: no-repeat;
 `;
 

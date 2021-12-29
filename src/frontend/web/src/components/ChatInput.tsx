@@ -81,9 +81,17 @@ const ChatInput = ({
   msgTypingHandler,
   msgSubmitHandler,
 }: ChatInputProps) => {
+  const enterKeyHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') msgSubmitHandler();
+  };
+
   return (
     <InputContainer>
-      <InputLayer value={msg} onChange={msgTypingHandler}></InputLayer>
+      <InputLayer
+        value={msg}
+        onChange={msgTypingHandler}
+        onKeyDown={enterKeyHandler}
+      ></InputLayer>
       <ButtonLayer>
         <LeftButtons>
           <ImageButton imageUrl={BoldIcon}></ImageButton>

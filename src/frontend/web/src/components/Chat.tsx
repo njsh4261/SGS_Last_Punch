@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import arrowDropDownIcon from '../icon/arrowDropDown.svg';
+import expandIcon from '../icon/expand.svg';
+import ChatInput from './ChatInput';
 
 const Container = styled.main`
   display: flex;
@@ -36,13 +37,13 @@ const ChannelName = styled.article`
   font-size: 20px;
 
   @media only screen and (max-width: 400px) {
-    width: 50vw;
+    max-width: 50vw;
   }
   @media only screen and (min-width: 400px) and (max-width: 650px) {
-    width: 65vw;
+    max-width: 65vw;
   }
   @media only screen and (min-width: 650px) {
-    width: 80vw;
+    max-width: 80vw;
   }
 `;
 const ArrowDropDownIcon = styled.article`
@@ -51,7 +52,8 @@ const ArrowDropDownIcon = styled.article`
   height: 20px;
   align-self: center;
   margin-right: 14px;
-  background-image: url(${arrowDropDownIcon});
+  background-image: url(${expandIcon});
+  background-repeat: no-repeat;
 `;
 
 const MemberInfo = styled.button`
@@ -60,25 +62,18 @@ const MemberInfo = styled.button`
 
 const MessageListContainer = styled.article`
   flex: 1;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow: hidden;
 `;
 
 const MessageBox = styled.section`
   display: flex;
+  white-space: normal;
+  word-break: break-all;
   padding: 8px 20px;
   &:hover {
     background: #f8f8f8;
   }
-`;
-
-const InputContainer = styled.article`
-  flex-shrink: 0;
-  padding: 8px 20px;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  height: 25px;
 `;
 
 const End = styled.article``;
@@ -107,9 +102,7 @@ const Chat = () => {
       <ChannelHeader>
         <ChannelInfo>
           <ChannelName>
-            dump channeldump channeldump channeldump channeldump channeldump
-            channeldump channeldump channeldump channeldump channeldump
-            channeldump channel
+            dump channeldump channeldump channeldump channeldump channel
           </ChannelName>
           <ArrowDropDownIcon></ArrowDropDownIcon>
         </ChannelInfo>
@@ -122,10 +115,11 @@ const Chat = () => {
         ))}
         <End ref={endRef}></End>
       </MessageListContainer>
-      <InputContainer>
-        <Input value={msg} onChange={msgTypingHandler}></Input>
-        <button onClick={msgSubmitHandler}>add msg</button>
-      </InputContainer>
+      <ChatInput
+        msg={msg}
+        msgTypingHandler={msgTypingHandler}
+        msgSubmitHandler={msgSubmitHandler}
+      ></ChatInput>
     </Container>
   );
 };

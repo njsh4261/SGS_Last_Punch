@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import expandIcon from '../icon/expand_more_black_24dp.svg';
+import expandIcon from '../icon/expand.svg';
 import ChatInput from './ChatInput';
 
 const Container = styled.main`

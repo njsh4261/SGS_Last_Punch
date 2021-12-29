@@ -20,9 +20,6 @@ const InputContainer = styled.article`
   border-radius: 6px;
   overflow: hidden;
   background: #f8f8f8;
-  /* todo: remove */
-  width: 80%;
-  margin: 20px;
 `;
 
 const InputLayer = styled.input`
@@ -31,12 +28,14 @@ const InputLayer = styled.input`
   padding: 8px;
   outline: none;
   border: none;
+  font-size: 15px;
 `;
 
 const ButtonLayer = styled.article`
   display: flex;
   justify-content: space-between;
-  padding: 4px;
+  height: 32px;
+  padding: 22px 12px;
   align-items: center;
 `;
 
@@ -57,14 +56,9 @@ const ImageButton = styled.section<{ imageUrl: string; size?: string }>`
   outline: none;
 
   & + & {
-    /* todo: remove this */
-    @media screen and (max-width: 500px) {
-      margin-left: 7px;
-    }
-    @media screen and (min-width: 500px) {
-      margin-left: 17px;
-    }
+    margin-left: 10px;
   }
+
   &:hover {
     opacity: 50%;
     cursor: pointer;
@@ -82,16 +76,18 @@ const ChatInput = ({
   msgTypingHandler,
   msgSubmitHandler,
 }: ChatInputProps) => {
+  const channelName = 'dump channel'; // todo: change store info
+
   const enterKeyHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') msgSubmitHandler();
   };
-
   return (
     <InputContainer>
       <InputLayer
         value={msg}
         onChange={msgTypingHandler}
         onKeyDown={enterKeyHandler}
+        placeholder={`#${channelName}에게 메시지 보내기`}
       ></InputLayer>
       <ButtonLayer>
         <LeftButtons>

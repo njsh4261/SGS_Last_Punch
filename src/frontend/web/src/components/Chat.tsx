@@ -76,19 +76,25 @@ const MessageBox = styled.section`
   }
 `;
 
+const ChatInputLayout = styled.article`
+  margin: 0 20px 20px 20px;
+`;
+
 const End = styled.article``;
 
 const Chat = () => {
   const endRef = useRef<null | HTMLDivElement>(null);
-  const [msg, setMsg] = useState<string>('temp');
+  const [msg, setMsg] = useState<string>('');
   const [msgList, setMsgList] = useState<string[]>([]);
+  const selectedChannel =
+    '# dump channeldump channeldump channeldump channeldump channel'; // todo: store
 
   const msgTypingHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setMsg(e.target.value);
   const msgSubmitHandler = () => {
     // socket.send(msg), get response
     setMsgList([...msgList, msg]);
-    setMsg(`temp${msgList.length}`);
+    setMsg('');
   };
   const scrollToBottom = () =>
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -101,9 +107,7 @@ const Chat = () => {
     <Container>
       <ChannelHeader>
         <ChannelInfo>
-          <ChannelName>
-            dump channeldump channeldump channeldump channeldump channel
-          </ChannelName>
+          <ChannelName>{selectedChannel}</ChannelName>
           <ArrowDropDownIcon></ArrowDropDownIcon>
         </ChannelInfo>
 
@@ -115,11 +119,13 @@ const Chat = () => {
         ))}
         <End ref={endRef}></End>
       </MessageListContainer>
-      <ChatInput
-        msg={msg}
-        msgTypingHandler={msgTypingHandler}
-        msgSubmitHandler={msgSubmitHandler}
-      ></ChatInput>
+      <ChatInputLayout>
+        <ChatInput
+          msg={msg}
+          msgTypingHandler={msgTypingHandler}
+          msgSubmitHandler={msgSubmitHandler}
+        ></ChatInput>
+      </ChatInputLayout>
     </Container>
   );
 };

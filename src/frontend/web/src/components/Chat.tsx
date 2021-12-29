@@ -53,6 +53,7 @@ const ArrowDropDownIcon = styled.article`
   align-self: center;
   margin-right: 14px;
   background-image: url(${arrowDropDownIcon});
+  background-repeat: no-repeat;
 `;
 
 const MemberInfo = styled.button`
@@ -61,11 +62,14 @@ const MemberInfo = styled.button`
 
 const MessageListContainer = styled.article`
   flex: 1;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow: hidden;
 `;
 
 const MessageBox = styled.section`
   display: flex;
+  white-space: normal;
+  word-break: break-all;
   padding: 8px 20px;
   &:hover {
     background: #f8f8f8;

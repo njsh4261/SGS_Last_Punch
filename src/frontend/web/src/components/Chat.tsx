@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import arrowDropDownIcon from '../arrowDropDown.svg';
+import arrowDropDownIcon from '../icon/arrowDropDown.svg';
 
 const Container = styled.main`
   display: flex;

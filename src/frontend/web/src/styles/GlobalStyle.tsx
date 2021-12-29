@@ -7,7 +7,6 @@ const GlobalStyle = createGlobalStyle`
 
   html, body, body>div {
     font-family: "Helvetica", "Arial", sans-serif;
-    line-height: 1.5;
     overflow: hidden;
     height: 100%;
     margin: 0;

@@ -19,6 +19,7 @@ const InputContainer = styled.article`
   border: 1px solid grey;
   border-radius: 6px;
   overflow: hidden;
+  background: #f8f8f8;
   /* todo: remove */
   width: 80%;
   margin: 20px;

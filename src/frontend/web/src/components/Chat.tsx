@@ -63,7 +63,7 @@ const MemberInfo = styled.button`
 const MessageListContainer = styled.article`
   flex: 1;
   overflow-y: scroll;
-  overflow: hidden;
+  overflow-x: hidden;
 `;
 
 const MessageBox = styled.section`
@@ -92,9 +92,11 @@ const Chat = () => {
   const msgTypingHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setMsg(e.target.value);
   const msgSubmitHandler = () => {
-    // socket.send(msg), get response
-    setMsgList([...msgList, msg]);
-    setMsg('');
+    if (msg !== '') {
+      // socket.send(msg), get response
+      setMsgList([...msgList, msg]);
+      setMsg('');
+    }
   };
   const scrollToBottom = () =>
     endRef.current?.scrollIntoView({ behavior: 'smooth' });

@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { openModal, closeModal } from '../../modules/modal';
 import ImageButton from '../Common/ImageButton';
 import SearchIcon from '../../icon/search.svg';
 
@@ -24,8 +26,12 @@ const SearchText = styled.span`
 `;
 
 const SearchContainer = ({ workspaceName }: { workspaceName: string }) => {
+  const dispatch = useDispatch();
+  const handler = () => {
+    dispatch(openModal());
+  };
   return (
-    <ScontainerStyle>
+    <ScontainerStyle onClick={handler}>
       <SearchText>{workspaceName} 검색</SearchText>
       <ImageButton size="15px" imageUrl={SearchIcon}></ImageButton>
     </ScontainerStyle>

@@ -70,7 +70,7 @@ CREATE TABLE `message`(
     `channel_id` BIGINT UNSIGNED NOT NULL,
     `content` TEXT NOT NULL,
     `refer_reply_id` BIGINT UNSIGNED NULL,
-    `file_id` BIGINT NULL,
+    `file_id` BIGINT UNSIGNED NULL,
     `status` TINYINT NOT NULL,
     `created_dt` DATETIME NOT NULL,
     `modified_dt` DATETIME NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE `reply`(
 );
 
 CREATE TABLE `file`(
-    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `description` TEXT NOT NULL,
     `content` BLOB NOT NULL

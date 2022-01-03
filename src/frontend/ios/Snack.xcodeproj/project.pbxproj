@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C19E40D278299970086F374 /* NotiListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C19E40C278299970086F374 /* NotiListViewController.swift */; };
+		8C19E40F27829B1D0086F374 /* NotiListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C19E40E27829B1D0086F374 /* NotiListTableViewCell.swift */; };
 		8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C33C4E7277BF06100294445 /* AppDelegate.swift */; };
 		8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C33C4E9277BF06100294445 /* SceneDelegate.swift */; };
 		8C33C4EC277BF06100294445 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C33C4EB277BF06100294445 /* ViewController.swift */; };
-		8C33C4EF277BF06100294445 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C33C4ED277BF06100294445 /* Main.storyboard */; };
 		8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C33C4F0277BF06200294445 /* Assets.xcassets */; };
 		8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C33C4F2277BF06200294445 /* LaunchScreen.storyboard */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
@@ -20,11 +21,12 @@
 		0349F0237A28CF144982DE22 /* Pods-Snack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.release.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.release.xcconfig"; sourceTree = "<group>"; };
 		5BD7615966730183AC1D70B3 /* Pods_Snack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Snack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C19E409277BFE0C0086F374 /* RxSwiftPractice.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = RxSwiftPractice.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		8C19E40C278299970086F374 /* NotiListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiListViewController.swift; sourceTree = "<group>"; };
+		8C19E40E27829B1D0086F374 /* NotiListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiListTableViewCell.swift; sourceTree = "<group>"; };
 		8C33C4E4277BF06100294445 /* Snack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C33C4E7277BF06100294445 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C33C4E9277BF06100294445 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8C33C4EB277BF06100294445 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		8C33C4EE277BF06100294445 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8C33C4F0277BF06200294445 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C33C4F3277BF06200294445 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8C33C4F5277BF06200294445 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,7 +70,8 @@
 				8C33C4E7277BF06100294445 /* AppDelegate.swift */,
 				8C33C4E9277BF06100294445 /* SceneDelegate.swift */,
 				8C33C4EB277BF06100294445 /* ViewController.swift */,
-				8C33C4ED277BF06100294445 /* Main.storyboard */,
+				8C19E40C278299970086F374 /* NotiListViewController.swift */,
+				8C19E40E27829B1D0086F374 /* NotiListTableViewCell.swift */,
 				8C33C4F0277BF06200294445 /* Assets.xcassets */,
 				8C33C4F2277BF06200294445 /* LaunchScreen.storyboard */,
 				8C33C4F5277BF06200294445 /* Info.plist */,
@@ -155,7 +158,6 @@
 			files = (
 				8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */,
 				8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */,
-				8C33C4EF277BF06100294445 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +210,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C19E40F27829B1D0086F374 /* NotiListTableViewCell.swift in Sources */,
+				8C19E40D278299970086F374 /* NotiListViewController.swift in Sources */,
 				8C33C4EC277BF06100294445 /* ViewController.swift in Sources */,
 				8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
@@ -217,14 +221,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		8C33C4ED277BF06100294445 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8C33C4EE277BF06100294445 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		8C33C4F2277BF06200294445 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

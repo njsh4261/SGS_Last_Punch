@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ImageButton from '../Common/ImageButton';
 import sendIcon from '../../icon/send.svg';
 import BoldIcon from '../../icon/bold.svg';
 import ItalicIcon from '../../icon/italic.svg';
@@ -45,24 +46,6 @@ const LeftButtons = styled.section`
 
 const RightButtons = styled.section`
   display: flex;
-`;
-
-const ImageButton = styled.section<{ imageUrl: string; size?: string }>`
-  background-image: url(${(props) => props.imageUrl});
-  background-repeat: no-repeat;
-  width: ${(props) => props.size || '25px'};
-  height: ${(props) => props.size || '25px'};
-  border: none;
-  outline: none;
-
-  & + & {
-    margin-left: 10px;
-  }
-
-  &:hover {
-    opacity: 50%;
-    cursor: pointer;
-  }
 `;
 
 interface ChatInputProps {

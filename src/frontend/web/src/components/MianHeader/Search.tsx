@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ImageButton from '../Common/ImageButton';
 import SearchIcon from '../../icon/search.svg';
 
 const ScontainerStyle = styled.article`
@@ -20,20 +21,6 @@ const ScontainerStyle = styled.article`
 
 const SearchText = styled.span`
   width: 100%;
-`;
-
-const ImageButton = styled.section<{ imageUrl: string; size?: string }>`
-  background-image: url(${(props) => props.imageUrl});
-  background-repeat: no-repeat;
-  width: ${(props) => props.size || '25px'};
-  height: ${(props) => props.size || '25px'};
-  border: none;
-  outline: none;
-
-  &:hover {
-    opacity: 50%;
-    cursor: pointer;
-  }
 `;
 
 const SearchContainer = ({ workspaceName }: { workspaceName: string }) => {

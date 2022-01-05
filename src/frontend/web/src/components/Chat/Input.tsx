@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import sendIcon from '../icon/send.svg';
-import BoldIcon from '../icon/bold.svg';
-import ItalicIcon from '../icon/italic.svg';
-import StrikeIcon from '../icon/strike.svg';
-import CodeIcon from '../icon/code.svg';
-import ListBulletIcon from '../icon/list_bullet.svg';
-import ListNumberIcon from '../icon/list_number.svg';
-import LinkIcon from '../icon/link.svg';
-import CodeBlockIcon from '../icon/code_block.svg';
-import QuoteIcon from '../icon/quote.svg';
-import EmailIcon from '../icon/email.svg';
-import SmileIcon from '../icon/smile.svg';
-import FileIcon from '../icon/file.svg';
+import ImageButton from '../Common/ImageButton';
+import sendIcon from '../../icon/send.svg';
+import BoldIcon from '../../icon/bold.svg';
+import ItalicIcon from '../../icon/italic.svg';
+import StrikeIcon from '../../icon/strike.svg';
+import CodeIcon from '../../icon/code.svg';
+import ListBulletIcon from '../../icon/list_bullet.svg';
+import ListNumberIcon from '../../icon/list_number.svg';
+import LinkIcon from '../../icon/link.svg';
+import CodeBlockIcon from '../../icon/code_block.svg';
+import QuoteIcon from '../../icon/quote.svg';
+import EmailIcon from '../../icon/email.svg';
+import SmileIcon from '../../icon/smile.svg';
+import FileIcon from '../../icon/file.svg';
 
 const InputContainer = styled.article`
   flex-shrink: 0;
@@ -45,24 +46,6 @@ const LeftButtons = styled.section`
 
 const RightButtons = styled.section`
   display: flex;
-`;
-
-const ImageButton = styled.section<{ imageUrl: string; size?: string }>`
-  background-image: url(${(props) => props.imageUrl});
-  background-repeat: no-repeat;
-  width: ${(props) => props.size || '25px'};
-  height: ${(props) => props.size || '25px'};
-  border: none;
-  outline: none;
-
-  & + & {
-    margin-left: 10px;
-  }
-
-  &:hover {
-    opacity: 50%;
-    cursor: pointer;
-  }
 `;
 
 interface ChatInputProps {

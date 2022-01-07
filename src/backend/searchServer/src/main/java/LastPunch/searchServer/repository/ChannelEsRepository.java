@@ -2,12 +2,12 @@ package LastPunch.searchServer.repository;
 
 import LastPunch.searchServer.dto.ChannelDto;
 import LastPunch.searchServer.dto.UserDto;
+import java.nio.channels.Channel;
+import java.util.List;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface UserEsRepository extends ElasticsearchRepository<UserDto, String> {
-    List<UserDto> findByNameContainsAndWorkspaceIdEquals(String name, Integer wid);
+public interface ChannelEsRepository extends ElasticsearchRepository<ChannelDto, String>{
+    List<ChannelDto> findByNameContains(String name);
 }

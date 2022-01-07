@@ -1,5 +1,6 @@
 package LastPunch.searchServer.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.time.LocalDateTime;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +20,9 @@ import java.time.LocalDateTime;
 public class UserDto {
     @Id
     private Integer id;
+    @Field(type = FieldType.Integer, name = "workspaceId")
+    private Integer workspaceId;
+    private Integer channel_id;
     private String email;
     private String password;
     private Integer login_type;

@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SearchMemberRequest {
+public class SearchRequest {
     private String query;
+    private Integer workspace_id;
 }

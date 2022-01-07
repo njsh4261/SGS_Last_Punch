@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    volumes:
+      - ./containers/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - logstash
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.16.2
+    command: -f /etc/logstash/conf.d/
+    volumes:
+      - ./containers/logstash/logstash.conf:/etc/logstash/conf.d/logstash.conf
+    ports:
+      - "5000:5000"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - db
+
+  db:
+    container_name: mysqlserver-8.0
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pw
+      MYSQL_USER: sa
+      MYSQL_PASSWORD: sa
+      MYSQL_DATABASE: lastpunch
+    volumes:
+      - db-data:/var/lib/mysql
+
+  search_server:
+    container_name: search_server
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL:  jdbc:mysql://localhost:3306/elasticstack?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+      SPRING_DATASOURCE_USERNAME: elasticstack
+      SPRING_DATASOURCE_PASSWORD: 123456
+    restart: always
+    depends_on:
+      - elasticsearch
+
+# Volumes
+volumes:
+  db-data:

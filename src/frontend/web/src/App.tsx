@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from './modules';
-import Chat from './components/Chat';
-import MainHeader from './components/MianHeader';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import PrivateRoute from './routes/Private';
+import PublicRoute from './routes/Public';
 
 function App() {
   const modalActive = useSelector((state: RootState) => state.modal.active);
+  const jwt = sessionStorage.getItem('jwt');
+  const navigate = useNavigate();
+
+  // jwt가 없으면 login page로 redirect
+  useEffect(() => {
+    if (!jwt) navigate('/login');
+    else navigate('/', { state: { jwt } });
+  }, []);
+
   return (
     <>
-      <MainHeader></MainHeader>
+      {!jwt ? <PublicRoute /> : <PrivateRoute />}
       {modalActive && <div>modal open</div>}
     </>
   );
-  // return <Chat></Chat>;
 }
 
 export default App;

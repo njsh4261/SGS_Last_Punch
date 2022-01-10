@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
-import Logo from './Logo';
+import Logo from '../Common/Logo';
 import SignUp from './SignUp';
 
-const InputContainer = styled.article`
+const LoginContainer = styled.article`
   width: 420px;
-`;
-
-const MarginBottom20 = styled.section`
-  margin-bottom: 20px;
+  & > * {
+    margin-bottom: 20px;
+  }
 `;
 
 export default function LoginEmailContainer() {
@@ -27,23 +26,15 @@ export default function LoginEmailContainer() {
   };
 
   return (
-    <InputContainer>
-      <MarginBottom20>
-        <Logo></Logo>
-      </MarginBottom20>
-      <MarginBottom20>
-        <Input value={email} inputHandler={inputHandler}></Input>
-      </MarginBottom20>
-      <MarginBottom20>
-        <Input value={pass} inputHandler={inputHandler} isPass={true}></Input>
-      </MarginBottom20>
-      <MarginBottom20>
-        <SubmitButton
-          submitHandler={submitHandler}
-          text="이메일로 로그인"
-        ></SubmitButton>
-      </MarginBottom20>
+    <LoginContainer>
+      <Logo></Logo>
+      <Input value={email} inputHandler={inputHandler}></Input>
+      <Input value={pass} inputHandler={inputHandler} isPass={true}></Input>
+      <SubmitButton
+        submitHandler={submitHandler}
+        text="이메일로 로그인"
+      ></SubmitButton>
       <SignUp></SignUp>
-    </InputContainer>
+    </LoginContainer>
   );
 }

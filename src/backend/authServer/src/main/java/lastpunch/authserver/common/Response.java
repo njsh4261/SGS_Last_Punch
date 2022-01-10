@@ -1,4 +1,4 @@
-package lastpunch.authserver.util;
+package lastpunch.authserver.common;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class ResponseHandler {
+public class Response {
     public static ResponseEntity<Object> response(String code, HttpStatus status, Object data) {
         Map<String, Object> map = new HashMap<String, Object>();
         Long datetime = System.currentTimeMillis();
@@ -20,7 +20,7 @@ public class ResponseHandler {
         return new ResponseEntity<Object>(map,status);
     }
     
-    public static ResponseEntity<Object> response(String code, HttpStatus status) {
+    public static ResponseEntity<Object> toResponseEntity(String code, HttpStatus status) {
         Map<String, Object> map = new HashMap<String, Object>();
         Long datetime = System.currentTimeMillis();
         Timestamp timestamp = new Timestamp(datetime);

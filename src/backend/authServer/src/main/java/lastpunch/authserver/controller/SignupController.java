@@ -2,7 +2,7 @@ package lastpunch.authserver.controller;
 
 import lastpunch.authserver.dto.SignupRequest;
 import lastpunch.authserver.service.SignupService;
-import lastpunch.authserver.util.ResponseHandler;
+import lastpunch.authserver.common.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +19,6 @@ public class SignupController {
     @PostMapping
     public ResponseEntity<Object> postSignup(@RequestBody SignupRequest signupRequest) {
         signupService.signup(signupRequest);
-        return ResponseHandler.response("10000", HttpStatus.OK);
+        return Response.toResponseEntity("10000", HttpStatus.OK);
     }
 }

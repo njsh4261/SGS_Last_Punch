@@ -10,10 +10,9 @@
 		8C19E40D278299970086F374 /* NotiListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C19E40C278299970086F374 /* NotiListViewController.swift */; };
 		8C19E40F27829B1D0086F374 /* NotiListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C19E40E27829B1D0086F374 /* NotiListTableViewCell.swift */; };
 		8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C19E4102786B35B0086F374 /* GoogleService-Info.plist */; };
-		8C19E414278B2C620086F374 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C19E413278B2C620086F374 /* Main.storyboard */; };
+		8C19E417278B31760086F374 /* Noti.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C19E416278B31760086F374 /* Noti.swift */; };
 		8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C33C4E7277BF06100294445 /* AppDelegate.swift */; };
 		8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C33C4E9277BF06100294445 /* SceneDelegate.swift */; };
-		8C33C4EC277BF06100294445 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C33C4EB277BF06100294445 /* ViewController.swift */; };
 		8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C33C4F0277BF06200294445 /* Assets.xcassets */; };
 		8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C33C4F2277BF06200294445 /* LaunchScreen.storyboard */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
@@ -27,11 +26,10 @@
 		8C19E40E27829B1D0086F374 /* NotiListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiListTableViewCell.swift; sourceTree = "<group>"; };
 		8C19E4102786B35B0086F374 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8C19E412278B23FB0086F374 /* Snack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Snack.entitlements; sourceTree = "<group>"; };
-		8C19E413278B2C620086F374 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		8C19E416278B31760086F374 /* Noti.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Noti.swift; sourceTree = "<group>"; };
 		8C33C4E4277BF06100294445 /* Snack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C33C4E7277BF06100294445 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C33C4E9277BF06100294445 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8C33C4EB277BF06100294445 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8C33C4F0277BF06200294445 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C33C4F3277BF06200294445 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8C33C4F5277BF06200294445 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,6 +48,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8C19E415278B31410086F374 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8C19E416278B31760086F374 /* Noti.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		8C33C4DB277BF06100294445 = {
 			isa = PBXGroup;
 			children = (
@@ -75,10 +81,9 @@
 				8C19E412278B23FB0086F374 /* Snack.entitlements */,
 				8C33C4E7277BF06100294445 /* AppDelegate.swift */,
 				8C33C4E9277BF06100294445 /* SceneDelegate.swift */,
-				8C33C4EB277BF06100294445 /* ViewController.swift */,
+				8C19E415278B31410086F374 /* Model */,
 				8C19E40C278299970086F374 /* NotiListViewController.swift */,
 				8C19E40E27829B1D0086F374 /* NotiListTableViewCell.swift */,
-				8C19E413278B2C620086F374 /* Main.storyboard */,
 				8C33C4F0277BF06200294445 /* Assets.xcassets */,
 				8C33C4F2277BF06200294445 /* LaunchScreen.storyboard */,
 				8C33C4F5277BF06200294445 /* Info.plist */,
@@ -167,7 +172,6 @@
 				8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */,
 				8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */,
 				8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */,
-				8C19E414278B2C620086F374 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,9 +224,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C19E417278B31760086F374 /* Noti.swift in Sources */,
 				8C19E40F27829B1D0086F374 /* NotiListTableViewCell.swift in Sources */,
 				8C19E40D278299970086F374 /* NotiListViewController.swift in Sources */,
-				8C33C4EC277BF06100294445 /* ViewController.swift in Sources */,
 				8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
 			);
@@ -293,7 +297,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -348,7 +352,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -372,7 +376,6 @@
 				INFOPLIST_FILE = Snack/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -403,7 +406,6 @@
 				INFOPLIST_FILE = Snack/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;

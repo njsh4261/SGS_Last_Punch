@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from './modules';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Chat from './components/Chat';
 import MainHeader from './components/MianHeader';
 import LoginPage from './pages/Login';
@@ -9,6 +9,7 @@ import LoginPage from './pages/Login';
 function App() {
   const jwt = sessionStorage.getItem('jwt');
   const modalActive = useSelector((state: RootState) => state.modal.active);
+
   return (
     <>
       <Routes>

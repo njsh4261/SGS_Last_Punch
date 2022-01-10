@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../Common/Logo';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
@@ -16,7 +17,7 @@ const GuideText = styled.header`
   max-width: 700px;
   text-align: center;
 
-  @media (max-width: 1200px) {
+  @media (max-width: 880px) {
     font-size: 32px;
   }
 `;
@@ -29,20 +30,42 @@ const SignupBody = styled.main`
 export default function SignupEmailContainer() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [passCheck, setPassCheck] = useState('');
+
+  const navigate = useNavigate();
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === 'email') setEmail(e.target.value);
     if (e.target.name === 'pass') setPass(e.target.value);
+    if (e.target.name === 'passCheck') setPassCheck(e.target.value);
   };
 
-  const submitHandler = () => alert('need api!');
+  const submitHandler = () => {
+    if (pass !== passCheck) {
+      return alert('비밀번호가 서로 다릅니다');
+    }
+    alert('need api!');
+    navigate('/');
+  };
 
   return (
     <SignupContainer>
       <Logo></Logo>
-      <GuideText>먼저 이메일부터 입력해 보세요</GuideText>
+      <GuideText>회원가입 페이지입니다</GuideText>
       <SignupBody>
         <Input value={email} inputHandler={inputHandler}></Input>
+        <Input
+          name="pass"
+          value={pass}
+          inputHandler={inputHandler}
+          isPass={true}
+        ></Input>
+        <Input
+          name="passCheck"
+          value={passCheck}
+          inputHandler={inputHandler}
+          isPass={true}
+        ></Input>
         <SubmitButton text="계속" submitHandler={submitHandler}></SubmitButton>
       </SignupBody>
     </SignupContainer>

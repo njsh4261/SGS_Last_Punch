@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import Chat from './components/Chat';
 import MainHeader from './components/MianHeader';
 import LoginPage from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   const jwt = sessionStorage.getItem('jwt');
@@ -13,7 +14,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="login" element={<LoginPage />}></Route>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
         <Route path="/header" element={<MainHeader />}></Route>
         <Route path="/chat" element={<Chat />}></Route>
         <Route path="/*" element={<div>not found</div>}></Route>

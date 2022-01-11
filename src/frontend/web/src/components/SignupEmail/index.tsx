@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../Common/Logo';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
-import loginAPI from '../Api/login';
+import signupAPI from '../Api/signup';
 
 const SignupContainer = styled.article`
   & * {
@@ -45,7 +45,7 @@ export default function SignupEmailContainer() {
     if (pass !== passCheck) {
       return alert('비밀번호가 서로 다릅니다');
     }
-    const success = await loginAPI(email, pass);
+    const success = await signupAPI(email, pass);
     if (success) navigate('/login');
   };
 

@@ -1,0 +1,16 @@
+server:
+  port: [your_port_here]
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: [your_db_url_here]
+    username: [your_name_here]
+    password: [your_pw_here]
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none

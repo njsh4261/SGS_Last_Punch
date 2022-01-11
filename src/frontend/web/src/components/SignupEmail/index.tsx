@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../Common/Logo';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
+import loginAPI from '../Api/login';
 
 const SignupContainer = styled.article`
   & * {
@@ -40,12 +41,12 @@ export default function SignupEmailContainer() {
     if (e.target.name === 'passCheck') setPassCheck(e.target.value);
   };
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     if (pass !== passCheck) {
       return alert('비밀번호가 서로 다릅니다');
     }
-    alert('need api!');
-    navigate('/login');
+    const success = await loginAPI(email, pass);
+    if (success) navigate('/login');
   };
 
   return (

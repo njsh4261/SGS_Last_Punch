@@ -9,7 +9,7 @@ export default async function signupAPI(email: string, pass: string) {
   };
   try {
     const response = await axios.post(host + endpoint, data);
-    if (response.status !== 200) throw new Error('login fail');
+    if (response.status !== 200) throw new Error('signup fail');
     return true;
   } catch (e) {
     alert('요청에 실패하였습니다');

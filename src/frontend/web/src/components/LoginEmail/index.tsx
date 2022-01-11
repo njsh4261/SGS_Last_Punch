@@ -5,6 +5,7 @@ import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
 import Logo from '../Common/Logo';
 import SignUp from './SignUp';
+import loginAPI from '../Api/login';
 
 const LoginContainer = styled.article`
   width: 420px;
@@ -24,10 +25,10 @@ export default function LoginEmailContainer() {
     if (e.target.name === 'pass') setPass(e.target.value);
   };
 
-  const submitHandler = () => {
-    console.log({ email, pass });
-    alert('need api!');
-    navigate('/');
+  const submitHandler = async () => {
+    sessionStorage.setItem('jwt', 'dump');
+    const success = await loginAPI(email, pass);
+    if (success) navigate('/');
   };
 
   return (

@@ -25,7 +25,7 @@ export default function LoginEmailContainer() {
   };
 
   const submitHandler = () => {
-    console.log({ email, pass });
+    sessionStorage.setItem('jwt', 'dump');
     alert('need api!');
     navigate('/');
   };

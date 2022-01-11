@@ -14,6 +14,7 @@ import lombok.Setter;
 public class SignupRequest {
 //    @NotBlank
 //    private String name;
+  
     @NotBlank
     private String email;
     @NotBlank

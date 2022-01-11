@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SignupController {
     private final SignupService signupService;
-    
+
     @PostMapping
     public ResponseEntity<Object> postSignup(@RequestBody SignupRequest signupRequest) {
         signupService.signup(signupRequest);

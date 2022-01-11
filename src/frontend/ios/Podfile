@@ -8,5 +8,9 @@ target 'Snack' do
   # Pods for Snack
   pod 'RxSwift', '6.2.0'
   pod 'RxCocoa', '6.2.0'
+  pod 'SnapKit', '~> 5.0.0'
+
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Messaging'
 
 end

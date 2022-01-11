@@ -1,0 +1,2 @@
+- 모든 api의 리턴은 성공 여부에 따라 true or false
+- https://documenter.getpostman.com/view/7437901/UVXgLHFb

@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+#      default-filters:
+#        - name: GlobalFilter
+#          args:
+#            baseMessage: Spring Cloud Gateway GlobalFilter
+#            preLogger: true
+#            postLogger: true
+      routes:
+        - id: authServer
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/auth/**
+          filters:
+            - RewritePath=/auth/?(?<segment>.*), /$\{segment}
+#          filters:
+#            - name: AuthFilter
+#              args:
+#                baseMessage: Spring Cloud Gateway AuthFilter
+#                preLogger: true
+#                postLogger: true

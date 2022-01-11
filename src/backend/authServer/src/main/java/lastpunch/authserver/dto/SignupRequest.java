@@ -12,8 +12,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SignupRequest {
-    @NotBlank
-    private String name;
+//    @NotBlank
+//    private String name;
     @NotBlank
     private String email;
     @NotBlank
@@ -21,7 +21,7 @@ public class SignupRequest {
     
     public Member toEntity() {
         return Member.builder()
-            .name(name)
+//            .name(name)
             .email(email)
             .password(password)
             .status("ROLE_USER")

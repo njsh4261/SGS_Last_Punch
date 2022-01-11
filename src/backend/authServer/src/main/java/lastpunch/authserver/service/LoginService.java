@@ -11,6 +11,7 @@ import lastpunch.authserver.entity.Member;
 import lastpunch.authserver.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -28,18 +29,20 @@ public class LoginService {
     public Tokens login(LoginRequest loginRequest){
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
-        String accessToken = jwtProvider.createAccessToken(authentication);
-        String refreshToken = jwtProvider.createRefreshToken(authentication);
-//
-//        redisService.setData("RefreshToken:" + authentication.getName(), refreshToken, REFRESH_TOKEN_VALIDATION_SEC);
         
-        return Tokens.builder()
-            .accessToken(accessToken)
-            .refreshToken(refreshToken)
-            .build();
+        try {
+            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+            String accessToken = jwtProvider.createAccessToken(authentication);
+            String refreshToken = jwtProvider.createRefreshToken(authentication);
+//            redisService.setData("RefreshToken:" + authentication.getName(), refreshToken, REFRESH_TOKEN_VALIDATION_SEC);
+    
+            return Tokens.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+        }
+        catch (BadCredentialsException e) {
+            throw new BusinessException(ErrorCode.BAD_CREDENTIALS);
+        }
     }
-    
-    
 }

@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
-import Logo from './Logo';
+import Logo from '../Common/Logo';
 import SignUp from './SignUp';
 
-const InputContainer = styled.article`
+const LoginContainer = styled.article`
   width: 420px;
-`;
-
-const MarginBottom20 = styled.section`
-  margin-bottom: 20px;
+  & > * {
+    margin-bottom: 20px;
+  }
 `;
 
 export default function LoginEmailContainer() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+
+  const navigate = useNavigate();
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === 'email') setEmail(e.target.value);
@@ -23,27 +25,26 @@ export default function LoginEmailContainer() {
   };
 
   const submitHandler = () => {
+    sessionStorage.setItem('jwt', 'dump');
     alert('need api!');
+    navigate('/');
   };
 
   return (
-    <InputContainer>
-      <MarginBottom20>
-        <Logo></Logo>
-      </MarginBottom20>
-      <MarginBottom20>
-        <Input value={email} inputHandler={inputHandler}></Input>
-      </MarginBottom20>
-      <MarginBottom20>
-        <Input value={pass} inputHandler={inputHandler} isPass={true}></Input>
-      </MarginBottom20>
-      <MarginBottom20>
-        <SubmitButton
-          submitHandler={submitHandler}
-          text="이메일로 로그인"
-        ></SubmitButton>
-      </MarginBottom20>
+    <LoginContainer>
+      <Logo></Logo>
+      <Input value={email} inputHandler={inputHandler}></Input>
+      <Input
+        name="pass"
+        value={pass}
+        inputHandler={inputHandler}
+        isPass={true}
+      ></Input>
+      <SubmitButton
+        submitHandler={submitHandler}
+        text="이메일로 로그인"
+      ></SubmitButton>
       <SignUp></SignUp>
-    </InputContainer>
+    </LoginContainer>
   );
 }

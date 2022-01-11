@@ -45,7 +45,7 @@ export default function SignupEmailContainer() {
       return alert('비밀번호가 서로 다릅니다');
     }
     alert('need api!');
-    navigate('/');
+    navigate('/login');
   };
 
   return (

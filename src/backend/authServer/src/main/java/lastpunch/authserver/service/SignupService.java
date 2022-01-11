@@ -8,6 +8,7 @@ import lastpunch.authserver.entity.Member;
 import lastpunch.authserver.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,10 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SignupService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
     
     @Transactional
     public void signup(SignupRequest signupRequest){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         signupRequest.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
         
         Optional<Member> member = memberRepository.findByEmail(signupRequest.getEmail());

@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class LoginService {
     private final JwtProvider jwtProvider;
-    private final MemberRepository memberRepository;
     private final AuthenticationManager authenticationManager;
     
     @Transactional

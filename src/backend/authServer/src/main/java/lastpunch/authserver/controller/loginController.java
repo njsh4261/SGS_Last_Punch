@@ -27,9 +27,11 @@ public class loginController {
     @PostMapping
     public ResponseEntity<Object> postLogin(@RequestBody LoginRequest loginRequest) {
         Tokens tokens = loginService.login(loginRequest);
+        
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("accessToken", tokens.getAccessToken());
         data.put("refreshToken", tokens.getRefreshToken());
+
         return Response.toResponseEntity("10000", HttpStatus.OK, data);
     }
 }

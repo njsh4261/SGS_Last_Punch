@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class Response {
-    public static ResponseEntity<Object> response(String code, HttpStatus status, Object data) {
+    public static ResponseEntity<Object> toResponseEntity(String code, HttpStatus status, Object data) {
         Map<String, Object> map = new HashMap<String, Object>();
         Long datetime = System.currentTimeMillis();
         Timestamp timestamp = new Timestamp(datetime);

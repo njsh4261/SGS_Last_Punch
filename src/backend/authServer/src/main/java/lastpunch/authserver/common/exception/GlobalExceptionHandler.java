@@ -21,8 +21,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
     
     @ExceptionHandler({ Exception.class })
-    public void handleException(HttpServletRequest request, HttpServletResponse response, Exception e) throws IOException {
+    public void handleInternalServerException(HttpServletRequest request, HttpServletResponse response, Exception e) throws IOException {
         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "서버 내부 오류입니다.");
-        log.error("알 수 없는 오류 감지.", e);
+        log.error("handleInternalServerException", e);
     }
 }

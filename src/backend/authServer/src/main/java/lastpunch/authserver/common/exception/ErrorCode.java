@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     
     //Signup
-    DUPLICATE_EMAIL(HttpStatus.OK, "10001", "DUPLICATE_EMAIL", "이미 가입된 이메일입니다.")
+    DUPLICATE_EMAIL(HttpStatus.OK, "10001", "DUPLICATE_EMAIL", "이미 가입된 이메일입니다."),
+    
+    //Login
+    BAD_CREDENTIALS(HttpStatus.OK, "10002", "BAD_CREDENTIALS", "이메일 혹은 패스워드를 잘못 입력했습니다.")
     ;
     
     private HttpStatus status;

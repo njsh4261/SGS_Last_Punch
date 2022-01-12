@@ -1,5 +1,6 @@
 package lastpunch.authserver.entity;
 
+import lastpunch.authserver.common.StatusConverter;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -40,11 +41,12 @@ public class Member{
     private String country;
     private String language;
     
-    @Column(columnDefinition="bit(1) default 2")
+    @Column(columnDefinition = "tinyint")
     private Integer settings;
     
-    @Column(columnDefinition="bit(1) default 2")
-    private Integer status;
+    @Convert(converter = StatusConverter.class)
+    @Column(columnDefinition = "tinyint")
+    private String status;
     
     @CreatedDate
     @Column(updatable = false)

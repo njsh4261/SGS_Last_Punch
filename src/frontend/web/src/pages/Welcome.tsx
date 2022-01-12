@@ -8,6 +8,7 @@ const WelcomePage = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
 `;
 
 export default function Welcome() {

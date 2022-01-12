@@ -6,6 +6,7 @@ declare module 'styled-components' {
       slack: string;
       lightSlack: string;
       lightGrey: string;
+      heavySlack: string;
     };
   }
 }

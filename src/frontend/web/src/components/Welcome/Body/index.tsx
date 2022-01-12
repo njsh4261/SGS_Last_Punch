@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import WsList from './WsList';
-import CreateWs from './CreateWs';
+import CreateWs from './CreateWsNav';
 
 const SwelcomeBody = styled.main`
   margin: 0 64px 0 64px;

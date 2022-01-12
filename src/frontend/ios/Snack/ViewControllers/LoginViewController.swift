@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
             $0.setTitle("이메일로 계속", for: .normal)
             $0.setTitleColor(.white, for: .normal)
             $0.setImage(UIImage.init(named: "logo_mail"), for: .normal)
-            $0.imageEdgeInsets = UIEdgeInsets(top: 5, left: -19, bottom: 0, right: 0)
+            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: -19, bottom: 0, right: 0)
             $0.backgroundColor = #colorLiteral(red: 0.2046000361, green: 0.4720201492, blue: 0.3607562184, alpha: 1)
         }
         

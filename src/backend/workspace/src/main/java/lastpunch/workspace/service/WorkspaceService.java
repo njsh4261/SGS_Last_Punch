@@ -1,6 +1,9 @@
 package lastpunch.workspace.service;
 
 import java.util.Optional;
+
+import lastpunch.workspace.common.StatusCode;
+import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.dto.WorkspaceDto;
 import lastpunch.workspace.entity.Workspace;
 import lastpunch.workspace.repository.WorkspaceRepository;
@@ -18,14 +21,18 @@ public class WorkspaceService{
         this.workspaceRepository = workspaceRepository;
     }
     
-    public Page<Workspace> getList(Pageable pageable) {
-        return workspaceRepository.findAll(pageable);
+    public Page<Workspace> getList(Long userId, Pageable pageable) {
+        // TODO: 각 워크스페이스마다 5명 정도 해당 워크스페이스의 참가자 목록을 보여줘야 함
+        return workspaceRepository.findAllById(userId, pageable);
     }
     
-    public Workspace getOne(Long id) {
-        Optional<Workspace> workspace = workspaceRepository.findById(id);
+    public Workspace getOne(Long workspaceId) {
+        // TODO: 워크스페이스 하나의 정보를 불러올 때, 해당 워크스페이스의 소속 멤버 목록과 채널 목록도 함께 불러와야 함
+        Optional<Workspace> workspace = workspaceRepository.findById(workspaceId);
         if(workspace.isPresent()) {
             return workspace.get();
+        } else {
+            throw new BusinessException(StatusCode.WORKSPACE_NOT_EXIST);
         }
     }
     
@@ -40,6 +47,8 @@ public class WorkspaceService{
     }
     
     public void deleteOne(Long id) {
+        // 추후에 아카이빙 기능(삭제한 데이터를 별도의 DB에 백업)을 구현한다면,
+        // status field를 "deleted" 등으로 수정하여 live server와 다른 DB 서버에 저장하는 기능 추가
         workspaceRepository.deleteById(id);
     }
 }

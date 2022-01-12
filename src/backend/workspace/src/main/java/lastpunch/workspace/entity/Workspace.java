@@ -2,12 +2,10 @@ package lastpunch.workspace.entity;
 
 import com.sun.istack.NotNull;
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import lastpunch.workspace.common.converter.MemberStatusConverter;
+import lastpunch.workspace.common.converter.WorkspaceStatusConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,7 +25,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 @AllArgsConstructor
 public class Workspace{
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @NotNull
@@ -35,11 +33,12 @@ public class Workspace{
     
     private String description;
     
-    @Column(columnDefinition="tinyint")
+    @Column(columnDefinition = "tinyint")
     private Integer settings;
-    
-    @Column(columnDefinition="tinyint")
-    private Integer status;
+
+    @Convert(converter = WorkspaceStatusConverter.class)
+    @Column(columnDefinition = "tinyint")
+    private String status;
     
     @CreatedDate
     @Column(updatable = false)

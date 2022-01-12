@@ -1,4 +1,4 @@
-import React, { ReactChild, ReactChildren } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const MainHeaderFrame = styled.header`

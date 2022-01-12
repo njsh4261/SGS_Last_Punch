@@ -1,5 +1,6 @@
 package lastpunch.authserver.service;
 
+import java.util.Map;
 import java.util.Optional;
 import lastpunch.authserver.common.exception.BusinessException;
 import lastpunch.authserver.common.exception.ErrorCode;
@@ -15,6 +16,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,5 +46,12 @@ public class LoginService {
         catch (BadCredentialsException e) {
             throw new BusinessException(ErrorCode.BAD_CREDENTIALS);
         }
+    }
+    
+    public String reissue(Map<String, Object> requestHeader){
+        String refreshToken = requestHeader.get("refreshtoken").toString();
+        Authentication authentication = jwtProvider.getAuthentication(refreshToken);
+        String newAccessToken = jwtProvider.createAccessToken(SecurityContextHolder.getContext().getAuthentication());
+        return newAccessToken;
     }
 }

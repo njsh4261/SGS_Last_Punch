@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +33,14 @@ public class loginController {
         data.put("accessToken", tokens.getAccessToken());
         data.put("refreshToken", tokens.getRefreshToken());
 
-        return Response.toResponseEntity("10000", HttpStatus.OK, data);
+        return Response.toResponseEntity("11000", HttpStatus.OK, data);
+    }
+    
+    @PostMapping("/reissue")
+    public ResponseEntity<Object> postReissue(@RequestHeader Map<String, Object> requestHeader) {
+        String accessToken = loginService.reissue(requestHeader);
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("accessToken", accessToken);
+        return Response.toResponseEntity("11000", HttpStatus.OK, data);
     }
 }

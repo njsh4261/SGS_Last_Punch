@@ -5,6 +5,7 @@ declare module 'styled-components' {
     color: {
       slack: string;
       lightSlack: string;
+      lightGrey: string;
     };
   }
 }

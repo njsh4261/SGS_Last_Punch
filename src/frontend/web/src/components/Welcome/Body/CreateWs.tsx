@@ -1,13 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ScreateWs = styled.section`
-  background-color: white;
+const Container = styled.section`
   border: 4px solid rgba(255, 255, 255, 0.2);
   border-radius: 9px;
+`;
+
+const Box = styled.article`
+  background-color: white;
   display: flex;
   flex-direction: column;
   padding: 16px;
+  border-radius: 5px;
 `;
 
 const GuideText = styled.p`
@@ -34,19 +38,21 @@ const CreateWsButton = styled.button`
 `;
 
 const Image = styled.img`
-  margin: 16px -16px -51px -20px;
+  margin: 16px -16px -47px -16px;
 `;
 
 export default function CreateWs() {
   return (
-    <ScreateWs>
-      <GuideText>다른 팀과 Snack을 사용하고 싶으세요?</GuideText>
-      <CreateWsButton>새 워크스페이스 개설</CreateWsButton>
-      <Image
-        src="https://a.slack-edge.com/613463e/marketing/img/homepage/bold-existing-users/create-new-workspace-module/woman-with-laptop-color-background.png"
-        height="121"
-        width="200"
-      />
-    </ScreateWs>
+    <Container>
+      <Box>
+        <GuideText>다른 팀과 Snack을 사용하고 싶으세요?</GuideText>
+        <CreateWsButton>새 워크스페이스 개설</CreateWsButton>
+        <Image
+          src="https://a.slack-edge.com/613463e/marketing/img/homepage/bold-existing-users/create-new-workspace-module/woman-with-laptop-color-background.png"
+          height="121"
+          width="200"
+        />
+      </Box>
+    </Container>
   );
 }

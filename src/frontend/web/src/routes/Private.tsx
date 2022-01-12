@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Chat from '../components/Main/Chat';
 import Welcome from '../pages/Welcome';
-import WsCreator from '../pages/WsCreator';
+import WsCreator from '../pages/CreateWs';
 
 export default function PrivateRoute() {
   return (

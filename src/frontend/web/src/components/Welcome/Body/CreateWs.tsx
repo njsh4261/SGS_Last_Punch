@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.section`
   border: 4px solid rgba(255, 255, 255, 0.2);
@@ -42,11 +43,17 @@ const Image = styled.img`
 `;
 
 export default function CreateWs() {
+  const navigate = useNavigate();
+  const createWsHandler = () => {
+    navigate('/create-workspace');
+  };
   return (
     <Container>
       <Box>
         <GuideText>다른 팀과 Snack을 사용하고 싶으세요?</GuideText>
-        <CreateWsButton>새 워크스페이스 개설</CreateWsButton>
+        <CreateWsButton onClick={createWsHandler}>
+          새 워크스페이스 개설
+        </CreateWsButton>
         <Image
           src="https://a.slack-edge.com/613463e/marketing/img/homepage/bold-existing-users/create-new-workspace-module/woman-with-laptop-color-background.png"
           height="121"

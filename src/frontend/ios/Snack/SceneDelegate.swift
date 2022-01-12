@@ -10,13 +10,15 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    let rootViewModel = LoginViewModel()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
         
-        let rootViewController = NotiListViewController()
+        let rootViewController = LoginViewController()
+//        rootViewController.bind(rootViewModel)
+        
         let rootNavigationController = UINavigationController(rootViewController: rootViewController)
         
         self.window?.rootViewController = rootNavigationController

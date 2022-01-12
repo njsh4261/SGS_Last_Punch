@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 // hard value
 
-const MainAsideFrame = styled.header`
+const MainAsideFrame = styled.aside`
   min-width: 260px;
   background-color: #3f0f40;
   border-top: 1px solid #664167;

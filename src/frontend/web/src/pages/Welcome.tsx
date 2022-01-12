@@ -1,16 +1,21 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import WelcomeHeader from '../components/Welcome/Header';
+import WelcomeBody from '../components/Welcome/Body';
+
+const WelcomePage = styled.div`
+  background-color: ${(props) => props.theme.color.slack};
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+`;
 
 export default function Welcome() {
-  const navigate = useNavigate();
-  const logoutHandler = () => {
-    sessionStorage.clear();
-    navigate('/login');
-  };
   return (
-    <div>
-      <span>login success</span>
-      <button onClick={logoutHandler}>logout</button>
-    </div>
+    <WelcomePage>
+      <WelcomeHeader></WelcomeHeader>
+      <WelcomeBody></WelcomeBody>
+    </WelcomePage>
   );
 }

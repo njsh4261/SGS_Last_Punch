@@ -1,14 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import icon from '../../icon/restore.svg';
+import MainHeaderFrame from '../../Common/MainHeaderFrame';
 import SearchContainer from './Search';
-
-const HeaderContainer = styled.header`
-  display: flex;
-  justify-content: space-between;
-  background-color: beige;
-  padding: 6px 0px;
-`;
+import icon from '../../../icon/restore.svg';
 
 const Hside = styled.article`
   flex: 1;
@@ -32,17 +26,15 @@ const Hright = styled.article`
   justify-content: flex-end;
 `;
 
-const Header = () => {
-  const selectedWorkspace = 'defaultWorkspaceName';
+export default function MainHeader() {
+  const dummyWorkspace = 'dummy ws name';
   return (
-    <HeaderContainer>
+    <MainHeaderFrame>
       <Hside>
         <HhistoryIcon></HhistoryIcon>
       </Hside>
-      <SearchContainer workspaceName={selectedWorkspace}></SearchContainer>
+      <SearchContainer workspaceName={dummyWorkspace}></SearchContainer>
       <Hright>memeber</Hright>
-    </HeaderContainer>
+    </MainHeaderFrame>
   );
-};
-
-export default Header;
+}

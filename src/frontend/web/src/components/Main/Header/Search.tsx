@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { openModal, closeModal } from '../../modules/modal';
-import ImageButton from '../Common/ImageButton';
-import SearchIcon from '../../icon/search.svg';
+import { openModal, closeModal } from '../../../modules/modal';
+import ImageButton from '../../Common/ImageButton';
+import SearchIcon from '../../../icon/search.svg';
 
 const ScontainerStyle = styled.article`
   flex: 2;

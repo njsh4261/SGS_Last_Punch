@@ -16,15 +16,18 @@ const Body = styled.div`
 `;
 
 const MainAsideWsName = styled.div`
-  display: flex;
-  align-items: center;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 260px;
   min-height: 49px;
   background-color: rgb(82, 38, 83);
   color: white;
   font-size: 19px;
   font-weight: 500;
   font-family: NotoSansKR, Slack-Lato, appleLogo, sans-serif;
-  padding-left: 16px;
+  padding: 12.5px 16px 12.5px;
 `;
 
 export default function WsCreator() {
@@ -34,7 +37,7 @@ export default function WsCreator() {
       <MainHeaderFrame></MainHeaderFrame>
       <Body>
         <MainAsideFrame>
-          <MainAsideWsName>{wsName}</MainAsideWsName>
+          <MainAsideWsName>{wsName}ascalksncjacnajkcacssasdasa</MainAsideWsName>
         </MainAsideFrame>
         <Chat></Chat>
       </Body>

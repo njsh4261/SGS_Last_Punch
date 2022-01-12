@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 
+// hard value
+
 const MainAsideFrame = styled.header`
   min-width: 260px;
-  background-color: ${(props) => props.theme.color.heavySlack};
+  background-color: #3f0f40;
+  border-top: 1px solid #664167;
 `;
 
 export default MainAsideFrame;

@@ -23,14 +23,14 @@ public class MemberWorkspaceController {
         return Response.ok(
                 ServerCode.WORKSPACE,
                 new ConcurrentHashMap<>().put(
-                        "memberWorkspace", memberWorkspaceService.addNewMemberToWorkspace(memberWorkspaceDto)
+                        "memberWorkspace", memberWorkspaceService.addNewMember(memberWorkspaceDto)
                 )
         );
     }
 
     @DeleteMapping
     public ResponseEntity<Object> deleteMemberFromWorkspace(@RequestBody MemberWorkspaceDto memberWorkspaceDto){
-        memberWorkspaceService.deleteMemberFromWorkspace(memberWorkspaceDto);
+        memberWorkspaceService.deleteMember(memberWorkspaceDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
 }

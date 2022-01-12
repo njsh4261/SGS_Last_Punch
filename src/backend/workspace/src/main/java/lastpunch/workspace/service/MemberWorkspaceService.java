@@ -13,11 +13,11 @@ public class MemberWorkspaceService{
         this.memberWorkspaceRepository = memberWorkspaceRepository;
     }
 
-    public MemberWorkspace addNewMemberToWorkspace(MemberWorkspaceDto memberWorkspaceDto){
+    public MemberWorkspace addNewMember(MemberWorkspaceDto memberWorkspaceDto){
         return memberWorkspaceRepository.save(memberWorkspaceDto.toEntity());
     }
 
-    public void deleteMemberFromWorkspace(MemberWorkspaceDto memberWorkspaceDto){
+    public void deleteMember(MemberWorkspaceDto memberWorkspaceDto){
         memberWorkspaceRepository.deleteByWorkspaceIdAndMemberId(
                 memberWorkspaceDto.getWorkspaceId(), memberWorkspaceDto.getMemberId()
         );

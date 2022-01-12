@@ -12,6 +12,7 @@ const SlogoutButton = styled.button`
   font-size: 14px;
   height: 38px;
   width: 70px;
+  margin-right: 64px;
   &:hover {
     cursor: pointer;
     opacity: 70%;

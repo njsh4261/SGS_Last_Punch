@@ -9,7 +9,9 @@ const Sheader = styled.header`
   align-items: center;
 `;
 
-const EmptyLeft = styled.article``;
+const EmptyLeft = styled.article`
+  margin-left: 104px;
+`;
 
 export default function WelcomeHeader() {
   return (

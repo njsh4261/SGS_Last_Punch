@@ -12,3 +12,6 @@
   - MySQL 스키마에서 MongoDB로 분리한 테이블 삭제, presence 테이블 추가
   - [MongoDB schema validation](https://docs.mongodb.com/manual/core/schema-validation/) 용도의 json 파일 추가
   - column명을 camel case로 일괄 수정
+- 22.01.10 DB 스키마 수정
+  - MySQL 스키마에서 member -> user로 수정 (연관 테이블 일괄 수정)
+    - MySQL 8.0에서 member가 예약어인 관계로 생기는 문제 해결

@@ -1,4 +1,4 @@
-CREATE TABLE `member`(
+CREATE TABLE `user`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `email` VARCHAR(255) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
@@ -41,44 +41,44 @@ CREATE TABLE `channel`(
     INDEX (`creatorId`)
 );
 ALTER TABLE `channel` ADD CONSTRAINT `channel_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`);
-ALTER TABLE `channel` ADD CONSTRAINT `channel_creatorid_foreign` FOREIGN KEY(`creatorId`) REFERENCES `member`(`id`);
+ALTER TABLE `channel` ADD CONSTRAINT `channel_creatorid_foreign` FOREIGN KEY(`creatorId`) REFERENCES `user`(`id`);
 
 CREATE TABLE `presence`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `memberId` BIGINT UNSIGNED NOT NULL,
+    `userId` BIGINT UNSIGNED NOT NULL,
     `mac` VARCHAR(255) NOT NULL,
     `loginDt` DATETIME NOT NULL,
     `logoutDt` DATETIME NULL,
-    INDEX (`memberId`)
+    INDEX (`userId`)
 );
-ALTER TABLE `presence` ADD CONSTRAINT `presence_memberid_foreign` FOREIGN KEY(`memberId`) REFERENCES `member`(`id`);
+ALTER TABLE `presence` ADD CONSTRAINT `presence_userid_foreign` FOREIGN KEY(`userId`) REFERENCES `user`(`id`);
 
 CREATE TABLE `role`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE `member_channel`(
+CREATE TABLE `user_channel`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `memberId` BIGINT UNSIGNED NOT NULL,
+    `userId` BIGINT UNSIGNED NOT NULL,
     `channelId` BIGINT UNSIGNED NOT NULL,
     `roleId` BIGINT UNSIGNED NOT NULL,
-    INDEX (`memberId`),
+    INDEX (`userId`),
     INDEX (`channelId`)
 );
-ALTER TABLE `member_channel` ADD CONSTRAINT `member_channel_memberid_foreign` FOREIGN KEY(`memberId`) REFERENCES `member`(`id`);
-ALTER TABLE `member_channel` ADD CONSTRAINT `member_channel_channelid_foreign` FOREIGN KEY(`channelId`) REFERENCES `channel`(`id`);
-ALTER TABLE `member_channel` ADD CONSTRAINT `member_channel_roleid_foreign` FOREIGN KEY(`roleId`) REFERENCES `role`(`id`);
+ALTER TABLE `user_channel` ADD CONSTRAINT `user_channel_userid_foreign` FOREIGN KEY(`userId`) REFERENCES `user`(`id`);
+ALTER TABLE `user_channel` ADD CONSTRAINT `user_channel_channelid_foreign` FOREIGN KEY(`channelId`) REFERENCES `channel`(`id`);
+ALTER TABLE `user_channel` ADD CONSTRAINT `user_channel_roleid_foreign` FOREIGN KEY(`roleId`) REFERENCES `role`(`id`);
 
-CREATE TABLE `member_workspace`(
+CREATE TABLE `user_workspace`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `memberId` BIGINT UNSIGNED NOT NULL,
+    `userId` BIGINT UNSIGNED NOT NULL,
     `workspaceId` BIGINT UNSIGNED NOT NULL,
-    INDEX (`memberId`),
+    INDEX (`userId`),
     INDEX (`workspaceId`)
 );
-ALTER TABLE `member_workspace` ADD CONSTRAINT `member_workspace_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`);
-ALTER TABLE `member_workspace` ADD CONSTRAINT `member_workspace_memberid_foreign` FOREIGN KEY(`memberId`) REFERENCES `member`(`id`);
+ALTER TABLE `user_workspace` ADD CONSTRAINT `user_workspace_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`);
+ALTER TABLE `user_workspace` ADD CONSTRAINT `user_workspace_userid_foreign` FOREIGN KEY(`userId`) REFERENCES `user`(`id`);
 
 CREATE TABLE `file`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -91,4 +91,4 @@ CREATE TABLE `file`(
     `createDt` DATETIME NOT NULL,
     `modifyDt` DATETIME NOT NULL
 );
-ALTER TABLE `file` ADD CONSTRAINT `file_ownerid_foreign` FOREIGN KEY(`ownerId`) REFERENCES `member`(`id`);
+ALTER TABLE `file` ADD CONSTRAINT `file_ownerid_foreign` FOREIGN KEY(`ownerId`) REFERENCES `user`(`id`);

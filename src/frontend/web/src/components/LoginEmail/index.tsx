@@ -28,7 +28,8 @@ export default function LoginEmailContainer() {
   const submitHandler = async () => {
     sessionStorage.setItem('jwt', 'dump');
     const success = await loginAPI(email, pass);
-    if (success) navigate('/');
+    navigate('/'); // 임시 코드
+    // if (success) navigate('/');
   };
 
   return (

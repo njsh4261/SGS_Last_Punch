@@ -47,7 +47,7 @@ export default function WsCreator() {
       // alert('create workspace!');
       // call api (create workspace)
       // redirect this workspace
-      navigate('/welcome'); // 임시
+      navigate('/'); // 임시
       return;
     }
     setStep((state) => state + 1);

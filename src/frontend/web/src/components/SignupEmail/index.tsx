@@ -46,7 +46,8 @@ export default function SignupEmailContainer() {
       return alert('비밀번호가 서로 다릅니다');
     }
     const success = await signupAPI(email, pass);
-    if (success) navigate('/login');
+    navigate('/login'); // 임시
+    // if (success) navigate('/login');
   };
 
   return (

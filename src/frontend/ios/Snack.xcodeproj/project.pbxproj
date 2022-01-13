@@ -112,10 +112,34 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		8C68AABF279093B600C1711E /* WelcomeView */ = {
+			isa = PBXGroup;
+			children = (
+				8C68AAC1279093F300C1711E /* LoginEmail */,
+				8C68AAC0279093ED00C1711E /* RegisterEmail */,
+				8C953BD2278E90F200D5677E /* WelcomViewController.swift */,
+				8C953BD0278E908600D5677E /* WelcomeViewModel.swift */,
+			);
+			path = WelcomeView;
+			sourceTree = "<group>";
+		};
+		8C68AAC0279093ED00C1711E /* RegisterEmail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = RegisterEmail;
+			sourceTree = "<group>";
+		};
+		8C68AAC1279093F300C1711E /* LoginEmail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LoginEmail;
+			sourceTree = "<group>";
+		};
 		8C845298278C26FE001A81FD /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				8C953BD0278E908600D5677E /* WelcomeViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -123,7 +147,7 @@
 		8C845299278C272C001A81FD /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				8C953BD2278E90F200D5677E /* WelcomViewController.swift */,
+				8C68AABF279093B600C1711E /* WelcomeView */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

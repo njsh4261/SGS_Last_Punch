@@ -14,6 +14,7 @@ import Then
 class WelcomViewController: UIViewController {
     let disposeBase = DisposeBag()
     
+    var lblTitle = UILabel()
     var ivLogo = UIImageView()
     var btnSignIn = UIButton()
     var btnSignUp = UIButton()
@@ -34,7 +35,10 @@ class WelcomViewController: UIViewController {
     }
     
     private func attribute() {
-        title = "Welcome"
+        lblTitle = lblTitle.then {
+            $0.text = "Snack"
+            $0.font = UIFont(name: "NotoSansKR-Bold", size: 40)
+        }
         
         ivLogo.image = UIImage(named: "snack")
         
@@ -55,14 +59,17 @@ class WelcomViewController: UIViewController {
     }
     
     private func layout() {
-        [ivLogo, btnSignIn, btnSignUp].forEach {
-            view.addSubview($0)
+        [lblTitle, ivLogo, btnSignIn, btnSignUp].forEach { view.addSubview($0) }
+        
+        lblTitle.snp.makeConstraints {
+            $0.centerX.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(45)
         }
         
         ivLogo.snp.makeConstraints {
             $0.width.height.equalTo(130)
             $0.centerX.equalTo(view.safeAreaLayoutGuide)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(90)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(135)
         }
         
         [btnSignIn, btnSignUp].forEach {

@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let rootViewController = WelcomViewController()
 //        rootViewController.bind(rootViewModel)
         
-        let rootNavigationController = UINavigationController(rootViewController: rootViewController)
+        let rootNavigationController = WelcomViewController()
         
         self.window?.rootViewController = rootNavigationController
         self.window?.makeKeyAndVisible()

@@ -8,18 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		8C19E40D278299970086F374 /* NotiListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C19E40C278299970086F374 /* NotiListViewController.swift */; };
-		8C19E40F27829B1D0086F374 /* NotiListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C19E40E27829B1D0086F374 /* NotiListTableViewCell.swift */; };
 		8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C19E4102786B35B0086F374 /* GoogleService-Info.plist */; };
-		8C19E417278B31760086F374 /* Noti.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C19E416278B31760086F374 /* Noti.swift */; };
 		8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C33C4E7277BF06100294445 /* AppDelegate.swift */; };
 		8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C33C4E9277BF06100294445 /* SceneDelegate.swift */; };
 		8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C33C4F0277BF06200294445 /* Assets.xcassets */; };
 		8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C33C4F2277BF06200294445 /* LaunchScreen.storyboard */; };
 		8C68AABD278ED9BF00C1711E /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AABC278ED64E00C1711E /* NotoSansKR-Regular.otf */; };
 		8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AABB278ED64E00C1711E /* NotoSansKR-Bold.otf */; };
-		8C953BD1278E908600D5677E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD0278E908600D5677E /* LoginViewModel.swift */; };
-		8C953BD3278E90F200D5677E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD2278E90F200D5677E /* LoginViewController.swift */; };
-		8C953BD5278E942C00D5677E /* Social.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD4278E942C00D5677E /* Social.swift */; };
+		8C953BD1278E908600D5677E /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD0278E908600D5677E /* WelcomeViewModel.swift */; };
+		8C953BD3278E90F200D5677E /* WelcomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD2278E90F200D5677E /* WelcomViewController.swift */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,10 +25,8 @@
 		5BD7615966730183AC1D70B3 /* Pods_Snack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Snack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C19E409277BFE0C0086F374 /* RxSwiftPractice.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = RxSwiftPractice.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8C19E40C278299970086F374 /* NotiListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiListViewController.swift; sourceTree = "<group>"; };
-		8C19E40E27829B1D0086F374 /* NotiListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiListTableViewCell.swift; sourceTree = "<group>"; };
 		8C19E4102786B35B0086F374 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8C19E412278B23FB0086F374 /* Snack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Snack.entitlements; sourceTree = "<group>"; };
-		8C19E416278B31760086F374 /* Noti.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Noti.swift; sourceTree = "<group>"; };
 		8C33C4E4277BF06100294445 /* Snack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C33C4E7277BF06100294445 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C33C4E9277BF06100294445 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,9 +35,8 @@
 		8C33C4F5277BF06200294445 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8C68AABB278ED64E00C1711E /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
 		8C68AABC278ED64E00C1711E /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
-		8C953BD0278E908600D5677E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		8C953BD2278E90F200D5677E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		8C953BD4278E942C00D5677E /* Social.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Social.swift; sourceTree = "<group>"; };
+		8C953BD0278E908600D5677E /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
+		8C953BD2278E90F200D5677E /* WelcomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomViewController.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,8 +55,6 @@
 		8C19E415278B31410086F374 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				8C19E416278B31760086F374 /* Noti.swift */,
-				8C953BD4278E942C00D5677E /* Social.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -89,10 +81,10 @@
 		8C33C4E6277BF06100294445 /* Snack */ = {
 			isa = PBXGroup;
 			children = (
-				8C68AAB1278ECFA100C1711E /* Resources */,
 				8C19E412278B23FB0086F374 /* Snack.entitlements */,
 				8C33C4E7277BF06100294445 /* AppDelegate.swift */,
 				8C33C4E9277BF06100294445 /* SceneDelegate.swift */,
+				8C68AAB1278ECFA100C1711E /* Resources */,
 				8C19E415278B31410086F374 /* Entities */,
 				8C84529A278C27AF001A81FD /* Cells */,
 				8C845299278C272C001A81FD /* ViewControllers */,
@@ -132,8 +124,8 @@
 		8C845299278C272C001A81FD /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				8C953BD2278E90F200D5677E /* LoginViewController.swift */,
-				8C953BD0278E908600D5677E /* LoginViewModel.swift */,
+				8C953BD2278E90F200D5677E /* WelcomViewController.swift */,
+				8C953BD0278E908600D5677E /* WelcomeViewModel.swift */,
 				8C845298278C26FE001A81FD /* ViewModels */,
 			);
 			path = ViewControllers;
@@ -142,7 +134,6 @@
 		8C84529A278C27AF001A81FD /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				8C19E40E27829B1D0086F374 /* NotiListTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -281,14 +272,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C953BD3278E90F200D5677E /* LoginViewController.swift in Sources */,
-				8C19E417278B31760086F374 /* Noti.swift in Sources */,
-				8C19E40F27829B1D0086F374 /* NotiListTableViewCell.swift in Sources */,
-				8C953BD1278E908600D5677E /* LoginViewModel.swift in Sources */,
+				8C953BD3278E90F200D5677E /* WelcomViewController.swift in Sources */,
+				8C953BD1278E908600D5677E /* WelcomeViewModel.swift in Sources */,
 				8C19E40D278299970086F374 /* NotiListViewController.swift in Sources */,
 				8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
-				8C953BD5278E942C00D5677E /* Social.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

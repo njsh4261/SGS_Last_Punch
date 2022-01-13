@@ -10,9 +10,8 @@ export default async function loginAPI(email: string, pass: string) {
   try {
     const response = await axios.post(host + endpoint, data);
     if (response.status !== 200) throw new Error('login fail');
-    return true;
+    return response.data;
   } catch (e) {
-    alert('요청에 실패하였습니다');
     return false;
   }
 }

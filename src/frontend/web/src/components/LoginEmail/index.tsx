@@ -26,10 +26,20 @@ export default function LoginEmailContainer() {
   };
 
   const submitHandler = async () => {
+    const data = await loginAPI(email, pass);
+
+    //// 임시코드 -> 나중에 삭제 필요!!!!!
     sessionStorage.setItem('jwt', 'dump');
-    const success = await loginAPI(email, pass);
-    navigate('/'); // 임시 코드
-    // if (success) navigate('/');
+    navigate('/');
+    ////// 나중에 반드시 삭제!!!!!
+
+    if (data) {
+      const { accessToken, refreshToken } = data;
+      sessionStorage.setItem(accessToken, refreshToken);
+      navigate('/');
+    } else {
+      alert('로그인 실패');
+    }
   };
 
   return (

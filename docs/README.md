@@ -10,4 +10,4 @@
   - MongoDB 스키마 이미지 및 원본 파일(drawio) 추가
   - column명을 camel case로 일괄 수정
 - 22.01.10 DB 스키마 수정
-  - MySQL 스키마에서 member -> user로 수정
+  - MySQL 스키마에서 member -> account로 수정

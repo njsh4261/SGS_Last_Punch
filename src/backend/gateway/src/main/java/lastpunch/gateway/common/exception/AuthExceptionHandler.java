@@ -56,11 +56,7 @@ public class AuthExceptionHandler implements ErrorWebExceptionHandler {
     public Mono<Void> handle(
         ServerWebExchange exchange, Throwable e) {
         log.error("handleGatewayException: " + e);
-        ErrorCode errorCode = exceptionCodeMap.get(e.getClass().getName());
-        
-        if (errorCode == null){
-            errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
-        }
+        ErrorCode errorCode = exceptionCodeMap.getOrDefault(e.getClass().getName(), ErrorCode.INTERNAL_SERVER_ERROR);
 
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.OK);

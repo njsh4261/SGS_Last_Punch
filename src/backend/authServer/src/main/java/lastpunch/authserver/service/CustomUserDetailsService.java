@@ -1,8 +1,8 @@
 package lastpunch.authserver.service;
 
 import lastpunch.authserver.common.CustomUser;
-import lastpunch.authserver.entity.Member;
-import lastpunch.authserver.repository.MemberRepository;
+import lastpunch.authserver.entity.Account;
+import lastpunch.authserver.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    private final MemberRepository memberRepository;
+    private final AccountRepository accountRepository;
     
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("not found email : " + email));
-        return new CustomUser(member);
+        Account account = accountRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("not found email : " + email));
+        return new CustomUser(account);
     }
 }
 

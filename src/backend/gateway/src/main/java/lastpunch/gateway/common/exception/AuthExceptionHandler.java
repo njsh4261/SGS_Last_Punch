@@ -38,7 +38,6 @@ public class AuthExceptionHandler implements ErrorWebExceptionHandler {
         exceptionCodeMap.put("io.jsonwebtoken.DecodingException", ErrorCode.DECODING_EXCEPTION);
     }
     
-    
     private String errorResponse(ErrorCode errorCode) {
         Map<String, Object> response = new HashMap<String, Object>();
         Map<String, Object> err = new HashMap<String, Object>();

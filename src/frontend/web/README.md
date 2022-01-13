@@ -30,3 +30,22 @@
 - npm이 깔려있다면 key 부분의 명령어 사용 가능(e.g. `npm run build:image`)
 - 외에도 `package.json` 참고하여 명령어 사용가능
 - **npm이 깔려있지 않다면 value 부분의 docker command 사용!**
+
+## 디렉토리 구조
+
+```
+- types : 외부 라이브러리, 혹은 특정 파일에 대한 타입 정의
+- src
+|--- Api: api. called by 'modules'
+|--- modules: redux module
+|--- icon: image icon
+|--- styles: global style, value
+|--- routes: 로그인 상태에 따라 public, private 라우팅
+|--- pages: 라우팅 되는 페이지. 여러 컴포넌트를 조합한다.
+|--- component
+      |--- common: 재사용되는 presenter 컴포넌트
+      |--- topic: 특정 페이지
+            |--- section: 페이지의 영역(옵셔널)
+                  |--- container: index.tsx
+                  |--- presenter
+```

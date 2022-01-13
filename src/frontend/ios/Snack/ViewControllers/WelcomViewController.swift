@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  WelcomViewController.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/12.
@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import Then
 
-class LoginViewController: UIViewController {
+class WelcomViewController: UIViewController {
     let disposeBase = DisposeBag()
     
     var stackView = UIStackView()
@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(_ viewModel: LoginViewModel) {
+    func bind(_ viewModel: WelcomeViewModel) {
         
     }
     

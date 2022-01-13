@@ -24,7 +24,6 @@ public class ErrorResponse {
         this.desc = errorCode.getDesc();
     }
     
-    
     public static ResponseEntity<Object> toResponseEntity(final ErrorCode errorCode) {
         Map<String, Object> response = new HashMap<String, Object>();
         Map<String, Object> err = new HashMap<String, Object>();
@@ -36,12 +35,8 @@ public class ErrorResponse {
         err.put("desc", errorCode.getDesc());
         
         response.put("code", errorCode.getCode());
-        response.put("status", errorCode.getStatus().value());
         response.put("err", err);
-        response.put("timestamp", timestamp);
         
         return new ResponseEntity<Object>(response,errorCode.getStatus());
     }
-    
-    
 }

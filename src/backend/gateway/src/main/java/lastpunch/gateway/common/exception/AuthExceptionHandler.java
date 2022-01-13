@@ -43,16 +43,11 @@ public class AuthExceptionHandler implements ErrorWebExceptionHandler {
         Map<String, Object> response = new HashMap<String, Object>();
         Map<String, Object> err = new HashMap<String, Object>();
         
-        Long datetime = System.currentTimeMillis();
-        Timestamp timestamp = new Timestamp(datetime);
-        
         err.put("msg", errorCode.getMsg());
         err.put("desc", errorCode.getDesc());
         
         response.put("code", errorCode.getCode());
-        response.put("status", errorCode.getStatus().value());
         response.put("err", err);
-        response.put("timestamp", timestamp);
         
         JSONObject json =  new JSONObject(response);
         return json.toString();

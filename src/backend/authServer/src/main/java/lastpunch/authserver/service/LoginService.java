@@ -49,7 +49,7 @@ public class LoginService {
     }
     
     public String reissue(Map<String, Object> requestHeader){
-        String refreshToken = requestHeader.get("refreshtoken").toString();
+        String refreshToken = requestHeader.get("refresh_token").toString();
         Authentication authentication = jwtProvider.getAuthentication(refreshToken);
         String newAccessToken = jwtProvider.createAccessToken(SecurityContextHolder.getContext().getAuthentication());
         return newAccessToken;

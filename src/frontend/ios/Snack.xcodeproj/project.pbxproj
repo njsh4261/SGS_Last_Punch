@@ -115,6 +115,7 @@
 		8C845298278C26FE001A81FD /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				8C953BD0278E908600D5677E /* WelcomeViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -123,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				8C953BD2278E90F200D5677E /* WelcomViewController.swift */,
-				8C953BD0278E908600D5677E /* WelcomeViewModel.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

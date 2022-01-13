@@ -13,7 +13,9 @@ import Then
 class WelcomViewController: UIViewController {
     let disposeBase = DisposeBag()
     
-
+    let ivLogo = UIImageView()
+    var btnSignIn = UIButton()
+    var btnSignUp = UIButton()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -31,10 +33,10 @@ class WelcomViewController: UIViewController {
     }
     
     private func attribute() {
-        title = "환영합니다."
+        title = "Welcome"
     }
     
     private func layout() {
-
+        
     }
 }

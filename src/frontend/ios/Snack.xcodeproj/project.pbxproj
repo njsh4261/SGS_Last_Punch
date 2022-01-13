@@ -14,7 +14,8 @@
 		8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C33C4F2277BF06200294445 /* LaunchScreen.storyboard */; };
 		8C68AABD278ED9BF00C1711E /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AABC278ED64E00C1711E /* NotoSansKR-Regular.otf */; };
 		8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AABB278ED64E00C1711E /* NotoSansKR-Bold.otf */; };
-		8C953BD1278E908600D5677E /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD0278E908600D5677E /* WelcomeViewModel.swift */; };
+		8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAC227909BC200C1711E /* LoginViewController.swift */; };
+		8C68AAC527909BD000C1711E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAC427909BD000C1711E /* LoginViewModel.swift */; };
 		8C953BD3278E90F200D5677E /* WelcomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD2278E90F200D5677E /* WelcomViewController.swift */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -33,7 +34,8 @@
 		8C33C4F5277BF06200294445 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8C68AABB278ED64E00C1711E /* NotoSansKR-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.otf"; sourceTree = "<group>"; };
 		8C68AABC278ED64E00C1711E /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
-		8C953BD0278E908600D5677E /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
+		8C68AAC227909BC200C1711E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8C68AAC427909BD000C1711E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		8C953BD2278E90F200D5677E /* WelcomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomViewController.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -64,7 +66,6 @@
 				8C33C4E6277BF06100294445 /* Snack */,
 				8C33C4E5277BF06100294445 /* Products */,
 				B2B4A968D3E00D2B1E6F53BC /* Pods */,
-				A552636F1460E7A24E654777 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,7 +119,6 @@
 				8C68AAC1279093F300C1711E /* LoginEmail */,
 				8C68AAC0279093ED00C1711E /* RegisterEmail */,
 				8C953BD2278E90F200D5677E /* WelcomViewController.swift */,
-				8C953BD0278E908600D5677E /* WelcomeViewModel.swift */,
 			);
 			path = WelcomeView;
 			sourceTree = "<group>";
@@ -133,6 +133,8 @@
 		8C68AAC1279093F300C1711E /* LoginEmail */ = {
 			isa = PBXGroup;
 			children = (
+				8C68AAC227909BC200C1711E /* LoginViewController.swift */,
+				8C68AAC427909BD000C1711E /* LoginViewModel.swift */,
 			);
 			path = LoginEmail;
 			sourceTree = "<group>";
@@ -165,11 +167,13 @@
 				5BD7615966730183AC1D70B3 /* Pods_Snack.framework */,
 			);
 			name = Frameworks;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		B2B4A968D3E00D2B1E6F53BC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				A552636F1460E7A24E654777 /* Frameworks */,
 				F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */,
 				0349F0237A28CF144982DE22 /* Pods-Snack.release.xcconfig */,
 			);
@@ -294,8 +298,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C953BD3278E90F200D5677E /* WelcomViewController.swift in Sources */,
-				8C953BD1278E908600D5677E /* WelcomeViewModel.swift in Sources */,
+				8C68AAC527909BD000C1711E /* LoginViewModel.swift in Sources */,
 				8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */,
+				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

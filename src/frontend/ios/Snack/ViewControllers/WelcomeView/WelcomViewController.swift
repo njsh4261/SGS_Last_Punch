@@ -12,7 +12,7 @@ import SnapKit
 import Then
 
 class WelcomViewController: UIViewController {
-    let disposeBase = DisposeBag()
+    let disposeBag = DisposeBag()
     
     var lblTitle = UILabel()
     var ivLogo = UIImageView()
@@ -22,6 +22,7 @@ class WelcomViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
+        bind()
         attribute()
         layout()
     }
@@ -30,8 +31,16 @@ class WelcomViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(_ viewModel: WelcomeViewModel) {
-        
+    func bind() {
+        let inputVC = LoginViewController()
+        inputVC.modalPresentationStyle = .fullScreen
+
+        btnSignIn.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.present(inputVC, animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {
@@ -52,6 +61,7 @@ class WelcomViewController: UIViewController {
             $0.setTitle("로그인", for: .normal)
             $0.backgroundColor = UIColor(named: "snackColor")
         }
+        
         btnSignUp = btnSignUp.then {
             $0.setTitle("회원가입", for: .normal)
             $0.backgroundColor = .lightGray

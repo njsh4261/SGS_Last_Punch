@@ -1,0 +1,35 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/data:/var/lib/mysql
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    env_file: .env
+    environment:
+      MYSQL_DATABASE: lastpunch
+      MYSQL_ROOT_PASSWORD: reddeer
+      MYSQL_ROOT_HOST: '%'
+      TZ: Asia/Seoul
+    ports:
+      - 3306:3306
+  auth-server:
+    build: ./authServer
+    image: sookim1110/auth-server
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+  gateway:
+    build: ./gateway
+    image: sookim1110/gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth-server
+  #  eureka-server:
+  #    build: ./eureka-server
+  #    image: sookim1110/eureka-server
+  #    ports:
+  #      - "8761:8761"

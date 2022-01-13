@@ -9,3 +9,5 @@
   - MySQL 스키마에서 MongoDB로 분리한 테이블 삭제, presence 테이블 추가
   - MongoDB 스키마 이미지 및 원본 파일(drawio) 추가
   - column명을 camel case로 일괄 수정
+- 22.01.10 DB 스키마 수정
+  - MySQL 스키마에서 member -> account로 수정

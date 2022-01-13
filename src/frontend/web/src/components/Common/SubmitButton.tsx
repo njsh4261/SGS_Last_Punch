@@ -1,16 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const SsubmitButton = styled.button`
+interface SubmitButtonProps {
+  borderRadius: string;
+  light: boolean;
+  fontSize: string;
+  fontWeight: string;
+}
+
+const SsubmitButton = styled.button<SubmitButtonProps>`
   width: 100%;
-  background-color: #4a154b;
+  background-color: ${({ light, theme }) =>
+    light ? theme.color.lightSlack : theme.color.slack};
   color: white;
   border: none;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: ${(props) => props.fontSize};
+  font-weight: ${(props) => props.fontWeight};
   height: 44px;
   min-width: 96px;
   padding: 0 16px 3px;
+  border-radius: ${(props) => props.borderRadius};
   &:hover {
     cursor: pointer;
   }
@@ -18,9 +27,30 @@ const SsubmitButton = styled.button`
 
 interface SubmitProps {
   text: string;
+  fontWeight?: string;
+  fontSize?: string;
+  borderRadius?: string;
+  light?: boolean;
   submitHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function SubmitButton({ text, submitHandler }: SubmitProps) {
-  return <SsubmitButton onClick={submitHandler}>{text}</SsubmitButton>;
+export default function SubmitButton({
+  text,
+  submitHandler,
+  fontSize = '18px',
+  fontWeight = '600',
+  borderRadius = '0',
+  light = false,
+}: SubmitProps) {
+  return (
+    <SsubmitButton
+      fontSize={fontSize}
+      fontWeight={fontWeight}
+      borderRadius={borderRadius}
+      light={light}
+      onClick={submitHandler}
+    >
+      {text}
+    </SsubmitButton>
+  );
 }

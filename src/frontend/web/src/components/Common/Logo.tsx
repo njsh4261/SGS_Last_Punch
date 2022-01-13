@@ -3,8 +3,9 @@ import styled from 'styled-components';
 
 const H1 = styled.h1`
   text-align: center;
+  color: ${(props) => props.color};
 `;
 
-export default function Logo() {
-  return <H1>Snack</H1>;
+export default function Logo({ color = 'black' }: { color?: string }) {
+  return <H1 color={color}>Snack</H1>;
 }

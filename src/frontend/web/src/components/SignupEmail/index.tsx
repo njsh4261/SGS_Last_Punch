@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../Common/Logo';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
-import signupAPI from '../Api/signup';
+import signupAPI from '../../Api/signup';
 
 const SignupContainer = styled.article`
   & * {

@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  RegisterViewController.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/14.
@@ -12,10 +12,10 @@ import SnapKit
 import ProgressHUD
 import Then
 
-class LoginViewController: UIViewController {
+class RegisterViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = LoginViewModel(LoginService())
+    private var viewModel = RegisterViewModel(RegisterService())
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
@@ -40,7 +40,7 @@ class LoginViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(with viewModel: LoginViewModel) {
+    func bind(with viewModel: RegisterViewModel) {
         
         fieldEmail.rx.text.asObservable()
             .ignoreNil()
@@ -52,12 +52,12 @@ class LoginViewController: UIViewController {
             .subscribe(viewModel.input.password)
             .disposed(by: disposeBag)
         
-        btnSignIn.rx.tap.asObservable()
+        btnSignUp.rx.tap.asObservable()
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(viewModel.input.signInDidTap)
+            .subscribe(viewModel.input.signUpDidTap)
             .disposed(by: disposeBag)
         
-        btnSignUp.rx.tap
+        btnSignIn.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.dismiss(animated: true, completion: nil)
@@ -68,9 +68,9 @@ class LoginViewController: UIViewController {
             .subscribe(onNext: { [self] valid in
                 self.btnSignIn.isUserInteractionEnabled = valid
                 if valid {
-                    self.btnSignIn.alpha = 1
+                    self.btnSignUp.alpha = 1
                 }else{
-                    self.btnSignIn.alpha = 0.3
+                    self.btnSignUp.alpha = 0.3
                 }
             }).disposed(by: disposeBag)
         
@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.output.loginResultObservable
+        viewModel.output.registerResultObservable
             .subscribe(onNext: { (user) in
                 //                ProgressHUD.show(nil, interaction: false)
             })
@@ -112,8 +112,8 @@ class LoginViewController: UIViewController {
             $0.isSecureTextEntry = true
         }
         
-        btnSignIn = btnSignIn.then {
-            $0.setTitle("로그인", for: .normal)
+        btnSignUp = btnSignUp.then {
+            $0.setTitle("회원 가입", for: .normal)
             $0.backgroundColor = UIColor(named: "snackColor")
         }
         
@@ -124,8 +124,8 @@ class LoginViewController: UIViewController {
             $0.textColor = .lightGray
         }
         
-        btnSignUp = btnSignUp.then {
-            $0.setTitle("혹시 계정이 없나요? 회원가입하기", for: .normal)
+        btnSignIn = btnSignIn.then {
+            $0.setTitle("이미 계정이 있나요? 로그인하기", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
             $0.setTitleColor(.lightGray, for: .normal)
             
@@ -133,7 +133,7 @@ class LoginViewController: UIViewController {
     }
     
     private func layout() {
-        [ivLogo, fieldEmail, emailBorder, fieldPassword, passwordBorder, btnSignIn, lblWarning, btnSignUp].forEach { view.addSubview($0) }
+        [ivLogo, fieldEmail, emailBorder, fieldPassword, passwordBorder, btnSignUp, lblWarning, btnSignIn].forEach { view.addSubview($0) }
         
         ivLogo.snp.makeConstraints {
             $0.width.height.equalTo(80)
@@ -147,7 +147,7 @@ class LoginViewController: UIViewController {
             }
         }
         
-        [fieldEmail, fieldPassword, btnSignIn].forEach {
+        [fieldEmail, fieldPassword, btnSignUp].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(50)
             }
@@ -175,12 +175,12 @@ class LoginViewController: UIViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(300)
         }
         
-        btnSignIn.snp.makeConstraints {
+        btnSignUp.snp.makeConstraints {
             $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(320)
         }
         
-        [lblWarning, btnSignUp].forEach {
+        [lblWarning, btnSignIn].forEach {
             $0.snp.makeConstraints {
                 $0.left.right.equalTo(view.safeAreaLayoutGuide)
             }
@@ -191,7 +191,7 @@ class LoginViewController: UIViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(380)
         }
         
-        btnSignUp.snp.makeConstraints {
+        btnSignIn.snp.makeConstraints {
             $0.height.equalTo(50)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }

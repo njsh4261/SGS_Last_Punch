@@ -41,6 +41,16 @@ class WelcomeViewController: UIViewController {
                 self?.present(inputVC, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
+        
+        let registerInputVC = RegisterViewController()
+        registerInputVC.modalPresentationStyle = .fullScreen
+        
+        btnSignUp.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.present(registerInputVC, animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {

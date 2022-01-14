@@ -42,13 +42,11 @@ class LoginViewController: UIViewController {
     private func attribute() {
         ivLogo.image = UIImage(named: "snack")
         
-//        [fieldEmail, fieldPassword].forEach {
-//            $0 = $0.then { (field) in
-//                field.textAlignment = .left
-//                field.font = UIFont(name: "NotoSansKR-Bold", size: 16)
-//                field.autocorrectionType = .no
-//            }
-//        }
+        [fieldEmail, fieldPassword].forEach {
+            $0.textAlignment = .left
+            $0..font = UIFont(name: "NotoSansKR-Bold", size: 16)
+            $0..autocorrectionType = .no
+        }
         
         [emailBorder, passwordBorder].forEach {
             $0.backgroundColor = .quaternaryLabel
@@ -58,20 +56,12 @@ class LoginViewController: UIViewController {
             $0.placeholder = "이메일을 입력해주세요"
             $0.keyboardType = .emailAddress
             $0.returnKeyType = .next
-            
-            $0.textAlignment = .left
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
-            $0.autocorrectionType = .no
         }
         
         fieldPassword = fieldPassword.then {
             $0.placeholder = "비밀번호를 입력해주세요"
             $0.returnKeyType = .done
             $0.isSecureTextEntry = true
-            
-            $0.textAlignment = .left
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
-            $0.autocorrectionType = .no
         }
         
         btnSignIn = btnSignIn.then {

@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-@Table(name="member")
+@Table(name="account")
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Member{
+public class Account {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -35,7 +35,7 @@ public class Member{
     @Column(length = 30)
     private String name;
     
-    private String displayname;
+    private String displayName;
     private String description;
     private String phone;
     private String country;
@@ -50,8 +50,8 @@ public class Member{
     
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createdDt;
+    private LocalDateTime createDt;
     
     @LastModifiedDate
-    private LocalDateTime modifiedDt;
+    private LocalDateTime modifyDt;
 }

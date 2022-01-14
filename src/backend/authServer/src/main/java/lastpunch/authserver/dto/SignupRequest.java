@@ -1,7 +1,7 @@
 package lastpunch.authserver.dto;
 
 import javax.validation.constraints.NotBlank;
-import lastpunch.authserver.entity.Member;
+import lastpunch.authserver.entity.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,8 @@ public class SignupRequest {
     @NotBlank
     private String password;
     
-    public Member toEntity() {
-        return Member.builder()
+    public Account toEntity() {
+        return Account.builder()
 //            .name(name)
             .email(email)
             .password(password)

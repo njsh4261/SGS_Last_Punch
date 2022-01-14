@@ -4,6 +4,7 @@ import ChatInput from './Input';
 import Header from './Header';
 
 const Container = styled.main`
+  flex: 1;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -36,7 +37,7 @@ const Chat = () => {
   const [msg, setMsg] = useState<string>('');
   const [msgList, setMsgList] = useState<string[]>([]);
   const selectedChannel =
-    '# dump channeldump channeldump channeldump channeldump channel'; // todo: store
+    '# dump csadqwjkflqsadqwjkflqsadqwjkflqsadqwjkflqsadqwjkflqsadqwjkflqsadqwjkflqhanneldump channeldump channeldump channeldump channel'; // todo: store
 
   const msgTypingHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setMsg(e.target.value);

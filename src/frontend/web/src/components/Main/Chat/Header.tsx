@@ -53,11 +53,11 @@ const MemberInfo = styled.button`
   flex: 0 0 auto;
 `;
 
-const Header = ({ selectedChannel }: { selectedChannel: string }) => {
+const Header = ({ channelName }: { channelName: string }) => {
   return (
     <ChannelHeader>
       <ChannelInfo>
-        <ChannelName>{selectedChannel}</ChannelName>
+        <ChannelName>{channelName}</ChannelName>
         <ArrowDropDownIcon></ArrowDropDownIcon>
       </ChannelInfo>
 

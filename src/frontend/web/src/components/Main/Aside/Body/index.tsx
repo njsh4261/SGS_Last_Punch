@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { selectChannel } from '../../../../modules/channel';
 import ToggleList, { Text } from './ToggleList';
 
 const Container = styled.article`
@@ -19,6 +21,8 @@ const SecitonType = styled.section`
 `;
 
 export default function AsideBody() {
+  const dispatch = useDispatch();
+
   // dummy data
   const channelList = [
     { id: 'ss1', name: '공지' },
@@ -32,12 +36,9 @@ export default function AsideBody() {
     { id: 'dm4', name: '나', userId: 'avdnsk3' },
   ];
 
-  const [selectedChannel, selectChannel] = useState(channelList[0].id); // todo: redux - store
-
   const selectHandler = (e: React.MouseEvent<HTMLElement>) => {
     const channel = (e.target as Element).closest('.channel-item') as Element;
-    selectChannel(channel.id);
-    console.log(channel.id);
+    dispatch(selectChannel(channel.id));
   };
 
   return (

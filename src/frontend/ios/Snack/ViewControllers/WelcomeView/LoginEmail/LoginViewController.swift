@@ -12,8 +12,12 @@ import SnapKit
 import Then
 
 class LoginViewController: UIViewController {
-    let disposeBag = DisposeBag()
+
+    // MARK: - Properties
+    private var viewModel = LoginViewModel(LoginService())
+    private let disposeBag = DisposeBag()
     
+    // MARK: - UI
     var ivLogo = UIImageView()
     var fieldEmail = UITextField()
     var fieldPassword = UITextField()
@@ -26,7 +30,7 @@ class LoginViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
-        bind()
+        bind(with: viewModel)
         attribute()
         layout()
     }
@@ -35,8 +39,41 @@ class LoginViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind() {
-
+    func bind(with viewModel: LoginViewModel) {
+        
+        fieldEmail.rx.text.asObservable()
+            .ignoreNil()
+            .subscribe(viewModel.input.email)
+            .disposed(by: disposeBag)
+        
+        fieldPassword.rx.text.asObservable()
+            .ignoreNil()
+            .subscribe(viewModel.input.password)
+            .disposed(by: disposeBag)
+        
+        btnSignIn.rx.tap.asObservable()
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(viewModel.input.signInDidTap)
+            .disposed(by: disposeBag)
+        
+        btnSignUp.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.output.errorsObservable
+            .subscribe(onNext: { [unowned self] (error) in
+                print("ouput : \(error)")
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.output.loginResultObservable
+            .subscribe(onNext: { [unowned self] (user) in
+                print("로그인 성공")
+            })
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {

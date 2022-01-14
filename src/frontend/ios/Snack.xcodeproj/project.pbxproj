@@ -16,6 +16,11 @@
 		8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AABB278ED64E00C1711E /* NotoSansKR-Bold.otf */; };
 		8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAC227909BC200C1711E /* LoginViewController.swift */; };
 		8C68AAC527909BD000C1711E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAC427909BD000C1711E /* LoginViewModel.swift */; };
+		8C68AAC92791166F00C1711E /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAC82791166F00C1711E /* ViewModelProtocol.swift */; };
+		8C68AACB279117FA00C1711E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AACA279117FA00C1711E /* User.swift */; };
+		8C68AACD2791186400C1711E /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AACC2791186400C1711E /* Credentials.swift */; };
+		8C68AAD027911A1000C1711E /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AACF27911A1000C1711E /* LoginService.swift */; };
+		8C68AAD327911AD700C1711E /* ExObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAD227911AD700C1711E /* ExObservable.swift */; };
 		8C953BD3278E90F200D5677E /* WelcomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD2278E90F200D5677E /* WelcomViewController.swift */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -36,6 +41,11 @@
 		8C68AABC278ED64E00C1711E /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 		8C68AAC227909BC200C1711E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8C68AAC427909BD000C1711E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		8C68AAC82791166F00C1711E /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
+		8C68AACA279117FA00C1711E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8C68AACC2791186400C1711E /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		8C68AACF27911A1000C1711E /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		8C68AAD227911AD700C1711E /* ExObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExObservable.swift; sourceTree = "<group>"; };
 		8C953BD2278E90F200D5677E /* WelcomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomViewController.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -55,6 +65,8 @@
 		8C19E415278B31410086F374 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				8C68AACA279117FA00C1711E /* User.swift */,
+				8C68AACC2791186400C1711E /* Credentials.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -85,8 +97,9 @@
 				8C33C4E9277BF06100294445 /* SceneDelegate.swift */,
 				8C68AAB1278ECFA100C1711E /* Resources */,
 				8C19E415278B31410086F374 /* Entities */,
-				8C84529A278C27AF001A81FD /* Cells */,
-				8C845298278C26FE001A81FD /* ViewModels */,
+				8C68AAD127911ABC00C1711E /* Extentions */,
+				8C68AAC62791163900C1711E /* Protocols */,
+				8C68AACE279119D700C1711E /* Network */,
 				8C845299278C272C001A81FD /* ViewControllers */,
 				8C33C4F0277BF06200294445 /* Assets.xcassets */,
 				8C33C4F2277BF06200294445 /* LaunchScreen.storyboard */,
@@ -139,11 +152,28 @@
 			path = LoginEmail;
 			sourceTree = "<group>";
 		};
-		8C845298278C26FE001A81FD /* ViewModels */ = {
+		8C68AAC62791163900C1711E /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				8C68AAC82791166F00C1711E /* ViewModelProtocol.swift */,
 			);
-			path = ViewModels;
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		8C68AACE279119D700C1711E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				8C68AACF27911A1000C1711E /* LoginService.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		8C68AAD127911ABC00C1711E /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				8C68AAD227911AD700C1711E /* ExObservable.swift */,
+			);
+			path = Extentions;
 			sourceTree = "<group>";
 		};
 		8C845299278C272C001A81FD /* ViewControllers */ = {
@@ -152,13 +182,6 @@
 				8C68AABF279093B600C1711E /* WelcomeView */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		8C84529A278C27AF001A81FD /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
@@ -299,9 +322,14 @@
 			files = (
 				8C953BD3278E90F200D5677E /* WelcomViewController.swift in Sources */,
 				8C68AAC527909BD000C1711E /* LoginViewModel.swift in Sources */,
+				8C68AACD2791186400C1711E /* Credentials.swift in Sources */,
+				8C68AAC92791166F00C1711E /* ViewModelProtocol.swift in Sources */,
+				8C68AAD027911A1000C1711E /* LoginService.swift in Sources */,
 				8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */,
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
+				8C68AAD327911AD700C1711E /* ExObservable.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
+				8C68AACB279117FA00C1711E /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

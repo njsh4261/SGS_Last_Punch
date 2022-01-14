@@ -44,8 +44,8 @@ class LoginViewController: UIViewController {
         
         [fieldEmail, fieldPassword].forEach {
             $0.textAlignment = .left
-            $0..font = UIFont(name: "NotoSansKR-Bold", size: 16)
-            $0..autocorrectionType = .no
+            $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
+            $0.autocorrectionType = .no
         }
         
         [emailBorder, passwordBorder].forEach {

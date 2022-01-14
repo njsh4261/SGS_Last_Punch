@@ -1,5 +1,5 @@
 //
-//  WelcomViewController.swift
+//  WelcomeViewController.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/12.
@@ -11,7 +11,7 @@ import RxCocoa
 import SnapKit
 import Then
 
-class WelcomViewController: UIViewController {
+class WelcomeViewController: UIViewController {
     let disposeBag = DisposeBag()
     
     var lblTitle = UILabel()

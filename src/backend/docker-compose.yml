@@ -1,7 +1,6 @@
 version: '3'
 services:
   eureka-server:
-    build: ./eureka-server
     image: sookim1110/eureka-server
     ports:
       - "8761:8761"
@@ -25,7 +24,6 @@ services:
       - lastpunch-network
 
   auth-server:
-    build: ./authServer
     image: sookim1110/auth-server
     ports:
       - "8081:8081"
@@ -41,7 +39,6 @@ services:
       - lastpunch-network
 
   gateway:
-    build: ./gateway
     image: sookim1110/gateway
     ports:
       - "8080:8080"

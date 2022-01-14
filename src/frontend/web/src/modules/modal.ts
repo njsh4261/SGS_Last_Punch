@@ -1,5 +1,5 @@
-const OPEN_MODAL = 'modal/open' as const;
-const CLOSE_MODAL = 'modal/close' as const;
+const OPEN_MODAL = 'modal/open';
+const CLOSE_MODAL = 'modal/close';
 
 export const openModal = () => ({
   type: OPEN_MODAL,

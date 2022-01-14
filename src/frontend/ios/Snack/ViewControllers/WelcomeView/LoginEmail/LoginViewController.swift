@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+import ProgressHUD
 import Then
 
 class LoginViewController: UIViewController {
@@ -64,14 +65,14 @@ class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.errorsObservable
-            .subscribe(onNext: { [unowned self] (error) in
-                print("ouput : \(error)")
+            .subscribe(onNext: { (error) in
+                ProgressHUD.showFailed(error.localizedDescription)
             })
             .disposed(by: disposeBag)
         
         viewModel.output.loginResultObservable
-            .subscribe(onNext: { [unowned self] (user) in
-                print("로그인 성공")
+            .subscribe(onNext: { (user) in
+//                ProgressHUD.show(nil, interaction: false)
             })
             .disposed(by: disposeBag)
     }

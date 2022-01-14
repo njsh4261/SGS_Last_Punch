@@ -44,4 +44,13 @@ public class loginController {
       
         return Response.toResponseEntity("11000", HttpStatus.OK, data);
     }
+    
+    @GetMapping("/verify")
+    public ResponseEntity<Object> verify() {
+        Map<String, Object> data = new HashMap<String, Object>();
+        String msg = "인증에 성공했습니다.";
+        data.put("msg", msg);
+        
+        return Response.toResponseEntity("11000", HttpStatus.OK, data);
+    }
 }

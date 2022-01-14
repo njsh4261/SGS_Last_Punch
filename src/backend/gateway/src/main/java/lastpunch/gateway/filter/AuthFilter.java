@@ -71,11 +71,11 @@ public class AuthFilter implements GatewayFilter, Ordered{
         }
         catch(ExpiredJwtException e){
             // 3. accessToken이 유효기간이 지났고 변조되지 않았으며, refresh 유효한 경우 -> 새 accessToken 발행 (인증서버로 요청)
-            if (jwtProvider.validateToken(refreshToken)){
-                URI uri = UriComponentsBuilder.fromUriString("http://localhost:8081/login/reissue").build().toUri();
-                exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, uri);
+//            if (jwtProvider.validateToken(refreshToken)){
+//                URI uri = UriComponentsBuilder.fromUriString("http://localhost:8081/login/reissue").build().toUri();
+//                exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, uri);
                 return chain.filter(exchange);
-            }
+//            }
         }
         throw new MalformedJwtException("Invalid Access Token");
     }

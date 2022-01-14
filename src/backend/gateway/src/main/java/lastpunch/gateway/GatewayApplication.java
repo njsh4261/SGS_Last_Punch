@@ -1,6 +1,7 @@
 package lastpunch.gateway;
 
 import lastpunch.gateway.filter.AuthFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -17,12 +18,17 @@ public class GatewayApplication {
     @Bean
     public RouteLocator customRoutes(RouteLocatorBuilder builder, AuthFilter authFilter) {
         return builder.routes()
-            .route("auth",  r-> r.path("/auth/**")
+            .route("auth-verify",  r-> r.path("/auth/login/verify")
                 .filters(f -> f
                     .rewritePath("/auth/(?<segment>.*)", "/${segment}")
                     .filter(authFilter)
                 )
-                .uri("http://localhost:8081"))
+                .uri("lb://AUTH-SERVER"))
+            .route("auth",  r-> r.path("/auth/**")
+                .filters(f -> f
+                    .rewritePath("/auth/(?<segment>.*)", "/${segment}")
+                )
+                .uri("lb://AUTH-SERVER"))
             .build();
     }
     

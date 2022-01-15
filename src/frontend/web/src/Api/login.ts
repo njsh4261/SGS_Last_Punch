@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default async function loginAPI(email: string, pass: string) {
   const host = process.env.REACT_APP_BACKEND_HOST;
-  const endpoint = '/login';
+  const endpoint = '/auth/login';
   const data = {
     email,
     password: pass,

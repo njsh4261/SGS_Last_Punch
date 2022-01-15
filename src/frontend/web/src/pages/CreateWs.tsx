@@ -4,6 +4,7 @@ import MainHeaderFrame from '../components/Common/MainHeaderFrame';
 import MainAsideFrame from '../components/Common/MainAsideFrame';
 import CreateWsContainer from '../components/CreateWs';
 import { useNavigate } from 'react-router-dom';
+import AsideHeader from '../components/Common/MainAsideHeader';
 
 const PageLayout = styled.div`
   display: flex;
@@ -14,21 +15,6 @@ const PageLayout = styled.div`
 const Body = styled.div`
   display: flex;
   height: 100%;
-`;
-
-const MainAsideWsName = styled.div`
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 260px;
-  min-height: 49px;
-  background-color: rgb(82, 38, 83);
-  color: white;
-  font-size: 19px;
-  font-weight: 500;
-  font-family: NotoSansKR, Slack-Lato, appleLogo, sans-serif;
-  padding: 12.5px 16px 12.5px;
 `;
 
 export default function WsCreator() {
@@ -63,7 +49,7 @@ export default function WsCreator() {
       <MainHeaderFrame></MainHeaderFrame>
       <Body>
         <MainAsideFrame>
-          <MainAsideWsName>{wsName}</MainAsideWsName>
+          <AsideHeader>{wsName}</AsideHeader>
         </MainAsideFrame>
         <CreateWsContainer
           step={step}

@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 
 import lastpunch.workspace.common.converter.AccountStatusConverter;
 
-@AllArgsConstructor
-@RequiredArgsConstructor
+@Entity
+@Table(name="account")
 @Getter
 @Setter
 @Builder
-@Table(name="account")
+@AllArgsConstructor
+@RequiredArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Entity
 public class Account{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -60,7 +60,7 @@ public class Account{
     @LastModifiedDate
     private LocalDateTime modifydt;
     
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", orphanRemoval = true)
     List<AccountWorkspace> workspaces;
     
     public AccountExportDto export(){

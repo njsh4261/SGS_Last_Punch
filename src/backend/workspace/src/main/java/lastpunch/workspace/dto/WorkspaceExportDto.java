@@ -13,7 +13,8 @@ public class WorkspaceExportDto{
     private String name;
     private String description;
     private Integer settings;
-    private String status;
+//    private String status; // TODO: converter 문제 해결 시 String으로
+    private Integer status;
     private LocalDateTime createdt;
     private LocalDateTime modifydt;
 }

@@ -1,16 +1,10 @@
 package lastpunch.workspace.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-import lastpunch.workspace.common.StatusCode;
-import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.dto.WorkspaceDto;
-import lastpunch.workspace.dto.WorkspaceExportDto;
 import lastpunch.workspace.entity.Account;
 import lastpunch.workspace.entity.AccountWorkspace;
 import lastpunch.workspace.entity.Workspace;
@@ -21,47 +15,58 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WorkspaceService{
+    private final CommonService commonService;
     private final WorkspaceRepository workspaceRepository;
     private final AccountRepository accountRepository;
     
     public WorkspaceService(
-            WorkspaceRepository workspaceRepository, AccountRepository accountRepository){
+            CommonService commonService,
+            WorkspaceRepository workspaceRepository,
+            AccountRepository accountRepository){
+        this.commonService = commonService;
         this.workspaceRepository = workspaceRepository;
         this.accountRepository = accountRepository;
     }
     
-    public List<WorkspaceExportDto> getList(Long userId, Pageable pageable) {
-        Optional<Account> accountOptional = accountRepository.findById(userId);
-        if(accountOptional.isEmpty()){
-            throw new BusinessException(StatusCode.WORKSPACE_AC_NOT_EXIST);
-        }
-        List<AccountWorkspace> list = accountOptional.get().getWorkspaces();
+    public Map<String, Object> getList(Long id, Pageable pageable) {
+        List<AccountWorkspace> list = commonService.getAccount(id).getWorkspaces();
         int start = (int) pageable.getOffset();
-        return list.subList(start, Math.min(list.size(), start + pageable.getPageSize()))
-            .stream().map(AccountWorkspace::getWorkspace).map(Workspace::export)
-            .collect(Collectors.toList());
+        
+        return Map.of(
+            "workspaces",
+                    // TODO: 제대로 pagination하는 방법인지 검증 필요
+                    //       프론트에만 지정 갯수만큼 넘겨주고 실제로는 모든 ws 목록을 불러오는 것 같다.
+                    list.subList(start, Math.min(list.size(), start + pageable.getPageSize()))
+                    .stream().map(AccountWorkspace::getWorkspace).map(Workspace::export)
+                    .collect(Collectors.toList())
+        );
     }
     
-    public Workspace getOne(Long workspaceId) {
-        // TODO: 워크스페이스 하나의 정보를 불러올 때,
-        //  해당 워크스페이스의 소속 멤버 목록과 채널 목록을 함께 불러와야 함.
-        //  이 때, pagination이 적용되어야 한다.
-        Optional<Workspace> workspace = workspaceRepository.findById(workspaceId);
-        if(workspace.isPresent()) {
-            return workspace.get();
-        } else {
-            throw new BusinessException(StatusCode.WORKSPACE_WS_NOT_EXIST);
-        }
+    public Map<String, Object> getOne(
+            Long workspaceId, Pageable channelPageable, Pageable memberPageable) {
+        Workspace workspace = commonService.getWorkspace(workspaceId);
+        List<AccountWorkspace> memberList = workspace.getAccounts();
+        int memberStart = (int) memberPageable.getOffset();
+    
+        // TODO: 채널 관련 API 추가 시 채널 정보도 함께 불러올 것
+        return Map.of(
+            "workspace", workspace.export(),
+            "channels", null,
+            "members",
+                    memberList.subList(
+                        memberStart,
+                        Math.min(memberList.size(), memberStart + memberPageable.getPageSize()))
+                    .stream().map(AccountWorkspace::getAccount).map(Account::export)
+                    .collect(Collectors.toList())
+        );
     }
     
-    public Workspace createOne(WorkspaceDto workspaceDto) {
+    public Workspace createOne(WorkspaceDto workspaceDto){
         return workspaceRepository.save(workspaceDto.toEntity());
     }
     
     public Workspace editOne(WorkspaceDto workspaceDto, Long id) {
-        Workspace workspace = workspaceDto.toEntity();
-        workspace.setId(id);
-        return workspaceRepository.save(workspace);
+        return workspaceRepository.save(workspaceDto.changeValues(commonService.getWorkspace(id)));
     }
     
     public void deleteOne(Long id) {

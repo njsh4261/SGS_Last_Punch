@@ -2,6 +2,7 @@ package lastpunch.workspace.entity;
 
 import com.sun.istack.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -12,19 +13,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name="workspace")
 @Getter
 @Setter
-@ToString
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Workspace{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,12 +38,14 @@ public class Workspace{
     
     private String description;
     
+    @NotNull
     @Column(columnDefinition = "tinyint")
     private Integer settings;
-
-    @Convert(converter = WorkspaceStatusConverter.class)
+    
+    @NotNull
+//    @Convert(converter = WorkspaceStatusConverter.class)
     @Column(columnDefinition = "tinyint")
-    private String status;
+    private Integer status; // TODO: converter 문제 해결 시 String으로
     
     @CreatedDate
     @Column(updatable = false)
@@ -49,8 +54,8 @@ public class Workspace{
     @LastModifiedDate
     private LocalDateTime modifydt;
     
-    @OneToMany(mappedBy = "workspace")
-    Set<AccountWorkspace> accounts;
+    @OneToMany(mappedBy = "workspace", orphanRemoval = true)
+    List<AccountWorkspace> accounts;
     
     public WorkspaceExportDto export(){
         return WorkspaceExportDto.builder()

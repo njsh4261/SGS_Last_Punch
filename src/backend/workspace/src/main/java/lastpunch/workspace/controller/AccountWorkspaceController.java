@@ -23,18 +23,15 @@ public class AccountWorkspaceController{
 
     @PostMapping
     public ResponseEntity<Object> addNewMember(
-        @RequestBody AccountWorkspaceDto accountWorkspaceDto){
-        return Response.ok(
-            ServerCode.WORKSPACE,
-            new ConcurrentHashMap<>().put(
-                "workspace", accountWorkspaceService.addNewMember(accountWorkspaceDto)
-            )
-        );
+            @RequestBody AccountWorkspaceDto accountWorkspaceDto){
+        // TODO: 논의할 거리 - 새로운 멤버를 워크스페이스에 추가한 뒤 db에서 업데이트된 멤버 목록을 가져올 것인가?
+        accountWorkspaceService.addNewMember(accountWorkspaceDto);
+        return Response.ok(ServerCode.WORKSPACE);
     }
 
     @DeleteMapping
     public ResponseEntity<Object> deleteMember(
-        @RequestBody AccountWorkspaceDto accountWorkspaceDto){
+            @RequestBody AccountWorkspaceDto accountWorkspaceDto){
         accountWorkspaceService.deleteMember(accountWorkspaceDto);
         return Response.ok(ServerCode.WORKSPACE);
     }

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default async function signupAPI(email: string, pass: string) {
   const host = process.env.REACT_APP_BACKEND_HOST;
-  const endpoint = '/signup';
+  const endpoint = '/auth/signup';
   const data = {
     email,
     password: pass,
@@ -12,7 +12,6 @@ export default async function signupAPI(email: string, pass: string) {
     if (response.status !== 200) throw new Error('signup fail');
     return true;
   } catch (e) {
-    alert('요청에 실패하였습니다');
     return false;
   }
 }

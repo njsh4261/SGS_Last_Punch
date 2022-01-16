@@ -30,8 +30,8 @@ public class loginController {
         Tokens tokens = loginService.login(loginRequest);
         
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("accessToken", tokens.getAccessToken());
-        data.put("refreshToken", tokens.getRefreshToken());
+        data.put("access_token", tokens.getAccessToken());
+        data.put("refresh_token", tokens.getRefreshToken());
 
         return Response.toResponseEntity("11000", HttpStatus.OK, data);
     }
@@ -40,7 +40,8 @@ public class loginController {
     public ResponseEntity<Object> postReissue(@RequestHeader Map<String, Object> requestHeader) {
         String accessToken = loginService.reissue(requestHeader);
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("accessToken", accessToken);
+        data.put("access_token", accessToken);
+      
         return Response.toResponseEntity("11000", HttpStatus.OK, data);
     }
 }

@@ -29,14 +29,14 @@ const ChannelName = styled.article`
   padding: 3px 8px;
   font-size: 20px;
 
-  @media only screen and (max-width: 400px) {
-    max-width: 50vw;
+  @media only screen and (max-width: 900px) {
+    max-width: 45vw;
   }
-  @media only screen and (min-width: 400px) and (max-width: 650px) {
+  @media only screen and (min-width: 900px) and (max-width: 1100px) {
+    max-width: 55vw;
+  }
+  @media only screen and (min-width: 1100px) {
     max-width: 65vw;
-  }
-  @media only screen and (min-width: 650px) {
-    max-width: 80vw;
   }
 `;
 const ArrowDropDownIcon = styled.article`
@@ -53,11 +53,11 @@ const MemberInfo = styled.button`
   flex: 0 0 auto;
 `;
 
-const Header = ({ selectedChannel }: { selectedChannel: string }) => {
+const Header = ({ channelName }: { channelName: string }) => {
   return (
     <ChannelHeader>
       <ChannelInfo>
-        <ChannelName>{selectedChannel}</ChannelName>
+        <ChannelName>{channelName}</ChannelName>
         <ArrowDropDownIcon></ArrowDropDownIcon>
       </ChannelInfo>
 

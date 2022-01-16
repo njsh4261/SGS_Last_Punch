@@ -57,11 +57,11 @@ public class AuthFilter implements GatewayFilter, Ordered{
         ServerHttpRequest request = exchange.getRequest();
         String accessToken, refreshToken;
         
-        // 인증 통과: 1) accessToken만 유효 2) refreshToken만 유효 3) 둘 다 유효
+        // 인증 통과: 1) accessToken만 유효 2) accessToken 기간 지남, refreshToken 유효 3) 둘 다 유효
         
         // 1. accessToken, refreshToken 둘 다 존재하는지 확인
-        accessToken = request.getHeaders().get("accessToken").get(0);
-        refreshToken = request.getHeaders().get("refreshToken").get(0);
+        accessToken = request.getHeaders().get("access_token").get(0);
+        refreshToken = request.getHeaders().get("refresh_token").get(0);
     
         // 2. accessToken이 유효한 경우 -> 요청 진행
         try {
@@ -69,13 +69,13 @@ public class AuthFilter implements GatewayFilter, Ordered{
                 return chain.filter(exchange);
             }
         }
-        catch(Exception e){
-        }
-        // 3. accessToken이 유효하지 않고, refresh 유효한 경우 -> 새 accessToken 발행 (인증서버로 요청)
-        if (jwtProvider.validateToken(refreshToken)){
-            URI uri = UriComponentsBuilder.fromUriString("http://localhost:8081/login/reissue").build().toUri();
-            exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, uri);
-            return chain.filter(exchange);
+        catch(ExpiredJwtException e){
+            // 3. accessToken이 유효기간이 지났고 변조되지 않았으며, refresh 유효한 경우 -> 새 accessToken 발행 (인증서버로 요청)
+            if (jwtProvider.validateToken(refreshToken)){
+                URI uri = UriComponentsBuilder.fromUriString("http://localhost:8081/login/reissue").build().toUri();
+                exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, uri);
+                return chain.filter(exchange);
+            }
         }
         throw new MalformedJwtException("Invalid Access Token");
     }

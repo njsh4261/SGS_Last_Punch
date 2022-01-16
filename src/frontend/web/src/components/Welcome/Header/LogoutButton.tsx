@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
 const SlogoutButton = styled.button`
   color: ${(props) => props.theme.color.slack};
@@ -20,10 +19,9 @@ const SlogoutButton = styled.button`
 `;
 
 export default function LogoutButton() {
-  const navigate = useNavigate();
   const logoutHandler = () => {
     sessionStorage.clear();
-    navigate('/login');
+    location.reload();
   };
   return <SlogoutButton onClick={logoutHandler}>logout</SlogoutButton>;
 }

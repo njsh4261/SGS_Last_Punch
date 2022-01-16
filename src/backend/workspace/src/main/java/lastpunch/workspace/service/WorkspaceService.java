@@ -61,15 +61,15 @@ public class WorkspaceService{
         );
     }
     
-    public Workspace createOne(WorkspaceDto workspaceDto){
+    public Workspace create(WorkspaceDto workspaceDto){
         return workspaceRepository.save(workspaceDto.toEntity());
     }
     
-    public Workspace editOne(WorkspaceDto workspaceDto, Long id) {
+    public Workspace edit(WorkspaceDto workspaceDto, Long id) {
         return workspaceRepository.save(workspaceDto.changeValues(commonService.getWorkspace(id)));
     }
     
-    public void deleteOne(Long id) {
+    public void delete(Long id) {
         // 추후에 아카이빙 기능(삭제한 데이터를 별도의 DB에 백업)을 구현한다면,
         // status field를 "deleted" 등으로 수정하여 live server와 다른 DB 서버에 저장하는 기능 추가
         workspaceRepository.deleteById(id);

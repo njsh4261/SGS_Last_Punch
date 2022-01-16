@@ -63,6 +63,9 @@ public class Account{
     @OneToMany(mappedBy = "account", orphanRemoval = true)
     List<AccountWorkspace> workspaces;
     
+    @OneToMany(mappedBy = "account", orphanRemoval = true)
+    List<AccountChannel> channels;
+    
     public AccountExportDto export(){
         return AccountExportDto.builder()
             .id(id)

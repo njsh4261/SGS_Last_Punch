@@ -17,7 +17,8 @@ public enum StatusCode{
 
     WORKSPACE_OK(HttpStatus.OK, "12000", "WORKSPACE_OK", "워크스페이스 API 성공"),
     WORKSPACE_WS_NOT_EXIST(HttpStatus.OK, "12001", "WORKSPACE_WS_NOT_EXIST", "존재하지 않는 워크스페이스입니다."),
-    WORKSPACE_AC_NOT_EXIST(HttpStatus.OK, "12002", "WORKSPACE_AC_NOT_EXIST", "존재하지 않는 사용자입니다.");
+    WORKSPACE_AC_NOT_EXIST(HttpStatus.OK, "12002", "WORKSPACE_AC_NOT_EXIST", "존재하지 않는 사용자입니다."),
+    WORKSPACE_CN_NOT_EXIST(HttpStatus.OK, "12003", "WORKSPACE_CN_NOT_EXIST", "존재하지 않는 채널입니다.");
     
     private HttpStatus status;
     private final String code;

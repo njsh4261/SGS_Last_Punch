@@ -49,20 +49,20 @@ public class WorkspaceController{
 
     @PostMapping
     public ResponseEntity<Object> createWorkspace(@RequestBody WorkspaceDto workspaceDto){
-        workspaceService.createOne(workspaceDto);
+        workspaceService.create(workspaceDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> editWorkspace(
             @RequestBody WorkspaceDto workspaceDto, @PathVariable("id") Long id){
-        workspaceService.editOne(workspaceDto, id);
+        workspaceService.edit(workspaceDto, id);
         return Response.ok(ServerCode.WORKSPACE);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteWorkspace(@PathVariable("id") Long id){
-        workspaceService.deleteOne(id);
+        workspaceService.delete(id);
         return Response.ok(ServerCode.WORKSPACE);
     }
 }

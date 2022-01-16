@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Converter
-public class MemberStatusConverter implements AttributeConverter<String, Integer> {
+public class AccountStatusConverter implements AttributeConverter<String, Integer> {
     private final Map<String, Integer> dbColumnMap;
     private final Map<Integer, String> entityAttributeMap;
 
-    public MemberStatusConverter(){
+    public AccountStatusConverter(){
         dbColumnMap = new ConcurrentHashMap<>();
 
         // put status here

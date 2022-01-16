@@ -1,38 +1,56 @@
 package lastpunch.workspace.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.dto.WorkspaceDto;
+import lastpunch.workspace.dto.WorkspaceExportDto;
+import lastpunch.workspace.entity.Account;
+import lastpunch.workspace.entity.AccountWorkspace;
 import lastpunch.workspace.entity.Workspace;
+import lastpunch.workspace.repository.AccountRepository;
 import lastpunch.workspace.repository.WorkspaceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class WorkspaceService{
-    private WorkspaceRepository workspaceRepository;
+    private final WorkspaceRepository workspaceRepository;
+    private final AccountRepository accountRepository;
     
-    @Autowired
-    public WorkspaceService(WorkspaceRepository workspaceRepository) {
+    public WorkspaceService(
+            WorkspaceRepository workspaceRepository, AccountRepository accountRepository){
         this.workspaceRepository = workspaceRepository;
+        this.accountRepository = accountRepository;
     }
     
-    public Page<Workspace> getList(Long userId, Pageable pageable) {
-        // TODO: 각 워크스페이스마다 5명 정도 해당 워크스페이스의 참가자 목록을 보여줘야 함
-        return workspaceRepository.findAllById(userId, pageable);
+    public List<WorkspaceExportDto> getList(Long userId, Pageable pageable) {
+        Optional<Account> accountOptional = accountRepository.findById(userId);
+        if(accountOptional.isEmpty()){
+            throw new BusinessException(StatusCode.WORKSPACE_AC_NOT_EXIST);
+        }
+        List<AccountWorkspace> list = accountOptional.get().getWorkspaces();
+        int start = (int) pageable.getOffset();
+        return list.subList(start, Math.min(list.size(), start + pageable.getPageSize()))
+            .stream().map(AccountWorkspace::getWorkspace).map(Workspace::export)
+            .collect(Collectors.toList());
     }
     
     public Workspace getOne(Long workspaceId) {
-        // TODO: 워크스페이스 하나의 정보를 불러올 때, 해당 워크스페이스의 소속 멤버 목록과 채널 목록도 함께 불러와야 함
+        // TODO: 워크스페이스 하나의 정보를 불러올 때,
+        //  해당 워크스페이스의 소속 멤버 목록과 채널 목록을 함께 불러와야 함.
+        //  이 때, pagination이 적용되어야 한다.
         Optional<Workspace> workspace = workspaceRepository.findById(workspaceId);
         if(workspace.isPresent()) {
             return workspace.get();
         } else {
-            throw new BusinessException(StatusCode.WORKSPACE_NOT_EXIST);
+            throw new BusinessException(StatusCode.WORKSPACE_WS_NOT_EXIST);
         }
     }
     

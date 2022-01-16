@@ -1,8 +1,10 @@
 // original source code work by Jisoo Kim
-
 package lastpunch.workspace.entity;
 
-import lastpunch.workspace.common.converter.MemberStatusConverter;
+import java.util.ArrayList;
+
+import java.util.List;
+import lastpunch.workspace.dto.AccountExportDto;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,15 +14,17 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+import lastpunch.workspace.common.converter.AccountStatusConverter;
+
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @Setter
 @Builder
-@Table(name="member")
+@Table(name="account")
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Member {
+public class Account{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -36,7 +40,7 @@ public class Member {
     @Column(length = 30)
     private String name;
     
-    private String displayName;
+    private String displayname;
     private String description;
     private String phone;
     private String country;
@@ -45,14 +49,34 @@ public class Member {
     @Column(columnDefinition = "tinyint")
     private Integer settings;
     
-    @Convert(converter = MemberStatusConverter.class)
+    @Convert(converter = AccountStatusConverter.class)
     @Column(columnDefinition = "tinyint")
     private String status;
     
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createdDt;
+    private LocalDateTime createdt;
     
     @LastModifiedDate
-    private LocalDateTime modifiedDt;
+    private LocalDateTime modifydt;
+    
+    @OneToMany(mappedBy = "account")
+    List<AccountWorkspace> workspaces;
+    
+    public AccountExportDto export(){
+        return AccountExportDto.builder()
+            .id(id)
+            .email(email)
+            .name(name)
+            .displayname(displayname)
+            .description(description)
+            .phone(phone)
+            .country(country)
+            .language(language)
+            .settings(settings)
+            .status(status)
+            .createdt(createdt)
+            .modifydt(modifydt)
+            .build();
+    }
 }

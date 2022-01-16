@@ -2,10 +2,12 @@ package lastpunch.workspace.entity;
 
 import com.sun.istack.NotNull;
 import java.time.LocalDateTime;
+import java.util.Set;
 import javax.persistence.*;
 
-import lastpunch.workspace.common.converter.MemberStatusConverter;
 import lastpunch.workspace.common.converter.WorkspaceStatusConverter;
+import lastpunch.workspace.dto.AccountExportDto;
+import lastpunch.workspace.dto.WorkspaceExportDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,8 +44,23 @@ public class Workspace{
     
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createdDt;
+    private LocalDateTime createdt;
     
     @LastModifiedDate
-    private LocalDateTime modifiedDt;
+    private LocalDateTime modifydt;
+    
+    @OneToMany(mappedBy = "workspace")
+    Set<AccountWorkspace> accounts;
+    
+    public WorkspaceExportDto export(){
+        return WorkspaceExportDto.builder()
+            .id(id)
+            .name(name)
+            .description(description)
+            .settings(settings)
+            .status(status)
+            .createdt(createdt)
+            .modifydt(modifydt)
+            .build();
+    }
 }

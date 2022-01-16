@@ -34,7 +34,7 @@ public class Response {
 
         return new ResponseEntity<>(map, status);
     }
-
+    
     public static ResponseEntity<Object> ok(ServerCode serverCode){
         return toResponseEntity(serverCode.getOkServerCode(), serverCode.getOkHttpStatus());
     }

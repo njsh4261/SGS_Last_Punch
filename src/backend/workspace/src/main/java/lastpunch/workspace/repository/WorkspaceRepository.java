@@ -10,7 +10,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WorkspaceRepository extends JpaRepository<Workspace, Long>{
     Page<Workspace> findAllById(Long id, Pageable pageable);
-    Optional<Workspace> findById(Long id);
-    Workspace save(Workspace workspace);
-    void deleteById(Long id);
 }

@@ -43,9 +43,9 @@ public class LoginService {
     }
     
     public String reissue(Map<String, Object> requestHeader){
-        String refreshToken = requestHeader.get("refresh_token").toString();
+        String refreshToken = requestHeader.get("x-auth-token").toString();
         Authentication authentication = jwtProvider.getAuthentication(refreshToken);
-        String newAccessToken = jwtProvider.createAccessToken(SecurityContextHolder.getContext().getAuthentication());
+        String newAccessToken = jwtProvider.createAccessToken(authentication);
         return newAccessToken;
     }
 }

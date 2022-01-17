@@ -1,12 +1,9 @@
 package lastpunch.workspace.dto;
 
-import javax.validation.constraints.NotBlank;
-import lastpunch.workspace.entity.Workspace;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
+import lastpunch.workspace.entity.Workspace;
 
 @Data
 @NoArgsConstructor

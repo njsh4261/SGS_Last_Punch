@@ -35,11 +35,11 @@ public class Channel{
     private Long id;
     
     @ManyToOne(targetEntity=Workspace.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "workspaceId")
+    @JoinColumn(name = "workspaceid")
     private Workspace workspace;
     
     @ManyToOne(targetEntity=Account.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "creatorId")
+    @JoinColumn(name = "creatorid")
     private Account account;
     
     @NotNull
@@ -58,10 +58,10 @@ public class Channel{
     
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createDt;
+    private LocalDateTime createdt;
     
     @LastModifiedDate
-    private LocalDateTime modifyDt;
+    private LocalDateTime modifydt;
     
     @OneToMany(mappedBy = "channel", orphanRemoval = true)
     List<AccountChannel> accounts;
@@ -76,8 +76,8 @@ public class Channel{
             .description(description)
             .settings(settings)
             .status(status)
-            .createDt(createDt)
-            .modifyDt(modifyDt)
+            .createDt(createdt)
+            .modifyDt(modifydt)
             .build();
     }
 }

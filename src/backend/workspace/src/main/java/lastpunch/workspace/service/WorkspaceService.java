@@ -8,7 +8,6 @@ import lastpunch.workspace.dto.WorkspaceDto;
 import lastpunch.workspace.entity.Account;
 import lastpunch.workspace.entity.AccountWorkspace;
 import lastpunch.workspace.entity.Workspace;
-import lastpunch.workspace.repository.AccountRepository;
 import lastpunch.workspace.repository.WorkspaceRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,15 +16,10 @@ import org.springframework.stereotype.Service;
 public class WorkspaceService{
     private final CommonService commonService;
     private final WorkspaceRepository workspaceRepository;
-    private final AccountRepository accountRepository;
     
-    public WorkspaceService(
-            CommonService commonService,
-            WorkspaceRepository workspaceRepository,
-            AccountRepository accountRepository){
+    public WorkspaceService(CommonService commonService, WorkspaceRepository workspaceRepository){
         this.commonService = commonService;
         this.workspaceRepository = workspaceRepository;
-        this.accountRepository = accountRepository;
     }
     
     public Map<String, Object> getList(Long id, Pageable pageable) {

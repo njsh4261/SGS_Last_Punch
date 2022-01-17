@@ -27,14 +27,14 @@ public class AccountChannel{
     private Long id;
     
     @ManyToOne(targetEntity= Account.class, fetch= FetchType.LAZY)
-    @JoinColumn(name="accountId")
+    @JoinColumn(name="accountid")
     private Account account;
     
     @ManyToOne(targetEntity=Channel.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="channelId")
+    @JoinColumn(name="channelid")
     private Channel channel;
     
     @ManyToOne(targetEntity=Channel.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="roleId")
+    @JoinColumn(name="roleid")
     private Role role;
 }

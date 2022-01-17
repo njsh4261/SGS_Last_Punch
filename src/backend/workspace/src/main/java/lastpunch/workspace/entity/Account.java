@@ -1,10 +1,8 @@
 // original source code work by Jisoo Kim
 package lastpunch.workspace.entity;
 
-import java.util.ArrayList;
-
 import java.util.List;
-import lastpunch.workspace.dto.AccountExportDto;
+
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 import lastpunch.workspace.common.converter.AccountStatusConverter;
+import lastpunch.workspace.dto.AccountExportDto;
 
 @Entity
 @Table(name="account")

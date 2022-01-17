@@ -32,13 +32,13 @@ public class WorkspaceController{
     }
 
     @GetMapping
-    public ResponseEntity<Object> getWorkspaceList(
+    public ResponseEntity<Object> getList(
             @RequestParam("userId") Long id, @PageableDefault(size = PAGESIZE) Pageable pageable){
         return Response.ok(ServerCode.WORKSPACE, workspaceService.getList(id, pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneWorkspace(
+    public ResponseEntity<Object> getOne(
             @PathVariable("id") Long id,
             @Qualifier("channel") @PageableDefault(size = PAGESIZE) Pageable channelPageable,
             @Qualifier("member") @PageableDefault(size = PAGESIZE) Pageable memberPageable){
@@ -48,21 +48,21 @@ public class WorkspaceController{
     }
 
     @PostMapping
-    public ResponseEntity<Object> createWorkspace(@RequestBody WorkspaceDto workspaceDto){
-        workspaceService.create(workspaceDto);
+    public ResponseEntity<Object> create(@RequestBody WorkspaceDto workspaceDto){
+        workspaceService.createOne(workspaceDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> editWorkspace(
+    public ResponseEntity<Object> edit(
             @RequestBody WorkspaceDto workspaceDto, @PathVariable("id") Long id){
-        workspaceService.edit(workspaceDto, id);
+        workspaceService.editOne(workspaceDto, id);
         return Response.ok(ServerCode.WORKSPACE);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteWorkspace(@PathVariable("id") Long id){
-        workspaceService.delete(id);
+    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
+        workspaceService.deleteOne(id);
         return Response.ok(ServerCode.WORKSPACE);
     }
 }

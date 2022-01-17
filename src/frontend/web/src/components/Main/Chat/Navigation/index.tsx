@@ -41,7 +41,7 @@ export default function Navigation() {
     const { id } = e.target as Element;
     selectId(id);
     // todo: 추후 구현 (샘플코드)
-    navigate('/workspace/1/channel/xx/note/yy');
+    navigate(id);
   };
 
   return (

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { selectChannel } from '../../../../modules/channel';
 import ToggleList, { Text } from './ToggleList';
 
@@ -21,6 +22,7 @@ const SecitonType = styled.section`
 `;
 
 export default function AsideBody() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // dummy data
@@ -38,7 +40,7 @@ export default function AsideBody() {
 
   const selectHandler = (e: React.MouseEvent<HTMLElement>) => {
     const channel = (e.target as Element).closest('.channel-item') as Element;
-    dispatch(selectChannel(channel.id));
+    dispatch(selectChannel(channel.id, navigate));
   };
 
   return (

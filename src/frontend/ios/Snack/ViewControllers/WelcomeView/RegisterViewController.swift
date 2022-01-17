@@ -88,6 +88,7 @@ class RegisterViewController: UIViewController {
     }
     
     private func attribute() {
+        view.backgroundColor = UIColor(named: "snackBackgroundColor")
         ivLogo.image = UIImage(named: "snack")
         
         [fieldEmail, fieldPassword].forEach {

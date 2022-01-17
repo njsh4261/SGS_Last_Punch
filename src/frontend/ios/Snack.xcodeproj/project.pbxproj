@@ -197,9 +197,17 @@
 			path = Extentions;
 			sourceTree = "<group>";
 		};
+		8C68AADC279524EB00C1711E /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
 		8C845299278C272C001A81FD /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8C68AADC279524EB00C1711E /* HomeView */,
 				8C68AABF279093B600C1711E /* WelcomeView */,
 			);
 			path = ViewControllers;

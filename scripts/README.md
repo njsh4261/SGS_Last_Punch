@@ -8,3 +8,11 @@
 - 22.01.03 SQL 스크립트 수정
   - `file` 테이블 추가 및 `message`, `reply` 테이블에 관련 필드 추가
   - Join table들의 이름을 member가 앞으로 오도록 고치고 PK 변경
+- 22.01.10 DB 스키마 수정 및 추가
+  - MySQL 스키마에서 MongoDB로 분리한 테이블 삭제, presence 테이블 추가
+  - [MongoDB schema validation](https://docs.mongodb.com/manual/core/schema-validation/) 용도의 json 파일 추가
+  - column명을 camel case로 일괄 수정
+- 22.01.10 DB 스키마 수정
+  - MySQL 스키마에서 member -> account로 수정 (연관 테이블 일괄 수정)
+    - MySQL 8.0에서 member가 예약어인 관계로 생기는 문제 해결
+ 

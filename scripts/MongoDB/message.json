@@ -1,0 +1,108 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "message",
+    "properties": {
+        "author": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id"
+            ]
+        },
+        "workspace": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id"
+            ]
+        },
+        "channel": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id"
+            ]
+        },
+        "content": {
+            "type": "string"
+        },
+        "target": {
+            "type": "array",
+            "additionalItems": true,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "read": {
+                        "type": "boolean"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "id"
+                ]
+            }
+        },
+        "status": {
+            "type": "integer"
+        },
+        "ref": {
+            "type": "object",
+            "properties": {
+                "parent": {
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{24}$"
+                },
+                "refReply": {
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{24}$"
+                },
+                "fileId": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "date": {
+            "type": "object",
+            "properties": {
+                "created": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "modified": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "created",
+                "modified"
+            ]
+        }
+    },
+    "additionalProperties": true,
+    "required": [
+        "content",
+        "target"
+    ]
+}

@@ -1,0 +1,56 @@
+version: '3'
+services:
+  eureka-server:
+    image: sookim1110/eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - lastpunch-network
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: lastpunch
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_ROOT_HOST: '%'
+      TZ: Asia/Seoul
+    volumes:
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    networks:
+      - lastpunch-network
+
+  auth-server:
+    image: sookim1110/auth-server
+    ports:
+      - "8081:8081"
+    environment:
+      spring.datasource.url: jdbc:mysql://mysql:3306/lastpunch?
+      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+    depends_on:
+      - mysql
+      - eureka-server
+    restart:
+      always
+    networks:
+      - lastpunch-network
+
+  gateway:
+    image: sookim1110/gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth-server
+      - eureka-server
+    environment:
+      auth.uri: http://auth:8081
+      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+    networks:
+      - lastpunch-network
+
+networks:
+  lastpunch-network:
+    driver: bridge

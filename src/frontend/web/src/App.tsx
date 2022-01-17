@@ -1,18 +1,19 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from './modules';
-import Chat from './components/Chat';
-import MainHeader from './components/MianHeader';
+import PrivateRoute from './routes/Private';
+import PublicRoute from './routes/Public';
 
 function App() {
+  const jwt = sessionStorage.getItem('jwt');
   const modalActive = useSelector((state: RootState) => state.modal.active);
+
   return (
     <>
-      <MainHeader></MainHeader>
+      {!jwt ? <PublicRoute /> : <PrivateRoute />}
       {modalActive && <div>modal open</div>}
     </>
   );
-  // return <Chat></Chat>;
 }
 
 export default App;

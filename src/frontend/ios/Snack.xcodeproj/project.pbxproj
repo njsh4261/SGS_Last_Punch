@@ -34,6 +34,7 @@
 		8C68AAFB27954FBF00C1711E /* DirectMessageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAFA27954FBF00C1711E /* DirectMessageCellViewModel.swift */; };
 		8C68AAFD27954FCB00C1711E /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAFC27954FCB00C1711E /* ChannelCell.swift */; };
 		8C68AAFF27954FD200C1711E /* ChannelCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAFE27954FD200C1711E /* ChannelCellViewModel.swift */; };
+		8C68AB042795545900C1711E /* Channel.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AB032795545900C1711E /* Channel.json */; };
 		8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD2278E90F200D5677E /* WelcomeViewController.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
@@ -74,6 +75,7 @@
 		8C68AAFA27954FBF00C1711E /* DirectMessageCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageCellViewModel.swift; sourceTree = "<group>"; };
 		8C68AAFC27954FCB00C1711E /* ChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
 		8C68AAFE27954FD200C1711E /* ChannelCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCellViewModel.swift; sourceTree = "<group>"; };
+		8C68AB032795545900C1711E /* Channel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Channel.json; sourceTree = "<group>"; };
 		8C953BD2278E90F200D5677E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -292,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				8C68AAF227953A8A00C1711E /* ChannelObject.swift */,
+				8C68AB032795545900C1711E /* Channel.json */,
 			);
 			path = SyncObjects;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 			files = (
 				8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */,
 				8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */,
+				8C68AB042795545900C1711E /* Channel.json in Resources */,
 				8C68AABD278ED9BF00C1711E /* NotoSansKR-Regular.otf in Resources */,
 				8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */,
 				8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */,

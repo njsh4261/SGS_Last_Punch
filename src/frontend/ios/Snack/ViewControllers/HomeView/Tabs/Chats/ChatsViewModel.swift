@@ -6,12 +6,14 @@
 //
 
 import RxSwift
+import RxCocoa
 
 class ChatsViewModel: ViewModelProtocol {
     struct Input {
 //        let email: AnyObserver<String>
 //        let password: AnyObserver<String>
 //        let signUpDidTap: AnyObserver<Void>
+//        let cellData: Driver<[String]>
     }
     
     struct Output {
@@ -32,7 +34,7 @@ class ChatsViewModel: ViewModelProtocol {
     
     // MARK: - Init
     init(_ ChatsService: RegisterServiceProtocol) {
-//
+        let title = Observable.just("글 제목")
         input = Input()
 
         output = Output()
@@ -54,5 +56,27 @@ class ChatsViewModel: ViewModelProtocol {
 //            })
 //            .disposed(by: disposeBag)
         
+    }
+    func test() {
+        guard let jsonData = load(),
+              let sodeul = try? JSONDecoder().decode(ChannelList.self, from: jsonData) else {
+                  return
+              }
+//        channelObjects = sodeul.channels
+    }
+
+    func load() -> Data?{
+        let fileNm: String = "Channel"
+        let extensionType = "json"
+        
+        
+        guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return nil }
+        
+        do {
+            let data = try Data(contentsOf: fileLocation)
+            return data
+        } catch {
+            return nil
+        }
     }
 }

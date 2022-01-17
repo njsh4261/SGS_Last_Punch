@@ -8,17 +8,20 @@
 import Foundation
 
 struct ChannelObject: Codable {
-    var objectId = ""
+    let objectId: String
 
-    var chatId = ""
+    let chatId: String
 
-    var name = ""
-    var ownerId = ""
-    var members = 0
+    let name: String
+    let ownerId: String
+    let members: Int
 
-    var isDeleted = false
+    let isDeleted: String
 
-    var createdAt = Date()
-    var updatedAt = Date()
+    let createdAt: String
+    let updatedAt: String
+}
 
+struct ChannelList: Codable {
+    let channels: [ChannelObject]
 }

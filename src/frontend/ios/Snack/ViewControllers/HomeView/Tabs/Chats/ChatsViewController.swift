@@ -17,7 +17,7 @@ class ChatsViewController: UIViewController {
     // MARK: - Properties
     private var viewModel = ChatsViewModel(RegisterService())
     private let disposeBag = DisposeBag()
-    private var chatObjects: [ChannelObject] = []
+    private var channelObjects: [ChannelObject] = []
     private var observerId: String?
     
     // MARK: - UI
@@ -37,8 +37,15 @@ class ChatsViewController: UIViewController {
     }
     
     func bind(with viewModel: ChatsViewModel) {
-        
-        
+//        viewModel.input.cellData
+//            .drive(tableView.rx.items) { tv, row, data in
+//                switch row {
+//                    
+//                default:
+//                    fatalError()
+//                }
+//            }
+//            .disposed(by: disposeBag)
     }
     
     private func attribute() {

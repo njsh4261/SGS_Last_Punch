@@ -35,6 +35,10 @@
 		8C68AAFD27954FCB00C1711E /* ChannelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAFC27954FCB00C1711E /* ChannelCell.swift */; };
 		8C68AAFF27954FD200C1711E /* ChannelCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAFE27954FD200C1711E /* ChannelCellViewModel.swift */; };
 		8C68AB042795545900C1711E /* Channel.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AB032795545900C1711E /* Channel.json */; };
+		8C68AB062795754900C1711E /* ChatsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB052795754900C1711E /* ChatsSection.swift */; };
+		8C68AB0827957ADD00C1711E /* ExDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB0727957ADD00C1711E /* ExDateFormatter.swift */; };
+		8C68AB0C2795AA4100C1711E /* User.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AB0B2795AA4100C1711E /* User.json */; };
+		8C68AB0E2795AB6200C1711E /* DirectMessageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB0D2795AB6200C1711E /* DirectMessageObject.swift */; };
 		8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD2278E90F200D5677E /* WelcomeViewController.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
@@ -76,6 +80,10 @@
 		8C68AAFC27954FCB00C1711E /* ChannelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCell.swift; sourceTree = "<group>"; };
 		8C68AAFE27954FD200C1711E /* ChannelCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCellViewModel.swift; sourceTree = "<group>"; };
 		8C68AB032795545900C1711E /* Channel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Channel.json; sourceTree = "<group>"; };
+		8C68AB052795754900C1711E /* ChatsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsSection.swift; sourceTree = "<group>"; };
+		8C68AB0727957ADD00C1711E /* ExDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExDateFormatter.swift; sourceTree = "<group>"; };
+		8C68AB0B2795AA4100C1711E /* User.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = User.json; sourceTree = "<group>"; };
+		8C68AB0D2795AB6200C1711E /* DirectMessageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageObject.swift; sourceTree = "<group>"; };
 		8C953BD2278E90F200D5677E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +162,7 @@
 		8C68AAB1278ECFA100C1711E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8C68AB0F2795ABF000C1711E /* Mock */,
 				8C68AAB2278ECFAB00C1711E /* Fonts */,
 			);
 			path = Resources;
@@ -217,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				8C68AAD227911AD700C1711E /* ExObservable.swift */,
+				8C68AB0727957ADD00C1711E /* ExDateFormatter.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -294,7 +304,8 @@
 			isa = PBXGroup;
 			children = (
 				8C68AAF227953A8A00C1711E /* ChannelObject.swift */,
-				8C68AB032795545900C1711E /* Channel.json */,
+				8C68AB0D2795AB6200C1711E /* DirectMessageObject.swift */,
+				8C68AB052795754900C1711E /* ChatsSection.swift */,
 			);
 			path = SyncObjects;
 			sourceTree = "<group>";
@@ -315,6 +326,15 @@
 				8C68AAFE27954FD200C1711E /* ChannelCellViewModel.swift */,
 			);
 			path = ChannelCell;
+			sourceTree = "<group>";
+		};
+		8C68AB0F2795ABF000C1711E /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				8C68AB032795545900C1711E /* Channel.json */,
+				8C68AB0B2795AA4100C1711E /* User.json */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		8C845299278C272C001A81FD /* ViewControllers */ = {
@@ -408,6 +428,7 @@
 				8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */,
 				8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */,
 				8C68AB042795545900C1711E /* Channel.json in Resources */,
+				8C68AB0C2795AA4100C1711E /* User.json in Resources */,
 				8C68AABD278ED9BF00C1711E /* NotoSansKR-Regular.otf in Resources */,
 				8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */,
 				8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */,
@@ -464,6 +485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C68AAE3279526CF00C1711E /* ChatsViewModel.swift in Sources */,
+				8C68AB0827957ADD00C1711E /* ExDateFormatter.swift in Sources */,
 				8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */,
 				8C68AAF927954FA100C1711E /* DirectMessageCell.swift in Sources */,
 				8C68AAFD27954FCB00C1711E /* ChannelCell.swift in Sources */,
@@ -476,6 +498,7 @@
 				8C68AAC92791166F00C1711E /* ViewModelProtocol.swift in Sources */,
 				8C68AAD027911A1000C1711E /* LoginService.swift in Sources */,
 				8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */,
+				8C68AB062795754900C1711E /* ChatsSection.swift in Sources */,
 				8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */,
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
 				8C68AAF027952F6500C1711E /* NavigationController.swift in Sources */,
@@ -484,6 +507,7 @@
 				8C68AAD327911AD700C1711E /* ExObservable.swift in Sources */,
 				8C68AAFB27954FBF00C1711E /* DirectMessageCellViewModel.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
+				8C68AB0E2795AB6200C1711E /* DirectMessageObject.swift in Sources */,
 				8C68AACB279117FA00C1711E /* User.swift in Sources */,
 				8C68AAF327953A8A00C1711E /* ChannelObject.swift in Sources */,
 			);

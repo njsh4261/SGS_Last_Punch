@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import ProgressHUD
+import RxDataSources
 import Then
 
 class ChatsViewController: UIViewController {
@@ -17,6 +18,7 @@ class ChatsViewController: UIViewController {
     // MARK: - Properties
     private var viewModel = ChatsViewModel(RegisterService())
     private let disposeBag = DisposeBag()
+    private var dataSource: RxTableViewSectionedReloadDataSource<ChatsSection>!
     private var channelObjects: [ChannelObject] = []
     private var observerId: String?
     
@@ -33,19 +35,23 @@ class ChatsViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
+        
         fatalError("init(coder:) has not been implemented")
     }
     
     func bind(with viewModel: ChatsViewModel) {
-//        viewModel.input.cellData
-//            .drive(tableView.rx.items) { tv, row, data in
-//                switch row {
-//                    
-//                default:
-//                    fatalError()
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        dataSource = RxTableViewSectionedReloadDataSource<ChatsSection> { dataSource, tableView, indexPath, item in
+            switch dataSource[indexPath] {
+            case .StatusChannel:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ChannelCell.identifier, for: indexPath) as! ChannelCell
+                cell.selectionStyle = .none
+                
+                return cell
+            case .StatusDirectMessage:
+                let cell = tableView.dequeueReusableCell(withIdentifier: DirectMessageCell.identifier, for: indexPath) as! DirectMessageCell
+                return cell
+            }
+        }
     }
     
     private func attribute() {

@@ -13,6 +13,7 @@ import Then
 
 class DirectMessageCell: UITableViewCell {
     let disposeBag = DisposeBag()
+    static let identifier = "DirectMessageCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

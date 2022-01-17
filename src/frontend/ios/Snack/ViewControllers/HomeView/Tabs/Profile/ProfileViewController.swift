@@ -46,6 +46,11 @@ class ProfileViewController: UIViewController {
     }
     
     private func attribute() {
+        title = "프로필"
+        tabBarItem.image = UIImage(systemName: "person.crop.circle")
+        tabBarItem.selectedImage = UIImage(systemName: "person.crop.circle.fill")
+        tabBarItem.title = "나"
+        
         view.backgroundColor = UIColor(named: "snackBackgroundColor")
         ivLogo.image = UIImage(named: "snack")
         

@@ -46,6 +46,11 @@ class ChatsViewController: UIViewController {
     }
     
     private func attribute() {
+        title = "Workspace명"
+        tabBarItem.image = UIImage(systemName: "house")
+        tabBarItem.selectedImage = UIImage(systemName: "house.fill")
+        tabBarItem.title = "홈"
+        
         view.backgroundColor = UIColor(named: "snackBackgroundColor")
         ivLogo.image = UIImage(named: "snack")
         

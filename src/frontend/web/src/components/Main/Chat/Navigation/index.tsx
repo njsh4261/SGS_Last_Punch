@@ -40,7 +40,6 @@ export default function Navigation() {
   const selectNavHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const { id } = e.target as Element;
     selectId(id);
-    // todo: 추후 구현 (샘플코드)
     navigate(id);
   };
 

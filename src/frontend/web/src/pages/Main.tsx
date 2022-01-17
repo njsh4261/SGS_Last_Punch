@@ -22,8 +22,9 @@ export default function Main() {
   // useEffect(): get workspace, member, channel Info.
   const params = useParams();
   useEffect(() => {
-    document.title = params.wsId as string;
-  });
+    if (!params.channelId) document.title = params.wsId as string;
+  }, [params]);
+
   return (
     <MainLayout>
       <MainHeader></MainHeader>

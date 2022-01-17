@@ -41,6 +41,7 @@ export default function AsideBody() {
   const selectHandler = (e: React.MouseEvent<HTMLElement>) => {
     const channel = (e.target as Element).closest('.channel-item') as Element;
     dispatch(selectChannel(channel.id, navigate));
+    document.title = channel.id;
   };
 
   return (

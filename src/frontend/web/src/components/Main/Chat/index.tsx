@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../modules';
+import { selectChannel } from '../../../modules/channel';
 import ChatInput from './Input';
 import Header from './Header';
 
@@ -35,6 +37,9 @@ const ChatInputLayout = styled.article`
 const End = styled.article``;
 
 const Chat = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const params = useParams();
   const channel = useSelector((state: RootState) => state.channel);
   const endRef = useRef<null | HTMLDivElement>(null);
   const [msg, setMsg] = useState<string>('');
@@ -44,13 +49,18 @@ const Chat = () => {
     setMsg(e.target.value);
   const msgSubmitHandler = () => {
     if (msg !== '') {
-      // socket.send(msg), get response
+      // todo: socket.send(msg), get response
       setMsgList([...msgList, msg]);
       setMsg('');
     }
   };
   const scrollToBottom = () =>
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+  useEffect(() => {
+    const id = params.channelId as string;
+    dispatch(selectChannel(id, navigate));
+  }, [params.channelId]);
 
   useEffect(() => {
     scrollToBottom();

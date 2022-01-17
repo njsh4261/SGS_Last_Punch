@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import java.util.stream.Collectors;
-import lastpunch.workspace.dto.WorkspaceDto;
-import lastpunch.workspace.entity.Account;
 import lastpunch.workspace.entity.AccountWorkspace;
 import lastpunch.workspace.entity.Workspace;
-import lastpunch.workspace.repository.WorkspaceRepository;
+import lastpunch.workspace.repository.workspace.WorkspaceRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -38,28 +36,31 @@ public class WorkspaceService{
     
     public Map<String, Object> getOne(
             Long workspaceId, Pageable channelPageable, Pageable memberPageable) {
-        Workspace workspace = commonService.getWorkspace(workspaceId);
-        List<AccountWorkspace> memberList = workspace.getAccounts();
-        int memberStart = (int) memberPageable.getOffset();
-    
-        // TODO: 채널 관련 API 추가 시 채널 정보도 함께 불러올 것
+//        Workspace workspace = commonService.getWorkspace(workspaceId);
+//        List<AccountWorkspace> memberList = workspace.getAccounts();
+//        int memberStart = (int) memberPageable.getOffset();
+//
+//        // TODO: 채널 관련 API 추가 시 채널 정보도 함께 불러올 것
+//        return Map.of(
+//            "workspace", workspace.export(),
+//            "channels", null,
+//            "members",
+//                    memberList.subList(
+//                        memberStart,
+//                        Math.min(memberList.size(), memberStart + memberPageable.getPageSize()))
+//                    .stream().map(AccountWorkspace::getAccount).map(Account::export)
+//                    .collect(Collectors.toList())
+//        );
         return Map.of(
-            "workspace", workspace.export(),
-            "channels", null,
-            "members",
-                    memberList.subList(
-                        memberStart,
-                        Math.min(memberList.size(), memberStart + memberPageable.getPageSize()))
-                    .stream().map(AccountWorkspace::getAccount).map(Account::export)
-                    .collect(Collectors.toList())
+            "workspace", workspaceRepository.getOneWorkspace(workspaceId)
         );
     }
     
-    public Workspace create(WorkspaceDto workspaceDto){
+    public Workspace create(Workspace.ImportDto workspaceDto){
         return workspaceRepository.save(workspaceDto.toEntity());
     }
     
-    public Workspace edit(WorkspaceDto workspaceDto, Long id) {
+    public Workspace edit(Workspace.ImportDto workspaceDto, Long id) {
         return workspaceRepository.save(workspaceDto.changeValues(commonService.getWorkspace(id)));
     }
     

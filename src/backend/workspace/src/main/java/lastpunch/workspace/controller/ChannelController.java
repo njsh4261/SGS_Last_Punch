@@ -2,8 +2,8 @@ package lastpunch.workspace.controller;
 
 import lastpunch.workspace.common.Response;
 import lastpunch.workspace.common.ServerCode;
-import lastpunch.workspace.dto.ChannelCreateDto;
-import lastpunch.workspace.dto.ChannelEditDto;
+import lastpunch.workspace.entity.Channel;
+import lastpunch.workspace.entity.Channel.ImportDto;
 import lastpunch.workspace.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -30,27 +29,32 @@ public class ChannelController{
         this.channelService = channelService;
     }
     
-    @GetMapping
-    public ResponseEntity<Object> getOneChannel(
-            @RequestParam("channelId") Long id, @PageableDefault(size = PAGESIZE) Pageable pageable){
-        return Response.ok(ServerCode.WORKSPACE, channelService.getOne(id, pageable));
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOne(@PathVariable("id") Long id){
+        return Response.ok(ServerCode.WORKSPACE, channelService.getOne(id));
+    }
+    
+    @GetMapping("/{id}/members")
+    public ResponseEntity<Object> getMembers(
+            @PathVariable("id") Long id, @PageableDefault(page = PAGESIZE) Pageable pageable){
+        return Response.ok(ServerCode.WORKSPACE, channelService.getMembers(id, pageable));
     }
     
     @PostMapping
-    public ResponseEntity<Object> createChannel(@RequestBody ChannelCreateDto channelCreateDto){
-        channelService.create(channelCreateDto);
+    public ResponseEntity<Object> create(@RequestBody Channel.ImportDto channelImportDto){
+        channelService.create(channelImportDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Object> editChannel(
-            @RequestBody ChannelEditDto channelEditDto, @PathVariable("id") Long id){
-        channelService.edit(channelEditDto, id);
+    public ResponseEntity<Object> edit(
+            @PathVariable("id") Long id, @RequestBody Channel.ImportDto channelImportDto){
+        channelService.edit(channelImportDto, id);
         return Response.ok(ServerCode.WORKSPACE);
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteChannel(@PathVariable("id") Long id){
+    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
         channelService.delete(id);
         return Response.ok(ServerCode.WORKSPACE);
     }

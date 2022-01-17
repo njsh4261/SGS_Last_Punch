@@ -34,7 +34,15 @@ public class AccountChannel{
     @JoinColumn(name="channelid")
     private Channel channel;
     
-    @ManyToOne(targetEntity=Channel.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity=Role.class, fetch = FetchType.LAZY)
     @JoinColumn(name="roleid")
     private Role role;
+    
+    @Getter
+    @Builder
+    public static class ImportDto{
+        private Long accountId;
+        private Long channelId;
+        private Long roleId;
+    }
 }

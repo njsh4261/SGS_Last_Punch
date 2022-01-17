@@ -1,9 +1,11 @@
 // original source code work by Jisoo Kim
 package lastpunch.workspace.entity;
 
+import com.querydsl.core.annotations.QueryProjection;
 import java.util.List;
 
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -13,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 import lastpunch.workspace.common.converter.AccountStatusConverter;
-import lastpunch.workspace.dto.AccountExportDto;
 
 @Entity
 @Table(name="account")
@@ -60,13 +61,32 @@ public class Account{
     private LocalDateTime modifydt;
     
     @OneToMany(mappedBy = "account", orphanRemoval = true)
+    @BatchSize(size=5)
     List<AccountWorkspace> workspaces;
     
     @OneToMany(mappedBy = "account", orphanRemoval = true)
+    @BatchSize(size=5)
     List<AccountChannel> channels;
     
-    public AccountExportDto export(){
-        return AccountExportDto.builder()
+    @Getter
+    @Builder
+    public static class ExportDto{
+        private Long id;
+        private String email;
+        private String name;
+        private String displayname;
+        private String description;
+        private String phone;
+        private String country;
+        private String language;
+        private Integer settings;
+        private String status;
+        private LocalDateTime createdt;
+        private LocalDateTime modifydt;
+    }
+    
+    public ExportDto export(){
+        return ExportDto.builder()
             .id(id)
             .email(email)
             .name(name)

@@ -13,12 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import lastpunch.workspace.dto.ChannelExportDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -64,10 +64,37 @@ public class Channel{
     private LocalDateTime modifydt;
     
     @OneToMany(mappedBy = "channel", orphanRemoval = true)
+    @BatchSize(size=5)
     List<AccountChannel> accounts;
     
-    public ChannelExportDto export(){
-        return ChannelExportDto.builder()
+    @Getter
+    public static class ImportDto{
+        private Long workspaceId;
+        private Long creatorId;
+        private String name;
+        private String topic;
+        private String description;
+        private Integer settings;
+        private Integer status;
+    }
+    
+    @Getter
+    @Builder
+    public static class ExportDto{
+        private Long id;
+        private Long workspaceId; // TODO: 필요에 따라 WorkspaceExportDto로 변경
+        private Account.ExportDto account; // TODO: 필요에 따라 더 적은 정보만을 전달
+        private String name;
+        private String topic;
+        private String description;
+        private Integer settings;
+        private Integer status;
+        private LocalDateTime createDt;
+        private LocalDateTime modifyDt;
+    }
+    
+    public ExportDto export(){
+        return ExportDto.builder()
             .id(id)
             .workspaceId(workspace.getId())
             .account(account.export())

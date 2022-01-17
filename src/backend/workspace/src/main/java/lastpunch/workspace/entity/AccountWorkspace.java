@@ -2,6 +2,7 @@ package lastpunch.workspace.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,4 +28,11 @@ public class AccountWorkspace{
     @ManyToOne(targetEntity=Workspace.class, fetch = FetchType.LAZY)
     @JoinColumn(name="workspaceid")
     private Workspace workspace;
+    
+    @Getter
+    @Builder
+    public static class ImportDto{
+        private Long accountId;
+        private Long workspaceId;
+    }
 }

@@ -106,8 +106,16 @@ INSERT INTO role (name) VALUES ('channel_admin');
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 1, 2);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (2, 1, 1);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (3, 1, 1);
+INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (4, 1, 1);
+INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (5, 1, 1);
+INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (6, 1, 1);
 
-INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 2, 1);
-INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (2, 2, 2);
-
+INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 2, 2);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 3, 1);
+INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 4, 1);
+INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 5 ,2);
+INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 6, 1);
+
+INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (3, 3, 1);
+INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (6, 5, 1);
+INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (9, 7, 1);

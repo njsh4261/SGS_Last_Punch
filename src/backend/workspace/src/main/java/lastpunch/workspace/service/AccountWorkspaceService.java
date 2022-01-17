@@ -1,8 +1,8 @@
 package lastpunch.workspace.service;
 
+import lastpunch.workspace.entity.AccountWorkspace;
 import org.springframework.stereotype.Service;
 
-import lastpunch.workspace.dto.AccountWorkspaceDto;
 import lastpunch.workspace.repository.AccountWorkspaceRepository;
 
 @Service
@@ -20,7 +20,7 @@ public class AccountWorkspaceService{
         this.accountWorkspaceRepository = accountWorkspaceRepository;
     }
     
-    public void addNewMember(AccountWorkspaceDto accountWorkspaceDto){
+    public void addNewMember(AccountWorkspace.ImportDto accountWorkspaceDto){
         // TODO: query
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         accountWorkspaceRepository.save(
@@ -29,7 +29,7 @@ public class AccountWorkspaceService{
         );
     }
 
-    public void deleteMember(AccountWorkspaceDto accountWorkspaceDto){
+    public void deleteMember(AccountWorkspace.ImportDto accountWorkspaceDto){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         accountWorkspaceRepository.delete(
             accountWorkspaceDto.getAccountId(),

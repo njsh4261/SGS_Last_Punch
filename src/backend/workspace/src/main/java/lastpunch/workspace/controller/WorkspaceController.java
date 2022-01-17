@@ -1,5 +1,6 @@
 package lastpunch.workspace.controller;
 
+import lastpunch.workspace.entity.Workspace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lastpunch.workspace.common.Response;
 import lastpunch.workspace.common.ServerCode;
-import lastpunch.workspace.dto.WorkspaceDto;
 import lastpunch.workspace.service.WorkspaceService;
 
 @RestController
@@ -48,21 +48,21 @@ public class WorkspaceController{
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody WorkspaceDto workspaceDto){
-        workspaceService.createOne(workspaceDto);
+    public ResponseEntity<Object> create(@RequestBody Workspace.ImportDto workspaceDto){
+        workspaceService.create(workspaceDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> edit(
-            @RequestBody WorkspaceDto workspaceDto, @PathVariable("id") Long id){
-        workspaceService.editOne(workspaceDto, id);
+            @RequestBody Workspace.ImportDto workspaceDto, @PathVariable("id") Long id){
+        workspaceService.edit(workspaceDto, id);
         return Response.ok(ServerCode.WORKSPACE);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id){
-        workspaceService.deleteOne(id);
+        workspaceService.delete(id);
         return Response.ok(ServerCode.WORKSPACE);
     }
 }

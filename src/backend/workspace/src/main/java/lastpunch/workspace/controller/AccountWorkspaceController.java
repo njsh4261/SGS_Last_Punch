@@ -1,5 +1,6 @@
 package lastpunch.workspace.controller;
 
+import lastpunch.workspace.entity.AccountWorkspace;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lastpunch.workspace.common.Response;
 import lastpunch.workspace.common.ServerCode;
-import lastpunch.workspace.dto.AccountWorkspaceDto;
 import lastpunch.workspace.service.AccountWorkspaceService;
 
 @RestController
@@ -23,7 +23,7 @@ public class AccountWorkspaceController{
 
     @PostMapping
     public ResponseEntity<Object> addNewMember(
-            @RequestBody AccountWorkspaceDto accountWorkspaceDto){
+            @RequestBody AccountWorkspace.ImportDto accountWorkspaceDto){
         // TODO: 논의할 거리 - 새로운 멤버를 워크스페이스에 추가한 뒤 db에서 업데이트된 멤버 목록을 가져올 것인가?
         accountWorkspaceService.addNewMember(accountWorkspaceDto);
         return Response.ok(ServerCode.WORKSPACE);
@@ -31,7 +31,7 @@ public class AccountWorkspaceController{
 
     @DeleteMapping
     public ResponseEntity<Object> deleteMember(
-            @RequestBody AccountWorkspaceDto accountWorkspaceDto){
+            @RequestBody AccountWorkspace.ImportDto accountWorkspaceDto){
         accountWorkspaceService.deleteMember(accountWorkspaceDto);
         return Response.ok(ServerCode.WORKSPACE);
     }

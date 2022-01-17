@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import SubmitButton from '../../Common/SubmitButton';
 import sampleImage from '../../../icon/sample-workspace.png';
 
@@ -50,6 +51,8 @@ interface WsItemProps {
 }
 
 export default function WsItem({ ws }: { ws: WsItemProps }) {
+  const navigate = useNavigate();
+  const submitHandler = () => navigate('/' + ws.id);
   return (
     <Item key={ws.id}>
       <ItemInfoLayer>
@@ -65,7 +68,7 @@ export default function WsItem({ ws }: { ws: WsItemProps }) {
         text="Let's Snack"
         borderRadius="5px"
         light={true}
-        submitHandler={() => console.log('enter workspace')}
+        submitHandler={submitHandler}
       ></SubmitButton>
     </Item>
   );

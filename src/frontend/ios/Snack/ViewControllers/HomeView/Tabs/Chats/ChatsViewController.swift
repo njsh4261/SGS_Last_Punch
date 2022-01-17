@@ -20,6 +20,7 @@ class ChatsViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private var dataSource: RxTableViewSectionedReloadDataSource<ChatsSection>!
     private var channelObjects: [ChannelObject] = []
+    private var directMessageObjects: [DirectMessageObject] = []
     private var observerId: String?
     
     // MARK: - UI
@@ -45,12 +46,66 @@ class ChatsViewController: UIViewController {
             case .StatusChannel:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ChannelCell.identifier, for: indexPath) as! ChannelCell
                 cell.selectionStyle = .none
-                
+                // cell.configure(item: item)
                 return cell
             case .StatusDirectMessage:
                 let cell = tableView.dequeueReusableCell(withIdentifier: DirectMessageCell.identifier, for: indexPath) as! DirectMessageCell
                 return cell
             }
+        }
+        test()
+        let sections = [
+            ChatsSection.SectionOne(items: [SectionItem.StatusChannel(header: "첫번째", items: channelObjects)]),
+            ChatsSection.SectionTwo(items: [SectionItem.StatusDirectMessage(header: "두번째", items: directMessageObjects)])
+        ]
+        
+        Observable.just(sections)
+                    .bind(to: tableView.rx.items(dataSource: dataSource))
+                    .disposed(by: disposeBag)
+    }
+
+    func test() {
+        guard let jsonData = load(),
+              let sodeul = try? JSONDecoder().decode(ChannelList.self, from: jsonData) else {
+                  return
+              }
+        //        print(sodeul)
+        channelObjects = sodeul.channels
+        guard let jsonData = load2(),
+              let sodeul2 = try? JSONDecoder().decode(DirectMessageList.self, from: jsonData) else {
+                  return
+              }
+        //        print(sodeul2)
+        directMessageObjects = sodeul2.users
+    }
+    
+    func load() -> Data?{
+        let fileNm: String = "Channel"
+        let extensionType = "json"
+        
+        
+        guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return nil }
+        
+        do {
+            let data = try Data(contentsOf: fileLocation)
+            return data
+        } catch {
+            return nil
+        }
+    }
+    
+    func load2() -> Data?{
+        let fileNm: String = "User"
+        let extensionType = "json"
+        
+        
+        guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return nil }
+        
+        do {
+            let data = try Data(contentsOf: fileLocation)
+            return data
+        } catch {
+            return nil
         }
     }
     

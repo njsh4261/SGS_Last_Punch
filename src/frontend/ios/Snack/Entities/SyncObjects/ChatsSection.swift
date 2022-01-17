@@ -13,8 +13,8 @@ enum ChatsSection {
 }
 
 enum SectionItem {
-    case StatusChannel(items: [ChatsSection])
-    case StatusDirectMessage(items: [DirectMessageObject])
+    case StatusChannel(header: String, items: [ChannelObject])
+    case StatusDirectMessage(header: String, items: [DirectMessageObject])
 }
 
 extension ChatsSection: SectionModelType {
@@ -30,7 +30,7 @@ extension ChatsSection: SectionModelType {
       }
     
     init(original: ChatsSection, items: [SectionItem]) {
-        switch  original {
+        switch original {
         case .SectionOne(items: _):
             self = .SectionOne(items: items)
         case .SectionTwo(items: _):

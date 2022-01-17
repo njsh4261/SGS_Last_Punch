@@ -19,6 +19,10 @@ struct AddressInfo: Codable {
     let city: String
 }
 
+struct DirectMessageList: Codable {
+    let users: [DirectMessageObject]
+}
+
 extension DirectMessageObject: IdentifiableType, Equatable {
     static func == (lhs: DirectMessageObject, rhs: DirectMessageObject) -> Bool {
         return (lhs.name == rhs.name &&

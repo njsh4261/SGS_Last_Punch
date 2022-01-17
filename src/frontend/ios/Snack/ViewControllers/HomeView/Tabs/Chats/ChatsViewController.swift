@@ -17,19 +17,12 @@ class ChatsViewController: UIViewController {
     // MARK: - Properties
     private var viewModel = ChatsViewModel(RegisterService())
     private let disposeBag = DisposeBag()
-    private var chatObjects: [GroupObject] = []
+    private var chatObjects: [ChannelObject] = []
     private var observerId: String?
     
     // MARK: - UI
     private var searchBar: UISearchBar!
     private var tableView: UITableView!
-
-    var fieldPassword = UITextField()
-    var emailBorder = UIView()
-    var passwordBorder = UIView()
-    var btnSignIn = UIButton()
-    var lblWarning = UILabel()
-    var btnSignUp = UIButton()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -56,9 +49,34 @@ class ChatsViewController: UIViewController {
         
         view.backgroundColor = UIColor(named: "snackBackgroundColor")
         
+        searchBar.placeholder = "채널로 이동..."
+        
+        tableView = tableView.then {
+            $0.bouncesZoom = false
+            $0.isOpaque = false
+            $0.clearsContextBeforeDrawing = false
+        }
+        
     }
     
     private func layout() {
-       
+        [searchBar, tableView].forEach {
+            view.addSubview($0)
+        }
+        
+        [searchBar, tableView].forEach {
+            $0?.snp.makeConstraints {
+                $0.left.right.equalTo(view.safeAreaLayoutGuide)
+            }
+        }
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(56)
+        }
+        
+        tableView.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(56)
+        }
     }
 }

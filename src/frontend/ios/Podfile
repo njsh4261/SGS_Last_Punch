@@ -11,6 +11,7 @@ target 'Snack' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'Then'
   pod 'ProgressHUD'
+  pod 'RxDataSources', '~> 5.0'
 
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'

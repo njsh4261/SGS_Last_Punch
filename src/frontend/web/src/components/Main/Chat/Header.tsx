@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Navigation from './Navigation';
+import Navigation from '../Navigation';
 import expandIcon from '../../../icon/expand.svg';
 
 const ChannelHeader = styled.article`

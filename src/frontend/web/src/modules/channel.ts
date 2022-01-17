@@ -12,10 +12,14 @@ type ChannelState = {
   error: boolean;
 };
 
-export const selectChannel = (id: string, navigate: NavigateFunction) => ({
+export const selectChannel = (
+  id: string,
+  name: string,
+  navigate: NavigateFunction,
+) => ({
   type: SELECT_CAHNNEL,
   id,
-  name: '',
+  name,
   navigate,
 });
 
@@ -30,24 +34,29 @@ const initChannelState: ChannelState = {
 
 function* selectChannelSaga(action: ChannelAction) {
   // dummy api
-  const dummyApi = (id: string): Promise<{ id: string; name: string }> => {
+  const dummyApi = (
+    id: string,
+    name: string,
+  ): Promise<{ id: string; name: string }> => {
     return new Promise((res) => {
       setTimeout(() => {
         res({
           id,
-          name: `채널 아이디 ${id}`,
+          name,
         });
       }, 100);
     });
   };
   try {
-    const channel: ChannelAction = yield call(dummyApi, action.id);
+    const channel: ChannelAction = yield call(dummyApi, action.id, action.name);
     yield put({
       type: SELECT_CHANNEL_SUCCESS,
       id: channel.id,
       name: channel.name,
     });
-    action.navigate('../' + channel.id);
+    action.navigate('../' + channel.id, {
+      state: { channelName: channel.name },
+    });
   } catch (e) {
     yield put({
       type: SELECT_CHANNEL_FAILURE,

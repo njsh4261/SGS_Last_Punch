@@ -53,7 +53,7 @@ const PaddingLeft8px = styled.span`
 interface Props {
   type: 'channel' | 'direct message';
   channelList: Array<{ id: string; name: string }>;
-  selectHandler: (e: React.MouseEvent<HTMLElement>) => void;
+  selectHandler: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export default function ToggleList({
@@ -79,6 +79,7 @@ export default function ToggleList({
           <ChannelItem
             className="channel-item"
             id={channel.id}
+            data-name={channel.name}
             key={channel.id}
             onClick={selectHandler}
           >

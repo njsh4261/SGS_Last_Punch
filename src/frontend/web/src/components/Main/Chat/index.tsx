@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../modules';
-import { selectChannel } from '../../../modules/channel';
 import ChatInput from './Input';
 import Header from './Header';
 
@@ -36,10 +35,14 @@ const ChatInputLayout = styled.article`
 
 const End = styled.article``;
 
+interface stateType {
+  channelName: string;
+}
+
 const Chat = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const params = useParams();
+  const location = useLocation();
+  const { channelName } = location.state as stateType;
+
   const channel = useSelector((state: RootState) => state.channel);
   const endRef = useRef<null | HTMLDivElement>(null);
   const [msg, setMsg] = useState<string>('');
@@ -58,11 +61,6 @@ const Chat = () => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
 
   useEffect(() => {
-    const id = params.channelId as string;
-    dispatch(selectChannel(id, navigate));
-  }, [params.channelId]);
-
-  useEffect(() => {
     scrollToBottom();
   }, [msgList]);
 
@@ -72,7 +70,7 @@ const Chat = () => {
         <div>loading</div>
       ) : (
         <Container>
-          <Header channelName={channel.name} />
+          <Header channelName={channelName} />
           <MessageListContainer>
             {msgList?.map((msg, idx) => (
               <MessageBox key={idx}>{msg}</MessageBox>

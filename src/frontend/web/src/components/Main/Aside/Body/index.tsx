@@ -38,10 +38,12 @@ export default function AsideBody() {
     { id: 'dm4', name: '나', userId: 'avdnsk3' },
   ];
 
-  const selectHandler = (e: React.MouseEvent<HTMLElement>) => {
-    const channel = (e.target as Element).closest('.channel-item') as Element;
-    dispatch(selectChannel(channel.id, navigate));
-    document.title = channel.id;
+  const selectHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    const channel = e.currentTarget;
+    dispatch(
+      selectChannel(channel.id, channel.dataset.name as string, navigate),
+    );
+    // document.title = channel.id;
   };
 
   return (

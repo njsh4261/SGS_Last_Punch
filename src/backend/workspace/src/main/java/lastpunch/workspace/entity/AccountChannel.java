@@ -27,12 +27,14 @@ public class AccountChannel{
     private Long id;
     
     @ManyToOne(targetEntity= Account.class, fetch= FetchType.LAZY)
-    @JoinColumn(name="accountid")
+    @JoinColumn(name="accountId")
     private Account account;
     
     @ManyToOne(targetEntity=Channel.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="channelid")
+    @JoinColumn(name="channelId")
     private Channel channel;
     
-    // TODO: 채널 내 권한 (role) 관련 필드 추가
+    @ManyToOne(targetEntity=Channel.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="roleId")
+    private Role role;
 }

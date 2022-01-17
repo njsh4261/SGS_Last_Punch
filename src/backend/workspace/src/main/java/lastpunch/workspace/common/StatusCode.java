@@ -16,8 +16,8 @@ public enum StatusCode{
     BAD_CREDENTIALS(HttpStatus.OK, "11002", "BAD_CREDENTIALS", "이메일 혹은 패스워드를 잘못 입력했습니다."),
 
     WORKSPACE_OK(HttpStatus.OK, "12000", "WORKSPACE_OK", "워크스페이스 API 성공"),
-    WORKSPACE_WS_NOT_EXIST(HttpStatus.OK, "12001", "WORKSPACE_WS_NOT_EXIST", "존재하지 않는 워크스페이스입니다."),
-    WORKSPACE_AC_NOT_EXIST(HttpStatus.OK, "12002", "WORKSPACE_AC_NOT_EXIST", "존재하지 않는 사용자입니다.");
+    WORKSPACE_NOT_EXIST(HttpStatus.OK, "12001", "WORKSPACE_NOT_EXIST", "존재하지 않는 워크스페이스입니다."),
+    ACCOUNT_NOT_EXIST(HttpStatus.OK, "12002", "ACCOUNT_NOT_EXIST", "존재하지 않는 사용자입니다.");
     
     private HttpStatus status;
     private final String code;

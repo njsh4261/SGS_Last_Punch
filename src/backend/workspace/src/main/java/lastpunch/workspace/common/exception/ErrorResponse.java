@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -29,20 +27,12 @@ public class ErrorResponse{
     }
     
     public static ResponseEntity<Object> toResponseEntity(final StatusCode statusCode){
-        Map<String, Object> response = new HashMap<>();
-        Map<String, Object> err = new HashMap<>();
-        
-        long datetime = System.currentTimeMillis();
-        Timestamp timestamp = new Timestamp(datetime);
-        
-        err.put("msg", statusCode.getMsg());
-        err.put("desc", statusCode.getDesc());
-        
-        response.put("code", statusCode.getCode());
-        response.put("status", statusCode.getStatus().value());
-        response.put("err", err);
-        response.put("timestamp", timestamp);
-        
-        return new ResponseEntity<>(response, statusCode.getStatus());
+        return new ResponseEntity<>(
+            Map.of(
+                "code", statusCode.getCode(),
+                "err", Map.of("msg", statusCode.getMsg(),"desc", statusCode.getDesc())
+            ),
+            statusCode.getStatus()
+        );
     }
 }

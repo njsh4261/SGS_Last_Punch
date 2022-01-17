@@ -1,13 +1,12 @@
 package lastpunch.workspace.repository;
 
-import lastpunch.workspace.entity.Account;
-import lastpunch.workspace.entity.AccountWorkspace;
-import lastpunch.workspace.entity.Workspace;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import lastpunch.workspace.entity.AccountWorkspace;
 
 @Repository
 public interface AccountWorkspaceRepository extends JpaRepository<AccountWorkspace, Long>{

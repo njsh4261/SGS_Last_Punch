@@ -23,7 +23,7 @@ public class CommonService{
     public Workspace getWorkspace(Long id){
         Optional<Workspace> workspaceOptional = workspaceRepository.findById(id);
         if(workspaceOptional.isEmpty()){
-            throw new BusinessException(StatusCode.WORKSPACE_WS_NOT_EXIST);
+            throw new BusinessException(StatusCode.WORKSPACE_NOT_EXIST);
         }
         return workspaceOptional.get();
     }
@@ -31,7 +31,7 @@ public class CommonService{
     public Account getAccount(Long id){
         Optional<Account> accountOptional = accountRepository.findById(id);
         if(accountOptional.isEmpty()){
-            throw new BusinessException(StatusCode.WORKSPACE_AC_NOT_EXIST);
+            throw new BusinessException(StatusCode.ACCOUNT_NOT_EXIST);
         }
         return accountOptional.get();
     }

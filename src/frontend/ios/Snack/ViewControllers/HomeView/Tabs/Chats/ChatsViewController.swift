@@ -17,7 +17,7 @@ class ChatsViewController: UIViewController {
     // MARK: - Properties
     private var viewModel = ChatsViewModel(RegisterService())
     private let disposeBag = DisposeBag()
-    private var chatObjects: [ChatObject] = []
+    private var chatObjects: [GroupObject] = []
     private var observerId: String?
     
     // MARK: - UI

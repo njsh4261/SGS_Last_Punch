@@ -1,5 +1,5 @@
 //
-//  ChatObject.swift
+//  GroupObject.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/17.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChatObject: Codable {
+struct GroupObject: Codable {
     var objectId = ""
 
     var isGroup = false

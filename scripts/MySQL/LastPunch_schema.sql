@@ -58,7 +58,7 @@ CREATE TABLE `role`(
     `name` VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE `account_channel`(
+CREATE TABLE `accountchannel`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `accountId` BIGINT UNSIGNED NOT NULL,
     `channelId` BIGINT UNSIGNED NOT NULL,
@@ -66,19 +66,19 @@ CREATE TABLE `account_channel`(
     INDEX (`accountId`),
     INDEX (`channelId`)
 );
-ALTER TABLE `account_channel` ADD CONSTRAINT `account_channel_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`);
-ALTER TABLE `account_channel` ADD CONSTRAINT `account_channel_channelid_foreign` FOREIGN KEY(`channelId`) REFERENCES `channel`(`id`);
-ALTER TABLE `account_channel` ADD CONSTRAINT `account_channel_roleid_foreign` FOREIGN KEY(`roleId`) REFERENCES `role`(`id`);
+ALTER TABLE `accountchannel` ADD CONSTRAINT `accountchannel_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`);
+ALTER TABLE `accountchannel` ADD CONSTRAINT `accountchannel_channelid_foreign` FOREIGN KEY(`channelId`) REFERENCES `channel`(`id`);
+ALTER TABLE `accountchannel` ADD CONSTRAINT `accountchannel_roleid_foreign` FOREIGN KEY(`roleId`) REFERENCES `role`(`id`);
 
-CREATE TABLE `account_workspace`(
+CREATE TABLE `accountworkspace`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `accountId` BIGINT UNSIGNED NOT NULL,
     `workspaceId` BIGINT UNSIGNED NOT NULL,
     INDEX (`accountId`),
     INDEX (`workspaceId`)
 );
-ALTER TABLE `account_workspace` ADD CONSTRAINT `account_workspace_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`);
-ALTER TABLE `account_workspace` ADD CONSTRAINT `account_workspace_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`);
+ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`);
+ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`);
 
 CREATE TABLE `file`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

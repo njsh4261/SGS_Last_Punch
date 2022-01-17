@@ -31,6 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController = UITabBarController()
         tabBarController.viewControllers = [navController1, navController4]
         tabBarController.tabBar.isTranslucent = false
+        tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
         tabBarController.selectedIndex = 0
         
         if #available(iOS 15.0, *) {

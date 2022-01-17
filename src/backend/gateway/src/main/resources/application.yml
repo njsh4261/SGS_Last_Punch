@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+eureka:
+  instance:
+    instance-id: gateway-instance
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka:8761/eureka
+
+jwt:
+  secret: lastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunch
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders:
+              - Content-Type
+              - Access-Control-Allow-Origin
+              - Access-Control-Allow-Headers
+              - X-AUTH-TOKEN
+            allowedMethods:
+              - POST
+              - GET
+              - PUT
+              - OPTIONS
+              - DELETE
+

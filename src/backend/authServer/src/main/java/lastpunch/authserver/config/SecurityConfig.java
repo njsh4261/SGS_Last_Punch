@@ -1,5 +1,6 @@
 package lastpunch.authserver.config;
 
+import java.util.Arrays;
 import lastpunch.authserver.common.jwt.JwtProvider;
 import lastpunch.authserver.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @RequiredArgsConstructor
 @Configuration
@@ -41,12 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests() // 다음 리퀘스트에 대한 사용권한 체크
-            .antMatchers("/login", "/signup").permitAll();
+            .antMatchers("/login", "/signup", "/reissue", "/verify").permitAll();
     }
     
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
 }

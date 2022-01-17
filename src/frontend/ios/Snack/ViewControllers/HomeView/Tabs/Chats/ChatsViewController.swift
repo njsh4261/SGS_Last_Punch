@@ -21,8 +21,8 @@ class ChatsViewController: UIViewController {
     private var observerId: String?
     
     // MARK: - UI
-    private var searchBar: UISearchBar!
-    private var tableView: UITableView!
+    private var searchBar = UISearchBar()
+    private var tableView = UITableView()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -52,11 +52,15 @@ class ChatsViewController: UIViewController {
         searchBar.placeholder = "채널로 이동..."
         
         tableView = tableView.then {
+            $0.register(ChannelCell.self, forCellReuseIdentifier: "ChannelCell")
+            $0.register(DirectMessageCell.self, forCellReuseIdentifier: "DirectMessageCell")
+            
             $0.bouncesZoom = false
             $0.isOpaque = false
             $0.clearsContextBeforeDrawing = false
+            $0.separatorStyle = .singleLine
+            $0.tableFooterView = UIView()
         }
-        
     }
     
     private func layout() {

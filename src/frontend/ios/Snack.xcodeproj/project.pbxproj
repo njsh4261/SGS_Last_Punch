@@ -29,6 +29,7 @@
 		8C68AAEB27952A8500C1711E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAEA27952A8500C1711E /* ProfileViewController.swift */; };
 		8C68AAED27952A9000C1711E /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAEC27952A9000C1711E /* ProfileViewModel.swift */; };
 		8C68AAF027952F6500C1711E /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAEF27952F6500C1711E /* NavigationController.swift */; };
+		8C68AAF327953A8A00C1711E /* ChatObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAF227953A8A00C1711E /* ChatObject.swift */; };
 		8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD2278E90F200D5677E /* WelcomeViewController.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
@@ -64,6 +65,7 @@
 		8C68AAEA27952A8500C1711E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8C68AAEC27952A9000C1711E /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		8C68AAEF27952F6500C1711E /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		8C68AAF227953A8A00C1711E /* ChatObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatObject.swift; sourceTree = "<group>"; };
 		8C953BD2278E90F200D5677E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,6 +94,7 @@
 		8C19E415278B31410086F374 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				8C68AAF1279539F700C1711E /* SyncObjects */,
 				8C68AACA279117FA00C1711E /* User.swift */,
 				8C68AACC2791186400C1711E /* Credentials.swift */,
 			);
@@ -275,6 +278,14 @@
 			path = Other;
 			sourceTree = "<group>";
 		};
+		8C68AAF1279539F700C1711E /* SyncObjects */ = {
+			isa = PBXGroup;
+			children = (
+				8C68AAF227953A8A00C1711E /* ChatObject.swift */,
+			);
+			path = SyncObjects;
+			sourceTree = "<group>";
+		};
 		8C845299278C272C001A81FD /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,6 +449,7 @@
 				8C68AAD327911AD700C1711E /* ExObservable.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
 				8C68AACB279117FA00C1711E /* User.swift in Sources */,
+				8C68AAF327953A8A00C1711E /* ChatObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

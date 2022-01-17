@@ -1,13 +1,13 @@
 //
-//  ChatsViewModel.swift
+//  ProfileViewModel.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/17.
 //
 
-import RxSwift
+import Foundation
 
-class ChatsViewModel: ViewModelProtocol {
+class ProfileViewModel: ViewModelProtocol {
     struct Input {
 //        let email: AnyObserver<String>
 //        let password: AnyObserver<String>

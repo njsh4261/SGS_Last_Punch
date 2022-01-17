@@ -1,5 +1,5 @@
 //
-//  ChatsViewController.swift
+//  ProfileViewController.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/17.
@@ -12,10 +12,10 @@ import SnapKit
 import ProgressHUD
 import Then
 
-class ChatsViewController: UIViewController {
+class ProfileViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = ChatsViewModel(RegisterService())
+    private var viewModel = ProfileViewModel(RegisterService())
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
@@ -40,7 +40,7 @@ class ChatsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(with viewModel: ChatsViewModel) {
+    func bind(with viewModel: ProfileViewModel) {
         
         
     }
@@ -156,3 +156,4 @@ class ChatsViewController: UIViewController {
         }
     }
 }
+

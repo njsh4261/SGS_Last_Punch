@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Navigation from './Navigation';
 import expandIcon from '../../../icon/expand.svg';
 
 const ChannelHeader = styled.article`
@@ -49,10 +50,6 @@ const ArrowDropDownIcon = styled.article`
   background-repeat: no-repeat;
 `;
 
-const MemberInfo = styled.button`
-  flex: 0 0 auto;
-`;
-
 const Header = ({ channelName }: { channelName: string }) => {
   return (
     <ChannelHeader>
@@ -60,8 +57,7 @@ const Header = ({ channelName }: { channelName: string }) => {
         <ChannelName>{channelName}</ChannelName>
         <ArrowDropDownIcon></ArrowDropDownIcon>
       </ChannelInfo>
-
-      <MemberInfo>member</MemberInfo>
+      <Navigation></Navigation>
     </ChannelHeader>
   );
 };

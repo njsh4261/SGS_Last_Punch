@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { selectWork } from '../../../modules/worksapce';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import SubmitButton from '../../Common/SubmitButton';
@@ -52,7 +54,10 @@ interface WsItemProps {
 
 export default function WsItem({ ws }: { ws: WsItemProps }) {
   const navigate = useNavigate();
-  const submitHandler = () => navigate('/' + ws.id);
+  const dispatch = useDispatch();
+  const submitHandler = () => {
+    dispatch(selectWork(ws.id, navigate));
+  };
   return (
     <Item key={ws.id}>
       <ItemInfoLayer>

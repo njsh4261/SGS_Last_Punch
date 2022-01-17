@@ -37,7 +37,7 @@ function* selectChannelSaga(action: ChannelAction) {
           id,
           name: `채널 아이디 ${id}`,
         });
-      }, 500);
+      }, 100);
     });
   };
   try {

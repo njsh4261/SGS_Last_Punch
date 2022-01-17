@@ -26,7 +26,7 @@ const initChannelState: ChannelState = {
   error: false,
 };
 
-function* channelChannelSaga(action: ChannelAction) {
+function* selectChannelSaga(action: ChannelAction) {
   // dummy api
   const dummyApi = (id: string): Promise<{ id: string; name: string }> => {
     return new Promise((res) => {
@@ -53,7 +53,7 @@ function* channelChannelSaga(action: ChannelAction) {
 }
 
 export function* channelSaga() {
-  yield takeLeading(SELECT_CAHNNEL, channelChannelSaga);
+  yield takeLeading(SELECT_CAHNNEL, selectChannelSaga);
 }
 
 export default function channel(

@@ -11,7 +11,7 @@ export default function PrivateRoute() {
       <Route path="/create-workspace" element={<WsCreator />}></Route>
 
       <Route path="/:wsId" element={<Outlet></Outlet>}>
-        <Route path="" element={<Navigate to={'thread'}></Navigate>}></Route>
+        <Route path="" element={<Main></Main>}></Route>
         <Route path=":channelId" element={<Main></Main>}>
           <Route path=":noteId" element={<Main></Main>}></Route>
         </Route>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import MainHeader from '../components/Main/Header';
 import Chat from '../components/Main/Chat';
@@ -21,13 +21,23 @@ export default function Main() {
   // useParams: { wsId: string; channelId: string; noteId?: string}
   // useEffect(): get workspace, member, channel Info.
   const params = useParams();
-
+  useEffect(() => {
+    document.title = params.wsId as string;
+  });
   return (
     <MainLayout>
       <MainHeader></MainHeader>
       <Body>
         <Aside></Aside>
-        {params.noteId ? <Note></Note> : <Chat></Chat>}
+        {params.channelId ? (
+          params.noteId ? (
+            <Note></Note>
+          ) : (
+            <Chat></Chat>
+          )
+        ) : (
+          <div>this is main page. select channel!</div>
+        )}
       </Body>
     </MainLayout>
   );

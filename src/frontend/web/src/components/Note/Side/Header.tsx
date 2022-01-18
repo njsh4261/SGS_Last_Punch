@@ -1,4 +1,6 @@
 import React from 'react';
+import ImageButton from '../../Common/ImageButton';
+import ArrowLeftIcon from '../../../icon/arrowLeft.svg';
 import styled from 'styled-components';
 
 interface Props {
@@ -18,14 +20,6 @@ const Container = styled.div`
   }
 `;
 
-const ToggleButton = styled.button`
-  background: none;
-  border: none;
-  outline: none;
-  font-weight: 900;
-  cursor: pointer;
-`;
-
 export default function NoteSideHeader({
   hover,
   hoverHandler,
@@ -35,7 +29,13 @@ export default function NoteSideHeader({
   return (
     <Container onMouseEnter={hoverHandler} onMouseLeave={hoverHandler}>
       <span>{channelName}의 NOTE</span>
-      {hover && <ToggleButton onClick={toggleHandler}>hide</ToggleButton>}
+      {hover && (
+        <ImageButton
+          imageUrl={ArrowLeftIcon}
+          onClick={toggleHandler}
+          size="16px"
+        ></ImageButton>
+      )}
     </Container>
   );
 }

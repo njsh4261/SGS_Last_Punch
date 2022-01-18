@@ -57,7 +57,7 @@ const Header = ({ channelName }: { channelName: string }) => {
         <ChannelName>{channelName}</ChannelName>
         <ArrowDropDownIcon></ArrowDropDownIcon>
       </ChannelInfo>
-      <Navigation></Navigation>
+      <Navigation mode="CHAT"></Navigation>
     </ChannelHeader>
   );
 };

@@ -43,7 +43,7 @@ export default function AsideBody() {
     dispatch(
       selectChannel(channel.id, channel.dataset.name as string, navigate),
     );
-    // document.title = channel.id;
+    document.title = channel.id;
   };
 
   return (

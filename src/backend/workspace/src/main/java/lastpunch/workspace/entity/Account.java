@@ -1,9 +1,11 @@
 // original source code work by Jisoo Kim
 package lastpunch.workspace.entity;
 
+import com.querydsl.core.annotations.QueryProjection;
 import java.util.List;
 
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -13,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 import lastpunch.workspace.common.converter.AccountStatusConverter;
-import lastpunch.workspace.dto.AccountExportDto;
 
 @Entity
 @Table(name="account")
@@ -60,10 +61,50 @@ public class Account{
     private LocalDateTime modifydt;
     
     @OneToMany(mappedBy = "account", orphanRemoval = true)
+    @BatchSize(size=5)
     List<AccountWorkspace> workspaces;
     
-    public AccountExportDto export(){
-        return AccountExportDto.builder()
+    @OneToMany(mappedBy = "account", orphanRemoval = true)
+    @BatchSize(size=5)
+    List<AccountChannel> channels;
+    
+    @Getter
+    @Builder
+    public static class ExportDto{
+        private Long id;
+        private String email;
+        private String name;
+        private String displayname;
+        private String description;
+        private String phone;
+        private String country;
+        private String language;
+        private Integer settings;
+        private String status;
+        private LocalDateTime createdt;
+        private LocalDateTime modifydt;
+
+        @QueryProjection
+        public ExportDto(Long id, String email, String name, String displayname, String description,
+                         String phone, String country, String language, Integer settings, String status,
+                         LocalDateTime createdt, LocalDateTime modifydt) {
+            this.id = id;
+            this.email = email;
+            this.name = name;
+            this.displayname = displayname;
+            this.description = description;
+            this.phone = phone;
+            this.country = country;
+            this.language = language;
+            this.settings = settings;
+            this.status = status;
+            this.createdt = createdt;
+            this.modifydt = modifydt;
+        }
+    }
+    
+    public ExportDto export(){
+        return ExportDto.builder()
             .id(id)
             .email(email)
             .name(name)

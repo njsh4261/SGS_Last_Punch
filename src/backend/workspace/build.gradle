@@ -1,3 +1,5 @@
+// reference: https://frogand.tistory.com/41
+
 plugins {
 	id 'org.springframework.boot' version '2.6.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -7,6 +9,8 @@ plugins {
 group = 'lastpunch'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
+def querydslVersion = '5.0.0'
 
 configurations {
 	compileOnly {
@@ -27,8 +31,21 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation group: 'com.querydsl', name: 'querydsl-jpa', version: querydslVersion
+	implementation group: 'com.querydsl', name: 'querydsl-apt', version: querydslVersion
+	implementation group: 'com.querydsl', name: 'querydsl-core', version: querydslVersion
+
+	annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: querydslVersion
+	annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: querydslVersion, classifier: 'jpa'
+	annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+	annotationProcessor("jakarta.annotation:jakarta.annotation-api")
 }
 
 test {
 	useJUnitPlatform()
+}
+
+clean {
+	delete file('src/main/generated')
 }

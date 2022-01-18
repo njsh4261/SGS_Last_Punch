@@ -27,4 +27,11 @@ public class AccountWorkspace{
     @ManyToOne(targetEntity=Workspace.class, fetch = FetchType.LAZY)
     @JoinColumn(name="workspaceid")
     private Workspace workspace;
+    
+    @Getter
+    @Builder
+    public static class Dto {
+        private Long accountId;
+        private Long workspaceId;
+    }
 }

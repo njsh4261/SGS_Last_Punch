@@ -5,6 +5,7 @@ import NoteSideHeader from '../components/Note/Side/Header';
 import NoteSideMenu from '../components/Note/Side/Menu';
 import NoteSideList from '../components/Note/Side/List';
 import NoteHeader from '../components/Note/Header';
+import NoteMain from '../components/Note/Main';
 
 const Layout = styled.div`
   display: flex;
@@ -35,6 +36,7 @@ const HeaderFrame = styled.header`
 const MainFrame = styled.main`
   flex: 1;
   background-color: white;
+  overflow-y: scroll;
 `;
 
 export default function Note() {
@@ -64,7 +66,9 @@ export default function Note() {
             toggleHandler={toggleHandler}
           ></NoteHeader>
         </HeaderFrame>
-        <MainFrame></MainFrame>
+        <MainFrame>
+          <NoteMain></NoteMain>
+        </MainFrame>
       </Container>
     </Layout>
   );

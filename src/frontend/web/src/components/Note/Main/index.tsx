@@ -16,19 +16,20 @@ export default function NoteMain() {
   const [blockList, setBlockList] = useState([{ id: newBlockId }]); // todo: 블록 데이터 저장
 
   const createBlock = (e: React.KeyboardEvent) => {
+    const target = e.target as HTMLInputElement;
+    const index = blockList.findIndex(({ id }) => id === target.id);
     // 엔터를 누른 블록의 배열의 다음 위치에 새 블록 삽입
     if (e.key === 'Enter') {
       const randomId = uuidv4();
-      const index = blockList.findIndex(
-        ({ id }) => id === (e.target as HTMLInputElement).id,
-      );
-
       setBlockList([
         ...blockList.slice(0, index + 1),
         { id: randomId },
         ...blockList.slice(index + 1, blockList.length),
       ]);
       setNewBlockId(randomId);
+    }
+
+    if (e.key === 'ArrowUp') {
     }
   };
 
@@ -38,18 +39,14 @@ export default function NoteMain() {
 
   return (
     <Container>
-      {blockList.map((block) =>
-        block.id === newBlockId ? (
-          <Block
-            ref={ref}
-            id={block.id}
-            key={block.id}
-            createBlock={createBlock}
-          ></Block>
-        ) : (
-          <Block id={block.id} key={block.id} createBlock={createBlock}></Block>
-        ),
-      )}
+      {blockList.map((block) => (
+        <Block
+          ref={block.id === newBlockId ? ref : undefined}
+          id={block.id}
+          key={block.id}
+          createBlock={createBlock}
+        ></Block>
+      ))}
     </Container>
   );
 }

@@ -28,7 +28,7 @@ class LoginViewModel: ViewModelProtocol {
     private let disposeBag = DisposeBag()
     
     // MARK: - Init
-    init(_ loginService: LoginServiceProtocol) {
+    init() {
         
         // isValid
         Observable.combineLatest(input.email, input.password)
@@ -38,13 +38,31 @@ class LoginViewModel: ViewModelProtocol {
         
         input.btnLoginTapped.withLatestFrom(Observable.combineLatest(input.email, input.password))
             .bind { [weak self] (email, password) in
-            guard let self = self else { return }
-            if password.count < 6 {
-                self.output.errorMessage.accept("6자리 이상 비밀번호를 입력해주세요.")
-            } else {
-                // API로직을 태워야합니다.
-                self.output.goToMain.accept(())
+                guard let self = self else { return }
+                if password.count < 1 {
+                    self.output.errorMessage.accept("1자리 이상 비밀번호를 입력해주세요.")
+                } else {
+                    // API로직을 태워야합니다.
+                    LoginService.shared.signIn(email: email, password: password) { result in
+                        switch result {
+                        case .success:
+                            self.output.goToMain.accept(())
+                        case .requestErr:
+                            self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력함")
+                        case .unAuthorized:
+                            self.output.errorMessage.accept("인증이 안됌")
+                        case .notFound:
+                            self.output.errorMessage.accept("찾을 수 없음")
+                        case .pathErr:
+                            self.output.errorMessage.accept("path 에러")
+                        case .serverErr:
+                            self.output.errorMessage.accept("서버 에러")
+                        case .networkFail:
+                            self.output.errorMessage.accept("네트워크")
+                        }
+                    }
+                }
             }
-        }.disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
 }

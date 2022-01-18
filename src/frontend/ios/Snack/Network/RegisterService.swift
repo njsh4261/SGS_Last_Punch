@@ -18,7 +18,7 @@ class RegisterService: RegisterServiceProtocol {
             /*
              Networking logic here.
             */
-            observer.onNext(User()) // Simulation of successful user authentication.
+//            observer.onNext(User()) // Simulation of successful user authentication.
             return Disposables.create()
         }
     }

@@ -15,7 +15,7 @@ import Then
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = LoginViewModel(LoginService())
+    private var viewModel = LoginViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - UI

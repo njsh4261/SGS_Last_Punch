@@ -13,7 +13,8 @@ export default function PrivateRoute() {
       <Route path="/:wsId" element={<Outlet></Outlet>}>
         <Route path="" element={<Main></Main>}></Route>
         <Route path=":channelId" element={<Main></Main>}>
-          <Route path=":noteId" element={<Main></Main>}></Route>
+          <Route path="note/:noteId" element={<Main></Main>}></Route>
+          <Route path="task/:taskId" element={<Main></Main>}></Route>
         </Route>
       </Route>
 

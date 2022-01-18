@@ -1,9 +1,3 @@
-DROP DATABASE workspace_test;
-CREATE DATABASE workspace_test default character set utf8;
-USE workspace_test;
-
-source C:/github/SGS_Last_Punch/scripts/MySQL/LastPunch_schema.sql
-
 DELETE FROM account;
 DELETE FROM workspace;
 DELETE FROM accountworkspace;

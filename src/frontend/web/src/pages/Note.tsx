@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import NoteSideHeader from '../components/Note/Side/Header';
 import NoteSideMenu from '../components/Note/Side/Menu';
 import NoteSideList from '../components/Note/Side/List';
+import NoteHeader from '../components/Note/Header';
 
 const Layout = styled.div`
   display: flex;
@@ -58,7 +59,10 @@ export default function Note() {
       </SideFrame>
       <Container>
         <HeaderFrame>
-          {!sideToggle && <button onClick={toggleHandler}>show</button>}
+          <NoteHeader
+            sideToggle={sideToggle}
+            toggleHandler={toggleHandler}
+          ></NoteHeader>
         </HeaderFrame>
         <MainFrame></MainFrame>
       </Container>

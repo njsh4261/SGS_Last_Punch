@@ -54,11 +54,12 @@ class WelcomeViewController: UIViewController {
     }
     
     private func attribute() {
-        view.backgroundColor = UIColor(named: "snackBackgroundColor")
+        view.backgroundColor = UIColor(named: "snackBackGroundColor")
         
         lblTitle = lblTitle.then {
             $0.text = "Snack"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 40)
+            $0.textColor = UIColor(named: "snackTextColor")
         }
         
         ivLogo.image = UIImage(named: "snack")

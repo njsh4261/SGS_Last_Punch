@@ -88,7 +88,7 @@ class RegisterViewController: UIViewController {
     }
     
     private func attribute() {
-        view.backgroundColor = UIColor(named: "snackBackgroundColor")
+        view.backgroundColor = UIColor(named: "snackBackGroundColor")
         ivLogo.image = UIImage(named: "snack")
         
         [fieldEmail, fieldPassword].forEach {
@@ -116,6 +116,7 @@ class RegisterViewController: UIViewController {
         btnSignUp = btnSignUp.then {
             $0.setTitle("회원 가입", for: .normal)
             $0.backgroundColor = UIColor(named: "snackColor")
+            $0.layer.cornerRadius = 6
         }
         
         lblWarning = lblWarning.then {

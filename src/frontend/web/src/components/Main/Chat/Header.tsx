@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Navigation from '../../Common/NavigationTab';
-import expandIcon from '../../Common/Navigation/expand.svg';
+import expandIcon from '../../../icon/expand.svg';
 
 const ChannelHeader = styled.article`
   display: flex;

@@ -9,13 +9,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
-import ProgressHUD
 import Then
 
 class ProfileViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = ProfileViewModel(RegisterService())
+    private var viewModel = ProfileViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - UI

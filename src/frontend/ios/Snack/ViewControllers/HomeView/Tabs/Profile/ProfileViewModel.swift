@@ -31,8 +31,7 @@ class ProfileViewModel: ViewModelProtocol {
 //    private let disposeBag = DisposeBag()
     
     // MARK: - Init
-    init(_ ChatsService: RegisterServiceProtocol) {
-//
+    init() {
         input = Input()
 
         output = Output()

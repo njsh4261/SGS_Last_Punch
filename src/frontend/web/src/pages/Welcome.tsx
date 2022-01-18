@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import WelcomeHeader from '../components/Welcome/Header';
 import WelcomeBody from '../components/Welcome/Body';
@@ -12,6 +12,10 @@ const WelcomePage = styled.div`
 `;
 
 export default function Welcome() {
+  useEffect(() => {
+    document.title = 'Welcome!';
+  }, []);
+
   return (
     <WelcomePage>
       <WelcomeHeader></WelcomeHeader>

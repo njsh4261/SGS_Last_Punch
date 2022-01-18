@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../modules';
@@ -34,7 +35,14 @@ const ChatInputLayout = styled.article`
 
 const End = styled.article``;
 
+interface stateType {
+  channelName: string;
+}
+
 const Chat = () => {
+  const location = useLocation();
+  const { channelName } = location.state as stateType;
+
   const channel = useSelector((state: RootState) => state.channel);
   const endRef = useRef<null | HTMLDivElement>(null);
   const [msg, setMsg] = useState<string>('');
@@ -44,7 +52,7 @@ const Chat = () => {
     setMsg(e.target.value);
   const msgSubmitHandler = () => {
     if (msg !== '') {
-      // socket.send(msg), get response
+      // todo: socket.send(msg), get response
       setMsgList([...msgList, msg]);
       setMsg('');
     }
@@ -62,7 +70,7 @@ const Chat = () => {
         <div>loading</div>
       ) : (
         <Container>
-          <Header channelName={channel.name} />
+          <Header channelName={channelName} />
           <MessageListContainer>
             {msgList?.map((msg, idx) => (
               <MessageBox key={idx}>{msg}</MessageBox>

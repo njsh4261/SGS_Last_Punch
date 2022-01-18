@@ -1,5 +1,8 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { selectWork } from '../../../modules/worksapce';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import SubmitButton from '../../Common/SubmitButton';
 import sampleImage from '../../../icon/sample-workspace.png';
 
@@ -50,6 +53,11 @@ interface WsItemProps {
 }
 
 export default function WsItem({ ws }: { ws: WsItemProps }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const submitHandler = () => {
+    dispatch(selectWork(ws.id, navigate));
+  };
   return (
     <Item key={ws.id}>
       <ItemInfoLayer>
@@ -65,7 +73,7 @@ export default function WsItem({ ws }: { ws: WsItemProps }) {
         text="Let's Snack"
         borderRadius="5px"
         light={true}
-        submitHandler={() => console.log('enter workspace')}
+        submitHandler={submitHandler}
       ></SubmitButton>
     </Item>
   );

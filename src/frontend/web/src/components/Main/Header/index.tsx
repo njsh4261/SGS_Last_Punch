@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../modules';
 import styled from 'styled-components';
 import MainHeaderFrame from '../../Common/MainHeaderFrame';
 import SearchContainer from './Search';
@@ -27,13 +29,13 @@ const Hright = styled.article`
 `;
 
 export default function MainHeader() {
-  const dummyWorkspace = 'dummy ws name';
+  const wsName = useSelector((state: RootState) => state.work.name);
   return (
     <MainHeaderFrame>
       <Hside>
         <HhistoryIcon></HhistoryIcon>
       </Hside>
-      <SearchContainer workspaceName={dummyWorkspace}></SearchContainer>
+      <SearchContainer workspaceName={wsName}></SearchContainer>
       <Hright>memeber</Hright>
     </MainHeaderFrame>
   );

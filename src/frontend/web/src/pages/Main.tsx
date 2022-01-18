@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import MainHeader from '../components/Main/Header';
 import Chat from '../components/Main/Chat';
 import Aside from '../components/Main/Aside';
+import { useParams } from 'react-router-dom';
 
 const MainLayout = styled.div`
   display: flex;
@@ -16,12 +17,23 @@ const Body = styled.div`
 `;
 
 export default function Main() {
+  // useParams: { wsId: string; channelId: string; noteId?: string}
+  // useEffect(): get workspace, member, channel Info.
+  const params = useParams();
+  useEffect(() => {
+    if (!params.channelId) document.title = params.wsId as string;
+  }, [params]);
+
   return (
     <MainLayout>
       <MainHeader></MainHeader>
       <Body>
         <Aside></Aside>
-        <Chat></Chat>
+        {params.channelId ? (
+          <Chat></Chat>
+        ) : (
+          <div>this is main page. select channel!</div>
+        )}
       </Body>
     </MainLayout>
   );

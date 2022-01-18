@@ -27,13 +27,13 @@ export default function LoginEmailContainer() {
 
     //// 임시코드 -> 나중에 삭제 필요!!!!!
     sessionStorage.setItem('jwt', 'dump');
-    location.reload();
+    location.href = 'http://localhost:3000';
     ////// 나중에 반드시 삭제!!!!!
 
     if (data) {
       const { accessToken, refreshToken } = data;
       sessionStorage.setItem(accessToken, refreshToken);
-      location.reload();
+      location.href = 'http://localhost:3000';
     } else {
       alert('로그인 실패');
     }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import MainHeaderFrame from '../components/Common/MainHeaderFrame';
 import MainAsideFrame from '../components/Common/MainAsideFrame';
@@ -43,6 +43,10 @@ export default function WsCreator() {
     if (e.target.name === 'ws') setWsName(e.target.value);
     if (e.target.name === 'channel') setChannelName(e.target.value);
   };
+
+  useEffect(() => {
+    document.title = 'create snack!';
+  }, []);
 
   return (
     <PageLayout>

@@ -3,20 +3,12 @@ package lastpunch.workspace.controller;
 import lastpunch.workspace.common.Response;
 import lastpunch.workspace.common.ServerCode;
 import lastpunch.workspace.entity.Channel;
-import lastpunch.workspace.entity.Channel.ImportDto;
 import lastpunch.workspace.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/channel")
@@ -49,7 +41,7 @@ public class ChannelController{
     @PutMapping("/{id}")
     public ResponseEntity<Object> edit(
             @PathVariable("id") Long id, @RequestBody Channel.ImportDto channelImportDto){
-        channelService.edit(channelImportDto, id);
+        channelService.edit(id, channelImportDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
     

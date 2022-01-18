@@ -1,5 +1,6 @@
 package lastpunch.workspace.entity;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.sun.istack.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -59,7 +60,15 @@ public class Workspace{
         private String description;
         private Integer settings;
         private Integer status; // TODO: converter 문제 해결 시 String으로
-    
+
+        @QueryProjection
+        public ImportDto(String name, String description, Integer settings, Integer status) {
+            this.name = name;
+            this.description = description;
+            this.settings = settings;
+            this.status = status;
+        }
+
         public Workspace toEntity(){
             settings = (settings == null) ? 0 : settings;
             status = (status == null) ? 0 : status;
@@ -74,19 +83,16 @@ public class Workspace{
         public Workspace changeValues(Workspace workspace){
             return Workspace.builder()
                 .id(workspace.getId())
-                .name((name == null) ? workspace.getName() : name)
-                .description((description == null) ? workspace.getDescription() : description)
-                .settings((settings == null) ? workspace.getSettings() : settings)
-                .status((status == null) ? workspace.getStatus() : status)
-                .createdt(workspace.getCreatedt())
-                .modifydt(workspace.getModifydt())
+                .name(name)
+                .description(description)
+                .settings(settings)
+                .status(status)
                 .build();
         }
     }
     
     @Getter
     @Builder
-    @AllArgsConstructor
     public static class ExportDto{
         private Long id;
         private String name;
@@ -96,6 +102,18 @@ public class Workspace{
         private Integer status;
         private LocalDateTime createdt;
         private LocalDateTime modifydt;
+
+        @QueryProjection
+        public ExportDto(Long id, String name, String description, Integer settings, Integer status,
+                         LocalDateTime createdt, LocalDateTime modifydt) {
+            this.id = id;
+            this.name = name;
+            this.description = description;
+            this.settings = settings;
+            this.status = status;
+            this.createdt = createdt;
+            this.modifydt = modifydt;
+        }
     }
     
     public ExportDto export(){

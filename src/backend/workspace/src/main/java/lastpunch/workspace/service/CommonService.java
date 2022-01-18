@@ -10,7 +10,7 @@ import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.entity.Account;
 import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.entity.Workspace;
-import lastpunch.workspace.repository.account.AccountRepository;
+import lastpunch.workspace.repository.AccountRepository;
 import lastpunch.workspace.repository.workspace.WorkspaceRepository;
 
 @Service

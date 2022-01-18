@@ -1,9 +1,13 @@
 package lastpunch.workspace.repository.workspace;
 
-import java.util.List;
+import lastpunch.workspace.entity.Account;
+import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.entity.Workspace;
-import lastpunch.workspace.entity.Workspace.ExportDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface WorkspaceRepositoryCustom{
-    public ExportDto getOneWorkspace(Long id);
+    Page<Workspace.ExportDto> getListWithUserId(Long id, Pageable pageable);
+    Page<Account.ExportDto> getMembers(Long id, Pageable pageable);
+    Page<Channel.ExportDto> getChannels(Long id, Pageable pageable);
 }

@@ -2,7 +2,6 @@ package lastpunch.workspace.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,7 +30,7 @@ public class AccountWorkspace{
     
     @Getter
     @Builder
-    public static class ImportDto{
+    public static class Dto {
         private Long accountId;
         private Long workspaceId;
     }

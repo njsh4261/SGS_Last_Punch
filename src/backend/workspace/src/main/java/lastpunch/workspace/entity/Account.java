@@ -83,6 +83,24 @@ public class Account{
         private String status;
         private LocalDateTime createdt;
         private LocalDateTime modifydt;
+
+        @QueryProjection
+        public ExportDto(Long id, String email, String name, String displayname, String description,
+                         String phone, String country, String language, Integer settings, String status,
+                         LocalDateTime createdt, LocalDateTime modifydt) {
+            this.id = id;
+            this.email = email;
+            this.name = name;
+            this.displayname = displayname;
+            this.description = description;
+            this.phone = phone;
+            this.country = country;
+            this.language = language;
+            this.settings = settings;
+            this.status = status;
+            this.createdt = createdt;
+            this.modifydt = modifydt;
+        }
     }
     
     public ExportDto export(){

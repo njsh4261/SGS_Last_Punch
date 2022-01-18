@@ -1,6 +1,6 @@
 package lastpunch.workspace.controller;
 
-import lastpunch.workspace.entity.AccountWorkspace;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lastpunch.workspace.common.Response;
 import lastpunch.workspace.common.ServerCode;
+import lastpunch.workspace.entity.AccountWorkspace;
 import lastpunch.workspace.service.AccountWorkspaceService;
 
 @RestController
@@ -17,21 +18,19 @@ import lastpunch.workspace.service.AccountWorkspaceService;
 public class AccountWorkspaceController{
     private final AccountWorkspaceService accountWorkspaceService;
 
+    @Autowired
     public AccountWorkspaceController(AccountWorkspaceService accountWorkspaceService) {
         this.accountWorkspaceService = accountWorkspaceService;
     }
 
     @PostMapping
-    public ResponseEntity<Object> addNewMember(
-            @RequestBody AccountWorkspace.ImportDto accountWorkspaceDto){
-        // TODO: 논의할 거리 - 새로운 멤버를 워크스페이스에 추가한 뒤 db에서 업데이트된 멤버 목록을 가져올 것인가?
-        accountWorkspaceService.addNewMember(accountWorkspaceDto);
+    public ResponseEntity<Object> add(@RequestBody AccountWorkspace.Dto accountWorkspaceDto){
+        accountWorkspaceService.addMember(accountWorkspaceDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
 
     @DeleteMapping
-    public ResponseEntity<Object> deleteMember(
-            @RequestBody AccountWorkspace.ImportDto accountWorkspaceDto){
+    public ResponseEntity<Object> delete(@RequestBody AccountWorkspace.Dto accountWorkspaceDto){
         accountWorkspaceService.deleteMember(accountWorkspaceDto);
         return Response.ok(ServerCode.WORKSPACE);
     }

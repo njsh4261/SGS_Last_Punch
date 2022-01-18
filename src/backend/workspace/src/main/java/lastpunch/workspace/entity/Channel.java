@@ -1,5 +1,6 @@
 package lastpunch.workspace.entity;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.sun.istack.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -76,14 +77,18 @@ public class Channel{
         private String description;
         private Integer settings;
         private Integer status;
+
+        public boolean isEmpty(){
+            return (workspaceId == null) && (creatorId == null) && (name == null) && (topic == null)
+                    && (description == null) && (settings == null) && (status == null);
+        }
     }
     
     @Getter
-    @Builder
     public static class ExportDto{
         private Long id;
         private Long workspaceId; // TODO: 필요에 따라 WorkspaceExportDto로 변경
-        private Account.ExportDto account; // TODO: 필요에 따라 더 적은 정보만을 전달
+        private Account.ExportDto creator; // TODO: 필요에 따라 더 적은 정보만을 전달
         private String name;
         private String topic;
         private String description;
@@ -91,20 +96,28 @@ public class Channel{
         private Integer status;
         private LocalDateTime createDt;
         private LocalDateTime modifyDt;
+
+        @QueryProjection
+        public ExportDto(Long id, Workspace workspace, Account account, String name, String topic,
+                         String description, Integer settings, Integer status,
+                         LocalDateTime createDt, LocalDateTime modifyDt) {
+            this.id = id;
+            this.workspaceId = workspace.getId();
+            this.creator = account.export();
+            this.name = name;
+            this.topic = topic;
+            this.description = description;
+            this.settings = settings;
+            this.status = status;
+            this.createDt = createDt;
+            this.modifyDt = modifyDt;
+        }
     }
     
     public ExportDto export(){
-        return ExportDto.builder()
-            .id(id)
-            .workspaceId(workspace.getId())
-            .account(account.export())
-            .name(name)
-            .topic(topic)
-            .description(description)
-            .settings(settings)
-            .status(status)
-            .createDt(createdt)
-            .modifyDt(modifydt)
-            .build();
+        return new ExportDto(
+                id, workspace, account, name, topic, description,
+                settings, status, createdt, modifydt
+        );
     }
 }

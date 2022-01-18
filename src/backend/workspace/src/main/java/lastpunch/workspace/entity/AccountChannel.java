@@ -26,21 +26,21 @@ public class AccountChannel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne(targetEntity= Account.class, fetch= FetchType.LAZY)
+    @ManyToOne(targetEntity = Account.class, fetch = FetchType.LAZY)
     @JoinColumn(name="accountid")
     private Account account;
     
-    @ManyToOne(targetEntity=Channel.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Channel.class, fetch = FetchType.LAZY)
     @JoinColumn(name="channelid")
     private Channel channel;
     
-    @ManyToOne(targetEntity=Role.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Role.class, fetch = FetchType.LAZY)
     @JoinColumn(name="roleid")
     private Role role;
     
     @Getter
     @Builder
-    public static class ImportDto{
+    public static class Dto {
         private Long accountId;
         private Long channelId;
         private Long roleId;

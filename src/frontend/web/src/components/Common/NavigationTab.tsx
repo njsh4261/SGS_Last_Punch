@@ -26,7 +26,7 @@ const NavItem = styled.section<{ selected: boolean }>`
   `}
 `;
 
-export default function Navigation() {
+export default function NavigationTab() {
   const navigate = useNavigate();
 
   // dummy

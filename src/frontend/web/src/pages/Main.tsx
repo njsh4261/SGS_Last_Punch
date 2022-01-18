@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import MainHeader from '../components/Main/Header';
 import Chat from '../components/Main/Chat';
-import Note from './Note';
 import Aside from '../components/Main/Aside';
 import { useParams } from 'react-router-dom';
 
@@ -31,11 +30,7 @@ export default function Main() {
       <Body>
         <Aside></Aside>
         {params.channelId ? (
-          params.noteId ? (
-            <Note></Note>
-          ) : (
-            <Chat></Chat>
-          )
+          <Chat></Chat>
         ) : (
           <div>this is main page. select channel!</div>
         )}

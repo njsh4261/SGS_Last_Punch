@@ -3,6 +3,8 @@ import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Main from '../pages/Main';
 import Welcome from '../pages/Welcome';
 import WsCreator from '../pages/CreateWs';
+import Note from '../pages/Note';
+import Task from '../pages/Task';
 
 export default function PrivateRoute() {
   return (
@@ -13,8 +15,8 @@ export default function PrivateRoute() {
       <Route path="/:wsId" element={<Outlet></Outlet>}>
         <Route path="" element={<Main></Main>}></Route>
         <Route path=":channelId" element={<Main></Main>}>
-          <Route path="note/:noteId" element={<Main></Main>}></Route>
-          <Route path="task/:taskId" element={<Main></Main>}></Route>
+          <Route path="note/:noteId" element={<Note></Note>}></Route>
+          <Route path="task/:taskId" element={<Task></Task>}></Route>
         </Route>
       </Route>
 

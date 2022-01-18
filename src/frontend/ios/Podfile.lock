@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.5.0)
   - Differentiator (5.0.0)
   - Firebase/Analytics (8.10.0):
     - Firebase/Core
@@ -115,6 +116,7 @@ PODS:
   - Then (2.7.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 5.5)
   - Firebase/Analytics
   - Firebase/Messaging
   - ProgressHUD
@@ -126,6 +128,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - Differentiator
     - Firebase
     - FirebaseAnalytics
@@ -147,6 +150,7 @@ SPEC REPOS:
     - Then
 
 SPEC CHECKSUMS:
+  Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   Firebase: 44213362f1dcc52555b935dc925ed35ac55f1b20
   FirebaseAnalytics: 319c9b3b1bdd400d60e2f415dff0c5f6959e6760
@@ -167,6 +171,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: 9c123c9d078949001487df321342019da3158797
+PODFILE CHECKSUM: 68b91fa53e62d5c71a9d5389d20006b93ba3be54
 
 COCOAPODS: 1.11.2

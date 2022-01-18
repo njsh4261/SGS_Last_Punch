@@ -12,6 +12,7 @@ target 'Snack' do
   pod 'Then'
   pod 'ProgressHUD'
   pod 'RxDataSources', '~> 5.0'
+  pod 'Alamofire', '~> 5.5'
 
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'

@@ -69,7 +69,7 @@ public class Channel{
     List<AccountChannel> accounts;
     
     @Getter
-    public class CreateDto {
+    public static class CreateDto{
         private Long workspaceId;
         private Long creatorId;
         private String name;
@@ -91,7 +91,7 @@ public class Channel{
         }
     }
     
-    public class EditDto{
+    public static class EditDto{
         private String name;
         private String topic;
         private String description;
@@ -109,7 +109,7 @@ public class Channel{
     }
     
     @Getter
-    public class ExportDto{
+    public static class ExportDto{
         private Long id;
         private Workspace.ExportDto workspace;
         private Account.ExportDto creator;

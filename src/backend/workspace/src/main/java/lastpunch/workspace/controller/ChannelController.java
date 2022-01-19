@@ -29,14 +29,13 @@ public class ChannelController{
     
     @GetMapping("/{id}/members")
     public ResponseEntity<Object> getMembers(
-            @PathVariable("id") Long id, @PageableDefault(page = PAGESIZE) Pageable pageable){
+            @PathVariable("id") Long id, @PageableDefault(size = PAGESIZE) Pageable pageable){
         return Response.ok(ServerCode.WORKSPACE, channelService.getMembers(id, pageable));
     }
     
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody CreateDto channelCreateDto){
-        channelService.create(channelCreateDto);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, channelService.create(channelCreateDto));
     }
     
     @PutMapping("/{id}")

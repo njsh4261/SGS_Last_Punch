@@ -1,6 +1,6 @@
 package lastpunch.workspace.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,5 +29,5 @@ public class Role{
     private String name;
     
     @OneToMany(mappedBy = "role", orphanRemoval = true)
-    Set<AccountChannel> accountChannels;
+    List<AccountChannel> accountChannels;
 }

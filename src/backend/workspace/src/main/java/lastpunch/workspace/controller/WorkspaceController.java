@@ -48,8 +48,7 @@ public class WorkspaceController{
 
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody Workspace.CreateDto createDto){
-        workspaceService.create(createDto);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, workspaceService.create(createDto));
     }
 
     @PutMapping("/{id}")

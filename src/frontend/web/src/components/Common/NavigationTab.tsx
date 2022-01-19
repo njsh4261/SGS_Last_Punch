@@ -6,6 +6,7 @@ const NavContainer = styled.nav`
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.color.lightGrey};
   display: flex;
+  cursor: pointer;
 `;
 
 const NavItem = styled.section<{ selected: boolean }>`

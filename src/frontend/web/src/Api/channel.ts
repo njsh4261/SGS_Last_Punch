@@ -2,13 +2,13 @@ import axios from 'axios';
 import { HOST, ERROR_MESSAGE } from '../constant';
 
 interface ICreate {
-  workspaceId: string;
-  creatorId: string;
+  workspaceId: number;
+  creatorId?: number;
   name: string;
-  topic: string;
+  topic?: string;
   description: string;
-  settings: number;
-  status: number;
+  settings?: number;
+  status?: number;
 }
 
 export async function getChannelInfoAPI(channelId: string) {
@@ -23,13 +23,30 @@ export async function getChannelInfoAPI(channelId: string) {
   }
 }
 
-export async function createChannelAPI(data: ICreate) {
+export async function createChannelAPI({
+  workspaceId,
+  creatorId = 1,
+  name,
+  topic = 'default',
+  description,
+  settings = 1,
+  status = 2,
+}: ICreate) {
   const endpoint = `/channel`;
-
+  const data = {
+    workspaceId,
+    creatorId,
+    name,
+    topic,
+    description,
+    settings,
+    status,
+  };
+  console.log(data);
   try {
     const response = await axios.post(HOST + endpoint, data);
     if (response.status !== 200) throw new Error(ERROR_MESSAGE.WORKSPACE.LIST);
-    return response.data.data;
+    return true;
   } catch (e) {
     return false;
   }

@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../../../modules';
+import { openModal } from '../../../../modules/modal';
 import expandIcon from '../../../../icon/downArrow.svg';
 import ImageButton from '../../../Common/ImageButton';
+import Modal from './Modal';
 
 const ToggleType = styled.section`
   padding: 8px 0px;
@@ -70,8 +74,13 @@ export default function ToggleList({
   selectHandler,
   type,
 }: Props) {
+  const dispatch = useDispatch();
+  const modalActive = useSelector((state: RootState) => state.modal.active);
+  const openModalHandler = () => dispatch(openModal());
+
   return (
     <ToggleType>
+      {modalActive && <Modal></Modal>}
       <Text htmlFor={`${type}-toggle`}>
         <Flex>
           <ImageButton
@@ -94,7 +103,7 @@ export default function ToggleList({
             #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
           </ChannelItem>
         ))}
-        <ChannelItem>
+        <ChannelItem onClick={openModalHandler}>
           <PlusIcon>+</PlusIcon>
           <PaddingLeft8px>{type} 추가</PaddingLeft8px>
         </ChannelItem>

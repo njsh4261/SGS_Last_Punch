@@ -42,7 +42,7 @@ export async function createChannelAPI({
     settings,
     status,
   };
-  console.log(data);
+
   try {
     const response = await axios.post(HOST + endpoint, data);
     if (response.status !== 200) throw new Error(ERROR_MESSAGE.WORKSPACE.LIST);

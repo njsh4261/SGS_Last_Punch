@@ -1,57 +1,51 @@
 import { NavigateFunction } from 'react-router-dom';
-import { call, put, takeLeading } from 'redux-saga/effects';
+import { put, takeLeading } from 'redux-saga/effects';
 
 const SELECT_WORK = 'workspace/select';
 const SELECT_WORK_SUCCESS = 'workspace/success';
 const SELECT_WORK_FAILURE = 'workspace/failure';
 
 type WorkState = {
-  id: string;
+  id: number;
   name: string;
   loading: boolean;
   error: boolean;
 };
 
-export const selectWork = (id: string, navigate: NavigateFunction) => ({
+export const selectWork = (
+  id: number,
+  name: string,
+  navigate: NavigateFunction,
+) => ({
   type: SELECT_WORK,
   id,
-  name: '',
+  name,
   navigate,
 });
 
 type WorkAction = ReturnType<typeof selectWork>;
 
 const initWorkState: WorkState = {
-  id: 'workInit1',
+  id: 1351,
   name: 'default workspace',
   loading: false,
   error: false,
 };
 
 function* selectWorkSaga(action: WorkAction) {
-  // dummy api
-  const dummyApi = (id: string): Promise<{ id: string; name: string }> => {
-    return new Promise((res) => {
-      setTimeout(() => {
-        res({
-          id,
-          name: `workspace id: ${id}`,
-        });
-      }, 100);
-    });
-  };
   try {
-    const work: WorkAction = yield call(dummyApi, action.id);
     yield put({
       type: SELECT_WORK_SUCCESS,
-      id: work.id,
-      name: work.name,
+      id: action.id,
+      name: action.name,
     });
-    action.navigate(work.id);
+    action.navigate('/' + action.id.toString());
   } catch (e) {
+    console.error(e);
     yield put({
       type: SELECT_WORK_FAILURE,
     });
+    alert('error!');
   }
 }
 

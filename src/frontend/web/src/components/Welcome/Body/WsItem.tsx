@@ -46,25 +46,26 @@ const WorkSpaceMembers = styled.section`
   font-size: 14px;
 `;
 
-interface WsItemProps {
-  id: string;
+export interface WsItemProps {
+  id: number; // todo: 바뀔수 있음
   name: string;
-  members: string[];
+  description: string | null;
+  setting: number;
+  status: number;
 }
 
 export default function WsItem({ ws }: { ws: WsItemProps }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const submitHandler = () => {
-    dispatch(selectWork(ws.id, navigate));
-  };
+  const submitHandler = () => dispatch(selectWork(ws.id, navigate));
+
   return (
     <Item key={ws.id}>
       <ItemInfoLayer>
         <WorkSpaceImage></WorkSpaceImage>
         <WorkSpaceInfo>
           <WorkSpaceName>{ws.name}</WorkSpaceName>
-          <WorkSpaceMembers>{ws.members.length}의 멤버</WorkSpaceMembers>
+          <WorkSpaceMembers>x명의 멤버</WorkSpaceMembers>
         </WorkSpaceInfo>
       </ItemInfoLayer>
       <SubmitButton

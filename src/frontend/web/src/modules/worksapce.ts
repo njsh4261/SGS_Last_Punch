@@ -6,13 +6,13 @@ const SELECT_WORK_SUCCESS = 'workspace/success';
 const SELECT_WORK_FAILURE = 'workspace/failure';
 
 type WorkState = {
-  id: string;
+  id: number;
   name: string;
   loading: boolean;
   error: boolean;
 };
 
-export const selectWork = (id: string, navigate: NavigateFunction) => ({
+export const selectWork = (id: number, navigate: NavigateFunction) => ({
   type: SELECT_WORK,
   id,
   name: '',
@@ -22,7 +22,7 @@ export const selectWork = (id: string, navigate: NavigateFunction) => ({
 type WorkAction = ReturnType<typeof selectWork>;
 
 const initWorkState: WorkState = {
-  id: 'workInit1',
+  id: 1351,
   name: 'default workspace',
   loading: false,
   error: false,
@@ -30,7 +30,7 @@ const initWorkState: WorkState = {
 
 function* selectWorkSaga(action: WorkAction) {
   // dummy api
-  const dummyApi = (id: string): Promise<{ id: string; name: string }> => {
+  const dummyApi = (id: number): Promise<{ id: number; name: string }> => {
     return new Promise((res) => {
       setTimeout(() => {
         res({
@@ -47,7 +47,7 @@ function* selectWorkSaga(action: WorkAction) {
       id: work.id,
       name: work.name,
     });
-    action.navigate(work.id);
+    action.navigate(work.id.toString());
   } catch (e) {
     yield put({
       type: SELECT_WORK_FAILURE,

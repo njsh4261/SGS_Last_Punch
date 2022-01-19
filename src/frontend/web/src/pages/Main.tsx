@@ -29,14 +29,16 @@ export default function Main() {
     const workspaceId = Number(params.wsId);
     const { workspace } = await getWsInfoAPI(workspaceId);
 
-    if (!params.channelId) document.title = workspace.name;
-
     dispatch(selectWork(workspace.id, workspace.name, navigate));
   };
 
   useEffect(() => {
     getWsInfo();
   }, []);
+
+  useEffect(() => {
+    if (!params.channelId) document.title = params.wsId as string;
+  }, [params]);
 
   return (
     <MainLayout>

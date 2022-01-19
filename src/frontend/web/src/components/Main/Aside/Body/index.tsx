@@ -55,6 +55,10 @@ export default function AsideBody() {
     getChannelsNMembers();
   }, []);
 
+  useEffect(() => {
+    if (params.channelId) document.title = params.channelId as string;
+  }, [params]);
+
   return (
     <Container>
       <SecitonType>

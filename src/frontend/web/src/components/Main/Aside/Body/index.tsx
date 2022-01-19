@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectChannel } from '../../../../modules/channel';
 import ToggleList, { Text } from './ToggleList';
-import { getChannelsAPI } from '../../../../Api/workspace';
+import { getChannelsAPI, getMembersAPI } from '../../../../Api/workspace';
 
 const Container = styled.article`
   padding-top: 8px;
@@ -24,17 +24,10 @@ const SecitonType = styled.section`
 
 export default function AsideBody() {
   const [channelList, setChannelList] = useState([]);
+  const [memberList, setMemberList] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // dummy data
-  const dmList = [
-    { id: 'dm1', name: '김지수', userId: 'sd2' },
-    { id: 'dm2', name: '김지효', userId: 'asa2' },
-    { id: 'dm3', name: '김건형', userId: 'sdsds' },
-    { id: 'dm4', name: '나', userId: 'avdnsk3' },
-  ];
 
   const selectHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const channel = e.currentTarget;
@@ -47,7 +40,8 @@ export default function AsideBody() {
   const getChannelsNMembers = async () => {
     const workspaceId = Number(params.wsId);
     const { channels } = await getChannelsAPI(workspaceId);
-    // const { memebers } = await getMembersAPI(workspaceId); // 현재 undefined
+    const { members } = await getMembersAPI(workspaceId);
+    setMemberList(members.content);
     setChannelList(channels.content);
   };
 
@@ -70,7 +64,7 @@ export default function AsideBody() {
         type="channel"
       ></ToggleList>
       <ToggleList
-        channelList={dmList}
+        channelList={memberList}
         selectHandler={selectHandler}
         type="direct message"
       ></ToggleList>

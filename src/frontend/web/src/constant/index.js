@@ -6,5 +6,6 @@ export const ERROR_MESSAGE = {
     INFO: 'get workspace info fail',
     MEMBERS: 'get workspace members fail',
     CHANNELS: 'get workspace channels fail',
+    CREATE: 'create workspace fail',
   },
 };

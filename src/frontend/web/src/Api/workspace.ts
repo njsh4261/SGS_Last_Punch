@@ -25,6 +25,7 @@ export async function getWsInfoAPI(wsId: number) {
     return false;
   }
 }
+
 export async function getMembersAPI(wsId: number) {
   const endpoint = `/workspace/${wsId}/members`;
 
@@ -37,6 +38,7 @@ export async function getMembersAPI(wsId: number) {
     return false;
   }
 }
+
 export async function getChannelsAPI(wsId: number) {
   const endpoint = `/workspace/${wsId}/channels`;
 
@@ -45,6 +47,25 @@ export async function getChannelsAPI(wsId: number) {
     if (response.status !== 200)
       throw new Error(ERROR_MESSAGE.WORKSPACE.CHANNELS);
     return response.data.data;
+  } catch (e) {
+    return false;
+  }
+}
+
+export async function createWsAPI(wsName: string) {
+  const endpoint = `/workspace`;
+  const data = {
+    name: wsName,
+    description: '',
+    settings: 0,
+    status: 1,
+  };
+
+  try {
+    const response = await axios.post(HOST + endpoint, data);
+    if (response.status !== 200)
+      throw new Error(ERROR_MESSAGE.WORKSPACE.CREATE);
+    return response;
   } catch (e) {
     return false;
   }

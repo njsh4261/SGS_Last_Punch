@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { selectChannel } from '../../../../modules/channel';
 import ToggleList, { Text } from './ToggleList';
+import { getChannelsAPI } from '../../../../Api/workspace';
 
 const Container = styled.article`
   padding-top: 8px;
@@ -22,15 +23,12 @@ const SecitonType = styled.section`
 `;
 
 export default function AsideBody() {
+  const [channelList, setChannelList] = useState([]);
+  const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // dummy data
-  const channelList = [
-    { id: 'ss1', name: '공지' },
-    { id: '2a', name: '수다방' },
-    { id: '3zz', name: '회의록' },
-  ];
   const dmList = [
     { id: 'dm1', name: '김지수', userId: 'sd2' },
     { id: 'dm2', name: '김지효', userId: 'asa2' },
@@ -45,6 +43,17 @@ export default function AsideBody() {
     );
     document.title = channel.id;
   };
+
+  const getChannelsNMembers = async () => {
+    const workspaceId = Number(params.wsId);
+    const { channels } = await getChannelsAPI(workspaceId);
+    // const { memebers } = await getMembersAPI(workspaceId); // 현재 undefined
+    setChannelList(channels.content);
+  };
+
+  useEffect(() => {
+    getChannelsNMembers();
+  }, []);
 
   return (
     <Container>

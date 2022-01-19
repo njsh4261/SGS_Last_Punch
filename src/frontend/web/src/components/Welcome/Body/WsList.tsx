@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import expand from '../../../icon/expand.svg';
-import WsItem, { WsItemProps } from './WsItem';
-import { getList } from '../../../Api/workspace';
+import WsItem from './WsItem';
+import { IWorkspace } from '../../../../types/workspace.type';
+import { getWsListAPI } from '../../../Api/workspace';
 
 const Container = styled.section`
   border: 4px solid rgba(255, 255, 255, 0.2);
@@ -64,13 +65,13 @@ const ShowMoreIcon = styled.div`
 export default function WsList() {
   const [wsList, setWsList] = useState([]);
 
-  const getListAPI = async () => {
-    const { workspaces } = await getList('1'); // dummy userId
+  const getWsList = async () => {
+    const { workspaces } = await getWsListAPI('1'); // dummy userId
     setWsList(workspaces.content);
   };
 
   useEffect(() => {
-    getListAPI();
+    getWsList();
   }, []);
 
   return (
@@ -78,7 +79,7 @@ export default function WsList() {
       <Box>
         <BoxHeader>워크스페이스 목록</BoxHeader>
         <BoxContent>
-          {wsList.map((ws: WsItemProps) => (
+          {wsList.map((ws: IWorkspace) => (
             <WsItem ws={ws} key={ws.id}></WsItem>
           ))}
           <ShowMore>

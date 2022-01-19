@@ -9,7 +9,7 @@ export default function Aside() {
   const wsName = useSelector((state: RootState) => state.work.name);
   return (
     <MainAsideFrame>
-      <AsideHeader>{wsName} tttttttttttttttt tttttttttttttttt</AsideHeader>
+      <AsideHeader>{wsName}</AsideHeader>
       <AsideBody></AsideBody>
     </MainAsideFrame>
   );

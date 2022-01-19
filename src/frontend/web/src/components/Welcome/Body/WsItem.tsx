@@ -1,10 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { selectWork } from '../../../modules/worksapce';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import SubmitButton from '../../Common/SubmitButton';
 import sampleImage from '../../../icon/sample-workspace.png';
+import { IWorkspace } from '../../../../types/workspace.type';
 
 const Item = styled.section`
   display: flex;
@@ -46,18 +45,9 @@ const WorkSpaceMembers = styled.section`
   font-size: 14px;
 `;
 
-export interface WsItemProps {
-  id: number; // todo: 바뀔수 있음
-  name: string;
-  description: string | null;
-  setting: number;
-  status: number;
-}
-
-export default function WsItem({ ws }: { ws: WsItemProps }) {
+export default function WsItem({ ws }: { ws: IWorkspace }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const submitHandler = () => dispatch(selectWork(ws.id, navigate));
+  const submitHandler = () => navigate('/' + ws.id);
 
   return (
     <Item key={ws.id}>

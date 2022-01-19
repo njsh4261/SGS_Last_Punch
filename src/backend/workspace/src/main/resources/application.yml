@@ -1,5 +1,5 @@
 server:
-  port: [chanege_here]
+  port: 8080
   error:
     whitelabel:
       enabled: false
@@ -7,9 +7,9 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: [chanege_here]
-    username: [chanege_here]
-    password: [chanege_here]
+    url: jdbc:mysql://localhost:3306/[your_db_name]
+    username: [your_db_username]
+    password: [your_db_password]
   jpa:
     show-sql: true
     hibernate:

@@ -1,6 +1,6 @@
-import { NavigateFunction } from 'react-router-dom';
 import { takeLeading, call, put } from 'redux-saga/effects';
 import { getChannelInfoAPI } from '../Api/channel';
+import { IChannel } from '../../types/channel.type';
 
 const SELECT_CAHNNEL = 'channel/select';
 const SELECT_CHANNEL_SUCCESS = 'channel/success';
@@ -13,15 +13,10 @@ type ChannelState = {
   error: boolean;
 };
 
-export const selectChannel = (
-  id: string,
-  name = '',
-  // navigate: NavigateFunction,
-) => ({
+export const selectChannel = (id: string, name = '') => ({
   type: SELECT_CAHNNEL,
   id,
   name,
-  // navigate,
 });
 
 type ChannelAction = ReturnType<typeof selectChannel>;
@@ -33,19 +28,9 @@ const initChannelState: ChannelState = {
   error: false,
 };
 
-type ChannelInfo = {
-  id: number;
-  name: string;
-  workspaceId: number;
-  creator: any;
-  topic: string;
-  status: number;
-  settings: number;
-};
-
 function* selectChannelSaga(action: ChannelAction) {
   try {
-    const { channel }: { channel: ChannelInfo } = yield call(
+    const { channel }: { channel: IChannel } = yield call(
       getChannelInfoAPI,
       action.id,
     );
@@ -54,9 +39,6 @@ function* selectChannelSaga(action: ChannelAction) {
       id: channel.id,
       name: channel.name,
     });
-    // action.navigate('../' + channel.id, {
-    //   state: { channelName: channel.name },
-    // });
   } catch (e) {
     yield put({
       type: SELECT_CHANNEL_FAILURE,

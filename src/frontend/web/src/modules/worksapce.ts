@@ -1,5 +1,5 @@
-import { NavigateFunction } from 'react-router-dom';
-import { put, takeLeading } from 'redux-saga/effects';
+import { call, put, takeLeading } from 'redux-saga/effects';
+import { getWsInfoAPI } from '../Api/workspace';
 
 const SELECT_WORK = 'workspace/select';
 const SELECT_WORK_SUCCESS = 'workspace/success';
@@ -12,15 +12,10 @@ type WorkState = {
   error: boolean;
 };
 
-export const selectWork = (
-  id: number,
-  name: string,
-  navigate: NavigateFunction,
-) => ({
+export const selectWork = (id: number, name = '') => ({
   type: SELECT_WORK,
   id,
   name,
-  navigate,
 });
 
 type WorkAction = ReturnType<typeof selectWork>;
@@ -34,12 +29,15 @@ const initWorkState: WorkState = {
 
 function* selectWorkSaga(action: WorkAction) {
   try {
+    const { workspace }: { workspace: WorkAction } = yield call(
+      getWsInfoAPI,
+      action.id,
+    );
     yield put({
       type: SELECT_WORK_SUCCESS,
-      id: action.id,
-      name: action.name,
+      id: workspace.id,
+      name: workspace.name,
     });
-    action.navigate('/' + action.id.toString());
   } catch (e) {
     console.error(e);
     yield put({

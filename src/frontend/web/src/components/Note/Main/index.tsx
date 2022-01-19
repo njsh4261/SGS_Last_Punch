@@ -29,7 +29,24 @@ export default function NoteMain() {
       setNewBlockId(randomId);
     }
 
-    if (e.key === 'ArrowUp') {
+    if (e.key === 'ArrowUp' && index > 0) {
+      const previous = blockList[index - 1];
+      const el = document.getElementById(previous.id);
+      el?.focus();
+    }
+    if (e.key === 'ArrowDown' && index < blockList.length - 1) {
+      const next = blockList[index + 1];
+      const el = document.getElementById(next.id);
+      el?.focus();
+    }
+    if (e.key === 'Backspace' && index > 0) {
+      // todo: 삭제 후 커서 위치 어떻게 할지
+      if (target.value.length < 1) {
+        setBlockList([
+          ...blockList.slice(0, index),
+          ...blockList.slice(index + 1, blockList.length),
+        ]);
+      }
     }
   };
 

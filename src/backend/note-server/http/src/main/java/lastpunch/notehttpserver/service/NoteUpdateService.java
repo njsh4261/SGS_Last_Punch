@@ -2,14 +2,10 @@ package lastpunch.notehttpserver.service;
 
 import com.mongodb.client.result.UpdateResult;
 import java.util.List;
-import java.util.Optional;
-import lastpunch.notehttpserver.dto.BlockDto;
-import lastpunch.notehttpserver.dto.CreateNoteRequest;
+import lastpunch.notehttpserver.dto.Transaction;
 import lastpunch.notehttpserver.dto.UpdateNoteRequest;
 import lastpunch.notehttpserver.entity.Block;
-import lastpunch.notehttpserver.entity.Clock;
 import lastpunch.notehttpserver.entity.Note;
-import lastpunch.notehttpserver.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,37 +20,42 @@ import org.springframework.stereotype.Service;
 public class NoteUpdateService {
     @Autowired
     MongoTemplate mongoTemplate;
-    
+
     public void update(UpdateNoteRequest updateNoteRequest){
-        ObjectId noteId = new ObjectId(updateNoteRequest.getNote_id());
-        List<BlockDto> transactions = updateNoteRequest.getTransactions();
-        
+        ObjectId noteId = new ObjectId(updateNoteRequest.getNoteId());
+        List<Transaction> transactions = updateNoteRequest.getTransactions();
+
         //ToDo: 효율적인 쿼리로 바꾸기 (Bulkwrite?)
-        for (BlockDto block: transactions){
-            Query query = new Query(Criteria.where("_id").is(new ObjectId(updateNoteRequest.getNote_id()))
-                .and("content._id").is(new ObjectId(block.getId()))
-            );
-            Update update = new Update();
-            update.set("content.$.text", block.getText());
-            update.set("content.$.ver", block.getVer());
-   
-            UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Note.class);
-            
-            
-            if (updateResult.getModifiedCount() == 0){
-                Query insertQuery = new Query().addCriteria(Criteria.where( "_id" ).is(new ObjectId(updateNoteRequest.getNote_id())));
-                Update insertUpdate = new Update();
-                Note note = mongoTemplate.findOne(insertQuery, Note.class);
+        //현재 코드는 잘못된 op인지 확인하지 않음
+        for (Transaction transaction: transactions){
+            String blockId = transaction.getId();
+            switch(transaction.getOp()) {
+                case "insert":
+                    Query insertQuery = new Query().addCriteria(Criteria.where( "_id" ).is(noteId));
+                    Note note = mongoTemplate.findOne(insertQuery, Note.class);
+        
+                    if (note != null) {
+                        note.getBlocks().add(transaction.getBlock());
+                        mongoTemplate.save(note);
+                    }
+                    break;
+                
+                case "update":
+                    Query updateQuery = new Query(Criteria.where("_id").is(noteId)
+                        .and("blocks._id").is(blockId));
+                    Update update = new Update();
+                    update.set("blocks.$", transaction.getBlock());
     
-                if (note != null) {
-                    note.getContent().add(block.toEntity());
-                    mongoTemplate.save(note);
-                }
+                    mongoTemplate.updateFirst(updateQuery, update, Note.class);
+                    break;
+                
+                case "delete":
+                    Query deleteQuery = new Query(Criteria.where("_id").is(noteId));
+                    Update deleteUpdate = new Update();
+                    deleteUpdate.pull("blocks", new Query(Criteria.where("_id").is(blockId)));
+                    mongoTemplate.updateFirst(deleteQuery, deleteUpdate, Note.class);
+                    break;
             }
         }
-       
-        
-        
-//        noteRepository.insert(createNoteRequest.toEntity());
     }
 }

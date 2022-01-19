@@ -22,8 +22,9 @@ public class NoteUpdateController {
     
     @PostMapping(value ="/note/save-transactions", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> saveTransactions(@RequestBody UpdateNoteRequest updateNoteRequest){
+        
         noteUpdateService.update(updateNoteRequest);
-        System.out.println("updateNoteRequest = " + updateNoteRequest);
+        
         return Response.toResponseEntity("15000", HttpStatus.OK);
     }
     

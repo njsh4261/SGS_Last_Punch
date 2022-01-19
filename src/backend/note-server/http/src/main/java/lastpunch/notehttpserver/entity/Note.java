@@ -24,10 +24,7 @@ public class Note {
     @NotNull
     private Long channel_id;
     
-    @NotNull
-    private String title;
-    
-    private List<Clock> content;
+    private List<Block> blocks;
     
     private LocalDateTime createdt;
     private LocalDateTime modifydt;

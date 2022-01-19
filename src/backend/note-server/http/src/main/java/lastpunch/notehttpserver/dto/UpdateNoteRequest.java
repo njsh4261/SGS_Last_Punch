@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class UpdateNoteRequest {
-    private String note_id;
-    private List<BlockDto> transactions;
+    private String noteId;
+    private List<Transaction> transactions;
 }

@@ -53,41 +53,55 @@ public class Workspace{
     @OneToMany(mappedBy = "workspace", orphanRemoval = true)
     @BatchSize(size=5)
     List<AccountWorkspace> accounts;
+
+    @Getter
+    public static class CreateDto{
+        private String workspaceName;
+        private String workspaceDescription;
+        private Long channelCreatorId;
+        private String channelName;
+        private String channelTopic;
+        private String channelDescription;
+
+        public Workspace toWorkspaceEntity(){
+            return Workspace.builder()
+                    .name(workspaceName)
+                    .description(workspaceDescription)
+                    .settings(0)
+                    .status(0)
+                    .createdt(LocalDateTime.now())
+                    .modifydt(LocalDateTime.now())
+                    .build();
+        }
+
+        public Channel toChannelEntity(Workspace workspace, Account account){
+            return Channel.builder()
+                    .workspace(workspace)
+                    .account(account)
+                    .name(channelName)
+                    .topic(channelTopic)
+                    .description(channelDescription)
+                    .settings(0)
+                    .status(0)
+                    .createdt(LocalDateTime.now())
+                    .modifydt(LocalDateTime.now())
+                    .build();
+        }
+    }
     
     @Getter
-    public static class ImportDto{
+    public static class EditDto {
         private String name;
         private String description;
         private Integer settings;
         private Integer status; // TODO: converter 문제 해결 시 String으로
-
-        @QueryProjection
-        public ImportDto(String name, String description, Integer settings, Integer status) {
-            this.name = name;
-            this.description = description;
-            this.settings = settings;
-            this.status = status;
-        }
-
-        public Workspace toEntity(){
-            settings = (settings == null) ? 0 : settings;
-            status = (status == null) ? 0 : status;
-            return Workspace.builder()
-                .name(name)
-                .description(description)
-                .settings(settings)
-                .status(status)
-                .build();
-        }
-    
-        public Workspace changeValues(Workspace workspace){
-            return Workspace.builder()
-                .id(workspace.getId())
-                .name(name)
-                .description(description)
-                .settings(settings)
-                .status(status)
-                .build();
+        
+        public Workspace toEntity(Workspace workspace){
+            workspace.setName(name);
+            workspace.setDescription(description);
+            workspace.setSettings(settings);
+            workspace.setStatus(status);
+            return workspace;
         }
     }
     

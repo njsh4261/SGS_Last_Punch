@@ -3,6 +3,7 @@ package lastpunch.workspace.controller;
 import lastpunch.workspace.common.Response;
 import lastpunch.workspace.common.ServerCode;
 import lastpunch.workspace.entity.Channel;
+import lastpunch.workspace.entity.Channel.CreateDto;
 import lastpunch.workspace.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -33,15 +34,15 @@ public class ChannelController{
     }
     
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody Channel.ImportDto channelImportDto){
-        channelService.create(channelImportDto);
+    public ResponseEntity<Object> create(@RequestBody CreateDto channelCreateDto){
+        channelService.create(channelCreateDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
     
     @PutMapping("/{id}")
     public ResponseEntity<Object> edit(
-            @PathVariable("id") Long id, @RequestBody Channel.ImportDto channelImportDto){
-        channelService.edit(id, channelImportDto);
+            @PathVariable("id") Long id, @RequestBody Channel.EditDto editDto){
+        channelService.edit(id, editDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
     

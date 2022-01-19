@@ -1,11 +1,10 @@
 package lastpunch.workspace.service;
 
-import java.util.List;
 import java.util.Map;
 
-import java.util.stream.Collectors;
-import lastpunch.workspace.entity.AccountWorkspace;
+import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.entity.Workspace;
+import lastpunch.workspace.repository.channel.ChannelRepository;
 import lastpunch.workspace.repository.workspace.WorkspaceRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,11 +12,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class WorkspaceService{
     private final CommonService commonService;
+    private final ChannelService channelService;
     private final WorkspaceRepository workspaceRepository;
+    private final ChannelRepository channelRepository;
     
-    public WorkspaceService(CommonService commonService, WorkspaceRepository workspaceRepository){
+    public WorkspaceService(
+            CommonService commonService, ChannelService channelService,
+            WorkspaceRepository workspaceRepository, ChannelRepository channelRepository){
         this.commonService = commonService;
+        this.channelService = channelService;
         this.workspaceRepository = workspaceRepository;
+        this.channelRepository = channelRepository;
     }
     
     public Map<String, Object> getList(Long id, Pageable pageable){
@@ -36,12 +41,21 @@ public class WorkspaceService{
         return Map.of("channels", workspaceRepository.getChannels(id, pageable));
     }
 
-    public void create(Workspace.ImportDto workspaceDto){
-        workspaceRepository.save(workspaceDto.toEntity());
+    public Map<String, Object> create(Workspace.CreateDto workspaceDto){
+        Workspace newWorkspace = workspaceRepository.save(workspaceDto.toWorkspaceEntity());
+        Channel newChannel = channelRepository.save(
+            workspaceDto.toChannelEntity(
+                newWorkspace, commonService.getAccount(workspaceDto.getChannelCreatorId())
+            )
+        );
+        return Map.of(
+                "workspace", newWorkspace.export(),
+                "channel", newChannel.export()
+        );
     }
     
-    public void edit(Workspace.ImportDto workspaceDto, Long id){
-        workspaceRepository.save(workspaceDto.changeValues(commonService.getWorkspace(id)));
+    public void edit(Workspace.EditDto editDto, Long id){
+        workspaceRepository.save(editDto.toEntity(commonService.getWorkspace(id)));
     }
     
     public void delete(Long id){

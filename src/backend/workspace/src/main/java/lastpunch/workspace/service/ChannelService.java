@@ -28,40 +28,20 @@ public class ChannelService{
         return Map.of("members", channelRepository.getMembers(id, pageable));
     }
     
-    public void create(Channel.ImportDto channelImportDto){
-        channelRepository.save(
-                Channel.builder()
-                        .workspace(commonService.getWorkspace(channelImportDto.getWorkspaceId()))
-                        .account(commonService.getAccount(channelImportDto.getCreatorId()))
-                        .name(channelImportDto.getName())
-                        .topic(channelImportDto.getTopic())
-                        .description(channelImportDto.getDescription())
-                        .settings(channelImportDto.getSettings())
-                        .status(channelImportDto.getStatus())
-                        .createdt(LocalDateTime.now())
-                        .modifydt(LocalDateTime.now())
-                        .build()
+    public Map<String, Object> create(Channel.CreateDto createDto){
+        return Map.of(
+            "channel",
+            channelRepository.save(
+                createDto.toEntity(
+                    commonService.getWorkspace(createDto.getWorkspaceId()),
+                    commonService.getAccount(createDto.getCreatorId())
+                )
+            )
         );
     }
     
-    public void edit(Long id, Channel.ImportDto channelImportDto){
-        Channel channel = commonService.getChannel(id);
-        if(channelImportDto.getName() != null){
-            channel.setName(channelImportDto.getName());
-        }
-        if(channelImportDto.getTopic() != null){
-            channel.setTopic(channelImportDto.getTopic());
-        }
-        if(channelImportDto.getDescription() != null){
-            channel.setDescription(channelImportDto.getDescription());
-        }
-        if(channelImportDto.getSettings() != null){
-            channel.setSettings(channelImportDto.getSettings());
-        }
-        if(channelImportDto.getStatus() != null){
-            channel.setStatus(channelImportDto.getStatus());
-        }
-        channelRepository.save(channel);
+    public void edit(Long id, Channel.EditDto editDto){
+        channelRepository.save(editDto.toEntity(commonService.getChannel(id)));
     }
     
     public void delete(Long id){

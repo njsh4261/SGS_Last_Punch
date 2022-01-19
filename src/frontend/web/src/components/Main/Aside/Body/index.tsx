@@ -36,7 +36,6 @@ export default function AsideBody() {
   const getChannelsNMembers = async () => {
     const workspaceId = Number(params.wsId);
     const { channels } = await getChannelsAPI(workspaceId);
-    console.log(channels.content);
     const { members } = await getMembersAPI(workspaceId);
     setMemberList(members.content);
     setChannelList(channels.content);

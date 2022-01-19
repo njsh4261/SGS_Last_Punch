@@ -68,13 +68,6 @@ export default function AsideBody() {
         selectHandler={selectHandler}
         type="direct message"
       ></ToggleList>
-      {/** remove test code*/}
-      <SecitonType>
-        <Text>
-          overflow test. overflow test. overflow test. overflow test. overflow
-          test.{' '}
-        </Text>
-      </SecitonType>
     </Container>
   );
 }

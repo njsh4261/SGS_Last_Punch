@@ -46,7 +46,7 @@ export default function Main() {
       <Body>
         <Aside></Aside>
         {params.channelId ? (
-          <Chat></Chat>
+          <Chat params={params}></Chat>
         ) : (
           <div>this is main page. select channel!</div>
         )}

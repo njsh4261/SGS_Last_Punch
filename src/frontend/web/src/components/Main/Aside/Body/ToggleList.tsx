@@ -38,6 +38,7 @@ const ChannelItem = styled.section`
   padding: 7px 0 7px 26px;
 
   &:hover {
+    cursor: pointer;
     background: ${(props) => props.theme.color.heavySlack};
   }
 `;
@@ -48,6 +49,14 @@ const Flex = styled.div`
 
 const PaddingLeft8px = styled.span`
   padding-left: 8px;
+`;
+
+const PlusIcon = styled.div`
+  display: inline-block;
+  padding: 0 4px 2px;
+  background-color: rgb(207, 195, 207);
+  border-radius: 4px;
+  color: ${(props) => props.theme.color.slack};
 `;
 
 interface Props {
@@ -86,6 +95,10 @@ export default function ToggleList({
             #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
           </ChannelItem>
         ))}
+        <ChannelItem>
+          <PlusIcon>+</PlusIcon>
+          <PaddingLeft8px>{type} 추가</PaddingLeft8px>
+        </ChannelItem>
       </ChannelList>
     </ToggleType>
   );

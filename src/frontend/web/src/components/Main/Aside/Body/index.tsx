@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { selectChannel } from '../../../../modules/channel';
 import ToggleList, { Text } from './ToggleList';
 import { getChannelsAPI, getMembersAPI } from '../../../../Api/workspace';
 
@@ -27,14 +25,12 @@ export default function AsideBody() {
   const [memberList, setMemberList] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const selectHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const channel = e.currentTarget;
-    dispatch(
-      selectChannel(channel.id, channel.dataset.name as string, navigate),
-    );
+    const wsId = params.wsId;
     document.title = channel.id;
+    navigate(`/${wsId}/${channel.id}`);
   };
 
   const getChannelsNMembers = async () => {

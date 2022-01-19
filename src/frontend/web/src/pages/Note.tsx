@@ -42,7 +42,7 @@ const MainFrame = styled.main`
 export default function Note() {
   const [sideToggle, setSideToggle] = useState(true);
   const [hover, setHover] = useState(false);
-  const [params, location] = [useParams(), useLocation()];
+  const params = useParams();
 
   const toggleHandler = () => setSideToggle((state) => !state);
   const hoverHandler = () => setHover((state) => !state);
@@ -53,7 +53,7 @@ export default function Note() {
         <NoteSideHeader
           hover={hover}
           hoverHandler={hoverHandler}
-          channelName={(location.state as any).channelName}
+          channelName={params.channelName as string}
           toggleHandler={toggleHandler}
         ></NoteSideHeader>
         <NoteSideMenu></NoteSideMenu>

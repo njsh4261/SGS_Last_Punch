@@ -47,12 +47,8 @@ class LoginService {
         guard let decodedData = try? decoder.decode(LoginDataModel.self, from: data)
         else { return .pathErr}
         
-        
         switch statusCode {
         case 200:
-
-            print(decodedData.data!.access_token)
-            print(decodedData.data!.refresh_token)
             return .success(decodedData.data!)
         case 400: return .requestErr("errorCode : " + decodedData.code)
         case 401: return .unAuthorized

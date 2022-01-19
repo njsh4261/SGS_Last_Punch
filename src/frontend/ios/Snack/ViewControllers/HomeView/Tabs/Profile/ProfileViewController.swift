@@ -2,162 +2,117 @@
 //  ProfileViewController.swift
 //  Snack
 //
-//  Created by ghyeongkim-MN on 2022/01/17.
+//  Created by ghyeongkim-MN on 2022/01/19.
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
-import SnapKit
-import Then
+import ProgressHUD
+import RxDataSources
 
-class ProfileViewController: UIViewController {
-    
-    // MARK: - Properties
-    private var viewModel = ProfileViewModel()
-    private let disposeBag = DisposeBag()
-    
+class ProfileViewController: UITableViewController {
     // MARK: - UI
-    var ivLogo = UIImageView()
-    var fieldEmail = UITextField()
-    var fieldPassword = UITextField()
-    var emailBorder = UIView()
-    var passwordBorder = UIView()
-    var btnSignIn = UIButton()
-    var lblWarning = UILabel()
-    var btnSignUp = UIButton()
+    @IBOutlet private var viewHeader: UIView!
+    @IBOutlet private var imageUser: UIImageView!
+    @IBOutlet private var labelName: UILabel!
+    // Section 1
+    @IBOutlet private var cellProfile: UITableViewCell!
+    @IBOutlet private var cellPassword: UITableViewCell!
+    @IBOutlet private var cellPasscode: UITableViewCell!
+    // Section 2
+    @IBOutlet private var cellStatus: UITableViewCell!
+    // Section 3
+    @IBOutlet private var cellCache: UITableViewCell!
+    @IBOutlet private var cellMedia: UITableViewCell!
+    // Section 4
+    @IBOutlet private var cellLogout: UITableViewCell!
+    @IBOutlet private var cellDeleteUser: UITableViewCell!
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
-        bind(with: viewModel)
-        attribute()
-        layout()
+        tabBarItem.image = UIImage(systemName: "person.crop.circle")
+        tabBarItem.selectedImage = UIImage(systemName: "person.crop.circle.fill")
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
-    func bind(with viewModel: ProfileViewModel) {
-        
-        
+    override func viewDidLoad() {
+
+        super.viewDidLoad()
+        title = "나"
+
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+
+        tableView.tableHeaderView = viewHeader
     }
     
-    private func attribute() {
-        title = "프로필"
-        tabBarItem.image = UIImage(systemName: "person.crop.circle")
-        tabBarItem.selectedImage = UIImage(systemName: "person.crop.circle.fill")
-        tabBarItem.title = "나"
-        
-        view.backgroundColor = UIColor(named: "snackBackgroundColor")
-        ivLogo.image = UIImage(named: "snack")
-        
-        [fieldEmail, fieldPassword].forEach {
-            $0.textAlignment = .left
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
-            $0.autocorrectionType = .no
-        }
-        
-        [emailBorder, passwordBorder].forEach {
-            $0.backgroundColor = .quaternaryLabel
-        }
-        
-        fieldEmail = fieldEmail.then {
-            $0.placeholder = "이메일을 입력해주세요"
-            $0.keyboardType = .emailAddress
-            $0.returnKeyType = .next
-        }
-        
-        fieldPassword = fieldPassword.then {
-            $0.placeholder = "비밀번호를 입력해주세요"
-            $0.returnKeyType = .done
-            $0.isSecureTextEntry = true
-        }
-        
-        btnSignUp = btnSignUp.then {
-            $0.setTitle("회원 가입", for: .normal)
-            $0.backgroundColor = UIColor(named: "snackColor")
-        }
-        
-        lblWarning = lblWarning.then {
-            $0.text = "로그인하면 약관 및 개인정보 보호정책에 동의하는 것입니다."
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 11)
-            $0.textAlignment = .center
-            $0.textColor = .lightGray
-        }
-        
-        btnSignIn = btnSignIn.then {
-            $0.setTitle("이미 계정이 있나요? 로그인하기", for: .normal)
-            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
-            $0.setTitleColor(.lightGray, for: .normal)
-            
-        }
+    override func viewWillAppear(_ animated: Bool) {
+
+        super.viewWillAppear(animated)
+
+        // user 정보 load하는 로직 필요
+//        loadUser()
+        tableView.reloadData()
+    }
+
+    func actionProfile() {
+        let editProfileView = EditProfileView()
+        let navController = NavigationController(rootViewController: editProfileView)
+        navController.isModalInPresentation = true
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
     }
     
-    private func layout() {
-        [ivLogo, fieldEmail, emailBorder, fieldPassword, passwordBorder, btnSignUp, lblWarning, btnSignIn].forEach { view.addSubview($0) }
+    // MARK: - TableView dataSource
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 4
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (section == 0) { return 3 }
+        if (section == 1) { return 1 }
+        if (section == 2) { return 2 }
+        if (section == 3) { return 2 }
+        return 0
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (section == 1) { return "Status" }
+        return nil
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        if (indexPath.section == 0) && (indexPath.row == 0) { return cellProfile }
+        if (indexPath.section == 0) && (indexPath.row == 1) { return cellPassword }
+        if (indexPath.section == 0) && (indexPath.row == 2) { return cellPasscode }
+        if (indexPath.section == 1) && (indexPath.row == 0) { return cellStatus }
+        if (indexPath.section == 2) && (indexPath.row == 0) { return cellCache }
+        if (indexPath.section == 2) && (indexPath.row == 1) { return cellMedia }
+        if (indexPath.section == 3) && (indexPath.row == 0) { return cellLogout }
+        if (indexPath.section == 3) && (indexPath.row == 1) { return cellDeleteUser }
+
+        return UITableViewCell()
+    }
+    
+    // MARK: - TableView delegate
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        ivLogo.snp.makeConstraints {
-            $0.width.height.equalTo(80)
-            $0.centerX.equalTo(view.safeAreaLayoutGuide)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(70)
-        }
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        [fieldEmail, emailBorder, fieldPassword, passwordBorder].forEach {
-            $0.snp.makeConstraints {
-                $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(16)
-            }
-        }
-        
-        [fieldEmail, fieldPassword, btnSignUp].forEach {
-            $0.snp.makeConstraints {
-                $0.height.equalTo(50)
-            }
-        }
-        
-        [emailBorder, passwordBorder].forEach {
-            $0.snp.makeConstraints {
-                $0.height.equalTo(1)
-            }
-        }
-        
-        fieldEmail.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(200)
-        }
-        
-        emailBorder.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
-        }
-        
-        fieldPassword.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
-        }
-        
-        passwordBorder.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(300)
-        }
-        
-        btnSignUp.snp.makeConstraints {
-            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(320)
-        }
-        
-        [lblWarning, btnSignIn].forEach {
-            $0.snp.makeConstraints {
-                $0.left.right.equalTo(view.safeAreaLayoutGuide)
-            }
-        }
-        
-        lblWarning.snp.makeConstraints {
-            $0.height.equalTo(21)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(380)
-        }
-        
-        btnSignIn.snp.makeConstraints {
-            $0.height.equalTo(50)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
+        if (indexPath.section == 0) && (indexPath.row == 0) { actionProfile() }
+//        if (indexPath.section == 0) && (indexPath.row == 1) { actionPassword() }
+//        if (indexPath.section == 0) && (indexPath.row == 2) { actionPasscode() }
+//        if (indexPath.section == 1) && (indexPath.row == 0) { actionStatus() }
+//        if (indexPath.section == 2) && (indexPath.row == 0) { actionCache() }
+//        if (indexPath.section == 2) && (indexPath.row == 1) { actionMedia() }
+//        if (indexPath.section == 3) && (indexPath.row == 0) { actionLogout() }
+//        if (indexPath.section == 3) && (indexPath.row == 0) { actionDeleteUser() }
     }
 }
+
+
+
 

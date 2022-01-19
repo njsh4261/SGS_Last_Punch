@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         
         chatsView = ChatsViewController()
-        profileVie = ProfileViewController()
+        profileVie = ProfileViewController(nibName: "ProfileView", bundle: nil)
         
         
         let navController1 = NavigationController(rootViewController: chatsView)
@@ -41,8 +41,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             tabBarController.tabBar.scrollEdgeAppearance = appearance
         }
         
-//        self.window?.rootViewController = tabBarController
-        self.window?.rootViewController = WelcomeViewController()
+        self.window?.rootViewController = tabBarController
+//        self.window?.rootViewController = WelcomeViewController()
         self.window?.makeKeyAndVisible()
         
         _ = chatsView.view

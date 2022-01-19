@@ -33,5 +33,5 @@
   - 중복된 record 처리에 대한 로직 필요
 - DTO에서 생략 불가능한 field가 있는데 생략된 정보가 있을 경우의 에러처리
 - DB 관련 에러들을 BusinessError로 wrapping 해야 함
-- 현재 `GET /channel/{id}/members` API가 멤버 목록을 정상 반환하지 않음 ([관련 이슈](https://github.com/njsh4261/SGS_Last_Punch/issues/91))
+~~- 현재 `GET /channel/{id}/members` API가 멤버 목록을 정상 반환하지 않음 ([관련 이슈](https://github.com/njsh4261/SGS_Last_Punch/issues/91))~~ 220120 수정
 - 이외 내용은 코드 주석 내용 참조

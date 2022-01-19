@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import expandIcon from '../../../../icon/downArrow.svg';
 import ImageButton from '../../../Common/ImageButton';
@@ -86,10 +86,9 @@ export default function ToggleList({
       <ChannelList>
         {channelList.map((channel) => (
           <ChannelItem
-            className="channel-item"
             id={channel.id}
-            data-name={channel.name}
             key={channel.id}
+            data-set={type}
             onClick={selectHandler}
           >
             #<PaddingLeft8px>{channel.name}</PaddingLeft8px>

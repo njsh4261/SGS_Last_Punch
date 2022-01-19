@@ -36,10 +36,6 @@ const ChatInputLayout = styled.article`
 
 const End = styled.article``;
 
-interface stateType {
-  channelName: string;
-}
-
 const Chat = ({ params }: { params: Params }) => {
   const dispatch = useDispatch();
   const channel = useSelector((state: RootState) => state.channel);

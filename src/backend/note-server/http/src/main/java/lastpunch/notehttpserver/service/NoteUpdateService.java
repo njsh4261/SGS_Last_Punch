@@ -1,7 +1,11 @@
 package lastpunch.notehttpserver.service;
 
 import com.mongodb.client.result.UpdateResult;
+import java.util.ArrayList;
 import java.util.List;
+import lastpunch.notehttpserver.common.exception.BusinessException;
+import lastpunch.notehttpserver.common.exception.ErrorCode;
+import lastpunch.notehttpserver.dto.SyncNoteRequest;
 import lastpunch.notehttpserver.dto.Transaction;
 import lastpunch.notehttpserver.dto.UpdateNoteRequest;
 import lastpunch.notehttpserver.entity.Block;
@@ -57,5 +61,25 @@ public class NoteUpdateService {
                     break;
             }
         }
+    }
+    
+    public List<Block> find(SyncNoteRequest syncNoteRequest){
+        ObjectId noteId = new ObjectId(syncNoteRequest.getNoteId());
+        List<Block> blocks = new ArrayList<Block>();
+        //ToDo: 효율적인 쿼리로 바꾸기
+        for (String blockId: syncNoteRequest.getQueryBlockId()){
+            Query query = new Query(Criteria.where("_id").is(noteId).and("blocks._id").is(blockId));
+            query.fields().include("blocks.$");
+            List<Note> notes = mongoTemplate.find(query, Note.class);
+            if (notes.size() != 0)
+                blocks.add(notes.get(0).getBlocks().get(0));
+        }
+        return blocks;
+//
+//        mongoTemplate.find()
+//        Note foundNote = mongoTemplate.findById(noteId, Note.class);
+//        if(foundNote == null){
+//            throw new BusinessException(ErrorCode.NOTE_NOT_EXIST);
+//        }
     }
 }

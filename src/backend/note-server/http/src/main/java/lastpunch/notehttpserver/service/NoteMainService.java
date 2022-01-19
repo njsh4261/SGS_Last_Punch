@@ -2,19 +2,16 @@ package lastpunch.notehttpserver.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import lastpunch.notehttpserver.common.exception.BusinessException;
 import lastpunch.notehttpserver.common.exception.ErrorCode;
 import lastpunch.notehttpserver.dto.CreateNoteRequest;
 import lastpunch.notehttpserver.dto.GetNoteResponse;
 import lastpunch.notehttpserver.entity.Block;
 import lastpunch.notehttpserver.entity.Note;
-import lastpunch.notehttpserver.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor

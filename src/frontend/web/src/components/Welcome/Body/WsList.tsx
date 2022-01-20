@@ -67,7 +67,8 @@ export default function WsList() {
 
   const getWsList = async () => {
     const { workspaces } = await getWsListAPI('1'); // dummy userId
-    setWsList(workspaces.content);
+    if (workspaces) setWsList(workspaces.content);
+    else alert('error');
   };
 
   useEffect(() => {

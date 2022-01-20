@@ -32,12 +32,14 @@ class WelcomeViewController: UIViewController {
     }
     
     func bind() {
-        let inputVC = LoginViewController()
+        let inputVC = NavigationController(rootViewController: LoginViewController())
+
         inputVC.modalPresentationStyle = .fullScreen
 
         btnSignIn.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
+                
                 self?.present(inputVC, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)

@@ -42,7 +42,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
 //        self.window?.rootViewController = tabBarController
-        self.window?.rootViewController = WelcomeViewController()
+//        self.window?.rootViewController = WelcomeViewController()
+        self.window?.rootViewController = NavigationController(rootViewController: WorkspaceListView())
         self.window?.makeKeyAndVisible()
         
         _ = chatsView.view

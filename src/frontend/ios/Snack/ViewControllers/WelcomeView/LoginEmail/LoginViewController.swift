@@ -15,7 +15,7 @@ import Then
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = LoginViewModel()
+    private let viewModel = LoginViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
@@ -84,14 +84,17 @@ class LoginViewController: UIViewController {
     }
     
     private func goToWorkspaceSelect() {
-        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-            ProgressHUD.showSucceed()
-            sceneDelegate.window?.rootViewController = WorkspaceListView()
-        }
+        ProgressHUD.showSucceed()
+        let navController = WorkspaceListView()
+        
+        navigationController?.pushViewController(navController, animated: true)
     }
     
     private func attribute() {
+        title = "로그인"
+        navigationController?.navigationBar.tintColor = .red
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
+        
         ivLogo.image = UIImage(named: "snack")
         
         [fieldEmail, fieldPassword].forEach {
@@ -134,7 +137,6 @@ class LoginViewController: UIViewController {
             $0.setTitle("혹시 계정이 없나요? 회원가입하기", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
             $0.setTitleColor(.lightGray, for: .normal)
-            
         }
     }
     

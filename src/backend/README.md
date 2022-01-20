@@ -9,12 +9,20 @@ SGS 2021 Dev Camp 2nd Team Last Punch
 
 1. cd /src/backend 
 - backend 경로로 이동
-2. docker-compose pull 
+
+2. docker-compose.yml 파일에서 다음 정보 작성   
+
+- spring.mail.username: 이메일 계정 주소
+- spring.mail.password: 이메일 계정 비밀번호
+
+3. docker-compose pull 
 - 필요한 이미지 pull
-3. docker-compose up --build 
+
+4. docker-compose up --build 
 - 이미지 빌드 (다음 실행부터는 docker-compose up 사용)
-- 모든 컨테이너가 실행되는데 시간이 몇초~몇십초 정도 소요될 수 있습니다
-4. 브라우저에서 localhost:8761 접속
+- 모든 컨테이너가 실행되는데 시간이 몇초~몇십초 정도 소요될 수 있습니다 
+
+5. 브라우저에서 localhost:8761 접속
 - eureka 에서 instances currently registered with Eureka에 AUTH-SERVER 와 GATEWAY 있는지 확인
 - 이제부터 통신을 하시면 됩니다!
 

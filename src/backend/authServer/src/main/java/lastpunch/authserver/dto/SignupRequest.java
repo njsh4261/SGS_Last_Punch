@@ -19,6 +19,8 @@ public class SignupRequest {
     private String email;
     @NotBlank
     private String password;
+    @NotBlank
+    private String verifyCode;
     
     public Account toEntity() {
         return Account.builder()

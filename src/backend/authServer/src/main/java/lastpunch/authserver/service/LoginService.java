@@ -1,5 +1,7 @@
 package lastpunch.authserver.service;
 
+import static lastpunch.authserver.common.jwt.JwtProvider.REFRESH_TOKEN_VALIDATION_SEC;
+
 import java.util.Map;
 import lastpunch.authserver.common.exception.BusinessException;
 import lastpunch.authserver.common.exception.ErrorCode;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginService {
     private final JwtProvider jwtProvider;
     private final AuthenticationManager authenticationManager;
+    private final RedisService redisService;
     
     @Transactional
     public Tokens login(LoginRequest loginRequest){
@@ -30,7 +33,8 @@ public class LoginService {
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             String accessToken = jwtProvider.createAccessToken(authentication);
             String refreshToken = jwtProvider.createRefreshToken(authentication);
-//            redisService.setData("RefreshToken:" + authentication.getName(), refreshToken, REFRESH_TOKEN_VALIDATION_SEC);
+            //redis에 refresh token 저장
+            redisService.setData("RefreshToken:" + authentication.getName(), refreshToken, REFRESH_TOKEN_VALIDATION_SEC);
     
             return Tokens.builder()
                 .accessToken(accessToken)
@@ -45,7 +49,17 @@ public class LoginService {
     public String reissue(Map<String, Object> requestHeader){
         String refreshToken = requestHeader.get("x-auth-token").toString();
         Authentication authentication = jwtProvider.getAuthentication(refreshToken);
+        String redisToken = redisService.getData("RefreshToken:"+ authentication.getName());
+        if (!refreshToken.equals(redisToken)) {
+            throw new BusinessException(ErrorCode.INVALID_REFRESH_TOKEN);
+        }
         String newAccessToken = jwtProvider.createAccessToken(authentication);
         return newAccessToken;
+    }
+    
+    public void logout(Map<String, Object> requestHeader){
+        String refreshToken = requestHeader.get("x-auth-token").toString();
+        Authentication authentication = jwtProvider.getAuthentication(refreshToken);
+        redisService.deleteData("RefreshToken:"+ authentication.getName());
     }
 }

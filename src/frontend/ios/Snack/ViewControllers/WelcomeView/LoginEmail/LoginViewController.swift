@@ -55,6 +55,13 @@ class LoginViewController: UIViewController {
             .bind(to: viewModel.input.btnLoginTapped)
             .disposed(by: disposeBag)
         
+        btnSignUp.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+        
         // Bind output
         viewModel.output.enableBtnSignIn
             .observe(on: MainScheduler.instance)
@@ -78,7 +85,8 @@ class LoginViewController: UIViewController {
     
     private func goToWorkspaceSelect() {
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-            sceneDelegate.window?.rootViewController = sceneDelegate.tabBarController
+            ProgressHUD.showSucceed()
+            sceneDelegate.window?.rootViewController = WorkspaceListView()
         }
     }
     

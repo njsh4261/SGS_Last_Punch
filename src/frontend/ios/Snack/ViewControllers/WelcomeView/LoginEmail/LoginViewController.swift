@@ -75,7 +75,7 @@ class LoginViewController: UIViewController {
         
         viewModel.output.goToWorkspaceList
             .observe(on: MainScheduler.instance)
-            .bind(onNext: goToWorkspaceSelect)
+            .bind(onNext: goToWorkspaceList)
             .disposed(by: disposeBag)
     }
     
@@ -83,9 +83,9 @@ class LoginViewController: UIViewController {
         ProgressHUD.showFailed(message)
     }
     
-    private func goToWorkspaceSelect() {
+    private func goToWorkspaceList() {
         ProgressHUD.showSucceed()
-        let navController = WorkspaceListView()
+        let navController = WorkspaceListViewController()
         
         navigationController?.pushViewController(navController, animated: true)
     }

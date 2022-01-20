@@ -11,7 +11,7 @@ import RxCocoa
 import SnapKit
 import Then
 
-class WorkspaceListView: UIViewController {
+class WorkspaceListViewController: UIViewController {
     // MARK: - Properties
     private let viewModel = LoginViewModel()
     private let disposeBag = DisposeBag()

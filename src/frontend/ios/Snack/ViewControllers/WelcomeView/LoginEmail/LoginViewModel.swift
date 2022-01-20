@@ -62,8 +62,6 @@ class LoginViewModel: ViewModelProtocol {
                                         self.output.errorMessage.accept("찾을 수 없음")
                                     case .pathErr:
                                         self.output.errorMessage.accept("path 에러")
-                                        // 추후 삭제
-                                        self.output.goToWorkspaceList.accept(())
                                     case .serverErr:
                                         self.output.errorMessage.accept("서버 에러")
                                     case .networkFail:

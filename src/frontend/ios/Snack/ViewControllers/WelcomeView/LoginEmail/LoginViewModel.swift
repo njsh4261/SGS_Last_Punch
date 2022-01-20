@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import ProgressHUD
 
 class LoginViewModel: ViewModelProtocol {
     struct Input {
@@ -43,26 +44,39 @@ class LoginViewModel: ViewModelProtocol {
                     self.output.errorMessage.accept("1자리 이상 비밀번호를 입력해주세요.")
                 } else {
                     // API로직을 태워야합니다.
-                    LoginService.shared.signIn(email: email, password: password) { result in
-                        switch result {
-                        case .success:
-                            self.output.goToMain.accept(())
-                        case .requestErr:
-                            self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력함")
-                        case .unAuthorized:
-                            self.output.errorMessage.accept("인증이 안됌")
-                        case .notFound:
-                            self.output.errorMessage.accept("찾을 수 없음")
-                        case .pathErr:
-                            self.output.errorMessage.accept("path 에러")
-                            // 추후 삭제
-                            self.output.goToMain.accept(())
-                        case .serverErr:
-                            self.output.errorMessage.accept("서버 에러")
-                        case .networkFail:
-                            self.output.errorMessage.accept("네트워크")
-                        }
-                    }
+                    ProgressHUD.animationType = .circleSpinFade
+                    ProgressHUD.show("로그인 중..")
+                    LoginService.shared.signIn(email: email, password: password)
+                        .subscribe { event in
+                            switch event {
+                            case .next(let result):
+                                DispatchQueue.main.async { // 메인스레드에서 동작
+                                    switch result {
+                                    case .success:
+                                        self.output.goToMain.accept(())
+                                    case .requestErr:
+                                        self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력함")
+                                    case .unAuthorized:
+                                        self.output.errorMessage.accept("인증이 안됌")
+                                    case .notFound:
+                                        self.output.errorMessage.accept("찾을 수 없음")
+                                    case .pathErr:
+                                        self.output.errorMessage.accept("path 에러")
+                                        // 추후 삭제
+                                        self.output.goToMain.accept(())
+                                    case .serverErr:
+                                        self.output.errorMessage.accept("서버 에러")
+                                    case .networkFail:
+                                        self.output.errorMessage.accept("네트워크")
+                                    }
+                                }
+                                break
+                            case .completed:
+                                break
+                            case .error:
+                                break
+                            }
+                        }.disposed(by: self.disposeBag)
                 }
             }
             .disposed(by: disposeBag)

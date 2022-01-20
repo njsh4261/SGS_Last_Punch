@@ -31,8 +31,7 @@ export default function WsCreator() {
         alert('팀이 사용할 채널 명을 입력하세요');
         return;
       }
-      const response = await createWsAPI(wsName);
-      // todo: create channel API
+      const response = await createWsAPI(wsName, channelName);
       // todo: 응답코드에 따른 올바른 처리
       if (!response) {
         alert('fail');

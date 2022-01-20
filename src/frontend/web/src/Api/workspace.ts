@@ -54,13 +54,12 @@ export async function getChannelsAPI(wsId: number) {
   }
 }
 
-export async function createWsAPI(wsName: string) {
+export async function createWsAPI(wsName: string, channelName: string) {
   const endpoint = `/workspace`;
   const data = {
-    name: wsName,
-    description: '',
-    settings: 0,
-    status: 1,
+    creatorId: 1, // test code
+    workspaceName: wsName,
+    channelName,
   };
 
   try {

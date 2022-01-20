@@ -37,10 +37,16 @@ public class AuthController {
     @GetMapping("/verify")
     public ResponseEntity<Object> verify() {
         Map<String, Object> data = new HashMap<String, Object>();
-        String msg = "인증에 성공했습니다.";
+        String msg = "토큰 인증에 성공했습니다.";
         data.put("msg", msg);
         
         return Response.toResponseEntity("11000", HttpStatus.OK, data);
+    }
+    
+    @GetMapping("/logout-token")
+    public ResponseEntity<Object> logout(@RequestHeader Map<String, Object> requestHeader) {
+        loginService.logout(requestHeader);
+        return Response.toResponseEntity("11000", HttpStatus.OK);
     }
     
     @PostMapping("/send-email")

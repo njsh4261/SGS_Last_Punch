@@ -7,8 +7,6 @@ interface ICreate {
   name: string;
   topic?: string;
   description: string;
-  settings?: number;
-  status?: number;
 }
 
 export async function getChannelInfoAPI(channelId: string) {
@@ -29,8 +27,6 @@ export async function createChannelAPI({
   name,
   topic = 'default',
   description,
-  settings = 1,
-  status = 2,
 }: ICreate) {
   const endpoint = `/channel`;
   const data = {
@@ -39,8 +35,6 @@ export async function createChannelAPI({
     name,
     topic,
     description,
-    settings,
-    status,
   };
 
   try {

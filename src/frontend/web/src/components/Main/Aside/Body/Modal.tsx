@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { closeModal } from '../../../../modules/modal';
 import styled from 'styled-components';
 import { createChannelAPI } from '../../../../Api/channel';
@@ -89,6 +90,7 @@ const Button = styled.button<{ active: boolean }>`
 
 export default function Modal() {
   const dispatch = useDispatch();
+  const params = useParams();
   const [channelName, setChannelName] = useState('');
   const [description, setDescription] = useState('');
 
@@ -100,7 +102,7 @@ export default function Modal() {
   const submitHandler = async () => {
     if (channelName === '') return;
     const success = await createChannelAPI({
-      workspaceId: 1,
+      workspaceId: Number(params.wsId),
       name: channelName,
       description,
     });

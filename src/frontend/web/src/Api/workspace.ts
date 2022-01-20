@@ -40,7 +40,9 @@ export async function getMembersAPI(wsId: number) {
 }
 
 export async function getChannelsAPI(wsId: number) {
-  const endpoint = `/workspace/${wsId}/channels`;
+  const page = 0;
+  const size = 15;
+  const endpoint = `/workspace/${wsId}/channels?page=${page}&size=${size}`;
 
   try {
     const response = await axios.get(HOST + endpoint);

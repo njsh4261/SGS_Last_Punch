@@ -3,6 +3,8 @@ package lastpunch.authserver.controller;
 import java.util.HashMap;
 import java.util.Map;
 import lastpunch.authserver.common.Response;
+import lastpunch.authserver.dto.EmailVerifyRequest;
+import lastpunch.authserver.dto.SendEmailRequest;
 import lastpunch.authserver.dto.SignupRequest;
 import lastpunch.authserver.service.EmailVerifyService;
 import lastpunch.authserver.service.LoginService;
@@ -41,9 +43,15 @@ public class AuthController {
         return Response.toResponseEntity("11000", HttpStatus.OK, data);
     }
     
+    @PostMapping("/send-email")
+    public ResponseEntity<Object> sendEmail(@RequestBody SendEmailRequest sendEmailRequest) {
+        emailVerifyService.sendVerifyMail(sendEmailRequest.getEmail());
+        return Response.toResponseEntity("11000", HttpStatus.OK);
+    }
+    
     @GetMapping("/email-verify")
     public ResponseEntity<Object> emailVerify(@RequestBody EmailVerifyRequest emailVerifyRequest) {
-//        emailVerifyService
+        emailVerifyService.verifyMail(emailVerifyRequest);
         return Response.toResponseEntity("11000", HttpStatus.OK);
     }
 }

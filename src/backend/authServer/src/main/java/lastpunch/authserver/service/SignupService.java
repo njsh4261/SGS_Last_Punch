@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SignupService {
     private final AccountRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RedisService redisService;
     
     @Transactional
     public void signup(SignupRequest signupRequest){
@@ -25,6 +26,12 @@ public class SignupService {
         if(account.isPresent()){
             throw new BusinessException(ErrorCode.DUPLICATE_EMAIL);
         }
+        
+        String email = redisService.getData(signupRequest.getVerifyCode());
+        if (email == null || !email.equals(signupRequest.getEmail())){
+            throw new BusinessException(ErrorCode.MODIFIED_EMAIL_VERIFY_DATA);
+        }
+        
         memberRepository.save(signupRequest.toEntity());
     }
 }

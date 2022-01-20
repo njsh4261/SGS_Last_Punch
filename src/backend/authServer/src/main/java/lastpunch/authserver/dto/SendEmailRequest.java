@@ -4,9 +4,7 @@ import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class EmailVerifyRequest {
+public class SendEmailRequest {
     @NotBlank
     private String email;
-    @NotBlank
-    private String verifyCode;
 }

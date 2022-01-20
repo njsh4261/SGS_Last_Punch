@@ -23,7 +23,6 @@ public class SignupController {
     @PostMapping
     public ResponseEntity<Object> postSignup(@RequestBody SignupRequest signupRequest) {
         signupService.signup(signupRequest);
-        emailVerifyService.sendVerifyMail(signupRequest);
         return Response.toResponseEntity("11000", HttpStatus.OK);
     }
 }

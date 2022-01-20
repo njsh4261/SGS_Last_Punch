@@ -3,6 +3,7 @@ package lastpunch.workspace.controller;
 import lastpunch.workspace.common.Response;
 import lastpunch.workspace.common.ServerCode;
 import lastpunch.workspace.entity.Channel;
+import lastpunch.workspace.entity.Channel.CreateDto;
 import lastpunch.workspace.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -28,20 +29,19 @@ public class ChannelController{
     
     @GetMapping("/{id}/members")
     public ResponseEntity<Object> getMembers(
-            @PathVariable("id") Long id, @PageableDefault(page = PAGESIZE) Pageable pageable){
+            @PathVariable("id") Long id, @PageableDefault(size = PAGESIZE) Pageable pageable){
         return Response.ok(ServerCode.WORKSPACE, channelService.getMembers(id, pageable));
     }
     
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody Channel.ImportDto channelImportDto){
-        channelService.create(channelImportDto);
-        return Response.ok(ServerCode.WORKSPACE);
+    public ResponseEntity<Object> create(@RequestBody CreateDto channelCreateDto){
+        return Response.ok(ServerCode.WORKSPACE, channelService.create(channelCreateDto));
     }
     
     @PutMapping("/{id}")
     public ResponseEntity<Object> edit(
-            @PathVariable("id") Long id, @RequestBody Channel.ImportDto channelImportDto){
-        channelService.edit(id, channelImportDto);
+            @PathVariable("id") Long id, @RequestBody Channel.EditDto editDto){
+        channelService.edit(id, editDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
     

@@ -17,7 +17,7 @@ public class AccountChannelController{
     public AccountChannelController(AccountChannelService accountChannelService){
         this.accountChannelService = accountChannelService;
     }
-
+    
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody AccountChannel.Dto accountChannelDto){
         accountChannelService.add(accountChannelDto);

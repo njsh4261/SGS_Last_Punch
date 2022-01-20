@@ -50,22 +50,22 @@
 //    }
 //
 //    func bind(with viewModel: ProfileViewModel) {
-////        dataSource = RxTableViewSectionedReloadDataSource<ProfileSection> { dataSource, tableView, indexPath, item in
-////            switch dataSource[indexPath] {
-////            case let .empty
-////            }
-////            let cell = tableView.dequeueReusableCell(withIdentifier: ProfileCell.identifier, for: indexPath) as! ProfileCell
-////
-////            // cell 설정
-////            cell.bind(task: item)
-////
-////            return cell
-////        }
+//        dataSource = RxTableViewSectionedReloadDataSource<ProfileSection> { dataSource, tableView, indexPath, item in
+//            switch dataSource[indexPath] {
+//            case let .empty
+//            }
+//            let cell = tableView.dequeueReusableCell(withIdentifier: ProfileCell.identifier, for: indexPath) as! ProfileCell
+//
+//            // cell 설정
+//            cell.bind(task: item)
+//
+//            return cell
+//        }
 //
 //        // 섹션 문자
-////        dataSource.titleForHeaderInSection = { ds, index in
-////            return ProfileSectionType.
-////        }
+//        dataSource.titleForHeaderInSection = { ds, index in
+//            return ProfileSectionType.
+//        }
 //
 //
 //

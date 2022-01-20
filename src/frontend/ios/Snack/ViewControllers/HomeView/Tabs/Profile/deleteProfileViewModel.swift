@@ -25,7 +25,7 @@
 //    let cellData: Driver<[String]>
 //
 ////    private let emailSubject = PublishSubject<String>()
-////    private let passwordSubject = PublishSubject<String>()
+////    private let passwofrdSubject = PublishSubject<String>()
 ////    private let signUpDidTapSubject = PublishSubject<Void>()
 ////    private let registerResultSubject = PublishSubject<User>()
 ////    private let errorsSubject = PublishSubject<Error>()

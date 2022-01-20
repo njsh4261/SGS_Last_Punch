@@ -1,9 +1,12 @@
 import axios from 'axios';
 import { HOST, ERROR_MESSAGE } from '../constant';
 
+const PAGE = 0;
+const SIZE = 15;
+
 // todo: remove userId and set Token
 export async function getWsListAPI(userId: string) {
-  const endpoint = `/workspace/?userId=${userId}`;
+  const endpoint = `/workspace/?userId=${userId}&page=${PAGE}&size=${SIZE}`;
 
   try {
     const response = await axios.get(HOST + endpoint);
@@ -27,7 +30,7 @@ export async function getWsInfoAPI(wsId: number) {
 }
 
 export async function getMembersAPI(wsId: number) {
-  const endpoint = `/workspace/${wsId}/members`;
+  const endpoint = `/workspace/${wsId}/members?page=${PAGE}&size=${SIZE}`;
 
   try {
     const response = await axios.get(HOST + endpoint);
@@ -40,9 +43,7 @@ export async function getMembersAPI(wsId: number) {
 }
 
 export async function getChannelsAPI(wsId: number) {
-  const page = 0;
-  const size = 15;
-  const endpoint = `/workspace/${wsId}/channels?page=${page}&size=${size}`;
+  const endpoint = `/workspace/${wsId}/channels?page=${PAGE}&size=${SIZE}`;
 
   try {
     const response = await axios.get(HOST + endpoint);

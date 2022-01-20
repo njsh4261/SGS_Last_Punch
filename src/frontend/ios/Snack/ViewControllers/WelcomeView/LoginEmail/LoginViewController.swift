@@ -121,7 +121,9 @@ class LoginViewController: UIViewController {
         
         btnSignIn = btnSignIn.then {
             $0.setTitle("로그인", for: .normal)
-            $0.backgroundColor = UIColor(named: "snackColor")
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .disabled)
+            $0.clipsToBounds = true
             $0.layer.cornerRadius = 6
             $0.isEnabled = false
         }

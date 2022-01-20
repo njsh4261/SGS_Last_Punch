@@ -47,6 +47,7 @@
 		8C68AB2D2797F5E400C1711E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB2C2797F5E400C1711E /* ProfileViewController.swift */; };
 		8C68AB2F2797F62D00C1711E /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AB2E2797F62D00C1711E /* ProfileView.xib */; };
 		8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD2278E90F200D5677E /* WelcomeViewController.swift */; };
+		8CBD452D2799A0C80056A557 /* ExUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD452C2799A0C80056A557 /* ExUIButton.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -99,6 +100,7 @@
 		8C68AB2C2797F5E400C1711E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8C68AB2E2797F62D00C1711E /* ProfileView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
 		8C953BD2278E90F200D5677E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		8CBD452C2799A0C80056A557 /* ExUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIButton.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -242,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				8C68AAD227911AD700C1711E /* ExObservable.swift */,
+				8CBD452C2799A0C80056A557 /* ExUIButton.swift */,
 				8C68AB0727957ADD00C1711E /* ExDateFormatter.swift */,
 			);
 			path = Extentions;
@@ -528,6 +531,7 @@
 				8C68AB1527969D1200C1711E /* NetworkResult.swift in Sources */,
 				8C68AAF927954FA100C1711E /* DirectMessageCell.swift in Sources */,
 				8C68AAFD27954FCB00C1711E /* ChannelCell.swift in Sources */,
+				8CBD452D2799A0C80056A557 /* ExUIButton.swift in Sources */,
 				8C68AB1A2796E70C00C1711E /* WorkspaceListView.swift in Sources */,
 				8C68AAD72791AF1100C1711E /* RegisterViewController.swift in Sources */,
 				8C68AB1C27970A2A00C1711E /* deleteProfileCell.swift in Sources */,

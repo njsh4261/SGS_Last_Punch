@@ -19,7 +19,7 @@ class LoginViewModel: ViewModelProtocol {
     struct Output {
         let enableBtnSignIn = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
-        let goToMain = PublishRelay<Void>()
+        let goToWorkspaceList = PublishRelay<Void>()
     }
     // MARK: - Public properties
     var input = Input()
@@ -53,7 +53,7 @@ class LoginViewModel: ViewModelProtocol {
                                 DispatchQueue.main.async { // 메인스레드에서 동작
                                     switch result {
                                     case .success:
-                                        self.output.goToMain.accept(())
+                                        self.output.goToWorkspaceList.accept(())
                                     case .requestErr:
                                         self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력함")
                                     case .unAuthorized:
@@ -63,7 +63,7 @@ class LoginViewModel: ViewModelProtocol {
                                     case .pathErr:
                                         self.output.errorMessage.accept("path 에러")
                                         // 추후 삭제
-                                        self.output.goToMain.accept(())
+                                        self.output.goToWorkspaceList.accept(())
                                     case .serverErr:
                                         self.output.errorMessage.accept("서버 에러")
                                     case .networkFail:

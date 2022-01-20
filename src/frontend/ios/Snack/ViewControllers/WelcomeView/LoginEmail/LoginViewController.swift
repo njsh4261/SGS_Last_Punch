@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
             .bind(onNext: showFailedAlert)
             .disposed(by: disposeBag)
         
-        viewModel.output.goToMain
+        viewModel.output.goToWorkspaceList
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToWorkspaceSelect)
             .disposed(by: disposeBag)

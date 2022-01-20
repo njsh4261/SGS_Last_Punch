@@ -69,7 +69,7 @@ class WorkspaceListView: UIViewController {
             $0.isOpaque = false
             $0.clearsContextBeforeDrawing = false
             $0.separatorStyle = .singleLine
-            $0.backgroundColor = .red
+            $0.backgroundColor = UIColor(named: "snackColor")
         }
         
         lblSearch = lblSearch.then {

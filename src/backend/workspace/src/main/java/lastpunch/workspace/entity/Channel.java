@@ -69,26 +69,50 @@ public class Channel{
     List<AccountChannel> accounts;
     
     @Getter
-    public static class ImportDto{
+    public static class CreateDto{
         private Long workspaceId;
         private Long creatorId;
         private String name;
         private String topic;
         private String description;
+
+        public Channel toEntity(Workspace workspace, Account account){
+            return Channel.builder()
+                .workspace(workspace)
+                .account(account)
+                .name(name)
+                .topic(topic)
+                .description(description)
+                .settings(0)
+                .status(0)
+                .createdt(LocalDateTime.now())
+                .modifydt(LocalDateTime.now())
+                .build();
+        }
+    }
+    
+    public static class EditDto{
+        private String name;
+        private String topic;
+        private String description;
         private Integer settings;
         private Integer status;
-
-        public boolean isEmpty(){
-            return (workspaceId == null) && (creatorId == null) && (name == null) && (topic == null)
-                    && (description == null) && (settings == null) && (status == null);
+        
+        public Channel toEntity(Channel channel){
+            channel.setName(name);
+            channel.setTopic(topic);
+            channel.setDescription(description);
+            channel.setSettings(settings);
+            channel.setStatus(status);
+            return channel;
         }
     }
     
     @Getter
     public static class ExportDto{
         private Long id;
-        private Long workspaceId; // TODO: 필요에 따라 WorkspaceExportDto로 변경
-        private Account.ExportDto creator; // TODO: 필요에 따라 더 적은 정보만을 전달
+        private Workspace.ExportDto workspace;
+        private Account.ExportDto creator;
         private String name;
         private String topic;
         private String description;
@@ -102,7 +126,7 @@ public class Channel{
                          String description, Integer settings, Integer status,
                          LocalDateTime createDt, LocalDateTime modifyDt) {
             this.id = id;
-            this.workspaceId = workspace.getId();
+            this.workspace = workspace.export();
             this.creator = account.export();
             this.name = name;
             this.topic = topic;

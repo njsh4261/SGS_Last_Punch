@@ -26,6 +26,8 @@ const Hright = styled.article`
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  color: white;
+  padding-right: 10px;
 `;
 
 export default function MainHeader() {
@@ -36,7 +38,7 @@ export default function MainHeader() {
         <HhistoryIcon></HhistoryIcon>
       </Hside>
       <SearchContainer workspaceName={wsName}></SearchContainer>
-      <Hright>memeber</Hright>
+      <Hright>profile</Hright>
     </MainHeaderFrame>
   );
 }

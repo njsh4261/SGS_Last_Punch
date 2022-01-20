@@ -6,69 +6,63 @@
 //
 
 import RxSwift
+import RxCocoa
 
 class LoginViewModel: ViewModelProtocol {
     struct Input {
-        let email: AnyObserver<String>
-        let password: AnyObserver<String>
-        let signInDidTap: AnyObserver<Void>
+        let email = PublishSubject<String>()
+        let password = PublishSubject<String>()
+        let btnLoginTapped = PublishSubject<Void>()
     }
     
     struct Output {
-        let loginResultObservable: Observable<User>
-        let errorsObservable: Observable<Error>
+        let enableBtnSignIn = PublishRelay<Bool>()
+        let errorMessage = PublishRelay<String>()
+        let goToMain = PublishRelay<Void>()
     }
     // MARK: - Public properties
-    let input: Input
-    let output: Output
+    var input = Input()
+    var output = Output()
     
     // MARK: - Private properties
-    private let emailSubject = PublishSubject<String>()
-    private let passwordSubject = PublishSubject<String>()
-    private let signInDidTapSubject = PublishSubject<Void>()
-    private let loginResultSubject = PublishSubject<User>()
-    private let errorsSubject = PublishSubject<Error>()
     private let disposeBag = DisposeBag()
     
-    
-    private var credentialsObservable: Observable<Credentials> {
-        return Observable.combineLatest(emailSubject.asObservable(), passwordSubject.asObservable()) { (email, password) in
-            return Credentials(email: email, password: password)
-        }
-    }
-    
     // MARK: - Init
-    init(_ loginService: LoginServiceProtocol) {
+    init() {
         
-        input = Input(email: emailSubject.asObserver(),
-                      password: passwordSubject.asObserver(),
-                      signInDidTap: signInDidTapSubject.asObserver())
-        
-        output = Output(loginResultObservable: loginResultSubject.asObservable(),
-                        errorsObservable: errorsSubject.asObservable())
-                
-        signInDidTapSubject
-            .withLatestFrom(credentialsObservable)
-            .flatMapLatest { credentials in
-                return loginService.signIn(with: credentials).materialize()
-            }
-            .subscribe(onNext: { [weak self] event in
-                switch event {
-                case .next(let user):
-                    self?.loginResultSubject.onNext(user)
-                case .error(let error):
-                    self?.errorsSubject.onNext(error)
-                default:
-                    break
-                }
-            })
+        // isValid
+        Observable.combineLatest(input.email, input.password)
+            .map{ !$0.0.isEmpty && !$0.1.isEmpty }
+            .bind(to: output.enableBtnSignIn)
             .disposed(by: disposeBag)
-    }
-    
-    func isValid() -> Observable<Bool> {
-        Observable.combineLatest(emailSubject.asObserver(), passwordSubject.asObserver()).map {
-            (email, password) in
-            return email.count > 3 && password.count > 3
-        }
+        
+        input.btnLoginTapped.withLatestFrom(Observable.combineLatest(input.email, input.password))
+            .bind { [weak self] (email, password) in
+                guard let self = self else { return }
+                if password.count < 1 {
+                    self.output.errorMessage.accept("1자리 이상 비밀번호를 입력해주세요.")
+                } else {
+                    // API로직을 태워야합니다.
+                    LoginService.shared.signIn(email: email, password: password) { result in
+                        switch result {
+                        case .success:
+                            self.output.goToMain.accept(())
+                        case .requestErr:
+                            self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력함")
+                        case .unAuthorized:
+                            self.output.errorMessage.accept("인증이 안됌")
+                        case .notFound:
+                            self.output.errorMessage.accept("찾을 수 없음")
+                        case .pathErr:
+                            self.output.errorMessage.accept("path 에러")
+                        case .serverErr:
+                            self.output.errorMessage.accept("서버 에러")
+                        case .networkFail:
+                            self.output.errorMessage.accept("네트워크")
+                        }
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }

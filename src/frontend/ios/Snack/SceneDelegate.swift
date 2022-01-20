@@ -6,19 +6,56 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var tabBarController: UITabBarController!
+    
+    var chatsView: ChatsViewController!
+    var profileVie: ProfileViewController!
+    // 추가예정 : DirectMessageViewConrooler!, NoticeViewConrooler!, SearchViewConrooler!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
-            
-        let rootNavigationController = WelcomeViewController()
         
-        self.window?.rootViewController = rootNavigationController
+        chatsView = ChatsViewController()
+        profileVie = ProfileViewController(nibName: "ProfileView", bundle: nil)
+        
+        
+        let navController1 = NavigationController(rootViewController: chatsView)
+        let navController4 = NavigationController(rootViewController: profileVie)
+        
+        tabBarController = UITabBarController()
+        tabBarController.viewControllers = [navController1, navController4]
+        tabBarController.tabBar.isTranslucent = false
+        tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
+        tabBarController.selectedIndex = 0
+        
+        if #available(iOS 15.0, *) {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            tabBarController.tabBar.standardAppearance = appearance
+            tabBarController.tabBar.scrollEdgeAppearance = appearance
+        }
+        
+        self.window?.rootViewController = tabBarController
+//        self.window?.rootViewController = WelcomeViewController()
         self.window?.makeKeyAndVisible()
+        
+        _ = chatsView.view
+        _ = profileVie.view
+        
+        // UITableView padding
+        if #available(iOS 15.0, *) {
+            UITableView.appearance().sectionHeaderTopPadding = 0
+        }
+
+        // ProgressHUD initialization
+        ProgressHUD.colorProgress = UIColor.systemYellow
+        ProgressHUD.colorAnimation = UIColor.systemYellow
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

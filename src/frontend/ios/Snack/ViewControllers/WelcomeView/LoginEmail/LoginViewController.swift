@@ -15,7 +15,7 @@ import Then
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = LoginViewModel(LoginService())
+    private var viewModel = LoginViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
@@ -41,53 +41,49 @@ class LoginViewController: UIViewController {
     }
     
     func bind(with viewModel: LoginViewModel) {
-        
-        fieldEmail.rx.text.asObservable()
-            .ignoreNil()
-            .subscribe(viewModel.input.email)
+        // Bind input
+        fieldEmail.rx.text.orEmpty
+            .bind(to: viewModel.input.email)
             .disposed(by: disposeBag)
         
-        fieldPassword.rx.text.asObservable()
-            .ignoreNil()
-            .subscribe(viewModel.input.password)
+        fieldPassword.rx.text.orEmpty
+            .bind(to: viewModel.input.password)
             .disposed(by: disposeBag)
         
-        btnSignIn.rx.tap.asObservable()
+        btnSignIn.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(viewModel.input.signInDidTap)
+            .bind(to: viewModel.input.btnLoginTapped)
             .disposed(by: disposeBag)
         
-        btnSignUp.rx.tap
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.dismiss(animated: true, completion: nil)
-            })
+        // Bind output
+        viewModel.output.enableBtnSignIn
+            .observe(on: MainScheduler.instance)
+            .bind(to: btnSignIn.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        viewModel.isValid()
-            .subscribe(onNext: { [self] valid in
-                self.btnSignIn.isUserInteractionEnabled = valid
-                if valid {
-                    self.btnSignIn.alpha = 1
-                }else{
-                    self.btnSignIn.alpha = 0.3
-                }
-            }).disposed(by: disposeBag)
-        
-        viewModel.output.errorsObservable
-            .subscribe(onNext: { (error) in
-                ProgressHUD.showFailed(error.localizedDescription)
-            })
+        viewModel.output.errorMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showFailedAlert)
             .disposed(by: disposeBag)
         
-        viewModel.output.loginResultObservable
-            .subscribe(onNext: { (user) in
-                //                ProgressHUD.show(nil, interaction: false)
-            })
+        viewModel.output.goToMain
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToWorkspaceSelect)
             .disposed(by: disposeBag)
     }
     
+    private func showFailedAlert(_ message: String) {
+        ProgressHUD.showFailed(message)
+    }
+    
+    private func goToWorkspaceSelect() {
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            sceneDelegate.window?.rootViewController = sceneDelegate.tabBarController
+        }
+    }
+    
     private func attribute() {
+        view.backgroundColor = UIColor(named: "snackBackGroundColor")
         ivLogo.image = UIImage(named: "snack")
         
         [fieldEmail, fieldPassword].forEach {
@@ -115,6 +111,8 @@ class LoginViewController: UIViewController {
         btnSignIn = btnSignIn.then {
             $0.setTitle("로그인", for: .normal)
             $0.backgroundColor = UIColor(named: "snackColor")
+            $0.layer.cornerRadius = 6
+            $0.isEnabled = false
         }
         
         lblWarning = lblWarning.then {

@@ -12,7 +12,7 @@ import lastpunch.workspace.entity.AccountWorkspace;
 public interface AccountWorkspaceRepository extends JpaRepository<AccountWorkspace, Long>{
     @Query(
         value = "INSERT INTO accountworkspace (accountid, workspaceid, roleid) "
-            + "VALUES (:accountId, :workspaceId)",
+            + "VALUES (:accountId, :workspaceId, :roleId)",
         nativeQuery = true
     )
     @Modifying(clearAutomatically = true)

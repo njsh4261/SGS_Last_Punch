@@ -2,6 +2,8 @@ package lastpunch.workspace.service;
 
 import java.util.Map;
 
+import lastpunch.workspace.common.StatusCode;
+import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.type.RoleType;
 import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.entity.Workspace;
@@ -34,8 +36,8 @@ public class WorkspaceService{
         this.commonService = commonService;
     }
     
-    public Map<String, Object> getList(Long id, Pageable pageable){
-        return Map.of("workspaces", workspaceRepository.getListWithUserId(id, pageable));
+    public Map<String, Object> getList(Long userId, Pageable pageable){
+        return Map.of("workspaces", workspaceRepository.getListWithUserId(userId, pageable));
     }
     
     public Map<String, Object> getOne(Long id){
@@ -53,7 +55,7 @@ public class WorkspaceService{
     public Map<String, Object> create(Long userId, Workspace.CreateDto workspaceDto){
         Workspace newWorkspace = workspaceRepository.save(workspaceDto.toWorkspaceEntity());
         Channel newChannel = channelRepository.save(
-            workspaceDto.toChannelEntity(newWorkspace, commonService.getAccount(userId))
+            workspaceDto.toChannelEntity(newWorkspace)
         );
         
         accountWorkspaceRepository.save(userId, newWorkspace.getId(), RoleType.OWNER.getId());

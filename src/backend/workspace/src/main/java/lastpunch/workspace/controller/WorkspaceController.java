@@ -2,6 +2,7 @@ package lastpunch.workspace.controller;
 
 import java.util.Map;
 
+import lastpunch.workspace.common.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,7 +18,7 @@ import lastpunch.workspace.service.WorkspaceService;
 @RequestMapping("/workspace")
 public class WorkspaceController{
     private final WorkspaceService workspaceService;
-    private static final int PAGE_SIZE_WORKSPACE = 4;
+    private static final int PAGE_SIZE_WORKSPACE = 5;
     private static final int PAGE_SIZE_CHANNEL = 10;
     private static final int PAGE_SIZE_MEMBER = 10;
 
@@ -32,7 +33,7 @@ public class WorkspaceController{
             @PageableDefault(size = PAGE_SIZE_WORKSPACE) Pageable pageable){
         return Response.ok(
             ServerCode.WORKSPACE,
-            workspaceService.getList((Long) header.get("userId"), pageable)
+            workspaceService.getList(Parser.getHeaderId(header), pageable)
         );
     }
 
@@ -61,7 +62,7 @@ public class WorkspaceController{
             @RequestBody Workspace.CreateDto createDto){
         return Response.ok(
             ServerCode.WORKSPACE,
-            workspaceService.create((Long) header.get("userId"), createDto)
+            workspaceService.create(Parser.getHeaderId(header), createDto)
         );
     }
 

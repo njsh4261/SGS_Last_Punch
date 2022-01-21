@@ -37,7 +37,7 @@ CREATE TABLE `channel`(
     `createDt` DATETIME NOT NULL,
     `modifyDt` DATETIME NOT NULL,
     INDEX (`workspaceId`),
-    INDEX (`creatorId`)
+    UNIQUE (`workspaceId`, `name`)
 );
 ALTER TABLE `channel` ADD CONSTRAINT `channel_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`) ON DELETE CASCADE;
 

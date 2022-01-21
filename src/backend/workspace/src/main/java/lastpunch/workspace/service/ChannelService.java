@@ -1,5 +1,7 @@
 package lastpunch.workspace.service;
 
+import lastpunch.workspace.common.StatusCode;
+import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.type.RoleType;
 import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.repository.AccountChannelRepository;
@@ -38,8 +40,7 @@ public class ChannelService{
     public Map<String, Object> create(Long userId, Channel.CreateDto createDto){
         Channel newChannel = channelRepository.save(
             createDto.toEntity(
-                commonService.getWorkspace(createDto.getWorkspaceId()),
-                commonService.getAccount(userId)
+                commonService.getWorkspace(createDto.getWorkspaceId())
             )
         );
     

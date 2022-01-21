@@ -39,10 +39,6 @@ public class Channel{
     @JoinColumn(name = "workspaceid")
     private Workspace workspace;
     
-    @ManyToOne(targetEntity=Account.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "creatorid")
-    private Account account;
-    
     @NotNull
     private String name;
     
@@ -75,10 +71,9 @@ public class Channel{
         private String topic;
         private String description;
 
-        public Channel toEntity(Workspace workspace, Account account){
+        public Channel toEntity(Workspace workspace){
             return Channel.builder()
                 .workspace(workspace)
-                .account(account)
                 .name(name)
                 .topic(topic)
                 .description(description)
@@ -98,11 +93,21 @@ public class Channel{
         private Integer status;
         
         public Channel toEntity(Channel channel){
-            channel.setName(name);
-            channel.setTopic(topic);
-            channel.setDescription(description);
-            channel.setSettings(settings);
-            channel.setStatus(status);
+            if(name != null){
+                channel.setName(name);
+            }
+            if(topic != null){
+                channel.setTopic(topic);
+            }
+            if(description != null){
+                channel.setDescription(description);
+            }
+            if(settings != null){
+                channel.setSettings(settings);
+            }
+            if(status != null){
+                channel.setStatus(status);
+            }
             return channel;
         }
     }
@@ -111,7 +116,6 @@ public class Channel{
     public static class ExportDto{
         private Long id;
         private Workspace.ExportDto workspace;
-        private Account.ExportDto creator;
         private String name;
         private String topic;
         private String description;
@@ -121,12 +125,11 @@ public class Channel{
         private LocalDateTime modifyDt;
 
         @QueryProjection
-        public ExportDto(Long id, Workspace workspace, Account account, String name, String topic,
+        public ExportDto(Long id, Workspace workspace, String name, String topic,
                          String description, Integer settings, Integer status,
                          LocalDateTime createDt, LocalDateTime modifyDt) {
             this.id = id;
             this.workspace = workspace.export();
-            this.creator = account.export();
             this.name = name;
             this.topic = topic;
             this.description = description;
@@ -139,8 +142,7 @@ public class Channel{
     
     public ExportDto export(){
         return new ExportDto(
-                id, workspace, account, name, topic, description,
-                settings, status, createdt, modifydt
+                id, workspace, name, topic, description, settings, status, createdt, modifydt
         );
     }
 }

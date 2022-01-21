@@ -1,6 +1,7 @@
 package lastpunch.workspace.controller;
 
 import java.util.Map;
+import lastpunch.workspace.common.Parser;
 import lastpunch.workspace.common.Response;
 import lastpunch.workspace.common.ServerCode;
 import lastpunch.workspace.entity.Channel;
@@ -41,7 +42,7 @@ public class ChannelController{
             @RequestBody CreateDto channelCreateDto){
         return Response.ok(
             ServerCode.WORKSPACE,
-            channelService.create((Long) header.get("userId"), channelCreateDto)
+            channelService.create(Parser.getHeaderId(header), channelCreateDto)
         );
     }
     

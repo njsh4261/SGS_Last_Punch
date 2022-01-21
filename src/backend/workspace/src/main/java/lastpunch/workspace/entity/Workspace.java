@@ -73,10 +73,9 @@ public class Workspace{
                     .build();
         }
 
-        public Channel toChannelEntity(Workspace workspace, Account account){
+        public Channel toChannelEntity(Workspace workspace){
             return Channel.builder()
                     .workspace(workspace)
-                    .account(account)
                     .name(channelName)
                     .topic(channelTopic)
                     .description(channelDescription)
@@ -96,10 +95,18 @@ public class Workspace{
         private Integer status; // TODO: converter 문제 해결 시 String으로
         
         public Workspace toEntity(Workspace workspace){
-            workspace.setName(name);
-            workspace.setDescription(description);
-            workspace.setSettings(settings);
-            workspace.setStatus(status);
+            if(name != null){
+                workspace.setName(name);
+            }
+            if(description != null){
+                workspace.setDescription(description);
+            }
+            if(settings != null){
+                workspace.setSettings(settings);
+            }
+            if(status != null){
+                workspace.setStatus(status);
+            }
             return workspace;
         }
     }

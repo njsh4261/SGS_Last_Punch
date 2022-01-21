@@ -63,12 +63,15 @@ const ShowMoreIcon = styled.div`
 `;
 
 export default function WsList() {
-  const [wsList, setWsList] = useState([]);
+  const [page, setPage] = useState(0);
+  const [wsList, setWsList] = useState<IWorkspace[]>([]);
 
   const getWsList = async () => {
-    const { workspaces } = await getWsListAPI('1'); // dummy userId
-    if (workspaces) setWsList(workspaces.content);
-    else alert('error');
+    const { workspaces } = await getWsListAPI('1', page); // dummy userId
+    if (workspaces) {
+      setWsList([...wsList, ...workspaces.content]);
+      setPage((state) => state + 1);
+    } else alert('error');
   };
 
   useEffect(() => {
@@ -84,7 +87,7 @@ export default function WsList() {
             <WsItem ws={ws} key={ws.id}></WsItem>
           ))}
           <ShowMore>
-            <ShowMoreButton>
+            <ShowMoreButton onClick={getWsList}>
               <span>더 보기</span>
               <ShowMoreIcon></ShowMoreIcon>
             </ShowMoreButton>

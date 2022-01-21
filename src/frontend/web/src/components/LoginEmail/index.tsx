@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
 import Logo from '../Common/Logo';
-import SignUp from './SignUp';
+import SignUp from './SignUpButton';
 import loginAPI from '../../Api/login';
 
 const LoginContainer = styled.article`

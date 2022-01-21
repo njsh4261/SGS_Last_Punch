@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
+import DisableButton from '../Common/DisableButton';
 import Logo from '../Common/Logo';
 import SignUp from './SignUpButton';
 import loginAPI from '../../Api/login';
@@ -49,10 +50,14 @@ export default function LoginEmailContainer() {
         inputHandler={inputHandler}
         isPass={true}
       ></Input>
-      <SubmitButton
-        submitHandler={submitHandler}
-        text="이메일로 로그인"
-      ></SubmitButton>
+      {email !== '' && pass !== '' ? (
+        <SubmitButton
+          submitHandler={submitHandler}
+          text="이메일로 로그인"
+        ></SubmitButton>
+      ) : (
+        <DisableButton text="이메일로 로그인"></DisableButton>
+      )}
       <SignUp></SignUp>
     </LoginContainer>
   );

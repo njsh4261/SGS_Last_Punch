@@ -3,15 +3,13 @@ import styled from 'styled-components';
 
 interface SubmitButtonProps {
   borderRadius: string;
-  light: boolean;
   fontSize: string;
   fontWeight: string;
 }
 
-const SsubmitButton = styled.button<SubmitButtonProps>`
+const SDisableButton = styled.button<SubmitButtonProps>`
   width: 100%;
-  background-color: ${({ light, theme }) =>
-    light ? theme.color.lightSlack : theme.color.slack};
+  background-color: grey;
   color: white;
   border: none;
   font-size: ${(props) => props.fontSize};
@@ -21,7 +19,7 @@ const SsubmitButton = styled.button<SubmitButtonProps>`
   padding: 0 16px 3px;
   border-radius: ${(props) => props.borderRadius};
   &:hover {
-    cursor: pointer;
+    cursor: not-allowed;
   }
 `;
 
@@ -30,27 +28,22 @@ interface SubmitProps {
   fontWeight?: string;
   fontSize?: string;
   borderRadius?: string;
-  light?: boolean;
-  submitHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function SubmitButton({
+export default function DisableButton({
   text,
-  submitHandler,
   fontSize = '18px',
   fontWeight = '600',
   borderRadius = '4px',
-  light = false,
 }: SubmitProps) {
   return (
-    <SsubmitButton
+    <SDisableButton
       fontSize={fontSize}
       fontWeight={fontWeight}
       borderRadius={borderRadius}
-      light={light}
-      onClick={submitHandler}
+      disabled
     >
       {text}
-    </SsubmitButton>
+    </SDisableButton>
   );
 }

@@ -18,6 +18,7 @@ const MessageListContainer = styled.article`
   flex: 1;
   overflow-y: scroll;
   overflow-x: hidden;
+  margin-bottom: 124px;
 `;
 
 const MessageBox = styled.section`
@@ -31,7 +32,12 @@ const MessageBox = styled.section`
 `;
 
 const ChatInputLayout = styled.article`
-  margin: 0 20px 20px 20px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 260px;
+  padding: 20px;
+  background-color: white;
 `;
 
 const End = styled.article``;

@@ -42,25 +42,25 @@ INSERT INTO workspace(name, settings, status, createDt, modifyDt)
     VALUES ('ws6', 0, 1, '1234-01-01', '9999-12-31');
 
 
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (1, 1);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (1, 2);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (1, 3);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (1, 4);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (1, 5);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (1, 6);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (1, 1, 3);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (1, 2, 1);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (1, 3, 2);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (1, 4, 1);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (1, 5, 1);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (1, 6, 2);
 
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (2, 1);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (2, 2);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (2, 3);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (2, 1, 1);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (2, 2, 1);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (2, 3, 1);
 
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (3, 1);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (3, 2);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (3, 3);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (3, 4);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (3, 5);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (3, 1, 1);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (3, 2, 1);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (3, 3, 3);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (3, 4, 2);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (3, 5, 2);
 
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (4, 1);
-INSERT INTO accountworkspace (accountId, workspaceId) VALUES (5, 1);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (4, 1, 1);
+INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (5, 1, 1);
 
 
 INSERT INTO channel (workspaceId, creatorId, name, topic, description, settings, status, createDt, modifyDt)
@@ -94,7 +94,8 @@ INSERT INTO channel (workspaceId, creatorId, name, topic, description, settings,
 
 
 INSERT INTO role (name) VALUES ('normal_user');
-INSERT INTO role (name) VALUES ('channel_admin');
+INSERT INTO role (name) VALUES ('admin');
+INSERT INTO role (name) VALUES ('owner');
 
 
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 1, 2);

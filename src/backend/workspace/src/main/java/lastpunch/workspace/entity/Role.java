@@ -29,5 +29,8 @@ public class Role{
     private String name;
     
     @OneToMany(mappedBy = "role", orphanRemoval = true)
+    List<AccountWorkspace> accountWorkspaces;
+    
+    @OneToMany(mappedBy = "role", orphanRemoval = true)
     List<AccountChannel> accountChannels;
 }

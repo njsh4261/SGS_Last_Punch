@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../Common/Logo';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
+import DisableButton from '../Common/DisableButton';
 import signupAPI from '../../Api/signup';
 
 const SignupContainer = styled.article`
@@ -73,7 +74,14 @@ export default function SignupEmailContainer() {
           inputHandler={inputHandler}
           isPass={true}
         ></Input>
-        <SubmitButton text="계속" submitHandler={submitHandler}></SubmitButton>
+        {email !== '' && pass !== '' && passCheck !== '' ? (
+          <SubmitButton
+            text="계속"
+            submitHandler={submitHandler}
+          ></SubmitButton>
+        ) : (
+          <DisableButton text="계속"></DisableButton>
+        )}
       </SignupBody>
     </SignupContainer>
   );

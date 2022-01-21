@@ -29,7 +29,6 @@ CREATE TABLE `workspace`(
 CREATE TABLE `channel`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `workspaceId` BIGINT UNSIGNED NOT NULL,
-    `creatorId` BIGINT UNSIGNED NOT NULL,
     `name` VARCHAR(255) NOT NULL,
     `topic` VARCHAR(255) NULL,
     `description` TEXT NULL,
@@ -38,10 +37,9 @@ CREATE TABLE `channel`(
     `createDt` DATETIME NOT NULL,
     `modifyDt` DATETIME NOT NULL,
     INDEX (`workspaceId`),
-    INDEX (`creatorId`)
+    UNIQUE (`workspaceId`, `name`)
 );
-ALTER TABLE `channel` ADD CONSTRAINT `channel_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`);
-ALTER TABLE `channel` ADD CONSTRAINT `channel_creatorid_foreign` FOREIGN KEY(`creatorId`) REFERENCES `account`(`id`);
+ALTER TABLE `channel` ADD CONSTRAINT `channel_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`) ON DELETE CASCADE;
 
 CREATE TABLE `presence`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -51,7 +49,7 @@ CREATE TABLE `presence`(
     `logoutDt` DATETIME NULL,
     INDEX (`accountId`)
 );
-ALTER TABLE `presence` ADD CONSTRAINT `presence_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`);
+ALTER TABLE `presence` ADD CONSTRAINT `presence_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`) ON DELETE CASCADE;
 
 CREATE TABLE `role`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -66,19 +64,21 @@ CREATE TABLE `accountchannel`(
     INDEX (`accountId`),
     INDEX (`channelId`)
 );
-ALTER TABLE `accountchannel` ADD CONSTRAINT `accountchannel_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`);
-ALTER TABLE `accountchannel` ADD CONSTRAINT `accountchannel_channelid_foreign` FOREIGN KEY(`channelId`) REFERENCES `channel`(`id`);
-ALTER TABLE `accountchannel` ADD CONSTRAINT `accountchannel_roleid_foreign` FOREIGN KEY(`roleId`) REFERENCES `role`(`id`);
+ALTER TABLE `accountchannel` ADD CONSTRAINT `accountchannel_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`) ON DELETE CASCADE;
+ALTER TABLE `accountchannel` ADD CONSTRAINT `accountchannel_channelid_foreign` FOREIGN KEY(`channelId`) REFERENCES `channel`(`id`) ON DELETE CASCADE;
+ALTER TABLE `accountchannel` ADD CONSTRAINT `accountchannel_roleid_foreign` FOREIGN KEY(`roleId`) REFERENCES `role`(`id`) ON DELETE CASCADE;
 
 CREATE TABLE `accountworkspace`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `accountId` BIGINT UNSIGNED NOT NULL,
     `workspaceId` BIGINT UNSIGNED NOT NULL,
+    `roleId` BIGINT UNSIGNED NOT NULL,
     INDEX (`accountId`),
     INDEX (`workspaceId`)
 );
-ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`);
-ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`);
+ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`) ON DELETE CASCADE;
+ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`) ON DELETE CASCADE;
+ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_roleid_foreign` FOREIGN KEY(`roleId`) REFERENCES `role`(`id`) ON DELETE CASCADE;
 
 CREATE TABLE `file`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

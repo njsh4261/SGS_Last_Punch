@@ -22,10 +22,15 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	set('springCloudVersion', "2021.0.0")
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
@@ -40,6 +45,12 @@ dependencies {
 	annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: querydslVersion, classifier: 'jpa'
 	annotationProcessor("jakarta.persistence:jakarta.persistence-api")
 	annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 test {

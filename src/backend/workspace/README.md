@@ -1,13 +1,10 @@
 # Workspace server
 
----
-
 워크스페이스 및 채널 관련 API를 제공하는 서버
 - 2022.01.17: 워크스페이스 CRUD 및 멤버 추가/삭제 API 제공 
 
 # How to Run
 
----
 - Java 11 필요 (OpenJDK 11 설치 권장)
 - MySQL 환경 세팅이 필요 (`/scripts/MySQL` 참조)
 - `./src/main/resources/application.yml`에서 개인 환경에 맞춰서 내용 수정
@@ -20,13 +17,9 @@
 
 # API Reference
 
----
-
 - `/docs/API_references/backend_workspace_apis.md` 참조
 
 # TODO
-
----
 
 - 워크스페이스-멤버 API 및 채널-멤버 API에 대해 수정할 사항
   - 권한에 따라 API call permission을 지정하는 코드 추가 필요

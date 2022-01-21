@@ -2,11 +2,11 @@ import axios from 'axios';
 import { HOST, ERROR_MESSAGE } from '../constant';
 
 const PAGE = 0;
-const SIZE = 15;
+const SIZE = 3;
 
 // todo: remove userId and set Token
-export async function getWsListAPI(userId: string) {
-  const endpoint = `/workspace/?userId=${userId}&page=${PAGE}&size=${SIZE}`;
+export async function getWsListAPI(userId: string, page: number) {
+  const endpoint = `/workspace/?userId=${userId}&page=${page}&size=${SIZE}`;
 
   try {
     const response = await axios.get(HOST + endpoint);

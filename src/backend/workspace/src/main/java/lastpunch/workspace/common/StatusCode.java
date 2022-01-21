@@ -22,7 +22,8 @@ public enum StatusCode{
     ACCOUNTWORKSPACE_NOT_EXIST(HttpStatus.OK, "12004", "ACCOUNTWORKSPACE_NOT_EXIST", "존재하지 않는 유저와 워크스페이스 간 관계입니다."),
     ACCOUNTWORKSPACE_ALREADY_EXIST(HttpStatus.OK, "12005", "ACCOUNTWORKSPACE_ALREADY_EXIST", "유저와 워크스페이스 간 관계가 이미 존재합니다."),
     ACCOUNTCHANNEL_NOT_EXIST(HttpStatus.OK, "12006", "ACCOUNTCHANNEL_NOT_EXIST", "존재하지 않는 유저와 채널 간 관계입니다."),
-    ACCOUNTCHANNEL_ALREADY_EXIST(HttpStatus.OK, "12007", "ACCOUNTCHANNEL_ALREADY_EXIST", "유저와 채널 간 관계가 이미 존재합니다.");
+    ACCOUNTCHANNEL_ALREADY_EXIST(HttpStatus.OK, "12007", "ACCOUNTCHANNEL_ALREADY_EXIST", "유저와 채널 간 관계가 이미 존재합니다."),
+    INVALID_USERID(HttpStatus.OK, "12008", "INVALID_USERID", "사용자 ID가 정상적으로 제공되지 않았습니다.");
     
     private HttpStatus status;
     private final String code;

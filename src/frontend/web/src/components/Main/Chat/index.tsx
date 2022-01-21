@@ -16,8 +16,12 @@ const Container = styled.main`
 
 const MessageListContainer = styled.article`
   flex: 1;
+  max-height: calc(
+    100% - 198px
+  ); // hard coding. 198 is main-header, chat-header
   overflow-y: scroll;
   overflow-x: hidden;
+  margin-bottom: 114px; // size of input
 `;
 
 const MessageBox = styled.section`
@@ -31,7 +35,12 @@ const MessageBox = styled.section`
 `;
 
 const ChatInputLayout = styled.article`
-  margin: 0 20px 20px 20px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 260px;
+  padding: 10px 20px 20px;
+  background-color: white;
 `;
 
 const End = styled.article``;
@@ -54,7 +63,11 @@ const Chat = ({ params }: { params: Params }) => {
     }
   };
   const scrollToBottom = () =>
-    endRef.current?.scrollIntoView({ behavior: 'smooth' });
+    endRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      // inline: 'start',
+    });
 
   useEffect(() => {
     const { channelId } = params;

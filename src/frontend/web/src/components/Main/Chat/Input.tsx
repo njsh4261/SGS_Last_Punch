@@ -16,7 +16,6 @@ import SmileIcon from '../../../icon/smile.svg';
 import FileIcon from '../../../icon/file.svg';
 
 const InputContainer = styled.article`
-  flex-shrink: 0;
   border: 1px solid grey;
   border-radius: 6px;
   overflow: hidden;

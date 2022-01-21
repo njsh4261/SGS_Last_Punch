@@ -1,6 +1,8 @@
 package lastpunch.workspace.controller;
 
-import lastpunch.workspace.entity.Channel;
+import java.util.Map;
+
+import lastpunch.workspace.common.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,7 +18,9 @@ import lastpunch.workspace.service.WorkspaceService;
 @RequestMapping("/workspace")
 public class WorkspaceController{
     private final WorkspaceService workspaceService;
-    private static final int PAGESIZE = 5;
+    private static final int PAGE_SIZE_WORKSPACE = 5;
+    private static final int PAGE_SIZE_CHANNEL = 10;
+    private static final int PAGE_SIZE_MEMBER = 10;
 
     @Autowired
     public WorkspaceController(WorkspaceService workspaceService){
@@ -25,8 +29,12 @@ public class WorkspaceController{
 
     @GetMapping
     public ResponseEntity<Object> getList(
-            @RequestParam("userId") Long id, @PageableDefault(size = PAGESIZE) Pageable pageable){
-        return Response.ok(ServerCode.WORKSPACE, workspaceService.getList(id, pageable));
+            @RequestHeader Map<String, Object> header,
+            @PageableDefault(size = PAGE_SIZE_WORKSPACE) Pageable pageable){
+        return Response.ok(
+            ServerCode.WORKSPACE,
+            workspaceService.getList(Parser.getHeaderId(header), pageable)
+        );
     }
 
     @GetMapping("/{id}")
@@ -36,19 +44,26 @@ public class WorkspaceController{
 
     @GetMapping("/{id}/members")
     public ResponseEntity<Object> getMembers(
-            @PathVariable("id") Long id, @PageableDefault(size = PAGESIZE) Pageable pageable){
+            @PathVariable("id") Long id,
+            @PageableDefault(size = PAGE_SIZE_MEMBER) Pageable pageable){
         return Response.ok(ServerCode.WORKSPACE, workspaceService.getMembers(id, pageable));
     }
 
     @GetMapping("/{id}/channels")
     public ResponseEntity<Object> getChannels(
-            @PathVariable("id") Long id, @PageableDefault(size = PAGESIZE) Pageable pageable){
+            @PathVariable("id") Long id,
+            @PageableDefault(size = PAGE_SIZE_CHANNEL) Pageable pageable){
         return Response.ok(ServerCode.WORKSPACE, workspaceService.getChannels(id, pageable));
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody Workspace.CreateDto createDto){
-        return Response.ok(ServerCode.WORKSPACE, workspaceService.create(createDto));
+    public ResponseEntity<Object> create(
+            @RequestHeader Map<String, Object> header,
+            @RequestBody Workspace.CreateDto createDto){
+        return Response.ok(
+            ServerCode.WORKSPACE,
+            workspaceService.create(Parser.getHeaderId(header), createDto)
+        );
     }
 
     @PutMapping("/{id}")

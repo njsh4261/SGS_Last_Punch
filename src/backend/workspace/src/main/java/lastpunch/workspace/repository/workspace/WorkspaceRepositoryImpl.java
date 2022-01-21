@@ -88,7 +88,7 @@ public class WorkspaceRepositoryImpl implements WorkspaceRepositoryCustom{
     public Page<Channel.ExportDto> getChannels(Long id, Pageable pageable){
         List<Channel.ExportDto> results = jpaQueryFactory
                 .select(new QChannel_ExportDto(
-                        channel.id, channel.workspace, channel.account, channel.name, channel.topic,
+                        channel.id, channel.workspace, channel.name, channel.topic,
                         channel.description, channel.settings, channel.status, channel.createdt, channel.modifydt
                 ))
                 .from(channel)

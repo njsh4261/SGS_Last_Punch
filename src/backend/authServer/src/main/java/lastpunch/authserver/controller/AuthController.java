@@ -43,19 +43,19 @@ public class AuthController {
         return Response.toResponseEntity("11000", HttpStatus.OK, data);
     }
     
-    @GetMapping("/logout-token")
-    public ResponseEntity<Object> logout(@RequestHeader Map<String, Object> requestHeader) {
+    @GetMapping("/signout")
+    public ResponseEntity<Object> signout(@RequestHeader Map<String, Object> requestHeader) {
         loginService.logout(requestHeader);
         return Response.toResponseEntity("11000", HttpStatus.OK);
     }
     
-    @PostMapping("/send-email")
+    @PostMapping("/email")
     public ResponseEntity<Object> sendEmail(@RequestBody SendEmailRequest sendEmailRequest) {
         emailVerifyService.sendVerifyMail(sendEmailRequest.getEmail());
         return Response.toResponseEntity("11000", HttpStatus.OK);
     }
     
-    @GetMapping("/email-verify")
+    @GetMapping("/email")
     public ResponseEntity<Object> emailVerify(@RequestBody EmailVerifyRequest emailVerifyRequest) {
         emailVerifyService.verifyMail(emailVerifyRequest);
         return Response.toResponseEntity("11000", HttpStatus.OK);

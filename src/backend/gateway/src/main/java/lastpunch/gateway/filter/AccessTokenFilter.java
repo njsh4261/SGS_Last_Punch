@@ -36,6 +36,11 @@ public class AccessTokenFilter implements GatewayFilter, Ordered{
     
         // 2. accessToken이 유효한 경우 -> 요청 진행, 유효하지 않은 경우 exception handler에 에러 걸려서 401 리턴
         jwtProvider.validateToken(accessToken);
+        
+        // 토큰에서 userId 정보를 받아 request header에 담음
+        Long userId = jwtProvider.getUserId();
+        request.mutate().header("userId", String.valueOf(userId)).build();
+        
         return chain.filter(exchange);
     }
     

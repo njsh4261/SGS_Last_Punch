@@ -83,7 +83,9 @@ class LoginViewController: UIViewController {
         ProgressHUD.showFailed(message)
     }
     
-    private func goToWorkspaceList() {
+    private func goToWorkspaceList(_ token: Token) {
+        print(token.access_token)
+        print(token.refresh_token)
         ProgressHUD.showSucceed()
         let navController = WorkspaceListViewController()
         

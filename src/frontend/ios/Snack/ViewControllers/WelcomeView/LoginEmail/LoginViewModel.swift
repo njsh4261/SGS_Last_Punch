@@ -19,7 +19,7 @@ class LoginViewModel: ViewModelProtocol {
     struct Output {
         let enableBtnSignIn = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
-        let goToWorkspaceList = PublishRelay<Void>()
+        let goToWorkspaceList = PublishRelay<Token>()
     }
     // MARK: - Public properties
     var input = Input()
@@ -45,21 +45,21 @@ class LoginViewModel: ViewModelProtocol {
                 } else {
                     // API로직을 태워야합니다.
                     ProgressHUD.animationType = .circleSpinFade
-                    ProgressHUD.show("로그인 중..")
+                    ProgressHUD.show("접속중..")
                     LoginService.shared.signIn(email: email, password: password)
                         .subscribe { event in
                             switch event {
                             case .next(let result):
                                 DispatchQueue.main.async { // 메인스레드에서 동작
                                     switch result {
-                                    case .success:
-                                        self.output.goToWorkspaceList.accept(())
+                                    case .success(let data):
+                                        self.output.goToWorkspaceList.accept(data as! Token)
                                     case .requestErr:
-                                        self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력함")
+                                        self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력했습니다.")
                                     case .unAuthorized:
                                         self.output.errorMessage.accept("인증이 안됌")
                                     case .notFound:
-                                        self.output.errorMessage.accept("찾을 수 없음")
+                                        self.output.errorMessage.accept("이메일과 비밀")
                                     case .pathErr:
                                         self.output.errorMessage.accept("path 에러")
                                     case .serverErr:

@@ -17,10 +17,6 @@ struct User: Codable {
 struct LoginDataModel: Codable {
     let code: String
     let data: Token?
-}
-
-struct LoginErrorModel: Codable {
-    let code: String
     let err: Err?
 }
 
@@ -30,7 +26,7 @@ struct Token: Codable {
     let refresh_token: String
 }
 
-// MARK: - TokenData
+// MARK: - ErrData
 struct Err: Codable {
     let msg: String
     let desc: String

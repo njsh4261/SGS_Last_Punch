@@ -71,7 +71,6 @@ public class Channel{
     @Getter
     public static class CreateDto{
         private Long workspaceId;
-        private Long creatorId;
         private String name;
         private String topic;
         private String description;

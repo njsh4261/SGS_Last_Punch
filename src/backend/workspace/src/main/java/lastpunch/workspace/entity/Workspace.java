@@ -56,7 +56,6 @@ public class Workspace{
 
     @Getter
     public static class CreateDto{
-        private Long creatorId;
         private String workspaceName;
         private String workspaceDescription;
         private String channelName;

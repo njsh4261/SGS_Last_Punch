@@ -2,6 +2,7 @@ package lastpunch.workspace.service;
 
 import java.util.Map;
 
+import lastpunch.workspace.common.type.RoleType;
 import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.entity.Workspace;
 import lastpunch.workspace.repository.AccountChannelRepository;
@@ -49,18 +50,14 @@ public class WorkspaceService{
         return Map.of("channels", workspaceRepository.getChannels(id, pageable));
     }
 
-    public Map<String, Object> create(Workspace.CreateDto workspaceDto){
+    public Map<String, Object> create(Long userId, Workspace.CreateDto workspaceDto){
         Workspace newWorkspace = workspaceRepository.save(workspaceDto.toWorkspaceEntity());
         Channel newChannel = channelRepository.save(
-            workspaceDto.toChannelEntity(
-                newWorkspace, commonService.getAccount(workspaceDto.getCreatorId())
-            )
+            workspaceDto.toChannelEntity(newWorkspace, commonService.getAccount(userId))
         );
         
-        // TODO: creator id를 header에서 가져온다면 코드를 수정
-        // TODO: 권한 관련 부분 수정할 때 하드코딩한 roleId 수정
-        accountWorkspaceRepository.save(workspaceDto.getCreatorId(), newWorkspace.getId());
-        accountChannelRepository.add(workspaceDto.getCreatorId(), newChannel.getId(), 2L);
+        accountWorkspaceRepository.save(userId, newWorkspace.getId(), RoleType.OWNER.getId());
+        accountChannelRepository.add(userId, newChannel.getId(), RoleType.OWNER.getId());
         
         return Map.of(
                 "workspace", newWorkspace.export(),

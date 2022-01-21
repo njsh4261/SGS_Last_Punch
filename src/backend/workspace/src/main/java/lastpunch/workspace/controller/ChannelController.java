@@ -1,5 +1,6 @@
 package lastpunch.workspace.controller;
 
+import java.util.Map;
 import lastpunch.workspace.common.Response;
 import lastpunch.workspace.common.ServerCode;
 import lastpunch.workspace.entity.Channel;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/channel")
 public class ChannelController{
     private final ChannelService channelService;
-    private static final int PAGESIZE = 5;
+    private static final int PAGE_SIZE_MEMBER = 10;
     
     @Autowired
     public ChannelController(ChannelService channelService){
@@ -29,13 +30,19 @@ public class ChannelController{
     
     @GetMapping("/{id}/members")
     public ResponseEntity<Object> getMembers(
-            @PathVariable("id") Long id, @PageableDefault(size = PAGESIZE) Pageable pageable){
+            @PathVariable("id") Long id,
+            @PageableDefault(size = PAGE_SIZE_MEMBER) Pageable pageable){
         return Response.ok(ServerCode.WORKSPACE, channelService.getMembers(id, pageable));
     }
     
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody CreateDto channelCreateDto){
-        return Response.ok(ServerCode.WORKSPACE, channelService.create(channelCreateDto));
+    public ResponseEntity<Object> create(
+            @RequestHeader Map<String, Object> header,
+            @RequestBody CreateDto channelCreateDto){
+        return Response.ok(
+            ServerCode.WORKSPACE,
+            channelService.create((Long) header.get("userId"), channelCreateDto)
+        );
     }
     
     @PutMapping("/{id}")

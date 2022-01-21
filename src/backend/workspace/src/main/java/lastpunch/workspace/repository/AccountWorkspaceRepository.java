@@ -11,13 +11,13 @@ import lastpunch.workspace.entity.AccountWorkspace;
 @Repository
 public interface AccountWorkspaceRepository extends JpaRepository<AccountWorkspace, Long>{
     @Query(
-        value = "INSERT INTO accountworkspace (accountid, workspaceid) "
+        value = "INSERT INTO accountworkspace (accountid, workspaceid, roleid) "
             + "VALUES (:accountId, :workspaceId)",
         nativeQuery = true
     )
     @Modifying(clearAutomatically = true)
     @Transactional
-    void save(Long accountId, Long workspaceId);
+    void save(Long accountId, Long workspaceId, Long roleId);
     
     @Query(
         value = "DELETE FROM accountworkspace "

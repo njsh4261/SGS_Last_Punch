@@ -28,10 +28,15 @@ public class AccountWorkspace{
     @JoinColumn(name="workspaceid")
     private Workspace workspace;
     
+    @ManyToOne(targetEntity = Role.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="roleid")
+    private Role role;
+    
     @Getter
     @Builder
     public static class Dto {
         private Long accountId;
         private Long workspaceId;
+        private Long roleId;
     }
 }

@@ -20,6 +20,7 @@ public class JwtProvider implements InitializingBean {
     @Value("${jwt.secret}")
     private String secret;
     private Key key;
+    private Claims claims = null;
     
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -38,13 +39,15 @@ public class JwtProvider implements InitializingBean {
     }
     
     public boolean validateToken(String token){
-        Claims claims = extractClaims(token);
+        claims = extractClaims(token);
         return claims.getExpiration().after(new Date());
     }
     
-    public String getUsername(String token){
-        Claims claims = extractClaims(token);
+    public String getUsername(){
         return claims.getSubject();
     }
     
+    public Long getUserId(){
+        return (Long) claims.get("userId");
+    }
 }

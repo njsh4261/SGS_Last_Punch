@@ -66,7 +66,6 @@ const Chat = ({ params }: { params: Params }) => {
     endRef.current?.scrollIntoView({
       behavior: 'smooth',
       block: 'nearest',
-      // inline: 'start',
     });
 
   useEffect(() => {
@@ -94,6 +93,7 @@ const Chat = ({ params }: { params: Params }) => {
           </MessageListContainer>
           <ChatInputLayout>
             <ChatInput
+              channelName={channel.name}
               msg={msg}
               msgTypingHandler={msgTypingHandler}
               msgSubmitHandler={msgSubmitHandler}

@@ -47,7 +47,7 @@ public class JwtProvider implements InitializingBean {
         return claims.getSubject();
     }
     
-    public Long getUserId(){
-        return (Long) claims.get("userId");
+    public String getUserId(){
+        return claims.get("userId").toString();
     }
 }

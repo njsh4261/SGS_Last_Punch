@@ -18,7 +18,7 @@ export async function getWsListAPI(page: number) {
     const response = await axios.get(URL.HOST + endpoint, {
       headers: {
         'X-AUTH-TOKEN': accessToken,
-        'content-type': 'application/json',
+        // 'Content-Type': 'application/json',
       },
     });
     if (response.status !== 200) throw new Error(ERROR_MESSAGE.WORKSPACE.LIST);

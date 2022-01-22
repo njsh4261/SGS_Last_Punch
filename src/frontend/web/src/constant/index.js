@@ -2,7 +2,7 @@ export const HOST = process.env.REACT_APP_BACKEND_HOST;
 
 export const ERROR_MESSAGE = {
   SIGNIN: {
-    WRONG: 'wrong email or password',
+    SERVER: 'server error',
   },
   WORKSPACE: {
     LIST: 'get workspace list fail',
@@ -11,4 +11,9 @@ export const ERROR_MESSAGE = {
     CHANNELS: 'get workspace channels fail',
     CREATE: 'create workspace fail',
   },
+};
+
+export const RESPONSE = {
+  SIGNIN_SUCCESS: '11000',
+  SIGNIN_FAIL: '11002',
 };

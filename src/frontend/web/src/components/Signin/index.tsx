@@ -6,6 +6,7 @@ import DisableButton from '../Common/DisableButton';
 import Logo from '../Common/Logo';
 import SignUp from './SignUpButton';
 import signinAPI from '../../Api/signin';
+import { RESPONSE, ERROR_MESSAGE } from '../../constant';
 
 const Container = styled.article`
   width: 420px;
@@ -23,22 +24,7 @@ export default function Signin() {
     if (e.target.name === 'pass') setPass(e.target.value);
   };
 
-  const submitHandler = async () => {
-    const data = await signinAPI(email, pass);
-
-    //// 임시코드 -> 나중에 삭제 필요!!!!!
-    sessionStorage.setItem('jwt', 'dump');
-    location.href = 'http://localhost:3000';
-    ////// 나중에 반드시 삭제!!!!!
-
-    if (data) {
-      const { accessToken, refreshToken } = data;
-      sessionStorage.setItem(accessToken, refreshToken);
-      location.href = 'http://localhost:3000';
-    } else {
-      alert('로그인 실패');
-    }
-  };
+  const submitHandler = async () => await signinAPI(email, pass);
 
   return (
     <Container>

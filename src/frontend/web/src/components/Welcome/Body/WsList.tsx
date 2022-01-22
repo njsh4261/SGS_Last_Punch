@@ -67,7 +67,7 @@ export default function WsList() {
   const [wsList, setWsList] = useState<IWorkspace[]>([]);
 
   const getWsList = async () => {
-    const { workspaces } = await getWsListAPI('1', page); // dummy userId
+    const { workspaces } = await getWsListAPI(page);
     if (workspaces) {
       setWsList([...wsList, ...workspaces.content]);
       setPage((state) => state + 1);

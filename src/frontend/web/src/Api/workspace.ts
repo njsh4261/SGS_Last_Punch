@@ -1,15 +1,26 @@
 import axios from 'axios';
-import { URL, ERROR_MESSAGE } from '../constant';
+import { URL, ERROR_MESSAGE, TOKEN } from '../constant';
 
 const PAGE = 0;
 const SIZE = 3;
 
 // todo: remove userId and set Token
-export async function getWsListAPI(userId: string, page: number) {
-  const endpoint = `/workspace/?userId=${userId}&page=${page}&size=${SIZE}`;
+export async function getWsListAPI(page: number) {
+  const endpoint = `/workspace/page=${page}&size=${SIZE}`;
 
   try {
-    const response = await axios.get(URL.HOST + endpoint);
+    const accessToken = sessionStorage.getItem(TOKEN.ACCESS);
+    if (!accessToken) {
+      // todo: type guard. 추후 처리 로직 삽입
+      alert('토큰이 사라졌습니다!');
+      return;
+    }
+    const response = await axios.get(URL.HOST + endpoint, {
+      headers: {
+        'X-AUTH-TOKEN': accessToken,
+        'content-type': 'application/json',
+      },
+    });
     if (response.status !== 200) throw new Error(ERROR_MESSAGE.WORKSPACE.LIST);
     return response.data.data;
   } catch (e) {

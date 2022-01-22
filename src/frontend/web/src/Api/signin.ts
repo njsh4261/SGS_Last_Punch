@@ -10,7 +10,6 @@ export default async function signinAPI(email: string, pass: string) {
   };
 
   try {
-    console.log(host, endpoint);
     const response = await axios.post(host + endpoint, body);
     const { code, data, err } = response.data;
 

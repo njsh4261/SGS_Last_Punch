@@ -5,16 +5,16 @@ import SubmitButton from '../Common/SubmitButton';
 import DisableButton from '../Common/DisableButton';
 import Logo from '../Common/Logo';
 import SignUp from './SignUpButton';
-import loginAPI from '../../Api/login';
+import signinAPI from '../../Api/signin';
 
-const LoginContainer = styled.article`
+const Container = styled.article`
   width: 420px;
   & > * {
     margin-bottom: 20px;
   }
 `;
 
-export default function LoginEmailContainer() {
+export default function Signin() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
@@ -24,7 +24,7 @@ export default function LoginEmailContainer() {
   };
 
   const submitHandler = async () => {
-    const data = await loginAPI(email, pass);
+    const data = await signinAPI(email, pass);
 
     //// 임시코드 -> 나중에 삭제 필요!!!!!
     sessionStorage.setItem('jwt', 'dump');
@@ -41,7 +41,7 @@ export default function LoginEmailContainer() {
   };
 
   return (
-    <LoginContainer>
+    <Container>
       <Logo></Logo>
       <Input value={email} inputHandler={inputHandler}></Input>
       <Input
@@ -59,6 +59,6 @@ export default function LoginEmailContainer() {
         <DisableButton text="이메일로 로그인"></DisableButton>
       )}
       <SignUp></SignUp>
-    </LoginContainer>
+    </Container>
   );
 }

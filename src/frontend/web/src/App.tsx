@@ -4,14 +4,15 @@ import { RootState } from './modules';
 import PrivateRoute from './routes/Private';
 import PublicRoute from './routes/Public';
 import ModalWrapper from './components/Common/ModalWrapper';
+import { TOKEN } from './constant';
 
 function App() {
-  const jwt = sessionStorage.getItem('jwt');
+  const accessToken = sessionStorage.getItem(TOKEN.ACCESS);
   const modalActive = useSelector((state: RootState) => state.modal.active);
 
   return (
     <>
-      {!jwt ? <PublicRoute /> : <PrivateRoute />}
+      {!accessToken ? <PublicRoute /> : <PrivateRoute />}
       {modalActive && <ModalWrapper active={modalActive} />}
     </>
   );

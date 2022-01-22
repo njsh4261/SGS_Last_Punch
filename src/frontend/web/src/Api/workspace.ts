@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { HOST, ERROR_MESSAGE } from '../constant';
+import { URL, ERROR_MESSAGE } from '../constant';
 
 const PAGE = 0;
 const SIZE = 3;
@@ -9,7 +9,7 @@ export async function getWsListAPI(userId: string, page: number) {
   const endpoint = `/workspace/?userId=${userId}&page=${page}&size=${SIZE}`;
 
   try {
-    const response = await axios.get(HOST + endpoint);
+    const response = await axios.get(URL.HOST + endpoint);
     if (response.status !== 200) throw new Error(ERROR_MESSAGE.WORKSPACE.LIST);
     return response.data.data;
   } catch (e) {
@@ -21,7 +21,7 @@ export async function getWsInfoAPI(wsId: number) {
   const endpoint = `/workspace/${wsId}`;
 
   try {
-    const response = await axios.get(HOST + endpoint);
+    const response = await axios.get(URL.HOST + endpoint);
     if (response.status !== 200) throw new Error(ERROR_MESSAGE.WORKSPACE.INFO);
     return response.data.data;
   } catch (e) {
@@ -33,7 +33,7 @@ export async function getMembersAPI(wsId: number) {
   const endpoint = `/workspace/${wsId}/members?page=${PAGE}&size=${SIZE}`;
 
   try {
-    const response = await axios.get(HOST + endpoint);
+    const response = await axios.get(URL.HOST + endpoint);
     if (response.status !== 200)
       throw new Error(ERROR_MESSAGE.WORKSPACE.MEMBERS);
     return response.data.data;
@@ -46,7 +46,7 @@ export async function getChannelsAPI(wsId: number) {
   const endpoint = `/workspace/${wsId}/channels?page=${PAGE}&size=${SIZE}`;
 
   try {
-    const response = await axios.get(HOST + endpoint);
+    const response = await axios.get(URL.HOST + endpoint);
     if (response.status !== 200)
       throw new Error(ERROR_MESSAGE.WORKSPACE.CHANNELS);
     return response.data.data;
@@ -64,7 +64,7 @@ export async function createWsAPI(wsName: string, channelName: string) {
   };
 
   try {
-    const response = await axios.post(HOST + endpoint, data);
+    const response = await axios.post(URL.HOST + endpoint, data);
     if (response.status !== 200)
       throw new Error(ERROR_MESSAGE.WORKSPACE.CREATE);
     return response;

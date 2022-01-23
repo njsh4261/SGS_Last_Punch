@@ -1,30 +1,36 @@
 import axios from 'axios';
-import { URL, ERROR_MESSAGE, TOKEN } from '../constant';
+import { URL, ERROR_MESSAGE, TOKEN, RESPONSE } from '../constant';
+import reissueAPI from './reissue';
 
-const PAGE = 0;
+const PAGE = 0; // todo: remove
 const SIZE = 3;
 
 // todo: remove userId and set Token
 export async function getWsListAPI(page: number) {
-  const endpoint = `/workspace/page=${page}&size=${SIZE}`;
+  const endpoint = `/workspace?page=${page}&size=${SIZE}`;
 
   try {
     const accessToken = sessionStorage.getItem(TOKEN.ACCESS);
     if (!accessToken) {
-      // todo: type guard. 추후 처리 로직 삽입
-      alert('토큰이 사라졌습니다!');
+      alert('no access token');
       return;
     }
     const response = await axios.get(URL.HOST + endpoint, {
-      headers: {
-        'X-AUTH-TOKEN': accessToken,
-        // 'Content-Type': 'application/json',
-      },
+      headers: { 'X-AUTH-TOKEN': accessToken },
     });
-    if (response.status !== 200) throw new Error(ERROR_MESSAGE.WORKSPACE.LIST);
-    return response.data.data;
-  } catch (e) {
-    return false;
+
+    const { code, data, err } = response.data;
+    // todo: 각 code에 따른 처리 어떻게할지, err올떄만 처리할까?
+    if (code === RESPONSE.WORKSPACE.SUCCESS) {
+      return data;
+    } else return;
+  } catch (e: any) {
+    // todo: error type
+    if (e.response.data.code === RESPONSE.TOKEN.EXPIRED) {
+      return await reissueAPI();
+    } else {
+      alert(ERROR_MESSAGE.SERVER);
+    }
   }
 }
 

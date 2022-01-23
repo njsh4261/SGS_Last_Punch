@@ -67,11 +67,15 @@ export default function WsList() {
   const [wsList, setWsList] = useState<IWorkspace[]>([]);
 
   const getWsList = async () => {
-    const { workspaces } = await getWsListAPI(page);
-    if (workspaces) {
-      setWsList([...wsList, ...workspaces.content]);
-      setPage((state) => state + 1);
-    } else alert('error');
+    const response = await getWsListAPI(page);
+    if (!response) {
+      sessionStorage.clear();
+      window.location.reload();
+      return;
+    }
+    const { workspaces } = response;
+    setWsList([...wsList, ...workspaces.content]);
+    setPage((state) => state + 1);
   };
 
   useEffect(() => {

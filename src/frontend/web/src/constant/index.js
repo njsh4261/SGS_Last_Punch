@@ -3,14 +3,17 @@ export const URL = {
   REDIRECT_HOME: 'http://localhost:3000',
 };
 
+export const HEADER = {
+  X_AUTH_TOKEN: 'X-AUTH-TOKEN',
+};
+
 export const ENDPOINT = {
   SIGNIN: '/auth/login',
+  REISSUE: '/auth/reissue',
 };
 
 export const ERROR_MESSAGE = {
-  SIGNIN: {
-    SERVER: 'server error',
-  },
+  SERVER: 'server error',
   WORKSPACE: {
     LIST: 'get workspace list fail',
     INFO: 'get workspace info fail',
@@ -21,8 +24,21 @@ export const ERROR_MESSAGE = {
 };
 
 export const RESPONSE = {
-  SIGNIN_SUCCESS: '11000',
-  SIGNIN_FAIL: '11002',
+  TOKEN: {
+    SUCCESS: '10000',
+    NO: '10001',
+    EXPIRED: '10002',
+    MALFORMED: '10003',
+    DECODING: '10004',
+    INTERNAL_SERVER_ERROR: '10999',
+  },
+  SIGNIN: {
+    SUCCESS: '11000',
+    FAIL: '11002',
+  },
+  WORKSPACE: {
+    SUCCESS: '12000',
+  },
 };
 
 export const TOKEN = {

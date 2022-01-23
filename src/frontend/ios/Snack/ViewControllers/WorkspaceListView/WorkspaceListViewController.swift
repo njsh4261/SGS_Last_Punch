@@ -15,6 +15,8 @@ class WorkspaceListViewController: UIViewController {
     // MARK: - Properties
     private let viewModel = WorkspaceListViewModel()
     private let disposeBag = DisposeBag()
+    var accessToken: String?
+    var workspace: WorkspacesModel?
     
     // MARK: - UI
     var btnNext = UIBarButtonItem()
@@ -24,6 +26,7 @@ class WorkspaceListViewController: UIViewController {
     var lblSearch = UILabel()
     var btnNewWorkspace = UIButton()
     var btnLogout = UIButton()
+    var lblAccessToken = UITextField()
     
     let text = UITextView()
     
@@ -40,7 +43,13 @@ class WorkspaceListViewController: UIViewController {
     }
     
     func bind(with viewModel: WorkspaceListViewModel) {
+        lblAccessToken.text = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJHZW9uaHllb25nLmRldkBnbWFpbC5jb20iLCJhdXRoIjoiUk9MRV9VU0VSIiwidXNlcklkIjoxMSwiZXhwIjoxNjQzNTUwMzc1fQ.ZKkstdBvMpIwYQ7NTh8087tdDZPuigcxOE1QfOr9eIo_D2F-S_X_c19GoIkZoZE4AIqXNUVLixrnQlQT1rt23w"
+        
         //MARK: Bind input
+        lblAccessToken.rx.text.orEmpty
+            .bind(to: viewModel.input.accessToken)
+            .disposed(by: disposeBag)
+        
         btnNext.rx.tap
             .subscribe(onNext: goToHome)
             .disposed(by: disposeBag)
@@ -50,60 +59,17 @@ class WorkspaceListViewController: UIViewController {
             .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
-        // test
-        let s = SearchBarViewModel()
-        let m = MainModel()
-        text.text = "안녕하세요"
-
-        text.rx.text
-            .bind(to: s.queryText)
-            .disposed(by: disposeBag)
-        
-        Observable
-            .merge(
-                btnNewWorkspace.rx.tap.asObservable()
-            )
-            .bind(to: s.searchButtonTapped)
-            .disposed(by: disposeBag)
-        
-        let blogResult = s.shouldLoadResult
-            .flatMapLatest(m.searchBlog)
-            .share()
-        
-        let blogValue = blogResult
-            .map(m.getBlogValue)
-            .filter { $0 != nil }
-        
-        let blogError = blogResult
-            .map(m.getBlogError)
-            .filter { $0 != nil }
-        
-        //네트워크를 통해 가져온 값을 CellData로 변환
-//        let cellData = blogValue
-//            .map(m.getBlogListCellData)
-        
-        //MainViewController -> ListView
-//        Observable
-//            .single(cellData)()
-//            .bind(to: viewModel.workspaceListCellData)
-//            .disposed(by: disposeBag)
         
         //MARK: Bind output
         viewModel.cellData
             .asDriver(onErrorJustReturn: [])
             .drive(tableView.rx.items) { tv, row, data in
                 let index = IndexPath(row: row, section: 0)
-                let cell = tv.dequeueReusableCell(withIdentifier: "WorksapceListCell", for: index) as! WorksapceListCell
+                let cell = tv.dequeueReusableCell(withIdentifier: "WorkspaceListCell", for: index) as! WorkspaceListCell
                 cell.setData(data)
                 return cell
             }
             .disposed(by: disposeBag)
-        
-        //        viewModel.output.goToHome
-        //            .observe(on: MainScheduler.instance)
-        //            .bind(onNext: goToHome)
-        //            .disposed(by: disposeBag)
-        
     }
     
     private func goToHome() {
@@ -143,12 +109,12 @@ class WorkspaceListViewController: UIViewController {
         }
         
         tableView = tableView.then {
-            $0.register(WorksapceListCell.self, forCellReuseIdentifier: "WorksapceListCell")
+            $0.register(WorkspaceListCell.self, forCellReuseIdentifier: "WorkspaceListCell")
             $0.bouncesZoom = false
             $0.isOpaque = false
             $0.clearsContextBeforeDrawing = false
-            $0.separatorStyle = .singleLine
             $0.backgroundColor = UIColor(named: "snackColor")
+            $0.rowHeight = 61
         }
         
         lblSearch = lblSearch.then {
@@ -184,21 +150,21 @@ class WorkspaceListViewController: UIViewController {
         }
         
         lblTitle.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(25)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
         }
         
         lblDescription.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(80)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(85)
         }
         
         tableView.snp.makeConstraints {
             $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(15)
-            $0.top.equalTo(lblDescription.snp.bottom).offset(20)
+            $0.top.equalTo(lblDescription.snp.bottom).offset(40)
             $0.bottom.equalTo(lblSearch.snp.top).offset(-20)
         }
         
         lblSearch.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(190)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(200)
             $0.left.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
         

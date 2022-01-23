@@ -7,16 +7,21 @@
 
 import Foundation
 
-struct WorkspaceListCellModel: Codable {
+struct WorkspaceResponseModel: Codable {
     let code: String
-    let workspaces: Workspaces?
+    let data: WorkspacesData?
 }
 
-struct Workspaces: Codable {
-    let content: Content
-    let pageable: Pageable
+struct WorkspacesData: Codable {
+    let workspaces: WorkspacesModel?
+}
+
+struct WorkspacesModel: Codable {
+    let content: [WorkspaceListCellModel]?
+    let pageable: Pageable?
     let last: Bool
     let totalPages: Int
+    let totalElements: Int
     let size: Int
     let number: Int
     let sort: Sort
@@ -25,7 +30,7 @@ struct Workspaces: Codable {
     let empty: Bool
 }
 
-struct Content: Codable {
+struct WorkspaceListCellModel: Codable {
     let id: Int
     let name: String
     var description: String? = ""
@@ -40,8 +45,8 @@ struct Pageable: Codable {
     let offset: Int
     let pageSize: Int
     let pageNumber: Int
-    let unpaged: Bool
     let paged: Bool
+    let unpaged: Bool
 }
 
 struct Sort: Codable {

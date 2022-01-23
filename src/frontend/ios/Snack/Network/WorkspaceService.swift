@@ -1,15 +1,15 @@
 //
-//  RegisterService.swift
+//  WorkspaceService.swift
 //  Snack
 //
-//  Created by ghyeongkim-MN on 2022/01/14.
+//  Created by ghyeongkim-MN on 2022/01/23.
 //
 
 import RxSwift
 import Alamofire
 
-class RegisterService {
-    static let shared = RegisterService()
+class WorkspaceService {
+    static let shared = WorkspaceService()
     
     private func makeSendEmailParameter(email: String) -> Parameters {
         return ["email": email]
@@ -26,12 +26,11 @@ class RegisterService {
                 "verifyCode": code]
     }
     
-    func sendEmail(email : String) -> Observable<NetworkResult<Any>> {
+    func getWorkspace(userId : String) -> Observable<NetworkResult<Any>> {
         return Observable.create { observer -> Disposable in
-            let header : HTTPHeaders = ["Content-Type": "application/json"]
-            let dataRequest = AF.request(APIConstants().authEmailURL,
-                                         method: .post,
-                                         parameters: self.makeSendEmailParameter(email: email),
+            let header : HTTPHeaders = ["userId": userId]
+            let dataRequest = AF.request(APIConstants().workspaceList,
+                                         method: .get,
                                          encoding: JSONEncoding.default,
                                          headers: header)
             

@@ -15,18 +15,26 @@ import Then
 class RegisterViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = RegisterViewModel(RegisterService())
+    private var viewModel = RegisterViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
     var ivLogo = UIImageView()
     var fieldEmail = UITextField()
+    var fieldCode = UITextField()
     var fieldPassword = UITextField()
+    var fieldCheckPassword = UITextField()
     var emailBorder = UIView()
+    var codeBorder = UIView()
     var passwordBorder = UIView()
+    var checkPasswordBorder = UIView()
+    var btnSendEmail = UIButton()
+    var btnVerification = UIButton()
+    var btnTogglePassword = UIButton()
+    var btnToggleCheckPassword = UIButton()
+    var btnSignUp = UIButton()
     var btnSignIn = UIButton()
     var lblWarning = UILabel()
-    var btnSignUp = UIButton()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -41,82 +49,256 @@ class RegisterViewController: UIViewController {
     }
     
     func bind(with viewModel: RegisterViewModel) {
-        
-        fieldEmail.rx.text.asObservable()
-            .ignoreNil()
-            .subscribe(viewModel.input.email)
+        //MARK: Bind input
+        fieldEmail.rx.text.orEmpty
+            .bind(to: viewModel.input.email)
             .disposed(by: disposeBag)
         
-        fieldPassword.rx.text.asObservable()
-            .ignoreNil()
-            .subscribe(viewModel.input.password)
+        fieldCode.rx.text.orEmpty
+            .bind(to: viewModel.input.code)
             .disposed(by: disposeBag)
         
-        btnSignUp.rx.tap.asObservable()
+        fieldPassword.rx.text.orEmpty
+            .bind(to: viewModel.input.password)
+            .disposed(by: disposeBag)
+        
+        fieldCheckPassword.rx.text.orEmpty
+            .bind(to: viewModel.input.checkPassword)
+            .disposed(by: disposeBag)
+        
+        // enter를 누를때
+        fieldEmail.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: viewModel.input.btnSendEmailTapped)
+            .disposed(by: disposeBag)
+                
+        fieldCode.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: viewModel.input.btnVerificationTapped)
+            .disposed(by: disposeBag)
+        
+        // 이메일 변경이 있을때
+        fieldEmail.rx.controlEvent(.editingChanged)
+            .asObservable()
+            .bind(to: viewModel.input.changedEmail)
+            .disposed(by: disposeBag)
+        
+        // 메일 전송
+        btnSendEmail.rx.controlEvent(.touchUpInside)
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(viewModel.input.signUpDidTap)
+            .bind(to: viewModel.input.btnSendEmailTapped)
+            .disposed(by: disposeBag)
+
+        // 코드 확인
+        btnVerification.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.input.btnVerificationTapped)
+            .disposed(by: disposeBag)
+        
+        // Toggle
+        btnTogglePassword.rx.tap
+            .asDriver()
+            .drive(fieldPassword.rx.isSecureTextEntry, btnTogglePassword.rx.setImage)
+            .disposed(by: disposeBag)
+        
+        btnToggleCheckPassword.rx.tap
+            .asDriver()
+            .drive(fieldCheckPassword.rx.isSecureTextEntry, btnToggleCheckPassword.rx.setImage)
+            .disposed(by: disposeBag)
+
+        btnSignUp.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(viewModel.input.btnSignUpTapped)
             .disposed(by: disposeBag)
         
         btnSignIn.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.dismiss(animated: true, completion: nil)
+                self?.goToLogin()
             })
             .disposed(by: disposeBag)
         
-        viewModel.isValid()
-            .subscribe(onNext: { [self] valid in
-                self.btnSignIn.isUserInteractionEnabled = valid
-                if valid {
-                    self.btnSignUp.alpha = 1
-                }else{
-                    self.btnSignUp.alpha = 0.3
-                }
-            }).disposed(by: disposeBag)
-        
-        viewModel.output.errorsObservable
-            .subscribe(onNext: { (error) in
-                ProgressHUD.showFailed(error.localizedDescription)
-            })
+        //MARK: Bind output
+        viewModel.output.changeVisibility
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: visibilityCode)
+            .disposed(by: disposeBag)
+
+        viewModel.output.changeVisibility
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: visibilityPassword)
             .disposed(by: disposeBag)
         
-        viewModel.output.registerResultObservable
-            .subscribe(onNext: { (user) in
-                //                ProgressHUD.show(nil, interaction: false)
-            })
+        viewModel.output.changeSendMailText
+            .observe(on: MainScheduler.instance)
+            .bind(to: btnSendEmail.rx.setText)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.changeClearText
+            .observe(on: MainScheduler.instance)
+            .bind(to: fieldCode.rx.setText, fieldPassword.rx.setText, fieldCheckPassword.rx.setText)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.enableBtnSendEmail
+            .observe(on: MainScheduler.instance)
+            .bind(to: btnSendEmail.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.enableBtnVerification
+            .observe(on: MainScheduler.instance)
+            .bind(to: btnVerification.rx.isEnabled, fieldCode.rx.deleteBackward)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.enableBtnSignUp
+            .observe(on: MainScheduler.instance)
+            .bind(to: btnSignUp.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        // Step 1
+        viewModel.output.visibilityCode
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: visibilityCode)
+            .disposed(by: disposeBag)
+        
+        // Step 2
+        viewModel.output.visibilityPassword
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: visibilityPassword)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.successMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showSuccessAlert)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.errorMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showFailedAlert)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.goToLogin
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToLogin)
             .disposed(by: disposeBag)
     }
     
+    private func showSuccessAlert(_ message: String) {
+        ProgressHUD.showSucceed(message)
+    }
+    
+    private func showFailedAlert(_ message: String) {
+        ProgressHUD.showFailed(message)
+    }
+    
+    // Step 1
+    private func visibilityCode(_ bool: Bool) {
+        [fieldCode, codeBorder].forEach {
+            $0.isHidden = bool
+        }
+    }
+    
+    // Step 2
+    private func visibilityPassword(_ bool: Bool) {
+        [fieldPassword, fieldCheckPassword, passwordBorder, checkPasswordBorder, btnSignUp, lblWarning].forEach {
+            $0.isHidden = bool
+        }
+    }
+    
+    private func goToLogin() {
+        guard let pvc = self.presentingViewController else { return }
+        let loginVC = NavigationController(rootViewController: LoginViewController())
+        loginVC.modalPresentationStyle = .fullScreen
+
+        dismiss(animated: true) {
+            pvc.present(loginVC, animated: true, completion: nil)
+        }
+    }
+    
     private func attribute() {
+        title = "회원가입"
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
         ivLogo.image = UIImage(named: "snack")
         
-        [fieldEmail, fieldPassword].forEach {
+        [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword].forEach {
             $0.textAlignment = .left
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
             $0.autocorrectionType = .no
         }
         
-        [emailBorder, passwordBorder].forEach {
+        [emailBorder, codeBorder, passwordBorder, checkPasswordBorder].forEach {
             $0.backgroundColor = .quaternaryLabel
         }
         
+        [btnSendEmail, btnVerification].forEach {
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .disabled)
+            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+            $0.clipsToBounds = true
+            $0.layer.cornerRadius = 3
+            $0.isEnabled = false
+        }
+        
+        [btnTogglePassword, btnToggleCheckPassword].forEach {
+            $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+            $0.setImage(UIImage(systemName: "snack"), for: .selected)
+            $0.tintColor = UIColor(named: "snackTextColor")
+        }
+        
+        // init시 숨겨야 할 것들
+        [fieldCode, fieldPassword, fieldCheckPassword, codeBorder, passwordBorder, checkPasswordBorder, btnSignUp, lblWarning].forEach {
+            $0.isHidden = true
+        }
+
         fieldEmail = fieldEmail.then {
             $0.placeholder = "이메일을 입력해주세요"
             $0.keyboardType = .emailAddress
+            $0.returnKeyType = .done
+            $0.rightView = btnSendEmail
+            $0.rightViewMode = .always
+        }
+        
+        btnSendEmail = btnSendEmail.then {
+            $0.setTitle("전송", for: .normal)
+        }
+        
+        fieldCode = fieldCode.then {
+            $0.placeholder = "인증 코드를 입력해주세요"
             $0.returnKeyType = .next
+            $0.rightView = btnVerification
+            $0.rightViewMode = .always
+        }
+        
+        btnVerification = btnVerification.then {
+            $0.setTitle("인증", for: .normal)
         }
         
         fieldPassword = fieldPassword.then {
             $0.placeholder = "비밀번호를 입력해주세요"
+            $0.returnKeyType = .next
+            $0.isSecureTextEntry = true
+            $0.rightView = btnTogglePassword
+            $0.rightViewMode = .always
+            $0.textContentType = .oneTimeCode
+        }
+        
+        fieldCheckPassword = fieldCheckPassword.then {
+            $0.placeholder = "다시 비밀번호를 입력해주세요"
             $0.returnKeyType = .done
             $0.isSecureTextEntry = true
+            $0.rightView = btnToggleCheckPassword
+            $0.rightViewMode = .always
+            $0.textContentType = .oneTimeCode
         }
         
         btnSignUp = btnSignUp.then {
             $0.setTitle("회원 가입", for: .normal)
-            $0.backgroundColor = UIColor(named: "snackColor")
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 16)
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .disabled)
+            $0.clipsToBounds = true
             $0.layer.cornerRadius = 6
+            $0.isEnabled = false
         }
         
         lblWarning = lblWarning.then {
@@ -130,12 +312,13 @@ class RegisterViewController: UIViewController {
             $0.setTitle("이미 계정이 있나요? 로그인하기", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
             $0.setTitleColor(.lightGray, for: .normal)
-            
         }
     }
     
     private func layout() {
-        [ivLogo, fieldEmail, emailBorder, fieldPassword, passwordBorder, btnSignUp, lblWarning, btnSignIn].forEach { view.addSubview($0) }
+        [ivLogo, fieldEmail, btnSendEmail, emailBorder, fieldCode, btnVerification, codeBorder, fieldPassword, passwordBorder, fieldCheckPassword, checkPasswordBorder, btnSignUp, lblWarning, btnSignIn].forEach {
+            view.addSubview($0)
+        }
         
         ivLogo.snp.makeConstraints {
             $0.width.height.equalTo(80)
@@ -143,19 +326,19 @@ class RegisterViewController: UIViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(70)
         }
         
-        [fieldEmail, emailBorder, fieldPassword, passwordBorder].forEach {
+        [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword, emailBorder, codeBorder, passwordBorder, checkPasswordBorder].forEach {
             $0.snp.makeConstraints {
                 $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(16)
             }
         }
         
-        [fieldEmail, fieldPassword, btnSignUp].forEach {
+        [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword, btnSignUp].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(50)
             }
         }
         
-        [emailBorder, passwordBorder].forEach {
+        [emailBorder, codeBorder, passwordBorder, checkPasswordBorder].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(1)
             }
@@ -169,17 +352,54 @@ class RegisterViewController: UIViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
         }
         
-        fieldPassword.snp.makeConstraints {
+        fieldCode.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
         }
         
-        passwordBorder.snp.makeConstraints {
+        codeBorder.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(300)
+        }
+        
+        fieldPassword.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(300)
+        }
+        
+        passwordBorder.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(350)
+        }
+        
+        fieldCheckPassword.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(350)
+        }
+        
+        checkPasswordBorder.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(400)
         }
         
         btnSignUp.snp.makeConstraints {
             $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(320)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(420)
+        }
+        
+        lblWarning.snp.makeConstraints {
+            $0.height.equalTo(21)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(480)
+        }
+        
+        [btnSendEmail, btnVerification].forEach {
+            $0.snp.makeConstraints {
+                $0.height.equalTo(35)
+                $0.width.equalTo(60)
+            }
+        }
+                
+        btnSendEmail.snp.makeConstraints {
+            $0.centerY.equalTo(fieldEmail)
+
+        }
+        
+        btnVerification.snp.makeConstraints {
+            $0.centerY.equalTo(fieldCode)
         }
         
         [lblWarning, btnSignIn].forEach {
@@ -188,14 +408,52 @@ class RegisterViewController: UIViewController {
             }
         }
         
-        lblWarning.snp.makeConstraints {
-            $0.height.equalTo(21)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(380)
-        }
-        
         btnSignIn.snp.makeConstraints {
             $0.height.equalTo(50)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+}
+
+extension Reactive where Base: UITextField {
+    
+    var setText: Binder<String> {
+        return Binder(base, binding: { (textField, text) in
+            textField.text = text
+        })
+    }
+    
+    // Toggle
+    var isSecureTextEntry: Binder<()> {
+        return Binder(base, binding: { (textField, _) in
+            textField.isSecureTextEntry = !textField.isSecureTextEntry
+        })
+    }
+    
+    var deleteBackward: Binder<(Bool)> {
+        return Binder(base, binding: { (textField, _) in
+            if textField.text!.count > 6 {
+                textField.deleteBackward()
+            }
+        })
+    }
+}
+
+extension Reactive where Base: UIButton {
+    
+    var setImage: Binder<()> {
+        return Binder(base, binding: { (button, _) in
+            if button.image(for: .normal) == UIImage(systemName: "eye.fill") {
+                button.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+            } else {
+                button.setImage(UIImage(systemName: "eye.fill"), for: .normal)
+            }
+        })
+    }
+    
+    var setText: Binder<String> {
+        return Binder(base, binding: { (button, str) in
+            button.setTitle(str, for: .normal)
+        })
     }
 }

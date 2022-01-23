@@ -32,25 +32,32 @@ class WelcomeViewController: UIViewController {
     }
     
     func bind() {
-        let inputVC = LoginViewController()
-        inputVC.modalPresentationStyle = .fullScreen
-
+        // Bind input
         btnSignIn.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.present(inputVC, animated: true, completion: nil)
+            .subscribe(onNext: { [weak self]_ in
+                self?.goToLogin()
             })
             .disposed(by: disposeBag)
-        
-        let registerInputVC = RegisterViewController()
-        registerInputVC.modalPresentationStyle = .fullScreen
-        
+                
         btnSignUp.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.present(registerInputVC, animated: true, completion: nil)
+                self?.goToRegister()
             })
             .disposed(by: disposeBag)
+    }
+    
+    func goToLogin() {
+        let loginVC = NavigationController(rootViewController: LoginViewController())
+        loginVC.modalPresentationStyle = .fullScreen
+        self.present(loginVC, animated: true, completion: nil)
+    }
+    
+    func goToRegister() {
+        let registerInputVC =         NavigationController(rootViewController: RegisterViewController())
+        registerInputVC.modalPresentationStyle = .fullScreen
+        self.present(registerInputVC, animated: true, completion: nil)
     }
     
     private func attribute() {

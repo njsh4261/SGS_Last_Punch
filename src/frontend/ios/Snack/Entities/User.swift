@@ -17,22 +17,24 @@ struct User: Codable {
 struct LoginDataModel: Codable {
     let code: String
     let data: Token?
-}
-
-struct LoginErrorModel: Codable {
-    let code: String
     let err: Err?
 }
 
-// MARK: - TokenData
+// TokenData
 struct Token: Codable {
     let access_token: String
     let refresh_token: String
 }
 
-// MARK: - TokenData
+// ErrData
 struct Err: Codable {
     let msg: String
     let desc: String
 }
 
+// MARK: - RegisterDataModel
+struct RegisterDataModel: Codable {
+    let code: String
+    let status: Int?
+    let err: Err?
+}

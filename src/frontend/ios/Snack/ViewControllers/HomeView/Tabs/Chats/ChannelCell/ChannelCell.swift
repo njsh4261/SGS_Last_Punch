@@ -27,11 +27,11 @@ class ChannelCell: UITableViewCell {
     }
     
     func bind(_ viewModel: ChannelCellViewModel) {
-
+        
     }
 
     private func attribute() {
-
+        backgroundColor = .red
     }
     
     private func layout() {

@@ -31,7 +31,7 @@ class DirectMessageCell: UITableViewCell {
     }
 
     private func attribute() {
-
+        backgroundColor = .blue
     }
     
     private func layout() {

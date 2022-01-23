@@ -15,7 +15,7 @@ import Then
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = LoginViewModel()
+    private let viewModel = LoginViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
@@ -50,9 +50,22 @@ class LoginViewController: UIViewController {
             .bind(to: viewModel.input.password)
             .disposed(by: disposeBag)
         
+        // enter를 누를때
+        fieldPassword.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: viewModel.input.btnLoginTapped)
+            .disposed(by: disposeBag)
+        
         btnSignIn.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .bind(to: viewModel.input.btnLoginTapped)
+            .disposed(by: disposeBag)
+        
+        btnSignUp.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.goToRegister()
+            })
             .disposed(by: disposeBag)
         
         // Bind output
@@ -61,28 +74,50 @@ class LoginViewController: UIViewController {
             .bind(to: btnSignIn.rx.isEnabled)
             .disposed(by: disposeBag)
         
+        viewModel.output.successMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showSuccessAlert)
+            .disposed(by: disposeBag)
+        
         viewModel.output.errorMessage
             .observe(on: MainScheduler.instance)
             .bind(onNext: showFailedAlert)
             .disposed(by: disposeBag)
         
-        viewModel.output.goToMain
+        viewModel.output.goToWorkspaceList
             .observe(on: MainScheduler.instance)
-            .bind(onNext: goToWorkspaceSelect)
+            .bind(onNext: goToWorkspaceList)
             .disposed(by: disposeBag)
+    }
+    
+    private func showSuccessAlert(_ message: String) {
+        ProgressHUD.showSucceed(message)
     }
     
     private func showFailedAlert(_ message: String) {
         ProgressHUD.showFailed(message)
     }
     
-    private func goToWorkspaceSelect() {
-        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-            sceneDelegate.window?.rootViewController = sceneDelegate.tabBarController
+    private func goToWorkspaceList(_ token: Token) {
+        print(token.access_token)
+        print(token.refresh_token)
+        let navController = WorkspaceListViewController()
+        
+        navigationController?.pushViewController(navController, animated: true)
+    }
+    
+    private func goToRegister() {
+        guard let pvc = self.presentingViewController else { return }
+        let registerInputVC =         NavigationController(rootViewController: RegisterViewController())
+        registerInputVC.modalPresentationStyle = .fullScreen
+
+        dismiss(animated: true) {
+            pvc.present(registerInputVC, animated: true, completion: nil)
         }
     }
     
     private func attribute() {
+        title = "로그인"
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
         ivLogo.image = UIImage(named: "snack")
         
@@ -110,7 +145,10 @@ class LoginViewController: UIViewController {
         
         btnSignIn = btnSignIn.then {
             $0.setTitle("로그인", for: .normal)
-            $0.backgroundColor = UIColor(named: "snackColor")
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 16)
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .disabled)
+            $0.clipsToBounds = true
             $0.layer.cornerRadius = 6
             $0.isEnabled = false
         }
@@ -126,7 +164,6 @@ class LoginViewController: UIViewController {
             $0.setTitle("혹시 계정이 없나요? 회원가입하기", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
             $0.setTitleColor(.lightGray, for: .normal)
-            
         }
     }
     

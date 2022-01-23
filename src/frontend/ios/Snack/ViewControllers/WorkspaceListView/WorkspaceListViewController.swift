@@ -1,5 +1,5 @@
 //
-//  WorkspaceListView.swift
+//  WorkspaceListViewController.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/18.
@@ -13,16 +13,19 @@ import Then
 
 class WorkspaceListViewController: UIViewController {
     // MARK: - Properties
-    private let viewModel = LoginViewModel()
+    private let viewModel = WorkspaceListViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
+    var btnNext = UIBarButtonItem()
     var lblTitle = UILabel()
     var lblDescription = UILabel()
     var tableView = UITableView()
     var lblSearch = UILabel()
     var btnNewWorkspace = UIButton()
     var btnLogout = UIButton()
+    
+    let text = UITextView()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -36,17 +39,83 @@ class WorkspaceListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(with viewModel: LoginViewModel) {
+    func bind(with viewModel: WorkspaceListViewModel) {
         // Bind input
+        btnNext.rx.tap
+            .subscribe(onNext: goToHome)
+            .disposed(by: disposeBag)
+        
+        // test
+        let s = SearchBarViewModel()
+        let m = MainModel()
+        text.text = "안녕하세요"
 
+        text.rx.text
+            .bind(to: s.queryText)
+            .disposed(by: disposeBag)
+        
+        Observable
+            .merge(
+                btnNewWorkspace.rx.tap.asObservable()
+            )
+            .bind(to: s.searchButtonTapped)
+            .disposed(by: disposeBag)
+        
+        let blogResult = s.shouldLoadResult
+            .flatMapLatest(m.searchBlog)
+            .share()
+        
+        let blogValue = blogResult
+            .map(m.getBlogValue)
+            .filter { $0 != nil }
+        
+        let blogError = blogResult
+            .map(m.getBlogError)
+            .filter { $0 != nil }
+        
+        //네트워크를 통해 가져온 값을 CellData로 변환
+        let cellData = blogValue
+            .map(m.getBlogListCellData)
+        
+        //MainViewController -> ListView
+        Observable
+            .single(cellData)()
+            .bind(to: viewModel.workspaceListCellData)
+            .disposed(by: disposeBag)
+        
         // Bind output
-
+        viewModel.cellData
+            .asDriver(onErrorJustReturn: [])
+            .drive(tableView.rx.items) { tv, row, data in
+                let index = IndexPath(row: row, section: 0)
+                let cell = tv.dequeueReusableCell(withIdentifier: "WorksapceListCell", for: index) as! WorksapceListCell
+                cell.setData(data)
+                return cell
+            }
+            .disposed(by: disposeBag)
+        
+        //        viewModel.output.goToHome
+        //            .observe(on: MainScheduler.instance)
+        //            .bind(onNext: goToHome)
+        //            .disposed(by: disposeBag)
+        
+    }
+    
+    private func goToHome() {
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            sceneDelegate.window?.rootViewController = sceneDelegate.tabBarController
+        }
     }
     
     private func attribute() {
-        view.backgroundColor = UIColor(named: "snackBackGroundColor")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "다음", style: .plain, target: nil, action: nil)
-
+        view.backgroundColor = UIColor (named: "snackBackGroundColor")
+        navigationItem.rightBarButtonItem = btnNext
+        
+        btnNext = btnNext.then {
+            $0.title = "다음"
+            $0.style = .plain
+        }
+        
         [lblTitle, lblDescription, lblSearch].forEach {
             $0.textColor = UIColor(named: "snackTextColor")
         }
@@ -65,6 +134,7 @@ class WorkspaceListViewController: UIViewController {
         }
         
         tableView = tableView.then {
+            $0.register(WorksapceListCell.self, forCellReuseIdentifier: "WorksapceListCell")
             $0.bouncesZoom = false
             $0.isOpaque = false
             $0.clearsContextBeforeDrawing = false
@@ -73,7 +143,7 @@ class WorkspaceListViewController: UIViewController {
         }
         
         lblSearch = lblSearch.then {
-            $0.text = "찾고 잇는 워크스페이스가 아닙니까?"
+            $0.text = "찾고 있는 워크스페이스가 아닙니까?"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
         }
         
@@ -135,4 +205,3 @@ class WorkspaceListViewController: UIViewController {
         }
     }
 }
-

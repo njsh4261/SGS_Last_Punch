@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import ProgressHUD
 
 class LoginViewModel: ViewModelProtocol {
     struct Input {
@@ -17,8 +18,9 @@ class LoginViewModel: ViewModelProtocol {
     
     struct Output {
         let enableBtnSignIn = PublishRelay<Bool>()
+        let successMessage = PublishRelay<String>()
         let errorMessage = PublishRelay<String>()
-        let goToMain = PublishRelay<Void>()
+        let goToWorkspaceList = PublishRelay<Token>()
     }
     // MARK: - Public properties
     var input = Input()
@@ -43,24 +45,32 @@ class LoginViewModel: ViewModelProtocol {
                     self.output.errorMessage.accept("1자리 이상 비밀번호를 입력해주세요.")
                 } else {
                     // API로직을 태워야합니다.
-                    LoginService.shared.signIn(email: email, password: password) { result in
-                        switch result {
-                        case .success:
-                            self.output.goToMain.accept(())
-                        case .requestErr:
-                            self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력함")
-                        case .unAuthorized:
-                            self.output.errorMessage.accept("인증이 안됌")
-                        case .notFound:
-                            self.output.errorMessage.accept("찾을 수 없음")
-                        case .pathErr:
-                            self.output.errorMessage.accept("path 에러")
-                        case .serverErr:
-                            self.output.errorMessage.accept("서버 에러")
-                        case .networkFail:
-                            self.output.errorMessage.accept("네트워크")
-                        }
-                    }
+                    ProgressHUD.animationType = .circleSpinFade
+                    ProgressHUD.show("접속중..")
+                    LoginService.shared.signIn(email: email, password: password)
+                        .subscribe { event in
+                            switch event {
+                            case .next(let result):
+                                DispatchQueue.main.async { // 메인스레드에서 동작
+                                    switch result {
+                                    case .success(let data):
+                                        self.output.successMessage.accept("환영합니다!")
+                                        self.output.goToWorkspaceList.accept(data as! Token)
+                                    case .fail:
+                                        self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력했습니다.")
+                                    default:
+                                        // 추후 삭제
+                                        self.output.goToWorkspaceList.accept(Token(access_token: "", refresh_token: ""))
+                                        self.output.errorMessage.accept("서버 에러")
+                                    }
+                                }
+                                break
+                            case .completed:
+                                break
+                            case .error:
+                                break
+                            }
+                        }.disposed(by: self.disposeBag)
                 }
             }
             .disposed(by: disposeBag)

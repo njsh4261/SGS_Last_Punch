@@ -15,18 +15,26 @@ import Then
 class RegisterViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = RegisterViewModel(RegisterService())
+    private var viewModel = RegisterViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
     var ivLogo = UIImageView()
     var fieldEmail = UITextField()
+    var fieldCode = UITextField()
     var fieldPassword = UITextField()
+    var fieldCheckPassword = UITextField()
     var emailBorder = UIView()
+    var codeBorder = UIView()
     var passwordBorder = UIView()
+    var checkPasswordBorder = UIView()
+    var btnSendEmail = UIButton()
+    var btnVerification = UIButton()
+    var btnTogglePassword = UIButton()
+    var btnToggleCheckPassword = UIButton()
+    var btnSignUp = UIButton()
     var btnSignIn = UIButton()
     var lblWarning = UILabel()
-    var btnSignUp = UIButton()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -82,32 +90,86 @@ class RegisterViewController: UIViewController {
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
         ivLogo.image = UIImage(named: "snack")
         
-        [fieldEmail, fieldPassword].forEach {
+        [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword].forEach {
             $0.textAlignment = .left
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
             $0.autocorrectionType = .no
         }
         
-        [emailBorder, passwordBorder].forEach {
+        [emailBorder, codeBorder, passwordBorder, checkPasswordBorder].forEach {
             $0.backgroundColor = .quaternaryLabel
         }
         
+        [btnSendEmail, btnVerification].forEach {
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .disabled)
+            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+            $0.clipsToBounds = true
+            $0.layer.cornerRadius = 3
+            $0.isEnabled = false
+        }
+        
+        [btnTogglePassword, btnToggleCheckPassword].forEach {
+            $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+            $0.setImage(UIImage(systemName: "snack"), for: .selected)
+            $0.tintColor = UIColor(named: "snackTextColor")
+        }
+        
+        // init시 숨겨야 할 것들
+        [fieldCode, fieldPassword, fieldCheckPassword, codeBorder, passwordBorder, checkPasswordBorder, btnSignUp, lblWarning].forEach {
+            $0.isHidden = true
+        }
+
         fieldEmail = fieldEmail.then {
             $0.placeholder = "이메일을 입력해주세요"
             $0.keyboardType = .emailAddress
+            $0.returnKeyType = .done
+            $0.rightView = btnSendEmail
+            $0.rightViewMode = .always
+        }
+        
+        btnSendEmail = btnSendEmail.then {
+            $0.setTitle("전송", for: .normal)
+        }
+        
+        fieldCode = fieldCode.then {
+            $0.placeholder = "인증 코드를 입력해주세요"
             $0.returnKeyType = .next
+            $0.rightView = btnVerification
+            $0.rightViewMode = .always
+        }
+        
+        btnVerification = btnVerification.then {
+            $0.setTitle("인증", for: .normal)
         }
         
         fieldPassword = fieldPassword.then {
             $0.placeholder = "비밀번호를 입력해주세요"
+            $0.returnKeyType = .next
+            $0.isSecureTextEntry = true
+            $0.rightView = btnTogglePassword
+            $0.rightViewMode = .always
+            $0.textContentType = .oneTimeCode
+        }
+        
+        fieldCheckPassword = fieldCheckPassword.then {
+            $0.placeholder = "다시 비밀번호를 입력해주세요"
             $0.returnKeyType = .done
             $0.isSecureTextEntry = true
+            $0.rightView = btnToggleCheckPassword
+            $0.rightViewMode = .always
+            $0.textContentType = .oneTimeCode
         }
         
         btnSignUp = btnSignUp.then {
             $0.setTitle("회원 가입", for: .normal)
-            $0.backgroundColor = UIColor(named: "snackColor")
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 16)
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .disabled)
+            $0.clipsToBounds = true
             $0.layer.cornerRadius = 6
+            $0.isEnabled = false
         }
         
         lblWarning = lblWarning.then {
@@ -121,12 +183,13 @@ class RegisterViewController: UIViewController {
             $0.setTitle("이미 계정이 있나요? 로그인하기", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
             $0.setTitleColor(.lightGray, for: .normal)
-            
         }
     }
     
     private func layout() {
-        [ivLogo, fieldEmail, emailBorder, fieldPassword, passwordBorder, btnSignUp, lblWarning, btnSignIn].forEach { view.addSubview($0) }
+        [ivLogo, fieldEmail, btnSendEmail, emailBorder, fieldCode, btnVerification, codeBorder, fieldPassword, passwordBorder, fieldCheckPassword, checkPasswordBorder, btnSignUp, lblWarning, btnSignIn].forEach {
+            view.addSubview($0)
+        }
         
         ivLogo.snp.makeConstraints {
             $0.width.height.equalTo(80)

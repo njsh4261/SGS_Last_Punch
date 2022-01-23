@@ -97,4 +97,33 @@ class RegisterService {
             return Disposables.create()
         }
     }
+    
+    private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
+        let decoder = JSONDecoder()
+                
+        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
+        
+        guard let decodedData = try? decoder.decode(RegisterDataModel.self, from: data) else { return
+            .pathErr
+        }
+        
+        switch statusCode {
+        case 200:
+            if decodedData.code == "11000" {
+                return .success(decodedData.code)
+            } else if decodedData.code == "11001" { // 이미 가입된 이메일이 있을때
+                return .fail(decodedData.code)
+            } else if decodedData.code == "11003" { // 이메일 인증 코드가 유효하지 않을때
+                return .fail(decodedData.code)
+            } else if decodedData.code == "11004" { // 이메일 인증시 사용했던 데이터가 변조되었을때
+                return .fail(decodedData.code)
+            } else {
+                return .serverErr
+            }
+        case 400: return .requestErr("errorCode : " + decodedData.code)
+        case 401: return .unAuthorized
+        case 500: return .serverErr
+        default: return .networkFail
+        }
+    }
 }

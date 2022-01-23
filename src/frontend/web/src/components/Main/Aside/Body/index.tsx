@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../modules';
-import { useNavigate, useParams } from 'react-router-dom';
+
+import getChannelsAndMembersHook from '../../../../hook/getChannelsAndMembers';
+import selectChannelHook from '../../../../hook/selectChannel';
+import setTitleHook from '../../../../hook/setTitle';
 import ToggleList, { Text } from './ToggleList';
-import { getChannelsAPI, getMembersAPI } from '../../../../Api/workspace';
 
 const Container = styled.article`
   padding-top: 8px;
@@ -23,38 +23,10 @@ const SecitonType = styled.section`
 `;
 
 export default function AsideBody() {
-  const [channelPage, setChannelPage] = useState(0);
-  const [memberPage, setMemberPage] = useState(0);
-  const [channelList, setChannelList] = useState([]);
-  const [memberList, setMemberList] = useState([]);
-  const modalActive = useSelector((state: RootState) => state.modal.active);
-  const params = useParams();
-  const navigate = useNavigate();
-
-  const selectHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    const channel = e.currentTarget;
-    const wsId = params.wsId;
-    document.title = channel.id;
-    navigate(`/${wsId}/${channel.id}`);
-  };
-
-  const getChannelsNMembers = async () => {
-    const workspaceId = Number(params.wsId);
-    const { channels } = await getChannelsAPI(channelPage, workspaceId);
-    const { members } = await getMembersAPI(memberPage, workspaceId);
-    setMemberList(members.content);
-    setChannelList(channels.content);
-  };
-
   // todo: get more list channel/member
-
-  useEffect(() => {
-    if (!modalActive) getChannelsNMembers();
-  }, [modalActive]);
-
-  useEffect(() => {
-    if (params.channelId) document.title = params.channelId as string;
-  }, [params]);
+  const [channelList, memberList, params] = getChannelsAndMembersHook();
+  setTitleHook('', params);
+  const selectChannelHandler = selectChannelHook(params);
 
   return (
     <Container>
@@ -63,12 +35,12 @@ export default function AsideBody() {
       </SecitonType>
       <ToggleList
         channelList={channelList}
-        selectHandler={selectHandler}
+        selectHandler={selectChannelHandler}
         type="channel"
       ></ToggleList>
       <ToggleList
         channelList={memberList}
-        selectHandler={selectHandler}
+        selectHandler={selectChannelHandler}
         type="direct message"
       ></ToggleList>
     </Container>

@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { closeModal } from '../../../../modules/modal';
+import React from 'react';
 import styled from 'styled-components';
-import { createChannelAPI } from '../../../../Api/channel';
+import createChannelHook from '../../../../hook/createChannel';
 
 const Container = styled.article`
   position: absolute;
@@ -89,30 +86,8 @@ const Button = styled.button<{ active: boolean }>`
 `;
 
 export default function Modal() {
-  const dispatch = useDispatch();
-  const params = useParams();
-  const [channelName, setChannelName] = useState('');
-  const [description, setDescription] = useState('');
-
-  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'channelName') setChannelName(e.target.value);
-    if (e.target.name === 'description') setDescription(e.target.value);
-  };
-
-  const submitHandler = async () => {
-    if (channelName === '') return;
-    const success = await createChannelAPI({
-      workspaceId: Number(params.wsId),
-      name: channelName,
-      description,
-    });
-    if (success) {
-      dispatch(closeModal());
-    } else {
-      alert('채널 생성 실패');
-      dispatch(closeModal());
-    }
-  };
+  const [channelName, description, inputHandler, submitHandler] =
+    createChannelHook();
 
   return (
     <Container>

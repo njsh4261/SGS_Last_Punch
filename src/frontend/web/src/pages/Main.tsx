@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import getWsHook from '../hook/getWs';
+import updateChannelStoreHook from '../hook/updateChannelStore';
 import setTitleHook from '../hook/setTitle';
 import MainHeader from '../components/Main/Header';
 import Chat from '../components/Main/Chat';
@@ -20,6 +22,7 @@ const Body = styled.div`
 export default function Main() {
   const [params, wsName] = getWsHook();
   setTitleHook('', params);
+  updateChannelStoreHook(params);
 
   return (
     <MainLayout>
@@ -27,7 +30,7 @@ export default function Main() {
       <Body>
         <Aside wsName={wsName}></Aside>
         {params.channelId ? (
-          <Chat params={params}></Chat>
+          <Chat></Chat>
         ) : (
           <div>this is main page. select channel!</div>
         )}

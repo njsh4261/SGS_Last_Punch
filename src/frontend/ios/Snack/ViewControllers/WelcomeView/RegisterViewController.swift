@@ -68,6 +68,14 @@ class RegisterViewController: UIViewController {
                 //                ProgressHUD.show(nil, interaction: false)
             })
             .disposed(by: disposeBag)
+    private func goToLogin() {
+        guard let pvc = self.presentingViewController else { return }
+        let loginVC = NavigationController(rootViewController: LoginViewController())
+        loginVC.modalPresentationStyle = .fullScreen
+
+        dismiss(animated: true) {
+            pvc.present(loginVC, animated: true, completion: nil)
+        }
     }
     
     private func attribute() {

@@ -144,7 +144,7 @@ class WorkspaceListViewController: UIViewController {
         btnLogout = btnLogout.then {
             $0.setTitle("로그아웃", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 16)
-            $0.setTitleColor(.red, for: .normal)
+            $0.setTitleColor(UIColor(named: "warningColor"), for: .normal)
             $0.backgroundColor = .lightGray
             $0.layer.cornerRadius = 6
         }

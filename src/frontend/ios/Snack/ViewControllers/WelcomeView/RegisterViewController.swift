@@ -197,19 +197,19 @@ class RegisterViewController: UIViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(70)
         }
         
-        [fieldEmail, emailBorder, fieldPassword, passwordBorder].forEach {
+        [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword, emailBorder, codeBorder, passwordBorder, checkPasswordBorder].forEach {
             $0.snp.makeConstraints {
                 $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(16)
             }
         }
         
-        [fieldEmail, fieldPassword, btnSignUp].forEach {
+        [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword, btnSignUp].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(50)
             }
         }
         
-        [emailBorder, passwordBorder].forEach {
+        [emailBorder, codeBorder, passwordBorder, checkPasswordBorder].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(1)
             }
@@ -223,28 +223,60 @@ class RegisterViewController: UIViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
         }
         
-        fieldPassword.snp.makeConstraints {
+        fieldCode.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
         }
         
-        passwordBorder.snp.makeConstraints {
+        codeBorder.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(300)
+        }
+        
+        fieldPassword.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(300)
+        }
+        
+        passwordBorder.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(350)
+        }
+        
+        fieldCheckPassword.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(350)
+        }
+        
+        checkPasswordBorder.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(400)
         }
         
         btnSignUp.snp.makeConstraints {
             $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(320)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(420)
+        }
+        
+        lblWarning.snp.makeConstraints {
+            $0.height.equalTo(21)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(480)
+        }
+        
+        [btnSendEmail, btnVerification].forEach {
+            $0.snp.makeConstraints {
+                $0.height.equalTo(35)
+                $0.width.equalTo(60)
+            }
+        }
+                
+        btnSendEmail.snp.makeConstraints {
+            $0.centerY.equalTo(fieldEmail)
+
+        }
+        
+        btnVerification.snp.makeConstraints {
+            $0.centerY.equalTo(fieldCode)
         }
         
         [lblWarning, btnSignIn].forEach {
             $0.snp.makeConstraints {
                 $0.left.right.equalTo(view.safeAreaLayoutGuide)
             }
-        }
-        
-        lblWarning.snp.makeConstraints {
-            $0.height.equalTo(21)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(380)
         }
         
         btnSignIn.snp.makeConstraints {

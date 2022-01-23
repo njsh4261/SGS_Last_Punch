@@ -95,6 +95,16 @@ class RegisterViewController: UIViewController {
             .bind(to: viewModel.input.btnVerificationTapped)
             .disposed(by: disposeBag)
         
+        // Toggle
+        btnTogglePassword.rx.tap
+            .asDriver()
+            .drive(fieldPassword.rx.isSecureTextEntry, btnTogglePassword.rx.setImage)
+            .disposed(by: disposeBag)
+        
+        btnToggleCheckPassword.rx.tap
+            .asDriver()
+            .drive(fieldCheckPassword.rx.isSecureTextEntry, btnToggleCheckPassword.rx.setImage)
+            .disposed(by: disposeBag)
 
         btnSignUp.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
@@ -393,5 +403,38 @@ class RegisterViewController: UIViewController {
             $0.height.equalTo(50)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+}
+
+extension Reactive where Base: UITextField {
+    
+    // Toggle
+    var isSecureTextEntry: Binder<()> {
+        return Binder(base, binding: { (textField, _) in
+            textField.isSecureTextEntry = !textField.isSecureTextEntry
+        })
+    }
+    
+    // deleteBackward
+    var deleteBackward: Binder<(Bool)> {
+        return Binder(base, binding: { (textField, _) in
+            if textField.text!.count > 6 {
+                textField.deleteBackward()
+            }
+        })
+    }
+}
+
+extension Reactive where Base: UIButton {
+    
+    // SetImage
+    var setImage: Binder<()> {
+        return Binder(base, binding: { (button, _) in
+            if button.image(for: .normal) == UIImage(systemName: "eye.fill") {
+                button.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+            } else {
+                button.setImage(UIImage(systemName: "eye.fill"), for: .normal)
+            }
+        })
     }
 }

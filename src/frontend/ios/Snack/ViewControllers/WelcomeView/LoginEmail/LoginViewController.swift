@@ -65,14 +65,21 @@ class LoginViewController: UIViewController {
         btnSignUp.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.dismiss(animated: true, completion: nil)
+                self?.goToRegister()
             })
             .disposed(by: disposeBag)
+        
         
         // Bind output
         viewModel.output.enableBtnSignIn
             .observe(on: MainScheduler.instance)
             .bind(to: btnSignIn.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        
+        viewModel.output.successMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showSuccessAlert)
             .disposed(by: disposeBag)
         
         viewModel.output.errorMessage
@@ -100,6 +107,16 @@ class LoginViewController: UIViewController {
         let navController = WorkspaceListViewController()
         
         navigationController?.pushViewController(navController, animated: true)
+    }
+    
+    private func goToRegister() {
+        guard let pvc = self.presentingViewController else { return }
+        let registerInputVC = RegisterViewController()
+        registerInputVC.modalPresentationStyle = .fullScreen
+
+        dismiss(animated: true) {
+            pvc.present(registerInputVC, animated: true, completion: nil)
+        }
     }
     
     private func attribute() {
@@ -131,6 +148,7 @@ class LoginViewController: UIViewController {
         
         btnSignIn = btnSignIn.then {
             $0.setTitle("로그인", for: .normal)
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 16)
             $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
             $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .disabled)
             $0.clipsToBounds = true

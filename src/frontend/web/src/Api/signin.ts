@@ -13,18 +13,18 @@ export default async function signinAPI(email: string, pass: string) {
     const response = await axios.post(host + endpoint, body);
     const { code, data, err } = response.data;
 
-    if (code === RESPONSE.SIGNIN_SUCCESS) {
+    if (code === RESPONSE.SIGNIN.SUCCESS) {
       const { access_token, refresh_token } = data;
       sessionStorage.setItem(TOKEN.ACCESS, access_token);
       sessionStorage.setItem(TOKEN.REFRESH, refresh_token);
       location.href = URL.REDIRECT_HOME;
     }
 
-    if (code === RESPONSE.SIGNIN_FAIL) {
+    if (code === RESPONSE.SIGNIN.FAIL) {
       alert(err.desc);
     }
   } catch (e) {
-    alert(ERROR_MESSAGE.SIGNIN.SERVER);
+    alert(ERROR_MESSAGE.SERVER);
     return;
   }
 }

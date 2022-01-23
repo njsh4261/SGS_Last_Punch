@@ -51,8 +51,21 @@ class RegisterViewModel: ViewModelProtocol {
             .bind(to: output.enableBtnSignUp)
             .disposed(by: disposeBag)
         
+        // 이메일 포맷 검증
+        Observable.asObservable(input.email)()
+            .map{ self.isValidEmail($0) }
+            .bind(to: output.enableBtnSendEmail)
+            .disposed(by: disposeBag)
         
             .disposed(by: disposeBag)
+    // MARK: - 이메일 포맷 검증
+    // @앞에는 대문자, 숫자, 소문자, 특수문자(._%+-)가 포함 가능
+    // \\. 콤마를 표현하기 위해서 \\사용
+    // @뒤로는 대문자, 소문자, 숫자 그리고 . 기준으로 맨 마지막 문자가 2~64길이
+    func isValidEmail(_ email: String) -> Bool {
+        let regex = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", regex)
+        return emailTest.evaluate(with: email)
     }
     
     }

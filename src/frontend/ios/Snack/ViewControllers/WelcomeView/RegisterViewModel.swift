@@ -91,6 +91,37 @@ class RegisterViewModel: ViewModelProtocol {
                         }
                     }.disposed(by: self.disposeBag)
             }.disposed(by: self.disposeBag)
+        
+        // 이메일 코드 확인
+        input.btnVerificationTapped.withLatestFrom(Observable.combineLatest(input.email, input.code))
+            .bind { [weak self] (email, code) in
+                guard let self = self else { return }
+                // API로직을 태워야합니다.
+                ProgressHUD.animationType = .circleSpinFade
+                ProgressHUD.show("코드 확인중..")
+                RegisterService.shared.verify(email: email, code: code)
+                    .subscribe { event in
+                        switch event {
+                        case .next(let result):
+                            DispatchQueue.main.async { // 메인스레드에서 동작
+                                switch result {
+                                case .success:
+                                    self.output.visibilityPassword.accept(false)
+                                    self.output.successMessage.accept("인증 확인")
+                                case .fail:
+                                    self.output.errorMessage.accept("유효하지 않는 코드\n재발송을 눌러주세요")
+                                default:
+                                    self.output.visibilityPassword.accept(false) // 임시
+                                    self.output.errorMessage.accept("인증 문제 발생")
+                                }
+                            }
+                        case .completed:
+                            break
+                        case .error:
+                            break
+                        }
+                    }.disposed(by: self.disposeBag)
+            }.disposed(by: self.disposeBag)
     // MARK: - 이메일 포맷 검증
     // @앞에는 대문자, 숫자, 소문자, 특수문자(._%+-)가 포함 가능
     // \\. 콤마를 표현하기 위해서 \\사용

@@ -86,7 +86,6 @@ class LoginViewController: UIViewController {
     private func goToWorkspaceList(_ token: Token) {
         print(token.access_token)
         print(token.refresh_token)
-        ProgressHUD.showSucceed()
         let navController = WorkspaceListViewController()
         
         navigationController?.pushViewController(navController, animated: true)
@@ -94,9 +93,7 @@ class LoginViewController: UIViewController {
     
     private func attribute() {
         title = "로그인"
-        navigationController?.navigationBar.tintColor = .red
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
-        
         ivLogo.image = UIImage(named: "snack")
         
         [fieldEmail, fieldPassword].forEach {

@@ -42,19 +42,11 @@ class RegisterViewController: UIViewController {
     
     func bind(with viewModel: RegisterViewModel) {
         
-        fieldEmail.rx.text.asObservable()
-            .ignoreNil()
-            .subscribe(viewModel.input.email)
             .disposed(by: disposeBag)
         
-        fieldPassword.rx.text.asObservable()
-            .ignoreNil()
-            .subscribe(viewModel.input.password)
             .disposed(by: disposeBag)
         
-        btnSignUp.rx.tap.asObservable()
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(viewModel.input.signUpDidTap)
             .disposed(by: disposeBag)
         
         btnSignIn.rx.tap
@@ -64,15 +56,6 @@ class RegisterViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.isValid()
-            .subscribe(onNext: { [self] valid in
-                self.btnSignIn.isUserInteractionEnabled = valid
-                if valid {
-                    self.btnSignUp.alpha = 1
-                }else{
-                    self.btnSignUp.alpha = 0.3
-                }
-            }).disposed(by: disposeBag)
         
         viewModel.output.errorsObservable
             .subscribe(onNext: { (error) in

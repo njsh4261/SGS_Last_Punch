@@ -59,7 +59,6 @@ class LoginService {
             }
         case 400: return .requestErr("errorCode : " + decodedData.code)
         case 401: return .unAuthorized
-        case 404: return .notFound
         case 500: return .serverErr
         default: return .networkFail
         }

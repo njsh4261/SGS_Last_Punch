@@ -26,8 +26,8 @@ class WorkspaceListViewModel: ViewModelProtocol {
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
-    let workspaceListCellData = PublishSubject<[WorkspaceListCellData]>()
-    var cellData: Driver<[WorkspaceListCellData]>
+    let workspaceListCellData = PublishSubject<[WorkspaceListCellModel]>()
+    var cellData: Driver<[WorkspaceListCellModel]>
 
     // MARK: - Init
     init() {

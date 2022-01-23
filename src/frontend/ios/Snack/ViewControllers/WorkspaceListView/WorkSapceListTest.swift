@@ -160,7 +160,7 @@ struct MainModel {
         return error.message
     }
     
-    func getBlogListCellData(_ value: DKBlog?) -> [WorkspaceListCellData] {
+    func getBlogListCellData(_ value: DKBlog?) -> [WorkspaceListCellModel] {
         guard let value = value else {
             return []
         }
@@ -168,7 +168,7 @@ struct MainModel {
         return value.documents
             .map {
                 let thumbnailURL = URL(string: $0.thumbnail ?? "")
-                return WorkspaceListCellData(
+                return WorkspaceListCellModel(
                     thumbnailURL: thumbnailURL,
                     name: $0.name,
                     title: $0.title,

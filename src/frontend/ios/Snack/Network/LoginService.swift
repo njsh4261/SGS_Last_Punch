@@ -8,10 +8,6 @@
 import RxSwift
 import Alamofire
 
-//protocol LoginServiceProtocol {
-//    func signIn(email: String, password: String) -> Observable<User>
-//}
-
 class LoginService {
     static let shared = LoginService()
     

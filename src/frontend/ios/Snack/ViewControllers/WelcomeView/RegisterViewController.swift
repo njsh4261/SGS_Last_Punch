@@ -118,7 +118,27 @@ class RegisterViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        //MARK: Bind output
+        //MARK: Bind output        
+        viewModel.output.changeVisibility
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: visibilityCode)
+            .disposed(by: disposeBag)
+
+        viewModel.output.changeVisibility
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: visibilityPassword)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.changeSendMailText
+            .observe(on: MainScheduler.instance)
+            .bind(to: btnSendEmail.rx.setText)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.changeClearText
+            .observe(on: MainScheduler.instance)
+            .bind(to: fieldCode.rx.setText, fieldPassword.rx.setText, fieldCheckPassword.rx.setText)
+            .disposed(by: disposeBag)
+        
         viewModel.output.enableBtnSendEmail
             .observe(on: MainScheduler.instance)
             .bind(to: btnSendEmail.rx.isEnabled)
@@ -146,17 +166,6 @@ class RegisterViewController: UIViewController {
             .bind(onNext: visibilityPassword)
             .disposed(by: disposeBag)
         
-//        // 추후 삭제
-//        viewModel.isValid()
-//            .subscribe(onNext: { [self] valid in
-//                self.btnSignIn.isUserInteractionEnabled = valid
-//                if valid {
-//                    self.btnSignUp.alpha = 1
-//                }else{
-//                    self.btnSignUp.alpha = 0.3
-//                }
-//            }).disposed(by: disposeBag)
-        
         viewModel.output.successMessage
             .observe(on: MainScheduler.instance)
             .bind(onNext: showSuccessAlert)
@@ -174,7 +183,6 @@ class RegisterViewController: UIViewController {
     }
     
     private func showSuccessAlert(_ message: String) {
-        btnSendEmail.setTitle("재발송", for: .normal)
         ProgressHUD.showSucceed(message)
     }
     
@@ -408,6 +416,12 @@ class RegisterViewController: UIViewController {
 
 extension Reactive where Base: UITextField {
     
+    var setText: Binder<String> {
+        return Binder(base, binding: { (textField, text) in
+            textField.text = text
+        })
+    }
+    
     // Toggle
     var isSecureTextEntry: Binder<()> {
         return Binder(base, binding: { (textField, _) in
@@ -415,7 +429,6 @@ extension Reactive where Base: UITextField {
         })
     }
     
-    // deleteBackward
     var deleteBackward: Binder<(Bool)> {
         return Binder(base, binding: { (textField, _) in
             if textField.text!.count > 6 {
@@ -427,7 +440,6 @@ extension Reactive where Base: UITextField {
 
 extension Reactive where Base: UIButton {
     
-    // SetImage
     var setImage: Binder<()> {
         return Binder(base, binding: { (button, _) in
             if button.image(for: .normal) == UIImage(systemName: "eye.fill") {
@@ -435,6 +447,12 @@ extension Reactive where Base: UIButton {
             } else {
                 button.setImage(UIImage(systemName: "eye.fill"), for: .normal)
             }
+        })
+    }
+    
+    var setText: Binder<String> {
+        return Binder(base, binding: { (button, str) in
+            button.setTitle(str, for: .normal)
         })
     }
 }

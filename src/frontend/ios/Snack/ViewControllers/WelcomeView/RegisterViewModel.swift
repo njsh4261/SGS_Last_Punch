@@ -22,6 +22,9 @@ class RegisterViewModel: ViewModelProtocol {
     }
     
     struct Output {
+        let changeVisibility = PublishRelay<Bool>()
+        let changeSendMailText = PublishRelay<String>()
+        let changeClearText = PublishRelay<String>()
         let enableBtnSignUp = PublishRelay<Bool>()
         let enableBtnSendEmail = PublishRelay<Bool>()
         let enableBtnVerification = PublishRelay<Bool>()
@@ -40,12 +43,13 @@ class RegisterViewModel: ViewModelProtocol {
     
     // MARK: - Init
     init() {
-//        Observable.asDriver(input.email)
-//            .
-//
-//            .disposed(by: disposeBag)
         
-        // isValid
+        // 이메일 변경
+        input.changedEmail
+            .bind{self.initialization("전송")}
+            .disposed(by: disposeBag)
+                
+        // signup 버튼 활성화 조건
         Observable.combineLatest(input.email, input.code, input.password, input.checkPassword)
             .map{ self.isSignUp($0.0, $0.1, $0.2, $0.3) }
             .bind(to: output.enableBtnSignUp)
@@ -70,8 +74,9 @@ class RegisterViewModel: ViewModelProtocol {
                 // API로직을 태워야합니다.
                 ProgressHUD.animationType = .circleSpinFade
                 ProgressHUD.show("인증 요청중..")
+                self.initialization("재전송")
                 self.output.visibilityCode.accept(false)
-                
+
                 RegisterService.shared.sendEmail(email: email)
                     .subscribe { event in
                         switch event {
@@ -175,5 +180,14 @@ class RegisterViewModel: ViewModelProtocol {
     
     func isSignUp(_ email: String, _ code: String, _ password: String, _ checkPassword: String) -> Bool {
         return isValidEmail(email) && code.count == 6 && isValidPassword(password, checkPassword)
+    }
+    
+    // 이메일 인증 버튼을 누를때
+    func initialization(_ sendMailText: String) {
+        self.output.changeVisibility.accept(true)
+        self.output.changeSendMailText.accept(sendMailText)
+        self.output.changeClearText.accept("")
+        self.output.enableBtnSignUp.accept(false)
+        self.output.enableBtnVerification.accept(false)
     }
 }

@@ -61,7 +61,6 @@ class LoginViewController: UIViewController {
             .bind(to: viewModel.input.btnLoginTapped)
             .disposed(by: disposeBag)
         
-        
         btnSignUp.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
@@ -69,13 +68,11 @@ class LoginViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        
         // Bind output
         viewModel.output.enableBtnSignIn
             .observe(on: MainScheduler.instance)
             .bind(to: btnSignIn.rx.isEnabled)
             .disposed(by: disposeBag)
-        
         
         viewModel.output.successMessage
             .observe(on: MainScheduler.instance)

@@ -72,6 +72,8 @@ class RegisterViewModel: ViewModelProtocol {
         return emailTest.evaluate(with: email)
     }
     
+    func isValidPassword(_ password: String, _ checkPassoword: String) -> Bool {
+        return !password.isEmpty && !checkPassoword.isEmpty && password == checkPassoword
     }
     
     func isSignUp(_ email: String, _ code: String, _ password: String, _ checkPassword: String) -> Bool {

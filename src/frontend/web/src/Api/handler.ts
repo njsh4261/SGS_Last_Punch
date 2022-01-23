@@ -5,7 +5,20 @@ import reissueAPI from './reissue';
 
 const getAccessToken = () => sessionStorage.getItem(TOKEN.ACCESS);
 
-export default async function apiHandler(
+async function apiHandler(
+  method: 'GET',
+  endpoint: string,
+  successCode: string,
+): Promise<any>;
+
+async function apiHandler(
+  method: 'POST',
+  endpoint: string,
+  successCode: string,
+  body: any,
+): Promise<any>;
+
+async function apiHandler(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   endpoint: string,
   successCode: string,
@@ -34,10 +47,12 @@ export default async function apiHandler(
     throw 'todo: 각 코드에 따른 처리 고려';
   } catch (e: any) {
     if (e.response.data.code === RESPONSE.TOKEN.EXPIRED) {
-      return await reissueAPI();
+      await reissueAPI();
     } else {
       alert(ERROR_MESSAGE.SERVER);
       clearSession();
     }
   }
 }
+
+export default apiHandler;

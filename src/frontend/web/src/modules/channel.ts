@@ -1,6 +1,7 @@
 import { takeLeading, call, put } from 'redux-saga/effects';
 import { getChannelInfoAPI } from '../Api/channel';
 import { IChannel } from '../../types/channel.type';
+import clearSession from '../util/clearSession';
 
 const SELECT_CAHNNEL = 'channel/select';
 const SELECT_CHANNEL_SUCCESS = 'channel/success';
@@ -46,8 +47,13 @@ function* selectChannelSaga(action: ChannelAction) {
   }
 }
 
+function* selectFailSaga() {
+  clearSession();
+}
+
 export function* channelSaga() {
   yield takeLeading(SELECT_CAHNNEL, selectChannelSaga);
+  yield takeLeading(SELECT_CHANNEL_FAILURE, selectFailSaga);
 }
 
 export default function channel(

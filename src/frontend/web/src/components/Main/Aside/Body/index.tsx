@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../modules';
 import { useNavigate, useParams } from 'react-router-dom';
 import ToggleList, { Text } from './ToggleList';
 import { getChannelsAPI, getMembersAPI } from '../../../../Api/workspace';
@@ -25,6 +27,7 @@ export default function AsideBody() {
   const [memberPage, setMemberPage] = useState(0);
   const [channelList, setChannelList] = useState([]);
   const [memberList, setMemberList] = useState([]);
+  const modalActive = useSelector((state: RootState) => state.modal.active);
   const params = useParams();
   const navigate = useNavigate();
 
@@ -46,8 +49,8 @@ export default function AsideBody() {
   // todo: get more list channel/member
 
   useEffect(() => {
-    getChannelsNMembers();
-  }, []);
+    if (!modalActive) getChannelsNMembers();
+  }, [modalActive]);
 
   useEffect(() => {
     if (params.channelId) document.title = params.channelId as string;

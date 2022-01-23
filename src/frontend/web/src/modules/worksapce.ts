@@ -44,7 +44,7 @@ function* selectWorkSaga(action: WorkAction) {
     yield put({
       type: SELECT_WORK_FAILURE,
     });
-    alert('인증 실패');
+    alert('인증 실패!');
   }
 }
 

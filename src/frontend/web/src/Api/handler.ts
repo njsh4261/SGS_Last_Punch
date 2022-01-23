@@ -2,6 +2,8 @@ import axios from 'axios';
 import { URL, ERROR_MESSAGE, TOKEN, RESPONSE } from '../constant';
 import clearSession from '../util/clearSession';
 import reissueAPI from './reissue';
+import { ICreateWs } from '../../types/workspace.type';
+import { ICreateChannel } from '../../types/channel.type';
 
 const getAccessToken = () => sessionStorage.getItem(TOKEN.ACCESS);
 
@@ -15,14 +17,14 @@ async function apiHandler(
   method: 'POST',
   endpoint: string,
   successCode: string,
-  body: any,
+  body: ICreateWs | ICreateChannel,
 ): Promise<any>;
 
 async function apiHandler(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   endpoint: string,
   successCode: string,
-  body?: any, // todo: edit
+  body?: ICreateWs | ICreateChannel,
 ) {
   try {
     const accessToken = getAccessToken();
@@ -46,7 +48,7 @@ async function apiHandler(
     // todo:
     throw 'todo: 각 코드에 따른 처리 고려';
   } catch (e: any) {
-    if (e.response.data.code === RESPONSE.TOKEN.EXPIRED) {
+    if (e.response?.data.code === RESPONSE.TOKEN.EXPIRED) {
       await reissueAPI();
     } else {
       alert(ERROR_MESSAGE.SERVER);

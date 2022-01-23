@@ -108,7 +108,6 @@ export default function Modal() {
     });
     if (success) {
       dispatch(closeModal());
-      window.location.reload(); // todo: 다른 방식으로 갱신
     } else {
       alert('채널 생성 실패');
       dispatch(closeModal());

@@ -74,14 +74,14 @@ class WorkspaceListViewController: UIViewController {
             .filter { $0 != nil }
         
         //네트워크를 통해 가져온 값을 CellData로 변환
-        let cellData = blogValue
-            .map(m.getBlogListCellData)
+//        let cellData = blogValue
+//            .map(m.getBlogListCellData)
         
         //MainViewController -> ListView
-        Observable
-            .single(cellData)()
-            .bind(to: viewModel.workspaceListCellData)
-            .disposed(by: disposeBag)
+//        Observable
+//            .single(cellData)()
+//            .bind(to: viewModel.workspaceListCellData)
+//            .disposed(by: disposeBag)
         
         // Bind output
         viewModel.cellData

@@ -99,8 +99,9 @@ class LoginViewController: UIViewController {
     }
     
     private func goToWorkspaceList(_ token: Token) {
-        print(token.access_token)
-        print(token.refresh_token)
+        NSLog("token.access_token : " + token.access_token)
+        NSLog("token.refresh_token : " + token.refresh_token)
+
         let navController = WorkspaceListViewController()
         
         navigationController?.pushViewController(navController, animated: true)
@@ -108,7 +109,7 @@ class LoginViewController: UIViewController {
     
     private func goToRegister() {
         guard let pvc = self.presentingViewController else { return }
-        let registerInputVC =         NavigationController(rootViewController: RegisterViewController())
+        let registerInputVC = NavigationController(rootViewController: RegisterViewController())
         registerInputVC.modalPresentationStyle = .fullScreen
 
         dismiss(animated: true) {

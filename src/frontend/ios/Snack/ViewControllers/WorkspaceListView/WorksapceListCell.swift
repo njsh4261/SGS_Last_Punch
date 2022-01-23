@@ -70,8 +70,8 @@ class WorksapceListCell: UITableViewCell {
     }
     
     func setData(_ data: WorkspaceListCellModel) {
-        ivThumbnail.image = UIImage(named: "snack")
-        lblName.text = data.name
-        lblAddress.text = data.title
+//        ivThumbnail.image = UIImage(named: "snack")
+//        lblName.text = data.name
+//        lblAddress.text = data.title
     }
 }

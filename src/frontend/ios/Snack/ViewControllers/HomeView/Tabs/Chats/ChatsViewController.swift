@@ -16,7 +16,7 @@ import Then
 class ChatsViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = ChatsViewModel(RegisterService())
+    private var viewModel = ChatsViewModel()
     private let disposeBag = DisposeBag()
     private var dataSource: RxTableViewSectionedReloadDataSource<ChatsSection>!
     private var channelObjects: [ChannelObject] = []
@@ -53,7 +53,6 @@ class ChatsViewController: UIViewController {
                 return cell
             }
         }
-        test()
         let sections = [
             ChatsSection.SectionOne(items: [SectionItem.StatusChannel(header: "첫번째", items: channelObjects)]),
             ChatsSection.SectionTwo(items: [SectionItem.StatusDirectMessage(header: "두번째", items: directMessageObjects)])
@@ -63,51 +62,6 @@ class ChatsViewController: UIViewController {
                     .bind(to: tableView.rx.items(dataSource: dataSource))
                     .disposed(by: disposeBag)
     }
-
-    func test() {
-        guard let jsonData = load(),
-              let sodeul = try? JSONDecoder().decode(ChannelList.self, from: jsonData) else {
-                  return
-              }
-        //        print(sodeul)
-        channelObjects = sodeul.channels
-        guard let jsonData = load2(),
-              let sodeul2 = try? JSONDecoder().decode(DirectMessageList.self, from: jsonData) else {
-                  return
-              }
-        //        print(sodeul2)
-        directMessageObjects = sodeul2.users
-    }
-    
-    func load() -> Data?{
-        let fileNm: String = "Channel"
-        let extensionType = "json"
-        
-        
-        guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return nil }
-        
-        do {
-            let data = try Data(contentsOf: fileLocation)
-            return data
-        } catch {
-            return nil
-        }
-    }
-    
-    func load2() -> Data?{
-        let fileNm: String = "User"
-        let extensionType = "json"
-        
-        
-        guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return nil }
-        
-        do {
-            let data = try Data(contentsOf: fileLocation)
-            return data
-        } catch {
-            return nil
-        }
-    }
     
     private func attribute() {
         title = "Workspace명"
@@ -115,8 +69,8 @@ class ChatsViewController: UIViewController {
         tabBarItem.selectedImage = UIImage(systemName: "house.fill")
         tabBarItem.title = "홈"
         
-        view.backgroundColor = UIColor(named: "snackBackgroundColor")
-        
+        view.backgroundColor = UIColor(named: "snackColor")
+
         searchBar.placeholder = "채널로 이동..."
         
         tableView = tableView.then {
@@ -127,7 +81,7 @@ class ChatsViewController: UIViewController {
             $0.isOpaque = false
             $0.clearsContextBeforeDrawing = false
             $0.separatorStyle = .singleLine
-            $0.tableFooterView = UIView()
+//            $0.tableFooterView = UIView()
         }
     }
     

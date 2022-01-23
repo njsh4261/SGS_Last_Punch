@@ -45,6 +45,11 @@ class RegisterViewModel: ViewModelProtocol {
 //
 //            .disposed(by: disposeBag)
         
+        // isValid
+        Observable.combineLatest(input.email, input.code, input.password, input.checkPassword)
+            .map{ self.isSignUp($0.0, $0.1, $0.2, $0.3) }
+            .bind(to: output.enableBtnSignUp)
+            .disposed(by: disposeBag)
         
         
             .disposed(by: disposeBag)
@@ -52,4 +57,7 @@ class RegisterViewModel: ViewModelProtocol {
     
     }
     
+    func isSignUp(_ email: String, _ code: String, _ password: String, _ checkPassword: String) -> Bool {
+        return isValidEmail(email) && code.count == 6 && isValidPassword(password, checkPassword)
+    }
 }

@@ -19,6 +19,13 @@ class RegisterService {
         return ["email": email,
                 "verifyCode": code]
     }
+    
+    private func makeSignUpParameter(email: String, code: String, password: String) -> Parameters {
+        return ["email": email,
+                "password": password,
+                "verifyCode": code]
+    }
+    
     func sendEmail(email : String) -> Observable<NetworkResult<Any>> {
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["Content-Type": "application/json"]
@@ -49,6 +56,30 @@ class RegisterService {
             let dataRequest = AF.request(APIConstants().authEmailURL,
                                          method: .get,
                                          parameters: self.makeVerifyParameter(email: email, code: code),
+                                         encoding: JSONEncoding.default,
+                                         headers: header)
+            
+            dataRequest.validate().responseData { [self] response in
+                switch response.result {
+                case .success:
+                    guard let statusCode = response.response?.statusCode else {return}
+                    guard let value = response.value else {return}
+                    let networkResult = judgeStatus(by: statusCode, value)
+                    return observer.onNext(networkResult)
+                case .failure:
+                    return observer.onNext(.pathErr)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func signUp(email: String, code: String, password:String) -> Observable<NetworkResult<Any>> {
+        return Observable.create { observer -> Disposable in
+            let header : HTTPHeaders = ["Content-Type": "application/json"]
+            let dataRequest = AF.request(APIConstants().signUpURL,
+                                         method: .post,
+                                         parameters: self.makeSignUpParameter(email: email, code: code, password: password),
                                          encoding: JSONEncoding.default,
                                          headers: header)
             

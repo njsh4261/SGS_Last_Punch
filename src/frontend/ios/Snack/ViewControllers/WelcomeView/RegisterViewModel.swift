@@ -122,6 +122,43 @@ class RegisterViewModel: ViewModelProtocol {
                         }
                     }.disposed(by: self.disposeBag)
             }.disposed(by: self.disposeBag)
+        
+        // 회원 가입
+        input.btnSignUpTapped.withLatestFrom(Observable.combineLatest(input.email, input.code, input.password, input.checkPassword))
+            .bind { [weak self] (email, code, password, checkPassword) in
+                guard let self = self else { return }
+                // API로직을 태워야합니다.
+                ProgressHUD.animationType = .circleSpinFade
+                ProgressHUD.show("정보 확인중..")
+                RegisterService.shared.signUp(email: email, code: code, password: checkPassword)
+                    .subscribe { event in
+                        switch event {
+                        case .next(let result):
+                            DispatchQueue.main.async { // 메인스레드에서 동작
+                                switch result {
+                                case .success:
+                                    self.output.successMessage.accept("Snack회원이 된것을 축하합니다!")
+                                    self.output.goToLogin.accept(())
+                                case .fail(let errCode as String):
+                                    if errCode == "11001" {
+                                        self.output.errorMessage.accept("이미 가입된 이메일입니다")
+                                    } else {
+                                        self.output.errorMessage.accept("인증받은 이메일이 아닙니다")
+                                    }
+                                default:
+                                    self.output.errorMessage.accept("회원 가입중 문제 발생")
+                                }
+                            }
+                        case .completed:
+                            break
+                        case .error:
+                            break
+                        }
+                    }.disposed(by: self.disposeBag)
+            }.disposed(by: self.disposeBag)
+        
+    }
+    
     // MARK: - 이메일 포맷 검증
     // @앞에는 대문자, 숫자, 소문자, 특수문자(._%+-)가 포함 가능
     // \\. 콤마를 표현하기 위해서 \\사용

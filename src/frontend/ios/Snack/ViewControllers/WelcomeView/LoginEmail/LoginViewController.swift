@@ -41,7 +41,7 @@ class LoginViewController: UIViewController {
     }
     
     func bind(with viewModel: LoginViewModel) {
-        // Bind input
+        //MARK: Bind input
         fieldEmail.rx.text.orEmpty
             .bind(to: viewModel.input.email)
             .disposed(by: disposeBag)
@@ -63,12 +63,10 @@ class LoginViewController: UIViewController {
         
         btnSignUp.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.goToRegister()
-            })
+            .subscribe(onNext: goToRegister)
             .disposed(by: disposeBag)
         
-        // Bind output
+        //MARK: Bind output
         viewModel.output.enableBtnSignIn
             .observe(on: MainScheduler.instance)
             .bind(to: btnSignIn.rx.isEnabled)

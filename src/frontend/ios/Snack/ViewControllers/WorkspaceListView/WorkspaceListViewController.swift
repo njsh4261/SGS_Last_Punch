@@ -40,7 +40,7 @@ class WorkspaceListViewController: UIViewController {
     }
     
     func bind(with viewModel: WorkspaceListViewModel) {
-        // Bind input
+        //MARK: Bind input
         btnNext.rx.tap
             .subscribe(onNext: goToHome)
             .disposed(by: disposeBag)
@@ -88,7 +88,7 @@ class WorkspaceListViewController: UIViewController {
 //            .bind(to: viewModel.workspaceListCellData)
 //            .disposed(by: disposeBag)
         
-        // Bind output
+        //MARK: Bind output
         viewModel.cellData
             .asDriver(onErrorJustReturn: [])
             .drive(tableView.rx.items) { tv, row, data in

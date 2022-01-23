@@ -113,9 +113,7 @@ class RegisterViewController: UIViewController {
         
         btnSignIn.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.goToLogin()
-            })
+            .subscribe(onNext: goToLogin)
             .disposed(by: disposeBag)
         
         //MARK: Bind output

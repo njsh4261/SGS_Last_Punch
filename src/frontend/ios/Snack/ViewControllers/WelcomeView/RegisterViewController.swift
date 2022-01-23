@@ -118,7 +118,7 @@ class RegisterViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        //MARK: Bind output        
+        //MARK: Bind output
         viewModel.output.changeVisibility
             .observe(on: MainScheduler.instance)
             .bind(onNext: visibilityCode)
@@ -215,6 +215,7 @@ class RegisterViewController: UIViewController {
     }
     
     private func attribute() {
+        title = "회원가입"
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
         ivLogo.image = UIImage(named: "snack")
         

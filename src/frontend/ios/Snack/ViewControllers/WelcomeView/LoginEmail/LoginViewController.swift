@@ -108,7 +108,7 @@ class LoginViewController: UIViewController {
     
     private func goToRegister() {
         guard let pvc = self.presentingViewController else { return }
-        let registerInputVC = RegisterViewController()
+        let registerInputVC =         NavigationController(rootViewController: RegisterViewController())
         registerInputVC.modalPresentationStyle = .fullScreen
 
         dismiss(animated: true) {

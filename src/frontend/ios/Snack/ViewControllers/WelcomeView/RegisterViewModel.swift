@@ -62,6 +62,35 @@ class RegisterViewModel: ViewModelProtocol {
             .map{ $0.count == 6 }
             .bind(to: output.enableBtnVerification)
             .disposed(by: disposeBag)
+        
+        // 이메일 인증 메일 전송
+        input.btnSendEmailTapped.withLatestFrom(input.email)
+            .bind { [weak self] (email) in
+                guard let self = self else { return }
+                // API로직을 태워야합니다.
+                ProgressHUD.animationType = .circleSpinFade
+                ProgressHUD.show("인증 요청중..")
+                self.output.visibilityCode.accept(false)
+                
+                RegisterService.shared.sendEmail(email: email)
+                    .subscribe { event in
+                        switch event {
+                        case .next(let result):
+                            DispatchQueue.main.async { // 메인스레드에서 동작
+                                switch result {
+                                case .success:
+                                    self.output.successMessage.accept("메일을 확인해주세요")
+                                default:
+                                    self.output.errorMessage.accept("발송 문제 발생")
+                                }
+                            }
+                        case .completed:
+                            break
+                        case .error:
+                            break
+                        }
+                    }.disposed(by: self.disposeBag)
+            }.disposed(by: self.disposeBag)
     // MARK: - 이메일 포맷 검증
     // @앞에는 대문자, 숫자, 소문자, 특수문자(._%+-)가 포함 가능
     // \\. 콤마를 표현하기 위해서 \\사용

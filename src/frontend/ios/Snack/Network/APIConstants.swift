@@ -9,4 +9,5 @@ import Foundation
 
 struct APIConstants {
     let loginURL = "http://localhost:8080/auth/login"
+    let authEmailURL = "http://localhost:8080/auth/email"
 }

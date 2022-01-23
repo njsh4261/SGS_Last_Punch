@@ -47,6 +47,9 @@
 |--- Api: api. called by 'modules'
 |--- modules: redux module
 |--- icon: image icon
+|--- constant: 상수
+|--- hook: custom hook
+|--- types: type
 |--- styles: global style, value
 |--- routes: 로그인 상태에 따라 public, private 라우팅
 |--- pages: 라우팅 되는 페이지. 여러 컴포넌트를 조합한다.

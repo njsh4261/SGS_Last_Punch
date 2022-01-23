@@ -22,7 +22,8 @@ public class AccountWorkspaceService{
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         accountWorkspaceRepository.save(
             accountWorkspaceDto.getAccountId(),
-            accountWorkspaceDto.getWorkspaceId()
+            accountWorkspaceDto.getWorkspaceId(),
+            accountWorkspaceDto.getRoleId()
         );
     }
 

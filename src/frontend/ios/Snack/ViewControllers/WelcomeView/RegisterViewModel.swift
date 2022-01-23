@@ -57,6 +57,10 @@ class RegisterViewModel: ViewModelProtocol {
             .bind(to: output.enableBtnSendEmail)
             .disposed(by: disposeBag)
         
+        // 코드 포맷 검증 - 6자리
+        Observable.asObservable(input.code)()
+            .map{ $0.count == 6 }
+            .bind(to: output.enableBtnVerification)
             .disposed(by: disposeBag)
     // MARK: - 이메일 포맷 검증
     // @앞에는 대문자, 숫자, 소문자, 특수문자(._%+-)가 포함 가능

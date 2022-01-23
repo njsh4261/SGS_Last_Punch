@@ -38,10 +38,9 @@ class WorkspaceService {
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<[WorkspaceListCellModel]> {
         let decoder = JSONDecoder()
         
-        let jsonData = load()!
-        if let JSONString = String(data: jsonData, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
+        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
         
-        guard let decodedData = try? decoder.decode(WorkspaceResponseModel.self, from: jsonData) else { return
+        guard let decodedData = try? decoder.decode(WorkspaceResponseModel.self, from: data) else { return
             .pathErr
         }
         guard let workspaces = decodedData.data?.workspaces?.content else {

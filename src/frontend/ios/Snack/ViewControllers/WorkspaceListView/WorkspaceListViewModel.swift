@@ -11,10 +11,10 @@ import RxCocoa
 class WorkspaceListViewModel: ViewModelProtocol {
     struct Input {
         let accessToken = PublishSubject<String>()
-        var workspaceListCellData = PublishSubject<[WorkspaceListCellModel]>()
     }
     
     struct Output {
+        let errorMessage = PublishRelay<String>()
     }
     // MARK: - Public properties
     var input = Input()
@@ -22,11 +22,12 @@ class WorkspaceListViewModel: ViewModelProtocol {
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
+    private var workspaceListCellData = PublishSubject<[WorkspaceListCellModel]>()
     var cellData: Driver<[WorkspaceListCellModel]>
     
     // MARK: - Init
     init() {
-        self.cellData = input.workspaceListCellData
+        self.cellData = workspaceListCellData
             .asDriver(onErrorJustReturn: [])
         
         input.accessToken.withLatestFrom(input.accessToken)
@@ -40,14 +41,12 @@ class WorkspaceListViewModel: ViewModelProtocol {
                             DispatchQueue.main.async { // 메인스레드에서 동작
                                 switch result {
                                 case .success(let workspace):
-                                    self.input.workspaceListCellData.onNext(workspace)
+                                    self.workspaceListCellData.onNext(workspace)
                                 default:
-                                    print("문제")
+                                    self.output.errorMessage.accept("워크스페이스 목록을 못가져웠어요")
                                 }
                             }
-                        case .completed:
-                            break
-                        case .error:
+                        default:
                             break
                         }
                     }.disposed(by: self.disposeBag)

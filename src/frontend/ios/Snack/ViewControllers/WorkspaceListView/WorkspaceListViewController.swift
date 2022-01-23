@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+import ProgressHUD
 import Then
 
 class WorkspaceListViewController: UIViewController {
@@ -70,6 +71,15 @@ class WorkspaceListViewController: UIViewController {
                 return cell
             }
             .disposed(by: disposeBag)
+        
+        viewModel.output.errorMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showFailedAlert)
+            .disposed(by: disposeBag)
+    }
+    
+    private func showFailedAlert(_ message: String) {
+        ProgressHUD.showFailed(message)
     }
     
     private func goToHome() {

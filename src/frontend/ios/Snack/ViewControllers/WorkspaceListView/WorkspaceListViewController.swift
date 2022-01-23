@@ -44,6 +44,11 @@ class WorkspaceListViewController: UIViewController {
         btnNext.rx.tap
             .subscribe(onNext: goToHome)
             .disposed(by: disposeBag)
+
+        btnLogout.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: goToWelecome)
+            .disposed(by: disposeBag)
         
         // test
         let s = SearchBarViewModel()
@@ -105,6 +110,10 @@ class WorkspaceListViewController: UIViewController {
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
             sceneDelegate.window?.rootViewController = sceneDelegate.tabBarController
         }
+    }
+    
+    private func goToWelecome() {
+        dismiss(animated: true, completion: nil)
     }
     
     private func attribute() {

@@ -49,18 +49,62 @@ class RegisterViewController: UIViewController {
     }
     
     func bind(with viewModel: RegisterViewModel) {
-        
+        //MARK: Bind input
+        fieldEmail.rx.text.orEmpty
+            .bind(to: viewModel.input.email)
             .disposed(by: disposeBag)
         
+        fieldCode.rx.text.orEmpty
+            .bind(to: viewModel.input.code)
             .disposed(by: disposeBag)
         
+        fieldPassword.rx.text.orEmpty
+            .bind(to: viewModel.input.password)
+            .disposed(by: disposeBag)
+        
+        fieldCheckPassword.rx.text.orEmpty
+            .bind(to: viewModel.input.checkPassword)
+            .disposed(by: disposeBag)
+        
+        // enter를 누를때
+        fieldEmail.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: viewModel.input.btnSendEmailTapped)
+            .disposed(by: disposeBag)
+                
+        fieldCode.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: viewModel.input.btnVerificationTapped)
+            .disposed(by: disposeBag)
+        
+        // 이메일 변경이 있을때
+        fieldEmail.rx.controlEvent(.editingChanged)
+            .asObservable()
+            .bind(to: viewModel.input.changedEmail)
+            .disposed(by: disposeBag)
+        
+        // 메일 전송
+        btnSendEmail.rx.controlEvent(.touchUpInside)
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.input.btnSendEmailTapped)
+            .disposed(by: disposeBag)
+
+        // 코드 확인
+        btnVerification.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.input.btnVerificationTapped)
+            .disposed(by: disposeBag)
+        
+
+        btnSignUp.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(viewModel.input.btnSignUpTapped)
             .disposed(by: disposeBag)
         
         btnSignIn.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.dismiss(animated: true, completion: nil)
+                self?.goToLogin()
             })
             .disposed(by: disposeBag)
         

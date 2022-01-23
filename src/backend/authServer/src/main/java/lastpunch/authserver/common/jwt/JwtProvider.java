@@ -35,7 +35,7 @@ public class JwtProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
     
-    public String createToken(Authentication authentication, long validation_sec){
+    public String createToken(Authentication authentication, long validation_sec, Long userId){
         String authorities = authentication.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(","));
@@ -44,17 +44,18 @@ public class JwtProvider implements InitializingBean {
         return Jwts.builder()
             .setSubject(authentication.getName())
             .claim("auth", authorities)
+            .claim("userId",userId)
             .signWith(key, SignatureAlgorithm.HS512)
             .setExpiration(expire)
             .compact();
     }
     
-    public String createAccessToken(Authentication authentication){
-        return createToken(authentication, ACCESS_TOKEN_VALIDATION_SEC);
+    public String createAccessToken(Authentication authentication, Long userId){
+        return createToken(authentication, ACCESS_TOKEN_VALIDATION_SEC, userId);
     }
     
-    public String createRefreshToken(Authentication authentication){
-        return createToken(authentication, REFRESH_TOKEN_VALIDATION_SEC);
+    public String createRefreshToken(Authentication authentication, Long userId){
+        return createToken(authentication, REFRESH_TOKEN_VALIDATION_SEC, userId);
     }
     
     public Claims extractClaims(String token) throws ExpiredJwtException {

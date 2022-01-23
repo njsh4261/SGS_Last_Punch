@@ -108,18 +108,84 @@ class RegisterViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        
-        viewModel.output.errorsObservable
-            .subscribe(onNext: { (error) in
-                ProgressHUD.showFailed(error.localizedDescription)
-            })
+        //MARK: Bind output
+        viewModel.output.enableBtnSendEmail
+            .observe(on: MainScheduler.instance)
+            .bind(to: btnSendEmail.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        viewModel.output.registerResultObservable
-            .subscribe(onNext: { (user) in
-                //                ProgressHUD.show(nil, interaction: false)
-            })
+        viewModel.output.enableBtnVerification
+            .observe(on: MainScheduler.instance)
+            .bind(to: btnVerification.rx.isEnabled, fieldCode.rx.deleteBackward)
             .disposed(by: disposeBag)
+        
+        viewModel.output.enableBtnSignUp
+            .observe(on: MainScheduler.instance)
+            .bind(to: btnSignUp.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        // Step 1
+        viewModel.output.visibilityCode
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: visibilityCode)
+            .disposed(by: disposeBag)
+        
+        // Step 2
+        viewModel.output.visibilityPassword
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: visibilityPassword)
+            .disposed(by: disposeBag)
+        
+//        // 추후 삭제
+//        viewModel.isValid()
+//            .subscribe(onNext: { [self] valid in
+//                self.btnSignIn.isUserInteractionEnabled = valid
+//                if valid {
+//                    self.btnSignUp.alpha = 1
+//                }else{
+//                    self.btnSignUp.alpha = 0.3
+//                }
+//            }).disposed(by: disposeBag)
+        
+        viewModel.output.successMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showSuccessAlert)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.errorMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showFailedAlert)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.goToLogin
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToLogin)
+            .disposed(by: disposeBag)
+    }
+    
+    private func showSuccessAlert(_ message: String) {
+        btnSendEmail.setTitle("재발송", for: .normal)
+        ProgressHUD.showSucceed(message)
+    }
+    
+    private func showFailedAlert(_ message: String) {
+        ProgressHUD.showFailed(message)
+    }
+    
+    // Step 1
+    private func visibilityCode(_ bool: Bool) {
+        [fieldCode, codeBorder].forEach {
+            $0.isHidden = bool
+        }
+    }
+    
+    // Step 2
+    private func visibilityPassword(_ bool: Bool) {
+        [fieldPassword, fieldCheckPassword, passwordBorder, checkPasswordBorder, btnSignUp, lblWarning].forEach {
+            $0.isHidden = bool
+        }
+    }
+    
     private func goToLogin() {
         guard let pvc = self.presentingViewController else { return }
         let loginVC = NavigationController(rootViewController: LoginViewController())

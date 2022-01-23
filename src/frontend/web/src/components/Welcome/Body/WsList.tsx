@@ -4,7 +4,6 @@ import expand from '../../../icon/expand.svg';
 import WsItem from './WsItem';
 import { IWorkspace } from '../../../../types/workspace.type';
 import { getWsListAPI } from '../../../Api/workspace';
-import clearSession from '../../../util/clearSession';
 
 const Container = styled.section`
   border: 4px solid rgba(255, 255, 255, 0.2);
@@ -68,13 +67,8 @@ export default function WsList() {
   const [wsList, setWsList] = useState<IWorkspace[]>([]);
 
   const getWsList = async () => {
-    const response = await getWsListAPI(page);
-    if (!response) {
-      clearSession();
-      return;
-    }
-    const { workspaces } = response;
-    setWsList([...wsList, ...workspaces.content]);
+    const newWsList = await getWsListAPI(page);
+    setWsList([...wsList, ...newWsList.content]);
     setPage((state) => state + 1);
   };
 

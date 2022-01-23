@@ -21,6 +21,8 @@ const SecitonType = styled.section`
 `;
 
 export default function AsideBody() {
+  const [channelPage, setChannelPage] = useState(0);
+  const [memberPage, setMemberPage] = useState(0);
   const [channelList, setChannelList] = useState([]);
   const [memberList, setMemberList] = useState([]);
   const params = useParams();
@@ -35,11 +37,13 @@ export default function AsideBody() {
 
   const getChannelsNMembers = async () => {
     const workspaceId = Number(params.wsId);
-    const { channels } = await getChannelsAPI(workspaceId);
-    const { members } = await getMembersAPI(workspaceId);
+    const { channels } = await getChannelsAPI(channelPage, workspaceId);
+    const { members } = await getMembersAPI(memberPage, workspaceId);
     setMemberList(members.content);
     setChannelList(channels.content);
   };
+
+  // todo: get more list channel/member
 
   useEffect(() => {
     getChannelsNMembers();

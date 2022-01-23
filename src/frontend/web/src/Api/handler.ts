@@ -35,16 +35,19 @@ async function apiHandler(
     const option = {
       headers: { 'X-AUTH-TOKEN': accessToken },
     };
+    let response;
+
     if (method === 'GET') {
-      const response = await axios.get(URL.HOST + endpoint, option);
-      const { code, data, err } = response.data;
-      if (code === successCode) return data;
+      response = await axios.get(URL.HOST + endpoint, option);
     }
+
     if (method === 'POST') {
-      const response = await axios.post(URL.HOST + endpoint, body, option);
-      const { code, data, err } = response.data;
-      if (code === successCode) return data;
+      response = await axios.post(URL.HOST + endpoint, body, option);
     }
+
+    const { code, data, err } = response?.data;
+    if (code === successCode) return data;
+
     // todo:
     throw 'todo: 각 코드에 따른 처리 고려';
   } catch (e: any) {

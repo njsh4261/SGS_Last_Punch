@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import getWsHook from '../hook/getWs';
+import setTitleHook from '../hook/setTitle';
 import MainHeader from '../components/Main/Header';
 import Chat from '../components/Main/Chat';
 import Aside from '../components/Main/Aside';
-import { selectWork } from '../modules/worksapce';
 
 const MainLayout = styled.div`
   display: flex;
@@ -19,27 +18,14 @@ const Body = styled.div`
 `;
 
 export default function Main() {
-  const params = useParams();
-  const dispatch = useDispatch();
-
-  const getWsInfo = async () => {
-    const workspaceId = Number(params.wsId);
-    dispatch(selectWork(workspaceId));
-  };
-
-  useEffect(() => {
-    getWsInfo();
-  }, []);
-
-  useEffect(() => {
-    if (!params.channelId) document.title = params.wsId as string;
-  }, [params]);
+  const [params, wsName] = getWsHook();
+  setTitleHook('', params);
 
   return (
     <MainLayout>
-      <MainHeader></MainHeader>
+      <MainHeader wsName={wsName}></MainHeader>
       <Body>
-        <Aside></Aside>
+        <Aside wsName={wsName}></Aside>
         {params.channelId ? (
           <Chat params={params}></Chat>
         ) : (

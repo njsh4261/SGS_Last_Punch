@@ -55,9 +55,9 @@ class LoginService {
             if decodedData.code == "11000" {
                 return .success(decodedData.data ?? Token.init(access_token: "", refresh_token: ""))
             } else { // 이메일, 비밀번호를 일치하지 않을때,
-                return .notFound
+                return .fail(decodedData.code)
             }
-        case 400: return .requestErr("errorCode : " + decodedData.code)
+        case 400: return .requestErr(decodedData.code)
         case 401: return .unAuthorized
         case 500: return .serverErr
         default: return .networkFail

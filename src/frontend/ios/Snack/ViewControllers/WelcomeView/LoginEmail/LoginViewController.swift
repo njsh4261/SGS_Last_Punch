@@ -55,6 +55,7 @@ class LoginViewController: UIViewController {
             .bind(to: viewModel.input.btnLoginTapped)
             .disposed(by: disposeBag)
         
+        
         btnSignUp.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
@@ -77,6 +78,10 @@ class LoginViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToWorkspaceList)
             .disposed(by: disposeBag)
+    }
+    
+    private func showSuccessAlert(_ message: String) {
+        ProgressHUD.showSucceed(message)
     }
     
     private func showFailedAlert(_ message: String) {

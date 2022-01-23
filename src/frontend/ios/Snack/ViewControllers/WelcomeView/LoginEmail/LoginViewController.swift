@@ -50,6 +50,12 @@ class LoginViewController: UIViewController {
             .bind(to: viewModel.input.password)
             .disposed(by: disposeBag)
         
+        // enter를 누를때
+        fieldPassword.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: viewModel.input.btnLoginTapped)
+            .disposed(by: disposeBag)
+        
         btnSignIn.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .bind(to: viewModel.input.btnLoginTapped)

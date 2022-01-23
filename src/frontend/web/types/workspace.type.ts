@@ -5,3 +5,8 @@ export interface IWorkspace {
   setting: number;
   status: number;
 }
+
+export interface ICreateWs {
+  workspaceName: string;
+  channelName: string;
+}

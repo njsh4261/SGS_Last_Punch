@@ -11,7 +11,7 @@ export async function getWsListAPI(page: number) {
     endpoint,
     RESPONSE.WORKSPACE.SUCCESS,
   );
-  return response.workspaces;
+  return response;
 }
 
 export async function getWsInfoAPI(wsId: number) {

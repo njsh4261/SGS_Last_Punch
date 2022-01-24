@@ -6,23 +6,44 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 
 class WorkspaceListCell: UITableViewCell {
+    
+    // MARK: - Properties
+    private var viewModel = WorkspaceListCellViewModel()
+    private let disposeBag = DisposeBag()
+
+    // MARK: - UI
     var ivThumbnail = UIImageView()
     var lblName = UILabel()
     var lblAddress = UILabel()
-    var btnCheckbox = UIButton()
+    var btnCheckBox = UIButton()
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        bind(with: viewModel)
         attribute()
         layout()
     }
     
+    private func bind(with viewModel: WorkspaceListCellViewModel) {
+        //MARK: Bind input
+        // Toggle
+        btnCheckBox.rx.tap
+            .asDriver()
+            .drive(btnCheckBox.rx.setCheckImage)
+            .disposed(by: disposeBag)
+        
+        //MARK: Bind output
+    }
+    
     private func attribute() {
-        backgroundColor = UIColor (named: "snackBackGroundColor")
+        backgroundColor = UIColor(named: "snackBackGroundColor")
         ivThumbnail.contentMode = .scaleAspectFit
         
         lblName = lblName.then {
@@ -35,14 +56,16 @@ class WorkspaceListCell: UITableViewCell {
             $0.numberOfLines = 1
         }
         
-        btnCheckbox = btnCheckbox.then {
-            $0.setTitle("클릭", for: .normal)
-//            $0.layer.cornerRadius = 5
+        btnCheckBox = btnCheckBox.then {
+            $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+            $0.backgroundColor = .white
+            $0.layer.cornerRadius = 5
+//            $0.tintColor = UIColor(named: "snackBackGroundColor")
         }
     }
     
     private func layout() {
-        [ivThumbnail, lblName, lblAddress, btnCheckbox].forEach {
+        [ivThumbnail, lblName, lblAddress, btnCheckBox].forEach {
             contentView.addSubview($0)
         }
         
@@ -55,19 +78,19 @@ class WorkspaceListCell: UITableViewCell {
         lblName.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.left.equalTo(ivThumbnail.snp.right).offset(10)
-            $0.trailing.lessThanOrEqualTo(btnCheckbox.snp.leading).offset(-8)
+            $0.trailing.lessThanOrEqualTo(btnCheckBox.snp.leading).offset(-8)
         }
 
         lblAddress.snp.makeConstraints {
             $0.top.equalTo(lblName.snp.bottom)
             $0.leading.equalTo(lblName)
-            $0.trailing.equalTo(btnCheckbox.snp.leading).offset(-8)
+            $0.trailing.equalTo(btnCheckBox.snp.leading).offset(-8)
         }
         
-        btnCheckbox.snp.makeConstraints {
+        btnCheckBox.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.top.right.bottom.equalToSuperview().inset(8)
-            $0.width.height.equalTo(50)
+            $0.right.equalToSuperview()
+            $0.width.height.equalTo(20)
         }
     }
     
@@ -75,5 +98,20 @@ class WorkspaceListCell: UITableViewCell {
         ivThumbnail.image = UIImage(named: "snack")
         lblName.text = data.name
         lblAddress.text = data.createdt
+    }
+}
+
+extension Reactive where Base: UIButton {
+    
+    var setCheckImage: Binder<()> {
+        return Binder(base, binding: { (button, _) in
+            if button.image(for: .normal) == UIImage(systemName: "eye.slash.fill") {
+                button.setImage(UIImage(named: "checkmark"), for: .normal)
+                button.backgroundColor = .white
+            } else {
+                button.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+                button.backgroundColor = UIColor(named: "snackColor")
+            }
+        })
     }
 }

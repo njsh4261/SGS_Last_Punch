@@ -239,7 +239,6 @@ class RegisterViewController: UIViewController {
         
         [btnTogglePassword, btnToggleCheckPassword].forEach {
             $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
-            $0.setImage(UIImage(systemName: "snack"), for: .selected)
             $0.tintColor = UIColor(named: "snackTextColor")
         }
         

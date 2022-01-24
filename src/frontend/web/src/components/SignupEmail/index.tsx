@@ -6,6 +6,8 @@ import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
 import DisableButton from '../Common/DisableButton';
 import signupAPI from '../../Api/signup';
+import Pass from './Pass';
+import Verify from './Verify';
 
 const SignupContainer = styled.article`
   & * {
@@ -50,7 +52,7 @@ export default function SignupEmailContainer() {
       ...input,
       [e.target.name]: e.target.value,
     });
-    // call duplicate api
+    // call email-duplicate api
     setStep({
       ...step,
       duplicate: true,
@@ -66,6 +68,7 @@ export default function SignupEmailContainer() {
   };
 
   const verifyHandler = () => {
+    // call email-verify api
     setStep({
       ...step,
       verify: true,
@@ -78,12 +81,8 @@ export default function SignupEmailContainer() {
     }
     const success = await signupAPI(input.email, input.pass);
 
-    if (success) navigate('/login');
-    else alert('회원가입 실패');
-
-    // 임시코드 -> 나중에 삭제!!
+    if (!success) alert('회원가입 실패');
     navigate('/login');
-    // 나중에 반드시 삭제!!!
   };
 
   return (
@@ -99,51 +98,19 @@ export default function SignupEmailContainer() {
         ></Input>
 
         {step.verify ? (
-          <>
-            <Input
-              name="pass"
-              value={input.pass}
-              inputHandler={inputHandler}
-              type="password"
-              placeholder="password"
-            ></Input>
-            <Input
-              name="passCheck"
-              value={input.passCheck}
-              inputHandler={inputHandler}
-              type="password"
-              placeholder="check password"
-            ></Input>
-            {input.email !== '' &&
-            input.pass !== '' &&
-            input.passCheck !== '' ? (
-              <SubmitButton
-                text="계속"
-                submitHandler={signupHandler}
-              ></SubmitButton>
-            ) : (
-              <DisableButton text="계속"></DisableButton>
-            )}
-          </>
+          <Pass
+            input={input}
+            inputHandler={inputHandler}
+            signupHandler={signupHandler}
+          ></Pass>
         ) : (
           <>
             {step.send ? (
-              <>
-                <Input
-                  value={input.code}
-                  name="code"
-                  inputHandler={inputHandler}
-                  placeholder="code"
-                ></Input>
-                {input.code !== '' ? (
-                  <SubmitButton
-                    text="Verify"
-                    submitHandler={verifyHandler}
-                  ></SubmitButton>
-                ) : (
-                  <DisableButton text="Verify"></DisableButton>
-                )}
-              </>
+              <Verify
+                input={input}
+                inputHandler={inputHandler}
+                verifyHandler={verifyHandler}
+              ></Verify>
             ) : (
               <>
                 {step.duplicate ? (

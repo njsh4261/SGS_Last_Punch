@@ -36,6 +36,7 @@ export default function Input({
       type={type}
       placeholder={placeholder}
       disabled={disabled}
+      autoComplete="off"
     ></Sinput>
   );
 }

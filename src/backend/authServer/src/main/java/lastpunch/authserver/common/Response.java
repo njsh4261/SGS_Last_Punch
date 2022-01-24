@@ -19,7 +19,6 @@ public class Response {
     public static ResponseEntity<Object> toResponseEntity(String code, HttpStatus status) {
         Map<String, Object> map = new HashMap<String, Object>();
         
-        map.put("status", status.value());
         map.put("code", code);
         
         return new ResponseEntity<Object>(map,status);

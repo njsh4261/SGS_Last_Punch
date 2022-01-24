@@ -6,7 +6,7 @@ import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
 import DisableButton from '../Common/DisableButton';
 import { signupAPI, duplicateAPI, sendAPI, verifyAPI } from '../../Api/signup';
-import { RESPONSE } from '../../constant';
+import { RESPONSE, ERROR_MESSAGE } from '../../constant';
 import Pass from './Pass';
 import Verify from './Verify';
 import isEmail from '../../util/isEmail';
@@ -68,7 +68,13 @@ export default function SignupEmailContainer() {
             ...step,
             duplicate: false,
           });
+          alert(ERROR_MESSAGE.SERVER);
         }
+      } else {
+        setStep({
+          ...step,
+          duplicate: false,
+        });
       }
     }
   };
@@ -81,18 +87,21 @@ export default function SignupEmailContainer() {
         send: true,
       });
     } else {
-      alert('fail');
-      navigate('/signup');
+      alert(ERROR_MESSAGE.SERVER);
     }
   };
 
   const verifyHandler = async () => {
     const response = await verifyAPI(input.email, input.code);
-    if (response) {
+    if (response === RESPONSE.SIGNIN.SUCCESS) {
       setStep({
         ...step,
         verify: true,
       });
+    } else {
+      if (response?.err.msg === ERROR_MESSAGE.SIGNUP.INVALID_VERIFY_CODE) {
+        alert(response.err.desc);
+      } else alert(ERROR_MESSAGE.SERVER);
     }
   };
 
@@ -100,11 +109,16 @@ export default function SignupEmailContainer() {
     if (input.pass !== input.passCheck) {
       return alert('비밀번호가 서로 다릅니다');
     }
-    const success = await signupAPI(input.email, input.pass, input.code);
-
-    if (!success) alert('회원가입 실패');
-    else alert('회원가입 성공');
-    navigate('/login');
+    const response = await signupAPI(input.email, input.pass, input.code);
+    if (response === RESPONSE.SIGNIN.SUCCESS) {
+      alert('회원가입 성공');
+    }
+    if (response === undefined) alert(ERROR_MESSAGE.SERVER);
+    if (response.err) {
+      if (response.err.msg === ERROR_MESSAGE.SIGNUP.DUPLICATE) {
+        alert(response.err.desc);
+      } else alert(ERROR_MESSAGE.UNKNOWN);
+    }
   };
 
   return (

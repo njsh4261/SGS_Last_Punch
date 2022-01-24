@@ -20,6 +20,12 @@ async function apiHandler(
   needToken?: boolean,
 ): Promise<any>;
 
+/** RETURN
+ * ERROR: err{msg, desc: ERROR_MESSAGE}
+ * SUCCESS:
+ *    if(data) data
+ *    else code: RESPONSE
+ */
 async function apiHandler(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   endpoint: string,
@@ -49,6 +55,7 @@ async function apiHandler(
     if (method === 'POST') {
       response = await axios.post(URL.HOST + endpoint, body, option);
     }
+
     const { code, data, err } = response?.data;
     if (code === successCode) {
       if (data) return data;
@@ -58,10 +65,10 @@ async function apiHandler(
     if (err) return { err };
   } catch (e: any) {
     if (e.response?.data.code === RESPONSE.TOKEN.EXPIRED) {
-      await reissueAPI();
+      await reissueAPI(); // todo: 예외처리 필요
     } else {
-      alert(ERROR_MESSAGE.SERVER);
       clearSession();
+      return;
     }
   }
 }

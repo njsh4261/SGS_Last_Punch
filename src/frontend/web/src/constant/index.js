@@ -20,6 +20,7 @@ export const ERROR_MESSAGE = {
   SERVER: 'server error',
   SIGNUP: {
     DUPLICATE: 'DUPLICATE_EMAIL',
+    INVALID_VERIFY_CODE: 'INVALID_VERIFY_CODE',
   },
   WORKSPACE: {
     LIST: 'get workspace list fail',
@@ -28,6 +29,7 @@ export const ERROR_MESSAGE = {
     CHANNELS: 'get workspace channels fail',
     CREATE: 'create workspace fail',
   },
+  UNKNOWN: 'unknown error',
 };
 
 export const RESPONSE = {

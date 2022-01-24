@@ -1,9 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Params } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectChannel } from '../../../modules/channel';
-import { RootState } from '../../../modules';
+
+import chatHook from '../../../hook/chat';
 import ChatInput from './Input';
 import Header from './Header';
 
@@ -45,38 +43,9 @@ const ChatInputLayout = styled.article`
 
 const End = styled.article``;
 
-const Chat = ({ params }: { params: Params }) => {
-  const dispatch = useDispatch();
-  const channel = useSelector((state: RootState) => state.channel);
-  const endRef = useRef<null | HTMLDivElement>(null);
-  const [msg, setMsg] = useState<string>('');
-  const [msgList, setMsgList] = useState<string[]>([]);
-
-  const msgTypingHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setMsg(e.target.value);
-
-  const msgSubmitHandler = () => {
-    if (msg !== '') {
-      // todo: socket.send(msg), get response
-      setMsgList([...msgList, msg]);
-      setMsg('');
-    }
-  };
-  const scrollToBottom = () =>
-    endRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-    });
-
-  useEffect(() => {
-    const { channelId } = params;
-    if (channelId) dispatch(selectChannel(channelId));
-    else alert('no channelId Main/Chat/index');
-  }, [params]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [msgList]);
+const Chat = () => {
+  const [channel, msg, msgList, endRef, msgTypingHandler, msgSubmitHandler] =
+    chatHook();
 
   return (
     <>

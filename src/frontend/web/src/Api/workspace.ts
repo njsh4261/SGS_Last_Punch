@@ -1,74 +1,60 @@
-import axios from 'axios';
-import { HOST, ERROR_MESSAGE } from '../constant';
+import { RESPONSE } from '../constant';
+import apiHandler from './handler';
 
-const PAGE = 0;
+const dummySize = 999; // todo: remove
 const SIZE = 3;
 
-// todo: remove userId and set Token
-export async function getWsListAPI(userId: string, page: number) {
-  const endpoint = `/workspace/?userId=${userId}&page=${page}&size=${SIZE}`;
-
-  try {
-    const response = await axios.get(HOST + endpoint);
-    if (response.status !== 200) throw new Error(ERROR_MESSAGE.WORKSPACE.LIST);
-    return response.data.data;
-  } catch (e) {
-    return false;
-  }
+export async function getWsListAPI(page: number) {
+  const endpoint = `/workspace?page=${page}&size=${SIZE}`;
+  const response = await apiHandler(
+    'GET',
+    endpoint,
+    RESPONSE.WORKSPACE.SUCCESS,
+  );
+  return response.workspaces;
 }
 
 export async function getWsInfoAPI(wsId: number) {
   const endpoint = `/workspace/${wsId}`;
-
-  try {
-    const response = await axios.get(HOST + endpoint);
-    if (response.status !== 200) throw new Error(ERROR_MESSAGE.WORKSPACE.INFO);
-    return response.data.data;
-  } catch (e) {
-    return false;
-  }
+  const response = await apiHandler(
+    'GET',
+    endpoint,
+    RESPONSE.WORKSPACE.SUCCESS,
+  );
+  return response;
 }
 
-export async function getMembersAPI(wsId: number) {
-  const endpoint = `/workspace/${wsId}/members?page=${PAGE}&size=${SIZE}`;
-
-  try {
-    const response = await axios.get(HOST + endpoint);
-    if (response.status !== 200)
-      throw new Error(ERROR_MESSAGE.WORKSPACE.MEMBERS);
-    return response.data.data;
-  } catch (e) {
-    return false;
-  }
+export async function getMembersAPI(page: number, wsId: number) {
+  const endpoint = `/workspace/${wsId}/members?page=${page}&size=${dummySize}`;
+  const response = await apiHandler(
+    'GET',
+    endpoint,
+    RESPONSE.WORKSPACE.SUCCESS,
+  );
+  return response;
 }
 
-export async function getChannelsAPI(wsId: number) {
-  const endpoint = `/workspace/${wsId}/channels?page=${PAGE}&size=${SIZE}`;
-
-  try {
-    const response = await axios.get(HOST + endpoint);
-    if (response.status !== 200)
-      throw new Error(ERROR_MESSAGE.WORKSPACE.CHANNELS);
-    return response.data.data;
-  } catch (e) {
-    return false;
-  }
+export async function getChannelsAPI(page: number, wsId: number) {
+  const endpoint = `/workspace/${wsId}/channels?page=${page}&size=${dummySize}`;
+  const response = await apiHandler(
+    'GET',
+    endpoint,
+    RESPONSE.WORKSPACE.SUCCESS,
+  );
+  return response;
 }
 
 export async function createWsAPI(wsName: string, channelName: string) {
   const endpoint = `/workspace`;
-  const data = {
-    creatorId: 1, // test code
+  const body = {
     workspaceName: wsName,
     channelName,
   };
-
-  try {
-    const response = await axios.post(HOST + endpoint, data);
-    if (response.status !== 200)
-      throw new Error(ERROR_MESSAGE.WORKSPACE.CREATE);
-    return response;
-  } catch (e) {
-    return false;
-  }
+  const response = await apiHandler(
+    'POST',
+    endpoint,
+    RESPONSE.WORKSPACE.SUCCESS,
+    body,
+  );
+  return response;
 }

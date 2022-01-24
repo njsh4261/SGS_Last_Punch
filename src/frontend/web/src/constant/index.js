@@ -1,6 +1,19 @@
-export const HOST = process.env.REACT_APP_BACKEND_HOST;
+export const URL = {
+  HOST: process.env.REACT_APP_BACKEND_HOST,
+  REDIRECT_HOME: 'http://localhost:3000',
+};
+
+export const HEADER = {
+  X_AUTH_TOKEN: 'X-AUTH-TOKEN',
+};
+
+export const ENDPOINT = {
+  SIGNIN: '/auth/login',
+  REISSUE: '/auth/reissue',
+};
 
 export const ERROR_MESSAGE = {
+  SERVER: 'server error',
   WORKSPACE: {
     LIST: 'get workspace list fail',
     INFO: 'get workspace info fail',
@@ -8,4 +21,27 @@ export const ERROR_MESSAGE = {
     CHANNELS: 'get workspace channels fail',
     CREATE: 'create workspace fail',
   },
+};
+
+export const RESPONSE = {
+  TOKEN: {
+    SUCCESS: '10000',
+    NO: '10001',
+    EXPIRED: '10002',
+    MALFORMED: '10003',
+    DECODING: '10004',
+    INTERNAL_SERVER_ERROR: '10999',
+  },
+  SIGNIN: {
+    SUCCESS: '11000',
+    FAIL: '11002',
+  },
+  WORKSPACE: {
+    SUCCESS: '12000',
+  },
+};
+
+export const TOKEN = {
+  ACCESS: 'access_token',
+  REFRESH: 'refresh_token',
 };

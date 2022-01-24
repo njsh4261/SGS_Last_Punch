@@ -1,5 +1,6 @@
 import { call, put, takeLeading } from 'redux-saga/effects';
 import { getWsInfoAPI } from '../Api/workspace';
+import clearSession from '../util/clearSession';
 
 const SELECT_WORK = 'workspace/select';
 const SELECT_WORK_SUCCESS = 'workspace/success';
@@ -43,12 +44,17 @@ function* selectWorkSaga(action: WorkAction) {
     yield put({
       type: SELECT_WORK_FAILURE,
     });
-    alert('error!');
+    alert('인증 실패!');
   }
+}
+
+function* selectFailSaga() {
+  clearSession();
 }
 
 export function* workSaga() {
   yield takeLeading(SELECT_WORK, selectWorkSaga);
+  yield takeLeading(SELECT_WORK_FAILURE, selectFailSaga);
 }
 
 export default function work(

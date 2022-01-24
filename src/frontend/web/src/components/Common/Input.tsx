@@ -12,25 +12,30 @@ const Sinput = styled.input`
 `;
 
 interface InputProps {
-  isPass?: boolean;
+  type?: 'text' | 'password';
   name?: string;
   value: string;
+  placeholder?: string;
   inputHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }
 
 export default function Input({
-  isPass = false,
+  type = 'text',
   value,
   inputHandler,
   name = 'email',
+  placeholder,
+  disabled = false,
 }: InputProps) {
   return (
     <Sinput
       name={name}
       value={value}
       onChange={inputHandler}
-      type={isPass ? 'password' : 'text'}
-      placeholder={isPass ? 'password' : 'name@work-email.com'}
+      type={type}
+      placeholder={placeholder}
+      disabled={disabled}
     ></Sinput>
   );
 }

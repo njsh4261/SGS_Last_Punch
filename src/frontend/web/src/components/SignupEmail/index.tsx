@@ -30,23 +30,53 @@ const SignupBody = styled.main`
 `;
 
 export default function SignupEmailContainer() {
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-  const [passCheck, setPassCheck] = useState('');
+  const [input, setInput] = useState({
+    email: '',
+    code: '',
+    pass: '',
+    passCheck: '',
+  });
+
+  const [step, setStep] = useState({
+    duplicate: false,
+    send: false,
+    verify: false,
+  });
 
   const navigate = useNavigate();
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'email') setEmail(e.target.value);
-    if (e.target.name === 'pass') setPass(e.target.value);
-    if (e.target.name === 'passCheck') setPassCheck(e.target.value);
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    // call duplicate api
+    setStep({
+      ...step,
+      duplicate: true,
+    });
   };
 
-  const submitHandler = async () => {
-    if (pass !== passCheck) {
+  const sendHandler = () => {
+    // call send email api
+    setStep({
+      ...step,
+      send: true,
+    });
+  };
+
+  const verifyHandler = () => {
+    setStep({
+      ...step,
+      verify: true,
+    });
+  };
+
+  const signupHandler = async () => {
+    if (input.pass !== input.passCheck) {
       return alert('비밀번호가 서로 다릅니다');
     }
-    const success = await signupAPI(email, pass);
+    const success = await signupAPI(input.email, input.pass);
 
     if (success) navigate('/login');
     else alert('회원가입 실패');
@@ -61,26 +91,72 @@ export default function SignupEmailContainer() {
       <Logo></Logo>
       <GuideText>회원가입 페이지입니다</GuideText>
       <SignupBody>
-        <Input value={email} inputHandler={inputHandler}></Input>
         <Input
-          name="pass"
-          value={pass}
+          value={input.email}
           inputHandler={inputHandler}
-          isPass={true}
+          placeholder="your@email.com"
+          disabled={step.send}
         ></Input>
-        <Input
-          name="passCheck"
-          value={passCheck}
-          inputHandler={inputHandler}
-          isPass={true}
-        ></Input>
-        {email !== '' && pass !== '' && passCheck !== '' ? (
-          <SubmitButton
-            text="계속"
-            submitHandler={submitHandler}
-          ></SubmitButton>
+
+        {step.verify ? (
+          <>
+            <Input
+              name="pass"
+              value={input.pass}
+              inputHandler={inputHandler}
+              type="password"
+              placeholder="password"
+            ></Input>
+            <Input
+              name="passCheck"
+              value={input.passCheck}
+              inputHandler={inputHandler}
+              type="password"
+              placeholder="check password"
+            ></Input>
+            {input.email !== '' &&
+            input.pass !== '' &&
+            input.passCheck !== '' ? (
+              <SubmitButton
+                text="계속"
+                submitHandler={signupHandler}
+              ></SubmitButton>
+            ) : (
+              <DisableButton text="계속"></DisableButton>
+            )}
+          </>
         ) : (
-          <DisableButton text="계속"></DisableButton>
+          <>
+            {step.send ? (
+              <>
+                <Input
+                  value={input.code}
+                  name="code"
+                  inputHandler={inputHandler}
+                  placeholder="code"
+                ></Input>
+                {input.code !== '' ? (
+                  <SubmitButton
+                    text="Verify"
+                    submitHandler={verifyHandler}
+                  ></SubmitButton>
+                ) : (
+                  <DisableButton text="Verify"></DisableButton>
+                )}
+              </>
+            ) : (
+              <>
+                {step.duplicate ? (
+                  <SubmitButton
+                    text="SEND"
+                    submitHandler={sendHandler}
+                  ></SubmitButton>
+                ) : (
+                  <DisableButton text="SEND"></DisableButton>
+                )}
+              </>
+            )}
+          </>
         )}
       </SignupBody>
     </SignupContainer>

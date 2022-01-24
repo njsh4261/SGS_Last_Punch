@@ -44,7 +44,7 @@ class WorkspaceListViewController: UIViewController {
     }
     
     func bind(with viewModel: WorkspaceListViewModel) {
-        lblAccessToken.text = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJHZW9uaHllb25nLmRldkBnbWFpbC5jb20iLCJhdXRoIjoiUk9MRV9VU0VSIiwidXNlcklkIjoxMSwiZXhwIjoxNjQzNTUwMzc1fQ.ZKkstdBvMpIwYQ7NTh8087tdDZPuigcxOE1QfOr9eIo_D2F-S_X_c19GoIkZoZE4AIqXNUVLixrnQlQT1rt23w"
+        lblAccessToken.text = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmQGFzZGYiLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJJZCI6MSwiZXhwIjoxNjQzMDI0Njk0fQ.7eh8FT8kXRZwNNOOliDt6-O7SQSDjcYZnTvn4CEH1ylQzVa9YjGKOGBCFCXHFfSghyAOntcEBFqh6ZYW19SyjA"
         
         //MARK: Bind input
         lblAccessToken.rx.text.orEmpty

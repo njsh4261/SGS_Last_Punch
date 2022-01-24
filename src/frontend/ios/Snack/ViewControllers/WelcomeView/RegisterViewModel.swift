@@ -16,6 +16,7 @@ class RegisterViewModel: ViewModelProtocol {
         let password = PublishSubject<String>()
         let checkPassword = PublishSubject<String>()
         let changedEmail = PublishSubject<Void>()
+        let btnDuplicateEmailTapped = PublishSubject<Void>()
         let btnSendEmailTapped = PublishSubject<Void>()
         let btnVerificationTapped = PublishSubject<Void>()
         let btnSignUpTapped = PublishSubject<Void>()
@@ -23,11 +24,12 @@ class RegisterViewModel: ViewModelProtocol {
     
     struct Output {
         let changeVisibility = PublishRelay<Bool>()
-        let changeSendMailText = PublishRelay<String>()
+        let changeSendEmailText = PublishRelay<String>()
         let changeClearText = PublishRelay<String>()
         let enableBtnSignUp = PublishRelay<Bool>()
-        let enableBtnSendEmail = PublishRelay<Bool>()
+        let enableBtnDuplicateEmail = PublishRelay<Bool>()
         let enableBtnVerification = PublishRelay<Bool>()
+        let visibilityBtnSendEmail = PublishRelay<Bool>()
         let visibilityCode = PublishRelay<Bool>()
         let visibilityPassword = PublishRelay<Bool>()
         let successMessage = PublishRelay<String>()
@@ -44,9 +46,17 @@ class RegisterViewModel: ViewModelProtocol {
     // MARK: - Init
     init() {
         
-        // 이메일 변경
+        // 사용자가 이메일 변경
         input.changedEmail
-            .bind{self.initialization("전송")}
+            .bind{ [weak self] _ in
+                guard let self = self else { return }
+                self.output.visibilityBtnSendEmail.accept(true)
+                self.initialization("전송")
+            }
+            .disposed(by: disposeBag)
+        
+        input.changedEmail
+            .bind{ }
             .disposed(by: disposeBag)
                 
         // signup 버튼 활성화 조건
@@ -58,7 +68,7 @@ class RegisterViewModel: ViewModelProtocol {
         // 이메일 포맷 검증
         Observable.asObservable(input.email)()
             .map{ self.isValidEmail($0) }
-            .bind(to: output.enableBtnSendEmail)
+            .bind(to: output.enableBtnDuplicateEmail)
             .disposed(by: disposeBag)
         
         // 코드 포맷 검증 - 6자리
@@ -66,6 +76,37 @@ class RegisterViewModel: ViewModelProtocol {
             .map{ $0.count == 6 }
             .bind(to: output.enableBtnVerification)
             .disposed(by: disposeBag)
+        
+        // 이메일 중복 검사
+        input.btnDuplicateEmailTapped.withLatestFrom(input.email)
+            .bind { [weak self] (email) in
+                guard let self = self else { return }
+                // API로직을 태워야합니다.
+                ProgressHUD.animationType = .circleSpinFade
+                ProgressHUD.show("중복 검사중..")
+
+                RegisterService.shared.duplicateEmail(email: email)
+                    .subscribe { event in
+                        switch event {
+                        case .next(let result):
+                            DispatchQueue.main.async { // 메인스레드에서 동작
+                                switch result {
+                                case .success:
+                                    self.output.visibilityBtnSendEmail.accept(false)
+                                    self.output.successMessage.accept("성공!!\n전송 버튼을 눌러주세요")
+                                case .fail:
+                                    self.output.errorMessage.accept("이미 가입된 이메일입니다")
+                                default:
+                                    self.output.errorMessage.accept("중복 문제 발생")
+                                }
+                            }
+                        case .completed:
+                            break
+                        case .error:
+                            break
+                        }
+                    }.disposed(by: self.disposeBag)
+            }.disposed(by: self.disposeBag)
         
         // 이메일 인증 메일 전송
         input.btnSendEmailTapped.withLatestFrom(input.email)
@@ -116,7 +157,6 @@ class RegisterViewModel: ViewModelProtocol {
                                 case .fail:
                                     self.output.errorMessage.accept("유효하지 않는 코드\n재발송을 눌러주세요")
                                 default:
-                                    self.output.visibilityPassword.accept(false) // 임시
                                     self.output.errorMessage.accept("인증 문제 발생")
                                 }
                             }
@@ -182,10 +222,10 @@ class RegisterViewModel: ViewModelProtocol {
         return isValidEmail(email) && code.count == 6 && isValidPassword(password, checkPassword)
     }
     
-    // 이메일 인증 버튼을 누를때
-    func initialization(_ sendMailText: String) {
+    // 이메일 수정 & 이메일 인증 버튼을 누를때
+    func initialization(_ sendEmailText: String) {
         self.output.changeVisibility.accept(true)
-        self.output.changeSendMailText.accept(sendMailText)
+        self.output.changeSendEmailText.accept(sendEmailText)
         self.output.changeClearText.accept("")
         self.output.enableBtnSignUp.accept(false)
         self.output.enableBtnVerification.accept(false)

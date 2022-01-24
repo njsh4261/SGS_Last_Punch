@@ -51,6 +51,5 @@ class WorkspaceListViewModel: ViewModelProtocol {
                         }
                     }.disposed(by: self.disposeBag)
             }.disposed(by: disposeBag)
-        
     }
 }

@@ -49,10 +49,11 @@
 		8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD2278E90F200D5677E /* WelcomeViewController.swift */; };
 		8CBD452D2799A0C80056A557 /* ExUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD452C2799A0C80056A557 /* ExUIButton.swift */; };
 		8CBD452F2799A2C10056A557 /* WorkspaceListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD452E2799A2C10056A557 /* WorkspaceListViewModel.swift */; };
-		8CBD45322799AEFD0056A557 /* WorksapceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45312799AEFD0056A557 /* WorksapceListCell.swift */; };
+		8CBD45322799AEFD0056A557 /* WorkspaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45312799AEFD0056A557 /* WorkspaceListCell.swift */; };
 		8CBD45342799B0E00056A557 /* WorkspaceListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45332799B0E00056A557 /* WorkspaceListCellModel.swift */; };
-		8CBD45362799BE8B0056A557 /* WorkSapceListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45352799BE8B0056A557 /* WorkSapceListTest.swift */; };
 		8CBD4538279D3F350056A557 /* WorkspaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD4537279D3F350056A557 /* WorkspaceService.swift */; };
+		8CBD453E279D917D0056A557 /* Workspace.json in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD453D279D917C0056A557 /* Workspace.json */; };
+		8CBD4540279DB3A50056A557 /* WorkspaceListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD453F279DB3A50056A557 /* WorkspaceListCellViewModel.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -107,10 +108,11 @@
 		8C953BD2278E90F200D5677E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		8CBD452C2799A0C80056A557 /* ExUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIButton.swift; sourceTree = "<group>"; };
 		8CBD452E2799A2C10056A557 /* WorkspaceListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListViewModel.swift; sourceTree = "<group>"; };
-		8CBD45312799AEFD0056A557 /* WorksapceListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceListCell.swift; sourceTree = "<group>"; };
+		8CBD45312799AEFD0056A557 /* WorkspaceListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListCell.swift; sourceTree = "<group>"; };
 		8CBD45332799B0E00056A557 /* WorkspaceListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListCellModel.swift; sourceTree = "<group>"; };
-		8CBD45352799BE8B0056A557 /* WorkSapceListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSapceListTest.swift; sourceTree = "<group>"; };
 		8CBD4537279D3F350056A557 /* WorkspaceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceService.swift; sourceTree = "<group>"; };
+		8CBD453D279D917C0056A557 /* Workspace.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Workspace.json; sourceTree = "<group>"; };
+		8CBD453F279DB3A50056A557 /* WorkspaceListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListCellViewModel.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,7 +141,6 @@
 			isa = PBXGroup;
 			children = (
 				8C68AAF1279539F700C1711E /* SyncObjects */,
-				8C68AACA279117FA00C1711E /* User.swift */,
 				8C68AACC2791186400C1711E /* Credentials.swift */,
 			);
 			path = Entities;
@@ -341,6 +342,7 @@
 				8C68AB0D2795AB6200C1711E /* DirectMessageObject.swift */,
 				8C68AB052795754900C1711E /* ChatsSection.swift */,
 				8CBD45332799B0E00056A557 /* WorkspaceListCellModel.swift */,
+				8C68AACA279117FA00C1711E /* User.swift */,
 			);
 			path = SyncObjects;
 			sourceTree = "<group>";
@@ -368,6 +370,7 @@
 			children = (
 				8C68AB032795545900C1711E /* Channel.json */,
 				8C68AB0B2795AA4100C1711E /* User.json */,
+				8CBD453D279D917C0056A557 /* Workspace.json */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -377,8 +380,8 @@
 			children = (
 				8C68AB192796E70C00C1711E /* WorkspaceListViewController.swift */,
 				8CBD452E2799A2C10056A557 /* WorkspaceListViewModel.swift */,
-				8CBD45312799AEFD0056A557 /* WorksapceListCell.swift */,
-				8CBD45352799BE8B0056A557 /* WorkSapceListTest.swift */,
+				8CBD45312799AEFD0056A557 /* WorkspaceListCell.swift */,
+				8CBD453F279DB3A50056A557 /* WorkspaceListCellViewModel.swift */,
 			);
 			path = WorkspaceListView;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				8C68AABD278ED9BF00C1711E /* NotoSansKR-Regular.otf in Resources */,
 				8C68AB2F2797F62D00C1711E /* ProfileView.xib in Resources */,
 				8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */,
+				8CBD453E279D917D0056A557 /* Workspace.json in Resources */,
 				8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,13 +570,13 @@
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
 				8C68AB2D2797F5E400C1711E /* ProfileViewController.swift in Sources */,
 				8C68AAF027952F6500C1711E /* NavigationController.swift in Sources */,
-				8CBD45322799AEFD0056A557 /* WorksapceListCell.swift in Sources */,
+				8CBD45322799AEFD0056A557 /* WorkspaceListCell.swift in Sources */,
 				8CBD452F2799A2C10056A557 /* WorkspaceListViewModel.swift in Sources */,
 				8CBD45342799B0E00056A557 /* WorkspaceListCellModel.swift in Sources */,
 				8C68AAED27952A9000C1711E /* deleteProfileViewModel.swift in Sources */,
+				8CBD4540279DB3A50056A557 /* WorkspaceListCellViewModel.swift in Sources */,
 				8C68AAFF27954FD200C1711E /* ChannelCellViewModel.swift in Sources */,
 				8C68AAD327911AD700C1711E /* ExObservable.swift in Sources */,
-				8CBD45362799BE8B0056A557 /* WorkSapceListTest.swift in Sources */,
 				8C68AAFB27954FBF00C1711E /* DirectMessageCellViewModel.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
 				8C68AB0E2795AB6200C1711E /* DirectMessageObject.swift in Sources */,

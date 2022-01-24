@@ -27,8 +27,8 @@ public class SignupService {
             throw new BusinessException(ErrorCode.DUPLICATE_EMAIL);
         }
         
-        String email = redisService.getData(signupRequest.getVerifyCode());
-        if (email == null || !email.equals(signupRequest.getEmail())){
+        String verifyCode = redisService.getData(signupRequest.getEmail());
+        if (verifyCode == null || !verifyCode.equals(signupRequest.getVerifyCode())){
             throw new BusinessException(ErrorCode.MODIFIED_EMAIL_VERIFY_DATA);
         }
         

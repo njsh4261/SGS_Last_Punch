@@ -160,20 +160,20 @@ struct MainModel {
         return error.message
     }
     
-    func getBlogListCellData(_ value: DKBlog?) -> [WorkspaceListCellModel] {
-        guard let value = value else {
-            return []
-        }
-        
-        return value.documents
-            .map {
-                let thumbnailURL = URL(string: $0.thumbnail ?? "")
-                return WorkspaceListCellModel(
-                    thumbnailURL: thumbnailURL,
-                    name: $0.name,
-                    title: $0.title,
-                    datetime: $0.datetime
-                )
-            }
-    }
+//    func getBlogListCellData(_ value: DKBlog?) -> [WorkspaceListCellModel] {
+//        guard let value = value else {
+//            return []
+//        }
+//        
+//        return value.documents
+//            .map {
+//                let thumbnailURL = URL(string: $0.thumbnail ?? "")
+//                return WorkspaceListCellModel(
+//                    thumbnailURL: thumbnailURL,
+//                    name: $0.name,
+//                    title: $0.title,
+//                    datetime: $0.datetime
+//                )
+//            }
+//    }
 }

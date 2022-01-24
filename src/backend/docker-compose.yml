@@ -41,6 +41,8 @@ services:
       spring.mail.username:
       spring.mail.password:
       spring.redis.host: redis
+      spring.datasource.username: root
+      spring.datasource.password: 1234
     depends_on:
       - mysql
       - redis

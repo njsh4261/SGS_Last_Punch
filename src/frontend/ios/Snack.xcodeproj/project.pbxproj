@@ -55,6 +55,7 @@
 		8CBD453E279D917D0056A557 /* Workspace.json in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD453D279D917C0056A557 /* Workspace.json */; };
 		8CBD4540279DB3A50056A557 /* WorkspaceListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD453F279DB3A50056A557 /* WorkspaceListCellViewModel.swift */; };
 		8CBD4542279F047F0056A557 /* KeychainWrapper+keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD4541279F047F0056A557 /* KeychainWrapper+keys.swift */; };
+		8CBD4544279F0CD50056A557 /* LogOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD4543279F0CD50056A557 /* LogOut.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -115,6 +116,7 @@
 		8CBD453D279D917C0056A557 /* Workspace.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Workspace.json; sourceTree = "<group>"; };
 		8CBD453F279DB3A50056A557 /* WorkspaceListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListCellViewModel.swift; sourceTree = "<group>"; };
 		8CBD4541279F047F0056A557 /* KeychainWrapper+keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainWrapper+keys.swift"; sourceTree = "<group>"; };
+		8CBD4543279F0CD50056A557 /* LogOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOut.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -400,6 +402,7 @@
 		8C845299278C272C001A81FD /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8CBD4543279F0CD50056A557 /* LogOut.swift */,
 				8C68AABF279093B600C1711E /* WelcomeView */,
 				8C68AB182796E67200C1711E /* WorkspaceListView */,
 				8C68AADC279524EB00C1711E /* HomeView */,
@@ -572,6 +575,7 @@
 				8C68AB062795754900C1711E /* ChatsSection.swift in Sources */,
 				8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */,
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
+				8CBD4544279F0CD50056A557 /* LogOut.swift in Sources */,
 				8C68AB2D2797F5E400C1711E /* ProfileViewController.swift in Sources */,
 				8C68AAF027952F6500C1711E /* NavigationController.swift in Sources */,
 				8CBD45322799AEFD0056A557 /* WorkspaceListCell.swift in Sources */,

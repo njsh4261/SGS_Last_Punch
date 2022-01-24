@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import ProgressHUD
+import SwiftKeychainWrapper
 import Then
 
 class LoginViewController: UIViewController {
@@ -41,7 +42,7 @@ class LoginViewController: UIViewController {
     }
     
     func bind(with viewModel: LoginViewModel) {
-        //MARK: Bind input
+        // MARK: Bind input
         fieldEmail.rx.text.orEmpty
             .bind(to: viewModel.input.email)
             .disposed(by: disposeBag)
@@ -66,7 +67,7 @@ class LoginViewController: UIViewController {
             .subscribe(onNext: goToRegister)
             .disposed(by: disposeBag)
         
-        //MARK: Bind output
+        // MARK: Bind output
         viewModel.output.enableBtnSignIn
             .observe(on: MainScheduler.instance)
             .bind(to: btnSignIn.rx.isEnabled)
@@ -97,8 +98,10 @@ class LoginViewController: UIViewController {
     }
     
     private func goToWorkspaceList(_ token: Token) {
-        NSLog("token.access_token : " + token.access_token)
-        NSLog("token.refresh_token : " + token.refresh_token)
+        // keychain에 email과 token 보관
+        KeychainWrapper.standard[.email] = fieldEmail.text
+        KeychainWrapper.standard[.accessToken] = token.access_token
+        KeychainWrapper.standard[.refreshToken] = token.refresh_token
 
         let navController = WorkspaceListViewController()
         navController.accessToken = token.access_token

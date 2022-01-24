@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import ProgressHUD
+import SwiftKeychainWrapper
 import Then
 
 class WorkspaceListViewController: UIViewController {
@@ -27,12 +28,14 @@ class WorkspaceListViewController: UIViewController {
     var lblSearch = UILabel()
     var btnNewWorkspace = UIButton()
     var btnLogout = UIButton()
-    var lblAccessToken = UITextField()
-    
+    var accessTokenField = UITextField()
+
     let text = UITextView()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        guard let token: String = KeychainWrapper.standard[.accessToken] else { return }
+        accessTokenField.text = token
         
         bind(with: viewModel)
         attribute()
@@ -44,10 +47,8 @@ class WorkspaceListViewController: UIViewController {
     }
     
     func bind(with viewModel: WorkspaceListViewModel) {
-        lblAccessToken.text = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfQURNSU4iLCJ1c2VySWQiOjE1LCJleHAiOjE2NDM2NDQwMDJ9.osEyZ-iKQuOocyylQJCSpUgXXl2gWbd_o7WKaWgZwMJ_gcfRSIUXfPAtKZ33uRFMUv-xUUJXAjdSnCnWxbIP4A"
-        
-        //MARK: Bind input
-        lblAccessToken.rx.text.orEmpty
+        // MARK: Bind input
+        accessTokenField.rx.text.orEmpty
             .bind(to: viewModel.input.accessToken)
             .disposed(by: disposeBag)
         
@@ -61,7 +62,7 @@ class WorkspaceListViewController: UIViewController {
             .disposed(by: disposeBag)
         
         
-        //MARK: Bind output
+        // MARK: Bind output
         viewModel.cellData
             .asDriver(onErrorJustReturn: [])
             .drive(tableView.rx.items) { tv, row, data in
@@ -89,6 +90,7 @@ class WorkspaceListViewController: UIViewController {
     }
     
     private func goToWelecome() {
+        _ = LogOut()
         dismiss(animated: true, completion: nil)
     }
     

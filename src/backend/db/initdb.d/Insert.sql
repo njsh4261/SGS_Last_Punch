@@ -7,6 +7,8 @@ DELETE FROM role;
 
 
 INSERT INTO account (email, password, name, country, language, settings, status, level, point, createDt, modifyDt)
+    VALUES ('1', '$2a$10$eU4gRbKP1WWUczJpH9BI5.CEmdyROfZoAOFJYRzeUFp.UPgW766Ku', 'name', 'kor', 'eng', 1, 2, 3, 123, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, level, point, createDt, modifyDt)
     VALUES ('asdf@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, 3, 123, '1234-01-01', '9999-12-31');
 INSERT INTO account (email, password, name, country, language, settings, status, level, point, createDt, modifyDt)
     VALUES ('qwer@qwer', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, 3, 123, '1234-01-01', '9999-12-31');

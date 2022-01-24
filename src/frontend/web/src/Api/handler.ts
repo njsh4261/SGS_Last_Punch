@@ -68,7 +68,7 @@ async function apiHandler(
       await reissueAPI(); // todo: 예외처리 필요
     } else {
       clearSession();
-      return;
+      return; // return undefined when server error
     }
   }
 }

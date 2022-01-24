@@ -68,7 +68,12 @@ export default function SignupEmailContainer() {
             ...step,
             duplicate: false,
           });
-          alert(ERROR_MESSAGE.SERVER);
+          if (response === undefined) alert(ERROR_MESSAGE.SERVER);
+          else if (response.err) {
+            if (response.err.msg === ERROR_MESSAGE.SIGNUP.DUPLICATE) {
+              alert(response.err.desc);
+            } else alert(ERROR_MESSAGE.UNKNOWN);
+          }
         }
       } else {
         setStep({
@@ -99,9 +104,10 @@ export default function SignupEmailContainer() {
         verify: true,
       });
     } else {
-      if (response?.err.msg === ERROR_MESSAGE.SIGNUP.INVALID_VERIFY_CODE) {
+      if (response === undefined) alert(ERROR_MESSAGE.SERVER);
+      else if (response.err.msg === ERROR_MESSAGE.SIGNUP.INVALID_VERIFY_CODE) {
         alert(response.err.desc);
-      } else alert(ERROR_MESSAGE.SERVER);
+      } else alert(ERROR_MESSAGE.UNKNOWN);
     }
   };
 
@@ -114,7 +120,7 @@ export default function SignupEmailContainer() {
       alert('회원가입 성공');
     }
     if (response === undefined) alert(ERROR_MESSAGE.SERVER);
-    if (response.err) {
+    else if (response.err) {
       if (response.err.msg === ERROR_MESSAGE.SIGNUP.DUPLICATE) {
         alert(response.err.desc);
       } else alert(ERROR_MESSAGE.UNKNOWN);

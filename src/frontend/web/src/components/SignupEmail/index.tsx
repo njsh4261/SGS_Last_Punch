@@ -118,6 +118,7 @@ export default function SignupEmailContainer() {
     const response = await signupAPI(input.email, input.pass, input.code);
     if (response === RESPONSE.SIGNIN.SUCCESS) {
       alert('회원가입 성공');
+      navigate('/signin');
     }
     if (response === undefined) alert(ERROR_MESSAGE.SERVER);
     else if (response.err) {

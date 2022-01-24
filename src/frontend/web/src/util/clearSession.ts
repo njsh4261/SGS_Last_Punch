@@ -1,4 +1,4 @@
-export default function clearSession() {
+export default function clearSession(reload = true) {
   sessionStorage.clear();
-  // window.location.reload();
+  if (reload) window.location.reload();
 }

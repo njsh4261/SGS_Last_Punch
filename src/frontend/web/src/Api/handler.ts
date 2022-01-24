@@ -39,7 +39,7 @@ async function apiHandler(
     if (needToken) {
       accessToken = getAccessToken();
       if (!accessToken) {
-        alert('no access token');
+        clearSession();
         return;
       }
       option = {
@@ -67,7 +67,7 @@ async function apiHandler(
     if (e.response?.data.code === RESPONSE.TOKEN.EXPIRED) {
       await reissueAPI(); // todo: 예외처리 필요
     } else {
-      clearSession();
+      clearSession(false);
       return; // return undefined when server error
     }
   }

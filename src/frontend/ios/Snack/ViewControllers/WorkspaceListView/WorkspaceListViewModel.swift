@@ -30,6 +30,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
         self.cellData = workspaceListCellData
             .asDriver(onErrorJustReturn: [])
         
+        // Cell Data
         input.accessToken.withLatestFrom(input.accessToken)
             .bind { [weak self] (token) in
                 guard let self = self else { return }

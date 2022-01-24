@@ -12,7 +12,7 @@ class WorkspaceService {
     static let shared = WorkspaceService()
 
     func getWorkspace(accessToken : String) -> Observable<NetworkResult<[WorkspaceListCellModel]>> {
-        print("여기" + accessToken)
+
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
             let dataRequest = AF.request(APIConstants().workspaceList,
@@ -46,7 +46,7 @@ class WorkspaceService {
         guard let workspaces = decodedData.data?.workspaces?.content else {
             return .pathErr
         }
-
+        
         switch statusCode {
         case 200: return .success(workspaces)
         case 400: return .requestErr(workspaces)

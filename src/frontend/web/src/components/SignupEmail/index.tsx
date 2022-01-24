@@ -9,6 +9,7 @@ import { signupAPI, duplicateAPI, sendAPI, verifyAPI } from '../../Api/signup';
 import { RESPONSE } from '../../constant';
 import Pass from './Pass';
 import Verify from './Verify';
+import isEmail from '../../util/isEmail';
 
 const SignupContainer = styled.article`
   & * {
@@ -55,17 +56,19 @@ export default function SignupEmailContainer() {
     });
 
     if (e.target.name === 'email') {
-      const response = await duplicateAPI(e.target.value);
-      if (response === RESPONSE.SIGNIN.SUCCESS) {
-        setStep({
-          ...step,
-          duplicate: true,
-        });
-      } else {
-        setStep({
-          ...step,
-          duplicate: false,
-        });
+      if (isEmail(e.target.value)) {
+        const response = await duplicateAPI(e.target.value);
+        if (response === RESPONSE.SIGNIN.SUCCESS) {
+          setStep({
+            ...step,
+            duplicate: true,
+          });
+        } else {
+          setStep({
+            ...step,
+            duplicate: false,
+          });
+        }
       }
     }
   };

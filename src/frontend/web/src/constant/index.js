@@ -9,11 +9,19 @@ export const HEADER = {
 
 export const ENDPOINT = {
   SIGNIN: '/auth/login',
+  SIGNUP: '/auth/signup',
   REISSUE: '/auth/reissue',
+  DUPLICATE: '/auth/email-duplicate',
+  SEND_EMAIL: '/auth/email',
+  VERIFY: '/auth/email-verification',
 };
 
 export const ERROR_MESSAGE = {
   SERVER: 'server error',
+  SIGNUP: {
+    DUPLICATE: 'DUPLICATE_EMAIL',
+    INVALID_VERIFY_CODE: 'INVALID_VERIFY_CODE',
+  },
   WORKSPACE: {
     LIST: 'get workspace list fail',
     INFO: 'get workspace info fail',
@@ -21,6 +29,7 @@ export const ERROR_MESSAGE = {
     CHANNELS: 'get workspace channels fail',
     CREATE: 'create workspace fail',
   },
+  UNKNOWN: 'unknown error',
 };
 
 export const RESPONSE = {

@@ -1,17 +1,58 @@
-import axios from 'axios';
+import apiHandler from './handler';
+import { ENDPOINT, RESPONSE } from '../constant';
 
-export default async function signupAPI(email: string, pass: string) {
-  const host = process.env.REACT_APP_BACKEND_HOST;
-  const endpoint = '/auth/signup';
-  const data = {
+export async function duplicateAPI(email: string) {
+  const body = { email };
+  const response = await apiHandler(
+    'POST',
+    ENDPOINT.DUPLICATE,
+    RESPONSE.SIGNIN.SUCCESS,
+    body,
+    false,
+  );
+  return response;
+}
+
+export async function sendAPI(email: string) {
+  const body = { email };
+  const response = await apiHandler(
+    'POST',
+    ENDPOINT.SEND_EMAIL,
+    RESPONSE.SIGNIN.SUCCESS,
+    body,
+    false,
+  );
+  return response;
+}
+
+export async function verifyAPI(email: string, verifyCode: string) {
+  const body = { email, verifyCode };
+  const response = await apiHandler(
+    'POST',
+    ENDPOINT.VERIFY,
+    RESPONSE.SIGNIN.SUCCESS,
+    body,
+    false,
+  );
+  return response;
+}
+
+export async function signupAPI(
+  email: string,
+  pass: string,
+  verifyCode: string,
+) {
+  const body = {
     email,
     password: pass,
+    verifyCode,
   };
-  try {
-    const response = await axios.post(host + endpoint, data);
-    if (response.status !== 200) throw new Error('signup fail');
-    return true;
-  } catch (e) {
-    return false;
-  }
+  const response = await apiHandler(
+    'POST',
+    ENDPOINT.SIGNUP,
+    RESPONSE.SIGNIN.SUCCESS,
+    body,
+    false,
+  );
+  return response;
 }

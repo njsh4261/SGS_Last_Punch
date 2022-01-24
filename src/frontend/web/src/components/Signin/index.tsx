@@ -6,7 +6,6 @@ import DisableButton from '../Common/DisableButton';
 import Logo from '../Common/Logo';
 import SignUp from './SignUpButton';
 import signinAPI from '../../Api/signin';
-import { RESPONSE, ERROR_MESSAGE } from '../../constant';
 
 const Container = styled.article`
   width: 420px;
@@ -34,7 +33,7 @@ export default function Signin() {
         name="pass"
         value={pass}
         inputHandler={inputHandler}
-        isPass={true}
+        type="password"
       ></Input>
       {email !== '' && pass !== '' ? (
         <SubmitButton

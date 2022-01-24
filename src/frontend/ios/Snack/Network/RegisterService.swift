@@ -53,8 +53,8 @@ class RegisterService {
     func verify(email: String, code: String) -> Observable<NetworkResult<Any>> {
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["Content-Type": "application/json"]
-            let dataRequest = AF.request(APIConstants().authEmailURL,
-                                         method: .get,
+            let dataRequest = AF.request(APIConstants().emailVerificationURL,
+                                         method: .post,
                                          parameters: self.makeVerifyParameter(email: email, code: code),
                                          encoding: JSONEncoding.default,
                                          headers: header)

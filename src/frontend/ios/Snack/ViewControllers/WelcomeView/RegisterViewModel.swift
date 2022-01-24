@@ -116,7 +116,6 @@ class RegisterViewModel: ViewModelProtocol {
                                 case .fail:
                                     self.output.errorMessage.accept("유효하지 않는 코드\n재발송을 눌러주세요")
                                 default:
-                                    self.output.visibilityPassword.accept(false) // 임시
                                     self.output.errorMessage.accept("인증 문제 발생")
                                 }
                             }

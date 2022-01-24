@@ -1,6 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../modules';
 import styled from 'styled-components';
 import MainHeaderFrame from '../../Common/MainHeaderFrame';
 import SearchContainer from './Search';
@@ -30,8 +28,7 @@ const Hright = styled.article`
   padding-right: 10px;
 `;
 
-export default function MainHeader() {
-  const wsName = useSelector((state: RootState) => state.work.name);
+export default function MainHeader({ wsName }: { wsName: string }) {
   return (
     <MainHeaderFrame>
       <Hside>

@@ -1,5 +1,6 @@
 package lastpunch.authserver.service;
 
+import java.util.Optional;
 import java.util.Random;
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
@@ -23,6 +24,7 @@ public class EmailVerifyService {
     @Autowired
     private JavaMailSender javaMailSender;
     private final RedisService redisService;
+    private final AccountRepository accountRepository;
     
     public void sendMail(String to, String sub, String text){
         MimeMessage message = javaMailSender.createMimeMessage();
@@ -46,17 +48,24 @@ public class EmailVerifyService {
         String verifyCode = String.format("%06d", number);
     
         // redis에 인증 코드 6자리 저장 - 유효시간 5분
-        redisService.setData(verifyCode, email,  1000 * 60 * 5);
+        redisService.setData(email, verifyCode,  1000 * 60 * 5);
         
         String sub = "Snack 회원가입 인증 코드를 발송해드립니다.";
         String text = "<h1>인증코드: " + verifyCode + "</h1>" + "<p>Snack으로 돌아가 6자리 인증 코드를 입력해주세요.</p>";
         sendMail(email, sub, text);
     }
     
+    public void checkDuplicateEmail(String email){
+        Optional<Account> account = accountRepository.findByEmail(email);
+        if(account.isPresent()){
+            throw new BusinessException(ErrorCode.DUPLICATE_EMAIL);
+        }
+    }
+    
     public void verifyMail(EmailVerifyRequest emailVerifyRequest) {
-        String email = redisService.getData(emailVerifyRequest.getVerifyCode());
+        String verifyCode = redisService.getData(emailVerifyRequest.getEmail());
 
-        if (email == null || !email.equals(emailVerifyRequest.getEmail())){
+        if (verifyCode == null || !verifyCode.equals(emailVerifyRequest.getVerifyCode())){
             throw new BusinessException(ErrorCode.INVALID_VERIFY_CODE);
         }
     }

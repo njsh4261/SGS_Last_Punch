@@ -7,3 +7,10 @@ export interface IChannel {
   status: number;
   settings: number;
 }
+
+export interface ICreateChannel {
+  workspaceId: number;
+  name: string;
+  topic?: string;
+  description: string;
+}

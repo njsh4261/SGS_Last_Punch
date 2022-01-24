@@ -1,12 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../modules';
 import MainAsideFrame from '../../Common/MainAsideFrame';
 import AsideHeader from '../../Common/MainAsideHeader';
 import AsideBody from './Body';
 
-export default function Aside() {
-  const wsName = useSelector((state: RootState) => state.work.name);
+export default function Aside({ wsName }: { wsName: string }) {
   return (
     <MainAsideFrame>
       <AsideHeader>{wsName}</AsideHeader>

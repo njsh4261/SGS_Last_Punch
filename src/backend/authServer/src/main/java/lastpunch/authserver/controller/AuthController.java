@@ -1,6 +1,7 @@
 package lastpunch.authserver.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import lastpunch.authserver.common.Response;
 import lastpunch.authserver.dto.EmailVerifyRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
 @RequiredArgsConstructor
 @RestController
@@ -51,13 +53,20 @@ public class AuthController {
     
     @PostMapping("/email")
     public ResponseEntity<Object> sendEmail(@RequestBody SendEmailRequest sendEmailRequest) {
+        final DeferredResult<List<String>> result = new DeferredResult<>();
         emailVerifyService.sendVerifyMail(sendEmailRequest.getEmail());
         return Response.toResponseEntity("11000", HttpStatus.OK);
     }
     
-    @GetMapping("/email")
+    @PostMapping("/email-verification")
     public ResponseEntity<Object> emailVerify(@RequestBody EmailVerifyRequest emailVerifyRequest) {
         emailVerifyService.verifyMail(emailVerifyRequest);
+        return Response.toResponseEntity("11000", HttpStatus.OK);
+    }
+    
+    @PostMapping("/email-duplicate")
+    public ResponseEntity<Object> emailDuplicate(@RequestBody SendEmailRequest sendEmailRequest) {
+        emailVerifyService.checkDuplicateEmail(sendEmailRequest.getEmail());
         return Response.toResponseEntity("11000", HttpStatus.OK);
     }
 }

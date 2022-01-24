@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import expand from '../../../icon/expand.svg';
 import WsItem from './WsItem';
 import { IWorkspace } from '../../../../types/workspace.type';
-import { getWsListAPI } from '../../../Api/workspace';
+import getWsListHook from '../../../hook/getWsList';
 
 const Container = styled.section`
   border: 4px solid rgba(255, 255, 255, 0.2);
@@ -63,20 +63,7 @@ const ShowMoreIcon = styled.div`
 `;
 
 export default function WsList() {
-  const [page, setPage] = useState(0);
-  const [wsList, setWsList] = useState<IWorkspace[]>([]);
-
-  const getWsList = async () => {
-    const { workspaces } = await getWsListAPI('1', page); // dummy userId
-    if (workspaces) {
-      setWsList([...wsList, ...workspaces.content]);
-      setPage((state) => state + 1);
-    } else alert('error');
-  };
-
-  useEffect(() => {
-    getWsList();
-  }, []);
+  const [wsList, getWsList] = getWsListHook();
 
   return (
     <Container>

@@ -19,6 +19,6 @@ public class User {
     public String getAlias() {
         return alias;
     }
-
+    
     
 }

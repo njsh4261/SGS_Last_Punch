@@ -23,6 +23,7 @@ dependencies {
 //    implementation 'org.springframework.boot:spring-reactive-web'
 //    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 //    implementation 'org.springframework.boot:spring-boot-starter-integration'
+    implementation 'org.springframework.boot:spring-boot-starter-rsocket'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

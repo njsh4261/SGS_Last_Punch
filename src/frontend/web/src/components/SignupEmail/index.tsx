@@ -5,7 +5,8 @@ import Logo from '../Common/Logo';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
 import DisableButton from '../Common/DisableButton';
-import signupAPI from '../../Api/signup';
+import { signupAPI, duplicateAPI, sendAPI, verifyAPI } from '../../Api/signup';
+import { RESPONSE } from '../../constant';
 import Pass from './Pass';
 import Verify from './Verify';
 
@@ -47,41 +48,59 @@ export default function SignupEmailContainer() {
 
   const navigate = useNavigate();
 
-  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const inputHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
-    // call email-duplicate api
-    setStep({
-      ...step,
-      duplicate: true,
-    });
+
+    if (e.target.name === 'email') {
+      const response = await duplicateAPI(e.target.value);
+      if (response === RESPONSE.SIGNIN.SUCCESS) {
+        setStep({
+          ...step,
+          duplicate: true,
+        });
+      } else {
+        setStep({
+          ...step,
+          duplicate: false,
+        });
+      }
+    }
   };
 
-  const sendHandler = () => {
-    // call send email api
-    setStep({
-      ...step,
-      send: true,
-    });
+  const sendHandler = async () => {
+    const response = await sendAPI(input.email);
+    if (response === RESPONSE.SIGNIN.SUCCESS) {
+      setStep({
+        ...step,
+        send: true,
+      });
+    } else {
+      alert('fail');
+      navigate('/signup');
+    }
   };
 
-  const verifyHandler = () => {
-    // call email-verify api
-    setStep({
-      ...step,
-      verify: true,
-    });
+  const verifyHandler = async () => {
+    const response = await verifyAPI(input.email, input.code);
+    if (response) {
+      setStep({
+        ...step,
+        verify: true,
+      });
+    }
   };
 
   const signupHandler = async () => {
     if (input.pass !== input.passCheck) {
       return alert('비밀번호가 서로 다릅니다');
     }
-    const success = await signupAPI(input.email, input.pass);
+    const success = await signupAPI(input.email, input.pass, input.code);
 
     if (!success) alert('회원가입 실패');
+    else alert('회원가입 성공');
     navigate('/login');
   };
 

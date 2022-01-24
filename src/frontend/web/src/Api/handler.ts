@@ -2,8 +2,6 @@ import axios from 'axios';
 import { URL, ERROR_MESSAGE, TOKEN, RESPONSE } from '../constant';
 import clearSession from '../util/clearSession';
 import reissueAPI from './reissue';
-import { ICreateWs } from '../../types/workspace.type';
-import { ICreateChannel } from '../../types/channel.type';
 
 const getAccessToken = () => sessionStorage.getItem(TOKEN.ACCESS);
 
@@ -11,30 +9,37 @@ async function apiHandler(
   method: 'GET',
   endpoint: string,
   successCode: string,
+  needToken?: boolean,
 ): Promise<any>;
 
 async function apiHandler(
   method: 'POST',
   endpoint: string,
   successCode: string,
-  body: ICreateWs | ICreateChannel,
+  body: any,
+  needToken?: boolean,
 ): Promise<any>;
 
 async function apiHandler(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   endpoint: string,
   successCode: string,
-  body?: ICreateWs | ICreateChannel,
+  body?: any,
+  needToken = true,
 ) {
   try {
-    const accessToken = getAccessToken();
-    if (!accessToken) {
-      alert('no access token');
-      return;
+    let accessToken, option;
+
+    if (needToken) {
+      accessToken = getAccessToken();
+      if (!accessToken) {
+        alert('no access token');
+        return;
+      }
+      option = {
+        headers: { 'X-AUTH-TOKEN': accessToken },
+      };
     }
-    const option = {
-      headers: { 'X-AUTH-TOKEN': accessToken },
-    };
     let response;
 
     if (method === 'GET') {
@@ -44,12 +49,13 @@ async function apiHandler(
     if (method === 'POST') {
       response = await axios.post(URL.HOST + endpoint, body, option);
     }
-
     const { code, data, err } = response?.data;
-    if (code === successCode) return data;
+    if (code === successCode) {
+      if (data) return data;
+      return code;
+    }
 
-    // todo:
-    throw 'todo: 각 코드에 따른 처리 고려';
+    if (err) return { err };
   } catch (e: any) {
     if (e.response?.data.code === RESPONSE.TOKEN.EXPIRED) {
       await reissueAPI();

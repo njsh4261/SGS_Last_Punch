@@ -41,7 +41,7 @@ class LoginViewController: UIViewController {
     }
     
     func bind(with viewModel: LoginViewModel) {
-        // Bind input
+        //MARK: Bind input
         fieldEmail.rx.text.orEmpty
             .bind(to: viewModel.input.email)
             .disposed(by: disposeBag)
@@ -63,12 +63,10 @@ class LoginViewController: UIViewController {
         
         btnSignUp.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.goToRegister()
-            })
+            .subscribe(onNext: goToRegister)
             .disposed(by: disposeBag)
         
-        // Bind output
+        //MARK: Bind output
         viewModel.output.enableBtnSignIn
             .observe(on: MainScheduler.instance)
             .bind(to: btnSignIn.rx.isEnabled)
@@ -99,16 +97,18 @@ class LoginViewController: UIViewController {
     }
     
     private func goToWorkspaceList(_ token: Token) {
-        print(token.access_token)
-        print(token.refresh_token)
+        NSLog("token.access_token : " + token.access_token)
+        NSLog("token.refresh_token : " + token.refresh_token)
+
         let navController = WorkspaceListViewController()
+        navController.accessToken = token.access_token
         
         navigationController?.pushViewController(navController, animated: true)
     }
     
     private func goToRegister() {
         guard let pvc = self.presentingViewController else { return }
-        let registerInputVC =         NavigationController(rootViewController: RegisterViewController())
+        let registerInputVC = NavigationController(rootViewController: RegisterViewController())
         registerInputVC.modalPresentationStyle = .fullScreen
 
         dismiss(animated: true) {

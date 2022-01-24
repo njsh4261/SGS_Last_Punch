@@ -55,7 +55,7 @@ class WelcomeViewController: UIViewController {
     }
     
     func goToRegister() {
-        let registerInputVC =         NavigationController(rootViewController: RegisterViewController())
+        let registerInputVC = NavigationController(rootViewController: RegisterViewController())
         registerInputVC.modalPresentationStyle = .fullScreen
         self.present(registerInputVC, animated: true, completion: nil)
     }

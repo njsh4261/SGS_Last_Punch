@@ -36,6 +36,7 @@ class WorkspaceListViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let token: String = KeychainWrapper.standard[.accessToken] else { return }
         accessTokenField.text = token
+        NSLog("accessToken: " + token)
         
         bind(with: viewModel)
         attribute()

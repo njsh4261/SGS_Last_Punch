@@ -39,7 +39,7 @@ export default function SubmitButton({
   submitHandler,
   fontSize = '18px',
   fontWeight = '600',
-  borderRadius = '0',
+  borderRadius = '4px',
   light = false,
 }: SubmitProps) {
   return (

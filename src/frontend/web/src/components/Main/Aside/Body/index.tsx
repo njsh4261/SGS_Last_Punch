@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { selectChannel } from '../../../../modules/channel';
+
+import getChannelsAndMembersHook from '../../../../hook/getChannelsAndMembers';
+import selectChannelHook from '../../../../hook/selectChannel';
+import setTitleHook from '../../../../hook/setTitle';
 import ToggleList, { Text } from './ToggleList';
 
 const Container = styled.article`
@@ -21,25 +23,10 @@ const SecitonType = styled.section`
 `;
 
 export default function AsideBody() {
-  const dispatch = useDispatch();
-
-  // dummy data
-  const channelList = [
-    { id: 'ss1', name: '공지' },
-    { id: '2a', name: '수다방' },
-    { id: '3zz', name: '회의록' },
-  ];
-  const dmList = [
-    { id: 'dm1', name: '김지수', userId: 'sd2' },
-    { id: 'dm2', name: '김지효', userId: 'asa2' },
-    { id: 'dm3', name: '김건형', userId: 'sdsds' },
-    { id: 'dm4', name: '나', userId: 'avdnsk3' },
-  ];
-
-  const selectHandler = (e: React.MouseEvent<HTMLElement>) => {
-    const channel = (e.target as Element).closest('.channel-item') as Element;
-    dispatch(selectChannel(channel.id));
-  };
+  // todo: get more list channel/member
+  const [channelList, memberList, params] = getChannelsAndMembersHook();
+  setTitleHook('', params);
+  const selectChannelHandler = selectChannelHook(params);
 
   return (
     <Container>
@@ -48,21 +35,14 @@ export default function AsideBody() {
       </SecitonType>
       <ToggleList
         channelList={channelList}
-        selectHandler={selectHandler}
+        selectHandler={selectChannelHandler}
         type="channel"
       ></ToggleList>
       <ToggleList
-        channelList={dmList}
-        selectHandler={selectHandler}
+        channelList={memberList}
+        selectHandler={selectChannelHandler}
         type="direct message"
       ></ToggleList>
-      {/** remove test code*/}
-      <SecitonType>
-        <Text>
-          overflow test. overflow test. overflow test. overflow test. overflow
-          test.{' '}
-        </Text>
-      </SecitonType>
     </Container>
   );
 }

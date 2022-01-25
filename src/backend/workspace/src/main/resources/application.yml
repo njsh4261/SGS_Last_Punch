@@ -1,0 +1,27 @@
+server:
+  port: 8082
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: workspace-server
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/[your_db_name]
+    username: [your_db_username]
+    password: [your_db_password]
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+eureka:
+  instance:
+    instance-id: workspace-server-instance
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    service-url:
+      defaultZone: http://eureka:8761/eureka

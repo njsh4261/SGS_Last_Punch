@@ -35,6 +35,11 @@ public class GatewayApplication {
                     .rewritePath("/auth/(?<segment>.*)", "/${segment}")
                 )
                 .uri("lb://AUTH-SERVER"))
+            .route("workspace", r -> r.path("/channel/**", "/workspace/**")
+                .filters(f -> f
+                    .filter(accessTokenFilter)
+                )
+                .uri("lb://WORKSPACE-SERVER"))
             .build();
     }
     

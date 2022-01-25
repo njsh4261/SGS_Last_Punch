@@ -1,7 +1,11 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../../../modules';
+import { openModal } from '../../../../modules/modal';
 import expandIcon from '../../../../icon/downArrow.svg';
 import ImageButton from '../../../Common/ImageButton';
+import Modal from './Modal';
 
 const ToggleType = styled.section`
   padding: 8px 0px;
@@ -38,6 +42,7 @@ const ChannelItem = styled.section`
   padding: 7px 0 7px 26px;
 
   &:hover {
+    cursor: pointer;
     background: ${(props) => props.theme.color.heavySlack};
   }
 `;
@@ -50,10 +55,18 @@ const PaddingLeft8px = styled.span`
   padding-left: 8px;
 `;
 
+const PlusIcon = styled.div`
+  display: inline-block;
+  padding: 0 4px 2px;
+  background-color: rgb(207, 195, 207);
+  border-radius: 4px;
+  color: ${(props) => props.theme.color.slack};
+`;
+
 interface Props {
   type: 'channel' | 'direct message';
   channelList: Array<{ id: string; name: string }>;
-  selectHandler: (e: React.MouseEvent<HTMLElement>) => void;
+  selectHandler: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export default function ToggleList({
@@ -61,8 +74,13 @@ export default function ToggleList({
   selectHandler,
   type,
 }: Props) {
+  const dispatch = useDispatch();
+  const modalActive = useSelector((state: RootState) => state.modal.active);
+  const openModalHandler = () => dispatch(openModal());
+
   return (
     <ToggleType>
+      {modalActive && <Modal></Modal>}
       <Text htmlFor={`${type}-toggle`}>
         <Flex>
           <ImageButton
@@ -77,14 +95,18 @@ export default function ToggleList({
       <ChannelList>
         {channelList.map((channel) => (
           <ChannelItem
-            className="channel-item"
             id={channel.id}
             key={channel.id}
+            data-set={type}
             onClick={selectHandler}
           >
             #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
           </ChannelItem>
         ))}
+        <ChannelItem onClick={openModalHandler}>
+          <PlusIcon>+</PlusIcon>
+          <PaddingLeft8px>{type} 추가</PaddingLeft8px>
+        </ChannelItem>
       </ChannelList>
     </ToggleType>
   );

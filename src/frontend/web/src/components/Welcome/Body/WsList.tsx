@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import expand from '../../../icon/expand.svg';
 import WsItem from './WsItem';
+import { IWorkspace } from '../../../../types/workspace.type';
+import getWsListHook from '../../../hook/getWsList';
 
 const Container = styled.section`
   border: 4px solid rgba(255, 255, 255, 0.2);
@@ -61,31 +63,18 @@ const ShowMoreIcon = styled.div`
 `;
 
 export default function WsList() {
-  // dump data
-  const userEmail = 'gueset@gmail.com';
-  const wsList = [
-    {
-      id: 'pucn1',
-      name: 'stove_dev_lastPunch',
-      members: ['cha', 'kim', 'kim', 'kim'],
-    },
-    {
-      id: 'smoonth123',
-      name: 'stove_dev_Smooth',
-      members: ['jung', 'whang', 'ji'],
-    },
-  ];
+  const [wsList, getWsList] = getWsListHook();
 
   return (
     <Container>
       <Box>
-        <BoxHeader>{userEmail}의 워크스페이스</BoxHeader>
+        <BoxHeader>워크스페이스 목록</BoxHeader>
         <BoxContent>
-          {wsList.map((ws) => (
+          {wsList.map((ws: IWorkspace) => (
             <WsItem ws={ws} key={ws.id}></WsItem>
           ))}
           <ShowMore>
-            <ShowMoreButton>
+            <ShowMoreButton onClick={getWsList}>
               <span>더 보기</span>
               <ShowMoreIcon></ShowMoreIcon>
             </ShowMoreButton>

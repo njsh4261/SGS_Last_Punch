@@ -9,6 +9,10 @@ target 'Snack' do
   pod 'RxSwift', '6.2.0'
   pod 'RxCocoa', '6.2.0'
   pod 'SnapKit', '~> 5.0.0'
+  pod 'Then'
+  pod 'ProgressHUD'
+  pod 'RxDataSources', '~> 5.0'
+  pod 'Alamofire', '~> 5.5'
 
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'

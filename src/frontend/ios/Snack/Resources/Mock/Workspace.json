@@ -1,0 +1,79 @@
+{
+    "code": "12000",
+    "data": {
+        "workspaces": {
+            "content": [
+                {
+                    "id": 1,
+                    "name": "ws1",
+                    "description": null,
+                    "settings": 0,
+                    "status": 1,
+                    "createdt": "1234-01-01T00:00:00",
+                    "modifydt": "9999-12-31T00:00:00"
+                },
+                {
+                    "id": 2,
+                    "name": "ws2",
+                    "description": null,
+                    "settings": 0,
+                    "status": 1,
+                    "createdt": "1234-01-01T00:00:00",
+                    "modifydt": "9999-12-31T00:00:00"
+                },
+                {
+                    "id": 3,
+                    "name": "ws3",
+                    "description": null,
+                    "settings": 0,
+                    "status": 1,
+                    "createdt": "1234-01-01T00:00:00",
+                    "modifydt": "9999-12-31T00:00:00"
+                },
+                {
+                    "id": 4,
+                    "name": "ws4",
+                    "description": null,
+                    "settings": 0,
+                    "status": 1,
+                    "createdt": "1234-01-01T00:00:00",
+                    "modifydt": "9999-12-31T00:00:00"
+                },
+                {
+                    "id": 5,
+                    "name": "ws5",
+                    "description": null,
+                    "settings": 0,
+                    "status": 1,
+                    "createdt": "1234-01-01T00:00:00",
+                    "modifydt": "9999-12-31T00:00:00"
+                }
+            ],
+            "pageable": {
+                "sort": {
+                    "empty": true,
+                    "sorted": false,
+                    "unsorted": true
+                },
+                "offset": 0,
+                "pageSize": 5,
+                "pageNumber": 0,
+                "unpaged": false,
+                "paged": true
+            },
+            "last": false,
+            "totalPages": 2,
+            "totalElements": 6,
+            "size": 5,
+            "number": 0,
+            "sort": {
+                "empty": true,
+                "sorted": false,
+                "unsorted": true
+            },
+            "first": true,
+            "numberOfElements": 5,
+            "empty": false
+        }
+    }
+}

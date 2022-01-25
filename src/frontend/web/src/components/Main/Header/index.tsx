@@ -24,17 +24,18 @@ const Hright = styled.article`
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  color: white;
+  padding-right: 10px;
 `;
 
-export default function MainHeader() {
-  const dummyWorkspace = 'dummy ws name';
+export default function MainHeader({ wsName }: { wsName: string }) {
   return (
     <MainHeaderFrame>
       <Hside>
         <HhistoryIcon></HhistoryIcon>
       </Hside>
-      <SearchContainer workspaceName={dummyWorkspace}></SearchContainer>
-      <Hright>memeber</Hright>
+      <SearchContainer workspaceName={wsName}></SearchContainer>
+      <Hright>profile</Hright>
     </MainHeaderFrame>
   );
 }

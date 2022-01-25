@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../modules';
+
+import chatHook from '../../../hook/chat';
 import ChatInput from './Input';
 import Header from './Header';
 
@@ -14,8 +14,12 @@ const Container = styled.main`
 
 const MessageListContainer = styled.article`
   flex: 1;
+  max-height: calc(
+    100% - 198px
+  ); // hard coding. 198 is main-header, chat-header
   overflow-y: scroll;
   overflow-x: hidden;
+  margin-bottom: 114px; // size of input
 `;
 
 const MessageBox = styled.section`
@@ -29,32 +33,19 @@ const MessageBox = styled.section`
 `;
 
 const ChatInputLayout = styled.article`
-  margin: 0 20px 20px 20px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 260px;
+  padding: 10px 20px 20px;
+  background-color: white;
 `;
 
 const End = styled.article``;
 
 const Chat = () => {
-  const channel = useSelector((state: RootState) => state.channel);
-  const endRef = useRef<null | HTMLDivElement>(null);
-  const [msg, setMsg] = useState<string>('');
-  const [msgList, setMsgList] = useState<string[]>([]);
-
-  const msgTypingHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setMsg(e.target.value);
-  const msgSubmitHandler = () => {
-    if (msg !== '') {
-      // socket.send(msg), get response
-      setMsgList([...msgList, msg]);
-      setMsg('');
-    }
-  };
-  const scrollToBottom = () =>
-    endRef.current?.scrollIntoView({ behavior: 'smooth' });
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [msgList]);
+  const [channel, msg, msgList, endRef, msgTypingHandler, msgSubmitHandler] =
+    chatHook();
 
   return (
     <>
@@ -71,6 +62,7 @@ const Chat = () => {
           </MessageListContainer>
           <ChatInputLayout>
             <ChatInput
+              channelName={channel.name}
               msg={msg}
               msgTypingHandler={msgTypingHandler}
               msgSubmitHandler={msgSubmitHandler}

@@ -16,7 +16,6 @@ import SmileIcon from '../../../icon/smile.svg';
 import FileIcon from '../../../icon/file.svg';
 
 const InputContainer = styled.article`
-  flex-shrink: 0;
   border: 1px solid grey;
   border-radius: 6px;
   overflow: hidden;
@@ -49,21 +48,22 @@ const RightButtons = styled.section`
 `;
 
 interface ChatInputProps {
+  channelName: string;
   msg: string;
   msgTypingHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
   msgSubmitHandler: () => void;
 }
 
 const ChatInput = ({
+  channelName,
   msg,
   msgTypingHandler,
   msgSubmitHandler,
 }: ChatInputProps) => {
-  const channelName = 'dump channel'; // todo: change store info
-
   const enterKeyHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') msgSubmitHandler();
   };
+
   return (
     <InputContainer>
       <InputLayer

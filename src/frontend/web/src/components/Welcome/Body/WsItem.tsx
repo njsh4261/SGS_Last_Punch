@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import SubmitButton from '../../Common/SubmitButton';
 import sampleImage from '../../../icon/sample-workspace.png';
+import { IWorkspace } from '../../../../types/workspace.type';
 
 const Item = styled.section`
   display: flex;
@@ -43,20 +45,17 @@ const WorkSpaceMembers = styled.section`
   font-size: 14px;
 `;
 
-interface WsItemProps {
-  id: string;
-  name: string;
-  members: string[];
-}
+export default function WsItem({ ws }: { ws: IWorkspace }) {
+  const navigate = useNavigate();
+  const submitHandler = () => navigate('/' + ws.id);
 
-export default function WsItem({ ws }: { ws: WsItemProps }) {
   return (
     <Item key={ws.id}>
       <ItemInfoLayer>
         <WorkSpaceImage></WorkSpaceImage>
         <WorkSpaceInfo>
           <WorkSpaceName>{ws.name}</WorkSpaceName>
-          <WorkSpaceMembers>{ws.members.length}의 멤버</WorkSpaceMembers>
+          <WorkSpaceMembers>x명의 멤버</WorkSpaceMembers>
         </WorkSpaceInfo>
       </ItemInfoLayer>
       <SubmitButton
@@ -65,7 +64,7 @@ export default function WsItem({ ws }: { ws: WsItemProps }) {
         text="Let's Snack"
         borderRadius="5px"
         light={true}
-        submitHandler={() => console.log('enter workspace')}
+        submitHandler={submitHandler}
       ></SubmitButton>
     </Item>
   );

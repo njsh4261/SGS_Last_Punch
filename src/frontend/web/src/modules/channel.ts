@@ -1,4 +1,7 @@
 import { takeLeading, call, put } from 'redux-saga/effects';
+import { getChannelInfoAPI } from '../Api/channel';
+import { IChannel } from '../../types/channel.type';
+import clearSession from '../util/clearSession';
 
 const SELECT_CAHNNEL = 'channel/select';
 const SELECT_CHANNEL_SUCCESS = 'channel/success';
@@ -11,10 +14,10 @@ type ChannelState = {
   error: boolean;
 };
 
-export const selectChannel = (id: string) => ({
+export const selectChannel = (id: string, name = '') => ({
   type: SELECT_CAHNNEL,
   id,
-  name: '',
+  name,
 });
 
 type ChannelAction = ReturnType<typeof selectChannel>;
@@ -26,20 +29,12 @@ const initChannelState: ChannelState = {
   error: false,
 };
 
-function* channelChannelSaga(action: ChannelAction) {
-  // dummy api
-  const dummyApi = (id: string): Promise<{ id: string; name: string }> => {
-    return new Promise((res) => {
-      setTimeout(() => {
-        res({
-          id,
-          name: `채널 아이디 ${id}`,
-        });
-      }, 500);
-    });
-  };
+function* selectChannelSaga(action: ChannelAction) {
   try {
-    const channel: ChannelAction = yield call(dummyApi, action.id);
+    const { channel }: { channel: IChannel } = yield call(
+      getChannelInfoAPI,
+      action.id,
+    );
     yield put({
       type: SELECT_CHANNEL_SUCCESS,
       id: channel.id,
@@ -52,8 +47,13 @@ function* channelChannelSaga(action: ChannelAction) {
   }
 }
 
+function* selectFailSaga() {
+  clearSession();
+}
+
 export function* channelSaga() {
-  yield takeLeading(SELECT_CAHNNEL, channelChannelSaga);
+  yield takeLeading(SELECT_CAHNNEL, selectChannelSaga);
+  yield takeLeading(SELECT_CHANNEL_FAILURE, selectFailSaga);
 }
 
 export default function channel(

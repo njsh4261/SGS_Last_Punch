@@ -12,20 +12,23 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SignupRequest {
-//    @NotBlank
-//    private String name;
-  
     @NotBlank
     private String email;
     @NotBlank
     private String password;
-    
+    @NotBlank
+    private String verifyCode;
     public Account toEntity() {
         return Account.builder()
-//            .name(name)
             .email(email)
             .password(password)
+            .name("default_name")
+            .country("kor")
+            .language("eng")
+            .settings(1)
             .status("ROLE_USER")
+            .level(3)
+            .point(123)
             .build();
     }
 }

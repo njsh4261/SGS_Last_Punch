@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import clearSession from '../../../util/clearSession';
 
 const SlogoutButton = styled.button`
   color: ${(props) => props.theme.color.slack};
@@ -19,9 +20,6 @@ const SlogoutButton = styled.button`
 `;
 
 export default function LogoutButton() {
-  const logoutHandler = () => {
-    sessionStorage.clear();
-    location.reload();
-  };
+  const logoutHandler = () => clearSession();
   return <SlogoutButton onClick={logoutHandler}>logout</SlogoutButton>;
 }

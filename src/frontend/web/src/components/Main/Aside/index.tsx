@@ -3,11 +3,10 @@ import MainAsideFrame from '../../Common/MainAsideFrame';
 import AsideHeader from '../../Common/MainAsideHeader';
 import AsideBody from './Body';
 
-export default function Aside() {
-  const wsName = 'default'; // todo: redux store
+export default function Aside({ wsName }: { wsName: string }) {
   return (
     <MainAsideFrame>
-      <AsideHeader>{wsName} tttttttttttttttt tttttttttttttttt</AsideHeader>
+      <AsideHeader>{wsName}</AsideHeader>
       <AsideBody></AsideBody>
     </MainAsideFrame>
   );

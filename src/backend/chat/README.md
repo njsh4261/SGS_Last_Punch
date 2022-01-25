@@ -15,3 +15,7 @@
 - Publish message: `/pub/chat`
 - Subscibe message: `/topic/channel.{channelId}`
 - STOMP 연결 예시는 `/src/main/resources/static/index.html`에서 Javasript 부분 참고
+
+## TODO
+- MongoDB를 통한 메시지 저장
+- RabbitMQ의 적절한 exchange 선택에 대한 추가 리서치

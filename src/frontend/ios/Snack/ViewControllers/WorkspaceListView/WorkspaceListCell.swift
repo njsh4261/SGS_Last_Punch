@@ -71,7 +71,7 @@ class WorkspaceListCell: UITableViewCell {
         
         ivThumbnail.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.top.left.bottom.equalToSuperview().inset(10)
+            $0.left.equalToSuperview().inset(10)
             $0.width.height.equalTo(30)
         }
 

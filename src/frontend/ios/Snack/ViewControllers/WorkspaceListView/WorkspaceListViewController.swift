@@ -26,6 +26,7 @@ class WorkspaceListViewController: UIViewController {
     var lblDescription = UILabel()
     var lblSearch = UILabel()
     var refreshControl = UIRefreshControl()
+    var pagenationControl = UIActivityIndicatorView()
     var tablewViewTopBorder = UIView()
     var tablewViewBottomBorder = UIView()
     var tableView = UITableView()
@@ -68,6 +69,10 @@ class WorkspaceListViewController: UIViewController {
             .bind(to: viewModel.input.refresh)
             .disposed(by: disposeBag)
         
+        tableView.rx.didScroll
+            .bind(to: viewModel.input.pullUp)
+            .disposed(by: disposeBag)
+        
         // MARK: Bind output
         viewModel.cellData
             .asDriver(onErrorJustReturn: [])
@@ -82,6 +87,11 @@ class WorkspaceListViewController: UIViewController {
         // refresh
         viewModel.output.refreshLoading
             .bind(to: refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+        
+        // pullUp
+        viewModel.output.pullUpLoading
+            .bind(to: pagenationControl.rx.isAnimating)
             .disposed(by: disposeBag)
         
         viewModel.output.isHiddenLogo
@@ -144,6 +154,7 @@ class WorkspaceListViewController: UIViewController {
             $0.register(WorkspaceListCell.self, forCellReuseIdentifier: "WorkspaceListCell")
             $0.backgroundColor = UIColor(named: "snackBackGroundColor")
             $0.refreshControl = refreshControl
+            $0.tableFooterView = pagenationControl
             $0.clearsContextBeforeDrawing = false
             $0.separatorStyle = .none
             $0.bouncesZoom = false
@@ -156,6 +167,11 @@ class WorkspaceListViewController: UIViewController {
             $0.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
             let attribute = [ NSAttributedString.Key.foregroundColor: UIColor(named: "snackColor")!, NSAttributedString.Key.font: UIFont(name: "NotoSansKR-Bold", size: 10)!]
             $0.attributedTitle = NSAttributedString(string: "당겨서 새로고침", attributes: attribute)
+        }
+        
+        pagenationControl = pagenationControl.then {
+            $0.color = UIColor(named: "snackColor")
+            $0.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 44)
         }
         
         lblSearch = lblSearch.then {

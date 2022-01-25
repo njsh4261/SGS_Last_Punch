@@ -1,0 +1,16 @@
+spring:
+  port: 8081
+  rabbitmq:
+    host: localhost
+#    port: 61613
+    username: guest
+    password: guest
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/lastpunch
+
+#destinations:
+#  queues:
+#    NYSE:
+#      exchange: nyse
+#      routing-key: NYSE

@@ -8,10 +8,10 @@
 
 | ErrorCode | Error Message           | HTTP Status Code                      | Description             | 
 |-----------|-------------------------|---------------------------------------|-------------------------|
-| 10001     | NO_TOKEN                | HttpStatus.OK(200)                    | 토큰이 존재하지 않습니다.          |
-| 10002     | EXPIRED_TOKEN           | HttpStatus.OK(200)                    | 토큰이 만료되었습니다.            |   
-| 10003     | MALFORMED_TOKEN         | HttpStatus.OK(200)                    | 토큰이 유효하지 않습니다.          |    
-| 10004     | DECODING_EXCEPTION      | HttpStatus.OK(200)                    | 토큰 디코딩 과정에서 에러가 발생했습니다. | 
+| 10001     | NO_TOKEN                | HttpStatus.UNAUTHORIZED(401)          | 토큰이 존재하지 않습니다.          |
+| 10002     | EXPIRED_TOKEN           | HttpStatus.UNAUTHORIZED(401)          | 토큰이 만료되었습니다.            |   
+| 10003     | MALFORMED_TOKEN         | HttpStatus.UNAUTHORIZED(401)          | 토큰이 유효하지 않습니다.          |    
+| 10004     | DECODING_EXCEPTION      | HttpStatus.UNAUTHORIZED(401)          | 토큰 디코딩 과정에서 에러가 발생했습니다. | 
 | 10999     | INTERNAL_SERVER_ERROR   | HttpStatus.INTERNAL_SERVER_ERROR(500) | 게이트웨이에서 에러가 발생했습니다.     |  
 
 

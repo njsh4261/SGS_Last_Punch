@@ -9,17 +9,11 @@ import RxSwift
 import RxCocoa
 import CoreGraphics
 
-struct Action {
-    let contentHeight: CGFloat
-    let contentOffsetY: CGFloat
-    let scrollViewHeight: CGFloat
-}
-
 class WorkspaceListViewModel: ViewModelProtocol {
     
     struct Input {
         let accessToken = PublishSubject<String>()
-        let pagination = PublishSubject<Action>()
+        let pagination = PublishSubject<PaginationAction>()
         let refresh = PublishSubject<Void>()
     }
     

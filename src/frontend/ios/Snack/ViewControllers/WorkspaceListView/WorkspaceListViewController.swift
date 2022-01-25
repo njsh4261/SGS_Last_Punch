@@ -65,15 +65,17 @@ class WorkspaceListViewController: UIViewController {
             .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
+        // pagenation
         refreshControl.rx.controlEvent(.valueChanged)
             .asDriver()
             .drive(viewModel.input.refresh)
             .disposed(by: disposeBag)
         
+        // pagenation
         tableView.rx.didScroll
             .withLatestFrom(tableView.rx.contentOffset)
             .map { [weak self] in
-                Action.init(
+                PaginationAction.init(
                     contentHeight: self?.tableView.contentSize.height ?? 0,
                     contentOffsetY: $0.y,
                     scrollViewHeight: self?.tableView.frame.size.height ?? 0
@@ -112,11 +114,12 @@ class WorkspaceListViewController: UIViewController {
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
         
-        // pullUp
+        // pagenation
         viewModel.output.pullUpLoading
             .bind(onNext: pullUpLoading)
             .disposed(by: disposeBag)
         
+        // Empty일때
         viewModel.output.isHiddenLogo
             .observe(on: MainScheduler.instance)
             .bind(to: btnNewWorkspaceByEmpty.rx.isHidden)

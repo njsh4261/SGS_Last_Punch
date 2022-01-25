@@ -38,7 +38,8 @@ class WorkspaceService {
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<[WorkspaceListCellModel]> {
         let decoder = JSONDecoder()
         
-        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
+        // 데이터량이 너무 많음
+//        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
         
         guard let decodedData = try? decoder.decode(WorkspaceResponseModel.self, from: data) else { return
             .pathErr
@@ -55,19 +56,4 @@ class WorkspaceService {
         default: return .networkFail
         }
     }
-    
-    func load() -> Data?{
-        let fileNm: String = "Workspace"
-        let extensionType = "json"
-        
-        guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return nil }
-        
-        do {
-            let data = try Data(contentsOf: fileLocation)
-            return data
-        } catch {
-            return nil
-        }
-    }
-
 }

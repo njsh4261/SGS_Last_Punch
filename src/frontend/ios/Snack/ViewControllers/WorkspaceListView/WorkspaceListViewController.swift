@@ -153,6 +153,7 @@ class WorkspaceListViewController: UIViewController {
         
         refreshControl = refreshControl.then {
             $0.tintColor = UIColor(named: "snackColor")
+            $0.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
             let attribute = [ NSAttributedString.Key.foregroundColor: UIColor(named: "snackColor")!, NSAttributedString.Key.font: UIFont(name: "NotoSansKR-Bold", size: 10)!]
             $0.attributedTitle = NSAttributedString(string: "당겨서 새로고침", attributes: attribute)
         }

@@ -104,8 +104,6 @@ class LoginViewController: UIViewController {
         KeychainWrapper.standard[.refreshToken] = token.refresh_token
 
         let navController = WorkspaceListViewController()
-        navController.accessToken = token.access_token
-        
         navigationController?.pushViewController(navController, animated: true)
     }
     

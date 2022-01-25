@@ -17,7 +17,8 @@ class WorkspaceListViewController: UIViewController {
     // MARK: - Properties
     private let viewModel = WorkspaceListViewModel()
     private let disposeBag = DisposeBag()
-    var accessToken: String?
+    private var accessTokenField = UITextField()
+    private var tablewHightField = UITextField()
     var workspace: WorkspacesModel?
     
     // MARK: - UI
@@ -33,7 +34,6 @@ class WorkspaceListViewController: UIViewController {
     var btnNewWorkspaceByEmpty = UIButton()
     var btnNewWorkspace = UIButton()
     var btnLogout = UIButton()
-    var accessTokenField = UITextField()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -59,19 +59,42 @@ class WorkspaceListViewController: UIViewController {
         btnNext.rx.tap
             .subscribe(onNext: goToHome)
             .disposed(by: disposeBag)
-
+        
         btnLogout.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
         refreshControl.rx.controlEvent(.valueChanged)
-            .bind(to: viewModel.input.refresh)
+            .asDriver()
+            .drive(viewModel.input.refresh)
             .disposed(by: disposeBag)
         
         tableView.rx.didScroll
-            .bind(to: viewModel.input.pullUp)
+            .withLatestFrom(tableView.rx.contentOffset)
+            .map { [weak self] in
+                Action.init(
+                    contentHeight: self?.tableView.contentSize.height ?? 0,
+                    contentOffsetY: $0.y,
+                    scrollViewHeight: self?.tableView.frame.size.height ?? 0
+                )
+            }
+            .bind(to: viewModel.input.pagination)
             .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let self = self else { return }
+                let cell = self.tableView.cellForRow(at: indexPath) as? WorkspaceListCell
+                cell?.btnCheckBox.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            }).disposed(by: disposeBag)
+        
+        tableView.rx.itemDeselected
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let self = self else { return }
+                let cell = self.tableView.cellForRow(at: indexPath) as? WorkspaceListCell
+                cell?.btnCheckBox.setImage(nil, for: .normal)
+            }).disposed(by: disposeBag)
         
         // MARK: Bind output
         viewModel.cellData
@@ -91,7 +114,7 @@ class WorkspaceListViewController: UIViewController {
         
         // pullUp
         viewModel.output.pullUpLoading
-            .bind(to: pagenationControl.rx.isAnimating)
+            .bind(onNext: pullUpLoading)
             .disposed(by: disposeBag)
         
         viewModel.output.isHiddenLogo
@@ -103,6 +126,16 @@ class WorkspaceListViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: showFailedAlert)
             .disposed(by: disposeBag)
+    }
+    
+    private func pullUpLoading(_ bool: Bool) {
+        if bool {
+            tableView.tableFooterView = pagenationControl
+            pagenationControl.startAnimating()
+        } else {
+            pagenationControl.stopAnimating()
+            tableView.tableFooterView = nil
+        }
     }
     
     private func showFailedAlert(_ message: String) {
@@ -154,7 +187,6 @@ class WorkspaceListViewController: UIViewController {
             $0.register(WorkspaceListCell.self, forCellReuseIdentifier: "WorkspaceListCell")
             $0.backgroundColor = UIColor(named: "snackBackGroundColor")
             $0.refreshControl = refreshControl
-            $0.tableFooterView = pagenationControl
             $0.clearsContextBeforeDrawing = false
             $0.separatorStyle = .none
             $0.bouncesZoom = false
@@ -171,7 +203,7 @@ class WorkspaceListViewController: UIViewController {
         
         pagenationControl = pagenationControl.then {
             $0.color = UIColor(named: "snackColor")
-            $0.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 44)
+            $0.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 1)
         }
         
         lblSearch = lblSearch.then {
@@ -260,5 +292,15 @@ class WorkspaceListViewController: UIViewController {
             $0.top.equalTo(btnNewWorkspace.snp.bottom).offset(20)
             $0.height.equalTo(50)
         }
+    }
+}
+
+extension Reactive where Base: UITableView {
+    
+    var contentSize: Binder<CGSize> {
+        return Binder(base, binding: { (tablew, s) in
+            
+            _ = tablew.contentSize.height
+        })
     }
 }

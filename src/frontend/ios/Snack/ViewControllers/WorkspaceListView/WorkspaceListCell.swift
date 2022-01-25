@@ -34,10 +34,10 @@ class WorkspaceListCell: UITableViewCell {
     private func bind(with viewModel: WorkspaceListCellViewModel) {
         //MARK: Bind input
         // Toggle
-        btnCheckBox.rx.tap
-            .asDriver()
-            .drive(btnCheckBox.rx.setCheckImage)
-            .disposed(by: disposeBag)
+//        btnCheckBox.rx.tap
+//            .asDriver()
+//            .drive(btnCheckBox.rx.setCheckImage)
+//            .disposed(by: disposeBag)
         
         //MARK: Bind output
     }
@@ -57,10 +57,8 @@ class WorkspaceListCell: UITableViewCell {
         }
         
         btnCheckBox = btnCheckBox.then {
-            $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
             $0.backgroundColor = .white
             $0.layer.cornerRadius = 5
-//            $0.tintColor = UIColor(named: "snackBackGroundColor")
         }
     }
     
@@ -89,7 +87,7 @@ class WorkspaceListCell: UITableViewCell {
         
         btnCheckBox.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.right.equalToSuperview()
+            $0.right.equalToSuperview().inset(10)
             $0.width.height.equalTo(20)
         }
     }
@@ -101,17 +99,16 @@ class WorkspaceListCell: UITableViewCell {
     }
 }
 
-extension Reactive where Base: UIButton {
-    
-    var setCheckImage: Binder<()> {
-        return Binder(base, binding: { (button, _) in
-            if button.image(for: .normal) == UIImage(systemName: "eye.slash.fill") {
-                button.setImage(UIImage(named: "checkmark"), for: .normal)
-                button.backgroundColor = .white
-            } else {
-                button.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
-                button.backgroundColor = UIColor(named: "snackColor")
-            }
-        })
-    }
-}
+//extension Reactive where Base: UIButton {
+//
+//    var setCheckImage: Binder<()> {
+//        return Binder(base, binding: { (button, _) in
+//            if button.image(for: .normal) == UIImage(systemName: "checkmark") {
+//                button.setImage(nil, for: .normal)
+//            } else {
+//                button.setImage(UIImage(systemName: "checkmark"), for: .normal)
+//                button.tintColor = UIColor(named: "snack")
+//            }
+//        })
+//    }
+//}

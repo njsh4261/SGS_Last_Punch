@@ -145,7 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				8C68AAF1279539F700C1711E /* SyncObjects */,
-				8C68AACC2791186400C1711E /* Credentials.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -348,6 +347,7 @@
 				8C68AB052795754900C1711E /* ChatsSection.swift */,
 				8CBD45332799B0E00056A557 /* WorkspaceListCellModel.swift */,
 				8C68AACA279117FA00C1711E /* User.swift */,
+				8C68AACC2791186400C1711E /* Credentials.swift */,
 			);
 			path = SyncObjects;
 			sourceTree = "<group>";

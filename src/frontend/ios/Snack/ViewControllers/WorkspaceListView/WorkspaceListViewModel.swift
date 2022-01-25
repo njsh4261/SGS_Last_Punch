@@ -7,12 +7,20 @@
 
 import RxSwift
 import RxCocoa
+import CoreGraphics
+
+struct Action {
+    let contentHeight: CGFloat
+    let contentOffsetY: CGFloat
+    let scrollViewHeight: CGFloat
+}
 
 class WorkspaceListViewModel: ViewModelProtocol {
+    
     struct Input {
         let accessToken = PublishSubject<String>()
+        let pagination = PublishSubject<Action>()
         let refresh = PublishSubject<Void>()
-        let pullUp = PublishSubject<Void>()
     }
     
     struct Output {
@@ -46,9 +54,12 @@ class WorkspaceListViewModel: ViewModelProtocol {
                 }
             }.disposed(by: disposeBag)
         
-        // pullUp
-        input.pullUp.withLatestFrom(input.accessToken)
-            .bind { [weak self] (token) in
+        // pagination
+        input.pagination.withLatestFrom(Observable.combineLatest(input.accessToken, input.pagination))
+            .bind { [weak self] (token, action) in
+                if action.contentOffsetY <= (action.contentHeight - action.scrollViewHeight) {
+                    return
+                }
                 guard let self = self else { return }
                 let when = DispatchTime.now() + 1.0
                 self.output.pullUpLoading.accept(true)

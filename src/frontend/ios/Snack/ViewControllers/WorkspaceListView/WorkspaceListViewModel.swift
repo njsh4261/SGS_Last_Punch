@@ -11,10 +11,12 @@ import RxCocoa
 class WorkspaceListViewModel: ViewModelProtocol {
     struct Input {
         let accessToken = PublishSubject<String>()
+        let refresh = PublishSubject<Void>()
     }
     
     struct Output {
         let isHiddenLogo = PublishRelay<Bool>()
+        let refreshLoading = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
     }
     // MARK: - Public properties
@@ -31,28 +33,43 @@ class WorkspaceListViewModel: ViewModelProtocol {
         self.cellData = workspaceListCellData
             .asDriver(onErrorJustReturn: [])
         
-        // Cell Data
+        // refresh
+        input.refresh.withLatestFrom(input.accessToken)
+            .bind { [weak self] (token) in
+                guard let self = self else { return }
+                let when = DispatchTime.now() + 1.0
+                DispatchQueue.main.asyncAfter(deadline: when) {
+                    self.getWorkspaceList(token)
+                    self.output.refreshLoading.accept(false)
+                }
+            }.disposed(by: disposeBag)
+        
+        // init - Cell Data
         input.accessToken.withLatestFrom(input.accessToken)
             .bind { [weak self] (token) in
                 guard let self = self else { return }
-                WorkspaceService.shared.getWorkspace(accessToken: token)
-                    .observe(on: MainScheduler.instance)
-                    .subscribe{ event in
-                        switch event {
-                        case .next(let result):
-                            DispatchQueue.main.async { // 메인스레드에서 동작
-                                switch result {
-                                case .success(let workspace):
-                                    self.output.isHiddenLogo.accept(!workspace.isEmpty)
-                                    self.workspaceListCellData.onNext(workspace)
-                                default:
-                                    self.output.errorMessage.accept("워크스페이스 목록을 못가져웠어요")
-                                }
-                            }
-                        default:
-                            break
-                        }
-                    }.disposed(by: self.disposeBag)
+                self.getWorkspaceList(token)
             }.disposed(by: disposeBag)
+    }
+    
+    func getWorkspaceList(_ token:String) {
+        DispatchQueue.main.async { // 메인스레드에서 동작
+            WorkspaceService.shared.getWorkspace(accessToken: token)
+                .observe(on: MainScheduler.instance)
+                .subscribe{ event in
+                    switch event {
+                    case .next(let result):
+                        switch result {
+                        case .success(let workspace):
+                            self.output.isHiddenLogo.accept(!workspace.isEmpty)
+                            self.workspaceListCellData.onNext(workspace)
+                        default:
+                            self.output.errorMessage.accept("워크스페이스 목록을 못가져웠어요")
+                        }
+                    default:
+                        break
+                    }
+                }.disposed(by: self.disposeBag)
+        }
     }
 }

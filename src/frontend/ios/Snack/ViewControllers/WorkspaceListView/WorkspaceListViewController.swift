@@ -25,6 +25,7 @@ class WorkspaceListViewController: UIViewController {
     var lblTitle = UILabel()
     var lblDescription = UILabel()
     var lblSearch = UILabel()
+    var refreshControl = UIRefreshControl()
     var tablewViewTopBorder = UIView()
     var tablewViewBottomBorder = UIView()
     var tableView = UITableView()
@@ -32,8 +33,6 @@ class WorkspaceListViewController: UIViewController {
     var btnNewWorkspace = UIButton()
     var btnLogout = UIButton()
     var accessTokenField = UITextField()
-
-    let text = UITextView()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -65,6 +64,9 @@ class WorkspaceListViewController: UIViewController {
             .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
+        refreshControl.rx.controlEvent(.valueChanged)
+            .bind(to: viewModel.input.refresh)
+            .disposed(by: disposeBag)
         
         // MARK: Bind output
         viewModel.cellData
@@ -75,6 +77,11 @@ class WorkspaceListViewController: UIViewController {
                 cell.setData(data)
                 return cell
             }
+            .disposed(by: disposeBag)
+        
+        // refresh
+        viewModel.output.refreshLoading
+            .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
         
         viewModel.output.isHiddenLogo
@@ -136,11 +143,18 @@ class WorkspaceListViewController: UIViewController {
         tableView = tableView.then {
             $0.register(WorkspaceListCell.self, forCellReuseIdentifier: "WorkspaceListCell")
             $0.backgroundColor = UIColor(named: "snackBackGroundColor")
+            $0.refreshControl = refreshControl
             $0.clearsContextBeforeDrawing = false
             $0.separatorStyle = .none
             $0.bouncesZoom = false
             $0.isOpaque = false
             $0.rowHeight = 61
+        }
+        
+        refreshControl = refreshControl.then {
+            $0.tintColor = UIColor(named: "snackColor")
+            let attribute = [ NSAttributedString.Key.foregroundColor: UIColor(named: "snackColor")!, NSAttributedString.Key.font: UIFont(name: "NotoSansKR-Bold", size: 10)!]
+            $0.attributedTitle = NSAttributedString(string: "당겨서 새로고침", attributes: attribute)
         }
         
         lblSearch = lblSearch.then {

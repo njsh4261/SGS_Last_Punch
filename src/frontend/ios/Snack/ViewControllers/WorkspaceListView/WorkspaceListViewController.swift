@@ -24,8 +24,11 @@ class WorkspaceListViewController: UIViewController {
     var btnNext = UIBarButtonItem()
     var lblTitle = UILabel()
     var lblDescription = UILabel()
-    var tableView = UITableView()
     var lblSearch = UILabel()
+    var tablewViewTopBorder = UIView()
+    var tablewViewBottomBorder = UIView()
+    var tableView = UITableView()
+    var btnNewWorkspaceByEmpty = UIButton()
     var btnNewWorkspace = UIButton()
     var btnLogout = UIButton()
     var accessTokenField = UITextField()
@@ -74,6 +77,11 @@ class WorkspaceListViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.output.isHiddenLogo
+            .observe(on: MainScheduler.instance)
+            .bind(to: btnNewWorkspaceByEmpty.rx.isHidden)
+            .disposed(by: disposeBag)
+        
         viewModel.output.errorMessage
             .observe(on: MainScheduler.instance)
             .bind(onNext: showFailedAlert)
@@ -114,25 +122,36 @@ class WorkspaceListViewController: UIViewController {
         }
         
         lblDescription = lblDescription.then {
-            $0.text = "추가하려는 워크스페이스를 선택하세요.\n나중에 언제든지 더 많은 곳에 로그인할 수 있습니다."
+            $0.text = "입장하려는 워크스페이스를 선택하세요.\n나중에 언제든지 더 많은 곳에 로그인할 수 있습니다."
             $0.font = UIFont(name: "NotoSansKR-Regular", size: 16)
             $0.textAlignment = .center
             $0.lineBreakMode = .byWordWrapping
             $0.numberOfLines = 0
         }
         
+        [tablewViewTopBorder, tablewViewBottomBorder].forEach {
+            $0.backgroundColor = .quaternaryLabel
+        }
+        
         tableView = tableView.then {
             $0.register(WorkspaceListCell.self, forCellReuseIdentifier: "WorkspaceListCell")
+            $0.backgroundColor = UIColor(named: "snackBackGroundColor")
+            $0.clearsContextBeforeDrawing = false
+            $0.separatorStyle = .none
             $0.bouncesZoom = false
             $0.isOpaque = false
-            $0.clearsContextBeforeDrawing = false
-            $0.backgroundColor = UIColor(named: "snackColor")
             $0.rowHeight = 61
         }
         
         lblSearch = lblSearch.then {
             $0.text = "찾고 있는 워크스페이스가 아닙니까?"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
+        }
+        
+        btnNewWorkspaceByEmpty = btnNewWorkspaceByEmpty.then {
+            $0.setImage(UIImage(named: "snack_click"), for: .normal)
+            $0.setImage(UIImage(named: "snack"), for: .focused)
+            $0.setBackgroundColor(UIColor(named: "snackBackGroundColor")!, for: .normal)
         }
         
         btnNewWorkspace = btnNewWorkspace.then {
@@ -154,7 +173,7 @@ class WorkspaceListViewController: UIViewController {
     }
     
     private func layout() {
-        [lblTitle, lblDescription, tableView, lblSearch, btnNewWorkspace, btnLogout].forEach { view.addSubview($0) }
+        [lblTitle, lblDescription, tablewViewTopBorder, tablewViewBottomBorder, tableView, lblSearch, btnNewWorkspaceByEmpty, btnNewWorkspace, btnLogout].forEach { view.addSubview($0) }
         
         [lblTitle, lblDescription].forEach {
             $0.snp.makeConstraints {
@@ -168,6 +187,25 @@ class WorkspaceListViewController: UIViewController {
         
         lblDescription.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(85)
+        }
+        
+        btnNewWorkspaceByEmpty.snp.makeConstraints {
+            $0.centerX.centerY.width.height.equalTo(tableView)
+        }
+        
+        [tablewViewTopBorder, tablewViewBottomBorder].forEach {
+            $0.snp.makeConstraints {
+                $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(15)
+                $0.height.equalTo(1)
+            }
+        }
+        
+        tablewViewTopBorder.snp.makeConstraints {
+            $0.top.equalTo(lblDescription.snp.bottom).offset(39)
+        }
+        
+        tablewViewBottomBorder.snp.makeConstraints {
+            $0.bottom.equalTo(lblSearch.snp.top).offset(-19)
         }
         
         tableView.snp.makeConstraints {

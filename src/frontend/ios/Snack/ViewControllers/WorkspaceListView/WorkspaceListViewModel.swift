@@ -14,6 +14,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
     }
     
     struct Output {
+        let isHiddenLogo = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
     }
     // MARK: - Public properties
@@ -42,6 +43,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
                             DispatchQueue.main.async { // 메인스레드에서 동작
                                 switch result {
                                 case .success(let workspace):
+                                    self.output.isHiddenLogo.accept(!workspace.isEmpty)
                                     self.workspaceListCellData.onNext(workspace)
                                 default:
                                     self.output.errorMessage.accept("워크스페이스 목록을 못가져웠어요")

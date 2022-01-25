@@ -13,10 +13,6 @@ import Then
 
 class WorkspaceListCell: UITableViewCell {
     
-    // MARK: - Properties
-    private var viewModel = WorkspaceListCellViewModel()
-    private let disposeBag = DisposeBag()
-
     // MARK: - UI
     var ivThumbnail = UIImageView()
     var lblName = UILabel()
@@ -26,20 +22,14 @@ class WorkspaceListCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        bind(with: viewModel)
         attribute()
         layout()
     }
     
-    private func bind(with viewModel: WorkspaceListCellViewModel) {
-        //MARK: Bind input
-        // Toggle
-//        btnCheckBox.rx.tap
-//            .asDriver()
-//            .drive(btnCheckBox.rx.setCheckImage)
-//            .disposed(by: disposeBag)
-        
-        //MARK: Bind output
+    func setData(_ data: WorkspaceListCellModel) {
+        ivThumbnail.image = UIImage(named: "snack")
+        lblName.text = data.name
+        lblAddress.text = data.createdt
     }
     
     private func attribute() {
@@ -91,24 +81,4 @@ class WorkspaceListCell: UITableViewCell {
             $0.width.height.equalTo(20)
         }
     }
-    
-    func setData(_ data: WorkspaceListCellModel) {
-        ivThumbnail.image = UIImage(named: "snack")
-        lblName.text = data.name
-        lblAddress.text = data.createdt
-    }
 }
-
-//extension Reactive where Base: UIButton {
-//
-//    var setCheckImage: Binder<()> {
-//        return Binder(base, binding: { (button, _) in
-//            if button.image(for: .normal) == UIImage(systemName: "checkmark") {
-//                button.setImage(nil, for: .normal)
-//            } else {
-//                button.setImage(UIImage(systemName: "checkmark"), for: .normal)
-//                button.tintColor = UIColor(named: "snack")
-//            }
-//        })
-//    }
-//}

@@ -26,8 +26,6 @@
 		8C68AADB2791B57100C1711E /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AADA2791B57100C1711E /* RegisterService.swift */; };
 		8C68AAE1279526C600C1711E /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAE0279526C600C1711E /* ChatsViewController.swift */; };
 		8C68AAE3279526CF00C1711E /* ChatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAE2279526CF00C1711E /* ChatsViewModel.swift */; };
-		8C68AAEB27952A8500C1711E /* deleteProfileViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAEA27952A8500C1711E /* deleteProfileViewController2.swift */; };
-		8C68AAED27952A9000C1711E /* deleteProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAEC27952A9000C1711E /* deleteProfileViewModel.swift */; };
 		8C68AAF027952F6500C1711E /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAEF27952F6500C1711E /* NavigationController.swift */; };
 		8C68AAF327953A8A00C1711E /* ChannelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAF227953A8A00C1711E /* ChannelObject.swift */; };
 		8C68AAF927954FA100C1711E /* DirectMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAF827954FA100C1711E /* DirectMessageCell.swift */; };
@@ -42,7 +40,6 @@
 		8C68AB1527969D1200C1711E /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB1427969D1200C1711E /* NetworkResult.swift */; };
 		8C68AB172796A03E00C1711E /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB162796A03E00C1711E /* APIConstants.swift */; };
 		8C68AB1A2796E70C00C1711E /* WorkspaceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB192796E70C00C1711E /* WorkspaceListViewController.swift */; };
-		8C68AB1C27970A2A00C1711E /* deleteProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB1B27970A2900C1711E /* deleteProfileCell.swift */; };
 		8C68AB1E27970A3200C1711E /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB1D27970A3200C1711E /* EditProfileView.swift */; };
 		8C68AB2D2797F5E400C1711E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB2C2797F5E400C1711E /* ProfileViewController.swift */; };
 		8C68AB2F2797F62D00C1711E /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AB2E2797F62D00C1711E /* ProfileView.xib */; };
@@ -53,7 +50,6 @@
 		8CBD45342799B0E00056A557 /* WorkspaceListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45332799B0E00056A557 /* WorkspaceListCellModel.swift */; };
 		8CBD4538279D3F350056A557 /* WorkspaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD4537279D3F350056A557 /* WorkspaceService.swift */; };
 		8CBD453E279D917D0056A557 /* Workspace.json in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD453D279D917C0056A557 /* Workspace.json */; };
-		8CBD4540279DB3A50056A557 /* WorkspaceListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD453F279DB3A50056A557 /* WorkspaceListCellViewModel.swift */; };
 		8CBD4542279F047F0056A557 /* KeychainWrapper+keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD4541279F047F0056A557 /* KeychainWrapper+keys.swift */; };
 		8CBD4544279F0CD50056A557 /* LogOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD4543279F0CD50056A557 /* LogOut.swift */; };
 		8CBD454827A064A20056A557 /* PaginationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD454727A064A20056A557 /* PaginationAction.swift */; };
@@ -88,8 +84,6 @@
 		8C68AADA2791B57100C1711E /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		8C68AAE0279526C600C1711E /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		8C68AAE2279526CF00C1711E /* ChatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewModel.swift; sourceTree = "<group>"; };
-		8C68AAEA27952A8500C1711E /* deleteProfileViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deleteProfileViewController2.swift; sourceTree = "<group>"; };
-		8C68AAEC27952A9000C1711E /* deleteProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deleteProfileViewModel.swift; sourceTree = "<group>"; };
 		8C68AAEF27952F6500C1711E /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		8C68AAF227953A8A00C1711E /* ChannelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelObject.swift; sourceTree = "<group>"; };
 		8C68AAF827954FA100C1711E /* DirectMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageCell.swift; sourceTree = "<group>"; };
@@ -104,7 +98,6 @@
 		8C68AB1427969D1200C1711E /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
 		8C68AB162796A03E00C1711E /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		8C68AB192796E70C00C1711E /* WorkspaceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListViewController.swift; sourceTree = "<group>"; };
-		8C68AB1B27970A2900C1711E /* deleteProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deleteProfileCell.swift; sourceTree = "<group>"; };
 		8C68AB1D27970A3200C1711E /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		8C68AB2C2797F5E400C1711E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8C68AB2E2797F62D00C1711E /* ProfileView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
@@ -115,7 +108,6 @@
 		8CBD45332799B0E00056A557 /* WorkspaceListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListCellModel.swift; sourceTree = "<group>"; };
 		8CBD4537279D3F350056A557 /* WorkspaceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceService.swift; sourceTree = "<group>"; };
 		8CBD453D279D917C0056A557 /* Workspace.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Workspace.json; sourceTree = "<group>"; };
-		8CBD453F279DB3A50056A557 /* WorkspaceListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListCellViewModel.swift; sourceTree = "<group>"; };
 		8CBD4541279F047F0056A557 /* KeychainWrapper+keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainWrapper+keys.swift"; sourceTree = "<group>"; };
 		8CBD4543279F0CD50056A557 /* LogOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOut.swift; sourceTree = "<group>"; };
 		8CBD454727A064A20056A557 /* PaginationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationAction.swift; sourceTree = "<group>"; };
@@ -328,9 +320,6 @@
 				8C68AB1F27970A3600C1711E /* EditProfile */,
 				8C68AB2C2797F5E400C1711E /* ProfileViewController.swift */,
 				8C68AB2E2797F62D00C1711E /* ProfileView.xib */,
-				8C68AAEA27952A8500C1711E /* deleteProfileViewController2.swift */,
-				8C68AAEC27952A9000C1711E /* deleteProfileViewModel.swift */,
-				8C68AB1B27970A2900C1711E /* deleteProfileCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -388,7 +377,6 @@
 				8C68AB192796E70C00C1711E /* WorkspaceListViewController.swift */,
 				8CBD452E2799A2C10056A557 /* WorkspaceListViewModel.swift */,
 				8CBD45312799AEFD0056A557 /* WorkspaceListCell.swift */,
-				8CBD453F279DB3A50056A557 /* WorkspaceListCellViewModel.swift */,
 			);
 			path = WorkspaceListView;
 			sourceTree = "<group>";
@@ -404,7 +392,6 @@
 		8C845299278C272C001A81FD /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				8CBD4543279F0CD50056A557 /* LogOut.swift */,
 				8C68AABF279093B600C1711E /* WelcomeView */,
 				8C68AB182796E67200C1711E /* WorkspaceListView */,
 				8C68AADC279524EB00C1711E /* HomeView */,
@@ -415,6 +402,7 @@
 		8CBD454927A064C70056A557 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				8CBD4543279F0CD50056A557 /* LogOut.swift */,
 				8C68AACC2791186400C1711E /* Credentials.swift */,
 				8CBD454727A064A20056A557 /* PaginationAction.swift */,
 			);
@@ -578,7 +566,6 @@
 				8CBD452D2799A0C80056A557 /* ExUIButton.swift in Sources */,
 				8C68AB1A2796E70C00C1711E /* WorkspaceListViewController.swift in Sources */,
 				8C68AAD72791AF1100C1711E /* RegisterViewController.swift in Sources */,
-				8C68AB1C27970A2A00C1711E /* deleteProfileCell.swift in Sources */,
 				8CBD4542279F047F0056A557 /* KeychainWrapper+keys.swift in Sources */,
 				8CBD454827A064A20056A557 /* PaginationAction.swift in Sources */,
 				8C68AAC527909BD000C1711E /* LoginViewModel.swift in Sources */,
@@ -587,7 +574,6 @@
 				8CBD4538279D3F350056A557 /* WorkspaceService.swift in Sources */,
 				8C68AAE1279526C600C1711E /* ChatsViewController.swift in Sources */,
 				8C68AB1E27970A3200C1711E /* EditProfileView.swift in Sources */,
-				8C68AAEB27952A8500C1711E /* deleteProfileViewController2.swift in Sources */,
 				8C68AADB2791B57100C1711E /* RegisterService.swift in Sources */,
 				8C68AAC92791166F00C1711E /* ViewModelProtocol.swift in Sources */,
 				8C68AAD027911A1000C1711E /* LoginService.swift in Sources */,
@@ -601,8 +587,6 @@
 				8CBD45322799AEFD0056A557 /* WorkspaceListCell.swift in Sources */,
 				8CBD452F2799A2C10056A557 /* WorkspaceListViewModel.swift in Sources */,
 				8CBD45342799B0E00056A557 /* WorkspaceListCellModel.swift in Sources */,
-				8C68AAED27952A9000C1711E /* deleteProfileViewModel.swift in Sources */,
-				8CBD4540279DB3A50056A557 /* WorkspaceListCellViewModel.swift in Sources */,
 				8C68AAFF27954FD200C1711E /* ChannelCellViewModel.swift in Sources */,
 				8C68AAD327911AD700C1711E /* ExObservable.swift in Sources */,
 				8C68AAFB27954FBF00C1711E /* DirectMessageCellViewModel.swift in Sources */,

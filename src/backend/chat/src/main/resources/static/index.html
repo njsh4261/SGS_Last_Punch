@@ -1,53 +1,92 @@
-<!DOCTYPE html>
+<!--original source code from https://www.baeldung.com/websockets-spring-->
 <html>
-  <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-      <title>Spring Boot WebSocket Chat Application | CalliCoder</title>
-      <link rel="stylesheet" href="/css/main.css" />
-  </head>
-  <body>
-    <noscript>
-      <h2>Sorry! Your browser doesn't support Javascript</h2>
-    </noscript>
+<head>
+  <title>Chat WebSocket</title>
+</head>
+<body onload="disconnect()">
+<div>
+  <div>
+    <input type="text" id="sender" placeholder="Type your name"/>
+  </div>
+  <div>
+    <input type="text" id="channelId" placeholder="Type channel id"/>
+  </div>
+  <br />
+  <div>
+    <button id="connect" onclick="connect();">Connect</button>
+    <button id="disconnect" disabled="disabled" onclick="disconnect();">
+      Disconnect
+    </button>
+  </div>
+  <br />
+  <div id="conversationDiv">
+    <input type="text" id="content" placeholder="Write a message..."/>
+    <button id="sendMessage" onclick="sendMessage();">Send</button>
+    <p id="response"></p>
+  </div>
+</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script type="text/javascript">
+    var stompClient = null;
 
-    <div id="username-page">
-        <div class="username-page-container">
-            <h1 class="title">Type your username</h1>
-            <form id="usernameForm" name="usernameForm">
-                <div class="form-group">
-                    <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="accent username-submit">Start Chatting</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    function setConnected(connected) {
+        document.getElementById('connect').disabled = connected;
+        document.getElementById('disconnect').disabled = !connected;
+        document.getElementById('conversationDiv').style.visibility
+          = connected ? 'visible' : 'hidden';
+        document.getElementById('response').innerHTML = '';
+    }
 
-    <div id="chat-page" class="hidden">
-        <div class="chat-container">
-            <div class="chat-header">
-                <h2>Spring WebSocket Chat Demo</h2>
-            </div>
-            <div class="connecting">
-                Connecting...
-            </div>
-            <ul id="messageArea">
+    function connect() {
+        var socket = new SockJS('/chat');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function(frame) {
+            setConnected(true);
+            console.log('Connected: ' + frame);
+            stompClient.subscribe(
+              '/topic/channel.' + document.getElementById('channelId').value,
+              function(messageOutput) {
+                  showMessageOutput(JSON.parse(messageOutput.body));
+              }
+            );
+        });
+    }
 
-            </ul>
-            <form id="messageForm" name="messageForm" nameForm="messageForm">
-                <div class="form-group">
-                    <div class="input-group clearfix">
-                        <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-                        <button type="submit" class="primary">Send</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    function disconnect() {
+        if(stompClient != null) {
+            stompClient.disconnect();
+        }
+        setConnected(false);
+        console.log("Disconnected");
+    }
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script src="/js/main.js"></script>
-  </body>
+    function sendMessage() {
+        var sender = document.getElementById('sender').value;
+        var content = document.getElementById('content').value;
+        var channelId = document.getElementById('channelId').value;
+        stompClient.send("/pub/chat", {},
+          JSON.stringify({
+            'sender': sender,
+            'content':content,
+            'channelId': channelId
+          })
+        );
+    }
+
+    function showMessageOutput(messageOutput) {
+        var response = document.getElementById('response');
+        var p = document.createElement('p');
+        p.style.wordWrap = 'break-word';
+        p.appendChild(
+          document.createTextNode(
+            messageOutput.sender + ": "
+            + messageOutput.content
+            + " (" + messageOutput.createDt + ")"
+          )
+        );
+        response.appendChild(p);
+    }
+</script>
 </html>

@@ -16,11 +16,11 @@ public class RabbitService{
         this.rabbitTemplate = rabbitTemplate;
     }
     
-    public void send(Message message, String channelId){
+    public void send(Message message){
         message.setCreateDt(LocalDateTime.now());
         rabbitTemplate.convertAndSend(
-//            ChatConstant.AMQ_TOPIC,
-            ChatConstant.ROUTING_KEY_PREFIX + channelId,
+            ChatConstant.AMQ_TOPIC,
+            ChatConstant.ROUTING_KEY_PREFIX + message.getChannelId(),
             message
         );
     }

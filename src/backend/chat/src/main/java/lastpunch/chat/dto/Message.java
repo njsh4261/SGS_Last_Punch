@@ -5,16 +5,8 @@ import lombok.Data;
 
 @Data
 public class Message{
-    private MessageType type;
     private String content;
     private String sender;
-    
-    private String channel;
+    private String channelId;
     private LocalDateTime createDt;
-    
-    public enum MessageType {
-        CHAT,
-        JOIN,
-        LEAVE
-    }
 }

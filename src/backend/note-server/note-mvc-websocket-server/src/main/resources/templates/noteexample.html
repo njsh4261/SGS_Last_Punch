@@ -29,9 +29,13 @@
     var client = Stomp.over(sock); // 1. SockJS를 내부에 들고 있는 client를 내어준다.
 
     // 2. connection이 맺어지면 실행된다.
+    // var headers={
+    //   X-AUTH-TOKEN: "123345678"
+    // };
+
     client.connect({}, function () {
       // 3. send(path, header, message)로 메시지를 보낼 수 있다.
-      client.send('/pub/note/update', {}, JSON.stringify({noteId: 1, blockId: ["1","2","3"]}));
+      client.send('/pub/note/update', {}, JSON.stringify({type: "ENTER", noteId: 1, blockId: ["1","2","3"]}));
       // 4. subscribe(path, callback)로 메시지를 받을 수 있다. callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
       client.subscribe('/sub/note/1', function (chat) {
         var content = JSON.parse(chat.body);
@@ -41,7 +45,7 @@
 
     sendBtn.click(function () {
       var message = messageInput.val();
-      client.send('/pub/note/update', {}, JSON.stringify({noteId: 1, blockId: ["1","2","3"]}));
+      client.send('/pub/note/update', {}, JSON.stringify({type: "UPDATE", noteId: 1, blockId: ["1","2","3"]}));
       messageInput.val('');
     });
   });

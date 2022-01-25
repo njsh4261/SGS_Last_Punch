@@ -10,15 +10,11 @@ import RxCocoa
 
 class WorkspaceListViewModel: ViewModelProtocol {
     struct Input {
-        let email = PublishSubject<String>()
-        let password = PublishSubject<String>()
-        let btnNextTapped = PublishSubject<Void>()
+        let accessToken = PublishSubject<String>()
     }
     
     struct Output {
-        let enableBtnNext = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
-        let goToHome = PublishRelay<Void>()
     }
     // MARK: - Public properties
     var input = Input()
@@ -26,12 +22,34 @@ class WorkspaceListViewModel: ViewModelProtocol {
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
-    let workspaceListCellData = PublishSubject<[WorkspaceListCellModel]>()
+    private var workspaceListCellData = PublishSubject<[WorkspaceListCellModel]>()
     var cellData: Driver<[WorkspaceListCellModel]>
-
+    
     // MARK: - Init
     init() {
         self.cellData = workspaceListCellData
             .asDriver(onErrorJustReturn: [])
+        
+        input.accessToken.withLatestFrom(input.accessToken)
+            .bind { [weak self] (token) in
+                guard let self = self else { return }
+                WorkspaceService.shared.getWorkspace(accessToken: token)
+                    .observe(on: MainScheduler.instance)
+                    .subscribe{ event in
+                        switch event {
+                        case .next(let result):
+                            DispatchQueue.main.async { // 메인스레드에서 동작
+                                switch result {
+                                case .success(let workspace):
+                                    self.workspaceListCellData.onNext(workspace)
+                                default:
+                                    self.output.errorMessage.accept("워크스페이스 목록을 못가져웠어요")
+                                }
+                            }
+                        default:
+                            break
+                        }
+                    }.disposed(by: self.disposeBag)
+            }.disposed(by: disposeBag)
     }
 }

@@ -9,12 +9,15 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+import ProgressHUD
 import Then
 
 class WorkspaceListViewController: UIViewController {
     // MARK: - Properties
     private let viewModel = WorkspaceListViewModel()
     private let disposeBag = DisposeBag()
+    var accessToken: String?
+    var workspace: WorkspacesModel?
     
     // MARK: - UI
     var btnNext = UIBarButtonItem()
@@ -24,6 +27,7 @@ class WorkspaceListViewController: UIViewController {
     var lblSearch = UILabel()
     var btnNewWorkspace = UIButton()
     var btnLogout = UIButton()
+    var lblAccessToken = UITextField()
     
     let text = UITextView()
     
@@ -40,71 +44,52 @@ class WorkspaceListViewController: UIViewController {
     }
     
     func bind(with viewModel: WorkspaceListViewModel) {
-        // Bind input
+        lblAccessToken.text = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmQGFzZGYiLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJJZCI6MSwiZXhwIjoxNjQzMDI0Njk0fQ.7eh8FT8kXRZwNNOOliDt6-O7SQSDjcYZnTvn4CEH1ylQzVa9YjGKOGBCFCXHFfSghyAOntcEBFqh6ZYW19SyjA"
+        
+        //MARK: Bind input
+        lblAccessToken.rx.text.orEmpty
+            .bind(to: viewModel.input.accessToken)
+            .disposed(by: disposeBag)
+        
         btnNext.rx.tap
             .subscribe(onNext: goToHome)
             .disposed(by: disposeBag)
-        
-        // test
-        let s = SearchBarViewModel()
-        let m = MainModel()
-        text.text = "안녕하세요"
 
-        text.rx.text
-            .bind(to: s.queryText)
+        btnLogout.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
-        Observable
-            .merge(
-                btnNewWorkspace.rx.tap.asObservable()
-            )
-            .bind(to: s.searchButtonTapped)
-            .disposed(by: disposeBag)
         
-        let blogResult = s.shouldLoadResult
-            .flatMapLatest(m.searchBlog)
-            .share()
-        
-        let blogValue = blogResult
-            .map(m.getBlogValue)
-            .filter { $0 != nil }
-        
-        let blogError = blogResult
-            .map(m.getBlogError)
-            .filter { $0 != nil }
-        
-        //네트워크를 통해 가져온 값을 CellData로 변환
-        let cellData = blogValue
-            .map(m.getBlogListCellData)
-        
-        //MainViewController -> ListView
-        Observable
-            .single(cellData)()
-            .bind(to: viewModel.workspaceListCellData)
-            .disposed(by: disposeBag)
-        
-        // Bind output
+        //MARK: Bind output
         viewModel.cellData
             .asDriver(onErrorJustReturn: [])
             .drive(tableView.rx.items) { tv, row, data in
                 let index = IndexPath(row: row, section: 0)
-                let cell = tv.dequeueReusableCell(withIdentifier: "WorksapceListCell", for: index) as! WorksapceListCell
+                let cell = tv.dequeueReusableCell(withIdentifier: "WorkspaceListCell", for: index) as! WorkspaceListCell
                 cell.setData(data)
                 return cell
             }
             .disposed(by: disposeBag)
         
-        //        viewModel.output.goToHome
-        //            .observe(on: MainScheduler.instance)
-        //            .bind(onNext: goToHome)
-        //            .disposed(by: disposeBag)
-        
+        viewModel.output.errorMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showFailedAlert)
+            .disposed(by: disposeBag)
+    }
+    
+    private func showFailedAlert(_ message: String) {
+        ProgressHUD.showFailed(message)
     }
     
     private func goToHome() {
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
             sceneDelegate.window?.rootViewController = sceneDelegate.tabBarController
         }
+    }
+    
+    private func goToWelecome() {
+        dismiss(animated: true, completion: nil)
     }
     
     private func attribute() {
@@ -134,12 +119,12 @@ class WorkspaceListViewController: UIViewController {
         }
         
         tableView = tableView.then {
-            $0.register(WorksapceListCell.self, forCellReuseIdentifier: "WorksapceListCell")
+            $0.register(WorkspaceListCell.self, forCellReuseIdentifier: "WorkspaceListCell")
             $0.bouncesZoom = false
             $0.isOpaque = false
             $0.clearsContextBeforeDrawing = false
-            $0.separatorStyle = .singleLine
             $0.backgroundColor = UIColor(named: "snackColor")
+            $0.rowHeight = 61
         }
         
         lblSearch = lblSearch.then {
@@ -159,7 +144,7 @@ class WorkspaceListViewController: UIViewController {
         btnLogout = btnLogout.then {
             $0.setTitle("로그아웃", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 16)
-            $0.setTitleColor(.red, for: .normal)
+            $0.setTitleColor(UIColor(named: "warningColor"), for: .normal)
             $0.backgroundColor = .lightGray
             $0.layer.cornerRadius = 6
         }
@@ -175,21 +160,21 @@ class WorkspaceListViewController: UIViewController {
         }
         
         lblTitle.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(25)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(30)
         }
         
         lblDescription.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(80)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(85)
         }
         
         tableView.snp.makeConstraints {
             $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(15)
-            $0.top.equalTo(lblDescription.snp.bottom).offset(20)
+            $0.top.equalTo(lblDescription.snp.bottom).offset(40)
             $0.bottom.equalTo(lblSearch.snp.top).offset(-20)
         }
         
         lblSearch.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(190)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(200)
             $0.left.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
         

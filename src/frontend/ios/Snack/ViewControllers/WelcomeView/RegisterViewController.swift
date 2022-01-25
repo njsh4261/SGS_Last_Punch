@@ -28,6 +28,7 @@ class RegisterViewController: UIViewController {
     var codeBorder = UIView()
     var passwordBorder = UIView()
     var checkPasswordBorder = UIView()
+    var btnDuplicateEmail = UIButton()
     var btnSendEmail = UIButton()
     var btnVerification = UIButton()
     var btnTogglePassword = UIButton()
@@ -49,7 +50,8 @@ class RegisterViewController: UIViewController {
     }
     
     func bind(with viewModel: RegisterViewModel) {
-        //MARK: Bind input
+        // MARK: Bind input
+        // Text 입력
         fieldEmail.rx.text.orEmpty
             .bind(to: viewModel.input.email)
             .disposed(by: disposeBag)
@@ -69,7 +71,7 @@ class RegisterViewController: UIViewController {
         // enter를 누를때
         fieldEmail.rx.controlEvent(.editingDidEndOnExit)
             .asObservable()
-            .bind(to: viewModel.input.btnSendEmailTapped)
+            .bind(to: viewModel.input.btnDuplicateEmailTapped)
             .disposed(by: disposeBag)
                 
         fieldCode.rx.controlEvent(.editingDidEndOnExit)
@@ -83,8 +85,14 @@ class RegisterViewController: UIViewController {
             .bind(to: viewModel.input.changedEmail)
             .disposed(by: disposeBag)
         
+        // 이메일 중복 검사
+        btnDuplicateEmail.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.input.btnDuplicateEmailTapped)
+            .disposed(by: disposeBag)
+        
         // 메일 전송
-        btnSendEmail.rx.controlEvent(.touchUpInside)
+        btnSendEmail.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .bind(to: viewModel.input.btnSendEmailTapped)
             .disposed(by: disposeBag)
@@ -113,12 +121,11 @@ class RegisterViewController: UIViewController {
         
         btnSignIn.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.goToLogin()
-            })
+            .subscribe(onNext: goToLogin)
             .disposed(by: disposeBag)
         
-        //MARK: Bind output
+        // MARK: Bind output
+        // 이메일을 수정했을 경우
         viewModel.output.changeVisibility
             .observe(on: MainScheduler.instance)
             .bind(onNext: visibilityCode)
@@ -129,19 +136,21 @@ class RegisterViewController: UIViewController {
             .bind(onNext: visibilityPassword)
             .disposed(by: disposeBag)
         
-        viewModel.output.changeSendMailText
+        viewModel.output.changeSendEmailText
             .observe(on: MainScheduler.instance)
             .bind(to: btnSendEmail.rx.setText)
             .disposed(by: disposeBag)
         
+        // email field를 제외한 모든 field 초기화
         viewModel.output.changeClearText
             .observe(on: MainScheduler.instance)
             .bind(to: fieldCode.rx.setText, fieldPassword.rx.setText, fieldCheckPassword.rx.setText)
             .disposed(by: disposeBag)
         
-        viewModel.output.enableBtnSendEmail
+        // 버튼 enable
+        viewModel.output.enableBtnDuplicateEmail
             .observe(on: MainScheduler.instance)
-            .bind(to: btnSendEmail.rx.isEnabled)
+            .bind(to: btnDuplicateEmail.rx.isEnabled)
             .disposed(by: disposeBag)
         
         viewModel.output.enableBtnVerification
@@ -154,18 +163,25 @@ class RegisterViewController: UIViewController {
             .bind(to: btnSignUp.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        // Step 1
+        // Step 0 - email input -> duplicate -> sendEamil
+        viewModel.output.visibilityBtnSendEmail
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: visibilitySendEmail)
+            .disposed(by: disposeBag)
+        
+        // Step 1 - email input -> code input
         viewModel.output.visibilityCode
             .observe(on: MainScheduler.instance)
             .bind(onNext: visibilityCode)
             .disposed(by: disposeBag)
         
-        // Step 2
+        // Step 2 - code input -> password, check input & signUp
         viewModel.output.visibilityPassword
             .observe(on: MainScheduler.instance)
             .bind(onNext: visibilityPassword)
             .disposed(by: disposeBag)
         
+        // 성공/실패 메시지
         viewModel.output.successMessage
             .observe(on: MainScheduler.instance)
             .bind(onNext: showSuccessAlert)
@@ -176,6 +192,7 @@ class RegisterViewController: UIViewController {
             .bind(onNext: showFailedAlert)
             .disposed(by: disposeBag)
         
+        // 로그인화면으로
         viewModel.output.goToLogin
             .observe(on: MainScheduler.instance)
             .bind(onNext: goToLogin)
@@ -190,14 +207,22 @@ class RegisterViewController: UIViewController {
         ProgressHUD.showFailed(message)
     }
     
-    // Step 1
+    // Step 0 - email input -> code input
+    private func visibilitySendEmail(_ bool: Bool) {
+        btnDuplicateEmail.isHidden = !bool
+        btnSendEmail.isHidden = bool
+        
+        fieldEmail.rightView = bool ? btnDuplicateEmail : btnSendEmail
+    }
+    
+    // Step 1 - email input -> code input
     private func visibilityCode(_ bool: Bool) {
         [fieldCode, codeBorder].forEach {
             $0.isHidden = bool
         }
     }
     
-    // Step 2
+    // Step 2 - code input -> password, check input & signUp
     private func visibilityPassword(_ bool: Bool) {
         [fieldPassword, fieldCheckPassword, passwordBorder, checkPasswordBorder, btnSignUp, lblWarning].forEach {
             $0.isHidden = bool
@@ -229,24 +254,22 @@ class RegisterViewController: UIViewController {
             $0.backgroundColor = .quaternaryLabel
         }
         
-        [btnSendEmail, btnVerification].forEach {
+        [btnDuplicateEmail, btnSendEmail, btnVerification].forEach {
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
             $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
             $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .disabled)
             $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
             $0.clipsToBounds = true
             $0.layer.cornerRadius = 3
-            $0.isEnabled = false
         }
         
         [btnTogglePassword, btnToggleCheckPassword].forEach {
             $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
-            $0.setImage(UIImage(systemName: "snack"), for: .selected)
             $0.tintColor = UIColor(named: "snackTextColor")
         }
         
         // init시 숨겨야 할 것들
-        [fieldCode, fieldPassword, fieldCheckPassword, codeBorder, passwordBorder, checkPasswordBorder, btnSignUp, lblWarning].forEach {
+        [fieldCode, fieldPassword, fieldCheckPassword, codeBorder, passwordBorder, checkPasswordBorder, btnSendEmail, btnSignUp, lblWarning].forEach {
             $0.isHidden = true
         }
 
@@ -254,12 +277,18 @@ class RegisterViewController: UIViewController {
             $0.placeholder = "이메일을 입력해주세요"
             $0.keyboardType = .emailAddress
             $0.returnKeyType = .done
-            $0.rightView = btnSendEmail
+            $0.rightView = btnDuplicateEmail
             $0.rightViewMode = .always
+        }
+        
+        btnDuplicateEmail = btnDuplicateEmail.then {
+            $0.setTitle("중복", for: .normal)
+            $0.isEnabled = false
         }
         
         btnSendEmail = btnSendEmail.then {
             $0.setTitle("전송", for: .normal)
+            $0.isHidden = true
         }
         
         fieldCode = fieldCode.then {
@@ -316,7 +345,7 @@ class RegisterViewController: UIViewController {
     }
     
     private func layout() {
-        [ivLogo, fieldEmail, btnSendEmail, emailBorder, fieldCode, btnVerification, codeBorder, fieldPassword, passwordBorder, fieldCheckPassword, checkPasswordBorder, btnSignUp, lblWarning, btnSignIn].forEach {
+        [ivLogo, fieldEmail, btnDuplicateEmail, btnSendEmail, emailBorder, fieldCode, btnVerification, codeBorder, fieldPassword, passwordBorder, fieldCheckPassword, checkPasswordBorder, btnSignUp, lblWarning, btnSignIn].forEach {
             view.addSubview($0)
         }
         
@@ -386,18 +415,19 @@ class RegisterViewController: UIViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(480)
         }
         
-        [btnSendEmail, btnVerification].forEach {
+        [btnDuplicateEmail, btnSendEmail, btnVerification].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(35)
                 $0.width.equalTo(60)
             }
         }
-                
-        btnSendEmail.snp.makeConstraints {
-            $0.centerY.equalTo(fieldEmail)
-
-        }
         
+        [btnDuplicateEmail, btnSendEmail].forEach {
+            $0.snp.makeConstraints {
+                $0.centerY.equalTo(fieldEmail)
+            }
+        }
+                
         btnVerification.snp.makeConstraints {
             $0.centerY.equalTo(fieldCode)
         }

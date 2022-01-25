@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createWsAPI } from '../Api/workspace';
+import { ERROR_MESSAGE } from '../constant';
 
 export default function createWsHook(): [
   wsName: string,
@@ -22,9 +23,8 @@ export default function createWsHook(): [
         return;
       }
       const response = await createWsAPI(wsName, channelName);
-      // todo: 응답코드에 따른 올바른 처리
-      if (!response) {
-        alert('fail');
+      if (response === undefined) {
+        alert(ERROR_MESSAGE.SERVER);
         navigate('/');
       } else {
         alert('success');

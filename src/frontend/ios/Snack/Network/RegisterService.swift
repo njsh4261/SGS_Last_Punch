@@ -26,6 +26,30 @@ class RegisterService {
                 "verifyCode": code]
     }
     
+    func duplicateEmail(email : String) -> Observable<NetworkResult<Any>> {
+        return Observable.create { observer -> Disposable in
+            let header : HTTPHeaders = ["Content-Type": "application/json"]
+            let dataRequest = AF.request(APIConstants().duplicateEmailURL,
+                                         method: .post,
+                                         parameters: self.makeSendEmailParameter(email: email),
+                                         encoding: JSONEncoding.default,
+                                         headers: header)
+            
+            dataRequest.validate().responseData { [self] response in
+                switch response.result {
+                case .success:
+                    guard let statusCode = response.response?.statusCode else {return}
+                    guard let value = response.value else {return}
+                    let networkResult = judgeStatus(by: statusCode, value)
+                    return observer.onNext(networkResult)
+                case .failure:
+                    return observer.onNext(.pathErr)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
     func sendEmail(email : String) -> Observable<NetworkResult<Any>> {
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["Content-Type": "application/json"]
@@ -53,8 +77,8 @@ class RegisterService {
     func verify(email: String, code: String) -> Observable<NetworkResult<Any>> {
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["Content-Type": "application/json"]
-            let dataRequest = AF.request(APIConstants().authEmailURL,
-                                         method: .get,
+            let dataRequest = AF.request(APIConstants().emailVerificationURL,
+                                         method: .post,
                                          parameters: self.makeVerifyParameter(email: email, code: code),
                                          encoding: JSONEncoding.default,
                                          headers: header)
@@ -119,7 +143,7 @@ class RegisterService {
                 return .fail(decodedData.code)
             } else {
                 return .serverErr
-            }
+            }//Q226
         case 400: return .requestErr("errorCode : " + decodedData.code)
         case 401: return .unAuthorized
         case 500: return .serverErr

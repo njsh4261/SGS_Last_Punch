@@ -20,6 +20,8 @@ class LoginViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
+    var scrollview = UIScrollView()
+    let contentsView = UIView()
     var ivLogo = UIImageView()
     var fieldEmail = UITextField()
     var fieldPassword = UITextField()
@@ -102,7 +104,7 @@ class LoginViewController: UIViewController {
         KeychainWrapper.standard[.email] = fieldEmail.text
         KeychainWrapper.standard[.accessToken] = token.access_token
         KeychainWrapper.standard[.refreshToken] = token.refresh_token
-
+        
         let navController = WorkspaceListViewController()
         navigationController?.pushViewController(navController, animated: true)
     }
@@ -111,7 +113,7 @@ class LoginViewController: UIViewController {
         guard let pvc = self.presentingViewController else { return }
         let registerInputVC = NavigationController(rootViewController: RegisterViewController())
         registerInputVC.modalPresentationStyle = .fullScreen
-
+        
         dismiss(animated: true) {
             pvc.present(registerInputVC, animated: true, completion: nil)
         }
@@ -170,17 +172,31 @@ class LoginViewController: UIViewController {
     }
     
     private func layout() {
-        [ivLogo, fieldEmail, emailBorder, fieldPassword, passwordBorder, btnSignIn, lblWarning, btnSignUp].forEach { view.addSubview($0) }
+        [ivLogo, fieldEmail, emailBorder, fieldPassword, passwordBorder, btnSignIn, lblWarning, btnSignUp].forEach { contentsView.addSubview($0) }
+        
+        scrollview.addSubview(contentsView)
+        
+        view.addSubview(scrollview)
+        
+        scrollview.snp.makeConstraints {
+            $0.edges.equalTo(0)
+        }
+        
+        contentsView.snp.makeConstraints {
+            $0.edges.equalTo(0)
+            $0.width.equalTo(view.frame.width)
+            $0.height.equalTo(view.frame.height - 70)
+        }
         
         ivLogo.snp.makeConstraints {
             $0.width.height.equalTo(80)
-            $0.centerX.equalTo(view.safeAreaLayoutGuide)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(70)
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(70)
         }
         
         [fieldEmail, emailBorder, fieldPassword, passwordBorder].forEach {
             $0.snp.makeConstraints {
-                $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(16)
+                $0.left.right.equalToSuperview().inset(16)
             }
         }
         
@@ -197,40 +213,40 @@ class LoginViewController: UIViewController {
         }
         
         fieldEmail.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(200)
+            $0.top.equalToSuperview().inset(200)
         }
         
         emailBorder.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
+            $0.top.equalToSuperview().inset(250)
         }
         
         fieldPassword.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
+            $0.top.equalToSuperview().inset(250)
         }
         
         passwordBorder.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(300)
+            $0.top.equalToSuperview().inset(300)
         }
         
         btnSignIn.snp.makeConstraints {
-            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(320)
+            $0.left.right.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(320)
         }
         
         [lblWarning, btnSignUp].forEach {
             $0.snp.makeConstraints {
-                $0.left.right.equalTo(view.safeAreaLayoutGuide)
+                $0.left.right.equalToSuperview()
             }
         }
         
         lblWarning.snp.makeConstraints {
             $0.height.equalTo(21)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(380)
+            $0.top.equalToSuperview().inset(380)
         }
         
         btnSignUp.snp.makeConstraints {
             $0.height.equalTo(50)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(lblWarning.snp.bottom).offset(270)
         }
     }
 }

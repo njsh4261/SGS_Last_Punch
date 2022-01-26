@@ -35,3 +35,6 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+apply plugin: 'application'
+mainClassName = 'lastpunch.chat.ChatApplication'

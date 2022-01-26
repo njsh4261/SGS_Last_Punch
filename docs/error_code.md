@@ -40,3 +40,6 @@
 | 12006     | ACCOUNTCHANNEL_NOT_EXIST       | HttpStatus.OK(200) | 존재하지 않는 유저와 채널 간 관계입니다.     |
 | 12007     | ACCOUNTCHANNEL_ALREADY_EXIST   | HttpStatus.OK(200) | 유저와 채널 간 관계가 이미 존재합니다.      |
 | 12008     | INVALID_USERID                 | HttpStatus.OK(200) | 사용자 ID가 정상적으로 제공되지 않았습니다.   |
+| 12009     | PERMISSION_DENIED              | HttpStatus.OK(200) | 해당 작업을 실행할 권한이 없습니다.        |
+| 12010     | ROLE_NOT_EXIST                 | HttpStatus.OK(200) | 존재하지 않는 역할입니다.              |
+| 12011     | CHANNEL_ALREADY_EXIST          | HttpStatus.OK(200) | 이미 존재하는 채널입니다.              |

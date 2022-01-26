@@ -62,7 +62,8 @@ CREATE TABLE `accountchannel`(
     `channelId` BIGINT UNSIGNED NOT NULL,
     `roleId` BIGINT UNSIGNED NOT NULL,
     INDEX (`accountId`),
-    INDEX (`channelId`)
+    INDEX (`channelId`),
+    UNIQUE (`accountId`, `channelId`)
 );
 ALTER TABLE `accountchannel` ADD CONSTRAINT `accountchannel_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`) ON DELETE CASCADE;
 ALTER TABLE `accountchannel` ADD CONSTRAINT `accountchannel_channelid_foreign` FOREIGN KEY(`channelId`) REFERENCES `channel`(`id`) ON DELETE CASCADE;
@@ -74,7 +75,8 @@ CREATE TABLE `accountworkspace`(
     `workspaceId` BIGINT UNSIGNED NOT NULL,
     `roleId` BIGINT UNSIGNED NOT NULL,
     INDEX (`accountId`),
-    INDEX (`workspaceId`)
+    INDEX (`workspaceId`),
+    UNIQUE (`accountId`, `workspaceId`)
 );
 ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`) ON DELETE CASCADE;
 ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`) ON DELETE CASCADE;

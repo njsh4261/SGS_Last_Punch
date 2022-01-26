@@ -35,6 +35,5 @@ struct Err: Codable {
 // MARK: - RegisterDataModel
 struct RegisterDataModel: Codable {
     let code: String
-    let status: Int?
     let err: Err?
 }

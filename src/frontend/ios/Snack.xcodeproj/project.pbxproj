@@ -53,6 +53,8 @@
 		8CBD4542279F047F0056A557 /* KeychainWrapper+keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD4541279F047F0056A557 /* KeychainWrapper+keys.swift */; };
 		8CBD4544279F0CD50056A557 /* LogOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD4543279F0CD50056A557 /* LogOut.swift */; };
 		8CBD454827A064A20056A557 /* PaginationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD454727A064A20056A557 /* PaginationAction.swift */; };
+		8CBD456C27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD456B27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift */; };
+		8CBD456F27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD456E27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -111,6 +113,8 @@
 		8CBD4541279F047F0056A557 /* KeychainWrapper+keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainWrapper+keys.swift"; sourceTree = "<group>"; };
 		8CBD4543279F0CD50056A557 /* LogOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOut.swift; sourceTree = "<group>"; };
 		8CBD454727A064A20056A557 /* PaginationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationAction.swift; sourceTree = "<group>"; };
+		8CBD456B27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchURLWorkspaceViewController.swift; sourceTree = "<group>"; };
+		8CBD456E27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchURLWorkspaceVeiwModel.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -374,6 +378,7 @@
 		8C68AB182796E67200C1711E /* WorkspaceListView */ = {
 			isa = PBXGroup;
 			children = (
+				8CBD456D27A18E3F0056A557 /* SearchURLWorkspace */,
 				8C68AB192796E70C00C1711E /* WorkspaceListViewController.swift */,
 				8CBD452E2799A2C10056A557 /* WorkspaceListViewModel.swift */,
 				8CBD45312799AEFD0056A557 /* WorkspaceListCell.swift */,
@@ -415,6 +420,15 @@
 				8C68AB052795754900C1711E /* ChatsSection.swift */,
 			);
 			path = Section;
+			sourceTree = "<group>";
+		};
+		8CBD456D27A18E3F0056A557 /* SearchURLWorkspace */ = {
+			isa = PBXGroup;
+			children = (
+				8CBD456B27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift */,
+				8CBD456E27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift */,
+			);
+			path = SearchURLWorkspace;
 			sourceTree = "<group>";
 		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
@@ -569,6 +583,7 @@
 				8CBD4542279F047F0056A557 /* KeychainWrapper+keys.swift in Sources */,
 				8CBD454827A064A20056A557 /* PaginationAction.swift in Sources */,
 				8C68AAC527909BD000C1711E /* LoginViewModel.swift in Sources */,
+				8CBD456F27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift in Sources */,
 				8C68AB172796A03E00C1711E /* APIConstants.swift in Sources */,
 				8C68AACD2791186400C1711E /* Credentials.swift in Sources */,
 				8CBD4538279D3F350056A557 /* WorkspaceService.swift in Sources */,
@@ -591,6 +606,7 @@
 				8C68AAD327911AD700C1711E /* ExObservable.swift in Sources */,
 				8C68AAFB27954FBF00C1711E /* DirectMessageCellViewModel.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
+				8CBD456C27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift in Sources */,
 				8C68AB0E2795AB6200C1711E /* DirectMessageObject.swift in Sources */,
 				8C68AACB279117FA00C1711E /* User.swift in Sources */,
 				8C68AAF327953A8A00C1711E /* ChannelObject.swift in Sources */,

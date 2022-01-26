@@ -11,8 +11,8 @@ import Alamofire
 class WorkspaceService {
     static let shared = WorkspaceService()
     
-    func getWorkspace(accessToken: String, page: Int, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: ""), method: HTTPMethod) -> Observable<NetworkResult<WorkspaceResponseModel>> {
-        var url = APIConstants().workspaceList + "/\(cell.workspaceId)"
+    func getWorkspace(accessToken: String, workspaceId: String = "", page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: ""), method: HTTPMethod) -> Observable<NetworkResult<WorkspaceResponseModel>> {
+        var url = APIConstants().workspaceList + "/\(workspaceId)"
         
         if page != 0 {
             url += "?page=\(page)"
@@ -51,7 +51,14 @@ class WorkspaceService {
         }
         
         switch statusCode {
-        case 200: return .success(decodedData)
+        case 200:
+            if decodedData.code == "12000" {
+                return .success(decodedData)
+            } else if decodedData.code == "12001" { // 존재하지 않는 워크스페이스
+                return .fail(decodedData)
+            } else {
+                return .success(decodedData)
+            }
         case 400: return .requestErr(decodedData)
         case 401: return .unAuthorized
         case 500: return .serverErr

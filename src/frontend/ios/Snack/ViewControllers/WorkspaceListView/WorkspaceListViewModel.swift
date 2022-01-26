@@ -86,7 +86,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
     
     func getWorkspaceList(_ token:String, page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: ""), method: HTTPMethod) {
         DispatchQueue.main.async { // 메인스레드에서 동작
-            WorkspaceService.shared.getWorkspace(accessToken: token, page: page, cell: cell, method: method)
+            WorkspaceService.shared.getWorkspace(accessToken: token, workspaceId: cell.workspaceId, page: page, method: method)
                 .observe(on: MainScheduler.instance)
                 .subscribe{ event in
                     switch event {

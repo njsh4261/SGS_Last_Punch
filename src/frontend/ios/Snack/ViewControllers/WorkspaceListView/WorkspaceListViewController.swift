@@ -63,6 +63,10 @@ class WorkspaceListViewController: UIViewController {
             .subscribe(onNext: goToHome)
             .disposed(by: disposeBag)
         
+        btnURLWorkspace.rx.tap
+            .subscribe(onNext: goToURLWorkspace)
+            .disposed(by: disposeBag)
+        
         btnLogout.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: goToWelecome)
@@ -195,7 +199,13 @@ class WorkspaceListViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    private func goToURLWorkspace() {
+        let navController = SearchURLWorkspaceViewController()
+        navigationController?.pushViewController(navController, animated: true)
+    }
+    
     private func attribute() {
+        title = "워크스페이스 선택"
         view.backgroundColor = UIColor (named: "snackBackGroundColor")
         navigationItem.rightBarButtonItem = btnNext
         

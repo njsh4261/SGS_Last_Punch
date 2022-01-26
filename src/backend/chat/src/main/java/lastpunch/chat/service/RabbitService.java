@@ -2,7 +2,7 @@ package lastpunch.chat.service;
 
 import java.time.LocalDateTime;
 import lastpunch.chat.common.ChatConstant;
-import lastpunch.chat.dto.Message;
+import lastpunch.chat.entity.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,6 @@ public class RabbitService{
     }
     
     public void send(Message message){
-        message.setCreateDt(LocalDateTime.now());
         rabbitTemplate.convertAndSend(
             ChatConstant.AMQ_TOPIC,
             ChatConstant.ROUTING_KEY_PREFIX + message.getChannelId(),

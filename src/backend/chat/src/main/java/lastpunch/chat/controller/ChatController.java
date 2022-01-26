@@ -1,7 +1,7 @@
 package lastpunch.chat.controller;
 
 import java.time.LocalDateTime;
-import lastpunch.chat.dto.Message;
+import lastpunch.chat.entity.Message;
 import lastpunch.chat.service.RabbitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +21,7 @@ public class ChatController{
     }
     
     @MessageMapping("/chat")
-    public void send(Message message){
-        message.setCreateDt(LocalDateTime.now());
-        rabbitService.send(message);
+    public void send(Message.Dto messageDto){
+        rabbitService.send(messageDto.toEntity());
     }
 }

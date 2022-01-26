@@ -35,11 +35,12 @@ class WorkspaceListViewController: UIViewController {
     var tableView = UITableView()
     var btnNewWorkspaceByEmpty = UIButton()
     var btnNewWorkspace = UIButton()
+    var btnURLWorkspace = UIButton()
     var btnLogout = UIButton()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        guard let token: String = KeychainWrapper.standard[.accessToken] else { return }
+        guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
         accessTokenField.text = token
         NSLog("accessToken: " + token)
         
@@ -259,26 +260,38 @@ class WorkspaceListViewController: UIViewController {
             $0.setBackgroundColor(UIColor(named: "snackBackGroundColor")!, for: .normal)
         }
         
-        btnNewWorkspace = btnNewWorkspace.then {
-            $0.setTitle("새 워크스페이스 생성", for: .normal)
+        [btnNewWorkspace, btnURLWorkspace].forEach {
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Regular", size: 18)
             $0.setTitleColor(UIColor(named: "snackTextColor"), for: .normal)
+            $0.setTitleColor(UIColor(named: "snackTextColor")?.withAlphaComponent(0.3), for: .highlighted)
             $0.tintColor = UIColor(named: "snackTextColor")
-            $0.setImage(UIImage(systemName: "plus"), for: .normal)
+            
             $0.imageEdgeInsets = .init(top: 0, left: -15, bottom: 0, right: 0)
         }
         
+        btnNewWorkspace = btnNewWorkspace.then {
+            $0.setTitle("새 워크스페이스 생성", for: .normal)
+            $0.setImage(UIImage(systemName: "plus"), for: .normal)
+        }
+        
+        btnURLWorkspace = btnURLWorkspace.then {
+            $0.setTitle("워크스페이스 URL을 아시나요?", for: .normal)
+            $0.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        }
+                        
         btnLogout = btnLogout.then {
             $0.setTitle("로그아웃", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 16)
             $0.setTitleColor(UIColor(named: "warningColor"), for: .normal)
-            $0.backgroundColor = .lightGray
+            $0.setTitleColor(UIColor(named: "warningColor")?.withAlphaComponent(0.3), for: .highlighted)
+            $0.setBackgroundColor(.lightGray, for: .normal)
+            $0.clipsToBounds = true
             $0.layer.cornerRadius = 6
         }
     }
     
     private func layout() {
-        [lblTitle, lblDescription, tablewViewTopBorder, tablewViewBottomBorder, tableView, lblSearch, btnNewWorkspaceByEmpty, btnNewWorkspace, btnLogout].forEach { view.addSubview($0) }
+        [lblTitle, lblDescription, tablewViewTopBorder, tablewViewBottomBorder, tableView, lblSearch, btnNewWorkspaceByEmpty, btnNewWorkspace, btnURLWorkspace, btnLogout].forEach { view.addSubview($0) }
         
         [lblTitle, lblDescription].forEach {
             $0.snp.makeConstraints {
@@ -329,9 +342,14 @@ class WorkspaceListViewController: UIViewController {
             $0.left.equalTo(view.safeAreaLayoutGuide).inset(25)
         }
         
+        btnURLWorkspace.snp.makeConstraints {
+            $0.top.equalTo(btnNewWorkspace.snp.bottom).offset(10)
+            $0.left.equalTo(view.safeAreaLayoutGuide).inset(25)
+        }
+        
         btnLogout.snp.makeConstraints {
             $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(15)
-            $0.top.equalTo(btnNewWorkspace.snp.bottom).offset(20)
+            $0.top.equalTo(btnURLWorkspace.snp.bottom).offset(20)
             $0.height.equalTo(50)
         }
     }

@@ -33,6 +33,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
     // MARK: - Private properties
     private var workspaces = [WorkspaceListCellModel]()
     private let disposeBag = DisposeBag()
+    private var page = 0
     var cellData: Driver<[WorkspaceListCellModel]>
     
     // MARK: - Init
@@ -44,7 +45,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
         input.deleteCell.withLatestFrom(Observable.combineLatest(input.accessToken, input.deleteCell))
             .bind { [weak self] (token, cell) in
                 guard let self = self else { return }
-                self.getWorkspaceList(token, cell, method: .delete)
+                self.getWorkspaceList(token, cell: cell, method: .delete)
             }.disposed(by: disposeBag)
         
         // refresh
@@ -61,14 +62,16 @@ class WorkspaceListViewModel: ViewModelProtocol {
         // pagination
         input.pagination.withLatestFrom(Observable.combineLatest(input.accessToken, input.pagination))
             .bind { [weak self] (token, action) in
-//                action.contentOffsetY < 40
-                if action.contentOffsetY <= action.contentHeight - 40 - action.scrollViewHeight { return }
+                if action.contentOffsetY < 40 { return }
+                if action.contentOffsetY <= action.contentHeight - action.scrollViewHeight { return }
                 guard let self = self else { return }
                 
                 let when = DispatchTime.now() + 1.0
                 self.output.paginationLoading.accept(true)
+                
                 DispatchQueue.main.asyncAfter(deadline: when) {
-                    self.getWorkspaceList(token, method: .get)
+//                    self.page = self.workspaces.count/5 <= 1 ? 1 : self.workspaces.count/5
+                    self.getWorkspaceList(token, page: self.page, method: .get)
                     self.output.paginationLoading.accept(false)
                 }
             }.disposed(by: disposeBag)
@@ -81,9 +84,9 @@ class WorkspaceListViewModel: ViewModelProtocol {
             }.disposed(by: disposeBag)
     }
     
-    func getWorkspaceList(_ token:String, _ cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: ""), method: HTTPMethod) {
+    func getWorkspaceList(_ token:String, page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: ""), method: HTTPMethod) {
         DispatchQueue.main.async { // 메인스레드에서 동작
-            WorkspaceService.shared.getWorkspace(accessToken: token, cell: cell, method: method)
+            WorkspaceService.shared.getWorkspace(accessToken: token, page: page, cell: cell, method: method)
                 .observe(on: MainScheduler.instance)
                 .subscribe{ event in
                     switch event {
@@ -96,9 +99,13 @@ class WorkspaceListViewModel: ViewModelProtocol {
                                     self.output.errorMessage.accept("워크스페이스를 찾지 못했습니다.")
                                     return
                                 }
-                                self.workspaces = workspaces
-                                self.output.isHiddenLogo.accept(!workspaces.isEmpty)
-                                self.output.workspaceListCellData.onNext(workspaces)
+                                if page == 0 {
+                                    self.workspaces = workspaces
+                                } else {
+                                    self.workspaces.append(contentsOf: workspaces)
+                                }
+                                self.output.isHiddenLogo.accept(!self.workspaces.isEmpty)
+                                self.output.workspaceListCellData.onNext(self.workspaces)
                             case .delete:
                                 self.workspaces.remove(at: cell.index)
                                 self.output.isHiddenLogo.accept(!self.workspaces.isEmpty)

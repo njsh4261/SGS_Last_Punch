@@ -11,11 +11,15 @@ import Alamofire
 class WorkspaceService {
     static let shared = WorkspaceService()
     
-    func getWorkspace(accessToken: String, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: ""), method: HTTPMethod) -> Observable<NetworkResult<WorkspaceResponseModel>> {
-                
+    func getWorkspace(accessToken: String, page: Int, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: ""), method: HTTPMethod) -> Observable<NetworkResult<WorkspaceResponseModel>> {
+        var url = APIConstants().workspaceList + "/\(cell.workspaceId)"
+        
+        if page != 0 {
+            url += "?page=\(page)"
+        }
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
-            let dataRequest = AF.request(APIConstants().workspaceList + "/\(cell.workspaceId)",
+            let dataRequest = AF.request(url,
                                          method: method,
                                          encoding: JSONEncoding.default,
                                          headers: header)

@@ -75,6 +75,7 @@ class WorkspaceListViewController: UIViewController {
         
         // pagenation
         tableView.rx.didScroll
+            .throttle(.seconds(1), latest: true, scheduler: MainScheduler.instance)
             .withLatestFrom(tableView.rx.contentOffset)
             .map { [weak self] in
                 

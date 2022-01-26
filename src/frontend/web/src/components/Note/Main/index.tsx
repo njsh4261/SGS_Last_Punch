@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-import Block from './Block';
+import SlateBlock from './SlateBlock';
 
 const Container = styled.article`
   display: flex;
@@ -56,14 +56,16 @@ export default function NoteMain() {
 
   return (
     <Container>
-      {blockList.map((block) => (
+      <SlateBlock></SlateBlock>
+      {/* <DraftBlock></DraftBlock> */}
+      {/* {blockList.map((block) => (
         <Block
           ref={block.id === newBlockId ? ref : undefined}
           id={block.id}
           key={block.id}
           createBlock={createBlock}
         ></Block>
-      ))}
+      ))} */}
     </Container>
   );
 }

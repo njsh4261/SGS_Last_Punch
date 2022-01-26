@@ -1,0 +1,932 @@
+{
+	"info": {
+		"_postman_id": "e429ce86-91ab-4532-8f8b-3ec58e38c7c4",
+		"name": "AuthServer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/auth/login",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"qwer@qwer\",\n    \"password\": \"pw\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": "로그인"
+			},
+			"response": [
+				{
+					"name": "Success - 11000 로그인 성공",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"lastpunch@gmail.com\",\n    \"password\": \"pw\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jan 2022 15:24:06 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": \"11000\",\n    \"data\": {\n        \"access_token\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXN0cHVuY2hAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0MjE3NDQ0Nn0.pikSN6bEc8vMIuw9DEe-f1hN0LlILcOW4yTjD4Z2856vj6Nqf9ACYFdEEnY8kQAkozeKAPYHKFoP2Et7Ivl1_w\",\n        \"refresh_token\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXN0cHVuY2hAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0Mjc3ODY0Nn0.eXbYaY6-_G-10m_QUa8DpU_OzmU8Yvxd8-7RJTqYJDRB9zodjWalYTeNGW_yObhm1eyfzzQ915A2uJhu3fNDfA\"\n    }\n}"
+				},
+				{
+					"name": "Fail - 11002 BAD_CREDENTIALS",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"wrongemail@gmail.com\",\n    \"password\": \"pw\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jan 2022 15:24:51 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": \"11002\",\n    \"err\": {\n        \"msg\": \"BAD_CREDENTIALS\",\n        \"desc\": \"이메일 혹은 패스워드를 잘못 입력했습니다.\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "localhost:8080/auth/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"lastpunch@gmail.com\",\n    \"password\": \"pw\",\n    \"verifyCode\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"signup"
+					]
+				},
+				"description": "회원 가입"
+			},
+			"response": [
+				{
+					"name": "Success - 11000 회원가입 성공",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"lastpunch@gmail.com\",\n    \"password\": \"pw\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jan 2022 15:19:42 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": \"11000\",\n    \"status\": 200\n}"
+				},
+				{
+					"name": "Fail - 11001 DUPLICATE_EMAIL",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"lastpunch@gmail.com\",\n    \"password\": \"pw\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jan 2022 15:21:57 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": \"11001\",\n    \"err\": {\n        \"msg\": \"DUPLICATE_EMAIL\",\n        \"desc\": \"이미 가입된 이메일입니다.\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "localhost:8080/auth/verify",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXN0cHVuY2hAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0MjE3NDQ0Nn0.pikSN6bEc8vMIuw9DEe-f1hN0LlILcOW4yTjD4Z2856vj6Nqf9ACYFdEEnY8kQAkozeKAPYHKFoP2Et7Ivl1_w",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/auth/verify",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"verify"
+					]
+				},
+				"description": "access token으로 사용자 인증이 잘 되는지 확인하기 위한 API\n\n- 헤더 'X-AUTH-TOKEN'에 access token의 값을 넣어 전송\n- 성공하지 못하면 /auth/reissue API를 통해 refresh token을 헤더에 넣고 access token 값을 새로 받아와야함"
+			},
+			"response": [
+				{
+					"name": "Success - 11000 access token 인증 성공",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXN0cHVuY2hAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0MjE3NDQ0Nn0.pikSN6bEc8vMIuw9DEe-f1hN0LlILcOW4yTjD4Z2856vj6Nqf9ACYFdEEnY8kQAkozeKAPYHKFoP2Et7Ivl1_w",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/auth/verify",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"verify"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jan 2022 15:30:32 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": \"11000\",\n    \"data\": {\n        \"msg\": \"인증에 성공했습니다.\"\n    }\n}"
+				},
+				{
+					"name": "Fail - 10002 EXPIRED_TOKEN (access token 유효기간 만료)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXN0cHVuY2hAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0MjE3NDQ0Nn0.pikSN6bEc8vMIuw9DEe-f1hN0LlILcOW4yTjD4Z2856vj6Nqf9ACYFdEEnY8kQAkozeKAPYHKFoP2Et7Ivl1_w",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/auth/verify",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"verify"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"err\": {\n        \"msg\": \"EXPIRED_TOKEN\",\n        \"desc\": \"토큰이 만료되었습니다.\"\n    },\n    \"code\": \"10002\"\n}"
+				},
+				{
+					"name": "Fail - 10003 MALFORMED_TOKEN (access token이 유효하지 않음)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzeUxMiJ9.eyJzdWIiOiJsYXN0cHVuY2hAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0MjE3NDQ0Nn0.pikSN6bEc8vMIuw9DEe-f1hN0LlILcOW4yTjD4Z2856vj6Nqf9ACYFdEEnY8kQAkozeKAPYHKFoP2Et7Ivl1_w",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/auth/verify",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"verify"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"err\": {\n        \"msg\": \"MALFORMED_TOKEN\",\n        \"desc\": \"토큰이 유효하지 않습니다.\"\n    },\n    \"code\": \"10003\"\n}"
+				},
+				{
+					"name": "Fail - 10001 NO_TOKEN (access token이 헤더에 존재하지 않거나 빈 string일 때)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-TOKEN",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/auth/verify",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"verify"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"err\": {\n        \"msg\": \"NO_TOKEN\",\n        \"desc\": \"토큰이 존재하지 않습니다.\"\n    },\n    \"code\": \"10001\"\n}"
+				}
+			]
+		},
+		{
+			"name": "localhost:8080/auth/reissue",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXN0cHVuY2hAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0Mjc2ODM0Nn0.oNx4CWLaWsgAkJQUViqWo42BouxUV2XJl8gqzlfvx7H6AHSfvMKw8hDZg8TewPWY_pd8cwDYVwBoRA3weX8a8w",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/auth/reissue",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"reissue"
+					]
+				},
+				"description": "refresh token으로 새 access token을 발급받기 위한 API"
+			},
+			"response": [
+				{
+					"name": "Success - 11000 access token 재발급 성공",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXN0cHVuY2hAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0Mjc2ODM0Nn0.oNx4CWLaWsgAkJQUViqWo42BouxUV2XJl8gqzlfvx7H6AHSfvMKw8hDZg8TewPWY_pd8cwDYVwBoRA3weX8a8w",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/auth/reissue",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"reissue"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 14 Jan 2022 16:05:46 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": \"11000\",\n    \"data\": {\n        \"access_token\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXN0cHVuY2hAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0MjE3Njk0Nn0.Vno2OmbBTYp9-OWaUTwxGbBm4jqXWI1vQb-Hd20Y73ePjW2b5C2ilCQ42U6K8XiT4gcbV0tZSMaFAeTwBUpvJg\"\n    }\n}"
+				},
+				{
+					"name": "Fail - 10003 MALFORMED_TOKEN (refresh token이 유효하지 않음)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUezUxMiJ9.eyJzdWIiOiJsYXN0cHVuY2hAZ21haWwuY29tIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY0Mjc2ODM0Nn0.oNx4CWLaWsgAkJQUViqWo42BouxUV2XJl8gqzlfvx7H6AHSfvMKw8hDZg8TewPWY_pd8cwDYVwBoRA3weX8ae",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/auth/reissue",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"reissue"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"err\": {\n        \"msg\": \"MALFORMED_TOKEN\",\n        \"desc\": \"토큰이 유효하지 않습니다.\"\n    },\n    \"code\": \"10003\"\n}"
+				},
+				{
+					"name": "Fail - 10001 NO_TOKEN (refresh token이 헤더에 존재하지 않거나 빈 string일 때)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-TOKEN",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/auth/reissue",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"reissue"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"err\": {\n        \"msg\": \"NO_TOKEN\",\n        \"desc\": \"토큰이 존재하지 않습니다.\"\n    },\n    \"code\": \"10001\"\n}"
+				}
+			]
+		},
+		{
+			"name": "localhost:8080/auth/email-verification",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"lastpunch@gmail.com\",\n    \"verifyCode\": \"564351\"\n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/email-verification",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"email-verification"
+					]
+				},
+				"description": "사용자가 이메일 인증 코드 6자리를 입력했을 때 올바른 인증 코드인지 확인하고, 사용자 status를 변경해주기 위한 API\n"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/auth/email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"lastpunch@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/email",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"email"
+					]
+				},
+				"description": "이메일 인증 메일을 보낼 때 사용하는 API"
+			},
+			"response": [
+				{
+					"name": "localhost:8080/auth/send-mail",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"lastpunch@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/send-email",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"send-email"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 20 Jan 2022 02:28:23 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": \"11000\",\n    \"status\": 200\n}"
+				}
+			]
+		},
+		{
+			"name": "localhost:8080/auth/signout",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2NDMyNTA2NTh9.zjZAPg7OpXPVtW1blyZBn3B24E9yBcncrARN88aQxO_MPgNMAwmCafxMyR5v-mY5kIHdiOPrd-fDzL-XMiDxsw"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/auth/signout",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"signout"
+					]
+				},
+				"description": "로그아웃 시 refresh token 삭제"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/email-duplicate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"lastpunch@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/email-duplicate",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"email-duplicate"
+					]
+				},
+				"description": "이미 해당 이메일로 회원가입된 사용자가 있는지 확인하는 API"
+			},
+			"response": []
+		}
+	]
+}

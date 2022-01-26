@@ -1,37 +1,69 @@
 package lastpunch.workspace.service;
 
+import lastpunch.workspace.common.StatusCode;
+import lastpunch.workspace.common.exception.BusinessException;
+import lastpunch.workspace.common.exception.DBExceptionMapper;
+import lastpunch.workspace.common.type.RoleType;
 import lastpunch.workspace.entity.AccountChannel;
 import lastpunch.workspace.repository.AccountChannelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AccountChannelService{
     private final AccountChannelRepository accountChannelRepository;
+    private final DBExceptionMapper dbExceptionMapper;
 
     @Autowired
-    public AccountChannelService(AccountChannelRepository accountChannelRepository) {
+    public AccountChannelService(
+            AccountChannelRepository accountChannelRepository,
+            DBExceptionMapper dbExceptionMapper) {
         this.accountChannelRepository = accountChannelRepository;
+        this.dbExceptionMapper = dbExceptionMapper;
     }
 
     public void add(AccountChannel.Dto accountChannelDto){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
-        accountChannelRepository.add(
-                accountChannelDto.getAccountId(), accountChannelDto.getChannelId(), accountChannelDto.getRoleId()
-        );
+        try{
+            if(accountChannelDto.getRoleId() == null){
+                accountChannelDto.setRoleId(RoleType.NORMAL_USER.getId());
+            }
+            accountChannelRepository.add(
+                accountChannelDto.getAccountId(),
+                accountChannelDto.getChannelId(),
+                accountChannelDto.getRoleId()
+            );
+        } catch(DataIntegrityViolationException e){
+            BusinessException be = dbExceptionMapper.getException(e);
+            throw (be != null) ? be : e;
+        }
     }
 
     public void edit(AccountChannel.Dto accountChannelDto){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
-        accountChannelRepository.edit(
-                accountChannelDto.getAccountId(), accountChannelDto.getChannelId(), accountChannelDto.getRoleId()
-        );
+        try{
+            Integer editedRecords = accountChannelRepository.edit(
+                accountChannelDto.getAccountId(),
+                accountChannelDto.getChannelId(),
+                accountChannelDto.getRoleId()
+            );
+            if(editedRecords <= 0){
+                throw new BusinessException(StatusCode.ACCOUNTCHANNEL_NOT_EXIST);
+            }
+        } catch(DataIntegrityViolationException e){
+            BusinessException be = dbExceptionMapper.getException(e);
+            throw (be != null) ? be : e;
+        }
     }
 
     public void delete(AccountChannel.Dto accountChannelDto){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
-        accountChannelRepository.delete(
+        Integer deletedRecords = accountChannelRepository.delete(
                 accountChannelDto.getAccountId(), accountChannelDto.getChannelId()
         );
+        if(deletedRecords <= 0){
+            throw new BusinessException(StatusCode.ACCOUNTCHANNEL_NOT_EXIST);
+        }
     }
 }

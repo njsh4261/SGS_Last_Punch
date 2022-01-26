@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,13 +26,19 @@ public class AccountWorkspaceController{
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody AccountWorkspace.Dto accountWorkspaceDto){
-        accountWorkspaceService.addMember(accountWorkspaceDto);
+        accountWorkspaceService.add(accountWorkspaceDto);
+        return Response.ok(ServerCode.WORKSPACE);
+    }
+    
+    @PutMapping
+    public ResponseEntity<Object> edit(@RequestBody AccountWorkspace.Dto accountWorkspaceDto){
+        accountWorkspaceService.edit(accountWorkspaceDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
 
     @DeleteMapping
     public ResponseEntity<Object> delete(@RequestBody AccountWorkspace.Dto accountWorkspaceDto){
-        accountWorkspaceService.deleteMember(accountWorkspaceDto);
+        accountWorkspaceService.delete(accountWorkspaceDto);
         return Response.ok(ServerCode.WORKSPACE);
     }
 }

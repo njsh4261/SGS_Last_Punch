@@ -39,6 +39,7 @@ public class AccountChannel{
     private Role role;
     
     @Getter
+    @Setter
     @Builder
     public static class Dto {
         private Long accountId;

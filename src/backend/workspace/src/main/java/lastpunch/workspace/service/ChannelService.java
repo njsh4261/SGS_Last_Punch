@@ -2,11 +2,14 @@ package lastpunch.workspace.service;
 
 import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
+import lastpunch.workspace.common.exception.DBExceptionMapper;
 import lastpunch.workspace.common.type.RoleType;
 import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.repository.AccountChannelRepository;
 import lastpunch.workspace.repository.channel.ChannelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +19,19 @@ import java.util.Map;
 public class ChannelService{
     private final ChannelRepository channelRepository;
     private final AccountChannelRepository accountChannelRepository;
-    
     private final CommonService commonService;
+    private final DBExceptionMapper dbExceptionMapper;
     
     @Autowired
     public ChannelService(
             ChannelRepository channelRepository,
             AccountChannelRepository accountChannelRepository,
-            CommonService commonService){
+            CommonService commonService,
+            DBExceptionMapper dbExceptionMapper){
         this.channelRepository = channelRepository;
         this.accountChannelRepository = accountChannelRepository;
         this.commonService = commonService;
+        this.dbExceptionMapper = dbExceptionMapper;
     }
     
     public Map<String, Object> getOne(Long id){
@@ -38,15 +43,19 @@ public class ChannelService{
     }
     
     public Map<String, Object> create(Long userId, Channel.CreateDto createDto){
-        Channel newChannel = channelRepository.save(
-            createDto.toEntity(
-                commonService.getWorkspace(createDto.getWorkspaceId())
-            )
-        );
-    
-        accountChannelRepository.add(userId, newChannel.getId(), RoleType.OWNER.getId());
-        
-        return Map.of("channel", newChannel.export());
+        try{
+            commonService.getAccount(userId); // userId validation 용도의 호출
+            Channel newChannel = channelRepository.save(
+                createDto.toEntity(
+                    commonService.getWorkspace(createDto.getWorkspaceId())
+                )
+            );
+            accountChannelRepository.add(userId, newChannel.getId(), RoleType.OWNER.getId());
+            return Map.of("channel", newChannel.export());
+        } catch(DataIntegrityViolationException e){
+            BusinessException be = dbExceptionMapper.getException(e);
+            throw (be != null) ? be : e;
+        }
     }
     
     public void edit(Long id, Channel.EditDto editDto){
@@ -54,6 +63,10 @@ public class ChannelService{
     }
     
     public void delete(Long id){
-        channelRepository.deleteById(id);
+        try{
+            channelRepository.deleteById(id);
+        } catch(EmptyResultDataAccessException e){
+            throw new BusinessException(StatusCode.CHANNEL_NOT_EXIST);
+        }
     }
 }

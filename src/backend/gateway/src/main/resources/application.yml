@@ -31,5 +31,6 @@ spring:
               - GET
               - PUT
               - OPTIONS
+              - PATCH
               - DELETE
 

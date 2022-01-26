@@ -3,6 +3,7 @@ package lastpunch.notehttpserver.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+import lastpunch.notehttpserver.dto.NoteInfo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,4 +31,14 @@ public class Note {
     
     private LocalDateTime createdt;
     private LocalDateTime modifydt;
+    
+    public NoteInfo toNoteInfo(){
+        String title = blocks.get(0).getContent();
+        return NoteInfo.builder()
+            .id(id.toString())
+            .title(title)
+            .createdt(createdt)
+            .modifydt(modifydt)
+            .build();
+    }
 }

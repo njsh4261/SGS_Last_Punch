@@ -16,9 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class NoteUpdateController {
     private final NoteUpdateService noteUpdateService;
     
-    @PostMapping(value ="/note/save-transactions", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value ="/note", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> saveTransactions(@RequestBody UpdateNoteRequest updateNoteRequest){
         
         noteUpdateService.update(updateNoteRequest);
@@ -34,13 +35,13 @@ public class NoteUpdateController {
         return Response.toResponseEntity("15000", HttpStatus.OK);
     }
     
-    @GetMapping(value ="/note/sync-note")
+    @PostMapping(value ="/note/block")
     public ResponseEntity<Object> syncNote(@RequestBody SyncNoteRequest syncNoteRequest){
         
-        List<Block> blocks = noteUpdateService.find(syncNoteRequest);
+        List<Block> block = noteUpdateService.find(syncNoteRequest);
     
         Map<String, List<Block>> data = new HashMap<String, List<Block>>();
-        data.put("blocks", blocks);
+        data.put("block", block);
         
         return Response.toResponseEntity("15000", HttpStatus.OK, data);
     }

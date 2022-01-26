@@ -1,10 +1,10 @@
-package com.lastpunch.chatproto;
+package lastpunch.chat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ChatProtoApplicationTests {
+class ChatApplicationTests {
 
 	@Test
 	void contextLoads() {

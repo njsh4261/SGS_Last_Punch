@@ -1,5 +1,5 @@
 //
-//  ChatsViewModel.swift
+//  HomeViewModel.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/17.
@@ -8,7 +8,7 @@
 import RxSwift
 import RxCocoa
 
-class ChatsViewModel: ViewModelProtocol {
+class HomeViewModel: ViewModelProtocol {
     struct Input {
 //        let email: AnyObserver<String>
 //        let password: AnyObserver<String>

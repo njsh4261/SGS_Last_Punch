@@ -8,11 +8,13 @@
 import RxSwift
 import RxCocoa
 import CoreGraphics
+import Alamofire
 
 class WorkspaceListViewModel: ViewModelProtocol {
     
     struct Input {
         let accessToken = PublishSubject<String>()
+        let deleteCell = PublishSubject<deleteCellAction>()
         let pagination = PublishSubject<PaginationAction>()
         let refresh = PublishSubject<Void>()
     }
@@ -21,7 +23,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
         let workspaceListCellData = PublishSubject<[WorkspaceListCellModel]>()
         let isHiddenLogo = PublishRelay<Bool>()
         let refreshLoading = PublishRelay<Bool>()
-        let pullUpLoading = PublishRelay<Bool>()
+        let paginationLoading = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
     }
     // MARK: - Public properties
@@ -29,6 +31,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
     var output = Output()
     
     // MARK: - Private properties
+    private var workspaces = [WorkspaceListCellModel]()
     private let disposeBag = DisposeBag()
     var cellData: Driver<[WorkspaceListCellModel]>
     
@@ -37,13 +40,20 @@ class WorkspaceListViewModel: ViewModelProtocol {
         self.cellData = output.workspaceListCellData
             .asDriver(onErrorJustReturn: [])
         
+        // delete cell
+        input.deleteCell.withLatestFrom(Observable.combineLatest(input.accessToken, input.deleteCell))
+            .bind { [weak self] (token, cell) in
+                guard let self = self else { return }
+                self.getWorkspaceList(token, cell, method: .delete)
+            }.disposed(by: disposeBag)
+        
         // refresh
         input.refresh.withLatestFrom(input.accessToken)
             .bind { [weak self] (token) in
                 guard let self = self else { return }
                 let when = DispatchTime.now() + 1.0
                 DispatchQueue.main.asyncAfter(deadline: when) {
-                    self.getWorkspaceList(token)
+                    self.getWorkspaceList(token, method: .get)
                     self.output.refreshLoading.accept(false)
                 }
             }.disposed(by: disposeBag)
@@ -51,15 +61,15 @@ class WorkspaceListViewModel: ViewModelProtocol {
         // pagination
         input.pagination.withLatestFrom(Observable.combineLatest(input.accessToken, input.pagination))
             .bind { [weak self] (token, action) in
-                if action.contentOffsetY <= (action.contentHeight - action.scrollViewHeight) {
-                    return
-                }
+//                action.contentOffsetY < 40
+                if action.contentOffsetY <= action.contentHeight - 40 - action.scrollViewHeight { return }
                 guard let self = self else { return }
+                
                 let when = DispatchTime.now() + 1.0
-                self.output.pullUpLoading.accept(true)
+                self.output.paginationLoading.accept(true)
                 DispatchQueue.main.asyncAfter(deadline: when) {
-                    self.getWorkspaceList(token)
-                    self.output.pullUpLoading.accept(false)
+                    self.getWorkspaceList(token, method: .get)
+                    self.output.paginationLoading.accept(false)
                 }
             }.disposed(by: disposeBag)
         
@@ -67,23 +77,37 @@ class WorkspaceListViewModel: ViewModelProtocol {
         input.accessToken.withLatestFrom(input.accessToken)
             .bind { [weak self] (token) in
                 guard let self = self else { return }
-                self.getWorkspaceList(token)
+                self.getWorkspaceList(token, method: .get)
             }.disposed(by: disposeBag)
     }
     
-    func getWorkspaceList(_ token:String) {
+    func getWorkspaceList(_ token:String, _ cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: ""), method: HTTPMethod) {
         DispatchQueue.main.async { // 메인스레드에서 동작
-            WorkspaceService.shared.getWorkspace(accessToken: token)
+            WorkspaceService.shared.getWorkspace(accessToken: token, cell: cell, method: method)
                 .observe(on: MainScheduler.instance)
                 .subscribe{ event in
                     switch event {
                     case .next(let result):
                         switch result {
-                        case .success(let workspace):
-                            self.output.isHiddenLogo.accept(!workspace.isEmpty)
-                            self.output.workspaceListCellData.onNext(workspace)
+                        case .success(let decodedData):
+                            switch method {
+                            case .get:
+                                guard let workspaces = decodedData.data?.workspaces?.content else {
+                                    self.output.errorMessage.accept("워크스페이스를 찾지 못했습니다.")
+                                    return
+                                }
+                                self.workspaces = workspaces
+                                self.output.isHiddenLogo.accept(!workspaces.isEmpty)
+                                self.output.workspaceListCellData.onNext(workspaces)
+                            case .delete:
+                                self.workspaces.remove(at: cell.index)
+                                self.output.isHiddenLogo.accept(!self.workspaces.isEmpty)
+                                self.output.workspaceListCellData.onNext(self.workspaces)
+                            default:
+                                break
+                            }
                         default:
-                            self.output.errorMessage.accept("워크스페이스 목록을 못가져웠어요")
+                            self.output.errorMessage.accept("문제가 발생했어요")
                         }
                     default:
                         break

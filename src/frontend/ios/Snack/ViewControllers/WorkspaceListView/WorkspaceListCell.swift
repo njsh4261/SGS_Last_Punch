@@ -12,6 +12,8 @@ import SnapKit
 import Then
 
 class WorkspaceListCell: UITableViewCell {
+    // MARK: - Properties
+    var workspaceId: Int = -1
     
     // MARK: - UI
     var ivThumbnail = UIImageView()
@@ -27,6 +29,7 @@ class WorkspaceListCell: UITableViewCell {
     }
     
     func setData(_ data: WorkspaceListCellModel) {
+        workspaceId = data.id
         ivThumbnail.image = UIImage(named: "snack")
         lblName.text = data.name
         lblAddress.text = data.createdt

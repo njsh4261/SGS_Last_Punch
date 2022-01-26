@@ -12,3 +12,8 @@ struct PaginationAction {
     let contentOffsetY: CGFloat
     let scrollViewHeight: CGFloat
 }
+
+struct deleteCellAction {
+    let index: Int
+    let workspaceId: String
+}

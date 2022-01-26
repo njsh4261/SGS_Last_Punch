@@ -13,7 +13,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var tabBarController: UITabBarController!
     
-    var chatsView: ChatsViewController!
     var profileVie: ProfileViewController!
     // 추가예정 : DirectMessageViewConrooler!, NoticeViewConrooler!, SearchViewConrooler!
 
@@ -21,18 +20,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
         
-        chatsView = ChatsViewController()
         profileVie = ProfileViewController(nibName: "ProfileView", bundle: nil)
         
         
-        let navController1 = NavigationController(rootViewController: chatsView)
-        let navController4 = NavigationController(rootViewController: profileVie)
+        let navController5 = NavigationController(rootViewController: profileVie)
         
         tabBarController = UITabBarController()
-        tabBarController.viewControllers = [navController1, navController4]
+        tabBarController.viewControllers = [navController5]
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
-        tabBarController.selectedIndex = 0
         
         if #available(iOS 15.0, *) {
             let appearance = UITabBarAppearance()
@@ -47,7 +43,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        self.window?.rootViewController = WorkspaceListViewController()
         self.window?.makeKeyAndVisible()
         
-        _ = chatsView.view
         _ = profileVie.view
         
         // UITableView padding

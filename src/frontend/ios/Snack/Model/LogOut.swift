@@ -12,5 +12,6 @@ class LogOut {
         KeychainWrapper.standard.removeObject(forKey: KeychainWrapper.Key.email.rawValue)
         KeychainWrapper.standard.removeObject(forKey: KeychainWrapper.Key.accessToken.rawValue)
         KeychainWrapper.standard.removeObject(forKey: KeychainWrapper.Key.refreshToken.rawValue)
+        KeychainWrapper.standard.removeObject(forKey: KeychainWrapper.Key.workspaceId.rawValue)
     }
 }

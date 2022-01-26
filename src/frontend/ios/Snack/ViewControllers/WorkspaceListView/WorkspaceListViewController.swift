@@ -19,7 +19,9 @@ class WorkspaceListViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private var accessTokenField = UITextField()
     private var tablewHightField = UITextField()
+    private var deleteCellField = UITextField()
     var workspace: WorkspacesModel?
+    var selectWorkspace: Int = -1
     
     // MARK: - UI
     var btnNext = UIBarButtonItem()
@@ -65,7 +67,7 @@ class WorkspaceListViewController: UIViewController {
             .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
-        // pagenation
+        // pull down
         refreshControl.rx.controlEvent(.valueChanged)
             .asDriver()
             .drive(viewModel.input.refresh)
@@ -75,10 +77,11 @@ class WorkspaceListViewController: UIViewController {
         tableView.rx.didScroll
             .withLatestFrom(tableView.rx.contentOffset)
             .map { [weak self] in
+                
                 PaginationAction.init(
                     contentHeight: self?.tableView.contentSize.height ?? 0,
                     contentOffsetY: $0.y,
-                    scrollViewHeight: self?.tableView.frame.size.height ?? 0
+                    scrollViewHeight: 1000
                 )
             }
             .bind(to: viewModel.input.pagination)
@@ -89,6 +92,9 @@ class WorkspaceListViewController: UIViewController {
                 guard let self = self else { return }
                 let cell = self.tableView.cellForRow(at: indexPath) as? WorkspaceListCell
                 cell?.btnCheckBox.setImage(UIImage(systemName: "checkmark"), for: .normal)
+                
+                self.btnNext.isEnabled = true
+                self.selectWorkspace = cell!.workspaceId
             }).disposed(by: disposeBag)
         
         tableView.rx.itemDeselected
@@ -98,12 +104,36 @@ class WorkspaceListViewController: UIViewController {
                 cell?.btnCheckBox.setImage(nil, for: .normal)
             }).disposed(by: disposeBag)
         
+        tableView.rx.itemDeleted
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let self = self else { return }
+                let cell = self.tableView.cellForRow(at: indexPath) as? WorkspaceListCell
+                
+                self.deleteCellField.text = cell?.workspaceId.description
+                // delete cell
+                self.deleteCellField.rx.text
+                    .map {
+                        deleteCellAction.init(
+                            index: indexPath.row,
+                            workspaceId: $0!
+                        )
+                    }
+                    .bind(to: viewModel.input.deleteCell)
+                    .disposed(by: self.disposeBag)
+
+            }).disposed(by: disposeBag)
+        
         // MARK: Bind output
         viewModel.cellData
             .asDriver(onErrorJustReturn: [])
             .drive(tableView.rx.items) { tv, row, data in
                 let index = IndexPath(row: row, section: 0)
                 let cell = tv.dequeueReusableCell(withIdentifier: "WorkspaceListCell", for: index) as! WorkspaceListCell
+                
+                cell.btnCheckBox.setImage(nil, for: .normal)
+                self.selectWorkspace = -1
+                self.btnNext.isEnabled = false
+                
                 cell.setData(data)
                 return cell
             }
@@ -115,8 +145,8 @@ class WorkspaceListViewController: UIViewController {
             .disposed(by: disposeBag)
         
         // pagenation
-        viewModel.output.pullUpLoading
-            .bind(onNext: pullUpLoading)
+        viewModel.output.paginationLoading
+            .bind(onNext: paginationLoding)
             .disposed(by: disposeBag)
         
         // Empty일때
@@ -131,7 +161,7 @@ class WorkspaceListViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func pullUpLoading(_ bool: Bool) {
+    private func paginationLoding(_ bool: Bool) {
         if bool {
             tableView.tableFooterView = pagenationControl
             pagenationControl.startAnimating()
@@ -147,6 +177,13 @@ class WorkspaceListViewController: UIViewController {
     
     private func goToHome() {
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            KeychainWrapper.standard[.workspaceId] = selectWorkspace
+            
+            let homeView = HomeViewController()
+            let navController1 = NavigationController(rootViewController: homeView)
+            sceneDelegate.tabBarController.viewControllers?.insert(navController1, at: 0)
+            sceneDelegate.tabBarController.selectedIndex = 0
+
             sceneDelegate.window?.rootViewController = sceneDelegate.tabBarController
         }
     }
@@ -163,6 +200,7 @@ class WorkspaceListViewController: UIViewController {
         btnNext = btnNext.then {
             $0.title = "다음"
             $0.style = .plain
+            $0.isEnabled = false
         }
         
         [lblTitle, lblDescription, lblSearch].forEach {
@@ -295,15 +333,5 @@ class WorkspaceListViewController: UIViewController {
             $0.top.equalTo(btnNewWorkspace.snp.bottom).offset(20)
             $0.height.equalTo(50)
         }
-    }
-}
-
-extension Reactive where Base: UITableView {
-    
-    var contentSize: Binder<CGSize> {
-        return Binder(base, binding: { (tablew, s) in
-            
-            _ = tablew.contentSize.height
-        })
     }
 }

@@ -24,8 +24,8 @@
 		8C68AAD72791AF1100C1711E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAD62791AF1100C1711E /* RegisterViewController.swift */; };
 		8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAD82791AF3300C1711E /* RegisterViewModel.swift */; };
 		8C68AADB2791B57100C1711E /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AADA2791B57100C1711E /* RegisterService.swift */; };
-		8C68AAE1279526C600C1711E /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAE0279526C600C1711E /* ChatsViewController.swift */; };
-		8C68AAE3279526CF00C1711E /* ChatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAE2279526CF00C1711E /* ChatsViewModel.swift */; };
+		8C68AAE1279526C600C1711E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAE0279526C600C1711E /* HomeViewController.swift */; };
+		8C68AAE3279526CF00C1711E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAE2279526CF00C1711E /* HomeViewModel.swift */; };
 		8C68AAF027952F6500C1711E /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAEF27952F6500C1711E /* NavigationController.swift */; };
 		8C68AAF327953A8A00C1711E /* ChannelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAF227953A8A00C1711E /* ChannelObject.swift */; };
 		8C68AAF927954FA100C1711E /* DirectMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAF827954FA100C1711E /* DirectMessageCell.swift */; };
@@ -82,8 +82,8 @@
 		8C68AAD62791AF1100C1711E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		8C68AAD82791AF3300C1711E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		8C68AADA2791B57100C1711E /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
-		8C68AAE0279526C600C1711E /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
-		8C68AAE2279526CF00C1711E /* ChatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewModel.swift; sourceTree = "<group>"; };
+		8C68AAE0279526C600C1711E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		8C68AAE2279526CF00C1711E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8C68AAEF27952F6500C1711E /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		8C68AAF227953A8A00C1711E /* ChannelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelObject.swift; sourceTree = "<group>"; };
 		8C68AAF827954FA100C1711E /* DirectMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageCell.swift; sourceTree = "<group>"; };
@@ -273,7 +273,7 @@
 		8C68AADD2795269100C1711E /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
-				8C68AAE5279526E800C1711E /* Chats */,
+				8C68AAE5279526E800C1711E /* Home */,
 				8C68AAE62795270200C1711E /* DirectMessage */,
 				8C68AAE72795281700C1711E /* Notice */,
 				8C68AAE82795281B00C1711E /* Search */,
@@ -282,15 +282,15 @@
 			path = Tabs;
 			sourceTree = "<group>";
 		};
-		8C68AAE5279526E800C1711E /* Chats */ = {
+		8C68AAE5279526E800C1711E /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				8C68AAF727954F7000C1711E /* ChannelCell */,
 				8C68AAF627954F6B00C1711E /* DirectMessageCell */,
-				8C68AAE0279526C600C1711E /* ChatsViewController.swift */,
-				8C68AAE2279526CF00C1711E /* ChatsViewModel.swift */,
+				8C68AAE0279526C600C1711E /* HomeViewController.swift */,
+				8C68AAE2279526CF00C1711E /* HomeViewModel.swift */,
 			);
-			path = Chats;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		8C68AAE62795270200C1711E /* DirectMessage */ = {
@@ -557,7 +557,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C68AAE3279526CF00C1711E /* ChatsViewModel.swift in Sources */,
+				8C68AAE3279526CF00C1711E /* HomeViewModel.swift in Sources */,
 				8C68AB0827957ADD00C1711E /* ExDateFormatter.swift in Sources */,
 				8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */,
 				8C68AB1527969D1200C1711E /* NetworkResult.swift in Sources */,
@@ -572,7 +572,7 @@
 				8C68AB172796A03E00C1711E /* APIConstants.swift in Sources */,
 				8C68AACD2791186400C1711E /* Credentials.swift in Sources */,
 				8CBD4538279D3F350056A557 /* WorkspaceService.swift in Sources */,
-				8C68AAE1279526C600C1711E /* ChatsViewController.swift in Sources */,
+				8C68AAE1279526C600C1711E /* HomeViewController.swift in Sources */,
 				8C68AB1E27970A3200C1711E /* EditProfileView.swift in Sources */,
 				8C68AADB2791B57100C1711E /* RegisterService.swift in Sources */,
 				8C68AAC92791166F00C1711E /* ViewModelProtocol.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  ChatsViewController.swift
+//  HomeViewController.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/17.
@@ -11,17 +11,19 @@ import RxCocoa
 import SnapKit
 import ProgressHUD
 import RxDataSources
+import SwiftKeychainWrapper
 import Then
 
-class ChatsViewController: UIViewController {
+class HomeViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = ChatsViewModel()
+    private var viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
     private var dataSource: RxTableViewSectionedReloadDataSource<ChatsSection>!
     private var channelObjects: [ChannelObject] = []
     private var directMessageObjects: [DirectMessageObject] = []
     private var observerId: String?
+    private var workspaceId: Int?
     
     // MARK: - UI
     private var searchBar = UISearchBar()
@@ -29,6 +31,8 @@ class ChatsViewController: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        let workspaceId: Int = KeychainWrapper.standard[.workspaceId] ?? -1
+        self.workspaceId = workspaceId
         
         bind(with: viewModel)
         attribute()
@@ -40,7 +44,7 @@ class ChatsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(with viewModel: ChatsViewModel) {
+    func bind(with viewModel: HomeViewModel) {
         dataSource = RxTableViewSectionedReloadDataSource<ChatsSection> { dataSource, tableView, indexPath, item in
             switch dataSource[indexPath] {
             case .StatusChannel:

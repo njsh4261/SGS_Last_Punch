@@ -1,5 +1,7 @@
 package lastpunch.workspace.service;
 
+import java.util.HashMap;
+import java.util.Map;
 import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.exception.DBExceptionMapper;
@@ -23,7 +25,7 @@ public class AccountChannelService{
         this.dbExceptionMapper = dbExceptionMapper;
     }
 
-    public void add(AccountChannel.Dto accountChannelDto){
+    public Map<String, Object> add(AccountChannel.Dto accountChannelDto){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
             if(accountChannelDto.getRoleId() == null){
@@ -34,13 +36,14 @@ public class AccountChannelService{
                 accountChannelDto.getChannelId(),
                 accountChannelDto.getRoleId()
             );
+            return new HashMap<>();
         } catch(DataIntegrityViolationException e){
             BusinessException be = dbExceptionMapper.getException(e);
             throw (be != null) ? be : e;
         }
     }
 
-    public void edit(AccountChannel.Dto accountChannelDto){
+    public Map<String, Object> edit(AccountChannel.Dto accountChannelDto){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
             Integer editedRecords = accountChannelRepository.edit(
@@ -51,19 +54,26 @@ public class AccountChannelService{
             if(editedRecords <= 0){
                 throw new BusinessException(StatusCode.ACCOUNTCHANNEL_NOT_EXIST);
             }
+            return new HashMap<>();
         } catch(DataIntegrityViolationException e){
             BusinessException be = dbExceptionMapper.getException(e);
             throw (be != null) ? be : e;
         }
     }
 
-    public void delete(AccountChannel.Dto accountChannelDto){
+    public Map<String, Object> delete(AccountChannel.Dto accountChannelDto){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
-        Integer deletedRecords = accountChannelRepository.delete(
+        try{
+            Integer deletedRecords = accountChannelRepository.delete(
                 accountChannelDto.getAccountId(), accountChannelDto.getChannelId()
-        );
-        if(deletedRecords <= 0){
-            throw new BusinessException(StatusCode.ACCOUNTCHANNEL_NOT_EXIST);
+            );
+            if(deletedRecords <= 0){
+                throw new BusinessException(StatusCode.ACCOUNTCHANNEL_NOT_EXIST);
+            }
+            return new HashMap<>();
+        } catch(DataIntegrityViolationException e){
+            BusinessException be = dbExceptionMapper.getException(e);
+            throw (be != null) ? be : e;
         }
     }
 }

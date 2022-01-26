@@ -26,19 +26,16 @@ public class AccountWorkspaceController{
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody AccountWorkspace.Dto accountWorkspaceDto){
-        accountWorkspaceService.add(accountWorkspaceDto);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, accountWorkspaceService.add(accountWorkspaceDto));
     }
     
     @PutMapping
     public ResponseEntity<Object> edit(@RequestBody AccountWorkspace.Dto accountWorkspaceDto){
-        accountWorkspaceService.edit(accountWorkspaceDto);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, accountWorkspaceService.edit(accountWorkspaceDto));
     }
 
     @DeleteMapping
     public ResponseEntity<Object> delete(@RequestBody AccountWorkspace.Dto accountWorkspaceDto){
-        accountWorkspaceService.delete(accountWorkspaceDto);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, accountWorkspaceService.delete(accountWorkspaceDto));
     }
 }

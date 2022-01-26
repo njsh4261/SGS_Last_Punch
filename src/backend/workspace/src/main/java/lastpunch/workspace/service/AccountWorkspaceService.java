@@ -1,5 +1,7 @@
 package lastpunch.workspace.service;
 
+import java.util.HashMap;
+import java.util.Map;
 import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.exception.DBExceptionMapper;
@@ -23,7 +25,7 @@ public class AccountWorkspaceService{
         this.dbExceptionMapper = dbExceptionMapper;
     }
     
-    public void add(AccountWorkspace.Dto accountWorkspaceDto){
+    public Map<String, Object> add(AccountWorkspace.Dto accountWorkspaceDto){
         try{
             // TODO: 요청자의 권한에 따라 거부하는 코드 추가
             if(accountWorkspaceDto.getRoleId() == null){
@@ -34,13 +36,14 @@ public class AccountWorkspaceService{
                 accountWorkspaceDto.getWorkspaceId(),
                 accountWorkspaceDto.getRoleId()
             );
+            return new HashMap<>();
         } catch(DataIntegrityViolationException e){
             BusinessException be = dbExceptionMapper.getException(e);
             throw (be != null) ? be : e;
         }
     }
     
-    public void edit(AccountWorkspace.Dto accountWorkspaceDto){
+    public Map<String, Object> edit(AccountWorkspace.Dto accountWorkspaceDto){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
             Integer editedRecords = accountWorkspaceRepository.edit(
@@ -51,20 +54,27 @@ public class AccountWorkspaceService{
             if(editedRecords <= 0){
                 throw new BusinessException(StatusCode.ACCOUNTWORKSPACE_NOT_EXIST);
             }
+            return new HashMap<>();
         } catch(DataIntegrityViolationException e){
             BusinessException be = dbExceptionMapper.getException(e);
             throw (be != null) ? be : e;
         }
     }
 
-    public void delete(AccountWorkspace.Dto accountWorkspaceDto){
+    public Map<String, Object> delete(AccountWorkspace.Dto accountWorkspaceDto){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
-        Integer deletedRecords = accountWorkspaceRepository.delete(
-            accountWorkspaceDto.getAccountId(),
-            accountWorkspaceDto.getWorkspaceId()
-        );
-        if(deletedRecords <= 0){
-            throw new BusinessException(StatusCode.ACCOUNTWORKSPACE_NOT_EXIST);
+        try{
+            Integer deletedRecords = accountWorkspaceRepository.delete(
+                accountWorkspaceDto.getAccountId(),
+                accountWorkspaceDto.getWorkspaceId()
+            );
+            if(deletedRecords <= 0){
+                throw new BusinessException(StatusCode.ACCOUNTWORKSPACE_NOT_EXIST);
+            }
+            return new HashMap<>();
+        } catch(DataIntegrityViolationException e){
+            BusinessException be = dbExceptionMapper.getException(e);
+            throw (be != null) ? be : e;
         }
     }
 }

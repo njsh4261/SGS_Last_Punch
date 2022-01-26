@@ -1,5 +1,6 @@
 package lastpunch.workspace.service;
 
+import java.util.HashMap;
 import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.exception.DBExceptionMapper;
@@ -38,7 +39,7 @@ public class ChannelService{
         return Map.of("channel", commonService.getChannel(id).export());
     }
     
-    public Object getMembers(Long id, Pageable pageable){
+    public Map<String, Object> getMembers(Long id, Pageable pageable){
         return Map.of("members", channelRepository.getMembers(id, pageable));
     }
     
@@ -58,13 +59,15 @@ public class ChannelService{
         }
     }
     
-    public void edit(Long id, Channel.EditDto editDto){
+    public Map<String, Object> edit(Long id, Channel.EditDto editDto){
         channelRepository.save(editDto.toEntity(commonService.getChannel(id)));
+        return new HashMap<>();
     }
     
-    public void delete(Long id){
+    public Map<String, Object> delete(Long id){
         try{
             channelRepository.deleteById(id);
+            return new HashMap<>();
         } catch(EmptyResultDataAccessException e){
             throw new BusinessException(StatusCode.CHANNEL_NOT_EXIST);
         }

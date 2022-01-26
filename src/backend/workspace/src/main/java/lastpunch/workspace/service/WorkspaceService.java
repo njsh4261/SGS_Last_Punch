@@ -1,5 +1,6 @@
 package lastpunch.workspace.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import lastpunch.workspace.common.StatusCode;
@@ -82,13 +83,15 @@ public class WorkspaceService{
         }
     }
     
-    public void edit(Workspace.EditDto editDto, Long id){
+    public Map<String, Object> edit(Workspace.EditDto editDto, Long id){
         workspaceRepository.save(editDto.toEntity(commonService.getWorkspace(id)));
+        return new HashMap<>();
     }
     
-    public void delete(Long id){
+    public Map<String, Object> delete(Long id){
         try{
             workspaceRepository.deleteById(id);
+            return new HashMap<>();
         } catch(EmptyResultDataAccessException e){
             throw new BusinessException(StatusCode.WORKSPACE_NOT_EXIST);
         }

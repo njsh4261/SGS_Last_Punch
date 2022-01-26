@@ -148,8 +148,8 @@ class LoginViewController: UIViewController {
             $0.setTitle("로그인", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 16)
             $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
-            $0.setTitleColor(UIColor(named: "snackTextColor")!, for: .normal)
             $0.setTitleColor(UIColor(named: "snackTextColor")?.withAlphaComponent(0.3), for: .highlighted)
+            $0.setTitleColor(UIColor(named: "snackTextColor")?.withAlphaComponent(0.3), for: .disabled)
             $0.clipsToBounds = true
             $0.layer.cornerRadius = 6
             $0.isEnabled = false

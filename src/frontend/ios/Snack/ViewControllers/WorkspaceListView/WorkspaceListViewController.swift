@@ -20,7 +20,6 @@ class WorkspaceListViewController: UIViewController {
     private var accessTokenField = UITextField()
     private var tablewHightField = UITextField()
     private var deleteCellField = UITextField()
-    var workspace: WorkspacesModel?
     var selectWorkspace: Int = -1
     
     // MARK: - UI

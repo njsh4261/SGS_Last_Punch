@@ -18,14 +18,14 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/sub");
-        config.setApplicationDestinationPrefixes("/pub");
+        config.setApplicationDestinationPrefixes("/topic");
     }
     
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // sockJS 연결 주소 http://localhost:8080/note 사용
-        registry.addEndpoint("/note").setAllowedOrigins("http://localhost:63342").withSockJS();
-        // 웹소켓 연결 주소 ws://localhost:8080/note 사용
-        registry.addEndpoint("/note").setAllowedOrigins("http://localhost:63342");
+        // sockJS 연결 주소 http://localhost:8080/ws/note 사용
+        registry.addEndpoint("/ws/note").setAllowedOrigins("http://localhost:3000").withSockJS();
+        // 웹소켓 연결 주소 ws://localhost:8080/ws/note 사용
+        registry.addEndpoint("/ws/note").setAllowedOrigins("http://localhost:3000");
     }
 }

@@ -20,8 +20,9 @@ class LoginViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
-    var scrollview = UIScrollView()
+    let scrollview = UIScrollView()
     let contentsView = UIView()
+    var btnBack = UIBarButtonItem()
     var ivLogo = UIImageView()
     var fieldEmail = UITextField()
     var fieldPassword = UITextField()
@@ -52,6 +53,10 @@ class LoginViewController: UIViewController {
         
         fieldPassword.rx.text.orEmpty
             .bind(to: viewModel.input.password)
+            .disposed(by: disposeBag)
+        
+        btnBack.rx.tap
+            .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
         // enter를 누를때
@@ -125,10 +130,21 @@ class LoginViewController: UIViewController {
         }
     }
     
+    private func goToWelecome() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     private func attribute() {
         title = "로그인"
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
+        navigationItem.leftBarButtonItem = btnBack
         ivLogo.image = UIImage(named: "snack")
+        view.endEditing(true)
+        
+        btnBack = btnBack.then {
+            $0.image = UIImage(systemName: "chevron.backward")
+            $0.style = .plain
+        }
         
         [fieldEmail, fieldPassword].forEach {
             $0.textAlignment = .left
@@ -144,6 +160,7 @@ class LoginViewController: UIViewController {
             $0.placeholder = "이메일을 입력해주세요"
             $0.keyboardType = .emailAddress
             $0.returnKeyType = .next
+            $0.becomeFirstResponder()
         }
         
         fieldPassword = fieldPassword.then {

@@ -21,6 +21,7 @@ class RegisterViewController: UIViewController {
     // MARK: - UI
     var scrollview = UIScrollView()
     let contentsView = UIView()
+    var btnBack = UIBarButtonItem()
     var ivLogo = UIImageView()
     var fieldEmail = UITextField()
     var fieldCode = UITextField()
@@ -69,6 +70,10 @@ class RegisterViewController: UIViewController {
         
         fieldCheckPassword.rx.text.orEmpty
             .bind(to: viewModel.input.checkPassword)
+            .disposed(by: disposeBag)
+        
+        btnBack.rx.tap
+            .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
         // enter를 누를때
@@ -247,10 +252,20 @@ class RegisterViewController: UIViewController {
         }
     }
     
+    private func goToWelecome() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     private func attribute() {
         title = "회원가입"
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
+        navigationItem.leftBarButtonItem = btnBack
         ivLogo.image = UIImage(named: "snack")
+        
+        btnBack = btnBack.then {
+            $0.image = UIImage(systemName: "chevron.backward")
+            $0.style = .plain
+        }
         
         [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword].forEach {
             $0.textAlignment = .left

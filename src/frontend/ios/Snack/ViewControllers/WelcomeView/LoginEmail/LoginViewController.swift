@@ -30,6 +30,7 @@ class LoginViewController: UIViewController {
     var btnSignIn = UIButton()
     var lblWarning = UILabel()
     var btnSignUp = UIButton()
+    var btnSignUpColor = UIButton()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -65,6 +66,11 @@ class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         btnSignUp.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: goToRegister)
+            .disposed(by: disposeBag)
+        
+        btnSignUpColor.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: goToRegister)
             .disposed(by: disposeBag)
@@ -165,14 +171,23 @@ class LoginViewController: UIViewController {
         }
         
         btnSignUp = btnSignUp.then {
-            $0.setTitle("혹시 계정이 없나요? 회원가입하기", for: .normal)
+            $0.setTitle("혹시 계정이 없나요?", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
             $0.setTitleColor(.lightGray, for: .normal)
+            $0.contentHorizontalAlignment = .right
+        }
+        
+        btnSignUpColor = btnSignUpColor.then {
+            $0.setTitle("회원가입", for: .normal)
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
+            $0.setTitleColor(UIColor(named: "snackColor")!, for: .normal)
+            $0.contentHorizontalAlignment = .left
+            $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
         }
     }
     
     private func layout() {
-        [ivLogo, fieldEmail, emailBorder, fieldPassword, passwordBorder, btnSignIn, lblWarning, btnSignUp].forEach { contentsView.addSubview($0) }
+        [ivLogo, fieldEmail, emailBorder, fieldPassword, passwordBorder, btnSignIn, lblWarning, btnSignUp, btnSignUpColor].forEach { contentsView.addSubview($0) }
         
         scrollview.addSubview(contentsView)
         
@@ -233,18 +248,21 @@ class LoginViewController: UIViewController {
             $0.top.equalToSuperview().inset(320)
         }
         
-        [lblWarning, btnSignUp].forEach {
-            $0.snp.makeConstraints {
-                $0.left.right.equalToSuperview()
-            }
-        }
-        
         lblWarning.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
             $0.height.equalTo(21)
             $0.top.equalToSuperview().inset(380)
         }
         
         btnSignUp.snp.makeConstraints {
+            $0.left.equalTo(view.frame.width/4)
+            $0.right.equalTo(btnSignUpColor.snp.left)
+            $0.height.equalTo(50)
+            $0.top.equalTo(lblWarning.snp.bottom).offset(270)
+        }
+        
+        btnSignUpColor.snp.makeConstraints {
+            $0.right.equalToSuperview()
             $0.height.equalTo(50)
             $0.top.equalTo(lblWarning.snp.bottom).offset(270)
         }

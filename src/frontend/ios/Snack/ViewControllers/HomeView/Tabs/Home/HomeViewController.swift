@@ -72,10 +72,14 @@ class HomeViewController: UIViewController {
         tabBarItem.image = UIImage(systemName: "house")
         tabBarItem.selectedImage = UIImage(systemName: "house.fill")
         tabBarItem.title = "홈"
+                
+        [view, tableView].forEach {
+            $0.backgroundColor = UIColor(named: "snackBackGroundColor")
+        }
         
-        view.backgroundColor = UIColor(named: "snackColor")
-
-        searchBar.placeholder = "채널로 이동..."
+        searchBar = searchBar.then {
+            $0.placeholder = "채널로 이동..."
+        }
         
         tableView = tableView.then {
             $0.register(ChannelCell.self, forCellReuseIdentifier: "ChannelCell")

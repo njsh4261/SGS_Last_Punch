@@ -1,5 +1,6 @@
 package lastpunch.chat.service;
 
+import java.time.LocalDateTime;
 import lastpunch.chat.entity.Message;
 import lastpunch.chat.repository.MongoDbRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class MongoDbService{
         return mongoDbRepository.findAllByChannelIdOrderByCreateDtDesc(
             channelId, PageRequest.of(page, size)
         );
+    }
+    
+    public Page<Message> getOlderMessages(String channelId, LocalDateTime dateTime){
+        return mongoDbRepository.findOldMessages(channelId, dateTime, PageRequest.of(page, size));
     }
     
     @Async

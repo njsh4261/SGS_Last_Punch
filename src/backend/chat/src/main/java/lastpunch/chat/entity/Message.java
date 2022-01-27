@@ -32,6 +32,12 @@ public class Message{
     }
     
     @Getter
+    public static class GetOlderDto{
+        private String channelId;
+        private LocalDateTime dateTime;
+    }
+    
+    @Getter
     public static class SendDto{
         private String authorId;
         private String channelId;

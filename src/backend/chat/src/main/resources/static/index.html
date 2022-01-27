@@ -50,7 +50,7 @@
                   showMessageOutput(JSON.parse(messageOutput.body));
               }
             );
-            stompClient.send("/pub/enter", {},
+            stompClient.send("/app/enter", {},
                 JSON.stringify({
                     'channelId': channelId
                 })
@@ -70,7 +70,7 @@
         var authorId = document.getElementById('authorId').value;
         var channelId = document.getElementById('channelId').value;
         var content = document.getElementById('content').value;
-        stompClient.send("/pub/chat", {},
+        stompClient.send("/app/chat", {},
           JSON.stringify({
             'authorId': authorId,
             'channelId': channelId,
@@ -102,6 +102,20 @@
           )
         );
         list.appendChild(p);
+    }
+
+<!--    this function is not for use; -->
+<!--    you may refer this function if you want to get older messages-->
+<!--    dateTime should come from the oldest message in local list-->
+    function getOlderMessage() {
+        var channelId = document.getElementById('channelId').value;
+        const dateTime = "2022-01-27T15:29:10.767Z";
+        stompClient.send("/app/older", {},
+            JSON.stringify({
+                'channelId': channelId,
+                'dateTime': dateTime
+            })
+        );
     }
 </script>
 </html>

@@ -14,20 +14,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var tabBarController: UITabBarController!
     var welcomeViewController: WelcomeViewController!
     
-    var profileVie: ProfileViewController!
+    var profileView: ProfileViewController!
+    var messageView: MessageView!
     // 추가예정 : DirectMessageViewConrooler!, NoticeViewConrooler!, SearchViewConrooler!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
         
-        profileVie = ProfileViewController(nibName: "ProfileView", bundle: nil)
+        messageView = MessageView()
+        profileView = ProfileViewController(nibName: "ProfileView", bundle: nil)
         
-        
-        let navController5 = NavigationController(rootViewController: profileVie)
+        let navController2 = NavigationController(rootViewController: messageView)
+        let navController5 = NavigationController(rootViewController: profileView)
         
         tabBarController = UITabBarController()
-        tabBarController.viewControllers = [navController5]
+        tabBarController.viewControllers = [navController2, navController5]
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
         tabBarController.modalPresentationStyle = .fullScreen
@@ -46,7 +48,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        self.window?.rootViewController = WorkspaceListViewController()
         self.window?.makeKeyAndVisible()
         
-        _ = profileVie.view
+        _ = profileView.view
+        _ = messageView.view
         
         // UITableView padding
         if #available(iOS 15.0, *) {

@@ -57,6 +57,9 @@
 		8CBD456F27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD456E27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift */; };
 		8CBD457527A22A2D0056A557 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457427A22A2D0056A557 /* AppConstant.swift */; };
 		8CBD457827A25E430056A557 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457727A25E430056A557 /* MessageView.swift */; };
+		8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457927A287460056A557 /* Ex+NotificationCenter.swift */; };
+		8CBD457C27A28A350056A557 /* MessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457B27A28A350056A557 /* MessagesCell.swift */; };
+		8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457D27A28AEF0056A557 /* MessageKit.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -119,6 +122,9 @@
 		8CBD456E27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchURLWorkspaceVeiwModel.swift; sourceTree = "<group>"; };
 		8CBD457427A22A2D0056A557 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		8CBD457727A25E430056A557 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		8CBD457927A287460056A557 /* Ex+NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+NotificationCenter.swift"; sourceTree = "<group>"; };
+		8CBD457B27A28A350056A557 /* MessagesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCell.swift; sourceTree = "<group>"; };
+		8CBD457D27A28AEF0056A557 /* MessageKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKit.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -264,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				8C68AAD227911AD700C1711E /* ExObservable.swift */,
+				8CBD457927A287460056A557 /* Ex+NotificationCenter.swift */,
 				8CBD452C2799A0C80056A557 /* ExUIButton.swift */,
 				8C68AB0727957ADD00C1711E /* ExDateFormatter.swift */,
 				8CBD4541279F047F0056A557 /* KeychainWrapper+keys.swift */,
@@ -441,6 +448,8 @@
 			isa = PBXGroup;
 			children = (
 				8CBD457727A25E430056A557 /* MessageView.swift */,
+				8CBD457B27A28A350056A557 /* MessagesCell.swift */,
+				8CBD457D27A28AEF0056A557 /* MessageKit.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -609,6 +618,7 @@
 				8C68AAD027911A1000C1711E /* LoginService.swift in Sources */,
 				8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */,
 				8C68AB062795754900C1711E /* ChatsSection.swift in Sources */,
+				8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */,
 				8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */,
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
 				8CBD4544279F0CD50056A557 /* LogOutViewModel.swift in Sources */,
@@ -619,6 +629,8 @@
 				8CBD45342799B0E00056A557 /* WorkspaceListCellModel.swift in Sources */,
 				8CBD457527A22A2D0056A557 /* AppConstant.swift in Sources */,
 				8C68AAFF27954FD200C1711E /* ChannelCellViewModel.swift in Sources */,
+				8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */,
+				8CBD457C27A28A350056A557 /* MessagesCell.swift in Sources */,
 				8C68AAD327911AD700C1711E /* ExObservable.swift in Sources */,
 				8C68AAFB27954FBF00C1711E /* DirectMessageCellViewModel.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,

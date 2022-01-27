@@ -68,7 +68,7 @@ class WorkspaceListViewController: UIViewController {
         
         btnLogout.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .subscribe(onNext: goToWelecome)
+            .subscribe(onNext: logoutUser)
             .disposed(by: disposeBag)
         
         // pull down
@@ -181,21 +181,25 @@ class WorkspaceListViewController: UIViewController {
     }
     
     private func goToHome() {
-        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-            KeychainWrapper.standard[.workspaceId] = selectWorkspace
-            
-            let homeView = HomeViewController()
-            let navController1 = NavigationController(rootViewController: homeView)
-            sceneDelegate.tabBarController.viewControllers?.insert(navController1, at: 0)
-            sceneDelegate.tabBarController.selectedIndex = 0
-
-            sceneDelegate.window?.rootViewController = sceneDelegate.tabBarController
+        guard let pvc = self.presentingViewController else { return }
+        pvc.dismiss(animated: true) { [self] in
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                KeychainWrapper.standard[.workspaceId] = selectWorkspace
+                
+                
+                let homeView = HomeViewController()
+                let navController1 = NavigationController(rootViewController: homeView)
+                sceneDelegate.tabBarController.viewControllers?.insert(navController1, at: App.DefaultTab)
+                sceneDelegate.tabBarController.selectedIndex = App.DefaultTab
+                
+                sceneDelegate.welcomeViewController.present(sceneDelegate.tabBarController, animated: true, completion: nil)
+            }
         }
     }
     
-    private func goToWelecome() {
-        _ = LogOut()
-        dismiss(animated: true, completion: nil)
+    private func logoutUser() {
+        guard let pvc = self.presentingViewController else { return }
+        _ = LogOutViewModel(viewContoller: pvc)
     }
     
     private func goToURLWorkspace() {

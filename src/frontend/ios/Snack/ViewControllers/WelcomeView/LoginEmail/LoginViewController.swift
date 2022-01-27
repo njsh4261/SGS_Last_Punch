@@ -181,7 +181,7 @@ class LoginViewController: UIViewController {
         }
         
         lblWarning = lblWarning.then {
-            $0.text = "로그인하면 약관 및 개인정보 보호정책에 동의하는 것입니다."
+            $0.text = "로그인하면 약관 및 개인정보 보호정책에 동의하는 것입니다"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 11)
             $0.textAlignment = .center
             $0.textColor = .lightGray

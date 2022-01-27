@@ -12,6 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var tabBarController: UITabBarController!
+    var welcomeViewController: WelcomeViewController!
     
     var profileVie: ProfileViewController!
     // 추가예정 : DirectMessageViewConrooler!, NoticeViewConrooler!, SearchViewConrooler!
@@ -29,6 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.viewControllers = [navController5]
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
+        tabBarController.modalPresentationStyle = .fullScreen
         
         if #available(iOS 15.0, *) {
             let appearance = UITabBarAppearance()
@@ -37,8 +39,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             tabBarController.tabBar.scrollEdgeAppearance = appearance
         }
         
+        welcomeViewController = WelcomeViewController()
 //        self.window?.rootViewController = tabBarController
-        self.window?.rootViewController = WelcomeViewController()
+        self.window?.rootViewController = welcomeViewController
 //        self.window?.rootViewController = NavigationController(rootViewController: WorkspaceListView())
 //        self.window?.rootViewController = WorkspaceListViewController()
         self.window?.makeKeyAndVisible()

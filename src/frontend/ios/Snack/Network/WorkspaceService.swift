@@ -23,8 +23,7 @@ class WorkspaceService {
                                          method: method,
                                          encoding: JSONEncoding.default,
                                          headers: header)
-//            print(APIConstants().workspaceList + "/\(workspaceId)")
-//            print(method)
+
             dataRequest.validate().responseData { [self] response in
                 switch response.result {
                 case .success:

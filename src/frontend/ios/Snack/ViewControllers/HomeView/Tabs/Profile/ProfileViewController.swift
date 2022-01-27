@@ -65,6 +65,25 @@ class ProfileViewController: UITableViewController {
         present(navController, animated: true)
     }
     
+    // 로그아웃
+    
+    func actionLogout() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "로그아웃", style: .destructive) { action in
+            self.logoutUser()
+        })
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+
+        present(alert, animated: true)
+    }
+
+    // 유저 정보 로그아웃
+    func logoutUser() {
+        guard let pvc = self.presentingViewController else { return }
+        _ = LogOutViewModel(viewContoller: pvc)
+    }
+    
     // MARK: - TableView dataSource
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
@@ -108,8 +127,8 @@ class ProfileViewController: UITableViewController {
 //        if (indexPath.section == 1) && (indexPath.row == 0) { actionStatus() }
 //        if (indexPath.section == 2) && (indexPath.row == 0) { actionCache() }
 //        if (indexPath.section == 2) && (indexPath.row == 1) { actionMedia() }
-//        if (indexPath.section == 3) && (indexPath.row == 0) { actionLogout() }
-//        if (indexPath.section == 3) && (indexPath.row == 0) { actionDeleteUser() }
+        if (indexPath.section == 3) && (indexPath.row == 0) { actionLogout() }
+//        if (indexPath.section == 3) && (indexPath.row == 1) { actionDeleteUser() }
     }
 }
 

@@ -1,27 +1,31 @@
 package lastpunch.chat.controller;
 
-import java.time.LocalDateTime;
-import lastpunch.chat.entity.Message;
-import lastpunch.chat.service.RabbitService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lastpunch.chat.entity.Message.EnterDto;
+import lastpunch.chat.entity.Message.SendDto;
+import lastpunch.chat.service.MongoDbService;
+import lastpunch.chat.service.RabbitMqService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class ChatController{
-    private final Logger logger;
-    private final RabbitService rabbitService;
+    private final RabbitMqService rabbitMqService;
+    private final MongoDbService mongoDbService;
 
     @Autowired
-    public ChatController(RabbitService rabbitService){
-        this.logger = LoggerFactory.getLogger(ChatController.class);
-        this.rabbitService = rabbitService;
+    public ChatController(RabbitMqService rabbitMqService, MongoDbService mongoDbService){
+        this.mongoDbService = mongoDbService;
+        this.rabbitMqService = rabbitMqService;
+    }
+    
+    @MessageMapping("/enter")
+    public void getRecentMessages(EnterDto enterDto){
+        rabbitMqService.getRecentMessages(enterDto);
     }
     
     @MessageMapping("/chat")
-    public void send(Message.Dto messageDto){
-        rabbitService.send(messageDto.toEntity());
+    public void send(SendDto sendDto){
+        rabbitMqService.send(sendDto.toEntity());
     }
 }

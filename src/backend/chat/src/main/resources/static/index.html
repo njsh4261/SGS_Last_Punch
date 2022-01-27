@@ -6,9 +6,7 @@
 <body onload="disconnect()">
 <div>
   <div>
-    <input type="text" id="sender" placeholder="Type your name"/>
-  </div>
-  <div>
+    <input type="text" id="authorId" placeholder="Type author ID"/>
     <input type="text" id="channelId" placeholder="Type channel id"/>
   </div>
   <br />
@@ -41,15 +39,21 @@
 
     function connect() {
         var socket = new SockJS('/chat');
+        const channelId = document.getElementById('channelId').value;
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function(frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
             stompClient.subscribe(
-              '/topic/channel.' + document.getElementById('channelId').value,
+              '/topic/channel.' + channelId,
               function(messageOutput) {
                   showMessageOutput(JSON.parse(messageOutput.body));
               }
+            );
+            stompClient.send("/pub/enter", {},
+                JSON.stringify({
+                    'channelId': channelId
+                })
             );
         });
     }
@@ -63,30 +67,41 @@
     }
 
     function sendMessage() {
-        var sender = document.getElementById('sender').value;
-        var content = document.getElementById('content').value;
+        var authorId = document.getElementById('authorId').value;
         var channelId = document.getElementById('channelId').value;
+        var content = document.getElementById('content').value;
         stompClient.send("/pub/chat", {},
           JSON.stringify({
-            'sender': sender,
-            'content':content,
-            'channelId': channelId
+            'authorId': authorId,
+            'channelId': channelId,
+            'content': content
           })
         );
     }
 
     function showMessageOutput(messageOutput) {
         var response = document.getElementById('response');
+        if(typeof(messageOutput.pageable) !== 'undefined'){
+            messageOutput.content.reverse().forEach(
+                message => addMessageToList(response, message)
+            );
+        }
+        else{
+            addMessageToList(response, messageOutput);
+        }
+    }
+
+    function addMessageToList(list, message){
         var p = document.createElement('p');
         p.style.wordWrap = 'break-word';
         p.appendChild(
           document.createTextNode(
-            messageOutput.sender + ": "
-            + messageOutput.content
-            + " (" + messageOutput.createDt + ")"
+            "(authorId: " + message.authorId + "): "
+            + message.content
+            + " (" + message.createDt + " / " + message.modifyDt +")"
           )
         );
-        response.appendChild(p);
+        list.appendChild(p);
     }
 </script>
 </html>

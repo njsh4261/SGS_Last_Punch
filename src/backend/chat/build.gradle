@@ -35,3 +35,12 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+apply plugin: 'application'
+mainClassName = 'lastpunch.chat.ChatApplication'
+
+bootJar{
+	archivesBaseName = 'chat-server'
+	archiveFileName = 'chat-server.jar'
+	archiveVersion = "0.0.1"
+}

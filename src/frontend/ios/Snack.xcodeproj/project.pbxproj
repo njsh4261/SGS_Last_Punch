@@ -56,6 +56,7 @@
 		8CBD456C27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD456B27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift */; };
 		8CBD456F27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD456E27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift */; };
 		8CBD457527A22A2D0056A557 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457427A22A2D0056A557 /* AppConstant.swift */; };
+		8CBD457827A25E430056A557 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457727A25E430056A557 /* MessageView.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -117,6 +118,7 @@
 		8CBD456B27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchURLWorkspaceViewController.swift; sourceTree = "<group>"; };
 		8CBD456E27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchURLWorkspaceVeiwModel.swift; sourceTree = "<group>"; };
 		8CBD457427A22A2D0056A557 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
+		8CBD457727A25E430056A557 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -403,6 +405,7 @@
 				8C68AABF279093B600C1711E /* WelcomeView */,
 				8C68AB182796E67200C1711E /* WorkspaceListView */,
 				8C68AADC279524EB00C1711E /* HomeView */,
+				8CBD457627A25D9A0056A557 /* Chat */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -432,6 +435,14 @@
 				8CBD456E27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift */,
 			);
 			path = SearchURLWorkspace;
+			sourceTree = "<group>";
+		};
+		8CBD457627A25D9A0056A557 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				8CBD457727A25E430056A557 /* MessageView.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
@@ -577,6 +588,7 @@
 				8C68AAE3279526CF00C1711E /* HomeViewModel.swift in Sources */,
 				8C68AB0827957ADD00C1711E /* ExDateFormatter.swift in Sources */,
 				8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */,
+				8CBD457827A25E430056A557 /* MessageView.swift in Sources */,
 				8C68AB1527969D1200C1711E /* NetworkResult.swift in Sources */,
 				8C68AAF927954FA100C1711E /* DirectMessageCell.swift in Sources */,
 				8C68AAFD27954FCB00C1711E /* ChannelCell.swift in Sources */,

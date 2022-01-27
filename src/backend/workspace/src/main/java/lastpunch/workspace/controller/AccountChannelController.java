@@ -20,19 +20,16 @@ public class AccountChannelController{
     
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody AccountChannel.Dto accountChannelDto){
-        accountChannelService.add(accountChannelDto);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, accountChannelService.add(accountChannelDto));
     }
 
     @PutMapping
     public ResponseEntity<Object> edit(@RequestBody AccountChannel.Dto accountChannelDto){
-        accountChannelService.edit(accountChannelDto);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, accountChannelService.edit(accountChannelDto));
     }
 
     @DeleteMapping
     public ResponseEntity<Object> delete(@RequestBody AccountChannel.Dto accountChannelDto){
-        accountChannelService.delete(accountChannelDto);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, accountChannelService.delete(accountChannelDto));
     }
 }

@@ -33,6 +33,11 @@
 | PUT    | /channel/member | 채널에 대한 멤버 정보 수정 | AccountChannelDto | -             | -   |
 | DELETE | /channel/member | 채널에서 멤버 삭제      | AccountChannelDto | -             | -   |
 
+## 계정 API
+| Method | URI      | Description | Request Body   | Response Body | etc    |
+|--------|----------|-------------|----------------|---------------|--------|
+| POST   | /account | 이메일로 계정 조회  | AccountFindDto | 계정 목록         | paging |
+
 
 - WorkspaceCreateDTO 예시
     ```
@@ -106,6 +111,13 @@
   - `DELETE /channel/member`에서만 `roleId` 생략 가능
   - 이외 속성 생략 불가
 
+- AccountFindDto 예시
+  ```
+  {
+      "email": "asdf@qwer"
+  }
+  ```
+  - `email` 생략 불가
 
 - `etc`에 `paging`으로 표기된 API는 페이징 정보를 parameter로 넘겨줘야 함
   - `page`: 요청할 페이지 번호

@@ -7,19 +7,18 @@ export default async function reissueAPI() {
     console.error('no refresh token');
     return;
   }
-
-  const response = await axios.get(URL.HOST + ENDPOINT.REISSUE, {
-    headers: {
-      'X-AUTH-TOKEN': refreshToken,
-    },
-  });
-
-  if (!response) return;
-
-  if (response.data.code === RESPONSE.SIGNIN.SUCCESS) {
-    sessionStorage.setItem(TOKEN.ACCESS, response.data.data.access_token);
-    window.location.reload();
+  try {
+    const response = await axios.get(URL.HOST + ENDPOINT.REISSUE, {
+      headers: {
+        'X-AUTH-TOKEN': refreshToken,
+      },
+    });
+    if (!response) return;
+    if (response.data.code === RESPONSE.SIGNIN.SUCCESS) {
+      sessionStorage.setItem(TOKEN.ACCESS, response.data.data.access_token);
+      window.location.reload();
+    }
+  } catch (e) {
+    return;
   }
-
-  return;
 }

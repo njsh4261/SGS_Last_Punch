@@ -49,13 +49,11 @@ public class ChannelController{
     @PutMapping("/{id}")
     public ResponseEntity<Object> edit(
             @PathVariable("id") Long id, @RequestBody Channel.EditDto editDto){
-        channelService.edit(id, editDto);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, channelService.edit(id, editDto));
     }
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id){
-        channelService.delete(id);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, channelService.delete(id));
     }
 }

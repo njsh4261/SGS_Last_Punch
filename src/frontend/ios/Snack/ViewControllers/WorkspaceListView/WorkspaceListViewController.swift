@@ -186,7 +186,6 @@ class WorkspaceListViewController: UIViewController {
             if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
                 KeychainWrapper.standard[.workspaceId] = selectWorkspace
                 
-                
                 let homeView = HomeViewController()
                 let navController1 = NavigationController(rootViewController: homeView)
                 sceneDelegate.tabBarController.viewControllers?.insert(navController1, at: App.DefaultTab)

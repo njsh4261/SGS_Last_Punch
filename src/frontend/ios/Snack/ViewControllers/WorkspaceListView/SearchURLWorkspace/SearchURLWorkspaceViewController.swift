@@ -100,15 +100,18 @@ class SearchURLWorkspaceViewController: UIViewController {
     
     private func goToHome(_ bool: Bool) {
         if bool {
-            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                KeychainWrapper.standard[.workspaceId] = workspaceId
-                
-                let homeView = HomeViewController()
-                let navController1 = NavigationController(rootViewController: homeView)
-                sceneDelegate.tabBarController.viewControllers?.insert(navController1, at: 0)
-                sceneDelegate.tabBarController.selectedIndex = 0
-                
-                sceneDelegate.window?.rootViewController = sceneDelegate.tabBarController
+            guard let pvc = self.presentingViewController else { return }
+            pvc.dismiss(animated: true) { [self] in
+                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                    KeychainWrapper.standard[.workspaceId] = workspaceId
+                    
+                    let homeView = HomeViewController()
+                    let navController1 = NavigationController(rootViewController: homeView)
+                    sceneDelegate.tabBarController.viewControllers?.insert(navController1, at: App.DefaultTab)
+                    sceneDelegate.tabBarController.selectedIndex = App.DefaultTab
+                    
+                    sceneDelegate.welcomeViewController.present(sceneDelegate.tabBarController, animated: true, completion: nil)
+                }
             }
         }
     }

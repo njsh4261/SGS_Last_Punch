@@ -12,11 +12,9 @@ import SnapKit
 import Then
 
 class WorkspaceListCell: UITableViewCell {
-    
     // MARK: - Properties
-    private var viewModel = WorkspaceListCellViewModel()
-    private let disposeBag = DisposeBag()
-
+    var workspaceId: Int = -1
+    
     // MARK: - UI
     var ivThumbnail = UIImageView()
     var lblName = UILabel()
@@ -26,20 +24,15 @@ class WorkspaceListCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        bind(with: viewModel)
         attribute()
         layout()
     }
     
-    private func bind(with viewModel: WorkspaceListCellViewModel) {
-        //MARK: Bind input
-        // Toggle
-        btnCheckBox.rx.tap
-            .asDriver()
-            .drive(btnCheckBox.rx.setCheckImage)
-            .disposed(by: disposeBag)
-        
-        //MARK: Bind output
+    func setData(_ data: WorkspaceListCellModel) {
+        workspaceId = data.id
+        ivThumbnail.image = UIImage(named: "snack")
+        lblName.text = data.name
+        lblAddress.text = data.createdt
     }
     
     private func attribute() {
@@ -57,10 +50,8 @@ class WorkspaceListCell: UITableViewCell {
         }
         
         btnCheckBox = btnCheckBox.then {
-            $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
             $0.backgroundColor = .white
             $0.layer.cornerRadius = 5
-//            $0.tintColor = UIColor(named: "snackBackGroundColor")
         }
     }
     
@@ -71,7 +62,7 @@ class WorkspaceListCell: UITableViewCell {
         
         ivThumbnail.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.top.left.bottom.equalToSuperview().inset(10)
+            $0.left.equalToSuperview().inset(10)
             $0.width.height.equalTo(30)
         }
 
@@ -89,29 +80,8 @@ class WorkspaceListCell: UITableViewCell {
         
         btnCheckBox.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.right.equalToSuperview()
+            $0.right.equalToSuperview().inset(10)
             $0.width.height.equalTo(20)
         }
-    }
-    
-    func setData(_ data: WorkspaceListCellModel) {
-        ivThumbnail.image = UIImage(named: "snack")
-        lblName.text = data.name
-        lblAddress.text = data.createdt
-    }
-}
-
-extension Reactive where Base: UIButton {
-    
-    var setCheckImage: Binder<()> {
-        return Binder(base, binding: { (button, _) in
-            if button.image(for: .normal) == UIImage(systemName: "eye.slash.fill") {
-                button.setImage(UIImage(named: "checkmark"), for: .normal)
-                button.backgroundColor = .white
-            } else {
-                button.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
-                button.backgroundColor = UIColor(named: "snackColor")
-            }
-        })
     }
 }

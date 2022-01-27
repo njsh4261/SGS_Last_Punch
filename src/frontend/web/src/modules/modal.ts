@@ -1,21 +1,26 @@
+import { ModalType } from '../components/Main/Aside/Body/Modal';
+
 const OPEN_MODAL = 'modal/open';
 const CLOSE_MODAL = 'modal/close';
 
-export const openModal = () => ({
+export const openModal = (modalType: ModalType) => ({
   type: OPEN_MODAL,
+  modalType,
 });
 export const closeModal = () => ({
   type: CLOSE_MODAL,
 });
 
-type ModalAction = ReturnType<typeof openModal> | ReturnType<typeof closeModal>;
+type ModalAction = ReturnType<typeof openModal>;
 
 type ModalState = {
   active: boolean;
+  modalType: ModalType;
 };
 
 const initModalState: ModalState = {
   active: false,
+  modalType: 'channel',
 };
 
 function modal(
@@ -24,9 +29,9 @@ function modal(
 ): ModalState {
   switch (action.type) {
     case OPEN_MODAL:
-      return { active: true };
+      return { active: true, modalType: action.modalType };
     case CLOSE_MODAL:
-      return { active: false };
+      return { ...state, active: false };
     default:
       return state;
   }

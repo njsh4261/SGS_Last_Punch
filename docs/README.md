@@ -11,3 +11,7 @@
   - column명을 camel case로 일괄 수정
 - 22.01.10 DB 스키마 수정
   - MySQL 스키마에서 member -> account로 수정
+- 22.01.26 DB 스키마 수정 및 테스트 코드 
+  - 일부 필드에 UNIQUE constraint 추가
+  - 테스트용 access token을 보유한 account 추가
+  - Docker 환경의 스크립트도 일괄 수정

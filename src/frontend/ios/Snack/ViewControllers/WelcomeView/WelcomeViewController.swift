@@ -79,12 +79,16 @@ class WelcomeViewController: UIViewController {
         
         btnSignIn = btnSignIn.then {
             $0.setTitle("로그인", for: .normal)
-            $0.backgroundColor = UIColor(named: "snackColor")
+            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
+            $0.setTitleColor(UIColor(named: "snackTextColor")?.withAlphaComponent(0.3), for: .highlighted)
+            $0.clipsToBounds = true
         }
         
         btnSignUp = btnSignUp.then {
             $0.setTitle("회원가입", for: .normal)
-            $0.backgroundColor = .lightGray
+            $0.setBackgroundColor(.lightGray, for: .normal)
+            $0.setTitleColor(.lightGray.withAlphaComponent(0.3), for: .highlighted)
+            $0.clipsToBounds = true
         }
     }
     

@@ -69,6 +69,11 @@ public class Account{
     List<AccountChannel> channels;
     
     @Getter
+    public static class FindDto{
+        private String email;
+    }
+    
+    @Getter
     @Builder
     public static class ExportDto{
         private Long id;

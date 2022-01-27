@@ -55,10 +55,6 @@ class RegisterViewModel: ViewModelProtocol {
             }
             .disposed(by: disposeBag)
         
-        input.changedEmail
-            .bind{ }
-            .disposed(by: disposeBag)
-                
         // signup 버튼 활성화 조건
         Observable.combineLatest(input.email, input.code, input.password, input.checkPassword)
             .map{ self.isSignUp($0.0, $0.1, $0.2, $0.3) }

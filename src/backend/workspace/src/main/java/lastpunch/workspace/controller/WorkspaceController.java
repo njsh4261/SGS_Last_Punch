@@ -69,13 +69,11 @@ public class WorkspaceController{
     @PutMapping("/{id}")
     public ResponseEntity<Object> edit(
             @RequestBody Workspace.EditDto workspaceDto, @PathVariable("id") Long id){
-        workspaceService.edit(workspaceDto, id);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, workspaceService.edit(workspaceDto, id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id){
-        workspaceService.delete(id);
-        return Response.ok(ServerCode.WORKSPACE);
+        return Response.ok(ServerCode.WORKSPACE, workspaceService.delete(id));
     }
 }

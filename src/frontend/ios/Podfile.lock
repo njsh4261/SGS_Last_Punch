@@ -113,6 +113,7 @@ PODS:
     - RxSwift (= 6.2.0)
   - RxSwift (6.2.0)
   - SnapKit (5.0.1)
+  - SwiftKeychainWrapper (4.0.1)
   - Then (2.7.0)
 
 DEPENDENCIES:
@@ -124,6 +125,7 @@ DEPENDENCIES:
   - RxDataSources (~> 5.0)
   - RxSwift (= 6.2.0)
   - SnapKit (~> 5.0.0)
+  - SwiftKeychainWrapper
   - Then
 
 SPEC REPOS:
@@ -147,6 +149,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SnapKit
+    - SwiftKeychainWrapper
     - Then
 
 SPEC CHECKSUMS:
@@ -169,8 +172,9 @@ SPEC CHECKSUMS:
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: 68b91fa53e62d5c71a9d5389d20006b93ba3be54
+PODFILE CHECKSUM: 09615d1e6b0590a8b2ab6ee781d60acc0f805c54
 
 COCOAPODS: 1.11.2

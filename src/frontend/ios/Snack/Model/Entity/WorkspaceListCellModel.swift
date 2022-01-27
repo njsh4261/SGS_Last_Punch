@@ -13,6 +13,7 @@ struct WorkspaceResponseModel: Codable {
 }
 
 struct WorkspacesData: Codable {
+    let workspace: WorkspaceListCellModel?
     let workspaces: WorkspacesModel?
 }
 

@@ -20,6 +20,11 @@
 
 ### Spring Boot 프로젝트 가동
 - `~> ./gradlew run` (Windows는 `~> ./gradlew.bat run`)
+- 또는 빌드 후 수동 실행
+  ```
+  ~> ./gradlew build
+  ~> ./java -jar ./build/libs/chat-0.0.1-SNAPSHOT.jar
+  ```
 
 ## How To Use Prototype
 ![image](https://user-images.githubusercontent.com/54832818/150924382-95512f7d-20df-41dd-bfce-de4f79168e99.png)

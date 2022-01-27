@@ -13,6 +13,7 @@ target 'Snack' do
   pod 'ProgressHUD'
   pod 'RxDataSources', '~> 5.0'
   pod 'Alamofire', '~> 5.5'
+  pod 'SwiftKeychainWrapper'
 
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'

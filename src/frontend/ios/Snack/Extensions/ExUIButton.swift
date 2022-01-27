@@ -16,6 +16,8 @@ extension UIButton {
             context.setFillColor(color.cgColor)
         case .disabled:
             context.setFillColor(color.withAlphaComponent(0.3).cgColor)
+        case .selected:
+            context.setFillColor(color.withAlphaComponent(0.3).cgColor)
         default:
             context.setFillColor(color.cgColor)
         }

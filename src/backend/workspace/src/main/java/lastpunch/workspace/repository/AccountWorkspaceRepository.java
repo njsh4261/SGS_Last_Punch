@@ -17,7 +17,16 @@ public interface AccountWorkspaceRepository extends JpaRepository<AccountWorkspa
     )
     @Modifying(clearAutomatically = true)
     @Transactional
-    void save(Long accountId, Long workspaceId, Long roleId);
+    void add(Long accountId, Long workspaceId, Long roleId);
+    
+    @Query(
+        value = "UPDATE accountworkspace SET roleid=:roleId "
+            + "WHERE accountid=:accountId AND workspaceid=:workspaceId",
+        nativeQuery = true
+    )
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    Integer edit(Long accountId, Long workspaceId, Long roleId);
     
     @Query(
         value = "DELETE FROM accountworkspace "
@@ -26,5 +35,5 @@ public interface AccountWorkspaceRepository extends JpaRepository<AccountWorkspa
     )
     @Modifying(clearAutomatically = true)
     @Transactional
-    void delete(Long accountId, Long workspaceId);
+    Integer delete(Long accountId, Long workspaceId);
 }

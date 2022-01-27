@@ -20,6 +20,10 @@
   <div id="conversationDiv">
     <input type="text" id="content" placeholder="Write a message..."/>
     <button id="sendMessage" onclick="sendMessage();">Send</button>
+    <input type="text" id="dateTime" placeholder="Type date"/>
+    <button id="getOlder" disabled="disabled" onclick="getOlderMessage();">
+      Get older messages
+    </button>
     <p id="response"></p>
   </div>
 </div>
@@ -32,6 +36,8 @@
     function setConnected(connected) {
         document.getElementById('connect').disabled = connected;
         document.getElementById('disconnect').disabled = !connected;
+        document.getElementById('dateTime').disabled = !connected;
+        document.getElementById('getOlder').disabled = !connected;
         document.getElementById('conversationDiv').style.visibility
           = connected ? 'visible' : 'hidden';
         document.getElementById('response').innerHTML = '';
@@ -104,12 +110,10 @@
         list.appendChild(p);
     }
 
-<!--    this function is not for use; -->
-<!--    you may refer this function if you want to get older messages-->
-<!--    dateTime should come from the oldest message in local list-->
+<!--    dateTime example: "2022-01-27T15:29:10.767Z" -->
     function getOlderMessage() {
         var channelId = document.getElementById('channelId').value;
-        const dateTime = "2022-01-27T15:29:10.767Z";
+        const dateTime = document.getElementById('dateTime').value;
         stompClient.send("/app/older", {},
             JSON.stringify({
                 'channelId': channelId,

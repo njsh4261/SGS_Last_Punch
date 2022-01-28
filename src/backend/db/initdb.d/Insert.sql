@@ -29,6 +29,8 @@ INSERT INTO account (email, password, name, country, language, settings, status,
 INSERT INTO account (email, password, name, country, language, settings, status, level, point, createDt, modifyDt)
     VALUES ('7777@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, 3, 123, '1234-01-01', '9999-12-31');
 
+INSERT INTO account (id, email, password, name, country, language, settings, status, level, point, createDt, modifyDt)
+    VALUES (123456789123456, 'test@test', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, 3, 123, '1234-01-01', '9999-12-31');
 
 INSERT INTO workspace(name, settings, status, createDt, modifyDt)
     VALUES ('ws1', 0, 1, '1234-01-01', '9999-12-31');

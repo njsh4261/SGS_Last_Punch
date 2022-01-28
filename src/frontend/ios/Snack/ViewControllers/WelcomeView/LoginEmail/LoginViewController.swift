@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import ProgressHUD
+import SwiftKeychainWrapper
 import Then
 
 class LoginViewController: UIViewController {
@@ -19,6 +20,9 @@ class LoginViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
+    let scrollview = UIScrollView()
+    let contentsView = UIView()
+    var btnBack = UIBarButtonItem()
     var ivLogo = UIImageView()
     var fieldEmail = UITextField()
     var fieldPassword = UITextField()
@@ -27,6 +31,7 @@ class LoginViewController: UIViewController {
     var btnSignIn = UIButton()
     var lblWarning = UILabel()
     var btnSignUp = UIButton()
+    var btnSignUpColor = UIButton()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -41,13 +46,17 @@ class LoginViewController: UIViewController {
     }
     
     func bind(with viewModel: LoginViewModel) {
-        //MARK: Bind input
+        // MARK: Bind input
         fieldEmail.rx.text.orEmpty
             .bind(to: viewModel.input.email)
             .disposed(by: disposeBag)
         
         fieldPassword.rx.text.orEmpty
             .bind(to: viewModel.input.password)
+            .disposed(by: disposeBag)
+        
+        btnBack.rx.tap
+            .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
         // enter를 누를때
@@ -66,7 +75,12 @@ class LoginViewController: UIViewController {
             .subscribe(onNext: goToRegister)
             .disposed(by: disposeBag)
         
-        //MARK: Bind output
+        btnSignUpColor.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: goToRegister)
+            .disposed(by: disposeBag)
+        
+        // MARK: Bind output
         viewModel.output.enableBtnSignIn
             .observe(on: MainScheduler.instance)
             .bind(to: btnSignIn.rx.isEnabled)
@@ -97,12 +111,12 @@ class LoginViewController: UIViewController {
     }
     
     private func goToWorkspaceList(_ token: Token) {
-        NSLog("token.access_token : " + token.access_token)
-        NSLog("token.refresh_token : " + token.refresh_token)
-
-        let navController = WorkspaceListViewController()
-        navController.accessToken = token.access_token
+        // keychain에 email과 token 보관
+        KeychainWrapper.standard[.email] = fieldEmail.text
+        KeychainWrapper.standard[.accessToken] = token.access_token
+        KeychainWrapper.standard[.refreshToken] = token.refresh_token
         
+        let navController = WorkspaceListViewController()
         navigationController?.pushViewController(navController, animated: true)
     }
     
@@ -110,16 +124,27 @@ class LoginViewController: UIViewController {
         guard let pvc = self.presentingViewController else { return }
         let registerInputVC = NavigationController(rootViewController: RegisterViewController())
         registerInputVC.modalPresentationStyle = .fullScreen
-
+        
         dismiss(animated: true) {
             pvc.present(registerInputVC, animated: true, completion: nil)
         }
     }
     
+    private func goToWelecome() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     private func attribute() {
         title = "로그인"
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
+        navigationItem.leftBarButtonItem = btnBack
         ivLogo.image = UIImage(named: "snack")
+        view.endEditing(true)
+        
+        btnBack = btnBack.then {
+            $0.image = UIImage(systemName: "chevron.backward")
+            $0.style = .plain
+        }
         
         [fieldEmail, fieldPassword].forEach {
             $0.textAlignment = .left
@@ -135,6 +160,7 @@ class LoginViewController: UIViewController {
             $0.placeholder = "이메일을 입력해주세요"
             $0.keyboardType = .emailAddress
             $0.returnKeyType = .next
+            $0.becomeFirstResponder()
         }
         
         fieldPassword = fieldPassword.then {
@@ -147,38 +173,62 @@ class LoginViewController: UIViewController {
             $0.setTitle("로그인", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 16)
             $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
-            $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .disabled)
+            $0.setTitleColor(UIColor(named: "snackTextColor")?.withAlphaComponent(0.3), for: .highlighted)
+            $0.setTitleColor(UIColor(named: "snackTextColor")?.withAlphaComponent(0.3), for: .disabled)
             $0.clipsToBounds = true
             $0.layer.cornerRadius = 6
             $0.isEnabled = false
         }
         
         lblWarning = lblWarning.then {
-            $0.text = "로그인하면 약관 및 개인정보 보호정책에 동의하는 것입니다."
+            $0.text = "로그인하면 약관 및 개인정보 보호정책에 동의하는 것입니다"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 11)
             $0.textAlignment = .center
             $0.textColor = .lightGray
         }
         
         btnSignUp = btnSignUp.then {
-            $0.setTitle("혹시 계정이 없나요? 회원가입하기", for: .normal)
+            $0.setTitle("혹시 계정이 없나요?", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
             $0.setTitleColor(.lightGray, for: .normal)
+            $0.contentHorizontalAlignment = .right
+        }
+        
+        btnSignUpColor = btnSignUpColor.then {
+            $0.setTitle("회원가입", for: .normal)
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
+            $0.setTitleColor(UIColor(named: "snackColor")!, for: .normal)
+            $0.contentHorizontalAlignment = .left
+            $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
         }
     }
     
     private func layout() {
-        [ivLogo, fieldEmail, emailBorder, fieldPassword, passwordBorder, btnSignIn, lblWarning, btnSignUp].forEach { view.addSubview($0) }
+        [ivLogo, fieldEmail, emailBorder, fieldPassword, passwordBorder, btnSignIn, lblWarning, btnSignUp, btnSignUpColor].forEach { contentsView.addSubview($0) }
+        
+        scrollview.addSubview(contentsView)
+        
+        view.addSubview(scrollview)
+        
+        scrollview.snp.makeConstraints {
+            $0.edges.equalTo(0)
+        }
+        
+        contentsView.snp.makeConstraints {
+            $0.edges.equalTo(0)
+            $0.width.equalTo(view.frame.width)
+            $0.height.equalTo(view.frame.height - 70)
+        }
         
         ivLogo.snp.makeConstraints {
             $0.width.height.equalTo(80)
-            $0.centerX.equalTo(view.safeAreaLayoutGuide)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(70)
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(70)
         }
         
         [fieldEmail, emailBorder, fieldPassword, passwordBorder].forEach {
             $0.snp.makeConstraints {
-                $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(16)
+                $0.left.right.equalToSuperview().inset(16)
             }
         }
         
@@ -195,40 +245,43 @@ class LoginViewController: UIViewController {
         }
         
         fieldEmail.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(200)
+            $0.top.equalToSuperview().inset(200)
         }
         
         emailBorder.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
+            $0.top.equalToSuperview().inset(250)
         }
         
         fieldPassword.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
+            $0.top.equalToSuperview().inset(250)
         }
         
         passwordBorder.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(300)
+            $0.top.equalToSuperview().inset(300)
         }
         
         btnSignIn.snp.makeConstraints {
-            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(320)
-        }
-        
-        [lblWarning, btnSignUp].forEach {
-            $0.snp.makeConstraints {
-                $0.left.right.equalTo(view.safeAreaLayoutGuide)
-            }
+            $0.left.right.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(320)
         }
         
         lblWarning.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
             $0.height.equalTo(21)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(380)
+            $0.top.equalToSuperview().inset(380)
         }
         
         btnSignUp.snp.makeConstraints {
+            $0.left.equalTo(view.frame.width/4)
+            $0.right.equalTo(btnSignUpColor.snp.left)
             $0.height.equalTo(50)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(lblWarning.snp.bottom).offset(270)
+        }
+        
+        btnSignUpColor.snp.makeConstraints {
+            $0.right.equalToSuperview()
+            $0.height.equalTo(50)
+            $0.top.equalTo(lblWarning.snp.bottom).offset(270)
         }
     }
 }

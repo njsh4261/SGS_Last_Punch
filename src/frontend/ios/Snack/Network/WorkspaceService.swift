@@ -10,16 +10,20 @@ import Alamofire
 
 class WorkspaceService {
     static let shared = WorkspaceService()
-
-    func getWorkspace(accessToken : String) -> Observable<NetworkResult<[WorkspaceListCellModel]>> {
-        print("여기" + accessToken)
+    
+    func getWorkspace(accessToken: String, workspaceId: String = "", page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: ""), method: HTTPMethod) -> Observable<NetworkResult<WorkspaceResponseModel>> {
+        var url = APIConstants().workspaceList + "/\(workspaceId)"
+        
+        if page != 0 {
+            url += "?page=\(page)"
+        }
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
-            let dataRequest = AF.request(APIConstants().workspaceList,
-                                         method: .get,
+            let dataRequest = AF.request(url,
+                                         method: method,
                                          encoding: JSONEncoding.default,
                                          headers: header)
-            
+
             dataRequest.validate().responseData { [self] response in
                 switch response.result {
                 case .success:
@@ -35,39 +39,29 @@ class WorkspaceService {
         }
     }
     
-    private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<[WorkspaceListCellModel]> {
+    private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<WorkspaceResponseModel> {
         let decoder = JSONDecoder()
         
-        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
+        // 데이터량이 너무 많음
+        //        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
         
         guard let decodedData = try? decoder.decode(WorkspaceResponseModel.self, from: data) else { return
-            .pathErr
+                .pathErr
         }
-        guard let workspaces = decodedData.data?.workspaces?.content else {
-            return .pathErr
-        }
-
+        
         switch statusCode {
-        case 200: return .success(workspaces)
-        case 400: return .requestErr(workspaces)
+        case 200:
+            if decodedData.code == "12000" {
+                return .success(decodedData)
+            } else if decodedData.code == "12001" { // 존재하지 않는 워크스페이스
+                return .fail(decodedData)
+            } else {
+                return .success(decodedData)
+            }
+        case 400: return .requestErr(decodedData)
         case 401: return .unAuthorized
         case 500: return .serverErr
         default: return .networkFail
         }
     }
-    
-    func load() -> Data?{
-        let fileNm: String = "Workspace"
-        let extensionType = "json"
-        
-        guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return nil }
-        
-        do {
-            let data = try Data(contentsOf: fileLocation)
-            return data
-        } catch {
-            return nil
-        }
-    }
-
 }

@@ -143,7 +143,7 @@ class RegisterService {
                 return .fail(decodedData.code)
             } else {
                 return .serverErr
-            }//Q226
+            }
         case 400: return .requestErr("errorCode : " + decodedData.code)
         case 401: return .unAuthorized
         case 500: return .serverErr

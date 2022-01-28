@@ -47,7 +47,7 @@ class LoginViewModel: ViewModelProtocol {
                     // API로직을 태워야합니다.
                     ProgressHUD.animationType = .circleSpinFade
                     ProgressHUD.show("접속중..")
-                    LoginService.shared.signIn(email: email, password: password)
+                    LoginService.shared.logIn(email: email, password: password)
                         .subscribe { event in
                             switch event {
                             case .next(let result):

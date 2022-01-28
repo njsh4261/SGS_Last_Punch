@@ -1,2 +1,2 @@
-- 모든 api의 리턴은 성공 여부에 따라 true or false
-- https://documenter.getpostman.com/view/7437901/UVXgLHFb
+- 각 API는 적절한 method, endpoint, 응답 성공 코드, 토큰 사용 여부를 Handler로 전달한다.
+- 핸들러는 각 요청을 처리하고 성공/예외에 대한 에러/서버 에러(undefined)에 대한 응답을 한다.

@@ -16,12 +16,35 @@ class LoginService {
                 "password" : password]
     }
     
-    func signIn(email : String, password : String) -> Observable<NetworkResult<Any>> {
+    func logIn(email : String, password : String) -> Observable<NetworkResult<Any>> {
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["Content-Type": "application/json"]
             let dataRequest = AF.request(APIConstants().loginURL,
                                          method: .post,
                                          parameters: self.makeParameter(email: email, password: password),
+                                         encoding: JSONEncoding.default,
+                                         headers: header)
+            
+            dataRequest.validate().responseData { [self] response in
+                switch response.result {
+                case .success:
+                    guard let statusCode = response.response?.statusCode else {return}
+                    guard let value = response.value else {return}
+                    let networkResult = judgeStatus(by: statusCode, value)
+                    return observer.onNext(networkResult)
+                case .failure:
+                    return observer.onNext(.pathErr)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func logOut(method: HTTPMethod, refreshToken : String) -> Observable<NetworkResult<Any>> {
+        return Observable.create { observer -> Disposable in
+            let header : HTTPHeaders = ["X-AUTH-TOKEN": refreshToken]
+            let dataRequest = AF.request(APIConstants().logoutURL,
+                                         method: method,
                                          encoding: JSONEncoding.default,
                                          headers: header)
             

@@ -19,6 +19,9 @@ class RegisterViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     // MARK: - UI
+    var scrollview = UIScrollView()
+    let contentsView = UIView()
+    var btnBack = UIBarButtonItem()
     var ivLogo = UIImageView()
     var fieldEmail = UITextField()
     var fieldCode = UITextField()
@@ -35,6 +38,7 @@ class RegisterViewController: UIViewController {
     var btnToggleCheckPassword = UIButton()
     var btnSignUp = UIButton()
     var btnSignIn = UIButton()
+    var btnSignInColor = UIButton()
     var lblWarning = UILabel()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -66,6 +70,10 @@ class RegisterViewController: UIViewController {
         
         fieldCheckPassword.rx.text.orEmpty
             .bind(to: viewModel.input.checkPassword)
+            .disposed(by: disposeBag)
+        
+        btnBack.rx.tap
+            .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
         // enter를 누를때
@@ -120,6 +128,11 @@ class RegisterViewController: UIViewController {
             .disposed(by: disposeBag)
         
         btnSignIn.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: goToLogin)
+            .disposed(by: disposeBag)
+        
+        btnSignInColor.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .subscribe(onNext: goToLogin)
             .disposed(by: disposeBag)
@@ -239,10 +252,20 @@ class RegisterViewController: UIViewController {
         }
     }
     
+    private func goToWelecome() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     private func attribute() {
         title = "회원가입"
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
+        navigationItem.leftBarButtonItem = btnBack
         ivLogo.image = UIImage(named: "snack")
+        
+        btnBack = btnBack.then {
+            $0.image = UIImage(systemName: "chevron.backward")
+            $0.style = .plain
+        }
         
         [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword].forEach {
             $0.textAlignment = .left
@@ -331,33 +354,56 @@ class RegisterViewController: UIViewController {
         }
         
         lblWarning = lblWarning.then {
-            $0.text = "로그인하면 약관 및 개인정보 보호정책에 동의하는 것입니다."
+            $0.text = "로그인하면 약관 및 개인정보 보호정책에 동의하는 것입니다"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 11)
             $0.textAlignment = .center
             $0.textColor = .lightGray
         }
         
         btnSignIn = btnSignIn.then {
-            $0.setTitle("이미 계정이 있나요? 로그인하기", for: .normal)
+            $0.setTitle("이미 계정이 있나요?", for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
             $0.setTitleColor(.lightGray, for: .normal)
+            $0.contentHorizontalAlignment = .right
+        }
+        
+        btnSignInColor = btnSignInColor.then {
+            $0.setTitle("로그인", for: .normal)
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 15)
+            $0.setTitleColor(UIColor(named: "snackColor")!, for: .normal)
+            $0.contentHorizontalAlignment = .left
+            $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
         }
     }
     
     private func layout() {
-        [ivLogo, fieldEmail, btnDuplicateEmail, btnSendEmail, emailBorder, fieldCode, btnVerification, codeBorder, fieldPassword, passwordBorder, fieldCheckPassword, checkPasswordBorder, btnSignUp, lblWarning, btnSignIn].forEach {
-            view.addSubview($0)
+        [ivLogo, fieldEmail, btnDuplicateEmail, btnSendEmail, emailBorder, fieldCode, btnVerification, codeBorder, fieldPassword, passwordBorder, fieldCheckPassword, checkPasswordBorder, btnSignUp, lblWarning, btnSignIn, btnSignInColor].forEach {
+            contentsView.addSubview($0)
+        }
+        
+        scrollview.addSubview(contentsView)
+        
+        view.addSubview(scrollview)
+        
+        scrollview.snp.makeConstraints {
+            $0.edges.equalTo(0)
+        }
+        
+        contentsView.snp.makeConstraints {
+            $0.edges.equalTo(0)
+            $0.width.equalTo(view.frame.width)
+            $0.height.equalTo(view.frame.height + 100)
         }
         
         ivLogo.snp.makeConstraints {
             $0.width.height.equalTo(80)
-            $0.centerX.equalTo(view.safeAreaLayoutGuide)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(70)
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(70)
         }
         
         [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword, emailBorder, codeBorder, passwordBorder, checkPasswordBorder].forEach {
             $0.snp.makeConstraints {
-                $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(16)
+                $0.left.right.equalToSuperview().inset(16)
             }
         }
         
@@ -374,45 +420,46 @@ class RegisterViewController: UIViewController {
         }
         
         fieldEmail.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(200)
+            $0.top.equalToSuperview().inset(200)
         }
         
         emailBorder.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
+            $0.top.equalToSuperview().inset(250)
         }
         
         fieldCode.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(250)
+            $0.top.equalToSuperview().inset(250)
         }
         
         codeBorder.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(300)
+            $0.top.equalToSuperview().inset(300)
         }
         
         fieldPassword.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(300)
+            $0.top.equalToSuperview().inset(300)
         }
         
         passwordBorder.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(350)
+            $0.top.equalToSuperview().inset(350)
         }
         
         fieldCheckPassword.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(350)
+            $0.top.equalToSuperview().inset(350)
         }
         
         checkPasswordBorder.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(400)
+            $0.top.equalToSuperview().inset(400)
         }
         
         btnSignUp.snp.makeConstraints {
-            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(420)
+            $0.left.right.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(420)
         }
         
         lblWarning.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
             $0.height.equalTo(21)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(480)
+            $0.top.equalToSuperview().inset(480)
         }
         
         [btnDuplicateEmail, btnSendEmail, btnVerification].forEach {
@@ -432,15 +479,17 @@ class RegisterViewController: UIViewController {
             $0.centerY.equalTo(fieldCode)
         }
         
-        [lblWarning, btnSignIn].forEach {
-            $0.snp.makeConstraints {
-                $0.left.right.equalTo(view.safeAreaLayoutGuide)
-            }
+        btnSignIn.snp.makeConstraints {
+            $0.left.equalTo(view.frame.width/4)
+            $0.right.equalTo(btnSignInColor.snp.left)
+            $0.height.equalTo(50)
+            $0.top.equalTo(lblWarning.snp.bottom).offset(170)
         }
         
-        btnSignIn.snp.makeConstraints {
+        btnSignInColor.snp.makeConstraints {
+            $0.right.equalToSuperview()
             $0.height.equalTo(50)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(lblWarning.snp.bottom).offset(170)
         }
     }
 }

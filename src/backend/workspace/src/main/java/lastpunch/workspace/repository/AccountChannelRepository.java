@@ -25,7 +25,7 @@ public interface AccountChannelRepository extends JpaRepository<AccountChannel, 
     )
     @Modifying(clearAutomatically = true)
     @Transactional
-    void edit(Long accountId, Long channelId, Long roleId);
+    Integer edit(Long accountId, Long channelId, Long roleId);
 
     @Query(
             value = "DELETE FROM accountchannel "
@@ -34,5 +34,5 @@ public interface AccountChannelRepository extends JpaRepository<AccountChannel, 
     )
     @Modifying(clearAutomatically = true)
     @Transactional
-    void delete(Long accountId, Long channelId);
+    Integer delete(Long accountId, Long channelId);
 }

@@ -2,6 +2,7 @@
 - Format: XXYYY
 - XX는 서버 코드, YYY는 에러 번호
 - XX000: 해당 서버에서 정상적인 결과가 반환되었음을 나타냄
+- 서버 코드: 게이트웨이(10), 인증(11), 웨크스페이스(12), 프리젠스(13), 채팅(14), 실시간노트편집(15), 알림(16), 파일(17), 검색(18)
 
 
 ## 게이트웨이(gateway) 10
@@ -39,3 +40,6 @@
 | 12006     | ACCOUNTCHANNEL_NOT_EXIST       | HttpStatus.OK(200) | 존재하지 않는 유저와 채널 간 관계입니다.     |
 | 12007     | ACCOUNTCHANNEL_ALREADY_EXIST   | HttpStatus.OK(200) | 유저와 채널 간 관계가 이미 존재합니다.      |
 | 12008     | INVALID_USERID                 | HttpStatus.OK(200) | 사용자 ID가 정상적으로 제공되지 않았습니다.   |
+| 12009     | PERMISSION_DENIED              | HttpStatus.OK(200) | 해당 작업을 실행할 권한이 없습니다.        |
+| 12010     | ROLE_NOT_EXIST                 | HttpStatus.OK(200) | 존재하지 않는 역할입니다.              |
+| 12011     | CHANNEL_ALREADY_EXIST          | HttpStatus.OK(200) | 이미 존재하는 채널입니다.              |

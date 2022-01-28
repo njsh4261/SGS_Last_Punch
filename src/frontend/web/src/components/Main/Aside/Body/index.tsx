@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
+import { RootState } from '../../../../modules';
+import Modal from './Modal';
 import getChannelsAndMembersHook from '../../../../hook/getChannelsAndMembers';
 import selectChannelHook from '../../../../hook/selectChannel';
 import setTitleHook from '../../../../hook/setTitle';
@@ -27,9 +30,11 @@ export default function AsideBody() {
   const [channelList, memberList, params] = getChannelsAndMembersHook();
   setTitleHook('', params);
   const selectChannelHandler = selectChannelHook(params);
+  const modalState = useSelector((state: RootState) => state.modal);
 
   return (
     <Container>
+      {modalState.active && <Modal type={modalState.modalType}></Modal>}
       <SecitonType>
         <Text>알림</Text>
       </SecitonType>

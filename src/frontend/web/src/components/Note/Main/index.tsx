@@ -9,6 +9,7 @@ import noteSocketHook from '../../../hook/noteSocket';
 const Container = styled.article`
   display: flex;
   flex-direction: column;
+  width: 70%;
   margin: 0 96px;
   height: 100%;
 `;
@@ -21,13 +22,21 @@ export default function NoteMain() {
     },
   ];
   const [value, setValue] = useState<Node[]>(initialValue);
-  const [sendMessage] = noteSocketHook();
-
   const editor = useMemo(() => withReact(withHistory(createEditor())), []);
+  const [sendMessage, remote] = noteSocketHook(editor);
+
   const changeHandler = (value: Node[]) => {
     setValue(value);
-    sendMessage(editor.operations);
+    const ops = editor.operations.filter((op) => {
+      if (op) return op.type !== 'set_selection';
+      return false;
+    });
+    if (ops.length > 0 && !remote.current) {
+      sendMessage(ops);
+      remote.current = false;
+    }
   };
+
   return (
     <Container>
       <EditorFrame

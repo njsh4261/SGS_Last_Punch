@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
         tabBarController.modalPresentationStyle = .fullScreen
         tabBarController.selectedIndex = App.DefaultTab
-        
+
         if #available(iOS 15.0, *) {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
@@ -48,11 +48,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         welcomeViewController = WelcomeViewController()
         self.window?.rootViewController = welcomeViewController
+//        self.window?.rootViewController = tabBarController
+
         self.window?.makeKeyAndVisible()
-        
-//        _ = homeView.view
-//        _ = profileView.view
-//        _ = messageView.view
                 
         // UITableView padding
         if #available(iOS 15.0, *) {

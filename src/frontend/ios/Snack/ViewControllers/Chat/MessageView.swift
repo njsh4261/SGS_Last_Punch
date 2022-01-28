@@ -45,6 +45,10 @@ class MessageView: UIViewController {
         bind(with: viewModel)
         attribute()
         layout()
+        
+        // 키보드 조절
+        keyboardManager.bind(inputAccessoryView: messageInputBar)
+        keyboardManager.bind(to: tableView)
     }
     
     required init?(coder: NSCoder) {
@@ -131,7 +135,7 @@ class MessageView: UIViewController {
         tableView.frame = CGRect(x: leftSafe, y: 0, width: widthTable, height: heightTable)
     }
     
-    // MARK: - Refresh TablewView
+    // MARK: - Refresh Table View
     func refreshTableView() {
         tableView.reloadData()
     }
@@ -181,16 +185,14 @@ class MessageView: UIViewController {
     
     private func attribute() {
         navigationItem.titleView = viewTitle
-        tableView.tableHeaderView = viewLoadEarlier
-        tableView.delegate = self
-        tableView.dataSource = self
-        layoutTableView()
         
-        // 키보드 조절
-//        keyboardManager.bind(inputAccessoryView: messageInputBar)
-        keyboardManager.bind(to: tableView)
-        
-        messageInputBar.delegate = self
+        tableView = tableView.then {
+            $0.tableHeaderView = viewLoadEarlier
+            $0.delegate = self
+            $0.dataSource = self
+            $0.backgroundColor = .white
+            layoutTableView()
+        }
         
         [lblTitle, lblLastActive].forEach {
             $0.textAlignment = .center
@@ -205,8 +207,9 @@ class MessageView: UIViewController {
             $0.text = "마지막 활동시간: YY.MM.DD"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
         }
-        
-        let when = DispatchTime.now() + 1.0
+
+        let delay = (keyboardHeight() == 0) ? 0.10 : 0.25
+        let when = DispatchTime.now() + delay
         DispatchQueue.main.asyncAfter(deadline: when) { [self] in
             self.configureKeyboardActions()
             
@@ -233,6 +236,10 @@ class MessageView: UIViewController {
             
             // library InputBarAccessoryView의 속성
             messageInputBar = messageInputBar.then {
+                $0.delegate = self
+                $0.inputTextView.placeholder = "#채널에(게) 메시지 보내기"
+                $0.backgroundView.backgroundColor = UIColor(named: "snackBackGroundColor")
+                
                 $0.setStackViewItems([btnAttach], forStack: .left, animated: false)
                 
                 $0.sendButton.title = nil
@@ -262,6 +269,7 @@ class MessageView: UIViewController {
                 $0.centerX.centerY.width.height.equalToSuperview()
             }
         }
+        
         let heightView = view.frame.size.height
         let heightInput = messageInputBar.bounds.height
         let heightTable = heightView - heightInput - heightKeyboard
@@ -282,7 +290,7 @@ extension MessageView: InputBarAccessoryViewDelegate {
         }
     }
     
-    // content가 바뀔 경우 - 이미지...등
+    // input에 들어가는 content가 바뀔 경우 - 더 많은 text, 이미지...등
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
         let when = DispatchTime.now() + 1.0
         DispatchQueue.main.asyncAfter(deadline: when) {
@@ -425,10 +433,12 @@ extension MessageView: UITableViewDataSource {
 extension MessageView: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        
         view.tintColor = UIColor.clear
     }
 
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        
         view.tintColor = UIColor.clear
     }
 

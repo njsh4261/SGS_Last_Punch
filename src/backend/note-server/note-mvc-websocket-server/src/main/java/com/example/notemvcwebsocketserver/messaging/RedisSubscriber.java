@@ -23,7 +23,7 @@ public class RedisSubscriber implements MessageListener {
         try {
             String publishMessage = (String) redisTemplate.getStringSerializer().deserialize(message.getBody());
             Payload payload = objectMapper.readValue(publishMessage, Payload.class);
-            System.out.println("payload = " + payload);
+            System.out.println("onmessage payload = " + payload);
             System.out.println("/sub/note/" + payload.getNoteId());
             messagingTemplate.convertAndSend("/sub/note/" + payload.getNoteId(), payload);
         } catch (Exception e) {

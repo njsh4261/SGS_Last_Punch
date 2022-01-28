@@ -20,10 +20,12 @@ public class NoteController {
     
     @MessageMapping("/note")
     public void message(Payload payload) {
-        System.out.println("payload = " + payload);
+        System.out.println("payload = " + payload.getType());
         if(Payload.MessageType.ENTER.equals(payload.getType())){
+            System.out.println("here");
             redisMessageListener.addMessageListener(redisSubscriber, new ChannelTopic(payload.getNoteId()));
         }
+        System.out.println("payload.getNoteId() = " + payload.getNoteId());
         redisPublisher.publish(ChannelTopic.of(payload.getNoteId()), payload);
     }
 }

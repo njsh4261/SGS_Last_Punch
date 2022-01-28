@@ -17,7 +17,7 @@ export default function noteSocketHook(): [sendMessage: (msg: any) => void] {
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, (frame: any) => {
       console.log('Connected: ' + frame);
-      stompClient.send('pub/note', {}, JSON.stringify(ENTER_MSG));
+      stompClient.send('/pub/note', {}, JSON.stringify(ENTER_MSG));
       stompClient.subscribe('/sub/note/abcd', (payload) =>
         console.log(payload),
       );
@@ -30,8 +30,9 @@ export default function noteSocketHook(): [sendMessage: (msg: any) => void] {
   const sendMessage = (msg: string) => {
     const SEND_MSG = {
       type: 'UPDATE',
-      noteID: 'abcd',
+      noteId: 'abcd',
       data: msg,
+      userId: 1,
     };
     stomp?.send('/pub/note', {}, JSON.stringify(SEND_MSG));
   };

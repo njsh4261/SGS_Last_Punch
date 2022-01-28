@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@emotion/styled": "^11.0.0",
+    "@stomp/stompjs": "^6.1.2",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -12,6 +13,7 @@
     "@types/node": "^16.11.17",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "@types/sockjs-client": "^1.5.1",
     "@types/styled-components": "^5.1.19",
     "@types/uuid": "^8.3.4",
     "axios": "^0.24.0",
@@ -26,6 +28,7 @@
     "slate": "^0.59.0",
     "slate-history": "^0.59.0",
     "slate-react": "^0.59.0",
+    "sockjs-client": "^1.5.2",
     "styled-components": "^5.3.3",
     "typescript": "^4.5.4",
     "uuid": "^8.3.2",

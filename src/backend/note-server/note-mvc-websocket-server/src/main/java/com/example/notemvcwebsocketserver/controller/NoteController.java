@@ -3,7 +3,6 @@ package com.example.notemvcwebsocketserver.controller;
 import com.example.notemvcwebsocketserver.entity.Payload;
 import com.example.notemvcwebsocketserver.messaging.RedisPublisher;
 import com.example.notemvcwebsocketserver.messaging.RedisSubscriber;
-import com.example.notemvcwebsocketserver.repository.NoteRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -19,7 +18,7 @@ public class NoteController {
     private final RedisSubscriber redisSubscriber;
     private final RedisMessageListenerContainer redisMessageListener;
     
-    @MessageMapping("/note/update")
+    @MessageMapping("/note")
     public void message(Payload payload) {
         System.out.println("payload = " + payload);
         if(Payload.MessageType.ENTER.equals(payload.getType())){

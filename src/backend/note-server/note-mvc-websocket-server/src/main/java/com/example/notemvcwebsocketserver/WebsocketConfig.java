@@ -18,7 +18,7 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/sub");
-        config.setApplicationDestinationPrefixes("/topic");
+        config.setApplicationDestinationPrefixes("/pub");
     }
     
     @Override
@@ -28,4 +28,5 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
         // 웹소켓 연결 주소 ws://localhost:8080/ws/note 사용
         registry.addEndpoint("/ws/note").setAllowedOrigins("http://localhost:3000");
     }
+    
 }

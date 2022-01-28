@@ -39,7 +39,9 @@ const enterAndSub =
       if (!ops) return;
 
       remote.current = true;
-      ops.forEach((op: any) => editor.apply(op));
+      Editor.withoutNormalizing(editor, () => {
+        ops.forEach((op: any) => editor.apply(op));
+      });
     });
   };
 

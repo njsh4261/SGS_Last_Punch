@@ -28,7 +28,6 @@ public class NoteMainController {
     @PostMapping
     public ResponseEntity<Object> createNote(@RequestBody CreateNoteRequest createNoteRequest){
         String noteId = noteMainService.create(createNoteRequest);
-    
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("noteId", noteId);
         

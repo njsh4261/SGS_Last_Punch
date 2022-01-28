@@ -17,7 +17,6 @@ import Then
 class HomeViewController: UIViewController {
     
     // MARK: - Properties
-    private var viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
     private var dataSource: RxTableViewSectionedReloadDataSource<ChatsSection>!
     private var channelObjects: [ChannelObject] = []
@@ -31,20 +30,20 @@ class HomeViewController: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        let workspaceId: Int = KeychainWrapper.standard[.workspaceId] ?? -1
-        self.workspaceId = workspaceId
         
-        bind(with: viewModel)
         attribute()
         layout()
     }
-    
-    required init?(coder: NSCoder) {
         
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func bind(with viewModel: HomeViewModel) {
+        guard let workspaceId: Int = KeychainWrapper.standard[.workspaceId] else { return }
+        self.workspaceId = workspaceId
+        tableView.dataSource = nil
+        
         dataSource = RxTableViewSectionedReloadDataSource<ChatsSection> { dataSource, tableView, indexPath, item in
             switch dataSource[indexPath] {
             case .StatusChannel:
@@ -63,8 +62,8 @@ class HomeViewController: UIViewController {
         ]
         
         Observable.just(sections)
-                    .bind(to: tableView.rx.items(dataSource: dataSource))
-                    .disposed(by: disposeBag)
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     private func attribute() {
@@ -72,7 +71,7 @@ class HomeViewController: UIViewController {
         tabBarItem.image = UIImage(systemName: "house")
         tabBarItem.selectedImage = UIImage(systemName: "house.fill")
         tabBarItem.title = "홈"
-                
+        
         [view, tableView].forEach {
             $0.backgroundColor = UIColor(named: "snackBackGroundColor")
         }
@@ -89,7 +88,7 @@ class HomeViewController: UIViewController {
             $0.isOpaque = false
             $0.clearsContextBeforeDrawing = false
             $0.separatorStyle = .singleLine
-//            $0.tableFooterView = UIView()
+            //            $0.tableFooterView = UIView()
         }
     }
     

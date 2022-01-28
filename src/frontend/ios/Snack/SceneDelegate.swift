@@ -13,26 +13,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var tabBarController: UITabBarController!
     var welcomeViewController: WelcomeViewController!
-    
-    var profileView: ProfileViewController!
+    var homeView: HomeViewController!
     var messageView: MessageView!
+    var profileView: ProfileViewController!
+
     // 추가예정 : DirectMessageViewConrooler!, NoticeViewConrooler!, SearchViewConrooler!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
         
+        
+        homeView = HomeViewController()
         messageView = MessageView()
         profileView = ProfileViewController(nibName: "ProfileView", bundle: nil)
         
+        let navController1 = NavigationController(rootViewController: homeView)
         let navController2 = NavigationController(rootViewController: messageView)
         let navController5 = NavigationController(rootViewController: profileView)
         
         tabBarController = UITabBarController()
-        tabBarController.viewControllers = [navController2, navController5]
+        tabBarController.viewControllers = [navController1, navController2, navController5]
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
         tabBarController.modalPresentationStyle = .fullScreen
+        tabBarController.selectedIndex = App.DefaultTab
         
         if #available(iOS 15.0, *) {
             let appearance = UITabBarAppearance()
@@ -42,15 +47,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         welcomeViewController = WelcomeViewController()
-//        self.window?.rootViewController = tabBarController
         self.window?.rootViewController = welcomeViewController
-//        self.window?.rootViewController = NavigationController(rootViewController: WorkspaceListView())
-//        self.window?.rootViewController = WorkspaceListViewController()
         self.window?.makeKeyAndVisible()
         
-        _ = profileView.view
-        _ = messageView.view
-        
+//        _ = homeView.view
+//        _ = profileView.view
+//        _ = messageView.view
+                
         // UITableView padding
         if #available(iOS 15.0, *) {
             UITableView.appearance().sectionHeaderTopPadding = 0

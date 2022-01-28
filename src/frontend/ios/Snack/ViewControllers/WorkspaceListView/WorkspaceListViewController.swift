@@ -185,12 +185,8 @@ class WorkspaceListViewController: UIViewController {
         pvc.dismiss(animated: true) { [self] in
             if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
                 KeychainWrapper.standard[.workspaceId] = selectWorkspace
-                
-                let homeView = HomeViewController()
-                let navController1 = NavigationController(rootViewController: homeView)
-                sceneDelegate.tabBarController.viewControllers?.insert(navController1, at: App.DefaultTab)
+                sceneDelegate.homeView.bind(with: HomeViewModel())
                 sceneDelegate.tabBarController.selectedIndex = App.DefaultTab
-                
                 sceneDelegate.welcomeViewController.present(sceneDelegate.tabBarController, animated: true, completion: nil)
             }
         }

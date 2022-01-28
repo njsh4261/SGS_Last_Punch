@@ -30,6 +30,7 @@ class ProfileViewController: UITableViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
+        tabBarItem.title = "나"
         tabBarItem.image = UIImage(systemName: "person.crop.circle")
         tabBarItem.selectedImage = UIImage(systemName: "person.crop.circle.fill")
     }
@@ -39,17 +40,14 @@ class ProfileViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
-
         super.viewDidLoad()
         title = "나"
-
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
 
         tableView.tableHeaderView = viewHeader
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
         super.viewWillAppear(animated)
 
         // user 정보 load하는 로직 필요
@@ -66,7 +64,6 @@ class ProfileViewController: UITableViewController {
     }
     
     // 로그아웃
-    
     func actionLogout() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 

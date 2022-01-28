@@ -51,6 +51,12 @@ class MessageView: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLayoutSubviews() {
+
+        super.viewDidLayoutSubviews()
+        layoutTableView()
+    }
+    
     func bind(with viewModel: WorkspaceListViewModel) {
         // MARK: Bind input
         btnViewTitle.rx.tap
@@ -250,10 +256,19 @@ class MessageView: UIViewController {
         
         [tableView, messageInputBar].forEach { view.addSubview($0) }
         
+        
         [btnViewTitle, btnLoadEarlier].forEach {
             $0.snp.makeConstraints {
                 $0.centerX.centerY.width.height.equalToSuperview()
             }
+        }
+        let heightView = view.frame.size.height
+        let heightInput = messageInputBar.bounds.height
+        let heightTable = heightView - heightInput - heightKeyboard
+
+        tableView.snp.makeConstraints {
+            $0.centerX.left.right.top.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(heightTable)
         }
     }
 }

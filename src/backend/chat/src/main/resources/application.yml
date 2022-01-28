@@ -4,4 +4,13 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/[your_db_here]
+      uri: mongodb://localhost:27017/[your_DB]
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG

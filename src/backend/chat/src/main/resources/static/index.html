@@ -30,6 +30,7 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script type="text/javascript">
     var stompClient = null;
 
@@ -63,11 +64,19 @@
                   showMessageOutput(JSON.parse(messageOutput.body));
               }
             );
-            stompClient.send("/app/enter", {},
-                JSON.stringify({
+            $.ajax({
+                type: 'POST',
+                url:'http://localhost:8083/chat/recent',
+                contentType : "application/json; charset=utf-8",
+                data: JSON.stringify({
                     'channelId': channelId
-                })
-            );
+                }),
+            }).done(function(res) {
+                console.log("POST /chat/recent: " + JSON.stringify(res))
+                showMessageOutput(res.data)
+            }).fail(function(err) {
+                console.log("fail to get recent chats!")
+            });
         });
     }
 
@@ -80,15 +89,12 @@
     }
 
     function sendMessage() {
-        var authorId = document.getElementById('authorId').value;
-        var channelId = document.getElementById('channelId').value;
-        var content = document.getElementById('content').value;
         stompClient.send("/app/chat", {},
-          JSON.stringify({
-            'authorId': authorId,
-            'channelId': channelId,
-            'content': content
-          })
+            JSON.stringify({
+              'authorId': document.getElementById('authorId').value,
+              'channelId': document.getElementById('channelId').value,
+              'content': document.getElementById('content').value
+            })
         );
     }
 
@@ -119,14 +125,20 @@
 
 <!--    dateTime example: "2022-01-27T15:29:10.767Z" -->
     function getOlderMessage() {
-        var channelId = document.getElementById('channelId').value;
-        const dateTime = document.getElementById('dateTime').value;
-        stompClient.send("/app/older", {},
-            JSON.stringify({
-                'channelId': channelId,
-                'dateTime': dateTime
-            })
-        );
+        $.ajax({
+            type: 'POST',
+            url:'http://localhost:8083/chat/old',
+            contentType : "application/json; charset=utf-8",
+            data: JSON.stringify({
+                'channelId': document.getElementById('channelId').value,
+                'dateTime': document.getElementById('dateTime').value
+            }),
+        }).done(function(res) {
+            console.log("POST /chat/old: " + JSON.stringify(res))
+            showMessageOutput(res.data)
+        }).fail(function(err) {
+            console.log("fail to get old chats!")
+        });
     }
 </script>
 </html>

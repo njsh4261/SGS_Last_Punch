@@ -1,6 +1,5 @@
 package lastpunch.chat.repository;
 
-import java.time.LocalDateTime;
 import lastpunch.chat.entity.Message;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -27,6 +27,7 @@ public class Message{
     private LocalDateTime modifyDt;
     
     @Getter
+    @ToString
     public static class EnterDto{
         private String channelId;
     }

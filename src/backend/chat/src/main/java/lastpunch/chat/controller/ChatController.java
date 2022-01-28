@@ -1,6 +1,5 @@
 package lastpunch.chat.controller;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 import lastpunch.chat.entity.Message.EnterDto;
 import lastpunch.chat.entity.Message.GetOlderDto;
@@ -14,9 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
+//@CrossOrigin(origins = {"http://localhost:8083"})
 public class ChatController{
     private final RabbitMqService rabbitMqService;
     private final MongoDbService mongoDbService;
@@ -29,22 +31,29 @@ public class ChatController{
         logger = LoggerFactory.getLogger(ChatController.class);
     }
     
-    @MessageMapping("/enter")
-    public void getRecentMessages(EnterDto enterDto){
-        rabbitMqService.getRecentMessages(enterDto);
-    }
-    
     @MessageMapping("/chat")
     public void send(SendDto sendDto){
         rabbitMqService.send(sendDto.toEntity());
     }
     
-    @PostMapping("/chat/older")
-    public ResponseEntity<Object> getOlderMessages(GetOlderDto getOlderDto){
+    @PostMapping("/chat/recent")
+    public ResponseEntity<Object> getRecentMessages(@RequestBody EnterDto enterDto){
+        logger.info("EnterDTO: " + enterDto.toString());
         return new ResponseEntity<>(
             Map.of(
                 "code", "13000",
-                "data", mongoDbService.getOlderMessages(getOlderDto)
+                "data", mongoDbService.getRecentMessages(enterDto.getChannelId())
+            ),
+            HttpStatus.OK
+        );
+    }
+    
+    @PostMapping("/chat/old")
+    public ResponseEntity<Object> getOldMessages(@RequestBody GetOlderDto getOlderDto){
+        return new ResponseEntity<>(
+            Map.of(
+                "code", "13000",
+                "data", mongoDbService.getOldMessages(getOlderDto)
             ),
             HttpStatus.OK
         );

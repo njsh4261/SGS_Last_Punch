@@ -2,6 +2,7 @@ package lastpunch.chat.service;
 
 import java.time.LocalDateTime;
 import lastpunch.chat.entity.Message;
+import lastpunch.chat.entity.Message.GetOlderDto;
 import lastpunch.chat.repository.MongoDbRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,8 +27,10 @@ public class MongoDbService{
         );
     }
     
-    public Page<Message> getOlderMessages(String channelId, LocalDateTime dateTime){
-        return mongoDbRepository.findOldMessages(channelId, dateTime, PageRequest.of(page, size));
+    public Page<Message> getOlderMessages(GetOlderDto getOlderDto){
+        return mongoDbRepository.findOldMessages(
+            getOlderDto.getChannelId(), getOlderDto.getDateTime(), PageRequest.of(page, size)
+        );
     }
     
     @Async

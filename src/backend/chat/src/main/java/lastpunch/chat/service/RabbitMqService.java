@@ -32,14 +32,6 @@ public class RabbitMqService{
         );
     }
     
-    public void getOlderMessages(GetOlderDto getOlderDto){
-        rabbitTemplate.convertAndSend(
-            ChatConstant.AMQ_TOPIC,
-            ChatConstant.ROUTING_KEY_PREFIX + getOlderDto.getChannelId(),
-            mongoDbService.getOlderMessages(getOlderDto.getChannelId(), getOlderDto.getDateTime())
-        );
-    }
-    
     public void send(Message message){
         mongoDbService.saveMessage(message);
         rabbitTemplate.convertAndSend(

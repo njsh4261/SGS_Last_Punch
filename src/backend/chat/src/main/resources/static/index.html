@@ -56,6 +56,13 @@
                   showMessageOutput(JSON.parse(messageOutput.body));
               }
             );
+<!--            global notification chat example-->
+            stompClient.subscribe(
+              '/topic/channel.' + 'global',
+              function(messageOutput) {
+                  showMessageOutput(JSON.parse(messageOutput.body));
+              }
+            );
             stompClient.send("/app/enter", {},
                 JSON.stringify({
                     'channelId': channelId

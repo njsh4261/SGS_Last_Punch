@@ -69,7 +69,7 @@ class DirectMessageListViewController: UIViewController {
                 let index = IndexPath(row: row, section: 0)
                 let cell = tv.dequeueReusableCell(withIdentifier: "DirectMessageListViewCell", for: index) as! DirectMessageListCellView
 
-                cell.setData(data)
+                cell.setData(data, row)
                 return cell
             }
             .disposed(by: disposeBag)

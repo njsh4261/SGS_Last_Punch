@@ -425,9 +425,9 @@
 		8CBD457627A25D9A0056A557 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				8CBD459B27A5294F0056A557 /* Cells */,
 				8CBD457727A25E430056A557 /* MessageView.swift */,
 				8CBD459927A41B510056A557 /* MessageViewModel.swift */,
-				8CBD457B27A28A350056A557 /* MessagesCell.swift */,
 				8CBD457D27A28AEF0056A557 /* MessageKit.swift */,
 			);
 			path = Chat;
@@ -464,6 +464,14 @@
 				8CBD459727A3E59B0056A557 /* UserListCellViewModel.swift */,
 			);
 			path = UserListCell;
+			sourceTree = "<group>";
+		};
+		8CBD459B27A5294F0056A557 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8CBD457B27A28A350056A557 /* MessagesCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {

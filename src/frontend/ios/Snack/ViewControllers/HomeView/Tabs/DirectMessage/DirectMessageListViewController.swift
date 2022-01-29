@@ -18,6 +18,8 @@ class DirectMessageListViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private var accessTokenField = UITextField()
     private var members = [WorkspaceMemberCellModel]()
+    private var accessToken: String = ""
+    private var workspaceId: String = ""
     
     // MARK: - UI
     private var searchBar = UISearchBar()
@@ -26,9 +28,13 @@ class DirectMessageListViewController: UIViewController {
     private var tableView = UITableView()
     private var refreshControl = UIRefreshControl()
         
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, workspaceId: String) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
+        guard let accessToken: String = KeychainWrapper.standard[.refreshToken] else { return }
+        self.accessToken = accessToken
+        self.workspaceId = workspaceId
+        tableView.dataSource = nil
+
         attribute()
         layout()
     }
@@ -37,16 +43,13 @@ class DirectMessageListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(with viewModel: DirectMessageListViewModel, workspaceId: String) {
-        guard let accessToken: String = KeychainWrapper.standard[.refreshToken] else { return }
-        tableView.dataSource = nil
-
+    func bind(with viewModel: DirectMessageListViewModel) {
         // MARK: Bind input
         accessTokenField.rx.text
             .map {_ in
                 getMemberAction.init(
-                    accessToken: accessToken,
-                    workspaceId: workspaceId
+                    accessToken: self.accessToken,
+                    workspaceId: self.workspaceId
                 )
             }
             .bind(to: viewModel.input.getMember)

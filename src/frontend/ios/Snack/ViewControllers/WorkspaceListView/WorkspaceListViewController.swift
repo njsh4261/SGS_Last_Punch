@@ -185,8 +185,8 @@ class WorkspaceListViewController: UIViewController {
                 KeychainWrapper.standard[.workspaceId] = selectWorkspace.description
 
                 let homeView = HomeViewController()
-                let DMView = DirectMessageListViewController()
-                DMView.bind(with: DirectMessageListViewModel(), workspaceId: selectWorkspace.description)
+                let DMView = DirectMessageListViewController(workspaceId: selectWorkspace.description)
+                DMView.bind(with: DirectMessageListViewModel())
                 let profileView = ProfileViewController(nibName: "ProfileView", bundle: nil)
                 
                 let navController0 = NavigationController(rootViewController: homeView)

@@ -106,8 +106,8 @@ class SearchURLWorkspaceViewController: UIViewController {
                     KeychainWrapper.standard[.workspaceId] = workspaceId.description
 
                     let homeView = HomeViewController()
-                    let DMView = DirectMessageListViewController()
-                    DMView.bind(with: DirectMessageListViewModel(), workspaceId: workspaceId.description)
+                    let DMView = DirectMessageListViewController(workspaceId: workspaceId.description)
+                    DMView.bind(with: DirectMessageListViewModel())
                     let profileView = ProfileViewController(nibName: "ProfileView", bundle: nil)
                     
                     let navController0 = NavigationController(rootViewController: homeView)

@@ -10,12 +10,14 @@ import Foundation
 extension Date {
     func toString() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "yyyy년 MM월 dd일"
+        formatter.locale = Locale(identifier:"ko_KR")
         return formatter.string(from: self)
     }
     
     func toTimeString() -> String {
         let formatter = DateFormatter()
+        
         formatter.dateStyle = .none
         formatter.timeStyle = .short
         return formatter.string(from: self)
@@ -25,7 +27,7 @@ extension Date {
 extension String {
     func toDate() -> Date? {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         return formatter.date(from: self)
     }
     

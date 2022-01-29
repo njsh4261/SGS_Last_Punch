@@ -30,7 +30,8 @@ class DirectMessageListCellView: UITableViewCell {
         ivThumbnail.image = UIImage(named: "snack")
         lblName.text = data.name
         lblLastMessage.text = data.description ?? "\(data.name!)님이 Snack의 멤버로 참가하였습니다.\n'안녕하세요'로 대화를 시작해보세요."
-        lblDate.text = data.modifydt
+        
+        lblDate.text = data.modifydt.toDate()?.toString()
     }
     
     private func attribute() {

@@ -103,11 +103,11 @@ class SearchURLWorkspaceViewController: UIViewController {
             guard let pvc = self.presentingViewController else { return }
             pvc.dismiss(animated: true) { [self] in
                 if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                    KeychainWrapper.standard[.workspaceId] = selectWorkspace.description
+                    KeychainWrapper.standard[.workspaceId] = workspaceId.description
 
                     let homeView = HomeViewController()
                     let DMView = DirectMessageListViewController()
-                    DMView.bind(with: DirectMessageListViewModel(), workspaceId: selectWorkspace.description)
+                    DMView.bind(with: DirectMessageListViewModel(), workspaceId: workspaceId.description)
                     let profileView = ProfileViewController(nibName: "ProfileView", bundle: nil)
                     
                     let navController0 = NavigationController(rootViewController: homeView)

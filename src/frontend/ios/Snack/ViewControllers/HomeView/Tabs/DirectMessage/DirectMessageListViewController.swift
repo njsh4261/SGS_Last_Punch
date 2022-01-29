@@ -169,6 +169,10 @@ class DirectMessageListViewController: UIViewController {
             $0.height.equalTo(56)
         }
         
+        viewHeader.snp.makeConstraints {
+            $0.height.equalTo(56)
+        }
+        
         tableView.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.top.equalTo(56)

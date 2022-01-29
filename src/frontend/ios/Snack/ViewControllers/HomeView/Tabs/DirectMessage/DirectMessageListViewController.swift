@@ -17,6 +17,7 @@ class DirectMessageListViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private var accessTokenField = UITextField()
+    private var members = [WorkspaceMemberCellModel]()
     
     // MARK: - UI
     private var searchBar = UISearchBar()
@@ -68,10 +69,15 @@ class DirectMessageListViewController: UIViewController {
             .drive(tableView.rx.items) { tv, row, data in
                 let index = IndexPath(row: row, section: 0)
                 let cell = tv.dequeueReusableCell(withIdentifier: "DirectMessageListViewCell", for: index) as! DirectMessageListCellView
-
+                
                 cell.setData(data, row)
                 return cell
             }
+            .disposed(by: disposeBag)
+        
+        // set Member
+        viewModel.output.memberListCellData
+            .bind(onNext: setMembers)
             .disposed(by: disposeBag)
         
         // refresh
@@ -80,8 +86,8 @@ class DirectMessageListViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.push
-            .drive(onNext: { viewModel in
-                let viewController = MessageView()
+            .drive(onNext: { (viewModel, row) in
+                let viewController = MessageView(memberInfo: self.members[row])
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)
@@ -92,6 +98,10 @@ class DirectMessageListViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: showFailedAlert)
             .disposed(by: disposeBag)
+    }
+    
+    private func setMembers(_ members: [WorkspaceMemberCellModel]) {
+        self.members = members
     }
     
     private func showFailedAlert(_ message: String) {

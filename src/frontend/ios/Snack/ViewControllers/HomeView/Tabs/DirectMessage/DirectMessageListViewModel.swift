@@ -19,7 +19,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
     }
     
     struct Output {
-        let memeberListCellData = PublishSubject<[WorkspaceMemberCellModel]>()
+        let memberListCellData = PublishSubject<[WorkspaceMemberCellModel]>()
         let refreshLoading = PublishRelay<Bool>()
         let goToMessage = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
@@ -31,19 +31,19 @@ class DirectMessageListViewModel: ViewModelProtocol {
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
     var cellData: Driver<[WorkspaceMemberCellModel]>
-    let push: Driver<MessageViewModel>
+    let push: Driver<(MessageViewModel, Int)>
     
     // MARK: - Init
     init() {
         let messageViewModel = MessageViewModel()
         
-        self.cellData = output.memeberListCellData
+        self.cellData = output.memberListCellData
             .asDriver(onErrorJustReturn: [])
         
         //MARK: - push
         self.push = input.itemSelected
-            .compactMap { row -> MessageViewModel? in
-                return messageViewModel
+            .compactMap { row -> (MessageViewModel, Int) in
+                return (messageViewModel, row)
             }
             .asDriver(onErrorDriveWith: .empty())
         
@@ -79,7 +79,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
                                 self.output.errorMessage.accept("워크스페이스를 찾지 못했습니다")
                                 return
                             }
-                            self.output.memeberListCellData.onNext(members)
+                            self.output.memberListCellData.onNext(members)
                         default:
                             self.output.errorMessage.accept("일시적인 문제가 발생했습니다")
                         }

@@ -16,17 +16,21 @@ import InputBarAccessoryView
 
 class MessageView: UIViewController {
     // MARK: - Properties
-    private let viewModel = MessageViewModel()
+//    private let viewModel = MessageViewModel()
     private let disposeBag = DisposeBag()
     private var isTyping = false
     private var textTitle: String?
     private var heightKeyboard: CGFloat = 0
     private var keyboardManager = KeyboardManager()
+    private var memberInfo: WorkspaceMemberCellModel?
     
     // MARK: - UI
+    private var btnBack = UIBarButtonItem()
+    private var btnTransform = UIBarButtonItem()
+    
     private var viewTitle =  UIView()
     private var lblTitle = UILabel()
-    private var lblLastActive = UILabel()
+    private var lblDetail = UILabel()
     private var btnViewTitle = UIButton()
     
     private var tableView = UITableView()
@@ -37,19 +41,21 @@ class MessageView: UIViewController {
     private var btnAttach = InputBarButtonItem()
     private let longPress = UILongPressGestureRecognizer(target: self, action: #selector(actionLongPress(_:)))
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, memberInfo: WorkspaceMemberCellModel) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
         NSLog("accessToken: " + token)
         NSLog("workspaceId: " + workspaceId)
+        self.memberInfo = memberInfo
         
-        bind(viewModel)
         attribute()
         layout()
         
         // 키보드 조절
         keyboardManager.bind(inputAccessoryView: messageInputBar)
         keyboardManager.bind(to: tableView)
+
     }
     
     required init?(coder: NSCoder) {
@@ -64,6 +70,14 @@ class MessageView: UIViewController {
     
     func bind(_ viewModel: MessageViewModel) {
         // MARK: Bind input
+        btnBack.rx.tap
+            .subscribe(onNext: goToMessage)
+            .disposed(by: disposeBag)
+
+//        btnTransform.rx.tap
+//            .bind(to: viewModel.input.btnTransformTapped)
+//            .disposed(by: disposeBag)
+        
         btnViewTitle.rx.tap
             .subscribe(onNext: actionTitle)
             .disposed(by: disposeBag)
@@ -75,6 +89,14 @@ class MessageView: UIViewController {
         
         // MARK: Bind output
         
+    }
+    
+    private func navTaped(_ bool : Bool) {
+        print("탭")
+    }
+    
+    private func goToMessage() {
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Load earlier methods
@@ -93,11 +115,11 @@ class MessageView: UIViewController {
     // MARK: - Typing indicator methods
     func typingIndicatorShow(_ typing: Bool, text: String = "입력중...") {
         if (typing == true) && (isTyping == false) {
-            textTitle = lblLastActive.text
-            lblLastActive.text = text
+            textTitle = lblDetail.text
+            lblDetail.text = text
         }
         if (typing == false) && (isTyping == true) {
-            lblLastActive.text = textTitle
+            lblDetail.text = textTitle
         }
         isTyping = typing
     }
@@ -186,28 +208,41 @@ class MessageView: UIViewController {
     
     private func attribute() {
         navigationItem.titleView = viewTitle
+        navigationItem.leftBarButtonItem = btnBack
+        navigationItem.rightBarButtonItem = btnTransform
+                
+        [lblTitle, lblDetail].forEach {
+            $0.textAlignment = .center
+        }
+        
+        lblTitle = lblTitle.then {
+            $0.text = memberInfo?.name
+            $0.font = UIFont(name: "NotoSansKR-Bold", size: 13)
+        }
+        
+        lblDetail = lblDetail.then {
+            $0.text = "세부정보 보기"
+            $0.font = UIFont(name: "NotoSansKR-Regular", size: 8)
+        }
+        
+        btnBack = btnBack.then {
+            $0.image = UIImage(systemName: "chevron.backward")
+            $0.style = .plain
+        }
+        
+        btnTransform = btnTransform.then {
+            $0.title = "전환"
+            $0.style = .plain
+        }
         
         tableView = tableView.then {
             $0.tableHeaderView = viewLoadEarlier
             $0.delegate = self
             $0.dataSource = self
-            $0.backgroundColor = .white
+            $0.backgroundColor = UIColor(named: "snackBackGroundColor")
             layoutTableView()
         }
         
-        [lblTitle, lblLastActive].forEach {
-            $0.textAlignment = .center
-        }
-        
-        lblTitle = lblTitle.then {
-            $0.text = "채널 제목"
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 17)
-        }
-        
-        lblTitle = lblTitle.then {
-            $0.text = "마지막 활동시간: YY.MM.DD"
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
-        }
 
         let delay = (keyboardHeight() == 0) ? 0.10 : 0.25
         let when = DispatchTime.now() + delay
@@ -256,14 +291,35 @@ class MessageView: UIViewController {
     }
     
     private func layout() {
-        [lblTitle, lblLastActive, btnViewTitle].forEach {
+        // navigationItem titleView
+        [lblTitle, lblDetail, btnViewTitle].forEach {
             viewTitle.addSubview($0)
         }
         
+        [lblTitle, lblDetail].forEach {
+            $0.snp.makeConstraints {
+                $0.centerX.equalToSuperview()
+            }
+        }
+        
+        lblTitle.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(5)
+        }
+        
+        lblDetail.snp.makeConstraints {
+            $0.top.equalTo(lblTitle.snp.bottom)
+        }
+        
+        btnViewTitle.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.width.equalTo(lblTitle)
+            $0.height.equalTo(40)
+        }
+        
+        // Table
         viewLoadEarlier.addSubview(btnLoadEarlier)
         
         [tableView, messageInputBar].forEach { view.addSubview($0) }
-        
         
         [btnViewTitle, btnLoadEarlier].forEach {
             $0.snp.makeConstraints {

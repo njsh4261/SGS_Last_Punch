@@ -217,12 +217,12 @@ class MessageView: UIViewController {
         
         lblTitle = lblTitle.then {
             $0.text = memberInfo?.name
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 13)
+            $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
         }
         
         lblDetail = lblDetail.then {
             $0.text = "세부정보 보기"
-            $0.font = UIFont(name: "NotoSansKR-Regular", size: 8)
+            $0.font = UIFont(name: "NotoSansKR-Regular", size: 10)
         }
         
         btnBack = btnBack.then {
@@ -307,7 +307,7 @@ class MessageView: UIViewController {
         }
         
         lblDetail.snp.makeConstraints {
-            $0.top.equalTo(lblTitle.snp.bottom)
+            $0.top.equalTo(lblTitle.snp.bottom).offset(-2)
         }
         
         btnViewTitle.snp.makeConstraints {

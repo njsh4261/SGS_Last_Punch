@@ -135,7 +135,6 @@ class WorkspaceListViewController: UIViewController {
                 let index = IndexPath(row: row, section: 0)
                 let cell = tv.dequeueReusableCell(withIdentifier: "WorkspaceListCell", for: index) as! WorkspaceListCell
                 
-                cell.btnCheckBox.setImage(nil, for: .normal)
                 self.selectWorkspace = -1
                 self.btnNext.isEnabled = false
                 

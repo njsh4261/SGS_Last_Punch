@@ -58,7 +58,7 @@ class SearchURLWorkspaceVeiwModel: ViewModelProtocol {
     
     func getWorkspace(_ token:String, workspaceId: String, method: HTTPMethod) {
         DispatchQueue.main.async { // 메인스레드에서 동작
-            WorkspaceService.shared.getWorkspace(accessToken: token, workspaceId: workspaceId, method: method)
+            WorkspaceService.shared.getWorkspace(method: method, accessToken: token, workspaceId: workspaceId)
                 .observe(on: MainScheduler.instance)
                 .subscribe{ event in
                     switch event {

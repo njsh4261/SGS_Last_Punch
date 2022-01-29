@@ -11,7 +11,7 @@ import Alamofire
 class WorkspaceService {
     static let shared = WorkspaceService()
     
-    func getWorkspace(accessToken: String, workspaceId: String = "", isMembers: Bool = false, page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: ""), method: HTTPMethod) -> Observable<NetworkResult<WorkspaceResponseModel>> {
+    func getWorkspace(method: HTTPMethod, accessToken: String, workspaceId: String = "", isMembers: Bool = false, page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: "")) -> Observable<NetworkResult<WorkspaceResponseModel>> {
         var url = APIConstants().workspaceList + "/\(workspaceId)"
         
         if isMembers { url += "/members" }

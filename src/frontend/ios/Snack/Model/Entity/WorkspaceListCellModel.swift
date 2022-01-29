@@ -33,7 +33,7 @@ struct WorkspacesModel: Codable {
 }
 
 struct WorkspaceMemberModel: Codable {
-    let content: [WorkspaceMember]?
+    let content: [WorkspaceMemberCellModel]?
     let pageable: Pageable?
     let last: Bool
     let totalPages: Int
@@ -56,17 +56,17 @@ struct WorkspaceListCellModel: Codable {
     let modifydt: String
 }
 
-struct WorkspaceMember: Codable {
+struct WorkspaceMemberCellModel: Codable {
     let id: Int
     let email: String
-    var name: String? = "이름"
+    var name: String?
     let displayname: String?
     let description: String?
     let phone: String?
     let country: String
     let language: String
     let settings: Int
-    let status: Int
+    let status: String
     let createdt: String
     let modifydt: String
 }

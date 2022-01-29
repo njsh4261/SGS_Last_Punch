@@ -49,10 +49,10 @@ class HomeViewController: UIViewController {
             case .StatusChannel:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ChannelCell.identifier, for: indexPath) as! ChannelCell
                 cell.selectionStyle = .none
-                // cell.configure(item: item)
+                // cell.configure(itemUserListCell: item)
                 return cell
             case .StatusDirectMessage:
-                let cell = tableView.dequeueReusableCell(withIdentifier: DirectMessageCell.identifier, for: indexPath) as! DirectMessageCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: UserListCell.identifier, for: indexPath) as! UserListCell
                 return cell
             }
         }
@@ -82,7 +82,7 @@ class HomeViewController: UIViewController {
         
         tableView = tableView.then {
             $0.register(ChannelCell.self, forCellReuseIdentifier: "ChannelCell")
-            $0.register(DirectMessageCell.self, forCellReuseIdentifier: "DirectMessageCell")
+            $0.register(UserListCell.self, forCellReuseIdentifier: "UserListCell")
             
             $0.bouncesZoom = false
             $0.isOpaque = false

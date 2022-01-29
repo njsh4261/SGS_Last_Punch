@@ -29,8 +29,8 @@ class WorkspaceListViewController: UIViewController {
     var lblSearch = UILabel()
     var refreshControl = UIRefreshControl()
     var pagenationControl = UIActivityIndicatorView()
-    var tablewViewTopBorder = UIView()
-    var tablewViewBottomBorder = UIView()
+    var tableViewTopBorder = UIView()
+    var tableViewBottomBorder = UIView()
     var tableView = UITableView()
     var btnNewWorkspaceByEmpty = UIButton()
     var btnNewWorkspace = UIButton()
@@ -258,7 +258,7 @@ class WorkspaceListViewController: UIViewController {
             $0.numberOfLines = 0
         }
         
-        [tablewViewTopBorder, tablewViewBottomBorder].forEach {
+        [tableViewTopBorder, tableViewBottomBorder].forEach {
             $0.backgroundColor = .quaternaryLabel
         }
         
@@ -327,7 +327,7 @@ class WorkspaceListViewController: UIViewController {
     }
     
     private func layout() {
-        [lblTitle, lblDescription, tablewViewTopBorder, tablewViewBottomBorder, tableView, lblSearch, btnNewWorkspaceByEmpty, btnNewWorkspace, btnURLWorkspace, btnLogout].forEach { view.addSubview($0) }
+        [lblTitle, lblDescription, tableViewTopBorder, tableViewBottomBorder, tableView, lblSearch, btnNewWorkspaceByEmpty, btnNewWorkspace, btnURLWorkspace, btnLogout].forEach { view.addSubview($0) }
         
         [lblTitle, lblDescription].forEach {
             $0.snp.makeConstraints {
@@ -347,18 +347,18 @@ class WorkspaceListViewController: UIViewController {
             $0.centerX.centerY.width.height.equalTo(tableView)
         }
         
-        [tablewViewTopBorder, tablewViewBottomBorder].forEach {
+        [tableViewTopBorder, tableViewBottomBorder].forEach {
             $0.snp.makeConstraints {
                 $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(15)
                 $0.height.equalTo(1)
             }
         }
         
-        tablewViewTopBorder.snp.makeConstraints {
+        tableViewTopBorder.snp.makeConstraints {
             $0.top.equalTo(lblDescription.snp.bottom).offset(39)
         }
         
-        tablewViewBottomBorder.snp.makeConstraints {
+        tableViewBottomBorder.snp.makeConstraints {
             $0.bottom.equalTo(lblSearch.snp.top).offset(-19)
         }
         

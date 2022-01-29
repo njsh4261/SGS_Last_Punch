@@ -16,7 +16,7 @@ import InputBarAccessoryView
 
 class MessageView: UIViewController {
     // MARK: - Properties
-    private let viewModel = WorkspaceListViewModel()
+    private let viewModel = MessageViewModel()
     private let disposeBag = DisposeBag()
     private var isTyping = false
     private var textTitle: String?
@@ -61,7 +61,7 @@ class MessageView: UIViewController {
         layoutTableView()
     }
     
-    func bind(with viewModel: WorkspaceListViewModel) {
+    func bind(_ viewModel: MessageViewModel) {
         // MARK: Bind input
         btnViewTitle.rx.tap
             .subscribe(onNext: actionTitle)

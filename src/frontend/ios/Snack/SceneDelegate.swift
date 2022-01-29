@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var tabBarController: UITabBarController!
     var welcomeViewController: WelcomeViewController!
     var homeView: HomeViewController!
-    var messageView: MessageView!
+    var DMView: DirectMessageListViewController!
     var profileView: ProfileViewController!
 
     // 추가예정 : DirectMessageViewConrooler!, NoticeViewConrooler!, SearchViewConrooler!
@@ -23,28 +23,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
         
-        
-        homeView = HomeViewController()
-        messageView = MessageView()
-        profileView = ProfileViewController(nibName: "ProfileView", bundle: nil)
-        
-        let navController1 = NavigationController(rootViewController: homeView)
-        let navController2 = NavigationController(rootViewController: messageView)
-        let navController5 = NavigationController(rootViewController: profileView)
-        
-        tabBarController = UITabBarController()
-        tabBarController.viewControllers = [navController1, navController2, navController5]
-        tabBarController.tabBar.isTranslucent = false
-        tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
-        tabBarController.modalPresentationStyle = .fullScreen
-        tabBarController.selectedIndex = App.DefaultTab
-
-        if #available(iOS 15.0, *) {
-            let appearance = UITabBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            tabBarController.tabBar.standardAppearance = appearance
-            tabBarController.tabBar.scrollEdgeAppearance = appearance
-        }
+//        homeView = HomeViewController()
+//        DMView = DirectMessageListViewController()
+//        profileView = ProfileViewController(nibName: "ProfileView", bundle: nil)
+//
+//        let navController0 = NavigationController(rootViewController: homeView)
+//        let navController1 = NavigationController(rootViewController: DMView)
+//        let navController4 = NavigationController(rootViewController: profileView)
+//
+//        tabBarController = UITabBarController()
+//        tabBarController.viewControllers = [navController0, navController1, navController4]
+//        tabBarController.tabBar.isTranslucent = false
+//        tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
+//        tabBarController.modalPresentationStyle = .fullScreen
+//        tabBarController.selectedIndex = App.DefaultTab
+//
+//        if #available(iOS 15.0, *) {
+//            let appearance = UITabBarAppearance()
+//            appearance.configureWithOpaqueBackground()
+//            tabBarController.tabBar.standardAppearance = appearance
+//            tabBarController.tabBar.scrollEdgeAppearance = appearance
+//        }
         
         welcomeViewController = WelcomeViewController()
         self.window?.rootViewController = welcomeViewController

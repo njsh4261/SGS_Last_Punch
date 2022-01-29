@@ -184,10 +184,39 @@ class WorkspaceListViewController: UIViewController {
         guard let pvc = self.presentingViewController else { return }
         pvc.dismiss(animated: true) { [self] in
             if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                KeychainWrapper.standard[.workspaceId] = selectWorkspace
-                sceneDelegate.homeView.bind(with: HomeViewModel())
-                sceneDelegate.tabBarController.selectedIndex = App.DefaultTab
-                sceneDelegate.welcomeViewController.present(sceneDelegate.tabBarController, animated: true, completion: nil)
+                KeychainWrapper.standard[.workspaceId] = selectWorkspace.description
+
+                let homeView = HomeViewController()
+                let DMView = DirectMessageListViewController()
+                DMView.bind(with: DirectMessageListViewModel(), workspaceId: selectWorkspace.description)
+                let profileView = ProfileViewController(nibName: "ProfileView", bundle: nil)
+                
+                let navController0 = NavigationController(rootViewController: homeView)
+                let navController1 = NavigationController(rootViewController: DMView)
+                let navController4 = NavigationController(rootViewController: profileView)
+                
+                let tabBarController = UITabBarController()
+                tabBarController.viewControllers = [navController0, navController1, navController4]
+                tabBarController.tabBar.isTranslucent = false
+                tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
+                tabBarController.modalPresentationStyle = .fullScreen
+                tabBarController.selectedIndex = App.DefaultTab
+                
+                if #available(iOS 15.0, *) {
+                    let appearance = UITabBarAppearance()
+                    appearance.configureWithOpaqueBackground()
+                    tabBarController.tabBar.standardAppearance = appearance
+                    tabBarController.tabBar.scrollEdgeAppearance = appearance
+                }
+
+                sceneDelegate.welcomeViewController.present(tabBarController, animated: true, completion: nil)
+
+                
+                
+//                sceneDelegate.homeView.bind(with: HomeViewModel())
+//                sceneDelegate.DMView.bind(with: DirectMessageListViewModel(), workspaceId: selectWorkspace.description)
+//                sceneDelegate.tabBarController.selectedIndex = App.DefaultTab
+//                sceneDelegate.welcomeViewController.present(sceneDelegate.tabBarController, animated: true, completion: nil)
             }
         }
     }

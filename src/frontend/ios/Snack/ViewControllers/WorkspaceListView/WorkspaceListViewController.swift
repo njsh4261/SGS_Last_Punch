@@ -18,7 +18,6 @@ class WorkspaceListViewController: UIViewController {
     private let viewModel = WorkspaceListViewModel()
     private let disposeBag = DisposeBag()
     private var accessTokenField = UITextField()
-    private var tablewHightField = UITextField()
     private var deleteCellField = UITextField()
     var selectWorkspace: Int = -1
     

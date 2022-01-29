@@ -39,10 +39,11 @@ class MessageView: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
+        guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
         NSLog("accessToken: " + token)
+        NSLog("workspaceId: " + workspaceId)
         
-        bind(with: viewModel)
+        bind(viewModel)
         attribute()
         layout()
         

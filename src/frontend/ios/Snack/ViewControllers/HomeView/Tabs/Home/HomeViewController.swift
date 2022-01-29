@@ -102,6 +102,12 @@ class HomeViewController: UIViewController {
                 $0.left.right.equalTo(view.safeAreaLayoutGuide)
             }
         }
+        
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(56)
+        }
+        
         searchBar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(56)

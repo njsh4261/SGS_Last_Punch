@@ -17,11 +17,17 @@ export interface EditorFrame {
   editor: ReactEditor;
   value: Node[];
   onChange: (value: Node[]) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
 const renderElement = (props: any) => <Element {...props} />;
 
-const EditorFrame: React.FC<EditorFrame> = ({ editor, value, onChange }) => {
+const EditorFrame: React.FC<EditorFrame> = ({
+  editor,
+  value,
+  onChange,
+  onKeyDown,
+}) => {
   const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
 
   return (
@@ -51,7 +57,11 @@ const EditorFrame: React.FC<EditorFrame> = ({ editor, value, onChange }) => {
 
           <LinkButton />
         </div>
-        <Editable renderElement={renderElement} renderLeaf={renderLeaf} />
+        <Editable
+          renderElement={renderElement}
+          renderLeaf={renderLeaf}
+          onKeyDown={onKeyDown}
+        />
       </Slate>
     </ClientFrame>
   );

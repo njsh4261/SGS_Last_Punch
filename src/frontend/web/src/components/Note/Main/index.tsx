@@ -5,8 +5,6 @@ import { createEditor, Node } from 'slate';
 import { withHistory } from 'slate-history';
 import { withReact } from 'slate-react';
 import noteSocketHook from '../../../hook/noteSocket';
-import noteUserListHook from '../../../hook/noteUserList';
-import noteOwnerHook from '../../../hook/noteOwner';
 import { User } from '../../../hook/noteSocket';
 
 const Container = styled.article`
@@ -28,8 +26,6 @@ export default function NoteMain() {
   const editor = useMemo(() => withReact(withHistory(createEditor())), []);
   const { updateNote, remote, lockNote, unlockNote, owner, myUser, userList } =
     noteSocketHook(editor);
-  const { userListState } = noteUserListHook({ userList });
-  const { ownerState } = noteOwnerHook({ owner });
 
   type Timeout = ReturnType<typeof setTimeout>;
   const typing = useRef<Timeout | null>(null);
@@ -44,7 +40,7 @@ export default function NoteMain() {
     // op를 배열에 저장하고 수초에 한번씩 call API to note server
     if (ops.length > 0 && !remote.current) {
       updateNote();
-      remote.current = false;
+      // remote.current = false;
     }
 
     if (typing.current) clearTimeout(typing.current);
@@ -60,12 +56,13 @@ export default function NoteMain() {
    * @ 비선점자: 선점자가 있으면 입력 금지, 없으면 선점 요창
    */
   const keydownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (owner.current === myUser) return;
+    console.log({ owner, myUser });
+    if (owner && owner.id == myUser.id) return;
 
     e.preventDefault();
-    if (owner.current !== null) return;
-    lockNote();
-    return;
+    if (owner === null) {
+      lockNote();
+    }
   };
 
   return (
@@ -76,10 +73,11 @@ export default function NoteMain() {
         onKeyDown={keydownHandler}
         editor={editor}
       ></EditorFrame>
-      <div>owner: {JSON.stringify(ownerState)}</div>
+      <div>my: {JSON.stringify(myUser)}</div>
+      <div>owner: {JSON.stringify(owner)}</div>
       <div>
         userList:
-        {userListState.map((u: User) => (
+        {userList.map((u: User) => (
           <div key={u.id}>{JSON.stringify(u)}</div>
         ))}
       </div>

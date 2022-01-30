@@ -36,7 +36,7 @@ public class NoteService {
         String owner = redisService.getData(payload.getNoteId());
         List<String> userList = redisService.getList(payload.getNoteId());
         StatusInfo statusInfo;
-        if (owner.equals("") || owner == null){
+        if (owner == null || owner.equals("")){
             statusInfo = StatusInfo.builder().userList(userList).build();
         }
         else{

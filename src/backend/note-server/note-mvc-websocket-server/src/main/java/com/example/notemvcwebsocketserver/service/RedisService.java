@@ -61,6 +61,7 @@ public class RedisService {
     public void setData(String key, User user){
         try {
             ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+            System.out.println(" here= " +  mapper.writeValueAsString(user));
             valueOperations.set(key, mapper.writeValueAsString(user));
         }
         catch(Exception e){

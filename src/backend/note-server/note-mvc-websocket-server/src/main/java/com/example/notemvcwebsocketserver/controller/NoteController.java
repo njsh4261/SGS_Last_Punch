@@ -1,12 +1,15 @@
 package com.example.notemvcwebsocketserver.controller;
 
 import com.example.notemvcwebsocketserver.entity.Payload;
+import com.example.notemvcwebsocketserver.entity.Payload.PayloadType;
 import com.example.notemvcwebsocketserver.messaging.RedisPublisher;
 import com.example.notemvcwebsocketserver.messaging.RedisSubscriber;
+import com.example.notemvcwebsocketserver.service.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -14,18 +17,26 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 @Controller
 public class NoteController {
-    private final RedisPublisher redisPublisher;
-    private final RedisSubscriber redisSubscriber;
-    private final RedisMessageListenerContainer redisMessageListener;
+    private final NoteService noteService;
     
     @MessageMapping("/note")
-    public void message(Payload payload) {
-        System.out.println("payload = " + payload.getType());
-        if(Payload.MessageType.ENTER.equals(payload.getType())){
-            System.out.println("here");
-            redisMessageListener.addMessageListener(redisSubscriber, new ChannelTopic(payload.getNoteId()));
+    public void pubNote(Payload payload, SimpMessageHeaderAccessor headerAccessor) {
+        System.out.println("payload = " + payload);
+        PayloadType type = payload.getType();
+        if (PayloadType.ENTER.equals(type)){
+            noteService.enter(payload);
         }
-        System.out.println("payload.getNoteId() = " + payload.getNoteId());
-        redisPublisher.publish(ChannelTopic.of(payload.getNoteId()), payload);
+        else if (PayloadType.LEAVE.equals(type)){
+            noteService.leave(payload);
+        }
+        else if (PayloadType.UPDATE.equals(type)){
+            noteService.update(payload);
+        }
+        else if (PayloadType.LOCK.equals(type)){
+            noteService.lock(payload);
+        }
+        else if (PayloadType.UNLOCK.equals(type)){
+            noteService.unlock(payload);
+        }
     }
 }

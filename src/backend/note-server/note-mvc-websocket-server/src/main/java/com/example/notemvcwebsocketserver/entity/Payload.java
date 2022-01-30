@@ -10,15 +10,12 @@ import netscape.javascript.JSObject;
 
 @Data
 public class Payload {
-    // 메시지 타입 : 입장, 노트 업데이트
-    public enum MessageType {
-        ENTER, UPDATE, CURSOR
+    public enum PayloadType {
+        ENTER, LEAVE, UPDATE, LOCK, UNLOCK, CURSOR;
     }
-    private MessageType type; // 메시지 타입
-    private String noteId; // 노트 번호
-    private String data; // 업데이트 Operation 데이터
-    private Long userId;
-//    private String sender; // 메세지 보낸 사람 id
-//    private List<String> blockId; // 업데이트된 블록들 id
-//    private LocalDateTime createDt;
+    private PayloadType type;
+    private String noteId;
+    private String userId;
+    private String userName;
+    private LocalDateTime timestamp;
 }

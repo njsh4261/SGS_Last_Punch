@@ -146,19 +146,16 @@ export default function noteSocketHook(editor: Editor): HookReturns {
     }
   };
 
-  const disconnect = () => {
+  const leavNote = () => {
     if (stomp.current) {
-      leaveNote();
+      stompSend(stomp.current, MESSAGE_TYPE.UNLOCK);
+      stompSend(stomp.current, MESSAGE_TYPE.LEAVE);
       stomp.current.disconnect();
     }
   };
 
   const enterNote = () => {
     if (stomp.current) stompSend(stomp.current, MESSAGE_TYPE.ENTER);
-  };
-
-  const leaveNote = () => {
-    if (stomp.current) stompSend(stomp.current, MESSAGE_TYPE.LEAVE);
   };
 
   const lockNote = () => {
@@ -219,7 +216,8 @@ export default function noteSocketHook(editor: Editor): HookReturns {
 
   useEffect(() => {
     connect();
-    return disconnect;
+    window.addEventListener('beforeunload', leavNote);
+    return leavNote;
   }, []);
 
   return { updateNote, remote, lockNote, unlockNote, owner, myUser, userList };

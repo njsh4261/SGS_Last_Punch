@@ -187,7 +187,7 @@ class WorkspaceListViewController: UIViewController {
                 let homeView = HomeViewController()
                 let DMView = DirectMessageListViewController(workspaceId: selectWorkspace.description)
                 DMView.bind(with: DirectMessageListViewModel())
-                let profileView = ProfileViewController(nibName: "ProfileView", bundle: nil)
+                let profileView = SettingsViewController(nibName: "SettingsView", bundle: nil)
                 
                 let navController0 = NavigationController(rootViewController: homeView)
                 let navController1 = NavigationController(rootViewController: DMView)

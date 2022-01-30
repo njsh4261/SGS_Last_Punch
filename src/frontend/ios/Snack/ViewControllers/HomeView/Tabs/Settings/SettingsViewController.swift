@@ -9,7 +9,7 @@ import UIKit
 import ProgressHUD
 import RxDataSources
 
-class ProfileViewController: UITableViewController {
+class SettingsViewController: UITableViewController {
     // MARK: - UI
     @IBOutlet private var viewHeader: UIView!
     @IBOutlet private var imageUser: UIImageView!
@@ -54,7 +54,7 @@ class ProfileViewController: UITableViewController {
 //        loadUser()
         tableView.reloadData()
     }
-
+    
     func actionProfile() {
         let editProfileView = EditProfileView()
         let navController = NavigationController(rootViewController: editProfileView)
@@ -79,6 +79,14 @@ class ProfileViewController: UITableViewController {
     func logoutUser() {
         guard let pvc = self.presentingViewController else { return }
         _ = LogOutViewModel(viewContoller: pvc)
+    }
+    
+    // test
+    func actionDeleteUser() {
+        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, userInfo: WorkspaceMemberCellModel(id: -1, email: "test@gamil.com", name: "테스트이름", displayname: "별명", description: "안녕하세요~!", phone: "010-1234-1234", country: "kor", language: "kor", settings: 1, status: "바쁨", createdt: "2020-02-25T12:00:00", modifydt: "2020-02-25T12:00:00"), isChat: false)
+        viewController.hidesBottomBarWhenPushed = true
+        self.show(viewController, sender: nil)
+
     }
     
     // MARK: - TableView dataSource
@@ -125,7 +133,7 @@ class ProfileViewController: UITableViewController {
 //        if (indexPath.section == 2) && (indexPath.row == 0) { actionCache() }
 //        if (indexPath.section == 2) && (indexPath.row == 1) { actionMedia() }
         if (indexPath.section == 3) && (indexPath.row == 0) { actionLogout() }
-//        if (indexPath.section == 3) && (indexPath.row == 1) { actionDeleteUser() }
+        if (indexPath.section == 3) && (indexPath.row == 1) { actionDeleteUser() }
     }
 }
 

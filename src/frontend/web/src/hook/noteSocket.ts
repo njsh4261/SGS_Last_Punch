@@ -3,6 +3,8 @@ import SockJS from 'sockjs-client';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { Editor } from 'slate';
 
+export type Owner = React.MutableRefObject<User | null>;
+
 export type User = {
   id: number;
   name: string;
@@ -24,7 +26,7 @@ interface EnterAndSubProps {
   userList: UserList;
   stomp: CompatClient;
   remote: React.MutableRefObject<boolean>;
-  owner: React.MutableRefObject<User | null>;
+  owner: Owner;
   enterNote: (stomp: CompatClient) => void;
 }
 

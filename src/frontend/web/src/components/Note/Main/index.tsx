@@ -6,6 +6,7 @@ import { withHistory } from 'slate-history';
 import { withReact } from 'slate-react';
 import noteSocketHook from '../../../hook/noteSocket';
 import noteUserListHook from '../../../hook/noteUserList';
+import noteOwnerHook from '../../../hook/noteOwner';
 import { User } from '../../../hook/noteSocket';
 
 const Container = styled.article`
@@ -28,6 +29,7 @@ export default function NoteMain() {
   const { updateNote, remote, lockNote, unlockNote, owner, myUser, userList } =
     noteSocketHook(editor);
   const { userListState } = noteUserListHook({ userList });
+  const { ownerState } = noteOwnerHook({ owner });
 
   type Timeout = ReturnType<typeof setTimeout>;
   const typing = useRef<Timeout | null>(null);
@@ -74,9 +76,13 @@ export default function NoteMain() {
         onKeyDown={keydownHandler}
         editor={editor}
       ></EditorFrame>
-      {userListState.map((u: User) => (
-        <div key={u.id}>{JSON.stringify(u)}</div>
-      ))}
+      <div>owner: {JSON.stringify(ownerState)}</div>
+      <div>
+        userList:
+        {userListState.map((u: User) => (
+          <div key={u.id}>{JSON.stringify(u)}</div>
+        ))}
+      </div>
     </Container>
   );
 }

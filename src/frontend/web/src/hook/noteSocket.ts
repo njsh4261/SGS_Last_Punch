@@ -53,28 +53,34 @@ const enterAndSub =
   () => {
     enterNote(stomp);
 
+    stomp.subscribe(`/user/note/${myUser.id}`, (payload) => {
+      const transaction = JSON.parse(payload.body);
+      owner.current = transaction.owner;
+      userList.current = transaction.userList;
+    });
+
     stomp.subscribe('/sub/note/abcd', (payload) => {
-      const transacrtion = JSON.parse(payload.body);
-      switch (transacrtion.type) {
+      const transaction = JSON.parse(payload.body);
+      switch (transaction.type) {
         case MESSAGE_TYPE.ENTER:
-          userList.current.push(transacrtion.user);
+          userList.current.push(transaction.user);
           break;
         case MESSAGE_TYPE.LEAVE:
           userList.current = userList.current.filter(
-            (u) => u.id !== transacrtion.user.id,
+            (u) => u.id !== transaction.user.id,
           );
           break;
         case MESSAGE_TYPE.LOCK:
-          owner.current = transacrtion.user;
+          owner.current = transaction.user;
           break;
         case MESSAGE_TYPE.UNLOCK:
           owner.current = null;
           break;
         case MESSAGE_TYPE.UPDATE:
-          if (transacrtion.user.id !== myUser.id) {
+          if (transaction.user.id !== myUser.id) {
             console.log('call API(get op by timestamp)');
             // call API (get ops by 'timestamp')
-            // const ops = JSON.parse(transacrtion.data);
+            // const ops = JSON.parse(transaction.data);
             // if (!ops) return;
 
             // remote.current = true;
@@ -82,10 +88,6 @@ const enterAndSub =
             //   ops.forEach((op: any) => editor.apply(op));
             // });
           }
-          break;
-        case '현재 노트 상황':
-          owner.current = transacrtion.owner;
-          userList.current = transacrtion.userList;
           break;
         default:
           console.error('wrong type');

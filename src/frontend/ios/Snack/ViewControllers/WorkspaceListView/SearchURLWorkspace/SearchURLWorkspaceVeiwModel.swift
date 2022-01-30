@@ -72,6 +72,7 @@ class SearchURLWorkspaceVeiwModel: ViewModelProtocol {
                             self.output.goToHome.accept(false)
                         default:
                             self.output.errorMessage.accept("정확한 주소를 적어주세요")
+                            self.output.goToHome.accept(true) // 임시
                         }
                     default:
                         break

@@ -27,11 +27,11 @@ class DirectMessageListViewModel: ViewModelProtocol {
     // MARK: - Public properties
     var input = Input()
     var output = Output()
+    var cellData: Driver<[WorkspaceMemberCellModel]>
+    let push: Driver<(MessageViewModel, Int)>
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
-    var cellData: Driver<[WorkspaceMemberCellModel]>
-    let push: Driver<(MessageViewModel, Int)>
     
     // MARK: - Init
     init() {

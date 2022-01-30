@@ -64,6 +64,9 @@
 		8CBD459527A3E5600056A557 /* UserListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD459427A3E55F0056A557 /* UserListCell.swift */; };
 		8CBD459827A3E59B0056A557 /* UserListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD459727A3E59B0056A557 /* UserListCellViewModel.swift */; };
 		8CBD459A27A41B520056A557 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD459927A41B510056A557 /* MessageViewModel.swift */; };
+		8CBD45B827A6CFAB0056A557 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45B727A6CFAB0056A557 /* ProfileViewController.swift */; };
+		8CBD45BA27A6CFCF0056A557 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45B927A6CFCF0056A557 /* ProfileViewModel.swift */; };
+		8CBD45BC27A6D6B90056A557 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD45BB27A6D6B90056A557 /* ProfileView.xib */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -133,6 +136,9 @@
 		8CBD459427A3E55F0056A557 /* UserListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCell.swift; sourceTree = "<group>"; };
 		8CBD459727A3E59B0056A557 /* UserListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCellViewModel.swift; sourceTree = "<group>"; };
 		8CBD459927A41B510056A557 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		8CBD45B727A6CFAB0056A557 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		8CBD45B927A6CFCF0056A557 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		8CBD45BB27A6D6B90056A557 /* ProfileView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -426,6 +432,7 @@
 		8CBD457627A25D9A0056A557 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				8CBD45B627A6CF320056A557 /* Profile */,
 				8CBD459B27A5294F0056A557 /* Cells */,
 				8CBD457727A25E430056A557 /* MessageView.swift */,
 				8CBD459927A41B510056A557 /* MessageViewModel.swift */,
@@ -473,6 +480,16 @@
 				8CBD457B27A28A350056A557 /* MessagesCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		8CBD45B627A6CF320056A557 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				8CBD45B727A6CFAB0056A557 /* ProfileViewController.swift */,
+				8CBD45B927A6CFCF0056A557 /* ProfileViewModel.swift */,
+				8CBD45BB27A6D6B90056A557 /* ProfileView.xib */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
@@ -560,6 +577,7 @@
 				8C68AB0C2795AA4100C1711E /* User.json in Resources */,
 				8C68AABD278ED9BF00C1711E /* NotoSansKR-Regular.otf in Resources */,
 				8C68AB2F2797F62D00C1711E /* SettingsView.xib in Resources */,
+				8CBD45BC27A6D6B90056A557 /* ProfileView.xib in Resources */,
 				8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */,
 				8CBD453E279D917D0056A557 /* Workspace.json in Resources */,
 				8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */,
@@ -626,6 +644,7 @@
 				8C68AAD72791AF1100C1711E /* RegisterViewController.swift in Sources */,
 				8CBD4542279F047F0056A557 /* KeychainWrapper+keys.swift in Sources */,
 				8CBD454827A064A20056A557 /* PaginationAction.swift in Sources */,
+				8CBD45BA27A6CFCF0056A557 /* ProfileViewModel.swift in Sources */,
 				8C68AAC527909BD000C1711E /* LoginViewModel.swift in Sources */,
 				8CBD456F27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift in Sources */,
 				8C68AB172796A03E00C1711E /* APIConstants.swift in Sources */,
@@ -647,7 +666,7 @@
 				8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */,
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
 				8CBD4544279F0CD50056A557 /* LogOutViewModel.swift in Sources */,
-				8C68AB2D2797F5E400C1711E /* ProfileViewController.swift in Sources */,
+				8C68AB2D2797F5E400C1711E /* SettingsViewController.swift in Sources */,
 				8C68AAF027952F6500C1711E /* NavigationController.swift in Sources */,
 				8CBD459A27A41B520056A557 /* MessageViewModel.swift in Sources */,
 				8CBD45322799AEFD0056A557 /* WorkspaceListCell.swift in Sources */,
@@ -657,6 +676,7 @@
 				8C68AAFF27954FD200C1711E /* ChannelCellViewModel.swift in Sources */,
 				8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */,
 				8CBD457C27A28A350056A557 /* MessagesCell.swift in Sources */,
+				8CBD45B827A6CFAB0056A557 /* ProfileViewController.swift in Sources */,
 				8C68AAD327911AD700C1711E /* ExObservable.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
 				8CBD456C27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift in Sources */,

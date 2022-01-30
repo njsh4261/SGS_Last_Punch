@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 @Builder
 public class StatusInfo {
-    private String ownerId;
-    private String ownerName;
+    private String owner;
     private List<String> userList;
 }

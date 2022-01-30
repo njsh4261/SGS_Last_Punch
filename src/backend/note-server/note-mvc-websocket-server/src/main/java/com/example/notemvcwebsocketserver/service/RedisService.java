@@ -1,6 +1,6 @@
 package com.example.notemvcwebsocketserver.service;
 
-import com.example.notemvcwebsocketserver.entity.Connection;
+import com.example.notemvcwebsocketserver.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -16,20 +16,20 @@ public class RedisService {
     private StringRedisTemplate redisTemplate;
     ObjectMapper mapper = new ObjectMapper();
     
-    public void insertList(String key, Connection connection){
+    public void insertList(String key, User user){
         try {
             ListOperations<String, String> listOperations = redisTemplate.opsForList();
-            listOperations.rightPush("Connection: " + key, mapper.writeValueAsString(connection));
+            listOperations.rightPush("Connection: " + key, mapper.writeValueAsString(user));
         }
         catch(Exception e){
             System.out.println("e = " + e);
         }
     }
     
-    public void removeList(String key, Connection connection){
+    public void removeList(String key, User user){
         try {
         ListOperations<String, String> listOperations = redisTemplate.opsForList();
-        listOperations.remove("Connection: "+ key, 1, mapper.writeValueAsString(connection));
+        listOperations.remove("Connection: "+ key, 1, mapper.writeValueAsString(user));
         }
         catch(Exception e){
             System.out.println("e = " + e);
@@ -43,7 +43,8 @@ public class RedisService {
     
     public String getData(String key) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        return valueOperations.get(key);
+        String value = valueOperations.get(key);
+        return value;
     }
     
     public void setData(String key, String value, long duration) {
@@ -51,9 +52,20 @@ public class RedisService {
         valueOperations.set(key, value, duration, TimeUnit.MILLISECONDS);
     }
     
-    public void setData(String key, String value){
+    public void setNullData(String key) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(key, value);
+        valueOperations.set(key, "");
+    }
+    
+    
+    public void setData(String key, User user){
+        try {
+            ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+            valueOperations.set(key, mapper.writeValueAsString(user));
+        }
+        catch(Exception e){
+            System.out.println("e = " + e);
+        }
     }
 
     public void deleteData(String key) {

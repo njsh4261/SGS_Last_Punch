@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class Connection {
-    private String userId;
-    private String userName;
+public class User {
+    private String id;
+    private String name;
 }

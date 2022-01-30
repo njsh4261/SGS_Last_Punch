@@ -158,7 +158,8 @@ export default function noteSocketHook(editor: Editor): HookReturns {
 
   const updateNote = () => {
     if (stomp && owner.current === myUser) {
-      const stringDate = JSON.stringify(new Date());
+      const date = new Date();
+      const stringDate = date.toJSON();
       stompSend(stomp, MESSAGE_TYPE.UPDATE, stringDate);
     }
   };

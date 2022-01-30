@@ -56,8 +56,7 @@ export default function NoteMain() {
    * @ 비선점자: 선점자가 있으면 입력 금지, 없으면 선점 요창
    */
   const keydownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log({ owner, myUser });
-    if (owner && owner.id == myUser.id) return;
+    if (owner && owner.id === myUser.id) return;
 
     e.preventDefault();
     if (owner === null) {

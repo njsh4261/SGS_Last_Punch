@@ -3,7 +3,6 @@ import React, {
   useRef,
   useEffect,
   useMemo,
-  useCallback,
   SetStateAction,
 } from 'react';
 import SockJS from 'sockjs-client';
@@ -59,8 +58,9 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
   enterNote(stomp);
 
   stomp.subscribe(`/user/note/${myUser.id}`, (payload) => {
+    console.log('접속 성공');
     const transaction = JSON.parse(payload.body);
-    setOwner(JSON.parse(transaction.owner));
+    if (transaction.owner) setOwner(JSON.parse(transaction.owner));
     setUserList(transaction.userList.map((u: string) => JSON.parse(u)));
   });
 
@@ -69,21 +69,25 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
 
     switch (transaction.type) {
       case MESSAGE_TYPE.ENTER:
-        if (transaction.myUser.id != myUser.id) {
+        if (transaction.myUser.id !== myUser.id) {
+          console.log('someone enter');
           setUserList((ul) => [...ul, transaction.myUser]);
         }
         break;
       case MESSAGE_TYPE.LEAVE:
-        setUserList((ul) => ul.filter((u) => u.id != transaction.myUser.id));
+        console.log('leave');
+        setUserList((ul) => ul.filter((u) => u.id !== transaction.myUser.id));
         break;
       case MESSAGE_TYPE.LOCK:
+        console.log('lock:', transaction.myUser);
         setOwner(transaction.myUser);
         break;
       case MESSAGE_TYPE.UNLOCK:
+        console.log('unlock');
         setOwner(null);
         break;
       case MESSAGE_TYPE.UPDATE:
-        if (transaction.myUser.id != myUser.id) {
+        if (transaction.myUser.id !== myUser.id) {
           console.log('call API(get op by timestamp)');
           // call API (get ops by 'timestamp')
           // const ops = JSON.parse(transaction.data);
@@ -149,31 +153,33 @@ export default function noteSocketHook(editor: Editor): HookReturns {
     }
   };
 
-  const enterNote = useCallback(() => {
+  const enterNote = () => {
     if (stomp.current) stompSend(stomp.current, MESSAGE_TYPE.ENTER);
-  }, [stomp]);
+  };
 
-  const leaveNote = useCallback(() => {
+  const leaveNote = () => {
     if (stomp.current) stompSend(stomp.current, MESSAGE_TYPE.LEAVE);
-  }, [stomp]);
+  };
 
-  const lockNote = useCallback(() => {
+  const lockNote = () => {
+    console.log('reqeust rock, owner=', owner);
     if (stomp.current && owner === null)
       stompSend(stomp.current, MESSAGE_TYPE.LOCK);
-  }, [stomp]);
+  };
 
-  const unlockNote = useCallback(() => {
-    if (stomp.current && owner?.id === myUser.id)
+  const unlockNote = () => {
+    if (stomp.current && owner?.id === myUser.id) {
       stompSend(stomp.current, MESSAGE_TYPE.UNLOCK);
-  }, [stomp]);
+    }
+  };
 
-  const updateNote = useCallback(() => {
+  const updateNote = () => {
     if (stomp.current && owner?.id === myUser.id) {
       const date = new Date();
       const stringDate = date.toJSON();
       stompSend(stomp.current, MESSAGE_TYPE.UPDATE, stringDate);
     }
-  }, [stomp]);
+  };
 
   // const sendOps = (ops: any) => {
   //   if (owner.current !== userId) return;

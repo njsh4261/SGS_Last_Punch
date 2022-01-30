@@ -13,9 +13,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var tabBarController: UITabBarController!
     var welcomeViewController: WelcomeViewController!
-    var homeView: HomeViewController!
-    var DMView: DirectMessageListViewController!
-    var profileView: ProfileViewController!
+//    var homeView: HomeViewController!
+//    var DMView: DirectMessageListViewController!
+//    var profileView: SettingsViewController!
 
     // 추가예정 : DirectMessageViewConrooler!, NoticeViewConrooler!, SearchViewConrooler!
 

@@ -39,8 +39,8 @@
 		8C68AB172796A03E00C1711E /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB162796A03E00C1711E /* APIConstants.swift */; };
 		8C68AB1A2796E70C00C1711E /* WorkspaceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB192796E70C00C1711E /* WorkspaceListViewController.swift */; };
 		8C68AB1E27970A3200C1711E /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB1D27970A3200C1711E /* EditProfileView.swift */; };
-		8C68AB2D2797F5E400C1711E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB2C2797F5E400C1711E /* ProfileViewController.swift */; };
-		8C68AB2F2797F62D00C1711E /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AB2E2797F62D00C1711E /* ProfileView.xib */; };
+		8C68AB2D2797F5E400C1711E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB2C2797F5E400C1711E /* SettingsViewController.swift */; };
+		8C68AB2F2797F62D00C1711E /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AB2E2797F62D00C1711E /* SettingsView.xib */; };
 		8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C953BD2278E90F200D5677E /* WelcomeViewController.swift */; };
 		8CBD452D2799A0C80056A557 /* ExUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD452C2799A0C80056A557 /* ExUIButton.swift */; };
 		8CBD452F2799A2C10056A557 /* WorkspaceListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD452E2799A2C10056A557 /* WorkspaceListViewModel.swift */; };
@@ -301,7 +301,7 @@
 				8CBD458727A3E2E20056A557 /* DirectMessage */,
 				8CBD459227A3E4A10056A557 /* Notice */,
 				8CBD459327A3E4A90056A557 /* Search */,
-				8C68AAE92795281D00C1711E /* Profile */,
+				8C68AAE92795281D00C1711E /* Settings */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -317,20 +317,21 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		8C68AAE92795281D00C1711E /* Profile */ = {
+		8C68AAE92795281D00C1711E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				8C68AB1F27970A3600C1711E /* EditProfile */,
-				8C68AB2C2797F5E400C1711E /* ProfileViewController.swift */,
-				8C68AB2E2797F62D00C1711E /* ProfileView.xib */,
+				8C68AB2C2797F5E400C1711E /* SettingsViewController.swift */,
+				8C68AB2E2797F62D00C1711E /* SettingsView.xib */,
 			);
-			path = Profile;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		8C68AAEE27952F5600C1711E /* Other */ = {
 			isa = PBXGroup;
 			children = (
 				8C68AAEF27952F6500C1711E /* NavigationController.swift */,
+				8CBD45B427A6C9670056A557 /* ImagePicker.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -558,7 +559,7 @@
 				8C68AB042795545900C1711E /* Channel.json in Resources */,
 				8C68AB0C2795AA4100C1711E /* User.json in Resources */,
 				8C68AABD278ED9BF00C1711E /* NotoSansKR-Regular.otf in Resources */,
-				8C68AB2F2797F62D00C1711E /* ProfileView.xib in Resources */,
+				8C68AB2F2797F62D00C1711E /* SettingsView.xib in Resources */,
 				8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */,
 				8CBD453E279D917D0056A557 /* Workspace.json in Resources */,
 				8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */,

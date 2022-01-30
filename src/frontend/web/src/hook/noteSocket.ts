@@ -1,16 +1,19 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+  SetStateAction,
+} from 'react';
 import SockJS from 'sockjs-client';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { Editor } from 'slate';
-
-export type Owner = React.MutableRefObject<User | null>;
 
 export type User = {
   id: number;
   name: string;
 };
-
-export type UserList = React.MutableRefObject<User[]>;
 
 enum MESSAGE_TYPE {
   ENTER = 'ENTER',
@@ -23,10 +26,11 @@ enum MESSAGE_TYPE {
 interface EnterAndSubProps {
   editor: Editor;
   myUser: User;
-  userList: UserList;
+  setUserList: React.Dispatch<SetStateAction<User[]>>;
   stomp: CompatClient;
   remote: React.MutableRefObject<boolean>;
-  owner: Owner;
+  owner: User | null;
+  setOwner: React.Dispatch<SetStateAction<User | null>>;
   enterNote: (stomp: CompatClient) => void;
 }
 
@@ -35,41 +39,51 @@ interface HookReturns {
   remote: React.MutableRefObject<boolean>;
   lockNote: () => void;
   unlockNote: () => void;
-  owner: React.MutableRefObject<User | null>;
+  owner: User | null;
   myUser: User;
-  userList: UserList;
+  userList: User[];
 }
 
 const enterAndSub = (props: EnterAndSubProps) => () => {
-  const { editor, myUser, userList, stomp, remote, owner, enterNote } = props;
+  const {
+    editor,
+    myUser,
+    setUserList,
+    stomp,
+    remote,
+    owner,
+    setOwner,
+    enterNote,
+  } = props;
 
   enterNote(stomp);
 
   stomp.subscribe(`/user/note/${myUser.id}`, (payload) => {
     const transaction = JSON.parse(payload.body);
-    owner.current = transaction.owner;
-    userList.current = transaction.userList;
+    setOwner(JSON.parse(transaction.owner));
+    setUserList(transaction.userList.map((u: string) => JSON.parse(u)));
   });
 
   stomp.subscribe('/sub/note/abcd', (payload) => {
     const transaction = JSON.parse(payload.body);
+
     switch (transaction.type) {
       case MESSAGE_TYPE.ENTER:
-        userList.current.push(transaction.user);
+        if (transaction.myUser.id != myUser.id) {
+          setUserList((ul) => [...ul, transaction.myUser]);
+        }
         break;
       case MESSAGE_TYPE.LEAVE:
-        userList.current = userList.current.filter(
-          (u) => u.id !== transaction.user.id,
-        );
+        setUserList((ul) => ul.filter((u) => u.id != transaction.myUser.id));
         break;
       case MESSAGE_TYPE.LOCK:
-        owner.current = transaction.user;
+        setOwner(transaction.myUser);
         break;
       case MESSAGE_TYPE.UNLOCK:
-        owner.current = null;
+        setOwner(null);
         break;
       case MESSAGE_TYPE.UPDATE:
-        if (transaction.user.id !== myUser.id) {
+        if (transaction.myUser.id != myUser.id) {
           console.log('call API(get op by timestamp)');
           // call API (get ops by 'timestamp')
           // const ops = JSON.parse(transaction.data);
@@ -91,7 +105,7 @@ export default function noteSocketHook(editor: Editor): HookReturns {
   // dummy user data
   const myUser = useMemo(
     () => ({
-      id: Math.floor(Math.random() * 9999),
+      id: Math.floor(Math.random() * 9999999),
       name: 'test user myUserame ' + Math.floor(Math.random() * 9999),
     }),
     [],
@@ -100,8 +114,8 @@ export default function noteSocketHook(editor: Editor): HookReturns {
   // const [stomp, setStomp] = useState<CompatClient>();
   const stomp = useRef<CompatClient>();
   const remote = useRef(false);
-  const owner = useRef<User | null>(null); // userId
-  const userList = useRef<User[]>([]);
+  const [owner, setOwner] = useState<User | null>(null);
+  const [userList, setUserList] = useState<User[]>([]);
 
   const connect = () => {
     const url = 'http://localhost:9001/ws/note';
@@ -113,10 +127,11 @@ export default function noteSocketHook(editor: Editor): HookReturns {
         enterAndSub({
           editor,
           myUser,
-          userList,
+          setUserList,
           stomp: stompClient,
           remote,
           owner,
+          setOwner,
           enterNote,
         }),
       );
@@ -134,31 +149,31 @@ export default function noteSocketHook(editor: Editor): HookReturns {
     }
   };
 
-  const enterNote = () => {
+  const enterNote = useCallback(() => {
     if (stomp.current) stompSend(stomp.current, MESSAGE_TYPE.ENTER);
-  };
+  }, [stomp]);
 
-  const leaveNote = () => {
+  const leaveNote = useCallback(() => {
     if (stomp.current) stompSend(stomp.current, MESSAGE_TYPE.LEAVE);
-  };
+  }, [stomp]);
 
-  const lockNote = () => {
-    if (stomp.current && owner.current === null)
+  const lockNote = useCallback(() => {
+    if (stomp.current && owner === null)
       stompSend(stomp.current, MESSAGE_TYPE.LOCK);
-  };
+  }, [stomp]);
 
-  const unlockNote = () => {
-    if (stomp.current && owner.current === myUser)
+  const unlockNote = useCallback(() => {
+    if (stomp.current && owner?.id === myUser.id)
       stompSend(stomp.current, MESSAGE_TYPE.UNLOCK);
-  };
+  }, [stomp]);
 
-  const updateNote = () => {
-    if (stomp.current && owner.current === myUser) {
+  const updateNote = useCallback(() => {
+    if (stomp.current && owner?.id === myUser.id) {
       const date = new Date();
       const stringDate = date.toJSON();
       stompSend(stomp.current, MESSAGE_TYPE.UPDATE, stringDate);
     }
-  };
+  }, [stomp]);
 
   // const sendOps = (ops: any) => {
   //   if (owner.current !== userId) return;

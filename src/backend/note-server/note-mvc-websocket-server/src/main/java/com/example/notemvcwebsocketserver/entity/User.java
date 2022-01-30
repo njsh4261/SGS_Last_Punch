@@ -6,6 +6,6 @@ import lombok.Data;
 @Builder
 @Data
 public class User {
-    private String id;
+    private Long id;
     private String name;
 }

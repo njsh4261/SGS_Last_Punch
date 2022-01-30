@@ -16,5 +16,5 @@ public class Payload {
     private PayloadType type;
     private String noteId;
     private User myUser;
-    private LocalDateTime timestamp;
+    private String timestamp;
 }

@@ -38,6 +38,7 @@ public class NoteService {
         StatusInfo statusInfo = StatusInfo.builder().owner(owner).userList(userList).build();
         //현재 입장한 사용자에게만 전송
         System.out.println("/user/note/"+payload.getMyUser().getId());
+        System.out.println("statusInfo = " + statusInfo);
         simpMessagingTemplate.convertAndSend("/user/note/"+payload.getMyUser().getId(), statusInfo);
         //모든 subscriber에게 전송
         redisPublisher.publish(ChannelTopic.of(payload.getNoteId()), payload);

@@ -35,7 +35,13 @@ public class NoteService {
         
         String owner = redisService.getData(payload.getNoteId());
         List<String> userList = redisService.getList(payload.getNoteId());
-        StatusInfo statusInfo = StatusInfo.builder().owner(owner).userList(userList).build();
+        StatusInfo statusInfo;
+        if (owner.equals("") || owner == null){
+            statusInfo = StatusInfo.builder().userList(userList).build();
+        }
+        else{
+            statusInfo = StatusInfo.builder().owner(owner).userList(userList).build();
+        }
         //현재 입장한 사용자에게만 전송
         System.out.println("/user/note/"+payload.getMyUser().getId());
         System.out.println("statusInfo = " + statusInfo);
@@ -60,7 +66,8 @@ public class NoteService {
     public void lock(Payload payload){
         //선점자 표시 (현재 상태가 null인 경우에만 선점 가능)
         String ownerId = redisService.getData(payload.getNoteId());
-        if (ownerId == null || ownerId == ""){
+        System.out.println("ownerId = " + ownerId);
+        if (ownerId == null || ownerId.equals("")){
             System.out.println("payload = " + payload);
             redisService.setData(payload.getNoteId(), User.builder()
                 .id(payload.getMyUser().getId())
@@ -72,7 +79,7 @@ public class NoteService {
     public void unlock(Payload payload){
         //선점상태 해지 (현재 상태에 선점자가 있을 경우에만 선점 가능)
         String ownerId = redisService.getData(payload.getNoteId());
-        if (ownerId != null && ownerId != ""){
+        if (ownerId != null && !ownerId.equals("")){
             redisService.setNullData(payload.getNoteId());
             redisPublisher.publish(ChannelTopic.of(payload.getNoteId()), payload);
         }

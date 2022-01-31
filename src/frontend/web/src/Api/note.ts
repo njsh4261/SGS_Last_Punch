@@ -76,3 +76,34 @@ export async function getSpecificNoteAPI(
     alert('fail request');
   }
 }
+
+export async function updateNoteAllAPI(
+  noteId: string,
+  title: string,
+  content: string,
+) {
+  const endpoint = '/note';
+  const body = {
+    noteId,
+    title,
+    content,
+    modifyDt: new Date().toISOString(),
+  };
+
+  try {
+    const response = await axios.request({
+      method: 'PUT',
+      url: testHost + endpoint,
+      data: body,
+    });
+    const { code, data, err } = response?.data;
+    if (code === RESPONSE.NOTE.SUCCESS) {
+      console.log('success update note all');
+      if (data) return data;
+      return code;
+    }
+    if (err) alert('fail update note all');
+  } catch (e) {
+    alert('fail request');
+  }
+}

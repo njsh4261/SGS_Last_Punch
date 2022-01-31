@@ -26,23 +26,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class NoteUpdateController {
     private final NoteUpdateService noteUpdateService;
-    
-    @PatchMapping(value ="/note", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> saveTransactions(@RequestBody UpdateNoteRequest updateNoteRequest){
-        
-        noteUpdateService.update(updateNoteRequest);
-        
+
+    @PutMapping(value ="/note", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> saveContent(@RequestBody UpdateNoteRequest updateNoteRequest){
+
+        noteUpdateService.saveContent(updateNoteRequest);
+
         return Response.toResponseEntity("15000", HttpStatus.OK);
     }
-    
-    @PostMapping(value ="/note/block")
-    public ResponseEntity<Object> syncNote(@RequestBody SyncNoteRequest syncNoteRequest){
-        
-        List<Block> block = noteUpdateService.find(syncNoteRequest);
-    
-        Map<String, List<Block>> data = new HashMap<String, List<Block>>();
-        data.put("block", block);
-        
-        return Response.toResponseEntity("15000", HttpStatus.OK, data);
-    }
+//
+//    @PostMapping(value ="/note/block")
+//    public ResponseEntity<Object> syncNote(@RequestBody SyncNoteRequest syncNoteRequest){
+//
+//        List<Block> block = noteUpdateService.find(syncNoteRequest);
+//
+//        Map<String, List<Block>> data = new HashMap<String, List<Block>>();
+//        data.put("block", block);
+//
+//        return Response.toResponseEntity("15000", HttpStatus.OK, data);
+//    }
 }

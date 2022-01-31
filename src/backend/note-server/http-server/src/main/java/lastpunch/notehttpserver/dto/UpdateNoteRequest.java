@@ -1,10 +1,14 @@
 package lastpunch.notehttpserver.dto;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
 
 @Data
 public class UpdateNoteRequest {
     private String noteId;
-    private List<Transaction> transactions;
+    private String title;
+    private String content;
+    private LocalDateTime modifyDt;
 }

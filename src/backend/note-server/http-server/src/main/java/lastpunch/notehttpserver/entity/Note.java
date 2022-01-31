@@ -22,23 +22,28 @@ public class Note {
     private ObjectId id;
     
     @NotNull
-    private Long workspace_id;
+    private Long workspaceId;
     
     @NotNull
-    private Long channel_id;
+    private Long channelId;
     
-    private List<Block> blocks;
+    private Long creatorId;
     
-    private LocalDateTime createdt;
-    private LocalDateTime modifydt;
+    private String title;
+    private String content; // JSON string
+    
+    private List<Op> ops;
+    
+    private LocalDateTime createDt;
+    private LocalDateTime modifyDt;
     
     public NoteInfo toNoteInfo(){
-        String title = blocks.get(0).getContent();
         return NoteInfo.builder()
             .id(id.toString())
+            .creatorId(creatorId)
             .title(title)
-            .createdt(createdt)
-            .modifydt(modifydt)
+            .createDt(createDt)
+            .modifyDt(modifyDt)
             .build();
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.data.annotation.Id;
 public class NoteInfo {
     private String id;
     private String title;
-    private LocalDateTime createdt;
-    private LocalDateTime modifydt;
+    private Long creatorId;
+    private LocalDateTime createDt;
+    private LocalDateTime modifyDt;
 }

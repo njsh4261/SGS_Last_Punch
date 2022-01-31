@@ -17,16 +17,16 @@ public class CreateNoteRequest {
     @NotNull
     private Long channelId;
     @NotNull
-    private String title;
-    @NotNull
-    private String titleBlockId;
+    private Long creatorId;
     
     public Note toEntity(){
         return Note.builder()
-            .workspace_id(workspaceId)
-            .channel_id(channelId)
-            .createdt(LocalDateTime.now())
-            .modifydt(LocalDateTime.now())
+            .workspaceId(workspaceId)
+            .channelId(channelId)
+            .creatorId(creatorId)
+            .title("")
+            .createDt(LocalDateTime.now())
+            .modifyDt(LocalDateTime.now())
             .build();
     }
 }

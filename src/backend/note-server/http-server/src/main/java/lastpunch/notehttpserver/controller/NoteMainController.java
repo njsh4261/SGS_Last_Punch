@@ -20,12 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/note")
 @RestController
 public class NoteMainController {
     private final NoteMainService noteMainService;
     
-    @PostMapping
+    @PostMapping("/note")
     public ResponseEntity<Object> createNote(@RequestBody CreateNoteRequest createNoteRequest){
         String noteId = noteMainService.create(createNoteRequest);
         Map<String, Object> data = new HashMap<String, Object>();
@@ -34,23 +33,23 @@ public class NoteMainController {
         return Response.toResponseEntity("15000", HttpStatus.OK, data);
     }
     
-    @GetMapping
+    @GetMapping("/notes")
     public ResponseEntity<Object> getNotes(@RequestParam Long channelId){
         List<NoteInfo> noteList = noteMainService.getList(channelId);
-        
+
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("noteList", noteList);
-        
+
         return Response.toResponseEntity("15000", HttpStatus.OK, data);
     }
-    
-    @GetMapping("/{id}")
+
+    @GetMapping("note/{id}")
     public ResponseEntity<Object> getNote(@PathVariable("id") String id){
         GetNoteResponse note = noteMainService.find(id);
-        
+
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("note", note);
-        
+
         return Response.toResponseEntity("15000", HttpStatus.OK, data);
     }
 }

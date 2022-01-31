@@ -76,6 +76,10 @@ class RegisterViewController: UIViewController {
             .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
+        scrollview.rx.didScroll
+            .bind(to: view.rx.endEditing)
+            .disposed(by: disposeBag)
+        
         // enter를 누를때
         fieldEmail.rx.controlEvent(.editingDidEndOnExit)
             .asObservable()

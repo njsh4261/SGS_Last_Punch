@@ -69,7 +69,7 @@ class PasswordView: UIViewController {
         dismiss(animated: true)
     }
 
-    @objc func actionDone() {
+    @objc func actionSave() {
 
         let password0 = fieldCurrentPassword.text ?? ""
         let password1 = fieldNewPassword.text ?? ""
@@ -129,7 +129,7 @@ extension PasswordView: UITextFieldDelegate {
 
         if (textField == fieldCurrentPassword)  { fieldNewPassword.becomeFirstResponder()    }
         if (textField == fieldNewPassword)      { fieldRetypePassword.becomeFirstResponder() }
-        if (textField == fieldRetypePassword)   { actionDone()                               }
+        if (textField == fieldRetypePassword)   { actionSave()                               }
 
         return true
     }

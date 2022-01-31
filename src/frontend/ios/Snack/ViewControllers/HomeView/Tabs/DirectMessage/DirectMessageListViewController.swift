@@ -88,7 +88,7 @@ class DirectMessageListViewController: UIViewController {
         viewModel.output.refreshLoading
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
-        
+                
         viewModel.push
             .drive(onNext: { (viewModel, row) in
                 let viewController = ChatPrivateView("55", self.members[row].id.description, self.members[row])

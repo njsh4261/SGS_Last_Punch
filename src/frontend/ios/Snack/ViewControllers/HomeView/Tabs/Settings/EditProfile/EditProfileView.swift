@@ -161,6 +161,12 @@ extension EditProfileView: UITableViewDataSource {
 
         return 0
     }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (section == 0) { return "정보" }
+        if (section == 1) { return "전화번호" }
+        return nil
+    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 

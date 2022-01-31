@@ -9,6 +9,8 @@ import SockJS from 'sockjs-client';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { Editor } from 'slate';
 
+import { getNoteOPAPI } from '../Api/note';
+
 export type User = {
   id: number;
   name: string;
@@ -64,7 +66,7 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
     setUserList(transaction.userList.map((u: string) => JSON.parse(u)));
   });
 
-  stomp.subscribe('/sub/note/abcd', (payload) => {
+  stomp.subscribe('/sub/note/abcd', async (payload) => {
     const transaction = JSON.parse(payload.body);
 
     switch (transaction.type) {
@@ -88,15 +90,21 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
         break;
       case MESSAGE_TYPE.UPDATE:
         if (transaction.myUser.id !== myUser.id) {
-          console.log('call API(get op by timestamp)');
-          // call API (get ops by 'timestamp')
-          // const ops = JSON.parse(transaction.data);
-          // if (!ops) return;
+          const { noteId, timestamp } = transaction;
+          const stringOP = await getNoteOPAPI(noteId.toString(), timestamp);
+          if (!stringOP) {
+            console.error('fail get operations - hook/noteSocket');
+            return;
+          }
 
-          // remote.current = true;
-          // Editor.withoutNormalizing(editor, () => {
-          //   ops.forEach((op: any) => editor.apply(op));
-          // });
+          try {
+            const ops = JSON.parse(stringOP);
+            Editor.withoutNormalizing(editor, () => {
+              ops.forEach((op: any) => editor.apply(op));
+            });
+          } catch (e) {
+            console.error(e);
+          }
         }
         break;
       default:
@@ -177,20 +185,6 @@ export default function noteSocketHook(editor: Editor): HookReturns {
       stompSend(stomp.current, MESSAGE_TYPE.UPDATE, stringDate);
     }
   };
-
-  // const sendOps = (ops: any) => {
-  //   if (owner.current !== userId) return;
-  //   try {
-  //     stomp?.send(
-  //       '/pub/note',
-  //       {},
-  //       JSON.stringify(getUpdateMessage(ops, userId, userName)),
-  //     );
-  //   } catch (e) {
-  //     // console.error(e);
-  //     return;
-  //   }
-  // };
 
   const stompSend = (
     stomp: CompatClient,

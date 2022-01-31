@@ -10,7 +10,6 @@ import noteSocketHook from '../../../hook/noteSocket';
 import { User } from '../../../hook/noteSocket';
 import {
   updateNoteAllAPI,
-  getNoteOPAPI,
   updateNoteOPAPI,
   getSpecificNoteAPI,
 } from '../../../Api/note';
@@ -21,6 +20,10 @@ const Container = styled.article`
   width: 50%;
   margin: 0 96px;
   height: 100%;
+`;
+
+const TestContainer = styled.div`
+  margin-top: 50px;
 `;
 
 interface Note {
@@ -48,17 +51,19 @@ export default function NoteMain() {
   type Timeout = ReturnType<typeof setTimeout>;
   const typing = useRef<Timeout | null>(null);
 
-  const changeHandler = (value: Node[]) => {
+  const changeHandler = async (value: Node[]) => {
     setValue(value);
     const ops = editor.operations.filter((op) => {
       if (op) return op.type !== 'set_selection';
       return false;
     });
 
-    // op를 배열에 저장하고 수초에 한번씩 call API to note server
-    if (ops.length > 0 && !remote.current) {
-      updateNote();
-      // remote.current = false;
+    // todo: op를 배열에 저장하고 수초에 한번씩 call API to note server
+    if (ops.length > 0) {
+      const stringOP = JSON.stringify(ops);
+      const res = await updateNoteOPAPI(note!.id, stringOP);
+      if (res) updateNote();
+      else console.error('update fail - Note/main/index');
     }
   };
 
@@ -139,7 +144,7 @@ export default function NoteMain() {
 
   useEffect(() => {
     getSpecificNoteHandler();
-  }, []);
+  }, [params]);
 
   useEffect(() => {
     if (owner) {
@@ -152,9 +157,13 @@ export default function NoteMain() {
 
   useEffect(() => {
     if (note) {
-      // const content = JSON.parse(note.content);
-      // setValue(content);
-      setValue(initialValue);
+      try {
+        const content = JSON.parse(note.content);
+        setValue(content);
+      } catch (e) {
+        console.error('Wrong Format - note.content');
+      }
+      // setTitle(note.title);
     } else setValue(initialValue);
   }, [note]);
 
@@ -170,14 +179,16 @@ export default function NoteMain() {
             onKeyDown={keydownHandler}
             editor={editor}
           ></EditorFrame>
-          <div>my: {JSON.stringify(myUser)}</div>
-          <div>owner: {JSON.stringify(owner)}</div>
-          <div>
-            userList:
-            {userList.map((u: User) => (
-              <div key={u.id}>{JSON.stringify(u)}</div>
-            ))}
-          </div>
+          <TestContainer>
+            <div>my: {JSON.stringify(myUser)}</div>
+            <div>owner: {JSON.stringify(owner)}</div>
+            <div>
+              userList:
+              {userList.map((u: User) => (
+                <div key={u.id}>{JSON.stringify(u)}</div>
+              ))}
+            </div>
+          </TestContainer>
         </Container>
       ) : (
         <div>plz select note</div>

@@ -1,16 +1,18 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import EditorFrame from './EditorFrame';
 import { createEditor, Node, Text, Transforms } from 'slate';
 import { withHistory } from 'slate-history';
 import { withReact } from 'slate-react';
+import { useParams } from 'react-router-dom';
 
+import EditorFrame from './EditorFrame';
 import noteSocketHook from '../../../hook/noteSocket';
 import { User } from '../../../hook/noteSocket';
 import {
   updateNoteAllAPI,
   getNoteOPAPI,
   updateNoteOPAPI,
+  getSpecificNoteAPI,
 } from '../../../Api/note';
 
 const Container = styled.article`
@@ -21,7 +23,13 @@ const Container = styled.article`
   height: 100%;
 `;
 
-export default function NoteMain({ note }: any) {
+interface Note {
+  id: string;
+  title: string;
+  content: string;
+}
+
+export default function NoteMain() {
   const initialValue = [
     {
       type: 'paragraph',
@@ -29,6 +37,8 @@ export default function NoteMain({ note }: any) {
     },
   ];
 
+  const params = useParams();
+  const [note, setNote] = useState<Note | null>(null);
   const [title, setTitle] = useState('test title');
   const [value, setValue] = useState<Node[]>(initialValue);
   const editor = useMemo(() => withReact(withHistory(createEditor())), []);
@@ -112,6 +122,25 @@ export default function NoteMain({ note }: any) {
     }
   };
 
+  // todo: onwer일 때 일정 주기마다 자동으로 api 날리기
+  const updateHandler = async () => {
+    if (!note) return;
+    const { id } = note;
+    console.log('send:', JSON.stringify(value));
+    const res = await updateNoteAllAPI(id, title, JSON.stringify(value));
+    if (res) alert('updated!');
+    else alert('fail update');
+  };
+
+  const getSpecificNoteHandler = async () => {
+    const responseNote = await getSpecificNoteAPI(params.noteId!.toString());
+    setNote(responseNote);
+  };
+
+  useEffect(() => {
+    getSpecificNoteHandler();
+  }, []);
+
   useEffect(() => {
     if (owner) {
       typing.current = setTimeout(() => {
@@ -121,18 +150,13 @@ export default function NoteMain({ note }: any) {
     }
   }, [owner]);
 
-  // todo: onwer일 때 일정 주기마다 자동으로 api 날리기
-  const updateHandler = async () => {
-    const { id } = note;
-    console.log(id);
-    const res = await updateNoteAllAPI(id, title, JSON.stringify(initialValue));
-    if (res) alert('updated!');
-    else alert('fail update');
-  };
-
   useEffect(() => {
-    if (note) setValue(note.content || initialValue);
-  }, []);
+    if (note) {
+      // const content = JSON.parse(note.content);
+      // setValue(content);
+      setValue(initialValue);
+    } else setValue(initialValue);
+  }, [note]);
 
   return (
     <>

@@ -11,5 +11,5 @@ public class SaveOperationsRequest {
     @NotNull
     private String noteId;
     private String op;
-    private LocalDateTime timestamp;
+    private String timestamp;
 }

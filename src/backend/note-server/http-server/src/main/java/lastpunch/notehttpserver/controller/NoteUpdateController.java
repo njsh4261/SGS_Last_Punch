@@ -46,6 +46,7 @@ public class NoteUpdateController {
     
     @PostMapping("/note/op")
     public ResponseEntity<Object> saveOperations(@RequestBody SaveOperationsRequest saveOperationsRequest){
+        System.out.println("saveOperationsRequest.getTimestamp() = " + saveOperationsRequest.getTimestamp());
         noteUpdateService.saveOperations(saveOperationsRequest);
         return Response.toResponseEntity("15000", HttpStatus.OK);
     }
@@ -53,10 +54,10 @@ public class NoteUpdateController {
     @GetMapping("/note/{id}/op")
     public ResponseEntity<Object> getNotes(@RequestParam String timestamp, @PathVariable("id") String id){
 
-        noteUpdateService.findOps(timestamp, id);
+        String op = noteUpdateService.findOps(timestamp, id);
 
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("ops", "1");
+        data.put("op", op);
     
         return Response.toResponseEntity("15000", HttpStatus.OK, data);
     }

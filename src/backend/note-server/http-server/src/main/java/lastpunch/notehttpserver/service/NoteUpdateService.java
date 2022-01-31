@@ -40,9 +40,10 @@ public class NoteUpdateService {
     
     public void saveOperations(SaveOperationsRequest saveOperationsRequest){
         ObjectId noteId = new ObjectId(saveOperationsRequest.getNoteId());
+        System.out.println(Date.from(Instant.parse(saveOperationsRequest.getTimestamp())));
         Op op = Op.builder()
             .op(saveOperationsRequest.getOp())
-            .timestamp(saveOperationsRequest.getTimestamp())
+            .timestamp(Date.from(Instant.parse(saveOperationsRequest.getTimestamp())))
             .build();
         
         Query query = new Query(Criteria.where("_id").is(noteId));
@@ -51,16 +52,18 @@ public class NoteUpdateService {
         mongoTemplate.updateFirst(query, update, Note.class);
     }
     
-    public void findOps(String timestamp, String id){
+    public String findOps(String timestamp, String id){
         ObjectId noteId = new ObjectId(id);
         Query query = new Query(Criteria.where("_id").is(noteId).andOperator(Criteria.where("ops").elemMatch(Criteria.where("timestamp").is(Date.from(Instant.parse(timestamp))))));
-//        query.fields().include("ops").elemMatch("op", Criteria.where("timestamp").is(Date.from(Instant.parse(timestamp))));
-//            .addCriteria(Criteria.where("ops").elemMatch(
-//            Criteria.where("timestamp").is(Date.from(Instant.parse(timestamp)))));
         query.fields().include("ops.$");
         List<Note> note = mongoTemplate.find(query, Note.class);
-        System.out.println("query = " + query);
-        System.out.println("note.get(0) = " + note.get(0));
+        
+        if(note.size() == 1){
+            return note.get(0).getOps().get(0).getOp();
+        }
+        else{
+            throw new BusinessException(ErrorCode.OPERATION_NOT_EXIST);
+        }
     }
 //    public void update(UpdateNoteRequest updateNoteRequest){
 //        ObjectId noteId = new ObjectId(updateNoteRequest.getNoteId());

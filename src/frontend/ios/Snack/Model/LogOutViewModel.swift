@@ -10,6 +10,7 @@ import SwiftKeychainWrapper
 import RxSwift
 import RxCocoa
 import ProgressHUD
+import PasscodeKit
 
 class LogOutViewModel {
     // MARK: - Private properties
@@ -20,6 +21,7 @@ class LogOutViewModel {
         
         ProgressHUD.show(nil, interaction: false)
         logOutService(viewContoller: viewContoller, token: token)
+        PasscodeKit.remove()
     }
     
     // keyChain 정보 삭제

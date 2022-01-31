@@ -9,6 +9,8 @@ import UIKit
 import Firebase
 import UserNotifications
 import FirebaseMessaging
+import ProgressHUD
+import PasscodeKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,7 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         Messaging.messaging().delegate = self
-        
+        PasscodeKit.start()
+
         //FCM 현재 등록 토큰 확인
         Messaging.messaging().token { token, error in
             if let error = error {
@@ -74,4 +77,3 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler([.list, .banner, .badge, .sound])
     }
 }
-

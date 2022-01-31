@@ -35,6 +35,7 @@ class PasscodeView: UIViewController {
     
     // MARK: - PasscodeKit Settings
     func settingPasscodeKit() {
+        PasscodeKit.allowedFailedAttempts = 3
         PasscodeKit.backgroundColor = .systemBackground
         PasscodeKit.textColor = .label
         

@@ -46,7 +46,6 @@ export async function getNoteListAPI(
 
     const { code, data, err } = response?.data;
     if (code === RESPONSE.NOTE.SUCCESS) {
-      alert('success get note list');
       return data.noteList;
     }
     if (err) alert('fail get note list');
@@ -68,7 +67,6 @@ export async function getSpecificNoteAPI(
 
     const { code, data, err } = response?.data;
     if (code === RESPONSE.NOTE.SUCCESS) {
-      alert('success get specific note');
       return data.note;
     }
     if (err) alert('fail get specific note');
@@ -103,6 +101,52 @@ export async function updateNoteAllAPI(
       return code;
     }
     if (err) alert('fail update note all');
+  } catch (e) {
+    alert('fail request');
+  }
+}
+
+export async function updateNoteOPAPI(noteId: string, op: string) {
+  const endpoint = '/note/op';
+  const body = {
+    noteId,
+    op,
+    timestamp: new Date().toISOString(),
+  };
+
+  try {
+    const response = await axios.request({
+      method: 'POST',
+      url: testHost + endpoint,
+      data: body,
+    });
+    const { code, data, err } = response?.data;
+    if (code === RESPONSE.NOTE.SUCCESS) {
+      console.log('success update note op');
+      if (data) return data;
+      return code;
+    }
+    if (err) alert('fail update note op');
+  } catch (e) {
+    alert('fail request');
+  }
+}
+
+export async function getNoteOPAPI(noteId: string, timestamp: string) {
+  const endpoint = `/note/${noteId}/op?timestamp=${timestamp}`;
+
+  try {
+    const response = await axios.request({
+      method: 'GET',
+      url: testHost + endpoint,
+    });
+    const { code, data, err } = response?.data;
+    if (code === RESPONSE.NOTE.SUCCESS) {
+      console.log('success update note op');
+      if (data) return data;
+      return code;
+    }
+    if (err) alert('fail update note op');
   } catch (e) {
     alert('fail request');
   }

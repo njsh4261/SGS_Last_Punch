@@ -54,3 +54,25 @@ export async function getNoteListAPI(
     alert('fail request');
   }
 }
+
+export async function getSpecificNoteAPI(
+  noteId: string,
+): Promise<any | undefined> {
+  const endpoint = `/note/${noteId}`;
+
+  try {
+    const response = await axios.request({
+      method: 'GET',
+      url: testHost + endpoint,
+    });
+
+    const { code, data, err } = response?.data;
+    if (code === RESPONSE.NOTE.SUCCESS) {
+      alert('success get specific note');
+      return data.note;
+    }
+    if (err) alert('fail get specific note');
+  } catch (e) {
+    alert('fail request');
+  }
+}

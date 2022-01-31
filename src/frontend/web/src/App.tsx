@@ -6,7 +6,8 @@ import PublicRoute from './routes/Public';
 import ModalWrapper from './components/Common/ModalWrapper';
 import { TOKEN } from './constant';
 import Note from './pages/Note';
-import { createNoteAPI, getNoteListAPI } from './Api/note';
+
+import { createNoteAPI, getNoteListAPI, getSpecificNoteAPI } from './Api/note';
 
 function App() {
   const accessToken = sessionStorage.getItem(TOKEN.ACCESS);
@@ -22,6 +23,12 @@ function App() {
     if (responseNoteList)
       setNoteList(responseNoteList.map((resNote) => resNote.id));
   };
+  const testGetSpecificHandler = async (
+    e: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    const responseNote = await getSpecificNoteAPI((e.target as any).id);
+    console.log(responseNote);
+  };
   useEffect(() => {
     testGetListHandler();
   }, []);
@@ -31,7 +38,9 @@ function App() {
       <button onClick={testCreateHandler}>create note</button>
       <div>
         {noteList.map((note) => (
-          <div key={note}>{note}</div>
+          <div id={note} key={note} onClick={testGetSpecificHandler}>
+            {note}
+          </div>
         ))}
       </div>
       <Note></Note>

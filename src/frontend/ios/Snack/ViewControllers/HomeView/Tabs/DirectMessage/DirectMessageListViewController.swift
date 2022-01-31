@@ -127,7 +127,7 @@ class DirectMessageListViewController: UIViewController {
             $0.setTitle("팀원 추가", for: .normal)
             $0.setImage(UIImage(systemName: "person.crop.circle.badge.plus"), for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 17)
-            $0.setBackgroundColor(UIColor(named: "snackBackGroundColor")!, for: .normal)
+            $0.backgroundColor = UIColor(named: "snackBackGroundColor")
             $0.setTitleColor(UIColor(named: "snackTextColor"), for: .normal)
             $0.setTitleColor(UIColor(named: "snackTextColor")?.withAlphaComponent(0.3), for: .highlighted)
             $0.tintColor = UIColor(named: "snackTextColor")
@@ -141,7 +141,6 @@ class DirectMessageListViewController: UIViewController {
             $0.layer.cornerRadius = 15
             $0.clipsToBounds = true
             $0.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat(HEADER_HEIGHT))
-            
         }
         
         tableView = tableView.then {

@@ -15,6 +15,7 @@ target 'Snack' do
   pod 'Alamofire', '~> 5.5'
   pod 'SwiftKeychainWrapper'
   pod 'InputBarAccessoryView'
+  pod 'PasscodeKit'
 
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'

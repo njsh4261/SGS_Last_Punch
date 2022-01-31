@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import EditorFrame from './EditorFrame';
 import { createEditor, Node, Text, Transforms } from 'slate';
@@ -103,6 +103,15 @@ export default function NoteMain() {
       lockNote();
     }
   };
+
+  useEffect(() => {
+    if (owner) {
+      typing.current = setTimeout(() => {
+        console.log('end typing');
+        unlockNote();
+      }, 1000);
+    }
+  }, [owner]);
 
   return (
     <Container>

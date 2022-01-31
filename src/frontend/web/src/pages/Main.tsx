@@ -6,6 +6,7 @@ import updateChannelStoreHook from '../hook/updateChannelStore';
 import setTitleHook from '../hook/setTitle';
 import MainHeader from '../components/Main/Header';
 import Chat from '../components/Main/Chat';
+import NoteMain from '../components/Note/Main';
 import Aside from '../components/Main/Aside';
 
 const MainLayout = styled.div`
@@ -30,7 +31,11 @@ export default function Main() {
       <Body>
         <Aside wsName={wsName}></Aside>
         {params.channelId ? (
-          <Chat></Chat>
+          params.noteId ? (
+            <NoteMain></NoteMain>
+          ) : (
+            <Chat></Chat>
+          )
         ) : (
           <div>this is main page. select channel!</div>
         )}

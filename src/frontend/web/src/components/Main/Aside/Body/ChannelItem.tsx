@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ModalType } from './Modal';
-import {
-  createNoteAPI,
-  getNoteListAPI,
-  getSpecificNoteAPI,
-} from '../../../../Api/note';
+import { createNoteAPI, getNoteListAPI } from '../../../../Api/note';
 
 export const ItemContainer = styled.section`
   padding: 7px 0 7px 26px;
@@ -26,19 +23,21 @@ interface Props {
     id: string;
     name: string;
   };
+  wsId: string;
   type: ModalType;
   isSelected?: boolean;
   selectHandler: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export default function ChannelItem(props: Props) {
-  const { channel, selectHandler, type, isSelected } = props;
+  const { channel, wsId, selectHandler, type, isSelected } = props;
 
   const [noteList, setNoteList] = useState<any[]>([]);
-  const [selectedNote, selectNote] = useState();
+
+  const navigate = useNavigate();
 
   const testCreateHandler = async () => {
-    const noteId = await createNoteAPI(1, 1, 1);
+    const noteId = await createNoteAPI(+wsId, +channel.id, 1);
     if (noteId) setNoteList([...noteList, noteId]);
   };
 
@@ -48,13 +47,11 @@ export default function ChannelItem(props: Props) {
       setNoteList(responseNoteList.map((resNote) => resNote.id));
   };
 
-  const testGetSpecificHandler = async (
-    e: React.MouseEvent<HTMLDivElement>,
-  ) => {
-    const responseNote = await getSpecificNoteAPI((e.target as any).id);
-    // { id, creatorId, title, content(initValue), ops(null | []), createDt, modifyDt}
-    selectNote(responseNote);
-    // todo: change View this note (Main) redux?
+  const selectNoteHandler = async (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    const noteId = (e.target as any).id;
+    if (noteId) navigate(`/${wsId}/${channel.id}/note/${noteId}`);
+    else alert('no-note.id. aside-body-ChannelItem');
   };
 
   useEffect(() => {
@@ -69,7 +66,7 @@ export default function ChannelItem(props: Props) {
       {isSelected && <button onClick={testCreateHandler}>create note</button>}
       {isSelected &&
         noteList.map((note) => (
-          <div id={note} key={note} onClick={testGetSpecificHandler}>
+          <div id={note} key={note} onClick={selectNoteHandler}>
             {note}
           </div>
         ))}

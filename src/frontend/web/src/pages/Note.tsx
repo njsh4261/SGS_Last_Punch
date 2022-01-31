@@ -41,67 +41,68 @@ const MainFrame = styled.main`
 `;
 
 export default function Note() {
-  const [sideToggle, setSideToggle] = useState(true);
-  const [hover, setHover] = useState(false);
-  const params = useParams();
+  return <>todo: delete this</>;
+  // const [sideToggle, setSideToggle] = useState(true);
+  // const [hover, setHover] = useState(false);
+  // const params = useParams();
 
-  const toggleHandler = () => setSideToggle((state) => !state);
-  const hoverHandler = () => setHover((state) => !state);
+  // const toggleHandler = () => setSideToggle((state) => !state);
+  // const hoverHandler = () => setHover((state) => !state);
 
-  // testing
-  const [selectedNote, selectNote] = useState();
-  const [noteList, setNoteList] = useState<any[]>([]);
-  const testCreateHandler = async () => {
-    const noteId = await createNoteAPI(1, 1, 1);
-    if (noteId) setNoteList([...noteList, noteId]);
-  };
-  const testGetListHandler = async () => {
-    const responseNoteList = await getNoteListAPI(1);
-    if (responseNoteList)
-      setNoteList(responseNoteList.map((resNote) => resNote.id));
-  };
-  const testGetSpecificHandler = async (
-    e: React.MouseEvent<HTMLDivElement>,
-  ) => {
-    const responseNote = await getSpecificNoteAPI((e.target as any).id);
-    // { id, creatorId, title, content(initValue), ops(null | []), createDt, modifyDt}
-    selectNote(responseNote);
-  };
-  useEffect(() => {
-    testGetListHandler();
-  }, []);
+  // // testing
+  // const [selectedNote, selectNote] = useState();
+  // const [noteList, setNoteList] = useState<any[]>([]);
+  // const testCreateHandler = async () => {
+  //   const noteId = await createNoteAPI(1, 1, 1);
+  //   if (noteId) setNoteList([...noteList, noteId]);
+  // };
+  // const testGetListHandler = async () => {
+  //   const responseNoteList = await getNoteListAPI(1);
+  //   if (responseNoteList)
+  //     setNoteList(responseNoteList.map((resNote) => resNote.id));
+  // };
+  // const testGetSpecificHandler = async (
+  //   e: React.MouseEvent<HTMLDivElement>,
+  // ) => {
+  //   const responseNote = await getSpecificNoteAPI((e.target as any).id);
+  //   // { id, creatorId, title, content(initValue), ops(null | []), createDt, modifyDt}
+  //   selectNote(responseNote);
+  // };
+  // useEffect(() => {
+  //   testGetListHandler();
+  // }, []);
 
-  return (
-    <Layout>
-      <SideFrame sideToggle={sideToggle}>
-        <NoteSideHeader
-          hover={hover}
-          hoverHandler={hoverHandler}
-          channelName={params.channelName as string}
-          toggleHandler={toggleHandler}
-        ></NoteSideHeader>
-        {/* <NoteSideMenu></NoteSideMenu>
-        <NoteSideList></NoteSideList> */}
-        <button onClick={testCreateHandler}>create note</button>
-        <div>
-          {noteList.map((note) => (
-            <div id={note} key={note} onClick={testGetSpecificHandler}>
-              {note}
-            </div>
-          ))}
-        </div>
-      </SideFrame>
-      <Container>
-        <HeaderFrame>
-          <NoteHeader
-            sideToggle={sideToggle}
-            toggleHandler={toggleHandler}
-          ></NoteHeader>
-        </HeaderFrame>
-        <MainFrame>
-          <NoteMain note={selectedNote}></NoteMain>
-        </MainFrame>
-      </Container>
-    </Layout>
-  );
+  // return (
+  //   <Layout>
+  //     <SideFrame sideToggle={sideToggle}>
+  //       <NoteSideHeader
+  //         hover={hover}
+  //         hoverHandler={hoverHandler}
+  //         channelName={params.channelName as string}
+  //         toggleHandler={toggleHandler}
+  //       ></NoteSideHeader>
+  //       {/* <NoteSideMenu></NoteSideMenu>
+  //       <NoteSideList></NoteSideList> */}
+  //       <button onClick={testCreateHandler}>create note</button>
+  //       <div>
+  //         {noteList.map((note) => (
+  //           <div id={note} key={note} onClick={testGetSpecificHandler}>
+  //             {note}
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </SideFrame>
+  //     <Container>
+  //       <HeaderFrame>
+  //         <NoteHeader
+  //           sideToggle={sideToggle}
+  //           toggleHandler={toggleHandler}
+  //         ></NoteHeader>
+  //       </HeaderFrame>
+  //       <MainFrame>
+  //         <NoteMain></NoteMain>
+  //       </MainFrame>
+  //     </Container>
+  //   </Layout>
+  // );
 }

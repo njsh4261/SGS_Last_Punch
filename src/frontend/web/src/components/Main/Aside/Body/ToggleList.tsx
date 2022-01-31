@@ -92,6 +92,7 @@ export default function ToggleList({
         {channelList.map((channel) => (
           <ChannelItem
             channel={channel}
+            wsId={params.wsId as string}
             key={channel.id}
             type={type}
             selectHandler={selectHandler}

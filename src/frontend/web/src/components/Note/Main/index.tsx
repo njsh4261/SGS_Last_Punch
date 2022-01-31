@@ -4,8 +4,14 @@ import EditorFrame from './EditorFrame';
 import { createEditor, Node, Text, Transforms } from 'slate';
 import { withHistory } from 'slate-history';
 import { withReact } from 'slate-react';
+
 import noteSocketHook from '../../../hook/noteSocket';
 import { User } from '../../../hook/noteSocket';
+import {
+  updateNoteAllAPI,
+  getNoteOPAPI,
+  updateNoteOPAPI,
+} from '../../../Api/note';
 
 const Container = styled.article`
   display: flex;
@@ -15,13 +21,15 @@ const Container = styled.article`
   height: 100%;
 `;
 
-export default function NoteMain() {
+export default function NoteMain({ note }: any) {
   const initialValue = [
     {
       type: 'paragraph',
-      children: [{ text: 'A line of text in a paragraph.' }],
+      children: [{ text: '' }],
     },
   ];
+
+  const [title, setTitle] = useState('test title');
   const [value, setValue] = useState<Node[]>(initialValue);
   const editor = useMemo(() => withReact(withHistory(createEditor())), []);
   const { updateNote, remote, lockNote, unlockNote, owner, myUser, userList } =
@@ -113,22 +121,43 @@ export default function NoteMain() {
     }
   }, [owner]);
 
+  // todo: onwer일 때 일정 주기마다 자동으로 api 날리기
+  const updateHandler = async () => {
+    const { id } = note;
+    console.log(id);
+    const res = await updateNoteAllAPI(id, title, JSON.stringify(initialValue));
+    if (res) alert('updated!');
+    else alert('fail update');
+  };
+
+  useEffect(() => {
+    if (note) setValue(note.content || initialValue);
+  }, []);
+
   return (
-    <Container>
-      <EditorFrame
-        value={value}
-        onChange={changeHandler}
-        onKeyDown={keydownHandler}
-        editor={editor}
-      ></EditorFrame>
-      <div>my: {JSON.stringify(myUser)}</div>
-      <div>owner: {JSON.stringify(owner)}</div>
-      <div>
-        userList:
-        {userList.map((u: User) => (
-          <div key={u.id}>{JSON.stringify(u)}</div>
-        ))}
-      </div>
-    </Container>
+    <>
+      {note ? (
+        <Container>
+          <h1>{note.title || title}</h1>
+          <button onClick={updateHandler}>update</button>
+          <EditorFrame
+            value={value}
+            onChange={changeHandler}
+            onKeyDown={keydownHandler}
+            editor={editor}
+          ></EditorFrame>
+          <div>my: {JSON.stringify(myUser)}</div>
+          <div>owner: {JSON.stringify(owner)}</div>
+          <div>
+            userList:
+            {userList.map((u: User) => (
+              <div key={u.id}>{JSON.stringify(u)}</div>
+            ))}
+          </div>
+        </Container>
+      ) : (
+        <div>plz select note</div>
+      )}
+    </>
   );
 }

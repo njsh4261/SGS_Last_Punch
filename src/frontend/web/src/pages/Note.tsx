@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import NoteSideHeader from '../components/Note/Side/Header';
 import NoteSideMenu from '../components/Note/Side/Menu';
 import NoteSideList from '../components/Note/Side/List';
 import NoteHeader from '../components/Note/Header';
 import NoteMain from '../components/Note/Main';
+import { createNoteAPI, getNoteListAPI, getSpecificNoteAPI } from '../Api/note';
 
 const Layout = styled.div`
   display: flex;
@@ -47,6 +48,29 @@ export default function Note() {
   const toggleHandler = () => setSideToggle((state) => !state);
   const hoverHandler = () => setHover((state) => !state);
 
+  // testing
+  const [selectedNote, selectNote] = useState();
+  const [noteList, setNoteList] = useState<any[]>([]);
+  const testCreateHandler = async () => {
+    const noteId = await createNoteAPI(1, 1, 1);
+    if (noteId) setNoteList([...noteList, noteId]);
+  };
+  const testGetListHandler = async () => {
+    const responseNoteList = await getNoteListAPI(1);
+    if (responseNoteList)
+      setNoteList(responseNoteList.map((resNote) => resNote.id));
+  };
+  const testGetSpecificHandler = async (
+    e: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    const responseNote = await getSpecificNoteAPI((e.target as any).id);
+    // { id, creatorId, title, content(initValue), ops(null | []), createDt, modifyDt}
+    selectNote(responseNote);
+  };
+  useEffect(() => {
+    testGetListHandler();
+  }, []);
+
   return (
     <Layout>
       <SideFrame sideToggle={sideToggle}>
@@ -56,8 +80,16 @@ export default function Note() {
           channelName={params.channelName as string}
           toggleHandler={toggleHandler}
         ></NoteSideHeader>
-        <NoteSideMenu></NoteSideMenu>
-        <NoteSideList></NoteSideList>
+        {/* <NoteSideMenu></NoteSideMenu>
+        <NoteSideList></NoteSideList> */}
+        <button onClick={testCreateHandler}>create note</button>
+        <div>
+          {noteList.map((note) => (
+            <div id={note} key={note} onClick={testGetSpecificHandler}>
+              {note}
+            </div>
+          ))}
+        </div>
       </SideFrame>
       <Container>
         <HeaderFrame>
@@ -67,7 +99,7 @@ export default function Note() {
           ></NoteHeader>
         </HeaderFrame>
         <MainFrame>
-          <NoteMain></NoteMain>
+          <NoteMain note={selectedNote}></NoteMain>
         </MainFrame>
       </Container>
     </Layout>

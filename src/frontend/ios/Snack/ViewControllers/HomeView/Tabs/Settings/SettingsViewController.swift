@@ -42,7 +42,7 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "나"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "나", style: .plain, target: nil, action: nil)
 
         tableView.tableHeaderView = viewHeader
     }
@@ -56,7 +56,7 @@ class SettingsViewController: UITableViewController {
     }
     
     func actionProfile() {
-        let editProfileView = EditProfileView()
+        let editProfileView = EditProfileView(userInfo: User(email: "test@gmail.com", name: "김아무개", displayName: "건빵", description: "안녕하세요:D", country: "kor", password: "1", phone: "010-1234-1234"))
         let navController = NavigationController(rootViewController: editProfileView)
         navController.isModalInPresentation = true
         navController.modalPresentationStyle = .fullScreen

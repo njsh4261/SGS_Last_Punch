@@ -12,11 +12,11 @@ function App() {
   const modalActive = useSelector((state: RootState) => state.modal.active);
 
   return (
-    <Note></Note>
-    // <>
-    //   {!accessToken ? <PublicRoute /> : <PrivateRoute />}
-    //   {modalActive && <ModalWrapper active={modalActive} />}
-    // </>
+    <>
+      <Note></Note>
+      {/* {!accessToken ? <PublicRoute /> : <PrivateRoute />}
+      {modalActive && <ModalWrapper active={modalActive} />} */}
+    </>
   );
 }
 

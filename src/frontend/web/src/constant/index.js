@@ -48,6 +48,9 @@ export const RESPONSE = {
   WORKSPACE: {
     SUCCESS: '12000',
   },
+  NOTE: {
+    SUCCESS: '15000',
+  },
 };
 
 export const TOKEN = {

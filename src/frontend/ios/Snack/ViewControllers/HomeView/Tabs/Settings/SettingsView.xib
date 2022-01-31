@@ -28,6 +28,7 @@
                 <outlet property="cellStatus" destination="wNU-C5-MnA" id="OHh-ua-PPK"/>
                 <outlet property="imageUser" destination="b1o-fd-eKH" id="u6z-Ns-K0J"/>
                 <outlet property="labelName" destination="ftm-da-xuL" id="aaa-Zd-uVZ"/>
+                <outlet property="lblStatus" destination="tnX-oP-wet" id="0RD-dL-Npb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewHeader" destination="9Oi-fY-zxx" id="fWF-WS-tWV"/>
             </connections>

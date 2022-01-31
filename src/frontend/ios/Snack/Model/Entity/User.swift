@@ -16,6 +16,7 @@ struct User: Codable {
     let country: String?
     let password: String?
     let phone: String?
+    let status: String?
 }
 
 // MARK: - LoginDataModel

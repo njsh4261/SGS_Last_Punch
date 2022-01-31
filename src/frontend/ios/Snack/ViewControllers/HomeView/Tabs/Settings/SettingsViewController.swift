@@ -20,12 +20,15 @@ class SettingsViewController: UITableViewController {
     @IBOutlet private var cellPasscode: UITableViewCell!
     // Section 2
     @IBOutlet private var cellStatus: UITableViewCell!
+    @IBOutlet private var lblStatus: UILabel!
     // Section 3
     @IBOutlet private var cellCache: UITableViewCell!
     @IBOutlet private var cellMedia: UITableViewCell!
     // Section 4
     @IBOutlet private var cellLogout: UITableViewCell!
     @IBOutlet private var cellDeleteUser: UITableViewCell!
+    
+    private var userInfo = User(email: "test@gmail.com", name: "김아무개", displayName: "건빵", description: "안녕하세요:D", country: "kor", password: "1", phone: "010-1234-1234", status: "바쁨")
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -51,12 +54,18 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
 
         // user 정보 load하는 로직 필요
-//        loadUser()
+        loadUser()
         tableView.reloadData()
     }
     
+    // MARK: - Load User
+    func loadUser() {
+        labelName.text = "\(userInfo.name!)/\(userInfo.displayName ?? "닉네임 없음")"
+        lblStatus.text = userInfo.status
+    }
+    
     func actionProfile() {
-        let editProfileView = EditProfileView(userInfo: User(email: "test@gmail.com", name: "김아무개", displayName: "건빵", description: "안녕하세요:D", country: "kor", password: "1", phone: "010-1234-1234"))
+        let editProfileView = EditProfileView(userInfo: userInfo)
         let navController = NavigationController(rootViewController: editProfileView)
         navController.isModalInPresentation = true
         navController.modalPresentationStyle = .fullScreen

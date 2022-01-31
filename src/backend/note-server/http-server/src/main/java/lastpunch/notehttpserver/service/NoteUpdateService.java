@@ -53,8 +53,11 @@ public class NoteUpdateService {
     
     public void findOps(String timestamp, String id){
         ObjectId noteId = new ObjectId(id);
-        Query query = new Query(Criteria.where("_id").is(noteId)).addCriteria(Criteria.where("ops").elemMatch(
-            Criteria.where("timestamp").is(Date.from(Instant.parse(timestamp)))));
+        Query query = new Query(Criteria.where("_id").is(noteId).andOperator(Criteria.where("ops").elemMatch(Criteria.where("timestamp").is(Date.from(Instant.parse(timestamp))))));
+//        query.fields().include("ops").elemMatch("op", Criteria.where("timestamp").is(Date.from(Instant.parse(timestamp))));
+//            .addCriteria(Criteria.where("ops").elemMatch(
+//            Criteria.where("timestamp").is(Date.from(Instant.parse(timestamp)))));
+        query.fields().include("ops.$");
         List<Note> note = mongoTemplate.find(query, Note.class);
         System.out.println("query = " + query);
         System.out.println("note.get(0) = " + note.get(0));

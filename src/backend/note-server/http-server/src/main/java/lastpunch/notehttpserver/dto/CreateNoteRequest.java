@@ -22,17 +22,19 @@ public class CreateNoteRequest {
     private Long creatorId;
     
     public Note toEntity(){
+        String defaultContent = "["
+            + "{"
+            + "\"type\": \"paragraph\","
+            + "\"children\": [{ \"text\": \"\" }]"
+            + "}"
+            + "]";
+
         return Note.builder()
             .workspaceId(workspaceId)
             .channelId(channelId)
             .creatorId(creatorId)
             .title("Untitled")
-            .content("["
-                + "{"
-                + "type: 'paragraph',"
-                + "children: [{ text: '' }],"
-                + "},"
-                + "]")
+            .content(defaultContent)
             .ops(new ArrayList<Op>())
             .createDt(LocalDateTime.now())
             .modifyDt(LocalDateTime.now())

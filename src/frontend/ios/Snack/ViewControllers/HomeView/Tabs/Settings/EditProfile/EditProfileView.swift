@@ -12,8 +12,6 @@ import RxCocoa
 
 class EditProfileView: UIViewController {
     // MARK: - Properties
-    private let disposeBag = DisposeBag()
-//    private let viewModel = ProfileViewModel()
     private var userInfo: User?
 
     // MARK: - UI

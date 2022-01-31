@@ -64,9 +64,20 @@ class SettingsViewController: UITableViewController {
         lblStatus.text = userInfo.status
     }
     
+    // MARK: - User actions
+    // 프로필 변경
     func actionProfile() {
         let editProfileView = EditProfileView(userInfo: userInfo)
         let navController = NavigationController(rootViewController: editProfileView)
+        navController.isModalInPresentation = true
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
+    }
+    
+    // 비밀번호 변경
+    func actionPassword() {
+        let passwordView = PasswordView()
+        let navController = NavigationController(rootViewController: passwordView)
         navController.isModalInPresentation = true
         navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true)
@@ -95,7 +106,6 @@ class SettingsViewController: UITableViewController {
         let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, userInfo: WorkspaceMemberCellModel(id: -1, email: "test@gamil.com", name: "테스트이름", displayname: "별명", description: "안녕하세요~!", phone: "010-1234-1234", country: "kor", language: "kor", settings: 1, status: "바쁨", createdt: "2020-02-25T12:00:00", modifydt: "2020-02-25T12:00:00"), isChat: true)
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)
-
     }
     
     // MARK: - TableView dataSource
@@ -112,7 +122,7 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (section == 1) { return "Status" }
+        if (section == 1) { return "상태" }
         return nil
     }
     
@@ -136,7 +146,7 @@ class SettingsViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if (indexPath.section == 0) && (indexPath.row == 0) { actionProfile() }
-//        if (indexPath.section == 0) && (indexPath.row == 1) { actionPassword() }
+        if (indexPath.section == 0) && (indexPath.row == 1) { actionPassword() }
 //        if (indexPath.section == 0) && (indexPath.row == 2) { actionPasscode() }
 //        if (indexPath.section == 1) && (indexPath.row == 0) { actionStatus() }
 //        if (indexPath.section == 2) && (indexPath.row == 0) { actionCache() }

@@ -90,6 +90,13 @@ class SettingsViewController: UITableViewController {
         navigationController?.pushViewController(passcodeView, animated: true)
     }
     
+    // 사진 및 동영상
+    func actionMedia() {
+        let mediaView = MediaView()
+        mediaView.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(mediaView, animated: true)
+    }
+    
     // 로그아웃
     func actionLogout() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -158,7 +165,7 @@ class SettingsViewController: UITableViewController {
         if (indexPath.section == 0) && (indexPath.row == 2) { actionPasscode() }
 //        if (indexPath.section == 1) && (indexPath.row == 0) { actionStatus() }
 //        if (indexPath.section == 2) && (indexPath.row == 0) { actionCache() }
-//        if (indexPath.section == 2) && (indexPath.row == 1) { actionMedia() }
+        if (indexPath.section == 2) && (indexPath.row == 1) { actionMedia() }
         if (indexPath.section == 3) && (indexPath.row == 0) { actionLogout() }
         if (indexPath.section == 3) && (indexPath.row == 1) { actionDeleteUser() }
     }

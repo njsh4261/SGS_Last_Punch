@@ -21,7 +21,7 @@ class PasscodeView: UIViewController {
     override func viewDidLoad() {
 
         super.viewDidLoad()
-        title = "패스코드"
+        title = "잠금 설정"
 
         switchBiometric.addTarget(self, action: #selector(actionBiometric), for: .valueChanged)
         settingPasscodeKit()

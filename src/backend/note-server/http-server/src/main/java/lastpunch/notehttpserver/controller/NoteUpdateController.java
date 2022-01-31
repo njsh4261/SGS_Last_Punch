@@ -1,11 +1,16 @@
 package lastpunch.notehttpserver.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lastpunch.notehttpserver.common.Response;
+import lastpunch.notehttpserver.common.exception.BusinessException;
+import lastpunch.notehttpserver.common.exception.ErrorCode;
 import lastpunch.notehttpserver.dto.CreateNoteRequest;
+import lastpunch.notehttpserver.dto.SaveOperationsRequest;
 import lastpunch.notehttpserver.dto.SyncNoteRequest;
 import lastpunch.notehttpserver.dto.UpdateNoteRequest;
 import lastpunch.notehttpserver.entity.Block;
@@ -34,15 +39,21 @@ public class NoteUpdateController {
 
         return Response.toResponseEntity("15000", HttpStatus.OK);
     }
-//
-//    @PostMapping(value ="/note/block")
-//    public ResponseEntity<Object> syncNote(@RequestBody SyncNoteRequest syncNoteRequest){
-//
-//        List<Block> block = noteUpdateService.find(syncNoteRequest);
-//
-//        Map<String, List<Block>> data = new HashMap<String, List<Block>>();
-//        data.put("block", block);
-//
-//        return Response.toResponseEntity("15000", HttpStatus.OK, data);
-//    }
+    
+    @PostMapping("/note/op")
+    public ResponseEntity<Object> saveOperations(@RequestBody String str){
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            SaveOperationsRequest saveOperationsRequest = mapper.readValue(str,
+                SaveOperationsRequest.class);
+    
+            noteUpdateService.saveOperations(saveOperationsRequest);
+    
+            return Response.toResponseEntity("15000", HttpStatus.OK);
+        }
+        catch(Exception e){
+            throw new BusinessException(ErrorCode.JSON_DATA_ERROR);
+        }
+    }
 }

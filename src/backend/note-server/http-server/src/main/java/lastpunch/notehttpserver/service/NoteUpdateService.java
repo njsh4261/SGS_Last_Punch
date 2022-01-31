@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lastpunch.notehttpserver.common.exception.BusinessException;
 import lastpunch.notehttpserver.common.exception.ErrorCode;
+import lastpunch.notehttpserver.dto.SaveOperationsRequest;
 import lastpunch.notehttpserver.dto.SyncNoteRequest;
 import lastpunch.notehttpserver.dto.Transaction;
 import lastpunch.notehttpserver.dto.UpdateNoteRequest;
@@ -33,6 +34,14 @@ public class NoteUpdateService {
             .set("title", updateNoteRequest.getTitle())
             .set("modifyDt", updateNoteRequest.getModifyDt());
         mongoTemplate.upsert(query, update, Note.class);
+    }
+    
+    public void saveOperations(SaveOperationsRequest saveOperationsRequest){
+        ObjectId noteId = new ObjectId(saveOperationsRequest.getNoteId());
+        Query query = new Query(Criteria.where("_id").is(noteId));
+        Update update = new Update();
+        update.push("ops").each(saveOperationsRequest.getOps());
+        mongoTemplate.updateFirst(query, update, Note.class);
     }
 //    public void update(UpdateNoteRequest updateNoteRequest){
 //        ObjectId noteId = new ObjectId(updateNoteRequest.getNoteId());

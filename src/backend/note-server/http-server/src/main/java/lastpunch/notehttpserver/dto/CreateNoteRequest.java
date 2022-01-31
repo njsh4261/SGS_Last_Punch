@@ -26,7 +26,13 @@ public class CreateNoteRequest {
             .workspaceId(workspaceId)
             .channelId(channelId)
             .creatorId(creatorId)
-            .title("")
+            .title("Untitled")
+            .content("["
+                + "{"
+                + "type: 'paragraph',"
+                + "children: [{ text: '' }],"
+                + "},"
+                + "]")
             .ops(new ArrayList<Op>())
             .createDt(LocalDateTime.now())
             .modifyDt(LocalDateTime.now())

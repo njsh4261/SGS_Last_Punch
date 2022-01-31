@@ -2,7 +2,6 @@ package lastpunch.notehttpserver.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import lastpunch.notehttpserver.entity.Block;
 import lastpunch.notehttpserver.entity.Op;
 import lombok.Builder;
 import lombok.Data;

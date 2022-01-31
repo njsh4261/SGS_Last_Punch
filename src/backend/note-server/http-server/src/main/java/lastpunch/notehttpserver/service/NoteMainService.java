@@ -8,7 +8,6 @@ import lastpunch.notehttpserver.common.exception.ErrorCode;
 import lastpunch.notehttpserver.dto.CreateNoteRequest;
 import lastpunch.notehttpserver.dto.NoteInfo;
 import lastpunch.notehttpserver.dto.GetNoteResponse;
-import lastpunch.notehttpserver.entity.Block;
 import lastpunch.notehttpserver.entity.Note;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;

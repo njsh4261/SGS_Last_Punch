@@ -138,8 +138,12 @@ export default function NoteMain() {
   };
 
   const getSpecificNoteHandler = async () => {
-    const responseNote = await getSpecificNoteAPI(params.noteId!.toString());
-    setNote(responseNote);
+    if (params.noteId) {
+      const responseNote = await getSpecificNoteAPI(params.noteId.toString());
+      setNote(responseNote);
+    } else {
+      console.error('no noteId at param');
+    }
   };
 
   useEffect(() => {

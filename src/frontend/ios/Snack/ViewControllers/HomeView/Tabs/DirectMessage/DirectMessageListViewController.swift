@@ -118,11 +118,6 @@ class DirectMessageListViewController: UIViewController {
         tabBarItem.selectedImage = UIImage(systemName: "message.fill")
         tabBarItem.title = "DM"
         
-//        [view, tableView].forEach {
-//            $0.backgroundColor = UIColor(named: "snackBackGroundColor")
-//        }
-        
-        
         searchBar = searchBar.then {
             $0.placeholder = "다음으로 이동..."
         }

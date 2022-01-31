@@ -33,6 +33,7 @@ public class NoteUpdateService {
         Query query = new Query(Criteria.where("_id").is(noteId));
         Update update = new Update();
         update.set("content", updateNoteRequest.getContent())
+            .set("ops", new ArrayList<Op>())
             .set("title", updateNoteRequest.getTitle())
             .set("modifyDt", updateNoteRequest.getModifyDt());
         mongoTemplate.upsert(query, update, Note.class);

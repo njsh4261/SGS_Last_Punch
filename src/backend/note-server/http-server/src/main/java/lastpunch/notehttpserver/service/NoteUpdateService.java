@@ -1,15 +1,16 @@
 package lastpunch.notehttpserver.service;
 
 import com.mongodb.client.result.UpdateResult;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import lastpunch.notehttpserver.common.exception.BusinessException;
 import lastpunch.notehttpserver.common.exception.ErrorCode;
 import lastpunch.notehttpserver.dto.SaveOperationsRequest;
 import lastpunch.notehttpserver.dto.SyncNoteRequest;
-import lastpunch.notehttpserver.dto.Transaction;
 import lastpunch.notehttpserver.dto.UpdateNoteRequest;
-import lastpunch.notehttpserver.entity.Block;
 import lastpunch.notehttpserver.entity.Note;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -42,6 +43,15 @@ public class NoteUpdateService {
         Update update = new Update();
         update.push("ops").each(saveOperationsRequest.getOps());
         mongoTemplate.updateFirst(query, update, Note.class);
+    }
+    
+    public void findOps(String timestamp, String id){
+        ObjectId noteId = new ObjectId(id);
+        Query query = new Query(Criteria.where("_id").is(noteId)).addCriteria(Criteria.where("ops").elemMatch(
+            Criteria.where("timestamp").is(Date.from(Instant.parse(timestamp)))));
+        List<Note> note = mongoTemplate.find(query, Note.class);
+        System.out.println("query = " + query);
+        System.out.println("note.get(0) = " + note.get(0));
     }
 //    public void update(UpdateNoteRequest updateNoteRequest){
 //        ObjectId noteId = new ObjectId(updateNoteRequest.getNoteId());

@@ -1,7 +1,7 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import EditorFrame from './EditorFrame';
-import { createEditor, Node } from 'slate';
+import { createEditor, Node, Text, Transforms } from 'slate';
 import { withHistory } from 'slate-history';
 import { withReact } from 'slate-react';
 import noteSocketHook from '../../../hook/noteSocket';
@@ -42,12 +42,6 @@ export default function NoteMain() {
       updateNote();
       // remote.current = false;
     }
-
-    if (typing.current) clearTimeout(typing.current);
-    typing.current = setTimeout(() => {
-      console.log('end typing');
-      unlockNote();
-    }, 1000);
   };
 
   /**
@@ -56,13 +50,68 @@ export default function NoteMain() {
    * @ 비선점자: 선점자가 있으면 입력 금지, 없으면 선점 요창
    */
   const keydownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (owner && owner.id === myUser.id) return;
+    console.log(
+      `key: ${e.key},  meta:${e.metaKey},  ctrl:${e.ctrlKey} alt:${e.altKey},  shift:${e.shiftKey}`,
+    );
+    if (owner && owner.id === myUser.id) {
+      if (e.ctrlKey) {
+        switch (e.key) {
+          case 'b':
+            e.preventDefault();
+            Transforms.setNodes(
+              editor,
+              { bold: true },
+              { match: (n) => Text.isText(n), split: true },
+            );
+            break;
+          case 'i':
+            e.preventDefault();
+            Transforms.setNodes(
+              editor,
+              { italic: true },
+              { match: (n) => Text.isText(n), split: true },
+            );
+            break;
+          case 'u':
+            e.preventDefault();
+            Transforms.setNodes(
+              editor,
+              { underline: true },
+              { match: (n) => Text.isText(n), split: true },
+            );
+            break;
+          case '`':
+            e.preventDefault();
+            Transforms.setNodes(
+              editor,
+              { code: true },
+              { match: (n) => Text.isText(n), split: true },
+            );
+            break;
+        }
+      }
 
+      if (typing.current) clearTimeout(typing.current);
+      typing.current = setTimeout(() => {
+        console.log('end typing');
+        unlockNote();
+      }, 1000);
+      return;
+    }
     e.preventDefault();
     if (owner === null) {
       lockNote();
     }
   };
+
+  useEffect(() => {
+    if (owner) {
+      typing.current = setTimeout(() => {
+        console.log('end typing');
+        unlockNote();
+      }, 1000);
+    }
+  }, [owner]);
 
   return (
     <Container>

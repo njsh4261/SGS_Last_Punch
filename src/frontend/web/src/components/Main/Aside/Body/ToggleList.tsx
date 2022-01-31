@@ -1,14 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { openModal } from '../../../../modules/modal';
 import expandIcon from '../../../../icon/downArrow.svg';
 import ImageButton from '../../../Common/ImageButton';
 import { ModalType } from './Modal';
+import ChannelItem, { ItemContainer } from './ChannelItem';
 
 const ToggleType = styled.section`
   padding: 8px 0px;
+`;
+
+const PaddingLeft8px = styled.span`
+  padding-left: 8px;
 `;
 
 export const Text = styled.label`
@@ -38,21 +44,8 @@ const ChannelList = styled.article`
   }
 `;
 
-const ChannelItem = styled.section`
-  padding: 7px 0 7px 26px;
-
-  &:hover {
-    cursor: pointer;
-    background: ${(props) => props.theme.color.heavySlack};
-  }
-`;
-
 const Flex = styled.div`
   display: flex;
-`;
-
-const PaddingLeft8px = styled.span`
-  padding-left: 8px;
 `;
 
 const PlusIcon = styled.div`
@@ -74,6 +67,7 @@ export default function ToggleList({
   selectHandler,
   type,
 }: Props) {
+  const params = useParams();
   const dispatch = useDispatch();
   const openModalHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const modalType = (e.currentTarget as HTMLDivElement).dataset
@@ -97,22 +91,21 @@ export default function ToggleList({
       <ChannelList>
         {channelList.map((channel) => (
           <ChannelItem
-            id={channel.id}
+            channel={channel}
             key={channel.id}
-            data-type={type}
-            onClick={selectHandler}
-          >
-            #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
-          </ChannelItem>
+            type={type}
+            selectHandler={selectHandler}
+            isSelected={params.channelId === channel.id.toString()}
+          ></ChannelItem>
         ))}
-        <ChannelItem data-type={type} onClick={openModalHandler}>
+        <ItemContainer data-type={type} onClick={openModalHandler}>
           <PlusIcon>+</PlusIcon>
           {type === 'channel' ? (
             <PaddingLeft8px>채널 추가</PaddingLeft8px>
           ) : (
             <PaddingLeft8px>팀원 추가</PaddingLeft8px>
           )}
-        </ChannelItem>
+        </ItemContainer>
       </ChannelList>
     </ToggleType>
   );

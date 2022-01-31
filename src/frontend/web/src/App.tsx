@@ -13,9 +13,9 @@ function App() {
 
   return (
     <>
-      <Note></Note>
-      {/* {!accessToken ? <PublicRoute /> : <PrivateRoute />}
-      {modalActive && <ModalWrapper active={modalActive} />} */}
+      {/* <Note></Note> */}
+      {!accessToken ? <PublicRoute /> : <PrivateRoute />}
+      {modalActive && <ModalWrapper active={modalActive} />}
     </>
   );
 }

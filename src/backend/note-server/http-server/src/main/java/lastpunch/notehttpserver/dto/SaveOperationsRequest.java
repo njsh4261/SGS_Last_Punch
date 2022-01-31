@@ -10,5 +10,6 @@ import lombok.Data;
 public class SaveOperationsRequest {
     @NotNull
     private String noteId;
-    private List<Op> ops;
+    private String op;
+    private LocalDateTime timestamp;
 }

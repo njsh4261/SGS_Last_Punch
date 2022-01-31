@@ -45,20 +45,9 @@ public class NoteUpdateController {
     }
     
     @PostMapping("/note/op")
-    public ResponseEntity<Object> saveOperations(@RequestBody String str){
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JavaTimeModule());
-            SaveOperationsRequest saveOperationsRequest = mapper.readValue(str,
-                SaveOperationsRequest.class);
-    
-            noteUpdateService.saveOperations(saveOperationsRequest);
-    
-            return Response.toResponseEntity("15000", HttpStatus.OK);
-        }
-        catch(Exception e){
-            throw new BusinessException(ErrorCode.JSON_DATA_ERROR);
-        }
+    public ResponseEntity<Object> saveOperations(@RequestBody SaveOperationsRequest saveOperationsRequest){
+        noteUpdateService.saveOperations(saveOperationsRequest);
+        return Response.toResponseEntity("15000", HttpStatus.OK);
     }
     
     @GetMapping("/note/{id}/op")

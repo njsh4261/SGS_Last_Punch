@@ -12,6 +12,7 @@ import lastpunch.notehttpserver.dto.SaveOperationsRequest;
 import lastpunch.notehttpserver.dto.SyncNoteRequest;
 import lastpunch.notehttpserver.dto.UpdateNoteRequest;
 import lastpunch.notehttpserver.entity.Note;
+import lastpunch.notehttpserver.entity.Op;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,14 @@ public class NoteUpdateService {
     
     public void saveOperations(SaveOperationsRequest saveOperationsRequest){
         ObjectId noteId = new ObjectId(saveOperationsRequest.getNoteId());
+        Op op = Op.builder()
+            .op(saveOperationsRequest.getOp())
+            .timestamp(saveOperationsRequest.getTimestamp())
+            .build();
+        
         Query query = new Query(Criteria.where("_id").is(noteId));
         Update update = new Update();
-        update.push("ops").each(saveOperationsRequest.getOps());
+        update.push("ops").value(op);
         mongoTemplate.updateFirst(query, update, Note.class);
     }
     

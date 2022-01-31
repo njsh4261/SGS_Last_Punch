@@ -8,6 +8,7 @@
 import UIKit
 import ProgressHUD
 import RxDataSources
+import PasscodeKit
 
 class SettingsViewController: UITableViewController {
     // MARK: - UI
@@ -28,7 +29,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet private var cellLogout: UITableViewCell!
     @IBOutlet private var cellDeleteUser: UITableViewCell!
     
-    private var userInfo = User(email: "test@gmail.com", name: "김아무개", displayName: "건빵", description: "안녕하세요:D", country: "kor", password: "1", phone: "010-1234-1234", status: "바쁨")
+    private var userInfo = User(email: "test@gmail.com", name: "김스낵", displayName: "아주맛남", description: "안녕하세요:D", country: "kor", password: "1", phone: "010-1234-1234", status: "바쁨")
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -55,13 +56,14 @@ class SettingsViewController: UITableViewController {
 
         // user 정보 load하는 로직 필요
         loadUser()
-        tableView.reloadData()
     }
     
     // MARK: - Load User
     func loadUser() {
         labelName.text = "\(userInfo.name!)/\(userInfo.displayName ?? "닉네임 없음")"
+        cellPasscode.detailTextLabel?.text = PasscodeKit.enabled() ? "켜짐" : "꺼짐"
         lblStatus.text = userInfo.status
+        tableView.reloadData()
     }
     
     // MARK: - User actions

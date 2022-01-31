@@ -60,6 +60,11 @@ class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         // enter를 누를때
+        fieldEmail.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: fieldPassword.rx.canBecomeFirstResponder)
+            .disposed(by: disposeBag)
+
         fieldPassword.rx.controlEvent(.editingDidEndOnExit)
             .asObservable()
             .bind(to: viewModel.input.btnLoginTapped)

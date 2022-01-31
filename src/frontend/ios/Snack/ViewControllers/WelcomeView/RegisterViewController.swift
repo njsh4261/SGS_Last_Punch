@@ -87,6 +87,16 @@ class RegisterViewController: UIViewController {
             .bind(to: viewModel.input.btnVerificationTapped)
             .disposed(by: disposeBag)
         
+        fieldPassword.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: fieldCheckPassword.rx.canBecomeFirstResponder)
+            .disposed(by: disposeBag)
+        
+        fieldPassword.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: viewModel.input.btnSignUpTapped)
+            .disposed(by: disposeBag)
+        
         // 이메일 변경이 있을때
         fieldEmail.rx.controlEvent(.editingChanged)
             .asObservable()
@@ -491,48 +501,5 @@ class RegisterViewController: UIViewController {
             $0.height.equalTo(50)
             $0.top.equalTo(lblWarning.snp.bottom).offset(170)
         }
-    }
-}
-
-extension Reactive where Base: UITextField {
-    
-    var setText: Binder<String> {
-        return Binder(base, binding: { (textField, text) in
-            textField.text = text
-        })
-    }
-    
-    // Toggle
-    var isSecureTextEntry: Binder<()> {
-        return Binder(base, binding: { (textField, _) in
-            textField.isSecureTextEntry = !textField.isSecureTextEntry
-        })
-    }
-    
-    var deleteBackward: Binder<(Bool)> {
-        return Binder(base, binding: { (textField, _) in
-            if textField.text!.count > 6 {
-                textField.deleteBackward()
-            }
-        })
-    }
-}
-
-extension Reactive where Base: UIButton {
-    
-    var setImage: Binder<()> {
-        return Binder(base, binding: { (button, _) in
-            if button.image(for: .normal) == UIImage(systemName: "eye.fill") {
-                button.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
-            } else {
-                button.setImage(UIImage(systemName: "eye.fill"), for: .normal)
-            }
-        })
-    }
-    
-    var setText: Binder<String> {
-        return Binder(base, binding: { (button, str) in
-            button.setTitle(str, for: .normal)
-        })
     }
 }

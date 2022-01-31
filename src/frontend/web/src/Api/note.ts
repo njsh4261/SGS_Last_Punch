@@ -7,21 +7,33 @@ import { RESPONSE } from '../constant';
  * @param channelId
  * @returns `noteId` | `undefined`
  */
-export async function createNoteAPI(wsId: string, channelId: string) {
+export async function createNoteAPI(
+  wsId: number,
+  channelId: number,
+  creatorId: number,
+) {
   const testHost = 'http://localhost:9000'; // todo: change
   const endpoint = `/note`;
+  const body = {
+    workspaceId: wsId,
+    channelId,
+    creatorId,
+  };
 
-  const response = await axios.request({
-    method: 'POST',
-    url: testHost + endpoint,
-  });
+  try {
+    const response = await axios.request({
+      method: 'POST',
+      url: testHost + endpoint,
+      data: body,
+    });
 
-  const { code, data, err } = response?.data;
-  if (code === RESPONSE.NOTE.SUCCESS) {
-    alert('success create note');
-    return data.noteId;
+    const { code, data, err } = response?.data;
+    if (code === RESPONSE.NOTE.SUCCESS) {
+      alert('success create note');
+      return data.noteId;
+    }
+    if (err) alert('fail create note');
+  } catch (e) {
+    alert('fail request');
   }
-  if (err) alert('fail create note');
-
-  return;
 }

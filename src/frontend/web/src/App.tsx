@@ -6,17 +6,23 @@ import PublicRoute from './routes/Public';
 import ModalWrapper from './components/Common/ModalWrapper';
 import { TOKEN } from './constant';
 import Note from './pages/Note';
+import { createNoteAPI } from './Api/note';
 
 function App() {
   const accessToken = sessionStorage.getItem(TOKEN.ACCESS);
   const modalActive = useSelector((state: RootState) => state.modal.active);
 
+  const testCreateHandler = async () => {
+    const noteId = await createNoteAPI(1, 1, 1);
+  };
+
   return (
-    <Note></Note>
-    // <>
-    //   {!accessToken ? <PublicRoute /> : <PrivateRoute />}
-    //   {modalActive && <ModalWrapper active={modalActive} />}
-    // </>
+    <>
+      <button onClick={testCreateHandler}>create note</button>
+      <Note></Note>
+      {/* {!accessToken ? <PublicRoute /> : <PrivateRoute />}
+      {modalActive && <ModalWrapper active={modalActive} />} */}
+    </>
   );
 }
 

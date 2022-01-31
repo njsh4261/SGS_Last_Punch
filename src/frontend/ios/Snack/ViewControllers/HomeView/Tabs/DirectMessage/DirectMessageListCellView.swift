@@ -22,6 +22,7 @@ class DirectMessageListCellView: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        self.layer.cornerRadius = 15
         
         attribute()
         layout()
@@ -36,6 +37,7 @@ class DirectMessageListCellView: UITableViewCell {
     
     private func attribute() {
         backgroundColor = UIColor(named: "snackBackGroundColor")
+        
         ivThumbnail.contentMode = .scaleAspectFit
         
         lblName = lblName.then {

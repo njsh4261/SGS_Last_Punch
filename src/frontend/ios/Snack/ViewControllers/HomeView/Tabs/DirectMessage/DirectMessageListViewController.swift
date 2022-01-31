@@ -20,6 +20,7 @@ class DirectMessageListViewController: UIViewController {
     private var members = [WorkspaceMemberCellModel]()
     private var accessToken: String = ""
     private var workspaceId: String = ""
+    private let HEADER_HEIGHT: Float = 56
     
     // MARK: - UI
     private var searchBar = UISearchBar()
@@ -90,7 +91,7 @@ class DirectMessageListViewController: UIViewController {
         
         viewModel.push
             .drive(onNext: { (viewModel, row) in
-                let viewController = MessageView(memberInfo: self.members[row])
+                let viewController = ChatPrivateView("55", self.members[row].id.description, self.members[row])
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)
@@ -117,9 +118,10 @@ class DirectMessageListViewController: UIViewController {
         tabBarItem.selectedImage = UIImage(systemName: "message.fill")
         tabBarItem.title = "DM"
         
-        [view, tableView].forEach {
-            $0.backgroundColor = UIColor(named: "snackBackGroundColor")
-        }
+//        [view, tableView].forEach {
+//            $0.backgroundColor = UIColor(named: "snackBackGroundColor")
+//        }
+        
         
         searchBar = searchBar.then {
             $0.placeholder = "다음으로 이동..."
@@ -138,13 +140,18 @@ class DirectMessageListViewController: UIViewController {
             $0.imageEdgeInsets = .init(top: 0, left: -5, bottom: 0, right: 0)
         }
 
-        viewHeader.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 56)
+        viewHeader = viewHeader.then {
+            $0.layer.cornerRadius = 15
+            $0.clipsToBounds = true
+            $0.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat(HEADER_HEIGHT))
+            
+        }
         
         tableView = tableView.then {
             $0.register(DirectMessageListCellView.self, forCellReuseIdentifier: "DirectMessageListViewCell")
-            $0.backgroundColor = UIColor(named: "snackBackGroundColor")
             $0.refreshControl = refreshControl
             $0.tableHeaderView = viewHeader
+            $0.tableHeaderView?.frame.size = CGSize(width: $0.frame.width, height: CGFloat(HEADER_HEIGHT+10))
             $0.clearsContextBeforeDrawing = false
             $0.separatorStyle = .none
             $0.bouncesZoom = false
@@ -167,9 +174,14 @@ class DirectMessageListViewController: UIViewController {
         
         viewHeader.addSubview(btnAddMemeber)
         
-        [searchBar, viewHeader, tableView].forEach {
+
+        searchBar.snp.makeConstraints {
+            $0.left.right.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        [viewHeader, tableView].forEach {
             $0?.snp.makeConstraints {
-                $0.left.right.equalTo(view.safeAreaLayoutGuide)
+                $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(8)
             }
         }
         

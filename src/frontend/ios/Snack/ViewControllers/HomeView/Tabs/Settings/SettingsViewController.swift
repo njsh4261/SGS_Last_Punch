@@ -29,7 +29,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet private var cellLogout: UITableViewCell!
     @IBOutlet private var cellDeleteUser: UITableViewCell!
     
-    private var userInfo = User(email: "test@gmail.com", name: "김스낵", displayName: "아주맛남", description: "안녕하세요:D", country: "kor", password: "1", phone: "010-1234-1234", status: "바쁨")
+    private var userInfo = User(email: "test@gmail.com", name: "김스낵", displayName: "아주맛남", description: "안녕하세요:D", country: "kor", password: "1", phone: "010-1234-1234", status: "대화 가능")
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -90,6 +90,13 @@ class SettingsViewController: UITableViewController {
         let passcodeView = PasscodeView()
         passcodeView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(passcodeView, animated: true)
+    }
+    
+    // 상태 설정
+    func actionStatus() {
+        let statusView = StatusView()
+        let navController = NavigationController(rootViewController: statusView)
+        present(navController, animated: true)
     }
     
     // 캐쉬 설정
@@ -172,7 +179,7 @@ class SettingsViewController: UITableViewController {
         if (indexPath.section == 0) && (indexPath.row == 0) { actionProfile() }
         if (indexPath.section == 0) && (indexPath.row == 1) { actionPassword() }
         if (indexPath.section == 0) && (indexPath.row == 2) { actionPasscode() }
-//        if (indexPath.section == 1) && (indexPath.row == 0) { actionStatus() }
+        if (indexPath.section == 1) && (indexPath.row == 0) { actionStatus() }
         if (indexPath.section == 2) && (indexPath.row == 0) { actionCache() }
         if (indexPath.section == 2) && (indexPath.row == 1) { actionMedia() }
         if (indexPath.section == 3) && (indexPath.row == 0) { actionLogout() }

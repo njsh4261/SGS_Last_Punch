@@ -86,6 +86,8 @@
 		8CBD45ED27A8746E0056A557 /* KeepMediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45EC27A8746E0056A557 /* KeepMediaView.swift */; };
 		8CBD45EF27A874950056A557 /* KeepMediaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD45EE27A874950056A557 /* KeepMediaView.xib */; };
 		8CBD45F127A8759F0056A557 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45F027A8759F0056A557 /* Media.swift */; };
+		8CBD45F327A887520056A557 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45F227A887520056A557 /* StatusView.swift */; };
+		8CBD45F527A887DE0056A557 /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD45F427A887DE0056A557 /* StatusView.xib */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -179,6 +181,8 @@
 		8CBD45EC27A8746E0056A557 /* KeepMediaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepMediaView.swift; sourceTree = "<group>"; };
 		8CBD45EE27A874950056A557 /* KeepMediaView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KeepMediaView.xib; sourceTree = "<group>"; };
 		8CBD45F027A8759F0056A557 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		8CBD45F227A887520056A557 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
+		8CBD45F427A887DE0056A557 /* StatusView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusView.xib; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -565,6 +569,8 @@
 		8CBD45C127A70C6B0056A557 /* Status */ = {
 			isa = PBXGroup;
 			children = (
+				8CBD45F227A887520056A557 /* StatusView.swift */,
+				8CBD45F427A887DE0056A557 /* StatusView.xib */,
 			);
 			path = Status;
 			sourceTree = "<group>";
@@ -698,6 +704,7 @@
 				8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */,
 				8CBD453E279D917D0056A557 /* Workspace.json in Resources */,
 				8CBD45DB27A846C50056A557 /* PasscodeView.xib in Resources */,
+				8CBD45F527A887DE0056A557 /* StatusView.xib in Resources */,
 				8CBD45BE27A70C440056A557 /* EditProfileView.xib in Resources */,
 				8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */,
 				8CBD45EA27A8735B0056A557 /* CacheView.xib in Resources */,

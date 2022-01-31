@@ -83,6 +83,13 @@ class SettingsViewController: UITableViewController {
         present(navController, animated: true)
     }
     
+    // 암호 설정
+    func actionPasscode() {
+        let passcodeView = PasscodeView()
+        passcodeView.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(passcodeView, animated: true)
+    }
+    
     // 로그아웃
     func actionLogout() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -94,6 +101,7 @@ class SettingsViewController: UITableViewController {
 
         present(alert, animated: true)
     }
+    
 
     // 유저 정보 로그아웃
     func logoutUser() {
@@ -147,7 +155,7 @@ class SettingsViewController: UITableViewController {
         
         if (indexPath.section == 0) && (indexPath.row == 0) { actionProfile() }
         if (indexPath.section == 0) && (indexPath.row == 1) { actionPassword() }
-//        if (indexPath.section == 0) && (indexPath.row == 2) { actionPasscode() }
+        if (indexPath.section == 0) && (indexPath.row == 2) { actionPasscode() }
 //        if (indexPath.section == 1) && (indexPath.row == 0) { actionStatus() }
 //        if (indexPath.section == 2) && (indexPath.row == 0) { actionCache() }
 //        if (indexPath.section == 2) && (indexPath.row == 1) { actionMedia() }

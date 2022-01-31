@@ -32,7 +32,7 @@
 		8C68AAFF27954FD200C1711E /* ChannelCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAFE27954FD200C1711E /* ChannelCellViewModel.swift */; };
 		8C68AB042795545900C1711E /* Channel.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AB032795545900C1711E /* Channel.json */; };
 		8C68AB062795754900C1711E /* ChatsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB052795754900C1711E /* ChatsSection.swift */; };
-		8C68AB0827957ADD00C1711E /* ExDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB0727957ADD00C1711E /* ExDateFormatter.swift */; };
+		8C68AB0827957ADD00C1711E /* Ex+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB0727957ADD00C1711E /* Ex+DateFormatter.swift */; };
 		8C68AB0C2795AA4100C1711E /* User.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AB0B2795AA4100C1711E /* User.json */; };
 		8C68AB0E2795AB6200C1711E /* DirectMessageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB0D2795AB6200C1711E /* DirectMessageObject.swift */; };
 		8C68AB1527969D1200C1711E /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB1427969D1200C1711E /* NetworkResult.swift */; };
@@ -75,6 +75,8 @@
 		8CBD45CF27A71A9E0056A557 /* Ex+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45CE27A71A9E0056A557 /* Ex+String.swift */; };
 		8CBD45D527A7EF6D0056A557 /* PasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45D427A7EF6D0056A557 /* PasswordView.swift */; };
 		8CBD45D727A7F0C80056A557 /* PasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD45D627A7F0C80056A557 /* PasswordView.xib */; };
+		8CBD45D927A846500056A557 /* PasscodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45D827A8464F0056A557 /* PasscodeView.swift */; };
+		8CBD45DB27A846C50056A557 /* PasscodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD45DA27A846C50056A557 /* PasscodeView.xib */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -157,6 +159,8 @@
 		8CBD45CE27A71A9E0056A557 /* Ex+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+String.swift"; sourceTree = "<group>"; };
 		8CBD45D427A7EF6D0056A557 /* PasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordView.swift; sourceTree = "<group>"; };
 		8CBD45D627A7F0C80056A557 /* PasswordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasswordView.xib; sourceTree = "<group>"; };
+		8CBD45D827A8464F0056A557 /* PasscodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeView.swift; sourceTree = "<group>"; };
+		8CBD45DA27A846C50056A557 /* PasscodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasscodeView.xib; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -533,6 +537,8 @@
 		8CBD45C027A70C640056A557 /* Passcode */ = {
 			isa = PBXGroup;
 			children = (
+				8CBD45D827A8464F0056A557 /* PasscodeView.swift */,
+				8CBD45DA27A846C50056A557 /* PasscodeView.xib */,
 			);
 			path = Passcode;
 			sourceTree = "<group>";
@@ -639,8 +645,10 @@
 				8CBD45BC27A6D6B90056A557 /* ProfileView.xib in Resources */,
 				8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */,
 				8CBD453E279D917D0056A557 /* Workspace.json in Resources */,
+				8CBD45DB27A846C50056A557 /* PasscodeView.xib in Resources */,
 				8CBD45BE27A70C440056A557 /* EditProfileView.xib in Resources */,
 				8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */,
+				8CBD45D727A7F0C80056A557 /* PasswordView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,6 +722,7 @@
 				8CBD459527A3E5600056A557 /* UserListCell.swift in Sources */,
 				8CBD458B27A3E40B0056A557 /* DirectMessageListCellView.swift in Sources */,
 				8C68AAE1279526C600C1711E /* HomeViewController.swift in Sources */,
+				8CBD45D927A846500056A557 /* PasscodeView.swift in Sources */,
 				8C68AB1E27970A3200C1711E /* EditProfileView.swift in Sources */,
 				8C68AADB2791B57100C1711E /* RegisterService.swift in Sources */,
 				8CBD458D27A3E42B0056A557 /* DirectMessageListViewModel.swift in Sources */,

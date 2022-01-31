@@ -112,7 +112,7 @@ class WorkspaceListViewController: UIViewController {
             .subscribe(onNext: { [weak self] indexPath in
                 guard let self = self else { return }
                 let cell = self.tableView.cellForRow(at: indexPath) as? WorkspaceListCell
-                
+
                 self.deleteCellField.text = cell?.workspaceId.description
                 // delete cell
                 self.deleteCellField.rx.text

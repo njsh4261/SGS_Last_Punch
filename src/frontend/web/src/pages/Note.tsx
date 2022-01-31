@@ -49,6 +49,7 @@ export default function Note() {
   const hoverHandler = () => setHover((state) => !state);
 
   // testing
+  const [selectedNote, selectNote] = useState();
   const [noteList, setNoteList] = useState<any[]>([]);
   const testCreateHandler = async () => {
     const noteId = await createNoteAPI(1, 1, 1);
@@ -64,7 +65,7 @@ export default function Note() {
   ) => {
     const responseNote = await getSpecificNoteAPI((e.target as any).id);
     // { id, creatorId, title, content(initValue), ops(null | []), createDt, modifyDt}
-    // 이걸로 note 페이지 렌더링
+    selectNote(responseNote);
   };
   useEffect(() => {
     testGetListHandler();
@@ -98,7 +99,7 @@ export default function Note() {
           ></NoteHeader>
         </HeaderFrame>
         <MainFrame>
-          <NoteMain></NoteMain>
+          <NoteMain note={selectedNote}></NoteMain>
         </MainFrame>
       </Container>
     </Layout>

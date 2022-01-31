@@ -182,7 +182,7 @@
 			children = (
 				8C68AAF1279539F700C1711E /* Entity */,
 				8CBD454A27A064FA0056A557 /* Section */,
-				8CBD454927A064C70056A557 /* Data */,
+				8CBD454927A064C70056A557 /* Utilities */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -301,6 +301,9 @@
 				8CBD457927A287460056A557 /* Ex+NotificationCenter.swift */,
 				8CBD452C2799A0C80056A557 /* ExUIButton.swift */,
 				8C68AB0727957ADD00C1711E /* ExDateFormatter.swift */,
+				8CBD45C427A7172C0056A557 /* Ex+UIImage.swift */,
+				8CBD45CA27A71A310056A557 /* Ex+Data.swift */,
+				8CBD45CE27A71A9E0056A557 /* Ex+String.swift */,
 				8CBD4541279F047F0056A557 /* KeychainWrapper+keys.swift */,
 			);
 			path = Extensions;
@@ -341,6 +344,11 @@
 			isa = PBXGroup;
 			children = (
 				8C68AB1F27970A3600C1711E /* EditProfile */,
+				8CBD45BF27A70C5B0056A557 /* Password */,
+				8CBD45C027A70C640056A557 /* Passcode */,
+				8CBD45C127A70C6B0056A557 /* Status */,
+				8CBD45C227A70C900056A557 /* Cache */,
+				8CBD45C327A70C9A0056A557 /* Media */,
 				8C68AB2C2797F5E400C1711E /* SettingsViewController.swift */,
 				8C68AB2E2797F62D00C1711E /* SettingsView.xib */,
 			);

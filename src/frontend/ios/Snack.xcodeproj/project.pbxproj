@@ -81,6 +81,11 @@
 		8CBD45E127A868040056A557 /* MediaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD45E027A868040056A557 /* MediaView.xib */; };
 		8CBD45E427A869870056A557 /* NetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45E327A869870056A557 /* NetworkView.swift */; };
 		8CBD45E627A869CC0056A557 /* NetworkView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD45E527A869CC0056A557 /* NetworkView.xib */; };
+		8CBD45E827A872300056A557 /* CacheView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45E727A872300056A557 /* CacheView.swift */; };
+		8CBD45EA27A8735B0056A557 /* CacheView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD45E927A8735B0056A557 /* CacheView.xib */; };
+		8CBD45ED27A8746E0056A557 /* KeepMediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45EC27A8746E0056A557 /* KeepMediaView.swift */; };
+		8CBD45EF27A874950056A557 /* KeepMediaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CBD45EE27A874950056A557 /* KeepMediaView.xib */; };
+		8CBD45F127A8759F0056A557 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD45F027A8759F0056A557 /* Media.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -169,6 +174,11 @@
 		8CBD45E027A868040056A557 /* MediaView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaView.xib; sourceTree = "<group>"; };
 		8CBD45E327A869870056A557 /* NetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkView.swift; sourceTree = "<group>"; };
 		8CBD45E527A869CC0056A557 /* NetworkView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NetworkView.xib; sourceTree = "<group>"; };
+		8CBD45E727A872300056A557 /* CacheView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheView.swift; sourceTree = "<group>"; };
+		8CBD45E927A8735B0056A557 /* CacheView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CacheView.xib; sourceTree = "<group>"; };
+		8CBD45EC27A8746E0056A557 /* KeepMediaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepMediaView.swift; sourceTree = "<group>"; };
+		8CBD45EE27A874950056A557 /* KeepMediaView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KeepMediaView.xib; sourceTree = "<group>"; };
+		8CBD45F027A8759F0056A557 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -449,6 +459,7 @@
 				8CBD454727A064A20056A557 /* PaginationAction.swift */,
 				8CBD45C827A719780056A557 /* Cryptor.swift */,
 				8CBD45CC27A71A650056A557 /* Password.swift */,
+				8CBD45F027A8759F0056A557 /* Media.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -561,6 +572,9 @@
 		8CBD45C227A70C900056A557 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
+				8CBD45EB27A874580056A557 /* KeepMedia */,
+				8CBD45E727A872300056A557 /* CacheView.swift */,
+				8CBD45E927A8735B0056A557 /* CacheView.xib */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -582,6 +596,15 @@
 				8CBD45E527A869CC0056A557 /* NetworkView.xib */,
 			);
 			path = NetworkView;
+			sourceTree = "<group>";
+		};
+		8CBD45EB27A874580056A557 /* KeepMedia */ = {
+			isa = PBXGroup;
+			children = (
+				8CBD45EC27A8746E0056A557 /* KeepMediaView.swift */,
+				8CBD45EE27A874950056A557 /* KeepMediaView.xib */,
+			);
+			path = KeepMedia;
 			sourceTree = "<group>";
 		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
@@ -663,6 +686,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CBD45EF27A874950056A557 /* KeepMediaView.xib in Resources */,
 				8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */,
 				8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */,
 				8C68AB042795545900C1711E /* Channel.json in Resources */,
@@ -676,6 +700,7 @@
 				8CBD45DB27A846C50056A557 /* PasscodeView.xib in Resources */,
 				8CBD45BE27A70C440056A557 /* EditProfileView.xib in Resources */,
 				8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */,
+				8CBD45EA27A8735B0056A557 /* CacheView.xib in Resources */,
 				8CBD45E627A869CC0056A557 /* NetworkView.xib in Resources */,
 				8CBD45D727A7F0C80056A557 /* PasswordView.xib in Resources */,
 			);
@@ -731,12 +756,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C68AAE3279526CF00C1711E /* HomeViewModel.swift in Sources */,
-				8C68AB0827957ADD00C1711E /* ExDateFormatter.swift in Sources */,
+				8C68AB0827957ADD00C1711E /* Ex+DateFormatter.swift in Sources */,
 				8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */,
 				8CBD457827A25E430056A557 /* MessageView.swift in Sources */,
 				8C68AB1527969D1200C1711E /* NetworkResult.swift in Sources */,
 				8C68AAFD27954FCB00C1711E /* ChannelCell.swift in Sources */,
-				8CBD452D2799A0C80056A557 /* ExUIButton.swift in Sources */,
+				8CBD452D2799A0C80056A557 /* Ex+UIButton.swift in Sources */,
 				8C68AB1A2796E70C00C1711E /* WorkspaceListViewController.swift in Sources */,
 				8C68AAD72791AF1100C1711E /* RegisterViewController.swift in Sources */,
 				8CBD4542279F047F0056A557 /* KeychainWrapper+keys.swift in Sources */,
@@ -762,16 +787,19 @@
 				8CBD458F27A3E46B0056A557 /* DirectMessageListViewController.swift in Sources */,
 				8CBD45C927A719780056A557 /* Cryptor.swift in Sources */,
 				8C68AB062795754900C1711E /* ChatsSection.swift in Sources */,
+				8CBD45ED27A8746E0056A557 /* KeepMediaView.swift in Sources */,
 				8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */,
 				8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */,
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
 				8CBD4544279F0CD50056A557 /* LogOutViewModel.swift in Sources */,
+				8CBD45DD27A865C30056A557 /* MeidaView.swift in Sources */,
 				8C68AB2D2797F5E400C1711E /* SettingsViewController.swift in Sources */,
 				8C68AAF027952F6500C1711E /* NavigationController.swift in Sources */,
 				8CBD459A27A41B520056A557 /* MessageViewModel.swift in Sources */,
 				8CBD45322799AEFD0056A557 /* WorkspaceListCell.swift in Sources */,
 				8CBD452F2799A2C10056A557 /* WorkspaceListViewModel.swift in Sources */,
 				8CBD45342799B0E00056A557 /* WorkspaceListCellModel.swift in Sources */,
+				8CBD45F127A8759F0056A557 /* Media.swift in Sources */,
 				8CBD457527A22A2D0056A557 /* AppConstant.swift in Sources */,
 				8C68AAFF27954FD200C1711E /* ChannelCellViewModel.swift in Sources */,
 				8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */,
@@ -780,6 +808,7 @@
 				8CBD45B827A6CFAB0056A557 /* ProfileViewController.swift in Sources */,
 				8CBD45CB27A71A310056A557 /* Ex+Data.swift in Sources */,
 				8C68AAD327911AD700C1711E /* ExObservable.swift in Sources */,
+				8CBD45E827A872300056A557 /* CacheView.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
 				8CBD456C27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift in Sources */,
 				8C68AB0E2795AB6200C1711E /* DirectMessageObject.swift in Sources */,

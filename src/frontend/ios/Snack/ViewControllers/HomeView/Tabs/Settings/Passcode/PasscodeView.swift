@@ -9,7 +9,7 @@ import UIKit
 import PasscodeKit
 
 class PasscodeView: UIViewController {
-
+    // MARK: - UI
     @IBOutlet private var tableView: UITableView!
 
     @IBOutlet private var cellTurnPasscode: UITableViewCell!

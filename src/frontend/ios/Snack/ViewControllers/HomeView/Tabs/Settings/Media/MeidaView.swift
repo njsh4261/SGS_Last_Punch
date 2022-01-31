@@ -9,7 +9,7 @@
 import UIKit
 
 class MediaView: UIViewController {
-
+    // MARK: - UI
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var cellPhoto: UITableViewCell!
     @IBOutlet private var cellVideo: UITableViewCell!

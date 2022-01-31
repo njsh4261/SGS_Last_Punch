@@ -9,14 +9,15 @@
 import UIKit
 
 class NetworkView: UIViewController {
+    // MARK: - Properties
+    private var mediaType = 0
+    private var selectedNetwork = 0
 
+    // MARK: - UI
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var cellManual: UITableViewCell!
     @IBOutlet private var cellWiFi: UITableViewCell!
     @IBOutlet private var cellAll: UITableViewCell!
-
-    private var mediaType = 0
-    private var selectedNetwork = 0
 
     init(_ mediaType: Int) {
         super.init(nibName: nil, bundle: nil)

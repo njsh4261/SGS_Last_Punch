@@ -497,13 +497,13 @@ class RegisterViewController: UIViewController {
             $0.left.equalTo(view.frame.width/4)
             $0.right.equalTo(btnSignInColor.snp.left)
             $0.height.equalTo(50)
-            $0.top.equalTo(lblWarning.snp.bottom).offset(170)
+            $0.top.equalTo(view.frame.size.height*0.79)
         }
         
         btnSignInColor.snp.makeConstraints {
             $0.right.equalToSuperview()
             $0.height.equalTo(50)
-            $0.top.equalTo(lblWarning.snp.bottom).offset(170)
+            $0.top.equalTo(view.frame.size.height*0.79)
         }
     }
 }

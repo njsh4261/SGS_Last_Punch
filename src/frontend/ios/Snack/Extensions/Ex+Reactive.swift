@@ -26,6 +26,15 @@ extension Reactive where Base: UIButton {
     }
 }
 
+extension Reactive where Base: UIView {
+    
+    var endEditing: Binder<Void> {
+        return Binder(base, binding: { (view, _) in
+            view.endEditing(true)
+        })
+    }
+}
+
 extension Reactive where Base: UITextField {
     
     var canBecomeFirstResponder: Binder<Void> {

@@ -59,6 +59,10 @@ class LoginViewController: UIViewController {
             .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
+        scrollview.rx.didScroll
+            .bind(to: view.rx.endEditing)
+            .disposed(by: disposeBag)
+        
         // enter를 누를때
         fieldEmail.rx.controlEvent(.editingDidEndOnExit)
             .asObservable()
@@ -144,7 +148,6 @@ class LoginViewController: UIViewController {
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
         navigationItem.leftBarButtonItem = btnBack
         ivLogo.image = UIImage(named: "snack")
-        view.endEditing(true)
         
         btnBack = btnBack.then {
             $0.image = UIImage(systemName: "chevron.backward")

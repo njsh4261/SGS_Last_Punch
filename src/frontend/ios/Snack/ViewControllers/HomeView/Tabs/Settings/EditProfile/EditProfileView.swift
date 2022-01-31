@@ -46,7 +46,7 @@ class EditProfileView: UIViewController {
         title = "프로필 편집"
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(actionDismiss))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(actionDone))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(actionSave))
 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tableView.addGestureRecognizer(gestureRecognizer)
@@ -83,7 +83,7 @@ class EditProfileView: UIViewController {
         dismiss(animated: true)
     }
     
-    @objc func actionDone() {
+    @objc func actionSave() {
 
         let name = fieldName.text ?? ""
         let displayName = fieldDisplayName.text ?? ""
@@ -95,6 +95,7 @@ class EditProfileView: UIViewController {
         if (country.isEmpty)        { ProgressHUD.showFailed("국적은 반드시 작성해야합니다");        return  }
         if (phone.isEmpty)          { ProgressHUD.showFailed("전화번호는 반드시 작성해야합니다");     return   }
 
+        ProgressHUD.showSucceed("변경되었습니다")
         dismiss(animated: true)
     }
     
@@ -192,7 +193,7 @@ extension EditProfileView: UITextFieldDelegate {
         if (textField == fieldName)         { fieldDisplayName.becomeFirstResponder()   }
         if (textField == fieldDisplayName)  { fieldDisplayName.becomeFirstResponder()   }
         if (textField == fieldDescription)  { fieldPhone.becomeFirstResponder()         }
-        if (textField == fieldPhone)        { actionDone()                              }
+        if (textField == fieldPhone)        { actionSave()                              }
 
         return true
     }

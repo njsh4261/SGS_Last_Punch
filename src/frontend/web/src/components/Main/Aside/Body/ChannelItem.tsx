@@ -43,7 +43,7 @@ export default function ChannelItem(props: Props) {
   };
 
   const testGetListHandler = async () => {
-    const responseNoteList = await getNoteListAPI(1);
+    const responseNoteList = await getNoteListAPI(+channel.id);
     if (responseNoteList)
       setNoteList(responseNoteList.map((resNote) => resNote.id));
   };

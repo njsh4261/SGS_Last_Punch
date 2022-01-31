@@ -26,37 +26,29 @@ public class NoteMainService {
     
     public String create(CreateNoteRequest createNoteRequest){
         Note newNote = createNoteRequest.toEntity();
-        List<Block> blocks = new ArrayList<Block>();
-        
-        blocks.add(Block.builder()
-            .id(createNoteRequest.getTitleBlockId())
-            .type("title")
-            .content(createNoteRequest.getTitle())
-            .build()
-        );
-        newNote.setBlocks(blocks);
-        
-        Note insertedNote = mongoTemplate.insert(newNote);
-        return insertedNote.getId().toString();
+        return  mongoTemplate.insert(newNote).getId().toString();
     }
     
     public GetNoteResponse find(String id) {
         ObjectId noteId = new ObjectId(id);
-        Note foundNote = mongoTemplate.findById(noteId, Note.class);
-        if(foundNote == null){
+        Note note = mongoTemplate.findById(noteId, Note.class);
+        if(note == null){
             throw new BusinessException(ErrorCode.NOTE_NOT_EXIST);
         }
         return GetNoteResponse.builder()
-            .id(foundNote.getId().toString())
-            .blocks(foundNote.getBlocks())
-            .createdt(foundNote.getCreatedt())
-            .modifydt(foundNote.getModifydt())
+            .id(note.getId().toString())
+            .creatorId(note.getCreatorId())
+            .title(note.getTitle())
+            .content(note.getContent())
+            .ops(note.getOps())
+            .createDt(note.getCreateDt())
+            .modifyDt(note.getModifyDt())
             .build();
     }
     
     // ToDo: 노트 계층 구조 반영된 목록 받아오기
     public List<NoteInfo> getList(Long channelId) {
-        Query query = new Query(Criteria.where("channel_id").is(channelId));
+        Query query = new Query(Criteria.where("channelId").is(channelId));
         List<Note> noteList = mongoTemplate.find(query, Note.class);
         return noteList.stream()
             .map(Note::toNoteInfo)

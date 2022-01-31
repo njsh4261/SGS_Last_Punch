@@ -3,6 +3,7 @@ package lastpunch.notehttpserver.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 import lastpunch.notehttpserver.entity.Block;
+import lastpunch.notehttpserver.entity.Op;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,7 +11,10 @@ import lombok.Data;
 @Builder
 public class GetNoteResponse{
     private String id;
-    private List<Block> blocks;
-    private LocalDateTime createdt;
-    private LocalDateTime modifydt;
+    private Long creatorId;
+    private String title;
+    private String content;
+    private List<Op> ops;
+    private LocalDateTime createDt;
+    private LocalDateTime modifyDt;
 }

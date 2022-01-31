@@ -83,7 +83,7 @@ class SettingsViewController: UITableViewController {
     
     // test
     func actionDeleteUser() {
-        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, userInfo: WorkspaceMemberCellModel(id: -1, email: "test@gamil.com", name: "테스트이름", displayname: "별명", description: "안녕하세요~!", phone: "010-1234-1234", country: "kor", language: "kor", settings: 1, status: "바쁨", createdt: "2020-02-25T12:00:00", modifydt: "2020-02-25T12:00:00"), isChat: false)
+        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, userInfo: WorkspaceMemberCellModel(id: -1, email: "test@gamil.com", name: "테스트이름", displayname: "별명", description: "안녕하세요~!", phone: "010-1234-1234", country: "kor", language: "kor", settings: 1, status: "바쁨", createdt: "2020-02-25T12:00:00", modifydt: "2020-02-25T12:00:00"), isChat: true)
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)
 

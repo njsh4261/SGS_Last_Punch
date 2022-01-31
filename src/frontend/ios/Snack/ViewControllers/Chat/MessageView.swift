@@ -91,8 +91,10 @@ class MessageView: UIViewController {
         
     }
     
-    private func navTaped(_ bool : Bool) {
-        print("탭")
+    private func goToProfile() {
+        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, userInfo: userInfo!, isChat: false)
+        viewController.hidesBottomBarWhenPushed = true
+        self.show(viewController, sender: nil)
     }
     
     private func goToMessage() {

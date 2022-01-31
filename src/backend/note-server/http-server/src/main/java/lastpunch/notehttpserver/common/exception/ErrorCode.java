@@ -8,6 +8,7 @@ public enum ErrorCode {
     
     //http
     NOTE_NOT_EXIST(HttpStatus.OK, "11001", "NOTE_NOT_EXIST", "존재하지 않는 노트입니다."),
+    JSON_DATA_ERROR(HttpStatus.OK, "11002", "JSON_DATA_ERROR", "request body의 데이터 형식이 잘못되었습니다."),
     
  
     ;

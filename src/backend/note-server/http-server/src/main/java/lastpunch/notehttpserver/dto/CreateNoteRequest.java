@@ -2,8 +2,10 @@ package lastpunch.notehttpserver.dto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import lastpunch.notehttpserver.entity.Note;
+import lastpunch.notehttpserver.entity.Op;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -25,6 +27,7 @@ public class CreateNoteRequest {
             .channelId(channelId)
             .creatorId(creatorId)
             .title("")
+            .ops(new ArrayList<Op>())
             .createDt(LocalDateTime.now())
             .modifyDt(LocalDateTime.now())
             .build();

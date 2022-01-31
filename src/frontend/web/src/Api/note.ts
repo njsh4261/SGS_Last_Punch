@@ -1,18 +1,13 @@
 import axios from 'axios';
 import { RESPONSE } from '../constant';
 
-/**
- *
- * @param wsId
- * @param channelId
- * @returns `noteId` | `undefined`
- */
+const testHost = 'http://localhost:9000'; // todo: change
+
 export async function createNoteAPI(
   wsId: number,
   channelId: number,
   creatorId: number,
-) {
-  const testHost = 'http://localhost:9000'; // todo: change
+): Promise<string | undefined> {
   const endpoint = `/note`;
   const body = {
     workspaceId: wsId,
@@ -33,6 +28,28 @@ export async function createNoteAPI(
       return data.noteId;
     }
     if (err) alert('fail create note');
+  } catch (e) {
+    alert('fail request');
+  }
+}
+
+export async function getNoteListAPI(
+  channelId: number,
+): Promise<any[] | undefined> {
+  const endpoint = `/notes?channelId=${channelId}`;
+
+  try {
+    const response = await axios.request({
+      method: 'GET',
+      url: testHost + endpoint,
+    });
+
+    const { code, data, err } = response?.data;
+    if (code === RESPONSE.NOTE.SUCCESS) {
+      alert('success get note list');
+      return data.noteList;
+    }
+    if (err) alert('fail get note list');
   } catch (e) {
     alert('fail request');
   }

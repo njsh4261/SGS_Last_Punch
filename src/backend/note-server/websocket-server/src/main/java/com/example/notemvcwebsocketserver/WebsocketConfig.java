@@ -31,12 +31,4 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
         // 웹소켓 연결 주소 ws://localhost:8080/ws/note 사용
         registry.addEndpoint("/ws/note").setAllowedOrigins("http://localhost:3000");
     }
-    @EventListener
-    public void onDisconnectEvent(SessionDisconnectEvent event) {
-        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-    
-        Long username = (Long) headerAccessor.getSessionAttributes().get("username");
-        System.out.println("client with username {} disconnected"+ event.toString() + username);
-    }
-    
 }

@@ -14,6 +14,7 @@ import lastpunch.notehttpserver.dto.CreateNoteRequest;
 import lastpunch.notehttpserver.dto.NoteInfo;
 import lastpunch.notehttpserver.dto.SaveOperationsRequest;
 import lastpunch.notehttpserver.dto.SyncNoteRequest;
+import lastpunch.notehttpserver.dto.TitleDto;
 import lastpunch.notehttpserver.dto.UpdateNoteRequest;
 import lastpunch.notehttpserver.entity.Op;
 import lastpunch.notehttpserver.service.NoteMainService;
@@ -61,4 +62,24 @@ public class NoteUpdateController {
     
         return Response.toResponseEntity("15000", HttpStatus.OK, data);
     }
+    
+    @GetMapping("/note/{id}/title")
+    public ResponseEntity<Object> getTitle(@PathVariable("id") String id){
+    
+        String title = noteUpdateService.findTitle(id);
+        
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("title", title);
+    
+        return Response.toResponseEntity("15000", HttpStatus.OK, data);
+    }
+    
+    @PutMapping("/note/title")
+    public ResponseEntity<Object> saveTitle(@RequestBody TitleDto titleDto){
+        
+        noteUpdateService.saveTitle(titleDto);
+        
+        return Response.toResponseEntity("15000", HttpStatus.OK);
+    }
+    
 }

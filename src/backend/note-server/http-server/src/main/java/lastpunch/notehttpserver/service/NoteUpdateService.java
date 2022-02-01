@@ -10,6 +10,7 @@ import lastpunch.notehttpserver.common.exception.BusinessException;
 import lastpunch.notehttpserver.common.exception.ErrorCode;
 import lastpunch.notehttpserver.dto.SaveOperationsRequest;
 import lastpunch.notehttpserver.dto.SyncNoteRequest;
+import lastpunch.notehttpserver.dto.TitleDto;
 import lastpunch.notehttpserver.dto.UpdateNoteRequest;
 import lastpunch.notehttpserver.entity.Note;
 import lastpunch.notehttpserver.entity.Op;
@@ -66,6 +67,31 @@ public class NoteUpdateService {
             throw new BusinessException(ErrorCode.OPERATION_NOT_EXIST);
         }
     }
+    
+    public void saveTitle(TitleDto titleDto){
+        ObjectId noteId = new ObjectId(titleDto.getNoteId());
+        Query query = new Query(Criteria.where("_id").is(noteId));
+        Update update = new Update();
+        update.set("title", titleDto.getTitle());
+        mongoTemplate.updateFirst(query, update, Note.class);
+    }
+    
+    public String findTitle(String id){
+        ObjectId noteId = new ObjectId(id);
+        Query query = new Query(Criteria.where("_id").is(noteId));
+        query.fields().include("title");
+        Note note = mongoTemplate.findOne(query, Note.class);
+        System.out.println("note = " + note);
+        
+        if(note == null){
+            throw new BusinessException(ErrorCode.NOTE_NOT_EXIST);
+        }
+        else{
+            return note.getTitle();
+        }
+    }
+    
+    
 //    public void update(UpdateNoteRequest updateNoteRequest){
 //        ObjectId noteId = new ObjectId(updateNoteRequest.getNoteId());
 //        List<Transaction> transactions = updateNoteRequest.getTransactions();

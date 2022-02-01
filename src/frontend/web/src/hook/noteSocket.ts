@@ -43,6 +43,7 @@ interface HookReturns {
   updateTitle: () => void;
   lockNote: () => void;
   unlockNote: () => void;
+  leaveNote: () => void;
   owner: User | null;
   myUser: User;
   userList: User[];
@@ -171,10 +172,10 @@ export default function noteSocketHook(
     }
   };
 
-  const leavNote = () => {
+  const leaveNote = () => {
     if (stomp.current) {
-      stompSend(stomp.current, MESSAGE_TYPE.UNLOCK);
-      stompSend(stomp.current, MESSAGE_TYPE.LEAVE);
+      // stompSend(stomp.current, MESSAGE_TYPE.UNLOCK);
+      // stompSend(stomp.current, MESSAGE_TYPE.LEAVE);
       stomp.current.disconnect();
     }
   };
@@ -232,8 +233,7 @@ export default function noteSocketHook(
   useEffect(() => {
     if (note) {
       connect();
-      window.addEventListener('beforeunload', leavNote);
-      return leavNote;
+      return leaveNote;
     }
   }, [note]);
 
@@ -242,6 +242,7 @@ export default function noteSocketHook(
     updateTitle,
     lockNote,
     unlockNote,
+    leaveNote,
     owner,
     myUser,
     userList,

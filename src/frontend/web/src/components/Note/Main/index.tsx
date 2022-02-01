@@ -17,11 +17,13 @@ import {
 } from '../../../Api/note';
 
 const TYPING_TIME = 2000;
+const UPDATE_OP_TIME = 1000;
+const UPDATE_NOTE_TIME = 10000;
 
 const Container = styled.article`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 500px;
   margin: 0 96px;
   height: 100%;
 `;
@@ -55,6 +57,7 @@ export default function NoteMain() {
     updateNote,
     lockNote,
     unlockNote,
+    leaveNote,
     owner,
     myUser,
     userList,
@@ -65,6 +68,7 @@ export default function NoteMain() {
   type Timeout = ReturnType<typeof setTimeout>;
   const typing = useRef<Timeout | null>(null);
   const typingTitle = useRef<Timeout | null>(null);
+  const opQueue = useRef<any[]>([]);
 
   const changeHandler = async (value: Node[]) => {
     setValue(value);
@@ -75,10 +79,7 @@ export default function NoteMain() {
 
     // todo: op를 배열에 저장하고 수초에 한번씩 call API to note server
     if (ops.length > 0) {
-      const stringOP = JSON.stringify(ops);
-      const timestamp = await updateNoteOPAPI(note!.id, stringOP);
-      if (timestamp) updateNote(timestamp);
-      else console.error('update fail - Note/main/index');
+      opQueue.current.push(...ops);
     }
   };
 
@@ -88,6 +89,12 @@ export default function NoteMain() {
    * @ 비선점자: 선점자가 있으면 입력 금지, 없으면 선점 요창
    */
   const keydownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const arrowKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
+    if (arrowKeys.includes(e.key)) {
+      return;
+    }
+
+    // 선점자 처리 로직
     if (owner && owner.id === myUser.id) {
       if (e.ctrlKey) {
         switch (e.key) {
@@ -128,18 +135,18 @@ export default function NoteMain() {
 
       if (typing.current) clearTimeout(typing.current);
       typing.current = setTimeout(() => {
-        console.log('end typing');
-        unlockNote();
+        endtypingHandler();
       }, TYPING_TIME);
       return;
     }
+
+    // 비선점자 처리
     e.preventDefault();
     if (owner === null) {
       lockNote();
     }
   };
 
-  // todo: onwer일 때 일정 주기마다 자동으로 api 날리기
   const updateHandler = async () => {
     if (!note) return;
     const { id } = note;
@@ -150,33 +157,60 @@ export default function NoteMain() {
   };
 
   const getSpecificNoteHandler = async () => {
-    if (params.noteId) {
-      const responseNote = await getSpecificNoteAPI(params.noteId.toString());
-      setNote(responseNote);
-    } else {
-      console.error('no noteId at param');
-    }
+    const responseNote = await getSpecificNoteAPI(params.noteId!.toString());
+    setNote(responseNote);
+  };
+
+  const endtypingHandler = () => {
+    console.log('end typing');
+    updateHandler();
+    unlockNote();
   };
 
   useEffect(() => {
-    getSpecificNoteHandler();
+    if (params.noteId) getSpecificNoteHandler();
   }, [params]);
 
+  // owner가 입력할 때에 대한 처리
   useEffect(() => {
-    if (owner) {
+    // 선점권을 갖자 마자 unlock을 위한 시간 체크
+    if (owner && owner.id === myUser.id) {
       typing.current = setTimeout(() => {
-        console.log('end typing');
-        unlockNote();
+        endtypingHandler();
       }, TYPING_TIME);
+
+      // 주기마다 update OP
+      const opTimer = setInterval(async () => {
+        if (opQueue.current.length > 0) {
+          const stringOP = JSON.stringify(opQueue.current);
+          const timestamp = await updateNoteOPAPI(note!.id, stringOP);
+          if (timestamp) {
+            updateNote(timestamp);
+            opQueue.current = [];
+          } else console.error('update fail - Note/main/index');
+        }
+      }, UPDATE_OP_TIME);
+
+      const noteTimer = setInterval(() => updateHandler, UPDATE_NOTE_TIME);
+
+      return () => {
+        clearInterval(opTimer);
+        clearInterval(noteTimer);
+      };
     }
-  }, [owner]);
+  }, [owner, note]);
 
   useEffect(() => {
     if (note) {
       try {
+        // apply title
+        setTitle(note.title);
+
+        // apply content
         const content = JSON.parse(note.content);
         setValue(content);
 
+        // apply ops
         const { ops } = note;
         Editor.withoutNormalizing(editor, () => {
           ops.forEach((op: any) => editor.apply(JSON.parse(op)));
@@ -184,8 +218,7 @@ export default function NoteMain() {
       } catch (e) {
         console.error('Wrong Format - note.content');
       }
-      setTitle(note.title);
-    } else setValue(initialValue);
+    }
   }, [note]);
 
   const titleHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -196,12 +229,17 @@ export default function NoteMain() {
 
       if (typingTitle.current) clearTimeout(typingTitle.current);
       typingTitle.current = setTimeout(() => {
-        console.log('end typing title');
         updateTitleAPI(note!.id, e.target.value);
         unlockNote();
       }, TYPING_TIME);
     }
   };
+
+  window.addEventListener('beforeunload', (e) => {
+    e.preventDefault();
+    updateHandler();
+    leaveNote();
+  });
 
   return (
     <>

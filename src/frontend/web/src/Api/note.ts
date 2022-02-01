@@ -161,3 +161,45 @@ export async function getNoteOPAPI(noteId: string, timestamp: string) {
     alert('fail request');
   }
 }
+
+export async function updateTitleAPI(noteId: string, title: string) {
+  const endpoint = '/note/title';
+  const body = {
+    noteId,
+    title,
+  };
+  try {
+    const response = await axios.request({
+      method: 'PUT',
+      url: testHost + endpoint,
+      data: body,
+    });
+    const { code, data, err } = response?.data;
+    if (code === RESPONSE.NOTE.SUCCESS) {
+      console.log('success update title');
+      return code;
+    }
+    if (err) console.error('fail update title');
+  } catch (e) {
+    alert('fail request - update title');
+  }
+}
+
+export async function getTitleAPI(noteId: string) {
+  const endpoint = `/note/${noteId}/title`;
+
+  try {
+    const response = await axios.request({
+      method: 'GET',
+      url: testHost + endpoint,
+    });
+    const { code, data, err } = response?.data;
+    if (code === RESPONSE.NOTE.SUCCESS) {
+      console.log('success get title');
+      return data;
+    }
+    if (err) console.error('fail update title');
+  } catch (e) {
+    alert('fail request - get title');
+  }
+}

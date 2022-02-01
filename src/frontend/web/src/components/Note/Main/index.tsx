@@ -13,7 +13,10 @@ import {
   updateNoteAllAPI,
   updateNoteOPAPI,
   getSpecificNoteAPI,
+  updateTitleAPI,
 } from '../../../Api/note';
+
+const TYPING_TIME = 2000;
 
 const Container = styled.article`
   display: flex;
@@ -45,15 +48,23 @@ export default function NoteMain() {
 
   const params = useParams();
   const [note, setNote] = useState<Note | null>(null);
-  const [title, setTitle] = useState('test title');
   const [value, setValue] = useState<Node[]>(initialValue);
   const editor = useMemo(() => withReact(withHistory(createEditor())), []);
 
-  const { updateNote, remote, lockNote, unlockNote, owner, myUser, userList } =
-    noteSocketHook(editor, note);
+  const {
+    updateNote,
+    lockNote,
+    unlockNote,
+    owner,
+    myUser,
+    userList,
+    title,
+    setTitle,
+  } = noteSocketHook(editor, note);
 
   type Timeout = ReturnType<typeof setTimeout>;
   const typing = useRef<Timeout | null>(null);
+  const typingTitle = useRef<Timeout | null>(null);
 
   const changeHandler = async (value: Node[]) => {
     setValue(value);
@@ -119,7 +130,7 @@ export default function NoteMain() {
       typing.current = setTimeout(() => {
         console.log('end typing');
         unlockNote();
-      }, 1000);
+      }, TYPING_TIME);
       return;
     }
     e.preventDefault();
@@ -156,7 +167,7 @@ export default function NoteMain() {
       typing.current = setTimeout(() => {
         console.log('end typing');
         unlockNote();
-      }, 1000);
+      }, TYPING_TIME);
     }
   }, [owner]);
 
@@ -177,9 +188,19 @@ export default function NoteMain() {
     } else setValue(initialValue);
   }, [note]);
 
-  const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-    console.log(e.target.value);
+  const titleHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (owner === null) {
+      lockNote();
+    } else if (owner.id === myUser.id) {
+      setTitle(e.target.value);
+
+      if (typingTitle.current) clearTimeout(typingTitle.current);
+      typingTitle.current = setTimeout(() => {
+        console.log('end typing title');
+        updateTitleAPI(note!.id, e.target.value);
+        unlockNote();
+      }, TYPING_TIME);
+    }
   };
 
   return (

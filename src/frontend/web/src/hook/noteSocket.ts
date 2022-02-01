@@ -9,7 +9,7 @@ import SockJS from 'sockjs-client';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { Editor } from 'slate';
 
-import { getNoteOPAPI } from '../Api/note';
+import { getNoteOPAPI, getTitleAPI } from '../Api/note';
 import { Note } from '../../types/note.type';
 
 export type User = {
@@ -21,6 +21,7 @@ enum MESSAGE_TYPE {
   ENTER = 'ENTER',
   LEAVE = 'LEAVE',
   UPDATE = 'UPDATE',
+  UPDATE_TITLE = 'UPDATE_TITLE',
   LOCK = 'LOCK',
   UNLOCK = 'UNLOCK',
 }
@@ -31,20 +32,22 @@ interface EnterAndSubProps {
   note: Note | null;
   setUserList: React.Dispatch<SetStateAction<User[]>>;
   stomp: CompatClient;
-  remote: React.MutableRefObject<boolean>;
   owner: User | null;
   setOwner: React.Dispatch<SetStateAction<User | null>>;
   enterNote: (stomp: CompatClient) => void;
+  setTitle: React.Dispatch<SetStateAction<string>>;
 }
 
 interface HookReturns {
   updateNote: (timestamp: string) => void;
-  remote: React.MutableRefObject<boolean>;
+  updateTitle: () => void;
   lockNote: () => void;
   unlockNote: () => void;
   owner: User | null;
   myUser: User;
   userList: User[];
+  title: string;
+  setTitle: React.Dispatch<SetStateAction<string>>;
 }
 
 const enterAndSub = (props: EnterAndSubProps) => () => {
@@ -54,10 +57,10 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
     note,
     setUserList,
     stomp,
-    remote,
     owner,
     setOwner,
     enterNote,
+    setTitle,
   } = props;
 
   enterNote(stomp);
@@ -91,6 +94,13 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
         console.log('unlock');
         setOwner(null);
         break;
+      case MESSAGE_TYPE.UPDATE_TITLE:
+        const data = await getTitleAPI(note!.id);
+        if (data) {
+          console.log(data);
+          // setTitle(data);
+        }
+        break;
       case MESSAGE_TYPE.UPDATE:
         if (transaction.myUser.id !== myUser.id) {
           const { noteId, timestamp } = transaction;
@@ -111,7 +121,7 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
         }
         break;
       default:
-        console.error('wrong type');
+        console.error('wrong type - fail apply updated');
     }
   });
 };
@@ -131,7 +141,7 @@ export default function noteSocketHook(
 
   // const [stomp, setStomp] = useState<CompatClient>();
   const stomp = useRef<CompatClient>();
-  const remote = useRef(false);
+  const [title, setTitle] = useState('test title');
   const [owner, setOwner] = useState<User | null>(null);
   const [userList, setUserList] = useState<User[]>([]);
 
@@ -148,10 +158,10 @@ export default function noteSocketHook(
           note,
           setUserList,
           stomp: stompClient,
-          remote,
           owner,
           setOwner,
           enterNote,
+          setTitle,
         }),
       );
       stomp.current = stompClient;
@@ -182,6 +192,12 @@ export default function noteSocketHook(
   const unlockNote = () => {
     if (stomp.current && owner?.id === myUser.id) {
       stompSend(stomp.current, MESSAGE_TYPE.UNLOCK);
+    }
+  };
+
+  const updateTitle = () => {
+    if (stomp.current && owner?.id === myUser.id) {
+      stompSend(stomp.current, MESSAGE_TYPE.UPDATE_TITLE);
     }
   };
 
@@ -221,5 +237,15 @@ export default function noteSocketHook(
     }
   }, [note]);
 
-  return { updateNote, remote, lockNote, unlockNote, owner, myUser, userList };
+  return {
+    updateNote,
+    updateTitle,
+    lockNote,
+    unlockNote,
+    owner,
+    myUser,
+    userList,
+    title,
+    setTitle,
+  };
 }

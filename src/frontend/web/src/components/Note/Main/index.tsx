@@ -182,11 +182,14 @@ export default function NoteMain() {
       // 주기마다 update OP
       const opTimer = setInterval(async () => {
         if (opQueue.current.length > 0) {
+          const oldQueueLength = opQueue.current.length;
           const stringOP = JSON.stringify(opQueue.current);
           const timestamp = await updateNoteOPAPI(note!.id, stringOP);
           if (timestamp) {
             updateNote(timestamp);
-            opQueue.current = [];
+            if (oldQueueLength !== opQueue.current.length) {
+              opQueue.current = opQueue.current.slice(oldQueueLength);
+            } else opQueue.current = [];
           } else console.error('update fail - Note/main/index');
         }
       }, UPDATE_OP_TIME);
@@ -208,6 +211,7 @@ export default function NoteMain() {
 
         // apply content
         const content = JSON.parse(note.content);
+        console.log({ content });
         setValue(content);
 
         // apply ops

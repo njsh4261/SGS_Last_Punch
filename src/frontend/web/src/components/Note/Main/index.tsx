@@ -1,18 +1,22 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { createEditor, Node, Text, Transforms } from 'slate';
+import { createEditor, Node, Text, Transforms, Editor } from 'slate';
 import { withHistory } from 'slate-history';
 import { withReact } from 'slate-react';
 import { useParams } from 'react-router-dom';
 
 import EditorFrame from './EditorFrame';
+import { Note } from '../../../../types/note.type';
 import noteSocketHook from '../../../hook/noteSocket';
 import { User } from '../../../hook/noteSocket';
 import {
   updateNoteAllAPI,
   updateNoteOPAPI,
   getSpecificNoteAPI,
+  updateTitleAPI,
 } from '../../../Api/note';
+
+const TYPING_TIME = 2000;
 
 const Container = styled.article`
   display: flex;
@@ -26,11 +30,13 @@ const TestContainer = styled.div`
   margin-top: 50px;
 `;
 
-interface Note {
-  id: string;
-  title: string;
-  content: string;
-}
+const InvisibleInput = styled.input`
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+`;
 
 export default function NoteMain() {
   const initialValue = [
@@ -42,14 +48,23 @@ export default function NoteMain() {
 
   const params = useParams();
   const [note, setNote] = useState<Note | null>(null);
-  const [title, setTitle] = useState('test title');
   const [value, setValue] = useState<Node[]>(initialValue);
   const editor = useMemo(() => withReact(withHistory(createEditor())), []);
-  const { updateNote, remote, lockNote, unlockNote, owner, myUser, userList } =
-    noteSocketHook(editor);
+
+  const {
+    updateNote,
+    lockNote,
+    unlockNote,
+    owner,
+    myUser,
+    userList,
+    title,
+    setTitle,
+  } = noteSocketHook(editor, note);
 
   type Timeout = ReturnType<typeof setTimeout>;
   const typing = useRef<Timeout | null>(null);
+  const typingTitle = useRef<Timeout | null>(null);
 
   const changeHandler = async (value: Node[]) => {
     setValue(value);
@@ -61,8 +76,8 @@ export default function NoteMain() {
     // todo: op를 배열에 저장하고 수초에 한번씩 call API to note server
     if (ops.length > 0) {
       const stringOP = JSON.stringify(ops);
-      const res = await updateNoteOPAPI(note!.id, stringOP);
-      if (res) updateNote();
+      const timestamp = await updateNoteOPAPI(note!.id, stringOP);
+      if (timestamp) updateNote(timestamp);
       else console.error('update fail - Note/main/index');
     }
   };
@@ -73,9 +88,6 @@ export default function NoteMain() {
    * @ 비선점자: 선점자가 있으면 입력 금지, 없으면 선점 요창
    */
   const keydownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log(
-      `key: ${e.key},  meta:${e.metaKey},  ctrl:${e.ctrlKey} alt:${e.altKey},  shift:${e.shiftKey}`,
-    );
     if (owner && owner.id === myUser.id) {
       if (e.ctrlKey) {
         switch (e.key) {
@@ -118,7 +130,7 @@ export default function NoteMain() {
       typing.current = setTimeout(() => {
         console.log('end typing');
         unlockNote();
-      }, 1000);
+      }, TYPING_TIME);
       return;
     }
     e.preventDefault();
@@ -133,7 +145,7 @@ export default function NoteMain() {
     const { id } = note;
     console.log('send:', JSON.stringify(value));
     const res = await updateNoteAllAPI(id, title, JSON.stringify(value));
-    if (res) alert('updated!');
+    if (res) console.log('updated note all!');
     else alert('fail update');
   };
 
@@ -155,7 +167,7 @@ export default function NoteMain() {
       typing.current = setTimeout(() => {
         console.log('end typing');
         unlockNote();
-      }, 1000);
+      }, TYPING_TIME);
     }
   }, [owner]);
 
@@ -164,18 +176,47 @@ export default function NoteMain() {
       try {
         const content = JSON.parse(note.content);
         setValue(content);
+
+        const { ops } = note;
+        Editor.withoutNormalizing(editor, () => {
+          ops.forEach((op: any) => editor.apply(JSON.parse(op)));
+        });
       } catch (e) {
         console.error('Wrong Format - note.content');
       }
-      // setTitle(note.title);
+      setTitle(note.title);
     } else setValue(initialValue);
   }, [note]);
 
+  const titleHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (owner === null) {
+      lockNote();
+    } else if (owner.id === myUser.id) {
+      setTitle(e.target.value);
+
+      if (typingTitle.current) clearTimeout(typingTitle.current);
+      typingTitle.current = setTimeout(() => {
+        console.log('end typing title');
+        updateTitleAPI(note!.id, e.target.value);
+        unlockNote();
+      }, TYPING_TIME);
+    }
+  };
+
   return (
     <>
-      {note ? (
+      {!note ? (
+        <div>select any note</div>
+      ) : (
         <Container>
-          <h1>{note.title || title}</h1>
+          <label htmlFor="title-input">
+            <h1>{title}</h1>
+          </label>
+          <InvisibleInput
+            id="title-input"
+            value={title}
+            onChange={titleHandler}
+          ></InvisibleInput>
           <button onClick={updateHandler}>update</button>
           <EditorFrame
             value={value}
@@ -194,8 +235,6 @@ export default function NoteMain() {
             </div>
           </TestContainer>
         </Container>
-      ) : (
-        <div>plz select note</div>
       )}
     </>
   );

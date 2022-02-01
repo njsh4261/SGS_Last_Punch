@@ -36,7 +36,7 @@ interface EnterAndSubProps {
 }
 
 interface HookReturns {
-  updateNote: () => void;
+  updateNote: (timestamp: string) => void;
   remote: React.MutableRefObject<boolean>;
   lockNote: () => void;
   unlockNote: () => void;
@@ -178,11 +178,9 @@ export default function noteSocketHook(editor: Editor): HookReturns {
     }
   };
 
-  const updateNote = () => {
+  const updateNote = (timestamp: string) => {
     if (stomp.current && owner?.id === myUser.id) {
-      const date = new Date();
-      const stringDate = date.toJSON();
-      stompSend(stomp.current, MESSAGE_TYPE.UPDATE, stringDate);
+      stompSend(stomp.current, MESSAGE_TYPE.UPDATE, timestamp);
     }
   };
 

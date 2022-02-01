@@ -61,8 +61,8 @@ export default function NoteMain() {
     // todo: op를 배열에 저장하고 수초에 한번씩 call API to note server
     if (ops.length > 0) {
       const stringOP = JSON.stringify(ops);
-      const res = await updateNoteOPAPI(note!.id, stringOP);
-      if (res) updateNote();
+      const timestamp = await updateNoteOPAPI(note!.id, stringOP);
+      if (timestamp) updateNote(timestamp);
       else console.error('update fail - Note/main/index');
     }
   };

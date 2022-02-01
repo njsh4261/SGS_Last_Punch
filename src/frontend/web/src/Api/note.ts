@@ -106,12 +106,22 @@ export async function updateNoteAllAPI(
   }
 }
 
-export async function updateNoteOPAPI(noteId: string, op: string) {
+/**
+ *
+ * @param noteId
+ * @param op applied JSON.stringfy(op)
+ * @returns `timestramp(string)` | `undefined`
+ */
+export async function updateNoteOPAPI(
+  noteId: string,
+  op: string,
+): Promise<string | undefined> {
   const endpoint = '/note/op';
+  const timestamp = new Date().toISOString();
   const body = {
     noteId,
     op,
-    timestamp: new Date().toISOString(),
+    timestamp,
   };
 
   try {
@@ -123,8 +133,7 @@ export async function updateNoteOPAPI(noteId: string, op: string) {
     const { code, data, err } = response?.data;
     if (code === RESPONSE.NOTE.SUCCESS) {
       console.log('success update note op');
-      if (data) return data;
-      return code;
+      return timestamp;
     }
     if (err) alert('fail update note op');
   } catch (e) {

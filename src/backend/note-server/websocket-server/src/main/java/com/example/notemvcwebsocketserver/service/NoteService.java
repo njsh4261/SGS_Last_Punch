@@ -82,7 +82,9 @@ public class NoteService {
         
                 // redis에서 선점자면 선점 정보 삭제, Unlock 알림
                 String ownerStr = redisService.getData(noteId);
-                if(ownerStr != null && !ownerStr.equals("") && objectMapper.readValue(ownerStr, User.class).equals(user.getId())){
+                System.out.println("ownerStr = " + ownerStr);
+                System.out.println("user = " + user);
+                if(ownerStr != null && !ownerStr.equals("") && objectMapper.readValue(ownerStr, User.class).getId().equals(user.getId())){
                     redisService.setNullData(noteId);
                     redisPublisher.publish(ChannelTopic.of(noteId), unlock);
                 }

@@ -149,6 +149,7 @@ export async function getNoteOPAPI(noteId: string, timestamp: string) {
       method: 'GET',
       url: testHost + endpoint,
     });
+    console.log('get response:', response);
     const { code, data, err } = response?.data;
     if (code === RESPONSE.NOTE.SUCCESS) {
       console.log('success update note op');

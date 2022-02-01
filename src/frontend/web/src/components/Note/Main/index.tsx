@@ -1,11 +1,12 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { createEditor, Node, Text, Transforms } from 'slate';
+import { createEditor, Node, Text, Transforms, Editor } from 'slate';
 import { withHistory } from 'slate-history';
 import { withReact } from 'slate-react';
 import { useParams } from 'react-router-dom';
 
 import EditorFrame from './EditorFrame';
+import { Note } from '../../../../types/note.type';
 import noteSocketHook from '../../../hook/noteSocket';
 import { User } from '../../../hook/noteSocket';
 import {
@@ -26,12 +27,6 @@ const TestContainer = styled.div`
   margin-top: 50px;
 `;
 
-interface Note {
-  id: string;
-  title: string;
-  content: string;
-}
-
 export default function NoteMain() {
   const initialValue = [
     {
@@ -45,8 +40,9 @@ export default function NoteMain() {
   const [title, setTitle] = useState('test title');
   const [value, setValue] = useState<Node[]>(initialValue);
   const editor = useMemo(() => withReact(withHistory(createEditor())), []);
+
   const { updateNote, remote, lockNote, unlockNote, owner, myUser, userList } =
-    noteSocketHook(editor);
+    noteSocketHook(editor, note);
 
   type Timeout = ReturnType<typeof setTimeout>;
   const typing = useRef<Timeout | null>(null);
@@ -164,6 +160,11 @@ export default function NoteMain() {
       try {
         const content = JSON.parse(note.content);
         setValue(content);
+        console.log(note.ops);
+        // note.ops.map(({ op }) => {
+        //   const jsonOP = JSON.parse(op);
+        //   Editor.withoutNormalizing(editor, () => editor.apply(jsonOP));
+        // });
       } catch (e) {
         console.error('Wrong Format - note.content');
       }
@@ -173,9 +174,11 @@ export default function NoteMain() {
 
   return (
     <>
-      {note ? (
+      {!note ? (
+        <div>select any note</div>
+      ) : (
         <Container>
-          <h1>{note.title || title}</h1>
+          <h1>{note?.title || title}</h1>
           <button onClick={updateHandler}>update</button>
           <EditorFrame
             value={value}
@@ -194,8 +197,6 @@ export default function NoteMain() {
             </div>
           </TestContainer>
         </Container>
-      ) : (
-        <div>plz select note</div>
       )}
     </>
   );

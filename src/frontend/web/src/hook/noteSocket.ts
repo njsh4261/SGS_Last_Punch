@@ -10,6 +10,7 @@ import { CompatClient, Stomp } from '@stomp/stompjs';
 import { Editor } from 'slate';
 
 import { getNoteOPAPI } from '../Api/note';
+import { Note } from '../../types/note.type';
 
 export type User = {
   id: number;
@@ -27,6 +28,7 @@ enum MESSAGE_TYPE {
 interface EnterAndSubProps {
   editor: Editor;
   myUser: User;
+  note: Note | null;
   setUserList: React.Dispatch<SetStateAction<User[]>>;
   stomp: CompatClient;
   remote: React.MutableRefObject<boolean>;
@@ -49,6 +51,7 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
   const {
     editor,
     myUser,
+    note,
     setUserList,
     stomp,
     remote,
@@ -66,7 +69,7 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
     setUserList(transaction.userList.map((u: string) => JSON.parse(u)));
   });
 
-  stomp.subscribe('/sub/note/abcd', async (payload) => {
+  stomp.subscribe(`/sub/note/${note!.id}`, async (payload) => {
     const transaction = JSON.parse(payload.body);
 
     switch (transaction.type) {
@@ -113,7 +116,10 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
   });
 };
 
-export default function noteSocketHook(editor: Editor): HookReturns {
+export default function noteSocketHook(
+  editor: Editor,
+  note: Note | null,
+): HookReturns {
   // dummy user data
   const myUser = useMemo(
     () => ({
@@ -139,6 +145,7 @@ export default function noteSocketHook(editor: Editor): HookReturns {
         enterAndSub({
           editor,
           myUser,
+          note,
           setUserList,
           stomp: stompClient,
           remote,
@@ -195,7 +202,7 @@ export default function noteSocketHook(editor: Editor): HookReturns {
         {},
         JSON.stringify({
           type: type,
-          noteId: 'abcd',
+          noteId: note!.id,
           myUser,
           timestamp,
         }),
@@ -207,9 +214,11 @@ export default function noteSocketHook(editor: Editor): HookReturns {
   };
 
   useEffect(() => {
-    connect();
-    window.addEventListener('beforeunload', leavNote);
-    return leavNote;
+    if (note) {
+      connect();
+      window.addEventListener('beforeunload', leavNote);
+      return leavNote;
+    }
   }, []);
 
   return { updateNote, remote, lockNote, unlockNote, owner, myUser, userList };

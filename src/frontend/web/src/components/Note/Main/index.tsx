@@ -69,9 +69,6 @@ export default function NoteMain() {
    * @ 비선점자: 선점자가 있으면 입력 금지, 없으면 선점 요창
    */
   const keydownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log(
-      `key: ${e.key},  meta:${e.metaKey},  ctrl:${e.ctrlKey} alt:${e.altKey},  shift:${e.shiftKey}`,
-    );
     if (owner && owner.id === myUser.id) {
       if (e.ctrlKey) {
         switch (e.key) {
@@ -160,6 +157,11 @@ export default function NoteMain() {
       try {
         const content = JSON.parse(note.content);
         setValue(content);
+
+        const { ops } = note;
+        Editor.withoutNormalizing(editor, () => {
+          ops.forEach((op: any) => editor.apply(JSON.parse(op)));
+        });
       } catch (e) {
         console.error('Wrong Format - note.content');
       }

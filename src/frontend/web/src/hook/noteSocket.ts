@@ -88,7 +88,8 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
         setUserList((ul) => ul.filter((u) => u.id !== transaction.myUser.id));
         break;
       case MESSAGE_TYPE.LOCK:
-        console.log('lock:', transaction.myUser);
+        // test
+        console.log('lock:', transaction.myUser, myUser);
         setOwner(transaction.myUser);
         break;
       case MESSAGE_TYPE.UNLOCK:
@@ -147,7 +148,7 @@ export default function noteSocketHook(
   const [userList, setUserList] = useState<User[]>([]);
 
   const connect = () => {
-    const url = 'http://localhost:9001/ws/note';
+    const url = 'http://13.124.115.13:9001/ws/note';
     try {
       const socket = new SockJS(url);
       const stompClient = Stomp.over(socket);

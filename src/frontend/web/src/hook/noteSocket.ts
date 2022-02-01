@@ -173,8 +173,8 @@ export default function noteSocketHook(
 
   const leavNote = () => {
     if (stomp.current) {
-      stompSend(stomp.current, MESSAGE_TYPE.UNLOCK);
-      stompSend(stomp.current, MESSAGE_TYPE.LEAVE);
+      // stompSend(stomp.current, MESSAGE_TYPE.UNLOCK);
+      // stompSend(stomp.current, MESSAGE_TYPE.LEAVE);
       stomp.current.disconnect();
     }
   };

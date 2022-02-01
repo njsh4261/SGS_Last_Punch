@@ -27,6 +27,14 @@ const TestContainer = styled.div`
   margin-top: 50px;
 `;
 
+const InvisibleInput = styled.input`
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+`;
+
 export default function NoteMain() {
   const initialValue = [
     {
@@ -165,9 +173,14 @@ export default function NoteMain() {
       } catch (e) {
         console.error('Wrong Format - note.content');
       }
-      // setTitle(note.title);
+      setTitle(note.title);
     } else setValue(initialValue);
   }, [note]);
+
+  const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+    console.log(e.target.value);
+  };
 
   return (
     <>
@@ -175,7 +188,14 @@ export default function NoteMain() {
         <div>select any note</div>
       ) : (
         <Container>
-          <h1>{note?.title || title}</h1>
+          <label htmlFor="title-input">
+            <h1>{title}</h1>
+          </label>
+          <InvisibleInput
+            id="title-input"
+            value={title}
+            onChange={titleHandler}
+          ></InvisibleInput>
           <button onClick={updateHandler}>update</button>
           <EditorFrame
             value={value}

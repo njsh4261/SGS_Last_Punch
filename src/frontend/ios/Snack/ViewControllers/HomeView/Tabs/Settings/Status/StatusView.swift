@@ -20,7 +20,6 @@ class StatusView: UIViewController {
     private var statuses: [String] = []
 
     override func viewDidLoad() {
-
         super.viewDidLoad()
         title = "상태 설정"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(actionSave))
@@ -29,7 +28,6 @@ class StatusView: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-
         super.viewWillAppear(animated)
 
         cellStatus.textLabel?.text = userInfo?.status ?? "대화 가능"

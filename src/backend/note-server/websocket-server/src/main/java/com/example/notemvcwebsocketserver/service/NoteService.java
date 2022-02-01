@@ -81,12 +81,12 @@ public class NoteService {
                     .build();
         
                 // redis에서 선점자면 선점 정보 삭제, Unlock 알림
-                User owner = objectMapper.readValue(redisService.getData(noteId), User.class);
-                if(user.getId().equals(owner.getId())){
+                String ownerStr = redisService.getData(noteId);
+                if(ownerStr != null && !ownerStr.equals("") && objectMapper.readValue(ownerStr, User.class).equals(user.getId())){
                     redisService.setNullData(noteId);
                     redisPublisher.publish(ChannelTopic.of(noteId), unlock);
                 }
-                
+
                 // redis에서 connection 삭제, leave 알림
                 redisService.removeHash(noteId, sessionId);
                 redisService.removeSessionData(sessionId);

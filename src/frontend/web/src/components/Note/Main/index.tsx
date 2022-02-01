@@ -77,7 +77,8 @@ export default function NoteMain() {
       return false;
     });
 
-    // todo: op를 배열에 저장하고 수초에 한번씩 call API to note server
+    // todo: 선점권자 등록 필요
+
     if (ops.length > 0) {
       opQueue.current.push(...ops);
     }
@@ -93,6 +94,9 @@ export default function NoteMain() {
     if (arrowKeys.includes(e.key)) {
       return;
     }
+
+    // test
+    console.log('owner: ', owner?.id, 'myUser: ', myUser.id);
 
     // 선점자 처리 로직
     if (owner && owner.id === myUser.id) {

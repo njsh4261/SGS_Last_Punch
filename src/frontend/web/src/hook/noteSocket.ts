@@ -88,6 +88,7 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
         setUserList((ul) => ul.filter((u) => u.id !== transaction.myUser.id));
         break;
       case MESSAGE_TYPE.LOCK:
+        // test
         console.log('lock:', transaction.myUser, myUser);
         setOwner(transaction.myUser);
         break;

@@ -129,7 +129,7 @@ export default function NoteMain() {
     const { id } = note;
     console.log('send:', JSON.stringify(value));
     const res = await updateNoteAllAPI(id, title, JSON.stringify(value));
-    if (res) alert('updated!');
+    if (res) console.log('updated note all!');
     else alert('fail update');
   };
 
@@ -160,11 +160,6 @@ export default function NoteMain() {
       try {
         const content = JSON.parse(note.content);
         setValue(content);
-        console.log(note.ops);
-        // note.ops.map(({ op }) => {
-        //   const jsonOP = JSON.parse(op);
-        //   Editor.withoutNormalizing(editor, () => editor.apply(jsonOP));
-        // });
       } catch (e) {
         console.error('Wrong Format - note.content');
       }

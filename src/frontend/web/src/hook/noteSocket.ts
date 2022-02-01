@@ -94,14 +94,14 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
       case MESSAGE_TYPE.UPDATE:
         if (transaction.myUser.id !== myUser.id) {
           const { noteId, timestamp } = transaction;
-          const stringOP = await getNoteOPAPI(noteId.toString(), timestamp);
-          if (!stringOP) {
+          const data = await getNoteOPAPI(noteId.toString(), timestamp);
+          if (!data) {
             console.error('fail get operations - hook/noteSocket');
             return;
           }
 
           try {
-            const ops = JSON.parse(stringOP);
+            const ops = JSON.parse(data.op);
             Editor.withoutNormalizing(editor, () => {
               ops.forEach((op: any) => editor.apply(op));
             });
@@ -219,7 +219,7 @@ export default function noteSocketHook(
       window.addEventListener('beforeunload', leavNote);
       return leavNote;
     }
-  }, []);
+  }, [note]);
 
   return { updateNote, remote, lockNote, unlockNote, owner, myUser, userList };
 }

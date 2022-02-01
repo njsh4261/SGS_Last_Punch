@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NoteMvcWebsocketServerApplication {
     
     public static void main(String[] args) {
+        
         SpringApplication.run(NoteMvcWebsocketServerApplication.class, args);
     }
     

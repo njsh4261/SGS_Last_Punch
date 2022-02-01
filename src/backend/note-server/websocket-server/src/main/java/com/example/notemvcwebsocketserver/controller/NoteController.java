@@ -34,7 +34,7 @@ public class NoteController {
 //        else if (PayloadType.LEAVE.equals(type)){
 //            noteService.leave(payload, sessionId);
 //        }
-        else if (PayloadType.UPDATE.equals(type)){
+        else if (PayloadType.UPDATE.equals(type) || PayloadType.UPDATE_TITLE.equals(type)){
             noteService.update(payload);
         }
         else if (PayloadType.LOCK.equals(type)){
@@ -49,9 +49,6 @@ public class NoteController {
     public void onDisconnectEvent(SessionDisconnectEvent event) {
         String sessionId = event.getMessage().getHeaders().get("simpSessionId").toString();
         noteService.leaveDisconnected(sessionId);
-        //현재 사용자가 선점자라면 선점 상태 해지
-        
-        //현재 사용자가 connection 배열에서 삭제되지 않았다면 삭제해주기
         System.out.println("client with sessionId = " + sessionId + " disconnected");
     }
 }

@@ -13,7 +13,7 @@ import netscape.javascript.JSObject;
 @Builder
 public class Payload {
     public enum PayloadType {
-        ENTER, LEAVE, UPDATE, LOCK, UNLOCK, CURSOR;
+        ENTER, LEAVE, UPDATE, UPDATE_TITLE,  LOCK, UNLOCK;
     }
     private PayloadType type;
     private String noteId;

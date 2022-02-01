@@ -6,9 +6,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,21 @@ public class RedisService {
     @Autowired
     private StringRedisTemplate redisTemplate;
     ObjectMapper mapper = new ObjectMapper();
+    
+    @PostConstruct
+    public void clear() {
+        try {
+            redisTemplate.execute(new RedisCallback() {
+                @Override
+                public Object doInRedis(RedisConnection connection) throws DataAccessException {
+                    connection.flushAll();
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("삭제하는데 실패했습니다 ㅠㅠ");
+        }
+    }
     
     public void insertHash(String key, String sessionId, User user){
         try {

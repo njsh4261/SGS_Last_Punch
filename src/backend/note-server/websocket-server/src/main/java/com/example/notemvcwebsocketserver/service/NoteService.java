@@ -69,15 +69,28 @@ public class NoteService {
                 String noteId = redisService.getData(sessionId);
                 User user = objectMapper.readValue(redisService.getHashData(noteId, sessionId),
                     User.class);
-                Payload payload = Payload.builder()
+                Payload unlock = Payload.builder()
+                    .noteId(noteId)
+                    .type(PayloadType.valueOf("UNLOCK"))
+                    .myUser(user)
+                    .build();
+                Payload leave = Payload.builder()
                     .noteId(noteId)
                     .type(PayloadType.valueOf("LEAVE"))
                     .myUser(user)
                     .build();
-    
+        
+                // redis에서 선점자면 선점 정보 삭제, Unlock 알림
+                User owner = objectMapper.readValue(redisService.getData(noteId), User.class);
+                if(user.getId().equals(owner.getId())){
+                    redisService.setNullData(noteId);
+                    redisPublisher.publish(ChannelTopic.of(noteId), unlock);
+                }
+                
+                // redis에서 connection 삭제, leave 알림
                 redisService.removeHash(noteId, sessionId);
                 redisService.removeSessionData(sessionId);
-                redisPublisher.publish(ChannelTopic.of(noteId), payload);
+                redisPublisher.publish(ChannelTopic.of(noteId), leave);
             }
             catch(Exception e){
                 System.out.println("exception leave disconnected = " + e);
@@ -100,12 +113,24 @@ public class NoteService {
             redisPublisher.publish(ChannelTopic.of(payload.getNoteId()), payload);
         }
     }
-    public void unlock(Payload payload){
+    public void unlock(Payload payload, String sessionId){
         //선점상태 해지 (현재 상태에 선점자가 있을 경우에만 선점 가능)
-        String ownerId = redisService.getData(payload.getNoteId());
-        if (ownerId != null && !ownerId.equals("") ){
-            redisService.setNullData(payload.getNoteId());
-            redisPublisher.publish(ChannelTopic.of(payload.getNoteId()), payload);
+        String ownerIdStr = redisService.getData(payload.getNoteId());
+        if (ownerIdStr == null){
+            System.out.println("ownerId is null");
+        }
+        else {
+            try {
+                User user = objectMapper.readValue(redisService.getHashData(payload.getNoteId(), sessionId), User.class);
+                Long ownerId = user.getId();
+                if(ownerId.equals(payload.getMyUser().getId())) {
+                    redisService.setNullData(payload.getNoteId());
+                    redisPublisher.publish(ChannelTopic.of(payload.getNoteId()), payload);
+                }
+            }
+            catch(Exception e){
+                System.out.println("redis exception = " + e);
+            }
         }
     }
 }

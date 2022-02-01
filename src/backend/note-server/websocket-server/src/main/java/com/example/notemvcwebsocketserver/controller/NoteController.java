@@ -41,7 +41,7 @@ public class NoteController {
             noteService.lock(payload);
         }
         else if (PayloadType.UNLOCK.equals(type)){
-            noteService.unlock(payload);
+            noteService.unlock(payload, sessionId);
         }
     }
     

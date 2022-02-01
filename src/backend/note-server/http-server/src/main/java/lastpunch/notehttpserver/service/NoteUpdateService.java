@@ -37,7 +37,7 @@ public class NoteUpdateService {
             .set("ops", new ArrayList<Op>())
             .set("title", updateNoteRequest.getTitle())
             .set("modifyDt", updateNoteRequest.getModifyDt());
-        mongoTemplate.upsert(query, update, Note.class);
+        mongoTemplate.updateFirst(query, update, Note.class);
     }
     
     public void saveOperations(SaveOperationsRequest saveOperationsRequest){

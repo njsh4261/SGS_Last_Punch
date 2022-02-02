@@ -1,18 +1,16 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { createEditor, Node, Text, Transforms, Editor } from 'slate';
-import { withHistory } from 'slate-history';
-import { withReact } from 'slate-react';
+import { HistoryEditor, withHistory } from 'slate-history';
+import { ReactEditor, withReact } from 'slate-react';
 import { useParams } from 'react-router-dom';
 
-import useInterval from '../../../hook/useInterval';
 import EditorFrame from './EditorFrame';
 import { Note } from '../../../../types/note.type';
 import noteSocketHook, { User } from '../../../hook/note/noteSocket';
 import noteApplyInitDataHook from '../../../hook/note/noteApplyInitData';
 import {
   updateNoteAllAPI,
-  updateNoteOPAPI,
   getSpecificNoteAPI,
   updateTitleAPI,
 } from '../../../Api/note';
@@ -54,7 +52,11 @@ export default function NoteMain() {
   const params = useParams();
   const [note, setNote] = useState<Note | null>(null);
   const [value, setValue] = useState<Node[]>(initialValue);
-  const editor = useMemo(() => withReact(withHistory(createEditor())), []);
+  const editorRef = useRef<Editor & ReactEditor & HistoryEditor>();
+  // const editor = useMemo(() => withReact(withHistory(createEditor())), []);
+  if (!editorRef.current)
+    editorRef.current = withReact(withHistory(createEditor()));
+  const editor = editorRef.current;
 
   const {
     updateNote,
@@ -71,6 +73,7 @@ export default function NoteMain() {
   type Timeout = ReturnType<typeof setTimeout>;
   const typing = useRef<Timeout | null>(null);
   const typingTitle = useRef<Timeout | null>(null);
+  const stringValue = useRef<string>(JSON.stringify(initialValue));
   const opQueue = useRef<any[]>([]);
 
   const resetTypingTimer = () => {
@@ -82,6 +85,7 @@ export default function NoteMain() {
 
   const changeHandler = async (value: Node[]) => {
     setValue(value);
+    stringValue.current = JSON.stringify(value); // for update all api
     const ops = editor.operations.filter((op) => {
       if (op) return op.type !== 'set_selection';
       return false;
@@ -155,8 +159,8 @@ export default function NoteMain() {
   const updateAllHandler = async () => {
     if (!note) return;
     const { id } = note;
-    console.log('send:', JSON.stringify(value));
-    const res = await updateNoteAllAPI(id, title, JSON.stringify(value));
+    console.log('send:', stringValue.current);
+    const res = await updateNoteAllAPI(id, title, stringValue.current);
     if (res) console.log('updated note all!');
     else alert('fail update');
   };
@@ -206,10 +210,10 @@ export default function NoteMain() {
 
   useEffect(() => {
     window.addEventListener('beforeunload', () => {
-      updateAllHandler(); // todo: only owner can do
+      if (owner && owner.id === myUser.id) updateAllHandler();
       leaveNote();
     });
-  }, [note]);
+  }, [note, owner]);
 
   return (
     <>

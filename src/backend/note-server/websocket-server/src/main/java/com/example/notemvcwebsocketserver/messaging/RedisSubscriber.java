@@ -1,5 +1,7 @@
 package com.example.notemvcwebsocketserver.messaging;
 
+import com.example.notemvcwebsocketserver.common.exception.BusinessException;
+import com.example.notemvcwebsocketserver.common.exception.ErrorCode;
 import com.example.notemvcwebsocketserver.entity.Payload;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +25,9 @@ public class RedisSubscriber implements MessageListener {
         try {
             String publishMessage = (String) redisTemplate.getStringSerializer().deserialize(message.getBody());
             Payload payload = objectMapper.readValue(publishMessage, Payload.class);
-            System.out.println("server has published" + payload);
             messagingTemplate.convertAndSend("/sub/note/" + payload.getNoteId(), payload);
         } catch (Exception e) {
-            System.out.println("e = " + e);
+            new BusinessException(ErrorCode.MESSAGE_SEND_FAIL);
         }
     }
 }

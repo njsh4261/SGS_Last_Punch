@@ -6,6 +6,7 @@ import com.example.notemvcwebsocketserver.messaging.RedisPublisher;
 import com.example.notemvcwebsocketserver.messaging.RedisSubscriber;
 import com.example.notemvcwebsocketserver.service.NoteService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class NoteController {
@@ -26,14 +28,11 @@ public class NoteController {
     
     @MessageMapping("/note")
     public void pubNote(Payload payload, @Header("simpSessionId") String sessionId) {
-        System.out.println("payload = " + payload);
+        log.info(payload.getType().toString() + " " + payload);
         PayloadType type = payload.getType();
         if (PayloadType.ENTER.equals(type)){
             noteService.enter(payload, sessionId);
         }
-//        else if (PayloadType.LEAVE.equals(type)){
-//            noteService.leave(payload, sessionId);
-//        }
         else if (PayloadType.UPDATE.equals(type) || PayloadType.UPDATE_TITLE.equals(type)){
             noteService.update(payload);
         }
@@ -48,7 +47,7 @@ public class NoteController {
     @EventListener
     public void onDisconnectEvent(SessionDisconnectEvent event) {
         String sessionId = event.getMessage().getHeaders().get("simpSessionId").toString();
-        noteService.leaveDisconnected(sessionId);
-        System.out.println("client with sessionId = " + sessionId + " disconnected");
+        noteService.disconnected(sessionId);
+        log.info(sessionId + " disconnected");
     }
 }

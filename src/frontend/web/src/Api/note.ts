@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { RESPONSE } from '../constant';
 
-const testHost = 'http://localhost:9000'; // todo: change
+const TEST_AWS = 'http://13.125.123.25:9000';
+const TEST_LOCAL = 'http://localhost:9000';
+
+const HOST = TEST_AWS;
 
 export async function createNoteAPI(
   wsId: number,
@@ -18,7 +21,7 @@ export async function createNoteAPI(
   try {
     const response = await axios.request({
       method: 'POST',
-      url: testHost + endpoint,
+      url: HOST + endpoint,
       data: body,
     });
 
@@ -41,7 +44,7 @@ export async function getNoteListAPI(
   try {
     const response = await axios.request({
       method: 'GET',
-      url: testHost + endpoint,
+      url: HOST + endpoint,
     });
 
     const { code, data, err } = response?.data;
@@ -62,7 +65,7 @@ export async function getSpecificNoteAPI(
   try {
     const response = await axios.request({
       method: 'GET',
-      url: testHost + endpoint,
+      url: HOST + endpoint,
     });
 
     const { code, data, err } = response?.data;
@@ -91,7 +94,7 @@ export async function updateNoteAllAPI(
   try {
     const response = await axios.request({
       method: 'PUT',
-      url: testHost + endpoint,
+      url: HOST + endpoint,
       data: body,
     });
     const { code, data, err } = response?.data;
@@ -127,7 +130,7 @@ export async function updateNoteOPAPI(
   try {
     const response = await axios.request({
       method: 'POST',
-      url: testHost + endpoint,
+      url: HOST + endpoint,
       data: body,
     });
     const { code, data, err } = response?.data;
@@ -147,7 +150,7 @@ export async function getNoteOPAPI(noteId: string, timestamp: string) {
   try {
     const response = await axios.request({
       method: 'GET',
-      url: testHost + endpoint,
+      url: HOST + endpoint,
     });
     console.log('get response:', response);
     const { code, data, err } = response?.data;
@@ -171,7 +174,7 @@ export async function updateTitleAPI(noteId: string, title: string) {
   try {
     const response = await axios.request({
       method: 'PUT',
-      url: testHost + endpoint,
+      url: HOST + endpoint,
       data: body,
     });
     const { code, data, err } = response?.data;
@@ -191,7 +194,7 @@ export async function getTitleAPI(noteId: string) {
   try {
     const response = await axios.request({
       method: 'GET',
-      url: testHost + endpoint,
+      url: HOST + endpoint,
     });
     const { code, data, err } = response?.data;
     if (code === RESPONSE.NOTE.SUCCESS) {

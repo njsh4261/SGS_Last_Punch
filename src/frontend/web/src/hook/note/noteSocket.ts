@@ -12,6 +12,11 @@ import { Editor } from 'slate';
 import { getNoteOPAPI, getTitleAPI } from '../../Api/note';
 import { Note } from '../../../types/note.type';
 
+const TEST_AWS = 'http://13.125.123.25:9001/ws/note';
+const TEST_LOCAL = 'http://localhost:9001/ws/note';
+
+const HOST = TEST_AWS;
+
 export type User = {
   id: number;
   name: string;
@@ -148,9 +153,8 @@ export default function noteSocketHook(
   const [userList, setUserList] = useState<User[]>([]);
 
   const connect = () => {
-    const url = 'http://localhost:9001/ws/note';
     try {
-      const socket = new SockJS(url);
+      const socket = new SockJS(HOST);
       const stompClient = Stomp.over(socket);
       stompClient.connect(
         {},

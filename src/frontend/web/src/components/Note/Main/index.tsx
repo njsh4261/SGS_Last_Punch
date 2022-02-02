@@ -210,7 +210,10 @@ export default function NoteMain() {
 
   useEffect(() => {
     window.addEventListener('beforeunload', () => {
-      if (owner && owner.id === myUser.id) updateAllHandler();
+      if (owner && owner.id === myUser.id) {
+        // todo: update OP
+        updateAllHandler();
+      }
       leaveNote();
     });
   }, [note, owner]);

@@ -9,8 +9,8 @@ import SockJS from 'sockjs-client';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { Editor } from 'slate';
 
-import { getNoteOPAPI, getTitleAPI } from '../Api/note';
-import { Note } from '../../types/note.type';
+import { getNoteOPAPI, getTitleAPI } from '../../Api/note';
+import { Note } from '../../../types/note.type';
 
 export type User = {
   id: number;
@@ -148,7 +148,7 @@ export default function noteSocketHook(
   const [userList, setUserList] = useState<User[]>([]);
 
   const connect = () => {
-    const url = 'http://13.124.115.13:9001/ws/note';
+    const url = 'http://localhost:9001/ws/note';
     try {
       const socket = new SockJS(url);
       const stompClient = Stomp.over(socket);

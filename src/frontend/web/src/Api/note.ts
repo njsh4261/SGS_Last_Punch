@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { RESPONSE } from '../constant';
 
-const testHost = 'http://13.124.115.13:9000'; // todo: change
+const testHost = 'http://localhost:9000'; // todo: change
 
 export async function createNoteAPI(
   wsId: number,

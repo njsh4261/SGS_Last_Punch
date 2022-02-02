@@ -16,6 +16,7 @@ import {
   getSpecificNoteAPI,
   updateTitleAPI,
 } from '../../../Api/note';
+import noteOPintervalHook from '../../../hook/note/noteOPinterval';
 
 const TYPING_TIME = 2000;
 const UPDATE_OP_TIME = 1000;
@@ -201,19 +202,7 @@ export default function NoteMain() {
   }, [owner, note]);
 
   // 주기마다 op 업데이트
-  useInterval(async () => {
-    if (opQueue.current.length > 0) {
-      const oldQueueLength = opQueue.current.length;
-      const stringOP = JSON.stringify(opQueue.current);
-      const timestamp = await updateNoteOPAPI(note!.id, stringOP);
-      if (timestamp) {
-        updateNote(timestamp);
-        if (oldQueueLength !== opQueue.current.length) {
-          opQueue.current = opQueue.current.slice(oldQueueLength);
-        } else opQueue.current = [];
-      } else console.error('update fail - Note/main/index');
-    }
-  }, UPDATE_OP_TIME);
+  noteOPintervalHook(opQueue, note, UPDATE_OP_TIME, updateNote);
 
   useEffect(() => {
     window.addEventListener('beforeunload', () => {

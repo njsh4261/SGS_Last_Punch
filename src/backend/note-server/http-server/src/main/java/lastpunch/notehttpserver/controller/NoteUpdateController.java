@@ -1,11 +1,9 @@
 package lastpunch.notehttpserver.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 import lastpunch.notehttpserver.common.Response;
-import lastpunch.notehttpserver.dto.SaveOperationsRequest;
-import lastpunch.notehttpserver.dto.TitleDto;
-import lastpunch.notehttpserver.dto.UpdateNoteRequest;
+import lastpunch.notehttpserver.dto.NoteDto;
+import lastpunch.notehttpserver.dto.OpDto;
 import lastpunch.notehttpserver.service.NoteUpdateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,47 +23,42 @@ public class NoteUpdateController {
     private final NoteUpdateService noteUpdateService;
 
     @PutMapping(value ="/note", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> saveContent(@RequestBody UpdateNoteRequest updateNoteRequest){
+    public ResponseEntity<Object> saveContent(@RequestBody NoteDto.updateRequest request){
 
-        noteUpdateService.saveContent(updateNoteRequest);
+        noteUpdateService.saveContent(request);
 
         return Response.toResponseEntity("15000", HttpStatus.OK);
     }
     
     @PostMapping("/note/op")
-    public ResponseEntity<Object> saveOperations(@RequestBody SaveOperationsRequest saveOperationsRequest){
-        noteUpdateService.saveOperations(saveOperationsRequest);
+    public ResponseEntity<Object> saveOperations(@RequestBody OpDto.saveRequest request){
+        
+        noteUpdateService.saveOperations(request);
+        
         return Response.toResponseEntity("15000", HttpStatus.OK);
     }
     
     @GetMapping("/note/{id}/op")
-    public ResponseEntity<Object> getNotes(@RequestParam String timestamp, @PathVariable("id") String id){
-
+    public ResponseEntity<Object> getOperations(@RequestParam String timestamp, @PathVariable("id") String id){
+        
         String op = noteUpdateService.findOps(timestamp, id);
-
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put("op", op);
-    
-        return Response.toResponseEntity("15000", HttpStatus.OK, data);
+        
+        return Response.toResponseEntity("15000", HttpStatus.OK, Map.of("op", op));
     }
     
     @GetMapping("/note/{id}/title")
     public ResponseEntity<Object> getTitle(@PathVariable("id") String id){
-    
+        
         String title = noteUpdateService.findTitle(id);
         
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put("title", title);
-    
-        return Response.toResponseEntity("15000", HttpStatus.OK, data);
+        return Response.toResponseEntity("15000", HttpStatus.OK, Map.of("title", title));
     }
     
     @PutMapping("/note/title")
-    public ResponseEntity<Object> saveTitle(@RequestBody TitleDto titleDto){
+    public ResponseEntity<Object> saveTitle(@RequestBody NoteDto.titleDto titleDto){
         
         noteUpdateService.saveTitle(titleDto);
         
         return Response.toResponseEntity("15000", HttpStatus.OK);
     }
-    
 }

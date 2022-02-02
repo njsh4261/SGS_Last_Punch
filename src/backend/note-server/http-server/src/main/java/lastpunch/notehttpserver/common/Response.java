@@ -23,5 +23,4 @@ public class Response {
         
         return new ResponseEntity<Object>(map,status);
     }
-    
 }

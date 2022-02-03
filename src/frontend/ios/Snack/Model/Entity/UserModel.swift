@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - UserData
-struct User: Codable {
+struct UserModel: Codable {
     let email: String
     let name: String?
     let displayName: String?

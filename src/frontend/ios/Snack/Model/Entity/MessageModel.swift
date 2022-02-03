@@ -6,115 +6,87 @@
 //
 
 import UIKit
+import Foundation
+import MessageKit
 import CoreLocation
 
-class Message: NSObject {
-
-    var chatId = ""
-    var messageId = ""
-
-    var userId = ""
-    var userFullname = ""
-    var userInitials = ""
-    var userPictureAt: TimeInterval = 0
-
-    var type = ""
-    var text = ""
-
-    var photoWidth = 0
-    var photoHeight = 0
-
-    var latitude: CLLocationDegrees = 0
-    var longitude: CLLocationDegrees = 0
-
-    var createdAt: TimeInterval = 0
+struct CoordinateItemModel: LocationItem {
     
-    var incoming = false
-    var outgoing = false
-
-    var photoImage: UIImage?
-    var locationThumbnail: UIImage?
-
-    var sizeBubble = CGSize.zero
-
-    // MARK: - Initialization methods
-    //-------------------------------------------------------------------------------------------------------------------------------------------
-    override init() {
-
-        super.init()
-    }
-
-    //-------------------------------------------------------------------------------------------------------------------------------------------
-    init(_ message: NetworkMessage) {
-
-        super.init()
-
-        chatId = message.chatId
-        messageId = message.objectId
-
-        userId = message.userId
-        userFullname = message.userFullname
-        userInitials = message.userInitials
-        userPictureAt = message.userPictureAt
-
-        type = message.type
-        text = message.text
-
-        photoWidth = message.photoWidth
-        photoHeight = message.photoHeight
-
-        latitude = message.latitude
-        longitude = message.longitude
+    var location: CLLocation
+    var size: CGSize
+    
+    init(location: CLLocation) {
+        self.location = location
+        self.size = CGSize(width: 240, height: 240)
     }
 }
 
-class NetworkMessage: NSObject {
-
-    @objc var objectId = ""
-
-    @objc var chatId = ""
-
-    @objc var userId = ""
-    @objc var userFullname = ""
-    @objc var userInitials = ""
-    @objc var userPictureAt: TimeInterval = 0
-
-    @objc var type = ""
-    @objc var text = ""
-
-    @objc var photoWidth = 0
-    @objc var photoHeight = 0
-    @objc var videoDuration = 0
-    @objc var audioDuration = 0
-
-    @objc var latitude: CLLocationDegrees = 0
-    @objc var longitude: CLLocationDegrees = 0
-
-    @objc var isMediaQueued = false
-    @objc var isMediaFailed = false
-
-    @objc var isDeleted = false
-
-    @objc var createdAt = Date()
-    @objc var updatedAt = Date()
-
-    //-------------------------------------------------------------------------------------------------------------------------------------------
-    class func primaryKey() -> String {
-
-        return "objectId"
+struct ImageMediaItemModel: MediaItem {
+    var url: URL?
+    var image: UIImage?
+    var placeholderImage: UIImage
+    var size: CGSize
+    
+    init(image: UIImage) {
+        self.image = image
+        self.size = CGSize(width: 240, height: 240)
+        self.placeholderImage = UIImage()
     }
 }
 
-extension NetworkMessage {
+struct MessageModel: MessageType {
+    
+//    let id: String?
+    var messageId: String
+    var sender: SenderType {
+        return user
+    }
+    var sentDate: Date
+    var kind: MessageKind
 
-    func incoming() -> Bool {
+    var user: MockUser
 
-        return (userId != "1")
+    private init(kind: MessageKind, user: MockUser, messageId: String, date: Date) {
+        self.kind = kind
+        self.user = user
+        self.messageId = messageId
+        self.sentDate = date
+    }
+    
+    init(custom: Any?, user: MockUser, messageId: String, date: Date) {
+        self.init(kind: .custom(custom), user: user, messageId: messageId, date: date)
     }
 
-    func outgoing() -> Bool {
+    init(text: String, user: MockUser, messageId: String, date: Date) {
+        self.init(kind: .text(text), user: user, messageId: messageId, date: date)
+    }
 
-        return (userId == "1")
+    init(attributedText: NSAttributedString, user: MockUser, messageId: String, date: Date) {
+        self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
+    }
+
+    init(image: UIImage, user: MockUser, messageId: String, date: Date) {
+        let mediaItem = ImageMediaItemModel(image: image)
+        self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date)
+    }
+    
+    init(location: CLLocation, user: MockUser, messageId: String, date: Date) {
+        let locationItem = CoordinateItemModel(location: location)
+        self.init(kind: .location(locationItem), user: user, messageId: messageId, date: date)
     }
 }
 
+extension MessageModel: Comparable {
+    static func == (lhs: MessageModel, rhs: MessageModel) -> Bool {
+        return lhs.sender.senderId == rhs.sender.senderId
+    }
+    
+    static func < (lhs: MessageModel, rhs: MessageModel) -> Bool {
+        return lhs.sentDate < rhs.sentDate
+    }
+}
+
+struct MockUser: SenderType, Equatable {
+    var senderId: String
+    var displayName: String
+}

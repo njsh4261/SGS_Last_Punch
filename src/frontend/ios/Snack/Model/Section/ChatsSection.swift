@@ -14,7 +14,7 @@ enum ChatsSection {
 
 enum SectionItem {
     case StatusChannel(header: String, items: [ChannelObject])
-    case StatusDirectMessage(header: String, items: [DirectMessageObject])
+    case StatusDirectMessage(header: String, items: [MemberListCellModel])
 }
 
 extension ChatsSection: SectionModelType {

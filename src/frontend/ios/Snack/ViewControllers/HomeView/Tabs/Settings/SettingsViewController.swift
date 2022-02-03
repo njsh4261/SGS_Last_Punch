@@ -29,7 +29,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet private var cellLogout: UITableViewCell!
     @IBOutlet private var cellDeleteUser: UITableViewCell!
     
-    private var userInfo = User(email: "test@gmail.com", name: "김스낵", displayName: "아주맛남", description: "안녕하세요:D", country: "kor", password: "1", phone: "010-1234-1234", status: "대화 가능")
+    private var userInfo = UserModel(email: "test@gmail.com", name: "김스낵", displayName: "아주맛남", description: "안녕하세요:D", country: "kor", password: "1", phone: "010-1234-1234", status: "대화 가능")
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)

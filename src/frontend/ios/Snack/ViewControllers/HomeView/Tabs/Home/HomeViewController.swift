@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private var dataSource: RxTableViewSectionedReloadDataSource<ChatsSection>!
     private var channelObjects: [ChannelObject] = []
-    private var directMessageObjects: [DirectMessageObject] = []
+    private var directMessageObjects: [MemberListCellModel] = []
     private var observerId: String?
     private var workspaceId: Int?
     

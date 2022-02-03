@@ -91,7 +91,7 @@ class DirectMessageListViewController: UIViewController {
                 
         viewModel.push
             .drive(onNext: { (viewModel, row) in
-                let viewController = ChatPrivateView("55", self.members[row].id.description, self.members[row])
+                let viewController = MessageViewController(userInfo: self.members[row], channel: Channel(chatId: "0", name: self.members[row].name ?? "아무개"))
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)

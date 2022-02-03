@@ -6,17 +6,22 @@
 //
 
 import Foundation
+import MessageKit
 
 // MARK: - UserData
-struct UserModel: Codable {
+struct UserModel: SenderType, Equatable {
+    var senderId: String
+    var displayName: String
+    var name: String?
     let email: String
-    let name: String?
-    let displayName: String?
     let description: String?
-    let country: String?
-    let password: String?
     let phone: String?
-    let status: String?
+    let country: String
+    let language: String
+    let settings: Int
+    let status: String
+    let createdt: String
+    let modifydt: String
 }
 
 // MARK: - LoginDataModel

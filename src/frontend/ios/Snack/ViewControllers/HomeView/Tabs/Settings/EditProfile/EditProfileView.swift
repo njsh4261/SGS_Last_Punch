@@ -69,7 +69,7 @@ class EditProfileView: UIViewController {
 
     // MARK: - Load User
     func loadUser() {
-        labelInitials.text = userInfo?.displayName?.first?.description
+        labelInitials.text = userInfo?.displayName.first?.description
         fieldName.text = userInfo?.name
         fieldDisplayName.text = userInfo?.displayName
         fieldDescription.text = userInfo?.description

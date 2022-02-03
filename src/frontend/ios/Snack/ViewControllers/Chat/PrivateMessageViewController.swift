@@ -15,12 +15,13 @@ import SwiftKeychainWrapper
 import InputBarAccessoryView
 import MessageKit
 
-class MessageViewController: MessagesViewController {
+class PrivateMessageViewController: MessagesViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     let channel: Channel?
     var messages = [MessageModel]()
-    var sender = MockUser(senderId: "any_unique_id", displayName: "jake")
+    var recipientInfo: UserModel
+    var senderInfo: UserModel
     private var userInfo: WorkspaceMemberCellModel?
     
     // MARK: - UI
@@ -33,8 +34,9 @@ class MessageViewController: MessagesViewController {
 
     private var btnAttach = InputBarButtonItem()
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, userInfo: WorkspaceMemberCellModel, channel: Channel) {
-        self.userInfo = userInfo
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: UserModel, recipientInfo: UserModel, channel: Channel) {
+        self.senderInfo = senderInfo
+        self.recipientInfo = recipientInfo
         self.channel = channel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
@@ -77,7 +79,8 @@ class MessageViewController: MessagesViewController {
     }
     
     private func goToProfile() {
-        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, userInfo: userInfo!, isChat: false)
+        // 추가 본인 정보를 넣어야함
+        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: recipientInfo, recipientInfo: recipientInfo, isChat: false)
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)
     }
@@ -158,7 +161,7 @@ class MessageViewController: MessagesViewController {
         }
         
         lblTitle = lblTitle.then {
-            $0.text = userInfo?.name
+            $0.text = recipientInfo.displayName
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
         }
         
@@ -210,9 +213,9 @@ class MessageViewController: MessagesViewController {
 }
 
 // MARK: - Message DataSource (메시지 데이터 정의)
-extension MessageViewController: MessagesDataSource {
+extension PrivateMessageViewController: MessagesDataSource {
     func currentSender() -> SenderType {
-        return sender
+        return recipientInfo
     }
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
@@ -231,7 +234,7 @@ extension MessageViewController: MessagesDataSource {
 }
     
 // MARK: - Message Layout Delegate (셀 관련 높이 값)
-extension MessageViewController: MessagesLayoutDelegate {
+extension PrivateMessageViewController: MessagesLayoutDelegate {
     // 아래 여백
     func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return CGSize(width: 0, height: 8)
@@ -244,7 +247,7 @@ extension MessageViewController: MessagesLayoutDelegate {
 }
 
 // MARK: - Messages Display Delegate (상대방이 보낸 메시지, 내가 보낸 메시지를 구분하여 색상과 모양 지정)
-extension MessageViewController: MessagesDisplayDelegate {
+extension PrivateMessageViewController: MessagesDisplayDelegate {
     // 말풍선의 배경 색상
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .red : .blue
@@ -262,10 +265,10 @@ extension MessageViewController: MessagesDisplayDelegate {
 }
 
 // MARK: - InputBarAccessoryView Delegate (검색창에서 send 버튼을 누를 경우 이벤트 처리)
-extension MessageViewController: InputBarAccessoryViewDelegate {
+extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        let message = MessageModel(text: text, user: MockUser(senderId: "ss", displayName: "이름"), messageId: UUID().uuidString, date: Date())
+        let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
 
         insertNewMessage(message)
         inputBar.inputTextView.text.removeAll()

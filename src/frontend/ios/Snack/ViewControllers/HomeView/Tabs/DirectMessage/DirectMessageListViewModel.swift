@@ -19,7 +19,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
     }
     
     struct Output {
-        let memberListCellData = PublishSubject<[WorkspaceMemberCellModel]>()
+        let memberListCellData = PublishSubject<[UserModel]>()
         let refreshLoading = PublishRelay<Bool>()
         let goToMessage = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
@@ -27,7 +27,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
     // MARK: - Public properties
     var input = Input()
     var output = Output()
-    var cellData: Driver<[WorkspaceMemberCellModel]>
+    var cellData: Driver<[UserModel]>
     let push: Driver<(MessageViewModel, Int)>
     
     // MARK: - Private properties
@@ -79,7 +79,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
                                 self.output.errorMessage.accept("워크스페이스를 찾지 못했습니다")
                                 return
                             }
-                            self.output.memberListCellData.onNext(members)
+                            self.output.memberListCellData.onNext(self.convertData(members: members))
                         default:
                             self.output.errorMessage.accept("일시적인 문제가 발생했습니다")
                         }
@@ -88,5 +88,28 @@ class DirectMessageListViewModel: ViewModelProtocol {
                     }
                 }.disposed(by: self.disposeBag)
         }
+    }
+    
+    func convertData(members: [WorkspaceMemberCellModel]) -> [UserModel] {
+        var userList = [UserModel]()
+        
+        for member in members {
+            let user = UserModel(
+                senderId: member.id.description,
+                displayName: member.displayname ?? "이름 없음",
+                name: member.name,
+                email: member.email,
+                description: member.description,
+                phone: member.phone,
+                country: member.country,
+                language: member.language,
+                settings: member.settings,
+                status: member.status,
+                createdt: member.createdt,
+                modifydt: member.modifydt
+            )
+            userList.append(user)
+        }
+        return userList
     }
 }

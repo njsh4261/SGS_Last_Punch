@@ -44,33 +44,33 @@ struct MessageModel: MessageType {
     var sentDate: Date
     var kind: MessageKind
 
-    var user: MockUser
+    var user: UserModel
 
-    private init(kind: MessageKind, user: MockUser, messageId: String, date: Date) {
+    private init(kind: MessageKind, user: UserModel, messageId: String, date: Date) {
         self.kind = kind
         self.user = user
         self.messageId = messageId
         self.sentDate = date
     }
     
-    init(custom: Any?, user: MockUser, messageId: String, date: Date) {
+    init(custom: Any?, user: UserModel, messageId: String, date: Date) {
         self.init(kind: .custom(custom), user: user, messageId: messageId, date: date)
     }
 
-    init(text: String, user: MockUser, messageId: String, date: Date) {
+    init(text: String, user: UserModel, messageId: String, date: Date) {
         self.init(kind: .text(text), user: user, messageId: messageId, date: date)
     }
 
-    init(attributedText: NSAttributedString, user: MockUser, messageId: String, date: Date) {
+    init(attributedText: NSAttributedString, user: UserModel, messageId: String, date: Date) {
         self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
     }
 
-    init(image: UIImage, user: MockUser, messageId: String, date: Date) {
+    init(image: UIImage, user: UserModel, messageId: String, date: Date) {
         let mediaItem = ImageMediaItemModel(image: image)
         self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date)
     }
     
-    init(location: CLLocation, user: MockUser, messageId: String, date: Date) {
+    init(location: CLLocation, user: UserModel, messageId: String, date: Date) {
         let locationItem = CoordinateItemModel(location: location)
         self.init(kind: .location(locationItem), user: user, messageId: messageId, date: date)
     }
@@ -84,9 +84,4 @@ extension MessageModel: Comparable {
     static func < (lhs: MessageModel, rhs: MessageModel) -> Bool {
         return lhs.sentDate < rhs.sentDate
     }
-}
-
-struct MockUser: SenderType, Equatable {
-    var senderId: String
-    var displayName: String
 }

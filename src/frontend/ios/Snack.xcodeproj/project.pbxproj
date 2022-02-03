@@ -54,7 +54,7 @@
 		8CBD456C27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD456B27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift */; };
 		8CBD456F27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD456E27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift */; };
 		8CBD457527A22A2D0056A557 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457427A22A2D0056A557 /* AppConstant.swift */; };
-		8CBD457827A25E430056A557 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457727A25E430056A557 /* MessageViewController.swift */; };
+		8CBD457827A25E430056A557 /* PrivateMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457727A25E430056A557 /* PrivateMessageViewController.swift */; };
 		8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457927A287460056A557 /* Ex+NotificationCenter.swift */; };
 		8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457D27A28AEF0056A557 /* MessageKit.swift */; };
 		8CBD458B27A3E40B0056A557 /* DirectMessageListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD458A27A3E40B0056A557 /* DirectMessageListCellView.swift */; };
@@ -150,7 +150,7 @@
 		8CBD456B27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchURLWorkspaceViewController.swift; sourceTree = "<group>"; };
 		8CBD456E27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchURLWorkspaceVeiwModel.swift; sourceTree = "<group>"; };
 		8CBD457427A22A2D0056A557 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
-		8CBD457727A25E430056A557 /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		8CBD457727A25E430056A557 /* PrivateMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateMessageViewController.swift; sourceTree = "<group>"; };
 		8CBD457927A287460056A557 /* Ex+NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+NotificationCenter.swift"; sourceTree = "<group>"; };
 		8CBD457D27A28AEF0056A557 /* MessageKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKit.swift; sourceTree = "<group>"; };
 		8CBD458A27A3E40B0056A557 /* DirectMessageListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageListCellView.swift; sourceTree = "<group>"; };
@@ -496,7 +496,7 @@
 			isa = PBXGroup;
 			children = (
 				8CBD45B627A6CF320056A557 /* Profile */,
-				8CBD457727A25E430056A557 /* MessageViewController.swift */,
+				8CBD457727A25E430056A557 /* PrivateMessageViewController.swift */,
 				8CBD459927A41B510056A557 /* MessageViewModel.swift */,
 				8CBD457D27A28AEF0056A557 /* MessageKit.swift */,
 			);
@@ -764,7 +764,7 @@
 				8C68AB0827957ADD00C1711E /* Ex+DateFormatter.swift in Sources */,
 				8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */,
 				8CC1E79327ABF4E500BFE4D1 /* Password.swift in Sources */,
-				8CBD457827A25E430056A557 /* MessageViewController.swift in Sources */,
+				8CBD457827A25E430056A557 /* PrivateMessageViewController.swift in Sources */,
 				8CBD45F327A887520056A557 /* StatusView.swift in Sources */,
 				8C68AB1527969D1200C1711E /* NetworkResult.swift in Sources */,
 				8C68AAFD27954FCB00C1711E /* ChannelCell.swift in Sources */,

@@ -28,7 +28,7 @@ class DirectMessageListCellView: UITableViewCell {
         layout()
     }
     
-    func setData(_ data: WorkspaceMemberCellModel, _ index: Int) {
+    func setData(_ data: UserModel, _ index: Int) {
         ivThumbnail.image = (index/2) == 0 ? UIImage(named: "snack") : UIImage(named: "snack_solid")
         lblName.text = data.name
         lblLastMessage.text = data.description ?? "\(data.name!)님이 Snack의 멤버로 참가하였습니다.\n'안녕하세요'로 대화를 시작해보세요."
@@ -72,7 +72,6 @@ class DirectMessageListCellView: UITableViewCell {
         lblName.snp.makeConstraints {
             $0.top.equalToSuperview().inset(8)
             $0.left.equalTo(ivThumbnail.snp.right).offset(10)
-//            $0.right.lessThanOrEqualTo(lblDate.snp.leading).offset(10)
         }
         
         lblLastMessage.snp.makeConstraints {

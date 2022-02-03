@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MessageKit
 
 struct WorkspaceResponseModel: Codable {
     let code: String

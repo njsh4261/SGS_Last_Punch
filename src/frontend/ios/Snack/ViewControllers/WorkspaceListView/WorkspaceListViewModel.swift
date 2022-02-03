@@ -86,7 +86,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
     
     func getWorkspaceList(_ token:String, page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: ""), method: HTTPMethod) {
         DispatchQueue.main.async { // 메인스레드에서 동작
-            WorkspaceService.shared.getWorkspace(accessToken: token, workspaceId: cell.workspaceId, page: page, method: method)
+            WorkspaceService.shared.getWorkspace(method: method, accessToken: token, workspaceId: cell.workspaceId, page: page)
                 .observe(on: MainScheduler.instance)
                 .subscribe{ event in
                     switch event {
@@ -96,7 +96,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
                             switch method {
                             case .get:
                                 guard let workspaces = decodedData.data?.workspaces?.content else {
-                                    self.output.errorMessage.accept("워크스페이스를 찾지 못했습니다.")
+                                    self.output.errorMessage.accept("워크스페이스를 찾지 못했습니다")
                                     return
                                 }
                                 if page == 0 {

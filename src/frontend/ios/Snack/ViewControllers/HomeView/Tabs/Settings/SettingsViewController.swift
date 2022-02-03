@@ -8,8 +8,9 @@
 import UIKit
 import ProgressHUD
 import RxDataSources
+import PasscodeKit
 
-class ProfileViewController: UITableViewController {
+class SettingsViewController: UITableViewController {
     // MARK: - UI
     @IBOutlet private var viewHeader: UIView!
     @IBOutlet private var imageUser: UIImageView!
@@ -20,6 +21,7 @@ class ProfileViewController: UITableViewController {
     @IBOutlet private var cellPasscode: UITableViewCell!
     // Section 2
     @IBOutlet private var cellStatus: UITableViewCell!
+    @IBOutlet private var lblStatus: UILabel!
     // Section 3
     @IBOutlet private var cellCache: UITableViewCell!
     @IBOutlet private var cellMedia: UITableViewCell!
@@ -27,9 +29,12 @@ class ProfileViewController: UITableViewController {
     @IBOutlet private var cellLogout: UITableViewCell!
     @IBOutlet private var cellDeleteUser: UITableViewCell!
     
+    private var userInfo = User(email: "test@gmail.com", name: "김스낵", displayName: "아주맛남", description: "안녕하세요:D", country: "kor", password: "1", phone: "010-1234-1234", status: "대화 가능")
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
+        tabBarItem.title = "나"
         tabBarItem.image = UIImage(systemName: "person.crop.circle")
         tabBarItem.selectedImage = UIImage(systemName: "person.crop.circle.fill")
     }
@@ -39,34 +44,76 @@ class ProfileViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
-
         super.viewDidLoad()
         title = "나"
-
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "나", style: .plain, target: nil, action: nil)
 
         tableView.tableHeaderView = viewHeader
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
         super.viewWillAppear(animated)
 
         // user 정보 load하는 로직 필요
-//        loadUser()
+        loadUser()
+    }
+    
+    // MARK: - Load User
+    func loadUser() {
+        labelName.text = "\(userInfo.name!)/\(userInfo.displayName ?? "닉네임 없음")"
+        cellPasscode.detailTextLabel?.text = PasscodeKit.enabled() ? "켜짐" : "꺼짐"
+        lblStatus.text = userInfo.status
         tableView.reloadData()
     }
-
+    
+    // MARK: - User actions
+    // 프로필 변경
     func actionProfile() {
-        let editProfileView = EditProfileView()
+        let editProfileView = EditProfileView(userInfo: userInfo)
         let navController = NavigationController(rootViewController: editProfileView)
         navController.isModalInPresentation = true
         navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true)
     }
     
-    // 로그아웃
+    // 비밀번호 변경
+    func actionPassword() {
+        let passwordView = PasswordView()
+        let navController = NavigationController(rootViewController: passwordView)
+        navController.isModalInPresentation = true
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
+    }
     
+    // 암호 설정
+    func actionPasscode() {
+        let passcodeView = PasscodeView()
+        passcodeView.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(passcodeView, animated: true)
+    }
+    
+    // 상태 설정
+    func actionStatus() {
+        let statusView = StatusView()
+        let navController = NavigationController(rootViewController: statusView)
+        present(navController, animated: true)
+    }
+    
+    // 캐쉬 설정
+    func actionCache() {
+        let cacheView = CacheView()
+        cacheView.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(cacheView, animated: true)
+    }
+    
+    // 사진 및 동영상
+    func actionMedia() {
+        let mediaView = MediaView()
+        mediaView.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(mediaView, animated: true)
+    }
+    
+    // 로그아웃
     func actionLogout() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
@@ -77,11 +124,19 @@ class ProfileViewController: UITableViewController {
 
         present(alert, animated: true)
     }
+    
 
     // 유저 정보 로그아웃
     func logoutUser() {
         guard let pvc = self.presentingViewController else { return }
         _ = LogOutViewModel(viewContoller: pvc)
+    }
+    
+    // test
+    func actionDeleteUser() {
+        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, userInfo: WorkspaceMemberCellModel(id: -1, email: "test@gamil.com", name: "테스트이름", displayname: "별명", description: "안녕하세요~!", phone: "010-1234-1234", country: "kor", language: "kor", settings: 1, status: "바쁨", createdt: "2020-02-25T12:00:00", modifydt: "2020-02-25T12:00:00"), isChat: true)
+        viewController.hidesBottomBarWhenPushed = true
+        self.show(viewController, sender: nil)
     }
     
     // MARK: - TableView dataSource
@@ -98,7 +153,7 @@ class ProfileViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (section == 1) { return "Status" }
+        if (section == 1) { return "상태" }
         return nil
     }
     
@@ -122,13 +177,13 @@ class ProfileViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if (indexPath.section == 0) && (indexPath.row == 0) { actionProfile() }
-//        if (indexPath.section == 0) && (indexPath.row == 1) { actionPassword() }
-//        if (indexPath.section == 0) && (indexPath.row == 2) { actionPasscode() }
-//        if (indexPath.section == 1) && (indexPath.row == 0) { actionStatus() }
-//        if (indexPath.section == 2) && (indexPath.row == 0) { actionCache() }
-//        if (indexPath.section == 2) && (indexPath.row == 1) { actionMedia() }
+        if (indexPath.section == 0) && (indexPath.row == 1) { actionPassword() }
+        if (indexPath.section == 0) && (indexPath.row == 2) { actionPasscode() }
+        if (indexPath.section == 1) && (indexPath.row == 0) { actionStatus() }
+        if (indexPath.section == 2) && (indexPath.row == 0) { actionCache() }
+        if (indexPath.section == 2) && (indexPath.row == 1) { actionMedia() }
         if (indexPath.section == 3) && (indexPath.row == 0) { actionLogout() }
-//        if (indexPath.section == 3) && (indexPath.row == 1) { actionDeleteUser() }
+        if (indexPath.section == 3) && (indexPath.row == 1) { actionDeleteUser() }
     }
 }
 

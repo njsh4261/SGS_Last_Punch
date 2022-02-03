@@ -10,7 +10,13 @@ import Foundation
 // MARK: - UserData
 struct User: Codable {
     let email: String
-    let password: String
+    let name: String?
+    let displayName: String?
+    let description: String?
+    let country: String?
+    let password: String?
+    let phone: String?
+    let status: String?
 }
 
 // MARK: - LoginDataModel

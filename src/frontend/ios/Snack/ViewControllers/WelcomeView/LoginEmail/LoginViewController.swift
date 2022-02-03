@@ -59,7 +59,16 @@ class LoginViewController: UIViewController {
             .subscribe(onNext: goToWelecome)
             .disposed(by: disposeBag)
         
+        scrollview.rx.didScroll
+            .bind(to: view.rx.endEditing)
+            .disposed(by: disposeBag)
+        
         // enter를 누를때
+        fieldEmail.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: fieldPassword.rx.canBecomeFirstResponder)
+            .disposed(by: disposeBag)
+
         fieldPassword.rx.controlEvent(.editingDidEndOnExit)
             .asObservable()
             .bind(to: viewModel.input.btnLoginTapped)
@@ -139,7 +148,6 @@ class LoginViewController: UIViewController {
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
         navigationItem.leftBarButtonItem = btnBack
         ivLogo.image = UIImage(named: "snack")
-        view.endEditing(true)
         
         btnBack = btnBack.then {
             $0.image = UIImage(systemName: "chevron.backward")
@@ -275,13 +283,13 @@ class LoginViewController: UIViewController {
             $0.left.equalTo(view.frame.width/4)
             $0.right.equalTo(btnSignUpColor.snp.left)
             $0.height.equalTo(50)
-            $0.top.equalTo(lblWarning.snp.bottom).offset(270)
+            $0.top.equalTo(view.frame.size.height*0.79)
         }
         
         btnSignUpColor.snp.makeConstraints {
             $0.right.equalToSuperview()
             $0.height.equalTo(50)
-            $0.top.equalTo(lblWarning.snp.bottom).offset(270)
+            $0.top.equalTo(view.frame.size.height*0.79)
         }
     }
 }

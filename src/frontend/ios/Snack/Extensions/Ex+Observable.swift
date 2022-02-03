@@ -1,5 +1,5 @@
 //
-//  ExObservable.swift
+//  Ex+Observable.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/14.

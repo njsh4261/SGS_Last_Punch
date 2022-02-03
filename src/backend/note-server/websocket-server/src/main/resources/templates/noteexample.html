@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<!--  <title>{{room.name}}</title>-->
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+<!--<h1>{{room.name}}({{room.id}})</h1>-->
+<h2>Note</h2>
+<!--<div class="content" data-room-id="{{room.id}}" data-member="{{member}}">-->
+<div class="content">
+  <ul class="chat_box">
+  </ul>
+  <input name="message">
+  <button class="send">보내기</button>
+</div>
+<script>
+  $(function () {
+    var chatBox = $('.chat_box');
+    var messageInput = $('input[name="message"]');
+    var sendBtn = $('.send');
+    var noteId = 1;
+    // var member = $('.content').data('member');
+
+    var sock = new SockJS("http://localhost:9001/ws/note");
+    var client = Stomp.over(sock); // 1. SockJS를 내부에 들고 있는 client를 내어준다.
+
+    // 2. connection이 맺어지면 실행된다.
+    // var headers={
+    //   X-AUTH-TOKEN: "123345678"
+    // };
+
+    var somedata = JSON.stringify({
+      type: 'set_selection',
+      properties: {
+        anchor: { path: [0, 0], offset: 0 },
+      },
+      newProperties: {
+        anchor: { path: [0, 0], offset: 15 },
+      },
+    })
+
+    client.connect({}, function () {
+      client.send('/pub/note', {}, JSON.stringify({type: "ENTER", noteId: "abcd", data:somedata, userId: 1}));
+      client.subscribe('/sub/note/abcd', function (chat) {
+        var content = JSON.parse(chat.body);
+        chatBox.append('<li>' + content.type + '(' + content.noteId + " " + content.data + '</li>')
+      });
+    });
+
+    sendBtn.click(function () {
+      var message = messageInput.val();
+      client.send('/pub/note', {}, JSON.stringify({type: "UPDATE", noteId: 1, data:somedata}));
+      messageInput.val('');
+    });
+  });
+</script>
+</body>
+</html>

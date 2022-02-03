@@ -117,6 +117,9 @@ PODS:
     - RxSwift (= 6.2.0)
   - RxSwift (6.2.0)
   - SnapKit (5.0.1)
+  - SocketRocket (0.6.0)
+  - StompClientLib (1.4.1):
+    - SocketRocket
   - SwiftKeychainWrapper (4.0.1)
   - Then (2.7.0)
 
@@ -131,6 +134,7 @@ DEPENDENCIES:
   - RxDataSources (~> 5.0)
   - RxSwift (= 6.2.0)
   - SnapKit (~> 5.0.0)
+  - StompClientLib
   - SwiftKeychainWrapper
   - Then
 
@@ -157,6 +161,8 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SnapKit
+    - SocketRocket
+    - StompClientLib
     - SwiftKeychainWrapper
     - Then
 
@@ -182,9 +188,11 @@ SPEC CHECKSUMS:
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  StompClientLib: ac40390e9660c574675f1c933bec81c8e2811a4f
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: a91a55118035f9fdf3c1da7fa6331026b9bb261f
+PODFILE CHECKSUM: 12a0140b9f365ab86b22c2ea7e69fcf1217d1d43
 
 COCOAPODS: 1.11.2

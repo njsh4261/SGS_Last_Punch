@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     
     //http
-    NOTE_NOT_EXIST(HttpStatus.OK, "11001", "NOTE_NOT_EXIST", "존재하지 않는 노트입니다."),
-    OPERATION_NOT_EXIST(HttpStatus.OK, "11002", "OPERATION_NOT_EXIST", "존재하지 않는 operation입니다."),
-    JSON_DATA_ERROR(HttpStatus.OK, "11003", "JSON_DATA_ERROR", "request body의 데이터 형식이 잘못되었습니다."),
+    NOTE_NOT_EXIST(HttpStatus.OK, "15001", "NOTE_NOT_EXIST", "존재하지 않는 노트입니다."),
+    OPERATION_NOT_EXIST(HttpStatus.OK, "15002", "OPERATION_NOT_EXIST", "존재하지 않는 operation입니다."),
+    JSON_DATA_ERROR(HttpStatus.OK, "15003", "JSON_DATA_ERROR", "request body의 데이터 형식이 잘못되었습니다."),
     
  
     ;

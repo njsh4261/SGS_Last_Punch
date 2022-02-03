@@ -1,4 +1,4 @@
-package com.example.notemvcwebsocketserver;
+package com.example.notemvcwebsocketserver.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +28,5 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // sockJS 연결 주소 http://localhost:8080/ws/note 사용
         registry.addEndpoint("/ws/note").setAllowedOrigins("http://localhost:3000").withSockJS();
-        // 웹소켓 연결 주소 ws://localhost:8080/ws/note 사용
-        registry.addEndpoint("/ws/note").setAllowedOrigins("http://localhost:3000");
     }
 }

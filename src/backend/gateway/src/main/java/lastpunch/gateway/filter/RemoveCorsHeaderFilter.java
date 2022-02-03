@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class RemoveCorsHeaderFilter implements GatewayFilter, Ordered {
-    String origin = "http://localhost:63342";
+    String origin = "http://localhost:3000";
     
     @Override
     public int getOrder() {

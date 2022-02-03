@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
-//@CrossOrigin(origins = {"http://localhost:8083"})
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ChatController{
     private final RabbitMqService rabbitMqService;
     private final MongoDbService mongoDbService;

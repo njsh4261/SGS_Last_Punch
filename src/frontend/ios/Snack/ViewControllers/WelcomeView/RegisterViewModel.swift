@@ -14,7 +14,7 @@ class RegisterViewModel: ViewModelProtocol {
         let email = PublishSubject<String>()
         let code = PublishSubject<String>()
         let password = PublishSubject<String>()
-        let checkPassword = PublishSubject<String>()
+        let retypePassword = PublishSubject<String>()
         let changedEmail = PublishSubject<Void>()
         let btnDuplicateEmailTapped = PublishSubject<Void>()
         let btnSendEmailTapped = PublishSubject<Void>()
@@ -56,7 +56,7 @@ class RegisterViewModel: ViewModelProtocol {
             .disposed(by: disposeBag)
         
         // signup 버튼 활성화 조건
-        Observable.combineLatest(input.email, input.code, input.password, input.checkPassword)
+        Observable.combineLatest(input.email, input.code, input.password, input.retypePassword)
             .map{ self.isSignUp($0.0, $0.1, $0.2, $0.3) }
             .bind(to: output.enableBtnSignUp)
             .disposed(by: disposeBag)
@@ -165,13 +165,13 @@ class RegisterViewModel: ViewModelProtocol {
             }.disposed(by: self.disposeBag)
         
         // 회원 가입
-        input.btnSignUpTapped.withLatestFrom(Observable.combineLatest(input.email, input.code, input.password, input.checkPassword))
-            .bind { [weak self] (email, code, password, checkPassword) in
+        input.btnSignUpTapped.withLatestFrom(Observable.combineLatest(input.email, input.code, input.password, input.retypePassword))
+            .bind { [weak self] (email, code, password, retypePassword) in
                 guard let self = self else { return }
                 // API로직을 태워야합니다.
                 ProgressHUD.animationType = .circleSpinFade
                 ProgressHUD.show("정보 확인중..")
-                RegisterService.shared.signUp(email: email, code: code, password: checkPassword)
+                RegisterService.shared.signUp(email: email, code: code, password: retypePassword)
                     .subscribe { event in
                         switch event {
                         case .next(let result):
@@ -210,12 +210,12 @@ class RegisterViewModel: ViewModelProtocol {
         return emailTest.evaluate(with: email)
     }
     
-    func isValidPassword(_ password: String, _ checkPassoword: String) -> Bool {
-        return !password.isEmpty && !checkPassoword.isEmpty && password == checkPassoword
+    func isValidPassword(_ password: String, _ retypePassoword: String) -> Bool {
+        return !password.isEmpty && !retypePassoword.isEmpty && password == retypePassoword
     }
     
-    func isSignUp(_ email: String, _ code: String, _ password: String, _ checkPassword: String) -> Bool {
-        return isValidEmail(email) && code.count == 6 && isValidPassword(password, checkPassword)
+    func isSignUp(_ email: String, _ code: String, _ password: String, _ retypePassword: String) -> Bool {
+        return isValidEmail(email) && code.count == 6 && isValidPassword(password, retypePassword)
     }
     
     // 이메일 수정 & 이메일 인증 버튼을 누를때

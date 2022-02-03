@@ -100,15 +100,36 @@ class SearchURLWorkspaceViewController: UIViewController {
     
     private func goToHome(_ bool: Bool) {
         if bool {
-            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                KeychainWrapper.standard[.workspaceId] = workspaceId
-                
-                let homeView = HomeViewController()
-                let navController1 = NavigationController(rootViewController: homeView)
-                sceneDelegate.tabBarController.viewControllers?.insert(navController1, at: 0)
-                sceneDelegate.tabBarController.selectedIndex = 0
-                
-                sceneDelegate.window?.rootViewController = sceneDelegate.tabBarController
+            guard let pvc = self.presentingViewController else { return }
+            pvc.dismiss(animated: true) { [self] in
+                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                    KeychainWrapper.standard[.workspaceId] = workspaceId.description
+
+                    let homeView = HomeViewController()
+                    let DMView = DirectMessageListViewController(workspaceId: workspaceId.description)
+                    DMView.bind(with: DirectMessageListViewModel())
+                    let profileView = SettingsViewController(nibName: "SettingsView", bundle: nil)
+                    
+                    let navController0 = NavigationController(rootViewController: homeView)
+                    let navController1 = NavigationController(rootViewController: DMView)
+                    let navController4 = NavigationController(rootViewController: profileView)
+                    
+                    let tabBarController = UITabBarController()
+                    tabBarController.viewControllers = [navController0, navController1, navController4]
+                    tabBarController.tabBar.isTranslucent = false
+                    tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
+                    tabBarController.modalPresentationStyle = .fullScreen
+                    tabBarController.selectedIndex = App.DefaultTab
+                    
+                    if #available(iOS 15.0, *) {
+                        let appearance = UITabBarAppearance()
+                        appearance.configureWithOpaqueBackground()
+                        tabBarController.tabBar.standardAppearance = appearance
+                        tabBarController.tabBar.scrollEdgeAppearance = appearance
+                    }
+
+                    sceneDelegate.welcomeViewController.present(tabBarController, animated: true, completion: nil)
+                }
             }
         }
     }

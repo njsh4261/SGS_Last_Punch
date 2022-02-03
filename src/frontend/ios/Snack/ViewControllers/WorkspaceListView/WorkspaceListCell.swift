@@ -12,6 +12,7 @@ import SnapKit
 import Then
 
 class WorkspaceListCell: UITableViewCell {
+    
     // MARK: - Properties
     var workspaceId: Int = -1
     
@@ -33,6 +34,8 @@ class WorkspaceListCell: UITableViewCell {
         ivThumbnail.image = UIImage(named: "snack")
         lblName.text = data.name
         lblAddress.text = data.createdt
+        
+        btnCheckBox.setImage(nil, for: .normal)
     }
     
     private func attribute() {
@@ -52,6 +55,7 @@ class WorkspaceListCell: UITableViewCell {
         btnCheckBox = btnCheckBox.then {
             $0.backgroundColor = .white
             $0.layer.cornerRadius = 5
+            $0.tintColor = UIColor(named: "snackColor")
         }
     }
     

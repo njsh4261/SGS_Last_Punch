@@ -17,3 +17,8 @@ struct deleteCellAction {
     let index: Int
     let workspaceId: String
 }
+
+struct getMemberAction {
+    let accessToken: String
+    let workspaceId: String
+}

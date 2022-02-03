@@ -1,8 +1,8 @@
 //
-//  DirectMessageCell.swift
+//  UserListCell.swift
 //  Snack
 //
-//  Created by ghyeongkim-MN on 2022/01/17.
+//  Created by ghyeongkim-MN on 2022/01/28.
 //
 
 import UIKit
@@ -11,9 +11,9 @@ import RxSwift
 import RxCocoa
 import Then
 
-class DirectMessageCell: UITableViewCell {
+class UserListCell: UITableViewCell {
     let disposeBag = DisposeBag()
-    static let identifier = "DirectMessageCell"
+    static let identifier = "UserListCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,7 +26,7 @@ class DirectMessageCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(_ viewModel: DirectMessageCellViewModel) {
+    func bind(_ viewModel: UserListCellViewModel) {
 
     }
 

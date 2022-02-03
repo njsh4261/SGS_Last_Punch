@@ -1,23 +1,24 @@
 package lastpunch.chat.service;
 
-import java.time.LocalDateTime;
 import lastpunch.chat.common.ChatConstant;
-import lastpunch.chat.dto.Message;
+import lastpunch.chat.entity.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RabbitService{
+public class RabbitMqService{
     private final RabbitTemplate rabbitTemplate;
+    private final MongoDbService mongoDbService;
     
     @Autowired
-    public RabbitService(RabbitTemplate rabbitTemplate){
+    public RabbitMqService(RabbitTemplate rabbitTemplate, MongoDbService mongoDbService){
         this.rabbitTemplate = rabbitTemplate;
+        this.mongoDbService = mongoDbService;
     }
     
     public void send(Message message){
-        message.setCreateDt(LocalDateTime.now());
+        mongoDbService.saveMessage(message);
         rabbitTemplate.convertAndSend(
             ChatConstant.AMQ_TOPIC,
             ChatConstant.ROUTING_KEY_PREFIX + message.getChannelId(),

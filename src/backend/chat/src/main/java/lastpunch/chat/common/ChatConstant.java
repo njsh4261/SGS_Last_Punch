@@ -2,7 +2,7 @@ package lastpunch.chat.common;
 
 public class ChatConstant{
     public static final String ENDPOINT = "/chat";
-    public static final String PUBLISH = "/pub";
+    public static final String PUBLISH = "/app";
     public static final String SUBSCRIBE = "/topic";
     
     public static final String QUEUE_NAME = "queue";

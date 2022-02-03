@@ -6,9 +6,7 @@
 <body onload="disconnect()">
 <div>
   <div>
-    <input type="text" id="sender" placeholder="Type your name"/>
-  </div>
-  <div>
+    <input type="text" id="authorId" placeholder="Type author ID"/>
     <input type="text" id="channelId" placeholder="Type channel id"/>
   </div>
   <br />
@@ -22,18 +20,25 @@
   <div id="conversationDiv">
     <input type="text" id="content" placeholder="Write a message..."/>
     <button id="sendMessage" onclick="sendMessage();">Send</button>
+    <input type="text" id="dateTime" placeholder="Type date"/>
+    <button id="getOlder" disabled="disabled" onclick="getOlderMessage();">
+      Get older messages
+    </button>
     <p id="response"></p>
   </div>
 </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script type="text/javascript">
     var stompClient = null;
 
     function setConnected(connected) {
         document.getElementById('connect').disabled = connected;
         document.getElementById('disconnect').disabled = !connected;
+        document.getElementById('dateTime').disabled = !connected;
+        document.getElementById('getOlder').disabled = !connected;
         document.getElementById('conversationDiv').style.visibility
           = connected ? 'visible' : 'hidden';
         document.getElementById('response').innerHTML = '';
@@ -41,16 +46,37 @@
 
     function connect() {
         var socket = new SockJS('/chat');
+        const channelId = document.getElementById('channelId').value;
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function(frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
             stompClient.subscribe(
-              '/topic/channel.' + document.getElementById('channelId').value,
+              '/topic/channel.' + channelId,
               function(messageOutput) {
                   showMessageOutput(JSON.parse(messageOutput.body));
               }
             );
+<!--            global notification chat example-->
+            stompClient.subscribe(
+              '/topic/channel.' + 'global',
+              function(messageOutput) {
+                  showMessageOutput(JSON.parse(messageOutput.body));
+              }
+            );
+            $.ajax({
+                type: 'POST',
+                url:'http://localhost:8083/chat/recent',
+                contentType : "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    'channelId': channelId
+                }),
+            }).done(function(res) {
+                console.log("POST /chat/recent: " + JSON.stringify(res))
+                showMessageOutput(res.data)
+            }).fail(function(err) {
+                console.log("fail to get recent chats!")
+            });
         });
     }
 
@@ -63,30 +89,56 @@
     }
 
     function sendMessage() {
-        var sender = document.getElementById('sender').value;
-        var content = document.getElementById('content').value;
-        var channelId = document.getElementById('channelId').value;
-        stompClient.send("/pub/chat", {},
-          JSON.stringify({
-            'sender': sender,
-            'content':content,
-            'channelId': channelId
-          })
+        stompClient.send("/app/chat", {},
+            JSON.stringify({
+              'authorId': document.getElementById('authorId').value,
+              'channelId': document.getElementById('channelId').value,
+              'content': document.getElementById('content').value
+            })
         );
     }
 
     function showMessageOutput(messageOutput) {
         var response = document.getElementById('response');
+        if(typeof(messageOutput.pageable) !== 'undefined'){
+            messageOutput.content.reverse().forEach(
+                message => addMessageToList(response, message)
+            );
+        }
+        else{
+            addMessageToList(response, messageOutput);
+        }
+    }
+
+    function addMessageToList(list, message){
         var p = document.createElement('p');
         p.style.wordWrap = 'break-word';
         p.appendChild(
           document.createTextNode(
-            messageOutput.sender + ": "
-            + messageOutput.content
-            + " (" + messageOutput.createDt + ")"
+            "(authorId: " + message.authorId + "): "
+            + message.content
+            + " (" + message.createDt + " / " + message.modifyDt +")"
           )
         );
-        response.appendChild(p);
+        list.appendChild(p);
+    }
+
+<!--    dateTime example: "2022-01-27T15:29:10.767Z" -->
+    function getOlderMessage() {
+        $.ajax({
+            type: 'POST',
+            url:'http://localhost:8083/chat/old',
+            contentType : "application/json; charset=utf-8",
+            data: JSON.stringify({
+                'channelId': document.getElementById('channelId').value,
+                'dateTime': document.getElementById('dateTime').value
+            }),
+        }).done(function(res) {
+            console.log("POST /chat/old: " + JSON.stringify(res))
+            showMessageOutput(res.data)
+        }).fail(function(err) {
+            console.log("fail to get old chats!")
+        });
     }
 </script>
 </html>

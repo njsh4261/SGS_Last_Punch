@@ -11,10 +11,12 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class ChatConfig implements WebSocketMessageBrokerConfigurer{
+    
+    
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint(ChatConstant.ENDPOINT)
-//            .setAllowedOrigins("*") // TODO: Gateway 서버를 통해서만 접근할 수 있도록 제한
+            .setAllowedOriginPatterns("*") // TODO: Gateway 서버를 통해서만 접근할 수 있도록 제한
             .withSockJS();
     }
     

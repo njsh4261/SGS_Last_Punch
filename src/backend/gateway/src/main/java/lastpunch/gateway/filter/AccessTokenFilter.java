@@ -1,16 +1,11 @@
 package lastpunch.gateway.filter;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import lastpunch.gateway.common.exception.AuthExceptionHandler;
 import lastpunch.gateway.common.jwt.JwtProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -21,10 +16,14 @@ import reactor.core.publisher.Mono;
 @Component
 // Check if access token is valid
 public class AccessTokenFilter implements GatewayFilter, Ordered{
-    @Autowired
-    private JwtProvider jwtProvider;
+    private final JwtProvider jwtProvider;
+    private final Logger logger;
     
-    private final Logger logger = LoggerFactory.getLogger(AccessTokenFilter.class);
+    @Autowired
+    public AccessTokenFilter(JwtProvider jwtProvider){
+        this.jwtProvider = jwtProvider;
+        this.logger = LoggerFactory.getLogger(AccessTokenFilter.class);
+    }
     
     @Override
     public int getOrder() {
@@ -37,8 +36,10 @@ public class AccessTokenFilter implements GatewayFilter, Ordered{
 
         // 1. accessToken이 존재하는지 확인 (code review by @yangbongsoo)
         String accessToken = request.getHeaders().getFirst("X-AUTH-TOKEN");
-        if (ObjectUtils.isEmpty(accessToken)) throw new java.lang.NullPointerException();
-        System.out.println("accessToken = " + accessToken);
+        if(ObjectUtils.isEmpty(accessToken)){
+            throw new java.lang.NullPointerException();
+        }
+        logger.info("accessToken = " + accessToken);
         
         // 2. accessToken이 유효한 경우 -> 요청 진행, 유효하지 않은 경우 exception handler에 에러 걸려서 401 리턴
         jwtProvider.validateToken(accessToken);
@@ -50,6 +51,5 @@ public class AccessTokenFilter implements GatewayFilter, Ordered{
     }
     
     public static class Config {
-    
     }
 }

@@ -1,7 +1,7 @@
 package lastpunch.chat.common;
 
 public class ChatConstant{
-    public static final String ENDPOINT = "/chat";
+    public static final String ENDPOINT = "/ws/chat";
     public static final String PUBLISH = "/app";
     public static final String SUBSCRIBE = "/topic";
     

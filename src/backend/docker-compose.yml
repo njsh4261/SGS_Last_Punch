@@ -15,6 +15,13 @@ services:
     networks:
       - lastpunch-network
 
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - lastpunch-network
+
   mysql:
     image: mysql:8.0
     environment:
@@ -63,6 +70,36 @@ services:
       spring.datasource.password: 1234
     depends_on:
       - mysql
+      - eureka-server
+    restart:
+      always
+    networks:
+      - lastpunch-network
+
+  note-server:
+    image: sookim1110/note-server
+    ports:
+      - "9000:9000"
+    environment:
+      spring.data.mongodb.uri: mongodb://mongodb:27017/lastpunch
+      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+    depends_on:
+      - mongodb
+      - eureka-server
+    restart:
+      always
+    networks:
+      - lastpunch-network
+
+  note-ws-server:
+    image: sookim1110/note-ws-server
+    ports:
+      - "9001:9001"
+    environment:
+      spring.redis.host: redis
+      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+    depends_on:
+      - redis
       - eureka-server
     restart:
       always

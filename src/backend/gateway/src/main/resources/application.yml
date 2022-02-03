@@ -21,7 +21,8 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "http://localhost:3000"
+            allowedOrigins: "http://localhost:63342"
+            allow-credentials: true
             allowedHeaders:
               - Content-Type
               - X-AUTH-TOKEN
@@ -30,5 +31,6 @@ spring:
               - GET
               - PUT
               - OPTIONS
+              - PATCH
               - DELETE
 

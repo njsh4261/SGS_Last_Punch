@@ -64,7 +64,7 @@ enum MessageKit {
 
     static var avatarFont                   = UIFont.systemFont(ofSize: 12)
 
-    // Text cell
+    // 텍스트 cell
     static var textBubbleWidthMax           = 0.70 * widthScreen
     static var textBubbleWidthMin           = CGFloat(45)
     static var textBubbleHeightMin          = CGFloat(35)

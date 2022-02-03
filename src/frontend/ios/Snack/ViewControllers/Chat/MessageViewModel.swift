@@ -18,6 +18,8 @@ class MessageViewModel: ViewModelProtocol {
     struct Output {
     }
     // MARK: - Public properties
+    var input = Input()
+    var output = Output()
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
@@ -25,6 +27,6 @@ class MessageViewModel: ViewModelProtocol {
     
     // MARK: - Init
     init() {
-        
+
     }
 }

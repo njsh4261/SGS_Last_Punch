@@ -22,18 +22,18 @@ class MessageView: UIViewController {
     private var textTitle: String?
     private var heightKeyboard: CGFloat = 0
     private var keyboardManager = KeyboardManager()
-    private var memberInfo: WorkspaceMemberCellModel?
+    private var userInfo: WorkspaceMemberCellModel?
     
     // MARK: - UI
     private var btnBack = UIBarButtonItem()
     private var btnTransform = UIBarButtonItem()
     
     private var viewTitle =  UIView()
-    private var lblTitle = UILabel()
+    var lblTitle = UILabel()
     private var lblDetail = UILabel()
     private var btnViewTitle = UIButton()
     
-    private var tableView = UITableView()
+    var tableView = UITableView()
     private var viewLoadEarlier = UIView()
     private var btnLoadEarlier = UIButton()
     
@@ -42,12 +42,12 @@ class MessageView: UIViewController {
     private let longPress = UILongPressGestureRecognizer(target: self, action: #selector(actionLongPress(_:)))
     
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, memberInfo: WorkspaceMemberCellModel) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, userInfo: WorkspaceMemberCellModel) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
         NSLog("accessToken: " + token)
         NSLog("workspaceId: " + workspaceId)
-        self.memberInfo = memberInfo
+        self.userInfo = userInfo
         
         attribute()
         layout()
@@ -55,18 +55,17 @@ class MessageView: UIViewController {
         // 키보드 조절
         keyboardManager.bind(inputAccessoryView: messageInputBar)
         keyboardManager.bind(to: tableView)
-
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLayoutSubviews() {
-
-        super.viewDidLayoutSubviews()
-        layoutTableView()
-    }
+//    override func viewDidLayoutSubviews() {
+//
+//        super.viewDidLayoutSubviews()
+//        layoutTableView()
+//    }
     
     func bind(_ viewModel: MessageViewModel) {
         // MARK: Bind input
@@ -78,8 +77,9 @@ class MessageView: UIViewController {
 //            .bind(to: viewModel.input.btnTransformTapped)
 //            .disposed(by: disposeBag)
         
+        
         btnViewTitle.rx.tap
-            .subscribe(onNext: actionTitle)
+            .subscribe(onNext: goToProfile)
             .disposed(by: disposeBag)
         
         btnLoadEarlier.rx.tap
@@ -88,7 +88,14 @@ class MessageView: UIViewController {
         
         
         // MARK: Bind output
-        
+//        viewModel.pushTitle
+//            .drive(onNext: { [self] (viewModel) in
+//                let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, userInfo: userInfo!)
+//                viewController.hidesBottomBarWhenPushed = true
+//                viewController.bind(with: viewModel)
+//                self.show(viewController, sender: nil)
+//            })
+//            .disposed(by: disposeBag)
     }
     
     private func goToProfile() {
@@ -202,11 +209,11 @@ class MessageView: UIViewController {
         }
     }
     
-    @objc func actionAttachLong() {}
+    @objc open dynamic func actionAttachLong() {}
     
-    @objc func actionAttachMessage() {}
+    @objc open dynamic func actionAttachMessage() {}
     
-    @objc func actionSendMessage(_ text: String) {}
+    @objc open dynamic func actionSendMessage(_ text: String) {}
     
     private func attribute() {
         navigationItem.titleView = viewTitle
@@ -218,7 +225,7 @@ class MessageView: UIViewController {
         }
         
         lblTitle = lblTitle.then {
-            $0.text = memberInfo?.name
+            $0.text = userInfo?.name
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
         }
         
@@ -369,6 +376,85 @@ extension MessageView: InputBarAccessoryViewDelegate {
     }
 }
 
+// MARK: - Message Source methods
+extension MessageView {
+
+    @objc func messageAt(_ indexPath: IndexPath) -> Message {
+
+        return Message()
+    }
+
+    @objc func indexPathBy(_ rcmessage: Message) -> IndexPath? {
+
+        return nil
+    }
+}
+
+// MARK: - Message Cell methods
+extension MessageView {
+
+    // Avatar methods
+    @objc func avatarInitials(_ indexPath: IndexPath) -> String {
+
+        return ""
+    }
+
+    @objc func avatarImage(_ indexPath: IndexPath) -> UIImage? {
+
+        return nil
+    }
+
+    // Header, Footer methods
+    @objc func textHeaderUpper(_ indexPath: IndexPath) -> String? {
+
+        return nil
+    }
+
+    @objc func textHeaderLower(_ indexPath: IndexPath) -> String? {
+
+        return nil
+    }
+
+    func textFooterUpper(_ indexPath: IndexPath) -> String? {
+
+        return nil
+    }
+
+    @objc func textFooterLower(_ indexPath: IndexPath) -> String? {
+
+        return nil
+    }
+
+    // User actions
+    @objc func actionTapBubble(_ indexPath: IndexPath) {
+
+    }
+
+    @objc func actionTapAvatar(_ indexPath: IndexPath) {
+
+    }
+}
+
+// MARK: - Menu Controller methods
+extension MessageView {
+
+    @objc func menuItems(_ indexPath: IndexPath) -> [MenuItem]? {
+
+        return nil
+    }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+
+        return false
+    }
+
+    override var canBecomeFirstResponder: Bool {
+
+        return true
+    }
+}
+
+
 // MARK: - Keyboard methods
 extension MessageView {
     func configureKeyboardActions() {
@@ -460,27 +546,23 @@ extension MessageView: UITableViewDataSource {
 
     //-------------------------------------------------------------------------------------------------------------------------------------------
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if (indexPath.row == 0)    { return tableViewCell(tableView, for: RCHeaderCell1.self, at: indexPath)    }
-//        if (indexPath.row == 1)    { return tableViewCell(tableView, for: RCHeaderCell2.self, at: indexPath)    }
-//
-//        if (indexPath.row == 2) {
-//            let rcmessage = rcmessageAt(indexPath)
-//            if (rcmessage.type == MessageType.Text)        { return tableViewCell(tableView, for: RCTextCell.self, at: indexPath)        }
-//            if (rcmessage.type == MessageType.Emoji)    { return tableViewCell(tableView, for: RCEmojiCell.self, at: indexPath)        }
+        if (indexPath.row == 0)    { return tableViewCell(tableView, for: HeaderCell1.self, at: indexPath)    }
+        if (indexPath.row == 1)    { return tableViewCell(tableView, for: HeaderCell2.self, at: indexPath)    }
+
+        if (indexPath.row == 2) {
+            let message = messageAt(indexPath)
+            if (message.type == "text")        { return tableViewCell(tableView, for: TextCell.self, at: indexPath)        }
 //            if (rcmessage.type == MessageType.Photo)    { return tableViewCell(tableView, for: RCPhotoCell.self, at: indexPath)        }
-//            if (rcmessage.type == MessageType.Video)    { return tableViewCell(tableView, for: RCVideoCell.self, at: indexPath)        }
-//            if (rcmessage.type == MessageType.Audio)    { return tableViewCell(tableView, for: RCAudioCell.self, at: indexPath)        }
-//            if (rcmessage.type == MessageType.Sticker)    { return tableViewCell(tableView, for: RCStickerCell.self, at: indexPath)    }
 //            if (rcmessage.type == MessageType.Location)    { return tableViewCell(tableView, for: RCLocationCell.self, at: indexPath)    }
-//        }
-//
-//        if (indexPath.row == 3)    { return tableViewCell(tableView, for: RCFooterCell1.self, at: indexPath)    }
-//        if (indexPath.row == 4)    { return tableViewCell(tableView, for: RCFooterCell2.self, at: indexPath)    }
+        }
+
+        if (indexPath.row == 3)    { return tableViewCell(tableView, for: FooterCell1.self, at: indexPath)    }
+        if (indexPath.row == 4)    { return tableViewCell(tableView, for: FooterCell2.self, at: indexPath)    }
 
         return UITableViewCell()
     }
 
-    func tableViewCell<T: MessagesCell>(_ tableView: UITableView, for cellType: T.Type, at indexPath: IndexPath) -> T {
+    func tableViewCell<T: MessageCell>(_ tableView: UITableView, for cellType: T.Type, at indexPath: IndexPath) -> T {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: cellType), for: indexPath) as! T
         cell.bindData(self, at: indexPath)
@@ -503,22 +585,22 @@ extension MessageView: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
-//        if (indexPath.row == 0)    { return RCHeaderCell1.height(self, at: indexPath)    }
-//        if (indexPath.row == 1)    { return RCHeaderCell2.height(self, at: indexPath)    }
-//
-//        if (indexPath.row == 2) {
-//            let rcmessage = rcmessageAt(indexPath)
-//            if (rcmessage.type == MessageType.Text)        { return RCTextCell.height(self, at: indexPath)        }
+        if (indexPath.row == 0)    { return HeaderCell1.height(self, at: indexPath)    }
+        if (indexPath.row == 1)    { return HeaderCell2.height(self, at: indexPath)    }
+
+        if (indexPath.row == 2) {
+            let message = messageAt(indexPath)
+            if (message.type == "text")        { return TextCell.height(self, at: indexPath)        }
 //            if (rcmessage.type == MessageType.Emoji)    { return RCEmojiCell.height(self, at: indexPath)    }
 //            if (rcmessage.type == MessageType.Photo)    { return RCPhotoCell.height(self, at: indexPath)    }
 //            if (rcmessage.type == MessageType.Video)    { return RCVideoCell.height(self, at: indexPath)    }
 //            if (rcmessage.type == MessageType.Audio)    { return RCAudioCell.height(self, at: indexPath)    }
 //            if (rcmessage.type == MessageType.Sticker)    { return RCStickerCell.height(self, at: indexPath)    }
 //            if (rcmessage.type == MessageType.Location)    { return RCLocationCell.height(self, at: indexPath)    }
-//        }
-//
-//        if (indexPath.row == 3)    { return RCFooterCell1.height(self, at: indexPath)    }
-//        if (indexPath.row == 4)    { return RCFooterCell2.height(self, at: indexPath)    }
+        }
+
+        if (indexPath.row == 3)    { return FooterCell1.height(self, at: indexPath)    }
+        if (indexPath.row == 4)    { return FooterCell2.height(self, at: indexPath)    }
 
         return 0
     }

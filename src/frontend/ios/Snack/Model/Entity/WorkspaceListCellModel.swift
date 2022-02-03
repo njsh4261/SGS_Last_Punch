@@ -15,11 +15,26 @@ struct WorkspaceResponseModel: Codable {
 struct WorkspacesData: Codable {
     let workspaces: WorkspacesModel?
     let workspace: WorkspaceListCellModel?
+    let channels: WorkspacesChannels?
     let members: WorkspaceMemberModel?
 }
 
 struct WorkspacesModel: Codable {
     let content: [WorkspaceListCellModel]?
+    let pageable: Pageable?
+    let last: Bool
+    let totalPages: Int
+    let totalElements: Int
+    let size: Int
+    let number: Int
+    let sort: Sort
+    let first: Bool
+    let numberOfElements: Int
+    let empty: Bool
+}
+
+struct WorkspacesChannels: Codable {
+    let content: [WorkspaceChannelCellModel]?
     let pageable: Pageable?
     let last: Bool
     let totalPages: Int
@@ -54,6 +69,18 @@ struct WorkspaceListCellModel: Codable {
     let status: Int
     let createdt: String
     let modifydt: String
+}
+
+struct WorkspaceChannelCellModel: Codable {
+    let id: Int
+    let workspace: WorkspaceListCellModel
+    var name: String?
+    let topic: String?
+    let description: String?
+    let settings: Int
+    let status: String
+    let createDt: String
+    let modifyDt: String
 }
 
 struct WorkspaceMemberCellModel: Codable {

@@ -52,11 +52,11 @@ class SearchURLWorkspaceVeiwModel: ViewModelProtocol {
                 // API로직을 태워야합니다.
                 ProgressHUD.animationType = .circleSpinFade
                 ProgressHUD.show("검색중..")
-                self.getWorkspace(token, workspaceId: workspaceId, method: .get)
+                self.getWorkspace(method: .get, token, workspaceId: workspaceId)
             }.disposed(by: self.disposeBag)
     }
     
-    func getWorkspace(_ token:String, workspaceId: String, method: HTTPMethod) {
+    func getWorkspace(method: HTTPMethod, _ token:String, workspaceId: String) {
         DispatchQueue.main.async { // 메인스레드에서 동작
             WorkspaceService.shared.getWorkspace(method: method, accessToken: token, workspaceId: workspaceId)
                 .observe(on: MainScheduler.instance)
@@ -72,7 +72,6 @@ class SearchURLWorkspaceVeiwModel: ViewModelProtocol {
                             self.output.goToHome.accept(false)
                         default:
                             self.output.errorMessage.accept("정확한 주소를 적어주세요")
-                            self.output.goToHome.accept(true) // 임시
                         }
                     default:
                         break

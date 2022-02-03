@@ -26,16 +26,16 @@ class RegisterViewController: UIViewController {
     var fieldEmail = UITextField()
     var fieldCode = UITextField()
     var fieldPassword = UITextField()
-    var fieldCheckPassword = UITextField()
+    var fieldRetypePassword = UITextField()
     var emailBorder = UIView()
     var codeBorder = UIView()
     var passwordBorder = UIView()
-    var checkPasswordBorder = UIView()
+    var retypePasswordBorder = UIView()
     var btnDuplicateEmail = UIButton()
     var btnSendEmail = UIButton()
     var btnVerification = UIButton()
     var btnTogglePassword = UIButton()
-    var btnToggleCheckPassword = UIButton()
+    var btnToggleRetypePassword = UIButton()
     var btnSignUp = UIButton()
     var btnSignIn = UIButton()
     var btnSignInColor = UIButton()
@@ -68,12 +68,16 @@ class RegisterViewController: UIViewController {
             .bind(to: viewModel.input.password)
             .disposed(by: disposeBag)
         
-        fieldCheckPassword.rx.text.orEmpty
-            .bind(to: viewModel.input.checkPassword)
+        fieldRetypePassword.rx.text.orEmpty
+            .bind(to: viewModel.input.retypePassword)
             .disposed(by: disposeBag)
         
         btnBack.rx.tap
             .subscribe(onNext: goToWelecome)
+            .disposed(by: disposeBag)
+        
+        scrollview.rx.didScroll
+            .bind(to: view.rx.endEditing)
             .disposed(by: disposeBag)
         
         // enter를 누를때
@@ -85,6 +89,16 @@ class RegisterViewController: UIViewController {
         fieldCode.rx.controlEvent(.editingDidEndOnExit)
             .asObservable()
             .bind(to: viewModel.input.btnVerificationTapped)
+            .disposed(by: disposeBag)
+        
+        fieldPassword.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: fieldRetypePassword.rx.canBecomeFirstResponder)
+            .disposed(by: disposeBag)
+        
+        fieldPassword.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: viewModel.input.btnSignUpTapped)
             .disposed(by: disposeBag)
         
         // 이메일 변경이 있을때
@@ -117,9 +131,9 @@ class RegisterViewController: UIViewController {
             .drive(fieldPassword.rx.isSecureTextEntry, btnTogglePassword.rx.setImage)
             .disposed(by: disposeBag)
         
-        btnToggleCheckPassword.rx.tap
+        btnToggleRetypePassword.rx.tap
             .asDriver()
-            .drive(fieldCheckPassword.rx.isSecureTextEntry, btnToggleCheckPassword.rx.setImage)
+            .drive(fieldRetypePassword.rx.isSecureTextEntry, btnToggleRetypePassword.rx.setImage)
             .disposed(by: disposeBag)
 
         btnSignUp.rx.tap
@@ -157,7 +171,7 @@ class RegisterViewController: UIViewController {
         // email field를 제외한 모든 field 초기화
         viewModel.output.changeClearText
             .observe(on: MainScheduler.instance)
-            .bind(to: fieldCode.rx.setText, fieldPassword.rx.setText, fieldCheckPassword.rx.setText)
+            .bind(to: fieldCode.rx.setText, fieldPassword.rx.setText, fieldRetypePassword.rx.setText)
             .disposed(by: disposeBag)
         
         // 버튼 enable
@@ -237,7 +251,7 @@ class RegisterViewController: UIViewController {
     
     // Step 2 - code input -> password, check input & signUp
     private func visibilityPassword(_ bool: Bool) {
-        [fieldPassword, fieldCheckPassword, passwordBorder, checkPasswordBorder, btnSignUp, lblWarning].forEach {
+        [fieldPassword, fieldRetypePassword, passwordBorder, retypePasswordBorder, btnSignUp, lblWarning].forEach {
             $0.isHidden = bool
         }
     }
@@ -267,13 +281,13 @@ class RegisterViewController: UIViewController {
             $0.style = .plain
         }
         
-        [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword].forEach {
+        [fieldEmail, fieldCode, fieldPassword, fieldRetypePassword].forEach {
             $0.textAlignment = .left
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
             $0.autocorrectionType = .no
         }
         
-        [emailBorder, codeBorder, passwordBorder, checkPasswordBorder].forEach {
+        [emailBorder, codeBorder, passwordBorder, retypePasswordBorder].forEach {
             $0.backgroundColor = .quaternaryLabel
         }
         
@@ -286,13 +300,13 @@ class RegisterViewController: UIViewController {
             $0.layer.cornerRadius = 3
         }
         
-        [btnTogglePassword, btnToggleCheckPassword].forEach {
+        [btnTogglePassword, btnToggleRetypePassword].forEach {
             $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
             $0.tintColor = UIColor(named: "snackTextColor")
         }
         
         // init시 숨겨야 할 것들
-        [fieldCode, fieldPassword, fieldCheckPassword, codeBorder, passwordBorder, checkPasswordBorder, btnSendEmail, btnSignUp, lblWarning].forEach {
+        [fieldCode, fieldPassword, fieldRetypePassword, codeBorder, passwordBorder, retypePasswordBorder, btnSendEmail, btnSignUp, lblWarning].forEach {
             $0.isHidden = true
         }
 
@@ -334,11 +348,11 @@ class RegisterViewController: UIViewController {
             $0.textContentType = .oneTimeCode
         }
         
-        fieldCheckPassword = fieldCheckPassword.then {
+        fieldRetypePassword = fieldRetypePassword.then {
             $0.placeholder = "다시 비밀번호를 입력해주세요"
             $0.returnKeyType = .done
             $0.isSecureTextEntry = true
-            $0.rightView = btnToggleCheckPassword
+            $0.rightView = btnToggleRetypePassword
             $0.rightViewMode = .always
             $0.textContentType = .oneTimeCode
         }
@@ -377,7 +391,7 @@ class RegisterViewController: UIViewController {
     }
     
     private func layout() {
-        [ivLogo, fieldEmail, btnDuplicateEmail, btnSendEmail, emailBorder, fieldCode, btnVerification, codeBorder, fieldPassword, passwordBorder, fieldCheckPassword, checkPasswordBorder, btnSignUp, lblWarning, btnSignIn, btnSignInColor].forEach {
+        [ivLogo, fieldEmail, btnDuplicateEmail, btnSendEmail, emailBorder, fieldCode, btnVerification, codeBorder, fieldPassword, passwordBorder, fieldRetypePassword, retypePasswordBorder, btnSignUp, lblWarning, btnSignIn, btnSignInColor].forEach {
             contentsView.addSubview($0)
         }
         
@@ -401,19 +415,19 @@ class RegisterViewController: UIViewController {
             $0.top.equalToSuperview().inset(70)
         }
         
-        [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword, emailBorder, codeBorder, passwordBorder, checkPasswordBorder].forEach {
+        [fieldEmail, fieldCode, fieldPassword, fieldRetypePassword, emailBorder, codeBorder, passwordBorder, retypePasswordBorder].forEach {
             $0.snp.makeConstraints {
                 $0.left.right.equalToSuperview().inset(16)
             }
         }
         
-        [fieldEmail, fieldCode, fieldPassword, fieldCheckPassword, btnSignUp].forEach {
+        [fieldEmail, fieldCode, fieldPassword, fieldRetypePassword, btnSignUp].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(50)
             }
         }
         
-        [emailBorder, codeBorder, passwordBorder, checkPasswordBorder].forEach {
+        [emailBorder, codeBorder, passwordBorder, retypePasswordBorder].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(1)
             }
@@ -443,11 +457,11 @@ class RegisterViewController: UIViewController {
             $0.top.equalToSuperview().inset(350)
         }
         
-        fieldCheckPassword.snp.makeConstraints {
+        fieldRetypePassword.snp.makeConstraints {
             $0.top.equalToSuperview().inset(350)
         }
         
-        checkPasswordBorder.snp.makeConstraints {
+        retypePasswordBorder.snp.makeConstraints {
             $0.top.equalToSuperview().inset(400)
         }
         
@@ -483,56 +497,13 @@ class RegisterViewController: UIViewController {
             $0.left.equalTo(view.frame.width/4)
             $0.right.equalTo(btnSignInColor.snp.left)
             $0.height.equalTo(50)
-            $0.top.equalTo(lblWarning.snp.bottom).offset(170)
+            $0.top.equalTo(view.frame.size.height*0.79)
         }
         
         btnSignInColor.snp.makeConstraints {
             $0.right.equalToSuperview()
             $0.height.equalTo(50)
-            $0.top.equalTo(lblWarning.snp.bottom).offset(170)
+            $0.top.equalTo(view.frame.size.height*0.79)
         }
-    }
-}
-
-extension Reactive where Base: UITextField {
-    
-    var setText: Binder<String> {
-        return Binder(base, binding: { (textField, text) in
-            textField.text = text
-        })
-    }
-    
-    // Toggle
-    var isSecureTextEntry: Binder<()> {
-        return Binder(base, binding: { (textField, _) in
-            textField.isSecureTextEntry = !textField.isSecureTextEntry
-        })
-    }
-    
-    var deleteBackward: Binder<(Bool)> {
-        return Binder(base, binding: { (textField, _) in
-            if textField.text!.count > 6 {
-                textField.deleteBackward()
-            }
-        })
-    }
-}
-
-extension Reactive where Base: UIButton {
-    
-    var setImage: Binder<()> {
-        return Binder(base, binding: { (button, _) in
-            if button.image(for: .normal) == UIImage(systemName: "eye.fill") {
-                button.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
-            } else {
-                button.setImage(UIImage(systemName: "eye.fill"), for: .normal)
-            }
-        })
-    }
-    
-    var setText: Binder<String> {
-        return Binder(base, binding: { (button, str) in
-            button.setTitle(str, for: .normal)
-        })
     }
 }

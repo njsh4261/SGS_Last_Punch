@@ -18,7 +18,6 @@ class WorkspaceListViewController: UIViewController {
     private let viewModel = WorkspaceListViewModel()
     private let disposeBag = DisposeBag()
     private var accessTokenField = UITextField()
-    private var tablewHightField = UITextField()
     private var deleteCellField = UITextField()
     var selectWorkspace: Int = -1
     
@@ -29,8 +28,8 @@ class WorkspaceListViewController: UIViewController {
     var lblSearch = UILabel()
     var refreshControl = UIRefreshControl()
     var pagenationControl = UIActivityIndicatorView()
-    var tablewViewTopBorder = UIView()
-    var tablewViewBottomBorder = UIView()
+    var tableViewTopBorder = UIView()
+    var tableViewBottomBorder = UIView()
     var tableView = UITableView()
     var btnNewWorkspaceByEmpty = UIButton()
     var btnNewWorkspace = UIButton()
@@ -113,7 +112,7 @@ class WorkspaceListViewController: UIViewController {
             .subscribe(onNext: { [weak self] indexPath in
                 guard let self = self else { return }
                 let cell = self.tableView.cellForRow(at: indexPath) as? WorkspaceListCell
-                
+
                 self.deleteCellField.text = cell?.workspaceId.description
                 // delete cell
                 self.deleteCellField.rx.text
@@ -135,7 +134,6 @@ class WorkspaceListViewController: UIViewController {
                 let index = IndexPath(row: row, section: 0)
                 let cell = tv.dequeueReusableCell(withIdentifier: "WorkspaceListCell", for: index) as! WorkspaceListCell
                 
-                cell.btnCheckBox.setImage(nil, for: .normal)
                 self.selectWorkspace = -1
                 self.btnNext.isEnabled = false
                 
@@ -184,15 +182,39 @@ class WorkspaceListViewController: UIViewController {
         guard let pvc = self.presentingViewController else { return }
         pvc.dismiss(animated: true) { [self] in
             if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                KeychainWrapper.standard[.workspaceId] = selectWorkspace
-                
-                
+                KeychainWrapper.standard[.workspaceId] = selectWorkspace.description
+
                 let homeView = HomeViewController()
-                let navController1 = NavigationController(rootViewController: homeView)
-                sceneDelegate.tabBarController.viewControllers?.insert(navController1, at: App.DefaultTab)
-                sceneDelegate.tabBarController.selectedIndex = App.DefaultTab
+                let DMView = DirectMessageListViewController(workspaceId: selectWorkspace.description)
+                DMView.bind(with: DirectMessageListViewModel())
+                let profileView = SettingsViewController(nibName: "SettingsView", bundle: nil)
                 
-                sceneDelegate.welcomeViewController.present(sceneDelegate.tabBarController, animated: true, completion: nil)
+                let navController0 = NavigationController(rootViewController: homeView)
+                let navController1 = NavigationController(rootViewController: DMView)
+                let navController4 = NavigationController(rootViewController: profileView)
+                
+                let tabBarController = UITabBarController()
+                tabBarController.viewControllers = [navController0, navController1, navController4]
+                tabBarController.tabBar.isTranslucent = false
+                tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
+                tabBarController.modalPresentationStyle = .fullScreen
+                tabBarController.selectedIndex = App.DefaultTab
+                
+                if #available(iOS 15.0, *) {
+                    let appearance = UITabBarAppearance()
+                    appearance.configureWithOpaqueBackground()
+                    tabBarController.tabBar.standardAppearance = appearance
+                    tabBarController.tabBar.scrollEdgeAppearance = appearance
+                }
+
+                sceneDelegate.welcomeViewController.present(tabBarController, animated: true, completion: nil)
+
+                
+                
+//                sceneDelegate.homeView.bind(with: HomeViewModel())
+//                sceneDelegate.DMView.bind(with: DirectMessageListViewModel(), workspaceId: selectWorkspace.description)
+//                sceneDelegate.tabBarController.selectedIndex = App.DefaultTab
+//                sceneDelegate.welcomeViewController.present(sceneDelegate.tabBarController, animated: true, completion: nil)
             }
         }
     }
@@ -235,7 +257,7 @@ class WorkspaceListViewController: UIViewController {
             $0.numberOfLines = 0
         }
         
-        [tablewViewTopBorder, tablewViewBottomBorder].forEach {
+        [tableViewTopBorder, tableViewBottomBorder].forEach {
             $0.backgroundColor = .quaternaryLabel
         }
         
@@ -304,7 +326,7 @@ class WorkspaceListViewController: UIViewController {
     }
     
     private func layout() {
-        [lblTitle, lblDescription, tablewViewTopBorder, tablewViewBottomBorder, tableView, lblSearch, btnNewWorkspaceByEmpty, btnNewWorkspace, btnURLWorkspace, btnLogout].forEach { view.addSubview($0) }
+        [lblTitle, lblDescription, tableViewTopBorder, tableViewBottomBorder, tableView, lblSearch, btnNewWorkspaceByEmpty, btnNewWorkspace, btnURLWorkspace, btnLogout].forEach { view.addSubview($0) }
         
         [lblTitle, lblDescription].forEach {
             $0.snp.makeConstraints {
@@ -324,18 +346,18 @@ class WorkspaceListViewController: UIViewController {
             $0.centerX.centerY.width.height.equalTo(tableView)
         }
         
-        [tablewViewTopBorder, tablewViewBottomBorder].forEach {
+        [tableViewTopBorder, tableViewBottomBorder].forEach {
             $0.snp.makeConstraints {
                 $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(15)
                 $0.height.equalTo(1)
             }
         }
         
-        tablewViewTopBorder.snp.makeConstraints {
+        tableViewTopBorder.snp.makeConstraints {
             $0.top.equalTo(lblDescription.snp.bottom).offset(39)
         }
         
-        tablewViewBottomBorder.snp.makeConstraints {
+        tableViewBottomBorder.snp.makeConstraints {
             $0.bottom.equalTo(lblSearch.snp.top).offset(-19)
         }
         

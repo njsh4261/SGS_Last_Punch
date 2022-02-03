@@ -1,16 +1,14 @@
 //
-//  DirectMessageCellViewModel.swift
+//  UserListCellViewModel.swift
 //  Snack
 //
-//  Created by ghyeongkim-MN on 2022/01/17.
+//  Created by ghyeongkim-MN on 2022/01/28.
 //
-
-import Foundation
 
 import RxSwift
 import RxCocoa
 
-struct DirectMessageCellViewModel {
+struct UserListCellViewModel {
     let showFreeShareButton: Signal<Bool>
     let resetPrice: Signal<Void>
     let priceValue = PublishRelay<String?>()

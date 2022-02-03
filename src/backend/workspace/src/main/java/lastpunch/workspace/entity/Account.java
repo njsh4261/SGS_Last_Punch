@@ -74,6 +74,7 @@ public class Account{
     }
     
     @Getter
+    @Setter
     @Builder
     public static class ExportDto{
         private Long id;
@@ -86,13 +87,14 @@ public class Account{
         private String language;
         private Integer settings;
         private String status;
-        private LocalDateTime createdt;
-        private LocalDateTime modifydt;
+        private LocalDateTime createDt;
+        private LocalDateTime modifyDt;
+        private Message lastMessage;
 
         @QueryProjection
         public ExportDto(Long id, String email, String name, String displayname, String description,
                          String phone, String country, String language, Integer settings, String status,
-                         LocalDateTime createdt, LocalDateTime modifydt) {
+                         LocalDateTime createDt, LocalDateTime modifyDt) {
             this.id = id;
             this.email = email;
             this.name = name;
@@ -103,8 +105,8 @@ public class Account{
             this.language = language;
             this.settings = settings;
             this.status = status;
-            this.createdt = createdt;
-            this.modifydt = modifydt;
+            this.createDt = createDt;
+            this.modifyDt = modifyDt;
         }
     }
     
@@ -120,8 +122,8 @@ public class Account{
             .language(language)
             .settings(settings)
             .status(status)
-            .createdt(createdt)
-            .modifydt(modifydt)
+            .createDt(createdt)
+            .modifyDt(modifydt)
             .build();
     }
 }

@@ -25,7 +25,7 @@ export default function chatHook(): [
     name: uuidv4(),
   });
 
-  const sendMessage = chatSocketHook(dummyUser, channel.id, setMsgList);
+  const sendMessage = chatSocketHook(channel.id, setMsgList);
 
   const msgTypingHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setMsg(e.target.value);

@@ -7,7 +7,6 @@ import { SendMessage, ChatMessage } from '../../types/chat.type';
 const HOST = 'http://localhost:8083';
 
 export default function chatSocketHook(
-  dummyUser: { id: string; name: string },
   channelId: string,
   setMsgList: React.Dispatch<SetStateAction<ChatMessage[]>>,
 ) {
@@ -37,8 +36,9 @@ export default function chatSocketHook(
 
   useEffect(() => {
     connect();
+    console.log('useEffect - chat socket'); // remove
     return disconnect;
-  }, []);
+  }, [channelId]);
 
   return sendMessage;
 }

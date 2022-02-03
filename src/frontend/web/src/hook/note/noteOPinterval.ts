@@ -12,7 +12,6 @@ export default function noteOPintervalHook(
 ) {
   useInterval(async () => {
     if (note && opQueue.current.length > 0) {
-      console.log(note.id);
       const oldQueueLength = opQueue.current.length;
       const stringOP = JSON.stringify(opQueue.current);
       const timestamp = await updateNoteOPAPI(note.id, stringOP);

@@ -36,12 +36,12 @@ export default function ChannelItem(props: Props) {
 
   const navigate = useNavigate();
 
-  const testCreateHandler = async () => {
+  const createNoteHandler = async () => {
     const noteId = await createNoteAPI(+wsId, +channel.id, 1);
     if (noteId) setNoteList([...noteList, noteId]);
   };
 
-  const testGetListHandler = async () => {
+  const getNoteListHandler = async () => {
     const responseNoteList = await getNoteListAPI(+channel.id);
     if (responseNoteList)
       setNoteList(responseNoteList.map((resNote) => resNote.id));
@@ -55,15 +55,15 @@ export default function ChannelItem(props: Props) {
   };
 
   useEffect(() => {
-    if (isSelected) testGetListHandler();
-  });
+    if (isSelected) getNoteListHandler();
+  }, [isSelected]);
 
   return (
     <ItemContainer id={channel.id} data-type={type} onClick={selectHandler}>
       <div>
         #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
       </div>
-      {isSelected && <button onClick={testCreateHandler}>create note</button>}
+      {isSelected && <button onClick={createNoteHandler}>create note</button>}
       {isSelected &&
         noteList.map((note) => (
           <div id={note} key={note} onClick={selectNoteHandler}>

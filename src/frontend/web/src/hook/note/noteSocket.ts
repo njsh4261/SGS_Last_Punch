@@ -73,7 +73,6 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
   enterNote(stomp);
 
   stomp.subscribe(`/user/note/${myUser.id}`, (payload) => {
-    console.log('접속 성공');
     const transaction = JSON.parse(payload.body);
     if (transaction.owner) setOwner(JSON.parse(transaction.owner));
     setUserList(transaction.userList.map((u: string) => JSON.parse(u)));
@@ -85,28 +84,22 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
     switch (transaction.type) {
       case MESSAGE_TYPE.ENTER:
         if (transaction.myUser.id !== myUser.id) {
-          console.log('someone enter');
           setUserList((ul) => [...ul, transaction.myUser]);
         }
         break;
       case MESSAGE_TYPE.LEAVE:
-        console.log('leave');
         setUserList((ul) => ul.filter((u) => u.id !== transaction.myUser.id));
         break;
       case MESSAGE_TYPE.LOCK:
-        // test
-        console.log('lock:', transaction.myUser, myUser);
         setOwner(transaction.myUser);
         break;
       case MESSAGE_TYPE.UNLOCK:
-        console.log('unlock');
         setOwner(null);
         break;
       case MESSAGE_TYPE.UPDATE_TITLE:
         const data = await getTitleAPI(note!.id);
-        if (data) {
-          console.log(data);
-          // setTitle(data);
+        if (data.title) {
+          setTitle(data.title);
         }
         break;
       case MESSAGE_TYPE.UPDATE:
@@ -147,14 +140,13 @@ export default function noteSocketHook(
     [],
   );
 
-  // const [stomp, setStomp] = useState<CompatClient>();
   const stomp = useRef<CompatClient>();
   const [title, setTitle] = useState('test title');
   const [owner, setOwner] = useState<User | null>(null);
   const [userList, setUserList] = useState<User[]>([]);
 
   const connect = () => {
-    const accessToken = sessionStorage.getItem(TOKEN.ACCESS);
+    const accessToken = localStorage.getItem(TOKEN.ACCESS);
     if (!accessToken || !HOST) {
       console.error('fail connect socket - hook/noteSock');
       return;
@@ -196,7 +188,6 @@ export default function noteSocketHook(
   };
 
   const lockNote = () => {
-    console.log('reqeust rock, owner=', owner);
     if (stomp.current && owner === null)
       stompSend(stomp.current, MESSAGE_TYPE.LOCK);
   };

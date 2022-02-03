@@ -1,10 +1,13 @@
 import axios from 'axios';
-import { RESPONSE } from '../constant';
+import { RESPONSE, TOKEN, URL } from '../constant';
 
-const TEST_AWS = 'http://13.125.123.25:9000';
-const TEST_LOCAL = 'http://localhost:9000';
+// const TEST_AWS = 'http://13.125.123.25:9000';
+const TEST_LOCAL = 'http://localhost:8080';
 
-const HOST = TEST_AWS;
+const HOST = TEST_LOCAL;
+
+const getAccessToken = () => sessionStorage.getItem(TOKEN.ACCESS);
+const accessToken = getAccessToken();
 
 export async function createNoteAPI(
   wsId: number,
@@ -18,11 +21,18 @@ export async function createNoteAPI(
     creatorId,
   };
 
+  if (!accessToken) {
+    alert('no token - note api');
+    return;
+  }
   try {
     const response = await axios.request({
       method: 'POST',
       url: HOST + endpoint,
       data: body,
+      headers: {
+        'X-AUTH-TOKEN': accessToken,
+      },
     });
 
     const { code, data, err } = response?.data;
@@ -41,10 +51,18 @@ export async function getNoteListAPI(
 ): Promise<any[] | undefined> {
   const endpoint = `/notes?channelId=${channelId}`;
 
+  if (!accessToken) {
+    alert('no token - note api');
+    return;
+  }
+
   try {
     const response = await axios.request({
       method: 'GET',
       url: HOST + endpoint,
+      headers: {
+        'X-AUTH-TOKEN': accessToken,
+      },
     });
 
     const { code, data, err } = response?.data;
@@ -62,10 +80,18 @@ export async function getSpecificNoteAPI(
 ): Promise<any | undefined> {
   const endpoint = `/note/${noteId}`;
 
+  if (!accessToken) {
+    alert('no token - note api');
+    return;
+  }
+
   try {
     const response = await axios.request({
       method: 'GET',
       url: HOST + endpoint,
+      headers: {
+        'X-AUTH-TOKEN': accessToken,
+      },
     });
 
     const { code, data, err } = response?.data;
@@ -91,11 +117,19 @@ export async function updateNoteAllAPI(
     modifyDt: new Date().toISOString(),
   };
 
+  if (!accessToken) {
+    alert('no token - note api');
+    return;
+  }
+
   try {
     const response = await axios.request({
       method: 'PUT',
       url: HOST + endpoint,
       data: body,
+      headers: {
+        'X-AUTH-TOKEN': accessToken,
+      },
     });
     const { code, data, err } = response?.data;
     if (code === RESPONSE.NOTE.SUCCESS) {
@@ -127,11 +161,19 @@ export async function updateNoteOPAPI(
     timestamp,
   };
 
+  if (!accessToken) {
+    alert('no token - note api');
+    return;
+  }
+
   try {
     const response = await axios.request({
       method: 'POST',
       url: HOST + endpoint,
       data: body,
+      headers: {
+        'X-AUTH-TOKEN': accessToken,
+      },
     });
     const { code, data, err } = response?.data;
     if (code === RESPONSE.NOTE.SUCCESS) {
@@ -147,10 +189,18 @@ export async function updateNoteOPAPI(
 export async function getNoteOPAPI(noteId: string, timestamp: string) {
   const endpoint = `/note/${noteId}/op?timestamp=${timestamp}`;
 
+  if (!accessToken) {
+    alert('no token - note api');
+    return;
+  }
+
   try {
     const response = await axios.request({
       method: 'GET',
       url: HOST + endpoint,
+      headers: {
+        'X-AUTH-TOKEN': accessToken,
+      },
     });
     console.log('get response:', response);
     const { code, data, err } = response?.data;
@@ -171,11 +221,20 @@ export async function updateTitleAPI(noteId: string, title: string) {
     noteId,
     title,
   };
+
+  if (!accessToken) {
+    alert('no token - note api');
+    return;
+  }
+
   try {
     const response = await axios.request({
       method: 'PUT',
       url: HOST + endpoint,
       data: body,
+      headers: {
+        'X-AUTH-TOKEN': accessToken,
+      },
     });
     const { code, data, err } = response?.data;
     if (code === RESPONSE.NOTE.SUCCESS) {
@@ -191,10 +250,18 @@ export async function updateTitleAPI(noteId: string, title: string) {
 export async function getTitleAPI(noteId: string) {
   const endpoint = `/note/${noteId}/title`;
 
+  if (!accessToken) {
+    alert('no token - note api');
+    return;
+  }
+
   try {
     const response = await axios.request({
       method: 'GET',
       url: HOST + endpoint,
+      headers: {
+        'X-AUTH-TOKEN': accessToken,
+      },
     });
     const { code, data, err } = response?.data;
     if (code === RESPONSE.NOTE.SUCCESS) {

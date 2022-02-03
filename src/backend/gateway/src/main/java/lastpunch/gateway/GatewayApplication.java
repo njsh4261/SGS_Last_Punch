@@ -2,7 +2,6 @@ package lastpunch.gateway;
 
 import lastpunch.gateway.filter.AccessTokenFilter;
 import lastpunch.gateway.filter.RefreshTokenFilter;
-import lastpunch.gateway.filter.RemoveCorsHeaderFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -17,7 +16,7 @@ public class GatewayApplication {
     }
     
     @Bean
-    public RouteLocator customRoutes(RouteLocatorBuilder builder, AccessTokenFilter accessTokenFilter, RefreshTokenFilter refreshTokenFilter, RemoveCorsHeaderFilter removeCorsHeaderFilter) {
+    public RouteLocator customRoutes(RouteLocatorBuilder builder, AccessTokenFilter accessTokenFilter, RefreshTokenFilter refreshTokenFilter) {
         return builder.routes()
             .route("auth-verify",  r-> r.path("/auth/verify")
                 .filters(f -> f

@@ -41,15 +41,12 @@ public class GatewayApplication {
                     .filter(accessTokenFilter)
                 )
                 .uri("lb://WORKSPACE-SERVER"))
-            .route("note-http", r -> r.path("/note/**")
-//                .filters(f -> f
-//                    .filter(accessTokenFilter)
-//                )
-                .uri("http://localhost:9000"))
-            .route("note-websocket", r -> r.path("ws/note/**")
+            .route("note-http", r -> r.path("/note*/**")
                 .filters(f -> f
-                    .filter(removeCorsHeaderFilter)
+                    .filter(accessTokenFilter)
                 )
+                .uri("http://localhost:9000"))
+            .route("note-websocket", r -> r.path("/ws/note/**")
                 .uri("http://localhost:9001"))
             .build();
     }

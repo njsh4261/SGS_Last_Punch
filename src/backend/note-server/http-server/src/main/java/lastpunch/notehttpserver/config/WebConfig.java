@@ -19,13 +19,4 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(requestInterceptor)
             .addPathPatterns("/**");
     }
-    
-    // 임시 CORS 설정 (gateway 연결 후 삭제)
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-            .allowedOrigins("http://localhost:3000")
-            .allowedHeaders("*")
-            .allowedMethods("*");
-    }
 }

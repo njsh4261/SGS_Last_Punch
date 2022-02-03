@@ -1,6 +1,7 @@
 // original source code work by Jisoo Kim
 package lastpunch.workspace.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
 import java.util.List;
 
@@ -87,8 +88,13 @@ public class Account{
         private String language;
         private Integer settings;
         private String status;
+    
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createDt;
+    
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime modifyDt;
+        
         private Message lastMessage;
 
         @QueryProjection

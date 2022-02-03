@@ -154,7 +154,7 @@ export default function noteSocketHook(
   const [userList, setUserList] = useState<User[]>([]);
 
   const connect = () => {
-    const accessToken = sessionStorage.getItem(TOKEN.ACCESS);
+    const accessToken = localStorage.getItem(TOKEN.ACCESS);
     if (!accessToken || !HOST) {
       console.error('fail connect socket - hook/noteSock');
       return;

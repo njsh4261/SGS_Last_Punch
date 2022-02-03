@@ -11,11 +11,12 @@ import { Editor } from 'slate';
 
 import { getNoteOPAPI, getTitleAPI } from '../../Api/note';
 import { Note } from '../../../types/note.type';
+import { TOKEN, URL } from '../../constant';
 
-const TEST_AWS = 'http://13.125.123.25:9001/ws/note';
+// const TEST_AWS = 'http://13.125.123.25:9001/ws/note';
 const TEST_LOCAL = 'http://localhost:9001/ws/note';
 
-const HOST = TEST_AWS;
+const HOST = 'http://localhost:8080/ws/note';
 
 export type User = {
   id: number;
@@ -153,11 +154,16 @@ export default function noteSocketHook(
   const [userList, setUserList] = useState<User[]>([]);
 
   const connect = () => {
+    const accessToken = sessionStorage.getItem(TOKEN.ACCESS);
+    if (!accessToken || !HOST) {
+      console.error('fail connect socket - hook/noteSock');
+      return;
+    }
     try {
       const socket = new SockJS(HOST);
       const stompClient = Stomp.over(socket);
       stompClient.connect(
-        {},
+        { Authorization: accessToken },
         enterAndSub({
           editor,
           myUser,
@@ -172,7 +178,7 @@ export default function noteSocketHook(
       );
       stomp.current = stompClient;
     } catch (e) {
-      // console.error(e);
+      console.error(e);
       return;
     }
   };

@@ -17,6 +17,7 @@ target 'Snack' do
   pod 'InputBarAccessoryView'
   pod 'PasscodeKit'
   pod 'StompClientLib'
+  pod 'MessageKit'
 
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'

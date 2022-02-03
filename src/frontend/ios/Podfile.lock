@@ -98,6 +98,8 @@ PODS:
   - InputBarAccessoryView (5.4.0):
     - InputBarAccessoryView/Core (= 5.4.0)
   - InputBarAccessoryView/Core (5.4.0)
+  - MessageKit (3.7.0):
+    - InputBarAccessoryView (~> 5.4.0)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -128,6 +130,7 @@ DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Messaging
   - InputBarAccessoryView
+  - MessageKit
   - PasscodeKit
   - ProgressHUD
   - RxCocoa (= 6.2.0)
@@ -152,6 +155,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - InputBarAccessoryView
+    - MessageKit
     - nanopb
     - PasscodeKit
     - ProgressHUD
@@ -179,6 +183,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
   InputBarAccessoryView: 74d471ab1fa1736806be50328df79257e52865a9
+  MessageKit: 8e76dd8d65ad44b49e1651c673497146416461e9
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PasscodeKit: 495d98d2d5e68c5e34c58917b4022eba66182616
   ProgressHUD: 4bdaa0d2ddf676b23324b199f9facffb5c3a1620
@@ -193,6 +198,6 @@ SPEC CHECKSUMS:
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: 12a0140b9f365ab86b22c2ea7e69fcf1217d1d43
+PODFILE CHECKSUM: 06ac6571a0d2539db27a8da5d6496d3a67b0bc11
 
 COCOAPODS: 1.11.2

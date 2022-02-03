@@ -1,2 +1,2 @@
-use LastPunchDB
-db.createCollection("message")
+db.createCollection("messages")
+db.createCollection("notes")

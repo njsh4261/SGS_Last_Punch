@@ -39,16 +39,9 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: lastpunch
       MONGO_INITDB_ROOT_PASSWORD: 1234
-      MONGO_INITDB_DATABASE: LastPunchDB
+      MONGO_INITDB_DATABASE: lastpunch
     volumes:
       - ./docker-setup/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-    networks:
-      - lastpunch-network
-
-  mongodb:
-    image: mongo
-    ports:
-      - "27017:27017"
     networks:
       - lastpunch-network
 
@@ -125,8 +118,8 @@ services:
     ports:
       - "8083:8083"
     environment:
+      spring.data.mongodb.uri: mongodb://localhost:27017/lastpunch
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
-      spring.data.mongodb.uri: mongodb://localhost:27017/LastPunchDB
     depends_on:
       - eureka-server
       - mongodb

@@ -1,7 +1,6 @@
 package lastpunch.chat.repository;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import lastpunch.chat.entity.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

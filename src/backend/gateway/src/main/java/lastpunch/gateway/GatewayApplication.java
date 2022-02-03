@@ -52,9 +52,9 @@ public class GatewayApplication{
                 .filters(f -> f
                     .filter(accessTokenFilter)
                 )
-                .uri("http://localhost:8083"))
+                .uri("lb://CHAT-SERVER"))
             .route("chat-websocket", r -> r.path("/ws/chat/**")
-                .uri("http://localhost:8083"))
+                .uri("lb://CHAT-SERVER"))
             .build();
     }
 }

@@ -22,8 +22,9 @@ const MessageListContainer = styled.article`
   margin-bottom: 114px; // size of input
 `;
 
-const MessageBox = styled.section`
+const MessageBox = styled.section<{ me?: boolean }>`
   display: flex;
+  ${({ me }) => me && `flex: end`}
   white-space: normal;
   word-break: break-all;
   padding: 8px 20px;
@@ -44,8 +45,15 @@ const ChatInputLayout = styled.article`
 const End = styled.article``;
 
 const Chat = () => {
-  const [channel, msg, msgList, endRef, msgTypingHandler, msgSubmitHandler] =
-    chatHook();
+  const [
+    dummyUser,
+    channel,
+    msg,
+    msgList,
+    endRef,
+    msgTypingHandler,
+    msgSubmitHandler,
+  ] = chatHook();
 
   return (
     <>
@@ -56,7 +64,9 @@ const Chat = () => {
           <Header channelName={channel.name} />
           <MessageListContainer>
             {msgList?.map((msg, idx) => (
-              <MessageBox key={idx}>{msg}</MessageBox>
+              <MessageBox key={idx} me={msg.writerId === dummyUser.id}>
+                {msg.text}
+              </MessageBox>
             ))}
             <End ref={endRef}></End>
           </MessageListContainer>

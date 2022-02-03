@@ -45,9 +45,9 @@ public class GatewayApplication{
                 .filters(f -> f
                     .filter(accessTokenFilter)
                 )
-                .uri("http://localhost:9000"))
+                .uri("lb://NOTE-SERVER"))
             .route("note-websocket", r -> r.path("/ws/note/**")
-                .uri("http://localhost:9001"))
+                .uri("lb://NOTE-WS-SERVER"))
             .route("chat-http", r -> r.path("/chat/**")
                 .filters(f -> f
                     .filter(accessTokenFilter)

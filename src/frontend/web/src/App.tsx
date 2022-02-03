@@ -9,14 +9,14 @@ import Note from './pages/Note';
 import TestRoute from './routes/Test';
 
 function App() {
-  const accessToken = sessionStorage.getItem(TOKEN.ACCESS);
+  const accessToken = localStorage.getItem(TOKEN.ACCESS);
   const modalActive = useSelector((state: RootState) => state.modal.active);
 
   return (
     <>
-      {/* <TestRoute></TestRoute> */}
-      {!accessToken ? <PublicRoute /> : <PrivateRoute />}
-      {modalActive && <ModalWrapper active={modalActive} />}
+      <TestRoute></TestRoute>
+      {/* {!accessToken ? <PublicRoute /> : <PrivateRoute />}
+      {modalActive && <ModalWrapper active={modalActive} />} */}
     </>
   );
 }

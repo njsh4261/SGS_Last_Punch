@@ -60,6 +60,7 @@ export default function NoteMain() {
 
   const {
     updateNote,
+    updateTitle,
     lockNote,
     unlockNote,
     leaveNote,
@@ -159,10 +160,8 @@ export default function NoteMain() {
   const updateAllHandler = async () => {
     if (!note) return;
     const { id } = note;
-    console.log('send:', stringValue.current);
     const res = await updateNoteAllAPI(id, title, stringValue.current);
-    if (res) console.log('updated note all!');
-    else alert('fail update');
+    if (!res) console.error('update note all fail');
   };
 
   const getSpecificNoteHandler = async () => {
@@ -171,7 +170,6 @@ export default function NoteMain() {
   };
 
   const endtypingHandler = () => {
-    console.log('end typing');
     updateAllHandler();
     unlockNote();
   };
@@ -183,8 +181,9 @@ export default function NoteMain() {
       setTitle(e.target.value);
 
       if (typingTitle.current) clearTimeout(typingTitle.current);
-      typingTitle.current = setTimeout(() => {
-        updateTitleAPI(note!.id, e.target.value);
+      typingTitle.current = setTimeout(async () => {
+        const success = await updateTitleAPI(note!.id, e.target.value);
+        if (success) updateTitle();
         unlockNote();
       }, TYPING_TIME);
     }
@@ -203,7 +202,7 @@ export default function NoteMain() {
     if (owner && owner.id === myUser.id) {
       resetTypingTimer();
     }
-  }, [owner, note]);
+  }, [note, owner]);
 
   // 주기마다 op 업데이트
   noteOPintervalHook(opQueue, note, UPDATE_OP_TIME, updateNote);
@@ -211,7 +210,6 @@ export default function NoteMain() {
   useEffect(() => {
     window.addEventListener('beforeunload', () => {
       if (owner && owner.id === myUser.id) {
-        // todo: update OP
         updateAllHandler();
       }
       leaveNote();

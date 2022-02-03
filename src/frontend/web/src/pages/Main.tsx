@@ -32,7 +32,8 @@ export default function Main() {
         <Aside wsName={wsName}></Aside>
         {params.channelId ? (
           params.noteId ? (
-            <NoteMain></NoteMain>
+            // <NoteMain></NoteMain>
+            <div>test note</div>
           ) : (
             <Chat></Chat>
           )

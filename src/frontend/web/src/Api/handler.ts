@@ -3,7 +3,7 @@ import { URL, ERROR_MESSAGE, TOKEN, RESPONSE } from '../constant';
 import clearSession from '../util/clearSession';
 import reissueAPI from './reissue';
 
-const getAccessToken = () => sessionStorage.getItem(TOKEN.ACCESS);
+const getAccessToken = () => localStorage.getItem(TOKEN.ACCESS);
 
 async function apiHandler(
   method: 'GET',
@@ -14,6 +14,14 @@ async function apiHandler(
 
 async function apiHandler(
   method: 'POST',
+  endpoint: string,
+  successCode: string,
+  body: any,
+  needToken?: boolean,
+): Promise<any>;
+
+async function apiHandler(
+  method: 'PUT',
   endpoint: string,
   successCode: string,
   body: any,
@@ -48,12 +56,15 @@ async function apiHandler(
     }
     let response;
 
-    if (method === 'GET') {
-      response = await axios.get(URL.HOST + endpoint, option);
-    }
-
-    if (method === 'POST') {
-      response = await axios.post(URL.HOST + endpoint, body, option);
+    switch (method) {
+      case 'GET':
+        response = await axios.get(URL.HOST + endpoint, option);
+        break;
+      case 'POST':
+        response = await axios.post(URL.HOST + endpoint, body, option);
+        break;
+      case 'PUT':
+        response = await axios.put(URL.HOST + endpoint, body, option);
     }
 
     const { code, data, err } = response?.data;

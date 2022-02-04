@@ -102,7 +102,9 @@ const Leaf: React.FC<RenderLeafProps> = ({ attributes, children, leaf }) => {
 
   if (leaf.code) {
     children = (
-      <code style={{ 'background-color': 'lightGray' } as any}>{children}</code>
+      <code style={{ backgroundColor: 'lightGray' } as React.CSSProperties}>
+        {children}
+      </code>
     );
   }
 
@@ -123,7 +125,7 @@ const Leaf: React.FC<RenderLeafProps> = ({ attributes, children, leaf }) => {
         {
           position: 'relative',
           backgroundColor: data?.alphaColor,
-        } as any
+        } as React.CSSProperties
       }
     >
       {leaf.isCaret ? <Caret {...(leaf as any)} /> : null}

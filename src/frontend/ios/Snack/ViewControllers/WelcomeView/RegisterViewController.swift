@@ -422,7 +422,7 @@ class RegisterViewController: UIViewController {
         contentsView.snp.makeConstraints {
             $0.edges.equalTo(0)
             $0.width.equalTo(view.frame.width)
-            $0.height.equalTo(view.frame.height + 100)
+            $0.height.equalTo(view.frame.height + 20)
         }
         
         ivLogo.snp.makeConstraints {

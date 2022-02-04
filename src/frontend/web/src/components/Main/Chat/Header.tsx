@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Navigation from '../../Common/NavigationTab';
 import expandIcon from '../../../icon/expand.svg';
 
 const ChannelHeader = styled.article`
@@ -57,7 +56,6 @@ const Header = ({ channelName }: { channelName: string }) => {
         <ChannelName>{channelName}</ChannelName>
         <ArrowDropDownIcon></ArrowDropDownIcon>
       </ChannelInfo>
-      <Navigation mode="CHAT"></Navigation>
     </ChannelHeader>
   );
 };

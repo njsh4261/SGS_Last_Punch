@@ -33,7 +33,7 @@ class WorkspaceListCell: UITableViewCell {
         workspaceId = data.id
         ivThumbnail.image = UIImage(named: "snack")
         lblName.text = data.name
-        lblAddress.text = data.createDt
+        lblAddress.text = data.createdt
         
         btnCheckBox.setImage(nil, for: .normal)
     }

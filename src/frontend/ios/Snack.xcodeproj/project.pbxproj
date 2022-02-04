@@ -102,7 +102,6 @@
 		0349F0237A28CF144982DE22 /* Pods-Snack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.release.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.release.xcconfig"; sourceTree = "<group>"; };
 		19B5C789142A2C6B28D343DE /* Pods_Snack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Snack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BD7615966730183AC1D70B3 /* Pods_Snack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Snack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8C19E409277BFE0C0086F374 /* RxSwiftPractice.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = RxSwiftPractice.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		8C19E4102786B35B0086F374 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8C19E412278B23FB0086F374 /* Snack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Snack.entitlements; sourceTree = "<group>"; };
 		8C33C4E4277BF06100294445 /* Snack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snack.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,7 +229,6 @@
 		8C33C4DB277BF06100294445 = {
 			isa = PBXGroup;
 			children = (
-				8C19E409277BFE0C0086F374 /* RxSwiftPractice.playground */,
 				8C33C4E6277BF06100294445 /* Snack */,
 				8C33C4E5277BF06100294445 /* Products */,
 				B2B4A968D3E00D2B1E6F53BC /* Pods */,

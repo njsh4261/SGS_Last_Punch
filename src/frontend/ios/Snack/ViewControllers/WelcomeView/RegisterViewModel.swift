@@ -169,13 +169,13 @@ class RegisterViewModel: ViewModelProtocol {
             }.disposed(by: self.disposeBag)
         
         // 회원 가입
-        input.btnSignUpTapped.withLatestFrom(Observable.combineLatest(input.email, input.code, input.password, input.retypePassword))
-            .bind { [weak self] (email, code, password, retypePassword) in
+        input.btnSignUpTapped.withLatestFrom(Observable.combineLatest(input.email, input.code, input.name, input.password, input.retypePassword))
+            .bind { [weak self] (email, code, name, password, retypePassword) in
                 guard let self = self else { return }
                 // API로직을 태워야합니다.
                 ProgressHUD.animationType = .circleSpinFade
                 ProgressHUD.show("정보 확인중..")
-                RegisterService.shared.signUp(email: email, code: code, password: retypePassword)
+                RegisterService.shared.signUp(email: email, code: code, name: name, password: retypePassword)
                     .subscribe { event in
                         switch event {
                         case .next(let result):

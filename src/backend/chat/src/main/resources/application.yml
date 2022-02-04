@@ -4,7 +4,12 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/[your_DB]
+      uri: mongodb://localhost:27017/lastpunch
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 5672
 
 logging:
   level:
@@ -14,3 +19,6 @@ logging:
           mongodb:
             core:
               MongoTemplate: DEBUG
+
+jwt:
+  secret: lastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunch

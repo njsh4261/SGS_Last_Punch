@@ -18,8 +18,8 @@ struct ChannelObject: Codable {
     
     let isDeleted: String
     
-    let createdAt: String
-    let updatedAt: String
+    let createdDt: String
+    let updatedDt: String
 }
 
 struct ChannelList: Codable {

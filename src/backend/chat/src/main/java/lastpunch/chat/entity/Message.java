@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
 
-@Document
+@Document(collection = "messages")
 @Getter
 @Builder
 @ToString

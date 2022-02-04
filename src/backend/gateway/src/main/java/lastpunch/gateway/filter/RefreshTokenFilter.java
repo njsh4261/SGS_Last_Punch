@@ -32,7 +32,9 @@ public class RefreshTokenFilter implements GatewayFilter, Ordered{
         
         // 1. refreshToken이 존재하는지 확인
         String refreshToken = request.getHeaders().get("X-AUTH-TOKEN").get(0);
-        if (refreshToken == "") throw new NullPointerException();
+        if(refreshToken.isBlank()){
+            throw new NullPointerException();
+        }
         
         // 2. refreshToken이 유효한 경우 -> accessToken 재발급 요청 진행, 유효하지 않은 경우 exception handler에 에러 걸려서 401 리턴
         jwtProvider.validateToken(refreshToken);
@@ -40,6 +42,5 @@ public class RefreshTokenFilter implements GatewayFilter, Ordered{
     }
     
     public static class Config {
-    
     }
 }

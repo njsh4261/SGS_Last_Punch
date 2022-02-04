@@ -13,9 +13,6 @@ import { getNoteOPAPI, getTitleAPI } from '../../Api/note';
 import { Note } from '../../../types/note.type';
 import { TOKEN, URL } from '../../constant';
 
-// const TEST_AWS = 'http://13.125.123.25:9001/ws/note';
-const TEST_LOCAL = 'http://localhost:9001/ws/note';
-
 const HOST = 'http://localhost:8080/ws/note';
 
 export type User = {
@@ -154,6 +151,7 @@ export default function noteSocketHook(
     try {
       const socket = new SockJS(HOST);
       const stompClient = Stomp.over(socket);
+      stompClient.debug = (f) => f;
       stompClient.connect(
         { Authorization: accessToken },
         enterAndSub({

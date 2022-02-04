@@ -16,7 +16,7 @@ public class MongoConfig{
     @Bean
     public MongoTemplate chatMongoTemplate(MongoClient mongoClient){
         return new MongoTemplate(
-            new SimpleMongoClientDatabaseFactory(mongoClient, "LastPunchDB")
+            new SimpleMongoClientDatabaseFactory(mongoClient, "lastpunch")
         );
     }
 }

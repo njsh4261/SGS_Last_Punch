@@ -30,4 +30,5 @@ public class Message{
     
     @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     private LocalDateTime modifyDt;
+    
 }

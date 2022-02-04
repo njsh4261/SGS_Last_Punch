@@ -10,11 +10,12 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @EnableMongoRepositories(
-    basePackages = "lastpunch.chat.repository", mongoTemplateRef = "chatMongoTemplate")
+    basePackages = "lastpunch.workspace.repository.message",
+    mongoTemplateRef = "workspaceMongoTemplate")
 @EnableMongoAuditing
 public class MongoConfig{
     @Bean
-    public MongoTemplate chatMongoTemplate(MongoClient mongoClient){
+    public MongoTemplate workspaceMongoTemplate(MongoClient mongoClient){
         return new MongoTemplate(
             new SimpleMongoClientDatabaseFactory(mongoClient, "lastpunch")
         );

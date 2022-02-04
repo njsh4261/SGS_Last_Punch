@@ -4,16 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lastpunch.workspace.entity.Message;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -32,18 +31,28 @@ public class MessageRepositoryImpl implements MessageRepositoryCustom{
         Aggregation aggregation = Aggregation.newAggregation(
             Aggregation.match(Criteria.where("channelId").in(dmList)),
             Aggregation.sort(Direction.DESC, "createDt"),
-            Aggregation.group("messages.channelId")
-                .first("channelId").as("lastMessage")
+            Aggregation.group("channelId").push("$$ROOT").as("messages"),
+            Aggregation.project().and("messages").slice(1)
         );
     
-        AggregationResults<Message> aggregationResults = mongoTemplate.aggregate(
-            aggregation, "messages", Message.class
+        AggregationResults<DmOutput> aggregationResults = mongoTemplate.aggregate(
+            aggregation, "messages", DmOutput.class
         );
     
         HashMap<String, Message> map = new HashMap<>();
-        for(Message message: aggregationResults.getMappedResults()){
-            map.put(message.getChannelId(), message);
+        for(DmOutput dmOutput: aggregationResults.getMappedResults()){
+            map.put(
+                dmOutput.getId(), (
+                    dmOutput.getMessages().size() > 0 ? dmOutput.getMessages().get(0) : null
+                )
+            );
         }
         return map;
+    }
+    
+    @Getter
+    private class DmOutput{
+        private String id;
+        private List<Message> messages;
     }
 }

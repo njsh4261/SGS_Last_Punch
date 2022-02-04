@@ -77,6 +77,7 @@ public class Account{
     @Getter
     @Setter
     @Builder
+    @AllArgsConstructor
     public static class ExportDto{
         private Long id;
         private String email;

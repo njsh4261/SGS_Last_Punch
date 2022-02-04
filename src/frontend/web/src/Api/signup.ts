@@ -45,7 +45,7 @@ export async function signupAPI(
 ) {
   const body = {
     email,
-    displayName,
+    name: displayName,
     password: pass,
     verifyCode,
   };

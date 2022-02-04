@@ -39,11 +39,13 @@ export async function verifyAPI(email: string, verifyCode: string) {
 
 export async function signupAPI(
   email: string,
+  displayName: string,
   pass: string,
   verifyCode: string,
 ) {
   const body = {
     email,
+    displayName,
     password: pass,
     verifyCode,
   };

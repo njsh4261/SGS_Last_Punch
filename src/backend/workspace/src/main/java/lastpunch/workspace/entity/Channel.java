@@ -1,5 +1,6 @@
 package lastpunch.workspace.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
 import com.sun.istack.NotNull;
 import java.time.LocalDateTime;
@@ -121,7 +122,11 @@ public class Channel{
         private String description;
         private Integer settings;
         private Integer status;
+    
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createDt;
+    
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime modifyDt;
 
         @QueryProjection

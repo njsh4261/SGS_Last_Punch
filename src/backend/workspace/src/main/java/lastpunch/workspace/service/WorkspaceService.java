@@ -1,22 +1,28 @@
 package lastpunch.workspace.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
+import java.util.stream.Collectors;
 import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.exception.DBExceptionMapper;
 import lastpunch.workspace.common.type.RoleType;
+import lastpunch.workspace.entity.Account.ExportDto;
 import lastpunch.workspace.entity.Channel;
+import lastpunch.workspace.entity.Message;
 import lastpunch.workspace.entity.Workspace;
 import lastpunch.workspace.repository.AccountChannelRepository;
 import lastpunch.workspace.repository.AccountWorkspaceRepository;
 import lastpunch.workspace.repository.channel.ChannelRepository;
+import lastpunch.workspace.repository.message.MessageRepository;
 import lastpunch.workspace.repository.workspace.WorkspaceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -26,23 +32,27 @@ public class WorkspaceService{
     private final ChannelRepository channelRepository;
     private final AccountWorkspaceRepository accountWorkspaceRepository;
     private final AccountChannelRepository accountChannelRepository;
+    private final MessageRepository messageRepository;
     
     private final CommonService commonService;
     
     private final DBExceptionMapper dbExceptionMapper;
     private Logger logger;
     
+    @Autowired
     public WorkspaceService(
-        WorkspaceRepository workspaceRepository,
-        ChannelRepository channelRepository,
-        AccountWorkspaceRepository accountWorkspaceRepository,
-        AccountChannelRepository accountChannelRepository,
-        CommonService commonService,
-        DBExceptionMapper dbExceptionMapper){
+            WorkspaceRepository workspaceRepository,
+            ChannelRepository channelRepository,
+            AccountWorkspaceRepository accountWorkspaceRepository,
+            AccountChannelRepository accountChannelRepository,
+            MessageRepository messageRepository,
+            CommonService commonService,
+            DBExceptionMapper dbExceptionMapper){
         this.workspaceRepository = workspaceRepository;
         this.channelRepository = channelRepository;
         this.accountWorkspaceRepository = accountWorkspaceRepository;
         this.accountChannelRepository = accountChannelRepository;
+        this.messageRepository = messageRepository;
         this.commonService = commonService;
         this.dbExceptionMapper = dbExceptionMapper;
         this.logger = LoggerFactory.getLogger(WorkspaceService.class);
@@ -57,7 +67,25 @@ public class WorkspaceService{
     }
 
     public Map<String, Object> getMembers(Long id, Pageable pageable){
-        return Map.of("members", workspaceRepository.getMembers(id, pageable));
+        Page<ExportDto> members = workspaceRepository.getMembers(id, pageable);
+        List<String> dmList = members.getContent().stream().map(
+            exportDto -> getDMChannelId(id, exportDto.getId())
+        ).collect(Collectors.toList());
+        
+        Map<String, Message> messages = messageRepository.getRecentDMs(dmList);
+        for(ExportDto member: members.getContent()){
+            member.setLastMessage(
+                messages.getOrDefault(getDMChannelId(id, member.getId()), new Message())
+            );
+        }
+        
+        return Map.of("members", members);
+    }
+    
+    private String getDMChannelId(Long userId1, Long userId2){
+        return userId1 < userId2
+            ? String.format("%d-%d", userId1, userId2)
+            : String.format("%d-%d", userId2, userId1);
     }
 
     public Map<String, Object> getChannels(Long id, Pageable pageable){

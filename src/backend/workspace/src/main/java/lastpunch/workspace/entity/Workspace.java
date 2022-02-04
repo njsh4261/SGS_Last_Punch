@@ -1,5 +1,6 @@
 package lastpunch.workspace.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
 import com.sun.istack.NotNull;
 import java.time.LocalDateTime;
@@ -120,7 +121,11 @@ public class Workspace{
         private Integer settings;
         //    private String status; // TODO: converter 문제 해결 시 String으로
         private Integer status;
+    
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createdt;
+    
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime modifydt;
 
         @QueryProjection

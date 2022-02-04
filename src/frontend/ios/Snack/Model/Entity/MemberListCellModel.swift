@@ -1,5 +1,5 @@
 //
-//  DirectMessageObject.swift
+//  MemberListCellModel.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/17.
@@ -7,7 +7,7 @@
 
 import RxDataSources
 
-struct DirectMessageObject: Codable {
+struct MemberListCellModel: Codable {
     let name: String
     let addressInfo: AddressInfo
     let image: String
@@ -19,12 +19,12 @@ struct AddressInfo: Codable {
     let city: String
 }
 
-struct DirectMessageList: Codable {
-    let users: [DirectMessageObject]
+struct MemberList: Codable {
+    let users: [MemberListCellModel]
 }
 
-extension DirectMessageObject: IdentifiableType, Equatable {
-    static func == (lhs: DirectMessageObject, rhs: DirectMessageObject) -> Bool {
+extension MemberListCellModel: IdentifiableType, Equatable {
+    static func == (lhs: MemberListCellModel, rhs: MemberListCellModel) -> Bool {
         return (lhs.name == rhs.name &&
                 lhs.addressInfo.contry == rhs.addressInfo.contry &&
                 lhs.addressInfo.city == rhs.addressInfo.city &&

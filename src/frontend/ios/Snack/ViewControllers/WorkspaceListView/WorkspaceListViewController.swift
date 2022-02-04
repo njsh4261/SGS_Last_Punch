@@ -61,6 +61,14 @@ class WorkspaceListViewController: UIViewController {
             .subscribe(onNext: goToHome)
             .disposed(by: disposeBag)
         
+        btnNewWorkspace.rx.tap
+            .subscribe(onNext: goToNewWorkspace)
+            .disposed(by: disposeBag)
+        
+        btnNewWorkspaceByEmpty.rx.tap
+            .subscribe(onNext: goToNewWorkspace)
+            .disposed(by: disposeBag)
+
         btnURLWorkspace.rx.tap
             .subscribe(onNext: goToURLWorkspace)
             .disposed(by: disposeBag)
@@ -178,6 +186,11 @@ class WorkspaceListViewController: UIViewController {
         ProgressHUD.showFailed(message)
     }
     
+    private func goToNewWorkspace() {
+        let navController = NewWorkspaceFirstViewController()
+        navigationController?.pushViewController(navController, animated: true)
+    }
+    
     private func goToHome() {
         guard let pvc = self.presentingViewController else { return }
         pvc.dismiss(animated: true) { [self] in
@@ -231,6 +244,7 @@ class WorkspaceListViewController: UIViewController {
     
     private func attribute() {
         title = "워크스페이스 선택"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "뒤로", style: .plain, target: nil, action: nil)
         view.backgroundColor = UIColor (named: "snackBackGroundColor")
         navigationItem.rightBarButtonItem = btnNext
         

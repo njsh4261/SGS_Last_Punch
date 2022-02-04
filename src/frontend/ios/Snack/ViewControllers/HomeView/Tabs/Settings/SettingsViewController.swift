@@ -29,7 +29,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet private var cellLogout: UITableViewCell!
     @IBOutlet private var cellDeleteUser: UITableViewCell!
     
-    private var userInfo = User(email: "test@gmail.com", name: "김스낵", displayName: "아주맛남", description: "안녕하세요:D", country: "kor", password: "1", phone: "010-1234-1234", status: "대화 가능")
+    private var userInfo = UserModel(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createDt: "2022-02-25T12:00:00", modifyDt: "2022-02-25T12:00:00")
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -60,7 +60,7 @@ class SettingsViewController: UITableViewController {
     
     // MARK: - Load User
     func loadUser() {
-        labelName.text = "\(userInfo.name!)/\(userInfo.displayName ?? "닉네임 없음")"
+        labelName.text = "\(userInfo.name!)/\(userInfo.displayName)"
         cellPasscode.detailTextLabel?.text = PasscodeKit.enabled() ? "켜짐" : "꺼짐"
         lblStatus.text = userInfo.status
         tableView.reloadData()
@@ -134,7 +134,7 @@ class SettingsViewController: UITableViewController {
     
     // test
     func actionDeleteUser() {
-        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, userInfo: WorkspaceMemberCellModel(id: -1, email: "test@gamil.com", name: "테스트이름", displayname: "별명", description: "안녕하세요~!", phone: "010-1234-1234", country: "kor", language: "kor", settings: 1, status: "바쁨", createdt: "2020-02-25T12:00:00", modifydt: "2020-02-25T12:00:00"), isChat: true)
+        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: UserModel(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createDt: "2022-02-25T12:00:00", modifyDt: "2022-02-25T12:00:00"), recipientInfo: UserModel(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createDt: "2022-02-25T12:00:00", modifyDt: "2022-02-25T12:00:00"), isChat: true)
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)
     }

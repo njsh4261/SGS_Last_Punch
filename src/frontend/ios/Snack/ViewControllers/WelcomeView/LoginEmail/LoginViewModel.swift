@@ -59,8 +59,7 @@ class LoginViewModel: ViewModelProtocol {
                                     case .fail:
                                         self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력했습니다.")
                                     default:
-                                        // 추후 삭제
-                                        self.output.goToWorkspaceList.accept(Token(access_token: "", refresh_token: ""))
+                                        self.output.goToWorkspaceList.accept(Token(access_token: "", refresh_token: "")) // 추후 삭제
                                         self.output.errorMessage.accept("서버 에러")
                                     }
                                 }

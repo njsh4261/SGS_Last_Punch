@@ -16,7 +16,8 @@ class ProfileViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private let viewModel = ProfileViewModel()
-    private var userInfo: WorkspaceMemberCellModel?
+    private var recipientInfo: UserModel?
+    private var senderInfo: UserModel?
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
@@ -44,9 +45,10 @@ class ProfileViewController: UIViewController {
 
     private var isChatEnabled = false
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, userInfo: WorkspaceMemberCellModel, isChat: Bool) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: UserModel, recipientInfo: UserModel, isChat: Bool) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        self.userInfo = userInfo
+        self.recipientInfo = recipientInfo
+        self.senderInfo = senderInfo
         self.isChatEnabled = isChat
     }
     
@@ -73,11 +75,10 @@ class ProfileViewController: UIViewController {
             .subscribe(onNext: actionMail)
             .disposed(by: disposeBag)
         
-
         // MARK: Bind output
         viewModel.push
-            .drive(onNext: { (viewModel) in
-                let viewController = ChatPrivateView("55", self.userInfo!.id.description, self.userInfo!)
+            .drive(onNext: { [self] (viewModel) in
+                let viewController = PrivateMessageViewController(senderInfo: senderInfo!, recipientInfo: recipientInfo!, channel: Channel(chatId: "0", name: recipientInfo?.name ?? "아무개"))
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)
@@ -86,7 +87,7 @@ class ProfileViewController: UIViewController {
     }
     
     func actionMobile() {
-        let number = "tel://\(userInfo?.phone ?? "010-1234-1234")"
+        let number = "tel://\(recipientInfo?.phone ?? "010-1234-1234")"
 
         if let url = URL(string: number) {
             if (UIApplication.shared.canOpenURL(url)) {
@@ -103,13 +104,13 @@ class ProfileViewController: UIViewController {
 
         if (MFMailComposeViewController.canSendMail()) {
             let mailCompose = MFMailComposeViewController()
-            mailCompose.setToRecipients([userInfo?.email ?? "test@test.com"])
+            mailCompose.setToRecipients([recipientInfo?.email ?? "test@test.com"])
             mailCompose.setSubject(subject)
             mailCompose.setMessageBody(message, isHTML: false)
             mailCompose.mailComposeDelegate = self
             present(mailCompose, animated: true)
         } else {
-            let link = "mailto:\(userInfo?.email ?? "test@test.com")?subject=\(subject)&body=\(message)"
+            let link = "mailto:\(recipientInfo?.email ?? "test@test.com")?subject=\(subject)&body=\(message)"
             if let encoded = link.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
                 if let url = URL(string: encoded) {
                     if (UIApplication.shared.canOpenURL(url)) {
@@ -128,7 +129,7 @@ class ProfileViewController: UIViewController {
     }
     
     func loadUser() {
-        guard let userInfo = userInfo else { return }
+        guard let userInfo = recipientInfo else { return }
         title = "프로필"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         tableView.tableHeaderView = viewHeader
@@ -142,8 +143,8 @@ class ProfileViewController: UIViewController {
         
         lblInitials.text = userInfo.name?.first?.description
         
-        lblName.text = "\(userInfo.name ?? "")/\(userInfo.displayname ?? "닉네임 없음")"
-        lblDetails.text = "마지막 수정일 : \(userInfo.modifydt.toDate()?.toString2() ?? "yy.MM.dd hh:mm")"
+        lblName.text = "\(userInfo.name ?? "")/\(userInfo.displayName)"
+        lblDetails.text = "마지막 수정일 : \(userInfo.modifyDt.toDate()?.toString2() ?? "yy.MM.dd hh:mm")"
         
         cellStatus.detailTextLabel?.text = userInfo.status
         cellDescription.detailTextLabel?.text = userInfo.description ?? "설명 없음"

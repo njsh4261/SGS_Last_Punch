@@ -2,7 +2,7 @@ import React from 'react';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
 import DisableButton from '../Common/DisableButton';
-import InputType from './input.type';
+import InputType from '../../../types/signupInput.type';
 
 interface Props {
   input: InputType;

@@ -11,9 +11,16 @@ import Alamofire
 class WorkspaceService {
     static let shared = WorkspaceService()
     
-    func getWorkspace(method: HTTPMethod, accessToken: String, workspaceId: String = "", isChannels: Bool = false, isMembers: Bool = false, page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: "")) -> Observable<NetworkResult<WorkspaceResponseModel>> {
+    private func makeParameter(name : String, chennel : String) -> Parameters {
+        return ["workspaceName" : name,
+                "channelName" : chennel]
+    }
+    
+    func getWorkspace(method: HTTPMethod, accessToken: String, workspaceId: String = "", name: String = "", chennel: String = "", isCreate: Bool = false, isChannels: Bool = false, isMembers: Bool = false, page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: "")) -> Observable<NetworkResult<WorkspaceResponseModel>> {
         var url = APIConstants().workspaceList + "/\(workspaceId)"
+        var parameters: Parameters? = nil
         
+        if isCreate { parameters = self.makeParameter(name: name, chennel: chennel) }
         if isChannels { url += "/channels" }
         if isMembers { url += "/members" }
         if page != 0 { url += "?page=\(page)" }
@@ -22,6 +29,7 @@ class WorkspaceService {
             let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
             let dataRequest = AF.request(url,
                                          method: method,
+                                         parameters: parameters,
                                          encoding: JSONEncoding.default,
                                          headers: header)
 
@@ -44,7 +52,7 @@ class WorkspaceService {
         let decoder = JSONDecoder()
         
 //         데이터량이 너무 많음
-//        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
+        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
         
         guard let decodedData = try? decoder.decode(WorkspaceResponseModel.self, from: data) else { return
                 .pathErr

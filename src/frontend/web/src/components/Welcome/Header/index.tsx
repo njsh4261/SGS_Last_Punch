@@ -3,10 +3,11 @@ import Logo from '../../Common/Logo';
 import styled from 'styled-components';
 import LogoutButton from './LogoutButton';
 
-const Sheader = styled.header`
+const Container = styled.header`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: end;
+  margin: 12px 0;
 `;
 
 const EmptyLeft = styled.article`
@@ -15,10 +16,10 @@ const EmptyLeft = styled.article`
 
 export default function WelcomeHeader() {
   return (
-    <Sheader>
+    <Container>
       <EmptyLeft></EmptyLeft>
       <Logo color="white"></Logo>
       <LogoutButton></LogoutButton>
-    </Sheader>
+    </Container>
   );
 }

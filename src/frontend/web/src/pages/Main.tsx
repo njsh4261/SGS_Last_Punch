@@ -27,7 +27,7 @@ export default function Main() {
 
   return (
     <MainLayout>
-      <MainHeader wsName={wsName}></MainHeader>
+      <MainHeader></MainHeader>
       <Body>
         <Aside wsName={wsName}></Aside>
         {params.channelId ? (

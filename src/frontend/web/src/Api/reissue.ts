@@ -2,7 +2,7 @@ import axios from 'axios';
 import { URL, TOKEN, ENDPOINT, RESPONSE } from '../constant';
 
 export default async function reissueAPI() {
-  const refreshToken = sessionStorage.getItem(TOKEN.REFRESH);
+  const refreshToken = localStorage.getItem(TOKEN.REFRESH);
   if (!refreshToken) {
     console.error('no refresh token');
     return;

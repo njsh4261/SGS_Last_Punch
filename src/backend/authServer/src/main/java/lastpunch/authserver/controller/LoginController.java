@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lastpunch.authserver.common.Response;
 import lastpunch.authserver.dto.LoginRequest;
-import lastpunch.authserver.dto.Tokens;
+import lastpunch.authserver.dto.LoginResponse;
 import lastpunch.authserver.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,11 +24,12 @@ public class LoginController {
     
     @PostMapping
     public ResponseEntity<Object> postLogin(@RequestBody LoginRequest loginRequest) {
-        Tokens tokens = loginService.login(loginRequest);
+        LoginResponse loginResponse = loginService.login(loginRequest);
         
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("access_token", tokens.getAccessToken());
-        data.put("refresh_token", tokens.getRefreshToken());
+        data.put("access_token", loginResponse.getAccessToken());
+        data.put("refresh_token", loginResponse.getRefreshToken());
+        data.put("account", loginResponse.getAccountInfo());
 
         return Response.toResponseEntity("11000", HttpStatus.OK, data);
     }

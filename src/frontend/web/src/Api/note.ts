@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { RESPONSE } from '../constant';
 import apiHandler from './handler';
 
@@ -19,7 +18,7 @@ export async function createNoteAPI(
     RESPONSE.NOTE.SUCCESS,
     body,
   );
-  return response.noteId;
+  return response?.noteId;
 }
 
 export async function getNoteListAPI(

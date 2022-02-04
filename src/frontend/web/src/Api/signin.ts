@@ -15,8 +15,8 @@ export default async function signinAPI(email: string, pass: string) {
 
     if (code === RESPONSE.SIGNIN.SUCCESS) {
       const { access_token, refresh_token } = data;
-      sessionStorage.setItem(TOKEN.ACCESS, access_token);
-      sessionStorage.setItem(TOKEN.REFRESH, refresh_token);
+      localStorage.setItem(TOKEN.ACCESS, access_token);
+      localStorage.setItem(TOKEN.REFRESH, refresh_token);
       location.href = URL.REDIRECT_HOME;
     }
 

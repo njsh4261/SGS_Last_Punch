@@ -2,7 +2,7 @@ import React from 'react';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
 import DisableButton from '../Common/DisableButton';
-import InputType from './input.type';
+import InputType from '../../../types/signupInput.type';
 
 interface Props {
   input: InputType;
@@ -13,6 +13,12 @@ interface Props {
 export default function Pass({ input, inputHandler, signupHandler }: Props) {
   return (
     <>
+      <Input
+        name="displayName"
+        value={input.displayName}
+        inputHandler={inputHandler}
+        placeholder="display name"
+      ></Input>
       <Input
         name="pass"
         value={input.pass}

@@ -37,6 +37,7 @@ export default function SignupEmailContainer() {
   const [input, setInput] = useState({
     email: '',
     code: '',
+    displayName: '',
     pass: '',
     passCheck: '',
   });
@@ -115,7 +116,12 @@ export default function SignupEmailContainer() {
     if (input.pass !== input.passCheck) {
       return alert('비밀번호가 서로 다릅니다');
     }
-    const response = await signupAPI(input.email, input.pass, input.code);
+    const response = await signupAPI(
+      input.email,
+      input.displayName,
+      input.pass,
+      input.code,
+    );
     if (response === RESPONSE.SIGNIN.SUCCESS) {
       alert('회원가입 성공');
       navigate('/signin');
@@ -139,7 +145,6 @@ export default function SignupEmailContainer() {
           placeholder="your@email.com"
           disabled={step.send}
         ></Input>
-
         {step.verify ? (
           <Pass
             input={input}

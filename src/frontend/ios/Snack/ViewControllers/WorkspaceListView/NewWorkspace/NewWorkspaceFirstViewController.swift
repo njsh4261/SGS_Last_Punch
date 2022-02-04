@@ -9,16 +9,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
-import ProgressHUD
-import SwiftKeychainWrapper
 import Then
 
 class NewWorkspaceFirstViewController: UIViewController {
     // MARK: - Properties
-    private let viewModel = NewWorkspaceFirstViewModel()
+    private let viewModel = NewWorkspaceViewModel()
     private let disposeBag = DisposeBag()
-    var workspace: WorkspacesModel?
-    var workspaceId: Int = -1
     
     // MARK: - UI
     private var btnNext = UIBarButtonItem()
@@ -38,16 +34,16 @@ class NewWorkspaceFirstViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(with viewModel: NewWorkspaceFirstViewModel) {
+    func bind(with viewModel: NewWorkspaceViewModel) {
         // MARK: Bind input
         btnNext.rx.tap
-            .bind(to: viewModel.input.btnNextTapped)
+            .bind(onNext: goToNewWorkspaceChennel)
             .disposed(by: disposeBag)
         
         // enter를 누를때
         newWorkspaceNameField.rx.controlEvent(.editingDidEndOnExit)
             .asObservable()
-            .bind(to: viewModel.input.btnNextTapped)
+            .bind(onNext: goToNewWorkspaceChennel)
             .disposed(by: disposeBag)
         
         newWorkspaceNameField.rx.text.orEmpty
@@ -55,7 +51,7 @@ class NewWorkspaceFirstViewController: UIViewController {
             .disposed(by: disposeBag)
         
         // MARK: Bind output
-        viewModel.output.isEnabled
+        viewModel.output.isNameEnabled
             .observe(on: MainScheduler.instance)
             .bind(to: btnNext.rx.isEnabled, newWorkspaceNameField.rx.deleteWorkspaceNameBackward)
             .disposed(by: disposeBag)
@@ -64,68 +60,14 @@ class NewWorkspaceFirstViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind(to: lblWarning.rx.isHidden)
             .disposed(by: disposeBag)
+    }
+    
+    private func goToNewWorkspaceChennel() {
+        let navController = NewWorkspaceSecondViewController()
+        navController.bind(with: viewModel)
+        navigationController?.pushViewController(navController, animated: true)
+    }
         
-        viewModel.output.goToNewWorkspaceChennel
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToNewWorkspaceChennel)
-            .disposed(by: disposeBag)
-        
-        // 성공/실패 메시지
-        viewModel.output.successMessage
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: showSuccessAlert)
-            .disposed(by: disposeBag)
-        
-        viewModel.output.errorMessage
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: showFailedAlert)
-            .disposed(by: disposeBag)
-    }
-    
-    private func showSuccessAlert(_ message: String) {
-        ProgressHUD.showSucceed(message)
-    }
-    
-    private func showFailedAlert(_ message: String) {
-        ProgressHUD.showFailed(message)
-    }
-    
-    private func goToNewWorkspaceChennel(_ bool: Bool) {
-        if bool {
-            guard let pvc = self.presentingViewController else { return }
-            pvc.dismiss(animated: true) { [self] in
-                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                    KeychainWrapper.standard[.workspaceId] = workspaceId.description
-
-                    let homeView = HomeViewController()
-                    let DMView = DirectMessageListViewController(workspaceId: workspaceId.description)
-                    DMView.bind(with: DirectMessageListViewModel())
-                    let profileView = SettingsViewController(nibName: "SettingsView", bundle: nil)
-                    
-                    let navController0 = NavigationController(rootViewController: homeView)
-                    let navController1 = NavigationController(rootViewController: DMView)
-                    let navController4 = NavigationController(rootViewController: profileView)
-                    
-                    let tabBarController = UITabBarController()
-                    tabBarController.viewControllers = [navController0, navController1, navController4]
-                    tabBarController.tabBar.isTranslucent = false
-                    tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
-                    tabBarController.modalPresentationStyle = .fullScreen
-                    tabBarController.selectedIndex = App.DefaultTab
-                    
-                    if #available(iOS 15.0, *) {
-                        let appearance = UITabBarAppearance()
-                        appearance.configureWithOpaqueBackground()
-                        tabBarController.tabBar.standardAppearance = appearance
-                        tabBarController.tabBar.scrollEdgeAppearance = appearance
-                    }
-
-                    sceneDelegate.welcomeViewController.present(tabBarController, animated: true, completion: nil)
-                }
-            }
-        }
-    }
-    
     private func attribute() {
         view.backgroundColor = UIColor (named: "snackBackGroundColor")
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "이름", style: .plain, target: nil, action: nil)

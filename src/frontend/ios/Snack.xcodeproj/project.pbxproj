@@ -92,7 +92,8 @@
 		8CC1E79327ABF4E500BFE4D1 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC1E79227ABF4E500BFE4D1 /* Password.swift */; };
 		8CC1E79527ABF66000BFE4D1 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC1E79427ABF66000BFE4D1 /* Media.swift */; };
 		8CC1E79C27ACAC6B00BFE4D1 /* NewWorkspaceFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC1E79B27ACAC6B00BFE4D1 /* NewWorkspaceFirstViewController.swift */; };
-		8CC1E79E27ACADA800BFE4D1 /* NewWorkspaceFirstViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC1E79D27ACADA800BFE4D1 /* NewWorkspaceFirstViewModel.swift */; };
+		8CC1E79E27ACADA800BFE4D1 /* NewWorkspaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC1E79D27ACADA800BFE4D1 /* NewWorkspaceViewModel.swift */; };
+		8CC1E7A027ACBF1D00BFE4D1 /* NewWorkspaceSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC1E79F27ACBF1D00BFE4D1 /* NewWorkspaceSecondViewController.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -190,7 +191,8 @@
 		8CC1E79227ABF4E500BFE4D1 /* Password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
 		8CC1E79427ABF66000BFE4D1 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		8CC1E79B27ACAC6B00BFE4D1 /* NewWorkspaceFirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkspaceFirstViewController.swift; sourceTree = "<group>"; };
-		8CC1E79D27ACADA800BFE4D1 /* NewWorkspaceFirstViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkspaceFirstViewModel.swift; sourceTree = "<group>"; };
+		8CC1E79D27ACADA800BFE4D1 /* NewWorkspaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkspaceViewModel.swift; sourceTree = "<group>"; };
+		8CC1E79F27ACBF1D00BFE4D1 /* NewWorkspaceSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkspaceSecondViewController.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -620,7 +622,8 @@
 			isa = PBXGroup;
 			children = (
 				8CC1E79B27ACAC6B00BFE4D1 /* NewWorkspaceFirstViewController.swift */,
-				8CC1E79D27ACADA800BFE4D1 /* NewWorkspaceFirstViewModel.swift */,
+				8CC1E79F27ACBF1D00BFE4D1 /* NewWorkspaceSecondViewController.swift */,
+				8CC1E79D27ACADA800BFE4D1 /* NewWorkspaceViewModel.swift */,
 			);
 			path = NewWorkspace;
 			sourceTree = "<group>";
@@ -777,6 +780,7 @@
 				8C68AAE3279526CF00C1711E /* HomeViewModel.swift in Sources */,
 				8C68AB0827957ADD00C1711E /* Ex+DateFormatter.swift in Sources */,
 				8C953BD3278E90F200D5677E /* WelcomeViewController.swift in Sources */,
+				8CC1E7A027ACBF1D00BFE4D1 /* NewWorkspaceSecondViewController.swift in Sources */,
 				8CC1E79327ABF4E500BFE4D1 /* Password.swift in Sources */,
 				8CBD457827A25E430056A557 /* PrivateMessageViewController.swift in Sources */,
 				8CBD45F327A887520056A557 /* StatusView.swift in Sources */,
@@ -814,7 +818,7 @@
 				8C68AB062795754900C1711E /* ChatsSection.swift in Sources */,
 				8CBD45ED27A8746E0056A557 /* KeepMediaView.swift in Sources */,
 				8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */,
-				8CC1E79E27ACADA800BFE4D1 /* NewWorkspaceFirstViewModel.swift in Sources */,
+				8CC1E79E27ACADA800BFE4D1 /* NewWorkspaceViewModel.swift in Sources */,
 				8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */,
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
 				8CBD4544279F0CD50056A557 /* LogOutViewModel.swift in Sources */,

@@ -29,7 +29,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet private var cellLogout: UITableViewCell!
     @IBOutlet private var cellDeleteUser: UITableViewCell!
     
-    private var userInfo = UserModel(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createdt: "2022-02-25T12:00:00", modifydt: "2022-02-25T12:00:00")
+    private var userInfo = UserModel(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createDt: "2022-02-25T12:00:00", modifyDt: "2022-02-25T12:00:00")
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -134,7 +134,7 @@ class SettingsViewController: UITableViewController {
     
     // test
     func actionDeleteUser() {
-        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: UserModel(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createdt: "2022-02-25T12:00:00", modifydt: "2022-02-25T12:00:00"), recipientInfo: UserModel(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createdt: "2022-02-25T12:00:00", modifydt: "2022-02-25T12:00:00"), isChat: true)
+        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: UserModel(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createDt: "2022-02-25T12:00:00", modifyDt: "2022-02-25T12:00:00"), recipientInfo: UserModel(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createDt: "2022-02-25T12:00:00", modifyDt: "2022-02-25T12:00:00"), isChat: true)
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)
     }

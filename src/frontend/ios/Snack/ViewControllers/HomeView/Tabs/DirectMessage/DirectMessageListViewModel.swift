@@ -105,8 +105,8 @@ class DirectMessageListViewModel: ViewModelProtocol {
                 language: member.language,
                 settings: member.settings,
                 status: member.status,
-                createdt: member.createdt,
-                modifydt: member.modifydt
+                createDt: member.createDt,
+                modifyDt: member.modifyDt
             )
             userList.append(user)
         }

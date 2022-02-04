@@ -20,8 +20,8 @@ struct UserModel: SenderType, Equatable {
     let language: String
     let settings: Int
     let status: String
-    let createdt: String
-    let modifydt: String
+    let createDt: String
+    let modifyDt: String
 }
 
 // MARK: - LoginDataModel

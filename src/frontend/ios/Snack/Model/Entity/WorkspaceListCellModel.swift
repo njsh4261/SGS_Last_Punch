@@ -17,6 +17,7 @@ struct WorkspacesData: Codable {
     let workspaces: WorkspacesModel?
     let workspace: WorkspaceListCellModel?
     let channels: WorkspacesChannels?
+    let channel: WorkspaceChannelCellModel?
     let members: WorkspaceMemberModel?
 }
 
@@ -68,8 +69,8 @@ struct WorkspaceListCellModel: Codable {
     var description: String? = ""
     let settings: Int
     let status: Int
-    let createdt: String
-    let modifydt: String
+    let createDt: String
+    let modifyDt: String
 }
 
 struct WorkspaceChannelCellModel: Codable {
@@ -95,8 +96,8 @@ struct WorkspaceMemberCellModel: Codable {
     let language: String
     let settings: Int
     let status: String
-    let createdt: String
-    let modifydt: String
+    let createDt: String
+    let modifyDt: String
 }
 
 struct Pageable: Codable {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, SetStateAction } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../modules';
@@ -9,6 +9,8 @@ export default function getChannelsAndMembersHook(): [
   channelList: any[],
   memberList: any[],
   params: Params,
+  setChannelPage: React.Dispatch<SetStateAction<number>>,
+  setMemberPage: React.Dispatch<SetStateAction<number>>,
 ] {
   const [channelPage, setChannelPage] = useState(0);
   const [memberPage, setMemberPage] = useState(0);
@@ -29,5 +31,5 @@ export default function getChannelsAndMembersHook(): [
     if (!modalActive) getChannelsNMembers();
   }, [modalActive]);
 
-  return [channelList, memberList, params];
+  return [channelList, memberList, params, setChannelPage, setMemberPage];
 }

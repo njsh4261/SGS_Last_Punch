@@ -27,7 +27,8 @@ const SecitonType = styled.section`
 
 export default function AsideBody() {
   // todo: get more list channel/member
-  const [channelList, memberList, params] = getChannelsAndMembersHook();
+  const [channelList, memberList, params, setChannelPage, setMemberPage] =
+    getChannelsAndMembersHook();
   setTitleHook('', params);
   const selectChannelHandler = selectChannelHook(params);
   const modalState = useSelector((state: RootState) => state.modal);

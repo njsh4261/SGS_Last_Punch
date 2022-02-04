@@ -101,7 +101,9 @@ const Leaf: React.FC<RenderLeafProps> = ({ attributes, children, leaf }) => {
   }
 
   if (leaf.code) {
-    children = <code>{children}</code>;
+    children = (
+      <code style={{ 'background-color': 'lightGray' } as any}>{children}</code>
+    );
   }
 
   if (leaf.italic) {

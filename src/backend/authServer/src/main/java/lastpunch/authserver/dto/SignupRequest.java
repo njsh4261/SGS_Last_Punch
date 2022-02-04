@@ -18,11 +18,14 @@ public class SignupRequest {
     private String password;
     @NotBlank
     private String verifyCode;
+    @NotBlank
+    private String name;
+    
     public Account toEntity() {
         return Account.builder()
             .email(email)
             .password(password)
-            .name("default_name")
+            .name(name)
             .country("kor")
             .language("eng")
             .settings(1)

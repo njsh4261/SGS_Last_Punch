@@ -33,6 +33,7 @@ class RegisterViewModel: ViewModelProtocol {
         let visibilityBtnSendEmail = PublishRelay<Bool>()
         let visibilityCode = PublishRelay<Bool>()
         let visibilityPassword = PublishRelay<Bool>()
+        let becomeName = PublishRelay<Void>()
         let successMessage = PublishRelay<String>()
         let errorMessage = PublishRelay<String>()
         let goToLogin = PublishRelay<Void>()
@@ -150,6 +151,8 @@ class RegisterViewModel: ViewModelProtocol {
                                 switch result {
                                 case .success:
                                     self.output.visibilityPassword.accept(false)
+                                    self.output.becomeName.accept((
+                                    ))
                                     self.output.successMessage.accept("인증 확인")
                                 case .fail:
                                     self.output.errorMessage.accept("유효하지 않는 코드\n재발송을 눌러주세요")

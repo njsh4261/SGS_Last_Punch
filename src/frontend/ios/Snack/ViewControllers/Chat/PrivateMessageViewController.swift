@@ -14,6 +14,7 @@ import ProgressHUD
 import SwiftKeychainWrapper
 import InputBarAccessoryView
 import MessageKit
+import CoreLocation
 
 class PrivateMessageViewController: MessagesViewController {
     // MARK: - Properties
@@ -23,15 +24,20 @@ class PrivateMessageViewController: MessagesViewController {
     var recipientInfo: UserModel
     var senderInfo: UserModel
     private var userInfo: WorkspaceMemberCellModel?
-    
+    private(set) lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
+        return control
+    }()
+
     // MARK: - UI
     private var btnBack = UIBarButtonItem()
     private var btnTransform = UIBarButtonItem()
     private var viewTitle =  UIView()
-    private var lblDetail = UILabel()
-    private var btnViewTitle = UIButton()
     private var lblTitle = UILabel()
-
+    private var lblSubTitle = UILabel()
+    private var btnViewTitle = UIButton()
+    
     private var btnAttach = InputBarButtonItem()
     
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: UserModel, recipientInfo: UserModel, channel: Channel) {
@@ -39,11 +45,8 @@ class PrivateMessageViewController: MessagesViewController {
         self.recipientInfo = recipientInfo
         self.channel = channel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
+        guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
         NSLog("accessToken: " + token)
-        NSLog("workspaceId: " + workspaceId)
-
-//        layout()
     }
     
     required init?(coder: NSCoder) {
@@ -56,6 +59,7 @@ class PrivateMessageViewController: MessagesViewController {
         confirmDelegates()
         removeOutgoingMessageAvatars()
         attribute()
+        layout()
     }
     
     func bind(_ viewModel: MessageViewModel) {
@@ -67,15 +71,19 @@ class PrivateMessageViewController: MessagesViewController {
         btnViewTitle.rx.tap
             .subscribe(onNext: goToProfile)
             .disposed(by: disposeBag)
-
-//        btnTransform.rx.tap
-//            .bind(to: viewModel.input.btnTransformTapped)
-//            .disposed(by: disposeBag)
         
-                
+        btnAttach.rx.tap
+            .subscribe(onNext: showImagePickerControllerActionSheet)
+            .disposed(by: disposeBag)
+        
+        //        btnTransform.rx.tap
+        //            .bind(to: viewModel.input.btnTransformTapped)
+        //            .disposed(by: disposeBag)
+        
+        
         
         // MARK: Bind output
-
+        
     }
     
     private func goToProfile() {
@@ -89,6 +97,23 @@ class PrivateMessageViewController: MessagesViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    @objc func loadMoreMessages() {
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
+//            SampleData.shared.getMessages(count: 20) { messages in
+//                DispatchQueue.main.async {
+//                    self.messages.insert(contentsOf: messages, at: 0)
+//                    self.messagesCollectionView.reloadDataAndKeepOffset()
+//                    self.refreshControl.endRefreshing()
+//                }
+//            }
+        }
+    }
+    
     // MARK: delegate
     private func confirmDelegates() {
         messagesCollectionView.messagesDataSource = self
@@ -96,6 +121,13 @@ class PrivateMessageViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         
         messageInputBar.delegate = self
+        
+        scrollsToLastItemOnKeyboardBeginsEditing = true // default false
+        maintainPositionOnKeyboardFrameChanged = true // default false
+
+        showMessageTimestampOnSwipeLeft = true // default false
+        
+        messagesCollectionView.refreshControl = refreshControl
     }
     
     private func removeOutgoingMessageAvatars() {
@@ -111,7 +143,7 @@ class PrivateMessageViewController: MessagesViewController {
         btnAttach = btnAttach.then {
             $0.image = UIImage(systemName: "plus")
             $0.tintColor = UIColor(named: "snackColor")
-            $0.setSize(CGSize(width: 36, height: 36), animated: false)
+            $0.setSize(CGSize(width: 35, height: 35), animated: false)
             $0.onKeyboardSwipeGesture { item, gesture in
                 if (gesture.direction == .left) {
                     item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 0, animated: true)
@@ -125,22 +157,23 @@ class PrivateMessageViewController: MessagesViewController {
         // library InputBarAccessoryView의 속성
         messageInputBar = messageInputBar.then {
             $0.delegate = self
-            $0.inputTextView.placeholder = "#채널에(게) 메시지 보내기"
+            $0.inputTextView.placeholder = "\(recipientInfo.displayName)에(게) 메시지 보내기"
             $0.backgroundView.backgroundColor = UIColor(named: "snackBackGroundColor")
-
+            
             $0.setStackViewItems([btnAttach], forStack: .left, animated: false)
-
+            
             $0.sendButton.title = nil
             $0.sendButton.image = UIImage(named: "send")
             $0.sendButton.setSize(CGSize(width: 36, height: 36), animated: false)
-
+            
             $0.setLeftStackViewWidthConstant(to: 36, animated: true)
             $0.setRightStackViewWidthConstant(to: 36, animated: true)
-
+            
             $0.inputTextView.isImagePasteEnabled = false
         }
     }
-    
+        
+    // MARK: - Helpers
     // send 버튼이 눌려지면 메시지를 collectionView의 cell에 표출
     private func insertNewMessage(_ message: MessageModel) {
         messages.append(message)
@@ -148,16 +181,46 @@ class PrivateMessageViewController: MessagesViewController {
         
         messagesCollectionView.reloadData()
     }
+
+    func insertMessage(_ message: MessageModel) {
+        messages.append(message)
+        // Reload last section to update header/footer labels and insert a new one
+        messagesCollectionView.performBatchUpdates({
+            messagesCollectionView.insertSections([messages.count - 1])
+            if messages.count >= 2 {
+                messagesCollectionView.reloadSections([messages.count - 2])
+            }
+        }, completion: { [weak self] _ in
+            if self?.isLastSectionVisible() == true {
+                self?.messagesCollectionView.scrollToLastItem(animated: true)
+            }
+        })
+    }
+    
+    func isLastSectionVisible() -> Bool {
+        guard !messages.isEmpty else { return false }
+        let lastIndexPath = IndexPath(item: 0, section: messages.count - 1)
+        
+        return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
+    }
     
     private func attribute() {
         navigationItem.titleView = viewTitle
         navigationItem.leftBarButtonItem = btnBack
         navigationItem.rightBarButtonItem = btnTransform
-            
-        viewTitle.backgroundColor = .red
         
-        [lblTitle, lblDetail].forEach {
+        viewTitle = UIView(frame: CGRect(x: 0, y: 0, width: max(lblTitle.frame.size.width, lblSubTitle.frame.size.width), height: 30))
+        
+        //        viewTitle.backgroundColor = .red
+        //        btnViewTitle.backgroundColor = .red
+        //        btnViewTitle.setTitle("왜 안돼", for: .normal)
+        
+        [lblTitle, lblSubTitle].forEach {
+            $0.backgroundColor = UIColor.clear
             $0.textAlignment = .center
+            $0.adjustsFontSizeToFitWidth = true
+            $0.tintColor = .white
+            $0.sizeToFit()
         }
         
         lblTitle = lblTitle.then {
@@ -165,7 +228,7 @@ class PrivateMessageViewController: MessagesViewController {
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
         }
         
-        lblDetail = lblDetail.then {
+        lblSubTitle = lblSubTitle.then {
             $0.text = "세부정보 보기"
             $0.font = UIFont(name: "NotoSansKR-Regular", size: 10)
         }
@@ -181,41 +244,118 @@ class PrivateMessageViewController: MessagesViewController {
         }
         
         addPlusButtonToMessageInputBar()
-
+        
     }
     
     private func layout() {
         // navigationItem titleView
-        [lblTitle, lblDetail, btnViewTitle].forEach {
+        [lblTitle, lblSubTitle, btnViewTitle].forEach {
             viewTitle.addSubview($0)
         }
         
-        [lblTitle, lblDetail].forEach {
+        [lblTitle, lblSubTitle].forEach {
             $0.snp.makeConstraints {
                 $0.centerX.equalToSuperview()
             }
         }
         
         lblTitle.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(5)
+            $0.top.equalToSuperview()
         }
         
-        lblDetail.snp.makeConstraints {
-            $0.top.equalTo(lblTitle.snp.bottom).offset(-2)
+        lblSubTitle.snp.makeConstraints {
+            $0.top.equalTo(lblTitle.snp.bottom)
         }
-        
-        btnViewTitle.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-            $0.width.equalTo(lblTitle)
-            $0.height.equalTo(40)
-        }
+        //
+        //        btnViewTitle.snp.makeConstraints {
+        //            $0.centerX.centerY.equalToSuperview()
+        //            $0.width.equalTo(lblTitle)
+        //            $0.height.equalTo(40)
+        //        }
     }
 }
+
+extension PrivateMessageViewController : UIImagePickerControllerDelegate , UINavigationControllerDelegate {
+    func showImagePickerControllerActionSheet()  {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let alertCamera = UIAlertAction(title: "카메라", style: .default) { action in
+            ImagePicker.cameraMulti(self, edit: true)
+        }
+
+        let alertPhoto = UIAlertAction(title: "사진", style: .default) { action in
+            ImagePicker.photoLibrary(self, edit: true)
+        }
+        
+        let alertLocation = UIAlertAction(title: "위치", style: .default) { action in
+//            self.actionLocation()
+        }
+        
+        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
+        
+        let configuration    = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
+        let imageCamera      = UIImage(systemName: "camera", withConfiguration: configuration)?
+            .withTintColor(UIColor(named: "snackColor")!, renderingMode: .alwaysOriginal)
+        let imagePhoto       = UIImage(systemName: "photo", withConfiguration: configuration)?
+            .withTintColor(UIColor(named: "snackColor")!, renderingMode: .alwaysOriginal)
+        let imageLocation    = UIImage(systemName: "location", withConfiguration: configuration)?
+            .withTintColor(UIColor(named: "snackColor")!, renderingMode: .alwaysOriginal)
+
+        alertCamera.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        alertPhoto.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        alertLocation.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alertCamera.setValue(imageCamera, forKey: "image");         alert.addAction(alertCamera)
+        alertPhoto.setValue(imagePhoto, forKey: "image");           alert.addAction(alertPhoto)
+        alertLocation.setValue(imageLocation, forKey: "image");     alert.addAction(alertLocation)
+
+        alert.addAction(alertCancle)
+
+        present(alert, animated: true)
+    }
+//
+//    func showImagePickerController(sourceType: UIImagePickerController.SourceType){
+//        let imgPicker = UIImagePickerController()
+//        imgPicker.delegate = self
+//        imgPicker.allowsEditing = true
+//        imgPicker.sourceType = sourceType
+//        imgPicker.presentationController?.delegate = self
+//        inputAccessoryView?.isHidden = true
+//        getRootViewController()?.present(imgPicker, animated: true, completion: nil)
+//
+//    }
+//
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//        if let editedImage = info[  UIImagePickerController.InfoKey.editedImage] as? UIImage {
+//            self.inputPlugins.forEach { _ = $0.handleInput(of: editedImage)}
+//
+//        }
+//        else if let originImage = info[  UIImagePickerController.InfoKey.originalImage] as? UIImage {
+//            self.inputPlugins.forEach { _ = $0.handleInput(of: originImage)}
+//        }
+//        getRootViewController()?.dismiss(animated: true, completion: nil)
+//        inputAccessoryView?.isHidden = false
+//    }
+//
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        getRootViewController()?.dismiss(animated: true, completion: nil)
+//        inputAccessoryView?.isHidden = false
+//    }
+//
+//
+//    func getRootViewController() -> UIViewController? {
+//        return (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController
+//    }
+//
+    
+}
+
 
 // MARK: - Message DataSource (메시지 데이터 정의)
 extension PrivateMessageViewController: MessagesDataSource {
     func currentSender() -> SenderType {
-        return recipientInfo
+        return senderInfo
     }
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
@@ -226,13 +366,32 @@ extension PrivateMessageViewController: MessagesDataSource {
         return messages[indexPath.section]
     }
     
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        if indexPath.section % 3 == 0 {
+            return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        }
+        return nil
+    }
+
+    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return NSAttributedString(string: "Read", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+    }
+    
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
-        return NSAttributedString(string: name, attributes: [.font: UIFont.preferredFont(forTextStyle: .caption1),
-                                                             .foregroundColor: UIColor(white: 0.3, alpha: 1)])
+        return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+    }
+    
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let dateString = message.sentDate.toString2()
+        return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+    }
+    
+    func textCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell? {
+        return nil
     }
 }
-    
+
 // MARK: - Message Layout Delegate (셀 관련 높이 값)
 extension PrivateMessageViewController: MessagesLayoutDelegate {
     // 아래 여백
@@ -268,9 +427,55 @@ extension PrivateMessageViewController: MessagesDisplayDelegate {
 extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
+        processInputBar(messageInputBar)
+    }
+    
+    func processInputBar(_ inputBar: InputBarAccessoryView) {
+//        let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
+//
+//        insertNewMessage(message)
+//        inputBar.inputTextView.text.removeAll()
+        let attributedText = inputBar.inputTextView.attributedText!
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
 
-        insertNewMessage(message)
-        inputBar.inputTextView.text.removeAll()
+            let substring = attributedText.attributedSubstring(from: range)
+            let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
+            print("Autocompleted: `", substring, "` with context: ", context ?? [])
+        }
+
+        let components = inputBar.inputTextView.components
+        inputBar.inputTextView.text = String()
+        inputBar.invalidatePlugins()
+        // Send button activity animation
+        inputBar.sendButton.startAnimating()
+        inputBar.inputTextView.placeholder = "전송중..."
+        // Resign first responder for iPad split view
+        inputBar.inputTextView.resignFirstResponder()
+        DispatchQueue.global(qos: .default).async {
+            // fake send request task
+            sleep(1)
+            DispatchQueue.main.async { [weak self] in
+                inputBar.sendButton.stopAnimating()
+                inputBar.inputTextView.placeholder = "\(self?.recipientInfo.displayName ?? "")에(게) 메시지 보내기"
+                self?.insertMessages(components)
+                self?.messagesCollectionView.scrollToLastItem(animated: true)
+            }
+        }
+    }
+    
+    private func insertMessages(_ data: [Any]) {
+        for component in data {
+            if let str = component as? String {
+                let message = MessageModel(text: str, user: senderInfo, messageId: UUID().uuidString, date: Date())
+                insertMessage(message)
+            } else if let img = component as? UIImage {
+                let message = MessageModel(image: img, user: senderInfo, messageId: UUID().uuidString, date: Date())
+                insertMessage(message)
+            } else if let location = component as? CLLocation {
+                let message = MessageModel(location: location, user: senderInfo, messageId: UUID().uuidString, date: Date())
+                insertMessage(message)
+            }
+        }
     }
 }

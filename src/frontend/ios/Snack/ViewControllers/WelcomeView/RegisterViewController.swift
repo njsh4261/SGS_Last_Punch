@@ -25,10 +25,12 @@ class RegisterViewController: UIViewController {
     var ivLogo = UIImageView()
     var fieldEmail = UITextField()
     var fieldCode = UITextField()
+    var fieldName = UITextField()
     var fieldPassword = UITextField()
     var fieldRetypePassword = UITextField()
     var emailBorder = UIView()
     var codeBorder = UIView()
+    var nameBorder = UIView()
     var passwordBorder = UIView()
     var retypePasswordBorder = UIView()
     var btnDuplicateEmail = UIButton()
@@ -64,6 +66,10 @@ class RegisterViewController: UIViewController {
             .bind(to: viewModel.input.code)
             .disposed(by: disposeBag)
         
+        fieldName.rx.text.orEmpty
+            .bind(to: viewModel.input.name)
+            .disposed(by: disposeBag)
+
         fieldPassword.rx.text.orEmpty
             .bind(to: viewModel.input.password)
             .disposed(by: disposeBag)
@@ -89,6 +95,11 @@ class RegisterViewController: UIViewController {
         fieldCode.rx.controlEvent(.editingDidEndOnExit)
             .asObservable()
             .bind(to: viewModel.input.btnVerificationTapped)
+            .disposed(by: disposeBag)
+        
+        fieldName.rx.controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .bind(to: fieldPassword.rx.canBecomeFirstResponder)
             .disposed(by: disposeBag)
         
         fieldPassword.rx.controlEvent(.editingDidEndOnExit)
@@ -251,7 +262,7 @@ class RegisterViewController: UIViewController {
     
     // Step 2 - code input -> password, check input & signUp
     private func visibilityPassword(_ bool: Bool) {
-        [fieldPassword, fieldRetypePassword, passwordBorder, retypePasswordBorder, btnSignUp, lblWarning].forEach {
+        [fieldName, nameBorder, fieldPassword, fieldRetypePassword, passwordBorder, retypePasswordBorder, btnSignUp, lblWarning].forEach {
             $0.isHidden = bool
         }
     }
@@ -281,13 +292,13 @@ class RegisterViewController: UIViewController {
             $0.style = .plain
         }
         
-        [fieldEmail, fieldCode, fieldPassword, fieldRetypePassword].forEach {
+        [fieldEmail, fieldCode, fieldName, fieldPassword, fieldRetypePassword].forEach {
             $0.textAlignment = .left
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
             $0.autocorrectionType = .no
         }
         
-        [emailBorder, codeBorder, passwordBorder, retypePasswordBorder].forEach {
+        [emailBorder, codeBorder, nameBorder, passwordBorder, retypePasswordBorder].forEach {
             $0.backgroundColor = .quaternaryLabel
         }
         
@@ -306,7 +317,7 @@ class RegisterViewController: UIViewController {
         }
         
         // init시 숨겨야 할 것들
-        [fieldCode, fieldPassword, fieldRetypePassword, codeBorder, passwordBorder, retypePasswordBorder, btnSendEmail, btnSignUp, lblWarning].forEach {
+        [fieldCode, fieldPassword, fieldRetypePassword, codeBorder, fieldName, nameBorder, passwordBorder, retypePasswordBorder, btnSendEmail, btnSignUp, lblWarning].forEach {
             $0.isHidden = true
         }
 
@@ -337,6 +348,11 @@ class RegisterViewController: UIViewController {
         
         btnVerification = btnVerification.then {
             $0.setTitle("인증", for: .normal)
+        }
+        
+        fieldName = fieldName.then {
+            $0.placeholder = "이름을 입력해주세요"
+            $0.returnKeyType = .next
         }
         
         fieldPassword = fieldPassword.then {
@@ -391,7 +407,7 @@ class RegisterViewController: UIViewController {
     }
     
     private func layout() {
-        [ivLogo, fieldEmail, btnDuplicateEmail, btnSendEmail, emailBorder, fieldCode, btnVerification, codeBorder, fieldPassword, passwordBorder, fieldRetypePassword, retypePasswordBorder, btnSignUp, lblWarning, btnSignIn, btnSignInColor].forEach {
+        [ivLogo, fieldEmail, btnDuplicateEmail, btnSendEmail, emailBorder, fieldCode, btnVerification, codeBorder, fieldName, nameBorder, fieldPassword, passwordBorder, fieldRetypePassword, retypePasswordBorder, btnSignUp, lblWarning, btnSignIn, btnSignInColor].forEach {
             contentsView.addSubview($0)
         }
         
@@ -415,19 +431,19 @@ class RegisterViewController: UIViewController {
             $0.top.equalToSuperview().inset(70)
         }
         
-        [fieldEmail, fieldCode, fieldPassword, fieldRetypePassword, emailBorder, codeBorder, passwordBorder, retypePasswordBorder].forEach {
+        [fieldEmail, fieldCode, fieldName, fieldPassword, fieldRetypePassword, emailBorder, codeBorder, nameBorder, passwordBorder, retypePasswordBorder].forEach {
             $0.snp.makeConstraints {
                 $0.left.right.equalToSuperview().inset(16)
             }
         }
         
-        [fieldEmail, fieldCode, fieldPassword, fieldRetypePassword, btnSignUp].forEach {
+        [fieldEmail, fieldCode, fieldName, fieldPassword, fieldRetypePassword, btnSignUp].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(50)
             }
         }
         
-        [emailBorder, codeBorder, passwordBorder, retypePasswordBorder].forEach {
+        [emailBorder, codeBorder, nameBorder, passwordBorder, retypePasswordBorder].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(1)
             }
@@ -449,31 +465,40 @@ class RegisterViewController: UIViewController {
             $0.top.equalToSuperview().inset(300)
         }
         
-        fieldPassword.snp.makeConstraints {
+        fieldName.snp.makeConstraints {
             $0.top.equalToSuperview().inset(300)
         }
         
-        passwordBorder.snp.makeConstraints {
+        nameBorder.snp.makeConstraints {
             $0.top.equalToSuperview().inset(350)
+        }
+
+        
+        fieldPassword.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(350)
+        }
+        
+        passwordBorder.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(400)
         }
         
         fieldRetypePassword.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(350)
+            $0.top.equalToSuperview().inset(400)
         }
         
         retypePasswordBorder.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(400)
+            $0.top.equalToSuperview().inset(450)
         }
         
         btnSignUp.snp.makeConstraints {
             $0.left.right.equalToSuperview().inset(20)
-            $0.top.equalToSuperview().inset(420)
+            $0.top.equalToSuperview().inset(470)
         }
         
         lblWarning.snp.makeConstraints {
             $0.left.right.equalToSuperview()
             $0.height.equalTo(21)
-            $0.top.equalToSuperview().inset(480)
+            $0.top.equalToSuperview().inset(530)
         }
         
         [btnDuplicateEmail, btnSendEmail, btnVerification].forEach {

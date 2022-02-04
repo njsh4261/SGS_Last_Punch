@@ -15,8 +15,8 @@ export default async function reissueAPI() {
     });
     if (!response) return;
     if (response.data.code === RESPONSE.SIGNIN.SUCCESS) {
-      sessionStorage.setItem(TOKEN.ACCESS, response.data.data.access_token);
-      window.location.reload();
+      localStorage.setItem(TOKEN.ACCESS, response.data.data.access_token);
+      return response.data.code;
     }
   } catch (e) {
     return;

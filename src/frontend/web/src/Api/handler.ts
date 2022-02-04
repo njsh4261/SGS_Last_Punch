@@ -5,6 +5,38 @@ import reissueAPI from './reissue';
 
 const getAccessToken = () => localStorage.getItem(TOKEN.ACCESS);
 
+const AxiosRequest = async (
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  endpoint: string,
+  successCode: string,
+  body?: any,
+) => {
+  let response;
+  const option = {
+    headers: { 'X-AUTH-TOKEN': getAccessToken()! },
+  };
+
+  switch (method) {
+    case 'GET':
+      response = await axios.get(URL.HOST + endpoint, option);
+      break;
+    case 'POST':
+      response = await axios.post(URL.HOST + endpoint, body, option);
+      break;
+    case 'PUT':
+      response = await axios.put(URL.HOST + endpoint, body, option);
+  }
+
+  const { code, data, err } = response?.data;
+  if (code === successCode) {
+    if (data) return data;
+    return code;
+  }
+
+  if (err) return { err };
+  else console.error('wrong response code');
+};
+
 async function apiHandler(
   method: 'GET',
   endpoint: string,
@@ -54,29 +86,13 @@ async function apiHandler(
         headers: { 'X-AUTH-TOKEN': accessToken },
       };
     }
-    let response;
-
-    switch (method) {
-      case 'GET':
-        response = await axios.get(URL.HOST + endpoint, option);
-        break;
-      case 'POST':
-        response = await axios.post(URL.HOST + endpoint, body, option);
-        break;
-      case 'PUT':
-        response = await axios.put(URL.HOST + endpoint, body, option);
-    }
-
-    const { code, data, err } = response?.data;
-    if (code === successCode) {
-      if (data) return data;
-      return code;
-    }
-
-    if (err) return { err };
+    return AxiosRequest(method, endpoint, successCode, body);
   } catch (e: any) {
     if (e.response?.data.code === RESPONSE.TOKEN.EXPIRED) {
-      await reissueAPI(); // todo: 예외처리 필요
+      const reissueResponse = await reissueAPI();
+      if (reissueResponse === RESPONSE.SIGNIN.SUCCESS) {
+        return AxiosRequest(method, endpoint, successCode, body);
+      }
     } else {
       clearSession(false);
       return; // return undefined when server error

@@ -26,7 +26,7 @@ export async function getNoteListAPI(
 ): Promise<any[] | undefined> {
   const endpoint = `/notes?channelId=${channelId}`;
   const response = await apiHandler('GET', endpoint, RESPONSE.NOTE.SUCCESS);
-  return response.noteList;
+  return response?.noteList;
 }
 
 export async function getSpecificNoteAPI(
@@ -34,7 +34,7 @@ export async function getSpecificNoteAPI(
 ): Promise<any | undefined> {
   const endpoint = `/note/${noteId}`;
   const response = await apiHandler('GET', endpoint, RESPONSE.NOTE.SUCCESS);
-  return response.note;
+  return response?.note;
 }
 
 export async function updateNoteAllAPI(

@@ -30,11 +30,7 @@ public class ChatConfig implements WebSocketMessageBrokerConfigurer{
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes(ChatConstant.PUBLISH);
-        registry.enableStompBrokerRelay(ChatConstant.SUBSCRIBE)
-            .setRelayHost("localhost")
-            .setRelayPort(61613)
-            .setClientLogin("guest")
-            .setClientPasscode("guest");
+        registry.enableStompBrokerRelay(ChatConstant.SUBSCRIBE);
     }
     
     @Override

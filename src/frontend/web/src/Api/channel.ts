@@ -22,3 +22,19 @@ export async function createChannelAPI(body: ICreateChannel) {
   );
   return response;
 }
+
+export async function inviteChannelAPI(
+  userId: number,
+  channelId: number,
+  roleId: 1,
+) {
+  const endpoint = `/channel/member`;
+  const body = { userId, channelId, roleId };
+  const response = await apiHandler(
+    'POST',
+    endpoint,
+    RESPONSE.WORKSPACE.SUCCESS,
+    body,
+  );
+  return response;
+}

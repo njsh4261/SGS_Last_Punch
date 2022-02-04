@@ -13,6 +13,7 @@ class RegisterViewModel: ViewModelProtocol {
     struct Input {
         let email = PublishSubject<String>()
         let code = PublishSubject<String>()
+        let name = PublishSubject<String>()
         let password = PublishSubject<String>()
         let retypePassword = PublishSubject<String>()
         let changedEmail = PublishSubject<Void>()
@@ -56,8 +57,8 @@ class RegisterViewModel: ViewModelProtocol {
             .disposed(by: disposeBag)
         
         // signup 버튼 활성화 조건
-        Observable.combineLatest(input.email, input.code, input.password, input.retypePassword)
-            .map{ self.isSignUp($0.0, $0.1, $0.2, $0.3) }
+        Observable.combineLatest(input.email, input.code, input.name, input.password, input.retypePassword)
+            .map{ self.isSignUp($0.0, $0.1, $0.2, $0.3, $0.4) }
             .bind(to: output.enableBtnSignUp)
             .disposed(by: disposeBag)
         
@@ -214,8 +215,8 @@ class RegisterViewModel: ViewModelProtocol {
         return !password.isEmpty && !retypePassoword.isEmpty && password == retypePassoword
     }
     
-    func isSignUp(_ email: String, _ code: String, _ password: String, _ retypePassword: String) -> Bool {
-        return isValidEmail(email) && code.count == 6 && isValidPassword(password, retypePassword)
+    func isSignUp(_ email: String, _ code: String, _ name: String, _ password: String, _ retypePassword: String) -> Bool {
+        return isValidEmail(email) && code.count == 6 && name.count > 0 && isValidPassword(password, retypePassword)
     }
     
     // 이메일 수정 & 이메일 인증 버튼을 누를때

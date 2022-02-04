@@ -159,7 +159,7 @@ class SearchURLWorkspaceViewController: UIViewController {
         }
         
         lblWarning = lblWarning.then {
-            $0.text = "최소 31자를 입력해주세요."
+            $0.text = "최대 31자를 입력해주세요."
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 14)
             $0.textColor = .lightGray
             $0.textAlignment = .left

@@ -13,6 +13,13 @@ enum App {
     static let TextShareApp     = "주소를 확인해주세요"
 }
 
+//enum MessageType {
+//
+//    static let Text             = "text"
+//    static let Photo            = "photo"
+//    static let Location         = "location"
+//}
+
 // 캐쉬
 enum KeepMedia {
 

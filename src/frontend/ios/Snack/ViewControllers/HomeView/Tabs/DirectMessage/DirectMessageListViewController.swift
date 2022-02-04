@@ -17,7 +17,7 @@ class DirectMessageListViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private var accessTokenField = UITextField()
-    private var members = [WorkspaceMemberCellModel]()
+    private var members = [UserModel]()
     private var accessToken: String = ""
     private var workspaceId: String = ""
     private let HEADER_HEIGHT: Float = 66
@@ -90,8 +90,9 @@ class DirectMessageListViewController: UIViewController {
             .disposed(by: disposeBag)
                 
         viewModel.push
-            .drive(onNext: { (viewModel, row) in
-                let viewController = ChatPrivateView("55", self.members[row].id.description, self.members[row])
+            .drive(onNext: { [self] (viewModel, row) in
+                // 추가) 본인 user정보를 넣어야함
+                let viewController = PrivateMessageViewController(senderInfo: members[row], recipientInfo: members[row], channel: Channel(chatId: "0", name: self.members[row].name ?? "아무개"))
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)
@@ -104,7 +105,7 @@ class DirectMessageListViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func setMembers(_ members: [WorkspaceMemberCellModel]) {
+    private func setMembers(_ members: [UserModel]) {
         self.members = members
     }
     

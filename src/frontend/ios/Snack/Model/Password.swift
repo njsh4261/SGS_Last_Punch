@@ -2,7 +2,7 @@
 //  Password.swift
 //  Snack
 //
-//  Created by ghyeongkim-MN on 2022/01/31.
+//  Created by ghyeongkim-MN on 2022/02/03.
 //
 
 import Foundation

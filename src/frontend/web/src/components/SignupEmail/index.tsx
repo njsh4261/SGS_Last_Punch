@@ -145,14 +145,7 @@ export default function SignupEmailContainer() {
           placeholder="your@email.com"
           disabled={step.send}
         ></Input>
-
-        {/* todo: remove this */}
-        <Pass
-          input={input}
-          inputHandler={inputHandler}
-          signupHandler={signupHandler}
-        ></Pass>
-        {/* {step.verify ? (
+        {step.verify ? (
           <Pass
             input={input}
             inputHandler={inputHandler}
@@ -179,7 +172,7 @@ export default function SignupEmailContainer() {
               </>
             )}
           </>
-        )} */}
+        )}
       </SignupBody>
     </SignupContainer>
   );

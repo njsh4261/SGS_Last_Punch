@@ -34,8 +34,7 @@ public class Account {
     
     @Column(length = 30)
     private String name;
-    
-    private String displayName;
+
     private String description;
     private String phone;
     private String country;

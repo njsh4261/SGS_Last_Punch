@@ -39,7 +39,7 @@ services:
       - lastpunch-network
 
   auth-server:
-    image: sookim1110/auth-server
+    image: sookim1110/auth-server2
     ports:
       - "8081:8081"
     environment:

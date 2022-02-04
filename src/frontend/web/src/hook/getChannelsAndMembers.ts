@@ -19,10 +19,10 @@ export default function getChannelsAndMembersHook(): [
 
   const getChannelsNMembers = async () => {
     const workspaceId = Number(params.wsId);
-    const { channels } = await getChannelsAPI(channelPage, workspaceId);
-    const { members } = await getMembersAPI(memberPage, workspaceId);
-    setMemberList(members.content);
-    setChannelList(channels.content);
+    const resChannels = await getChannelsAPI(channelPage, workspaceId);
+    const resMembers = await getMembersAPI(memberPage, workspaceId);
+    if (resChannels) setChannelList(resChannels.channels.content);
+    if (resMembers) setMemberList(resMembers.members.content);
   };
 
   useEffect(() => {

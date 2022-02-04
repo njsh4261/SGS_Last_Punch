@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { RESPONSE } from '../constant';
 import apiHandler from './handler';
 
@@ -19,7 +18,7 @@ export async function createNoteAPI(
     RESPONSE.NOTE.SUCCESS,
     body,
   );
-  return response.noteId;
+  return response?.noteId;
 }
 
 export async function getNoteListAPI(
@@ -27,7 +26,7 @@ export async function getNoteListAPI(
 ): Promise<any[] | undefined> {
   const endpoint = `/notes?channelId=${channelId}`;
   const response = await apiHandler('GET', endpoint, RESPONSE.NOTE.SUCCESS);
-  return response.noteList;
+  return response?.noteList;
 }
 
 export async function getSpecificNoteAPI(
@@ -35,7 +34,7 @@ export async function getSpecificNoteAPI(
 ): Promise<any | undefined> {
   const endpoint = `/note/${noteId}`;
   const response = await apiHandler('GET', endpoint, RESPONSE.NOTE.SUCCESS);
-  return response.note;
+  return response?.note;
 }
 
 export async function updateNoteAllAPI(

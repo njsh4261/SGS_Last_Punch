@@ -193,7 +193,7 @@ class RegisterViewController: UIViewController {
         
         viewModel.output.enableBtnVerification
             .observe(on: MainScheduler.instance)
-            .bind(to: btnVerification.rx.isEnabled, fieldCode.rx.deleteBackward)
+            .bind(to: btnVerification.rx.isEnabled, fieldCode.rx.deleteCodeBackward)
             .disposed(by: disposeBag)
         
         viewModel.output.enableBtnSignUp

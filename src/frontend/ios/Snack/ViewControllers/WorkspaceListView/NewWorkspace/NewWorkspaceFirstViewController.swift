@@ -1,8 +1,8 @@
 //
-//  SearchURLWorkspaceViewController.swift
+//  NewWorkspaceFirstViewController.swift
 //  Snack
 //
-//  Created by ghyeongkim-MN on 2022/01/26.
+//  Created by ghyeongkim-MN on 2022/02/04.
 //
 
 import UIKit
@@ -13,26 +13,22 @@ import ProgressHUD
 import SwiftKeychainWrapper
 import Then
 
-class SearchURLWorkspaceViewController: UIViewController {
+class NewWorkspaceFirstViewController: UIViewController {
     // MARK: - Properties
-    private let viewModel = SearchURLWorkspaceVeiwModel()
+    private let viewModel = NewWorkspaceFirstViewModel()
     private let disposeBag = DisposeBag()
-    private var accessTokenField = UITextField()
     var workspace: WorkspacesModel?
     var workspaceId: Int = -1
     
     // MARK: - UI
     private var btnNext = UIBarButtonItem()
     private var lblDescription = UILabel()
-    private var urlWorkspaceField = UITextField()
+    private var newWorkspaceNameField = UITextField()
     private var lblWarning = UILabel()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
-        accessTokenField.text = token
-        NSLog("accessToken: " + token)
-        
+                
         bind(with: viewModel)
         attribute()
         layout()
@@ -42,30 +38,26 @@ class SearchURLWorkspaceViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(with viewModel: SearchURLWorkspaceVeiwModel) {
+    func bind(with viewModel: NewWorkspaceFirstViewModel) {
         // MARK: Bind input
-        accessTokenField.rx.text.orEmpty
-            .bind(to: viewModel.input.accessToken)
-            .disposed(by: disposeBag)
-        
         btnNext.rx.tap
             .bind(to: viewModel.input.btnNextTapped)
             .disposed(by: disposeBag)
         
         // enter를 누를때
-        urlWorkspaceField.rx.controlEvent(.editingDidEndOnExit)
+        newWorkspaceNameField.rx.controlEvent(.editingDidEndOnExit)
             .asObservable()
             .bind(to: viewModel.input.btnNextTapped)
             .disposed(by: disposeBag)
         
-        urlWorkspaceField.rx.text.orEmpty
-            .bind(to: viewModel.input.urlWorkspace)
+        newWorkspaceNameField.rx.text.orEmpty
+            .bind(to: viewModel.input.newWorkspaceName)
             .disposed(by: disposeBag)
         
         // MARK: Bind output
         viewModel.output.isEnabled
             .observe(on: MainScheduler.instance)
-            .bind(to: btnNext.rx.isEnabled)
+            .bind(to: btnNext.rx.isEnabled, newWorkspaceNameField.rx.deleteWorkspaceNameBackward)
             .disposed(by: disposeBag)
         
         viewModel.output.isHidden
@@ -73,9 +65,9 @@ class SearchURLWorkspaceViewController: UIViewController {
             .bind(to: lblWarning.rx.isHidden)
             .disposed(by: disposeBag)
         
-        viewModel.output.goToHome
+        viewModel.output.goToNewWorkspaceChennel
             .observe(on: MainScheduler.instance)
-            .bind(onNext: goToHome)
+            .bind(onNext: goToNewWorkspaceChennel)
             .disposed(by: disposeBag)
         
         // 성공/실패 메시지
@@ -98,7 +90,7 @@ class SearchURLWorkspaceViewController: UIViewController {
         ProgressHUD.showFailed(message)
     }
     
-    private func goToHome(_ bool: Bool) {
+    private func goToNewWorkspaceChennel(_ bool: Bool) {
         if bool {
             guard let pvc = self.presentingViewController else { return }
             pvc.dismiss(animated: true) { [self] in
@@ -136,22 +128,23 @@ class SearchURLWorkspaceViewController: UIViewController {
     
     private func attribute() {
         view.backgroundColor = UIColor (named: "snackBackGroundColor")
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "이름", style: .plain, target: nil, action: nil)
         navigationItem.rightBarButtonItem = btnNext
         
         btnNext = btnNext.then {
-            $0.title = "홈으로"
+            $0.title = "다음"
             $0.style = .plain
-            $0.isEnabled = false
         }
         
         lblDescription = lblDescription.then {
-            $0.text = "입장하려는 Snack 워크스페이스의 URL"
+            $0.text = "워크스페이스 이름이 어떻게 됩니까?"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
             $0.textAlignment = .left
         }
         
-        urlWorkspaceField = urlWorkspaceField.then {
-            $0.placeholder = "workspace-url"
+        newWorkspaceNameField = newWorkspaceNameField.then {
+            $0.text = "새 워크스페이스"
+            $0.placeholder = "예: Last Punch Project"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 25)
             $0.textAlignment = .left
             $0.returnKeyType = .go
@@ -159,7 +152,7 @@ class SearchURLWorkspaceViewController: UIViewController {
         }
         
         lblWarning = lblWarning.then {
-            $0.text = "최대 31자를 입력해주세요."
+            $0.text = "최대 15자를 입력해주세요"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 14)
             $0.textColor = .lightGray
             $0.textAlignment = .left
@@ -168,9 +161,9 @@ class SearchURLWorkspaceViewController: UIViewController {
     }
     
     private func layout() {
-        [lblDescription, urlWorkspaceField, lblWarning].forEach { view.addSubview($0) }
+        [lblDescription, newWorkspaceNameField, lblWarning].forEach { view.addSubview($0) }
         
-        [lblDescription, urlWorkspaceField, lblWarning].forEach {
+        [lblDescription, newWorkspaceNameField, lblWarning].forEach {
             $0.snp.makeConstraints {
                 $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(16)
             }
@@ -180,13 +173,13 @@ class SearchURLWorkspaceViewController: UIViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(175)
         }
         
-        urlWorkspaceField.snp.makeConstraints {
+        newWorkspaceNameField.snp.makeConstraints {
             $0.top.equalTo(lblDescription.snp.bottom)
             $0.height.equalTo(50)
         }
         
         lblWarning.snp.makeConstraints {
-            $0.top.equalTo(urlWorkspaceField.snp.bottom)
+            $0.top.equalTo(newWorkspaceNameField.snp.bottom)
         }
     }
 }

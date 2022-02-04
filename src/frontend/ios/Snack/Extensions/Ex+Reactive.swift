@@ -56,9 +56,17 @@ extension Reactive where Base: UITextField {
         })
     }
     
-    var deleteBackward: Binder<(Bool)> {
+    var deleteCodeBackward: Binder<(Bool)> {
         return Binder(base, binding: { (textField, _) in
             if textField.text!.count > 6 {
+                textField.deleteBackward()
+            }
+        })
+    }
+    
+    var deleteWorkspaceNameBackward: Binder<(Bool)> {
+        return Binder(base, binding: { (textField, _) in
+            if textField.text!.count > 16 {
                 textField.deleteBackward()
             }
         })

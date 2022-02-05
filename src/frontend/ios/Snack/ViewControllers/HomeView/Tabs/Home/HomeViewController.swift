@@ -98,11 +98,15 @@ class HomeViewController: UIViewController {
         tabBarItem.title = "홈"
         
         [view, tableView].forEach {
-            $0.backgroundColor = UIColor(named: "snackBackGroundColor")
+            $0.backgroundColor = UIColor(named: "snackBackGroundColor2")
         }
         
         searchBar = searchBar.then {
             $0.placeholder = "채널로 이동..."
+            $0.barTintColor = UIColor(named: "snackBackGroundColor2")
+            $0.searchTextField.backgroundColor = UIColor(named: "snackButtonColor")
+            $0.backgroundImage = UIImage()
+            $0.searchTextField.layer.cornerRadius = 15
         }
         
         tableView = tableView.then {
@@ -113,7 +117,7 @@ class HomeViewController: UIViewController {
             $0.isOpaque = false
             $0.clearsContextBeforeDrawing = false
             $0.separatorStyle = .singleLine
-            $0.rowHeight = UITableView.automaticDimension
+            $0.rowHeight = 50
         }
     }
     
@@ -121,19 +125,15 @@ class HomeViewController: UIViewController {
         [searchBar, tableView].forEach {
             view.addSubview($0)
         }
-        
-        [searchBar, tableView].forEach {
-            $0?.snp.makeConstraints {
-                $0.left.right.equalTo(view.safeAreaLayoutGuide)
-            }
-        }
-        
+
         searchBar.snp.makeConstraints {
+            $0.left.right.equalTo(view.safeAreaLayoutGuide)
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(56)
         }
         
         tableView.snp.makeConstraints {
+            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(8)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.top.equalTo(56)
         }

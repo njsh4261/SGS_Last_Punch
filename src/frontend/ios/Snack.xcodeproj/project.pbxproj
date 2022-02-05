@@ -371,8 +371,7 @@
 		8C68AAE5279526E800C1711E /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				8C68AAF727954F7000C1711E /* ChannelCell */,
-				8CBD459627A3E5650056A557 /* memberCell */,
+				8C962B6127AE6A1C00A9A1F5 /* Cell */,
 				8C68AAE0279526C600C1711E /* HomeViewController.swift */,
 				8C68AAE2279526CF00C1711E /* HomeViewModel.swift */,
 			);
@@ -414,14 +413,6 @@
 				8CBD459E27A56F0A0056A557 /* MessageModel.swift */,
 			);
 			path = Entity;
-			sourceTree = "<group>";
-		};
-		8C68AAF727954F7000C1711E /* ChannelCell */ = {
-			isa = PBXGroup;
-			children = (
-				8C68AAFC27954FCB00C1711E /* ChannelListCell.swift */,
-			);
-			path = ChannelCell;
 			sourceTree = "<group>";
 		};
 		8C68AB0F2795ABF000C1711E /* Mock */ = {
@@ -472,6 +463,15 @@
 				8C962B5C27ADAC3B00A9A1F5 /* ModelType.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		8C962B6127AE6A1C00A9A1F5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8C68AAFC27954FCB00C1711E /* ChannelListCell.swift */,
+				8CBD459427A3E55F0056A557 /* MemberListCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		8CBD454927A064C70056A557 /* Utilities */ = {
@@ -540,14 +540,6 @@
 			children = (
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		8CBD459627A3E5650056A557 /* memberCell */ = {
-			isa = PBXGroup;
-			children = (
-				8CBD459427A3E55F0056A557 /* MemberListCell.swift */,
-			);
-			path = memberCell;
 			sourceTree = "<group>";
 		};
 		8CBD45B627A6CF320056A557 /* Profile */ = {

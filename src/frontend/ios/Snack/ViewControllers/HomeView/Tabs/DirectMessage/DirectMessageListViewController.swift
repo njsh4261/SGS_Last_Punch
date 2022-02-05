@@ -76,9 +76,9 @@ class DirectMessageListViewController: UIViewController {
         // MARK: Bind output
         viewModel.cellData
             .asDriver(onErrorJustReturn: [])
-            .drive(tableView.rx.items) { tv, row, data in
+            .drive(tableView.rx.items) { tableView, row, data in
                 let index = IndexPath(row: row, section: 0)
-                let cell = tv.dequeueReusableCell(withIdentifier: "DirectMessageListViewCell", for: index) as! DirectMessageListCellView
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DirectMessageListViewCell", for: index) as! DirectMessageListCellView
                 
                 cell.setData(data, row)
                 return cell

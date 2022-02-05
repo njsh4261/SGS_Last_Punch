@@ -7,7 +7,7 @@ import Modal from './Modal';
 import getChannelsAndMembersHook from '../../../../hook/getChannelsAndMembers';
 import selectChannelHook from '../../../../hook/selectChannel';
 import setTitleHook from '../../../../hook/setTitle';
-import ToggleList, { Text } from './ToggleList';
+import ToggleList, { Label } from './ToggleList';
 
 const Container = styled.article`
   padding-top: 8px;
@@ -37,7 +37,7 @@ export default function AsideBody() {
     <Container>
       {modalState.active && <Modal type={modalState.modalType}></Modal>}
       <SecitonType>
-        <Text>알림</Text>
+        <Label>알림</Label>
       </SecitonType>
       <ToggleList
         channelList={channelList}

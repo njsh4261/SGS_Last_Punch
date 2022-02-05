@@ -11,6 +11,7 @@ import RxCocoa
 import SnapKit
 import ProgressHUD
 import RxDataSources
+import SwiftKeychainWrapper
 import Then
 
 class HomeViewController: UIViewController {
@@ -18,9 +19,10 @@ class HomeViewController: UIViewController {
     private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
     private var dataSource: RxTableViewSectionedReloadDataSource<HomeSection.Model>!
-//    private var channelObjects: [ChannelObject] = []
-//    private var directMessageObjects: [MemberListCellModel] = []
-//    private var observerId: String?
+    private var users: [User]?
+    private var channels: [WorkspaceChannelCellModel]?
+    private var userInfo: User?
+    private var channel: Channel?
     
     // MARK: - UI
     private var searchBar = UISearchBar()
@@ -28,7 +30,11 @@ class HomeViewController: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
+        if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
+            let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
+            self.userInfo = getUser(userInfo!)
+        }
+
         bind(with: viewModel)
         attribute()
         layout()
@@ -40,6 +46,18 @@ class HomeViewController: UIViewController {
     
     func bind(with viewModel: HomeViewModel) {
         tableView.dataSource = nil
+        
+        // MARK: Bind input
+        tableView.rx.itemSelected
+            .map { $0.row }
+            .bind(to: viewModel.input.itemSelected)
+            .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.tableView.deselectRow(at: indexPath, animated: true)
+            })
+            .disposed(by: disposeBag)
         
         // MARK: Bind output
         dataSource = RxTableViewSectionedReloadDataSource<HomeSection.Model> { dataSource, tableView, indexPath, item in
@@ -59,18 +77,24 @@ class HomeViewController: UIViewController {
         viewModel.output.sections
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
-        tableView.rx.itemSelected
-            .subscribe(onNext: { [weak self] indexPath in
-                self?.tableView.deselectRow(at: indexPath, animated: true)
-            })
-            .disposed(by: disposeBag)
-
+                
         viewModel.output.workspaceTitle
             .bind(onNext: setTitle)
             .disposed(by: disposeBag)
-
         
+        viewModel.output.setData
+            .bind(onNext: setData)
+            .disposed(by: disposeBag)
+
+        viewModel.push
+            .drive(onNext: { [self] (viewModel, row) in
+                // 추가) 본인 user정보를 넣어야함
+                let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: users![row], channel: Channel(chatId: "", name: users![row].name!))
+                viewController.hidesBottomBarWhenPushed = true
+                viewController.bind(viewModel)
+                self.show(viewController, sender: nil)
+            })
+            .disposed(by: disposeBag)
 //        let sections = [
 //
 //            ChatsSection.SectionOne(items: [SectionItem.StatusChannel(header: "첫번째", items: channelObjects)]),
@@ -84,6 +108,15 @@ class HomeViewController: UIViewController {
     
     private func setTitle(_ title: String) {
         self.navigationItem.title = title
+    }
+    
+    private func setData(_ users: [User], _ channels: [WorkspaceChannelCellModel]) {
+        self.users = users
+        self.channels = channels
+    }
+    
+    private func getUser(_ userInfo: UserModel) -> User {
+        return User(senderId: userInfo.id.description, displayName: userInfo.name, name: userInfo.name, email: userInfo.email, description: userInfo.description, phone: userInfo.phone, country: userInfo.country, language: userInfo.language, settings: userInfo.settings, status: userInfo.status, createDt: userInfo.createDt, modifyDt: userInfo.modifyDt, authorId: userInfo.id.description, content: userInfo.email)
     }
     
     private func configureCollectionViewCell(tableView: UITableView, indexPath: IndexPath, item: HomeSection.HomeItem) -> UITableViewCell {

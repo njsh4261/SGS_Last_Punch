@@ -55,7 +55,6 @@ class LoginViewModel: ViewModelProtocol {
                                 DispatchQueue.main.async { // 메인스레드에서 동작
                                     switch result {
                                     case .success(let data as Token):
-                                        KeychainWrapper.standard[.id] = data.account.id.description
                                         self.output.successMessage.accept("환영합니다!")
                                         self.output.goToWorkspaceList.accept(data)
                                     case .fail:

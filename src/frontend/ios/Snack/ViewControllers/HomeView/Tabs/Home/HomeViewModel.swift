@@ -13,17 +13,19 @@ import Alamofire
 
 class HomeViewModel: ViewModelProtocol {
     struct Input {
-//        let cellData: Driver<[String]>
+        let itemSelected = PublishRelay<Int>()
     }
     
     struct Output {
         let workspaceTitle = PublishRelay<String>()
+        let setData = PublishRelay<([User], [WorkspaceChannelCellModel])>()
         let sections = PublishRelay<[SectionModel<HomeSection.HomeSection, HomeSection.HomeItem>]>()
         let errorMessage = PublishRelay<String>()
     }
     // MARK: - Public properties
     let input = Input()
     let output = Output()
+    let push: Driver<(MessageViewModel, Int)>
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
@@ -44,6 +46,16 @@ class HomeViewModel: ViewModelProtocol {
     
     // MARK: - Init
     init() {
+        let messageViewModel = MessageViewModel()
+
+        //MARK: - push
+        self.push = input.itemSelected
+            .compactMap { row -> (MessageViewModel, Int) in
+                return (messageViewModel, row)
+            }
+            .asDriver(onErrorDriveWith: .empty())
+
+        
         guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else {  return }
         self.token = token
         self.workspaceId = workspaceId
@@ -59,6 +71,7 @@ class HomeViewModel: ViewModelProtocol {
         
         networkGroup.notify(queue: .main) { [self] in
             guard let workspace = self.workspace, let channels = self.channels, let members = self.members else { return }
+            output.setData.accept((getUser(members), channels))
             let sectionChannels = getChannels(channels)
             let sectionMembers = getMembers(members)
             
@@ -100,6 +113,8 @@ class HomeViewModel: ViewModelProtocol {
             }.disposed(by: self.disposeBag)
     }
     
+    
+    
     func getChannels(_ channels: [WorkspaceChannelCellModel]) -> [Channel] {
         return channels.map {
             Channel(chatId: "\($0.id)", name: "\($0.name!)")
@@ -111,6 +126,13 @@ class HomeViewModel: ViewModelProtocol {
             Member(id: "\($0.id)", name: "\($0.name!)", thumbnail: "")
         }
     }
+    
+    func getUser(_ members: [WorkspaceMemberCellModel]) -> [User] {
+        return members.map {
+            User(senderId: $0.id.description, displayName: $0.name!, name: $0.name!, email: $0.email, description: $0.description, phone: $0.phone, country: $0.country, language: $0.language, settings: $0.settings, status: $0.status, createDt: $0.createDt, modifyDt: $0.modifyDt, authorId: $0.id.description, content: $0.email)
+        }
+    }
+
 }
 
 

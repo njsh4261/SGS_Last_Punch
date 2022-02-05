@@ -17,6 +17,7 @@ class DirectMessageListViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private var accessTokenField = UITextField()
+    private var userInfo: User?
     private var members = [User]()
     private var accessToken: String = ""
     private var workspaceId: String = ""
@@ -32,6 +33,10 @@ class DirectMessageListViewController: UIViewController {
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, workspaceId: String) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let accessToken: String = KeychainWrapper.standard[.refreshToken] else { return }
+        if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
+            let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
+            self.userInfo = getUser(userInfo!)
+        }
         self.accessToken = accessToken
         self.workspaceId = workspaceId
         tableView.dataSource = nil
@@ -98,7 +103,7 @@ class DirectMessageListViewController: UIViewController {
         viewModel.push
             .drive(onNext: { [self] (viewModel, row) in
                 // 추가) 본인 user정보를 넣어야함
-                let viewController = PrivateMessageViewController(senderInfo: members[row], recipientInfo: members[row], channel: Channel(chatId: "0", name: self.members[row].name ?? "아무개"))
+                let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members[row], channel: Channel(chatId: "0", name: self.members[row].name ?? ""))
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)
@@ -113,6 +118,10 @@ class DirectMessageListViewController: UIViewController {
     
     private func setMembers(_ members: [User]) {
         self.members = members
+    }
+    
+    private func getUser(_ userInfo: UserModel) -> User {
+        return User(senderId: userInfo.id.description, displayName: userInfo.name, name: userInfo.name, email: userInfo.email, description: userInfo.description, phone: userInfo.phone, country: userInfo.country, language: userInfo.language, settings: userInfo.settings, status: userInfo.status, createDt: userInfo.createDt, modifyDt: userInfo.modifyDt, authorId: userInfo.id.description, content: userInfo.email)
     }
     
     private func showFailedAlert(_ message: String) {

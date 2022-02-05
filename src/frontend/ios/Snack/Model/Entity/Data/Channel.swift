@@ -10,10 +10,22 @@ import Foundation
 struct Channel: ModelType {
     let chatId: String
     let name: String
-    
-    init(chatId: String, name: String) {
+    let topic: String
+    let description: String
+    let settings: Int
+    let status: Int
+    let createDt: String
+    let modifyDt: String
+
+    init(chatId: String, name: String = "", topic: String = "", description: String = "", settings: Int = 0, status: Int = 0, createDt: String = "", modifyDt: String = "") {
         self.chatId = chatId
         self.name = name
+        self.topic = topic
+        self.description = description
+        self.settings = settings
+        self.status = status
+        self.createDt = createDt
+        self.modifyDt = modifyDt
     }
 }
 

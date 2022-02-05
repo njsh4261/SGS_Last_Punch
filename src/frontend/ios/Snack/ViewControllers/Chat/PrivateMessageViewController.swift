@@ -88,7 +88,7 @@ class PrivateMessageViewController: MessagesViewController {
     
     private func goToProfile() {
         // 추가 본인 정보를 넣어야함
-        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: recipientInfo, recipientInfo: recipientInfo, isChat: false)
+        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: senderInfo, recipientInfo: recipientInfo, isChat: false)
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)
     }
@@ -157,7 +157,7 @@ class PrivateMessageViewController: MessagesViewController {
         // library InputBarAccessoryView의 속성
         messageInputBar = messageInputBar.then {
             $0.delegate = self
-            $0.inputTextView.placeholder = "\(recipientInfo.displayName)에(게) 메시지 보내기"
+            $0.inputTextView.placeholder = "\(recipientInfo.name!)에(게) 메시지 보내기"
             $0.backgroundView.backgroundColor = UIColor(named: "snackBackGroundColor")
             
             $0.setStackViewItems([btnAttach], forStack: .left, animated: false)

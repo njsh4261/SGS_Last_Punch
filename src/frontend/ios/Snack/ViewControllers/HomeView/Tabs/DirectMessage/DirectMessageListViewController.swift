@@ -17,7 +17,7 @@ class DirectMessageListViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private var accessTokenField = UITextField()
-    private var members = [UserModel]()
+    private var members = [User]()
     private var accessToken: String = ""
     private var workspaceId: String = ""
     private let HEADER_HEIGHT: Float = 66
@@ -111,7 +111,7 @@ class DirectMessageListViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func setMembers(_ members: [UserModel]) {
+    private func setMembers(_ members: [User]) {
         self.members = members
     }
     

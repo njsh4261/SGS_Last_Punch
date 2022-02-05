@@ -21,8 +21,8 @@ class PrivateMessageViewController: MessagesViewController {
     private let disposeBag = DisposeBag()
     let channel: Channel?
     var messages = [MessageModel]()
-    var recipientInfo: UserModel
-    var senderInfo: UserModel
+    var recipientInfo: User
+    var senderInfo: User
     private var userInfo: WorkspaceMemberCellModel?
     private(set) lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
@@ -40,7 +40,7 @@ class PrivateMessageViewController: MessagesViewController {
     
     private var btnAttach = InputBarButtonItem()
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: UserModel, recipientInfo: UserModel, channel: Channel) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, channel: Channel) {
         self.senderInfo = senderInfo
         self.recipientInfo = recipientInfo
         self.channel = channel

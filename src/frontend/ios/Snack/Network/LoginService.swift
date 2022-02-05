@@ -66,13 +66,15 @@ class LoginService {
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         let decoder = JSONDecoder()
         
+        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
+        
         guard let decodedData = try? decoder.decode(LoginDataModel.self, from: data)
         else { return .pathErr}
         
         switch statusCode {
         case 200:
             if decodedData.code == "11000" {
-                return .success(decodedData.data ?? Token.init(access_token: "", refresh_token: ""))
+                return .success(decodedData.data!)
             } else { // 이메일, 비밀번호를 일치하지 않을때,
                 return .fail(decodedData.code)
             }

@@ -19,7 +19,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
     }
     
     struct Output {
-        let memberListCellData = PublishSubject<[UserModel]>()
+        let memberListCellData = PublishSubject<[User]>()
         let refreshLoading = PublishRelay<Bool>()
         let goToMessage = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
@@ -27,7 +27,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
     // MARK: - Public properties
     var input = Input()
     var output = Output()
-    var cellData: Driver<[UserModel]>
+    var cellData: Driver<[User]>
     let push: Driver<(MessageViewModel, Int)>
     
     // MARK: - Private properties
@@ -90,11 +90,11 @@ class DirectMessageListViewModel: ViewModelProtocol {
         }
     }
     
-    func convertData(members: [WorkspaceMemberCellModel]) -> [UserModel] {
-        var userList = [UserModel]()
+    func convertData(members: [WorkspaceMemberCellModel]) -> [User] {
+        var userList = [User]()
         
         for member in members {
-            let user = UserModel(
+            let user = User(
                 senderId: member.id.description,
                 displayName: member.displayname ?? "이름 없음",
                 name: member.name,

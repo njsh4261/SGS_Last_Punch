@@ -12,7 +12,7 @@ import RxCocoa
 
 class EditProfileView: UIViewController {
     // MARK: - Properties
-    private var userInfo: UserModel?
+    private var userInfo: User?
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
@@ -31,7 +31,7 @@ class EditProfileView: UIViewController {
     @IBOutlet private var fieldDescription: UITextField!
     @IBOutlet private var fieldPhone: UITextField!
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, userInfo: UserModel) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, userInfo: User) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.userInfo = userInfo
     }

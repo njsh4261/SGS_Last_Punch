@@ -44,33 +44,33 @@ struct MessageModel: MessageType {
     var sentDate: Date
     var kind: MessageKind
 
-    var user: UserModel
+    var user: User
 
-    private init(kind: MessageKind, user: UserModel, messageId: String, date: Date) {
+    private init(kind: MessageKind, user: User, messageId: String, date: Date) {
         self.kind = kind
         self.user = user
         self.messageId = messageId
         self.sentDate = date
     }
     
-    init(custom: Any?, user: UserModel, messageId: String, date: Date) {
+    init(custom: Any?, user: User, messageId: String, date: Date) {
         self.init(kind: .custom(custom), user: user, messageId: messageId, date: date)
     }
 
-    init(text: String, user: UserModel, messageId: String, date: Date) {
+    init(text: String, user: User, messageId: String, date: Date) {
         self.init(kind: .text(text), user: user, messageId: messageId, date: date)
     }
 
-    init(attributedText: NSAttributedString, user: UserModel, messageId: String, date: Date) {
+    init(attributedText: NSAttributedString, user: User, messageId: String, date: Date) {
         self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
     }
 
-    init(image: UIImage, user: UserModel, messageId: String, date: Date) {
+    init(image: UIImage, user: User, messageId: String, date: Date) {
         let mediaItem = ImageMediaItemModel(image: image)
         self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date)
     }
     
-    init(location: CLLocation, user: UserModel, messageId: String, date: Date) {
+    init(location: CLLocation, user: User, messageId: String, date: Date) {
         let locationItem = CoordinateItemModel(location: location)
         self.init(kind: .location(locationItem), user: user, messageId: messageId, date: date)
     }

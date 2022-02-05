@@ -10,7 +10,7 @@ import ProgressHUD
 
 class StatusView: UIViewController {
     // MARK: - Properties
-    private var userInfo: UserModel?
+    private var userInfo: User?
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!

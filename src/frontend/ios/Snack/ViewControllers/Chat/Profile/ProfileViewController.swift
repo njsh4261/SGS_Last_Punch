@@ -16,8 +16,8 @@ class ProfileViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private let viewModel = ProfileViewModel()
-    private var recipientInfo: UserModel?
-    private var senderInfo: UserModel?
+    private var recipientInfo: User?
+    private var senderInfo: User?
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
@@ -45,7 +45,7 @@ class ProfileViewController: UIViewController {
 
     private var isChatEnabled = false
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: UserModel, recipientInfo: UserModel, isChat: Bool) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, isChat: Bool) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.recipientInfo = recipientInfo
         self.senderInfo = senderInfo

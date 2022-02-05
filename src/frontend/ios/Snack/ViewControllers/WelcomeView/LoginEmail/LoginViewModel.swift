@@ -8,6 +8,7 @@
 import RxSwift
 import RxCocoa
 import ProgressHUD
+import SwiftKeychainWrapper
 
 class LoginViewModel: ViewModelProtocol {
     struct Input {
@@ -53,14 +54,14 @@ class LoginViewModel: ViewModelProtocol {
                             case .next(let result):
                                 DispatchQueue.main.async { // 메인스레드에서 동작
                                     switch result {
-                                    case .success(let data):
+                                    case .success(let data as Token):
+                                        KeychainWrapper.standard[.id] = data.account.id.description
                                         self.output.successMessage.accept("환영합니다!")
-                                        self.output.goToWorkspaceList.accept(data as! Token)
+                                        self.output.goToWorkspaceList.accept(data)
                                     case .fail:
                                         self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력했습니다.")
                                     default:
-                                        self.output.goToWorkspaceList.accept(Token(access_token: "", refresh_token: "")) // 추후 삭제
-                                        self.output.errorMessage.accept("서버 에러")
+                                        self.output.errorMessage.accept("일시적인 문제가 발생했습니다")
                                     }
                                 }
                                 break

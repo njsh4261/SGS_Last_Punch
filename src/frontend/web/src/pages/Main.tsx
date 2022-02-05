@@ -27,7 +27,7 @@ const GuideText = styled.div`
 `;
 
 export default function Main() {
-  const [params, wsName] = getWsHook();
+  const [params, ws] = getWsHook();
   setTitleHook('', params);
   updateChannelStoreHook(params);
 
@@ -35,7 +35,7 @@ export default function Main() {
     <MainLayout>
       <MainHeader></MainHeader>
       <Body>
-        <Aside wsName={wsName}></Aside>
+        <Aside ws={ws}></Aside>
         {params.channelId ? (
           params.noteId ? (
             <NoteMain></NoteMain>

@@ -20,6 +20,12 @@ const Body = styled.div`
   height: 100%;
 `;
 
+const GuideText = styled.div`
+  margin: auto;
+  font-size: 30px;
+  font-weight: bold;
+`;
+
 export default function Main() {
   const [params, wsName] = getWsHook();
   setTitleHook('', params);
@@ -37,7 +43,7 @@ export default function Main() {
             <Chat></Chat>
           )
         ) : (
-          <div>this is main page. select channel!</div>
+          <GuideText>🍪 Select Channel 🍪</GuideText>
         )}
       </Body>
     </MainLayout>

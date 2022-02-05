@@ -13,7 +13,7 @@ const Container = styled.article`
   padding-top: 8px;
   display: flex;
   flex-direction: column;
-  color: rgb(207, 195, 207);
+  color: ${({ theme }) => theme.color.snackSideFont};
   font-size: 14px;
   overflow-y: scroll;
 `;
@@ -21,7 +21,7 @@ const Container = styled.article`
 const SecitonType = styled.section`
   padding: 8px 0px;
   &:hover {
-    background-color: ${(props) => props.theme.color.heavySlack};
+    background-color: ${(props) => props.theme.color.snackSideHover};
   }
 `;
 

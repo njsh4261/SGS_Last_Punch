@@ -5,7 +5,7 @@ const MainHeaderFrame = styled.header`
   justify-content: end;
   align-items: center;
   min-height: 38px;
-  background-color: ${(props) => props.theme.color.heavySlack};
+  background-color: ${({ theme }) => theme.color.snackHeader};
   padding: 6px 0px;
 `;
 

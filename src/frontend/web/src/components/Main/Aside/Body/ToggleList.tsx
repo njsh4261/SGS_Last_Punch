@@ -4,8 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { openModal } from '../../../../modules/modal';
-import expandIcon from '../../../../icon/downArrow.svg';
-import ImageButton from '../../../Common/ImageButton';
 import { ModalType } from './Modal';
 import ChannelItem, { ItemContainer } from './ChannelItem';
 
@@ -26,7 +24,7 @@ export const Text = styled.label`
   white-space: nowrap;
   cursor: pointer;
   &:hover {
-    color: white;
+    color: gray;
   }
 `;
 
@@ -74,16 +72,11 @@ export default function ToggleList({
       .type as ModalType;
     dispatch(openModal(modalType));
   };
-
   return (
     <ToggleType>
       <Text htmlFor={`${type}-toggle`}>
         <Flex>
-          <ImageButton
-            size="17px"
-            inline={true}
-            imageUrl={expandIcon}
-          ></ImageButton>
+          ▶️
           <PaddingLeft8px>{type}</PaddingLeft8px>
         </Flex>
       </Text>

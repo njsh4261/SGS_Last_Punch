@@ -7,12 +7,12 @@ const AsideHeader = styled.div`
   white-space: nowrap;
   width: 260px;
   min-height: 49px;
-  color: white;
+  color: black;
   font-size: 19px;
   font-weight: 600;
-  font-family: NotoSansKR, Slack-Lato, appleLogo, sans-serif;
+  font-family: sans-serif;
   padding: 12.5px 40px 12.5px 16px;
-  border-bottom: 1px solid rgb(82, 38, 83);
+  border-bottom: 1px solid ${({ theme }) => theme.color.snackBorder};
   cursor: pointer;
 `;
 

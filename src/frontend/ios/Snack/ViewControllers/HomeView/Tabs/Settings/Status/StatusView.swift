@@ -118,7 +118,7 @@ extension StatusView: UITableViewDelegate {
         }
 
         if (indexPath.section == 2) {
-            updateStatus(status: "")
+            updateStatus(status: "대화 가능")
         }
     }
 }

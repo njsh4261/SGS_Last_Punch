@@ -7,6 +7,11 @@ declare module 'styled-components' {
       lightSlack: string;
       lightGrey: string;
       heavySlack: string;
+      snackBorder: string;
+      snackHeader: string;
+      snackSide: string;
+      snackSideFont: string;
+      snackSideHover: string;
     };
   }
 }

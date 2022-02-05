@@ -1,12 +1,9 @@
 import styled from 'styled-components';
 
-// hard value
-
 const MainAsideFrame = styled.aside`
   min-width: 260px;
-  background-color: #3f0f40;
-  border-top: 1px solid #664167;
-  color: white;
+  background-color: ${({ theme }) => theme.color.snackSide};
+  user-select: none;
 `;
 
 export default MainAsideFrame;

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import chatHook from '../../../hook/chat';
 import ChatInput from './Input';
 import Header from './Header';
+import Loading from '../../Common/Loading';
 
 const Container = styled.main`
   flex: 1;
@@ -58,7 +59,7 @@ const Chat = () => {
   return (
     <>
       {channel.loading ? (
-        <div>loading</div>
+        <Loading></Loading>
       ) : (
         <Container>
           <Header channelName={channel.name} />

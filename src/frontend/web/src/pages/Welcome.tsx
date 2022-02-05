@@ -5,7 +5,7 @@ import WelcomeHeader from '../components/Welcome/Header';
 import WelcomeBody from '../components/Welcome/Body';
 
 const WelcomePage = styled.div`
-  background-color: ${(props) => props.theme.color.slack};
+  background-color: ${(props) => props.theme.color.snackSide};
   height: 100%;
   display: flex;
   flex-direction: column;

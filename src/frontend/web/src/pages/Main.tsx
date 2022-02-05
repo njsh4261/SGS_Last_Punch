@@ -20,16 +20,22 @@ const Body = styled.div`
   height: 100%;
 `;
 
+const GuideText = styled.div`
+  margin: auto;
+  font-size: 30px;
+  font-weight: bold;
+`;
+
 export default function Main() {
-  const [params, wsName] = getWsHook();
+  const [params, ws] = getWsHook();
   setTitleHook('', params);
   updateChannelStoreHook(params);
 
   return (
     <MainLayout>
-      <MainHeader wsName={wsName}></MainHeader>
+      <MainHeader></MainHeader>
       <Body>
-        <Aside wsName={wsName}></Aside>
+        <Aside ws={ws}></Aside>
         {params.channelId ? (
           params.noteId ? (
             <NoteMain></NoteMain>
@@ -37,7 +43,7 @@ export default function Main() {
             <Chat></Chat>
           )
         ) : (
-          <div>this is main page. select channel!</div>
+          <GuideText>🍪 Select Channel 🍪</GuideText>
         )}
       </Body>
     </MainLayout>

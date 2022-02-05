@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import Navigation from '../../Common/NavigationTab';
 import expandIcon from '../../../icon/expand.svg';
 
 const ChannelHeader = styled.article`
   display: flex;
   flex-shrink: 0;
   justify-content: space-between;
-  padding: 8px 20px;
-  border-bottom: 1px solid #e6e6e6;
+  padding: 9.5px 20px;
+  border-bottom: 1px solid ${({ theme }) => theme.color.snackBorder};
 `;
 
 const ChannelInfo = styled.section`
@@ -57,7 +56,6 @@ const Header = ({ channelName }: { channelName: string }) => {
         <ChannelName>{channelName}</ChannelName>
         <ArrowDropDownIcon></ArrowDropDownIcon>
       </ChannelInfo>
-      <Navigation mode="CHAT"></Navigation>
     </ChannelHeader>
   );
 };

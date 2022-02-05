@@ -10,7 +10,8 @@ export const ItemContainer = styled.section`
 
   &:hover {
     cursor: pointer;
-    background: ${(props) => props.theme.color.heavySlack};
+    background: ${(props) => props.theme.color.snackSideHover};
+    color: gray;
   }
 `;
 

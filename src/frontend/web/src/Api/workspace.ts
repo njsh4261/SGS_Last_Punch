@@ -4,7 +4,7 @@ import apiHandler from './handler';
 const dummySize = 999; // todo: remove
 const SIZE = 3;
 
-type wsId = number;
+type WsId = number;
 
 export async function getWsListAPI(page: number) {
   const endpoint = `/workspace?page=${page}&size=${SIZE}`;
@@ -16,7 +16,7 @@ export async function getWsListAPI(page: number) {
   return response;
 }
 
-export async function getWsInfoAPI(wsId: wsId) {
+export async function getWsInfoAPI(wsId: WsId) {
   const endpoint = `/workspace/${wsId}`;
   const response = await apiHandler(
     'GET',
@@ -26,7 +26,7 @@ export async function getWsInfoAPI(wsId: wsId) {
   return response;
 }
 
-export async function getMembersAPI(page: number, wsId: wsId) {
+export async function getMembersAPI(page: number, wsId: WsId) {
   const endpoint = `/workspace/${wsId}/members?page=${page}&size=${dummySize}`;
   const response = await apiHandler(
     'GET',
@@ -36,7 +36,7 @@ export async function getMembersAPI(page: number, wsId: wsId) {
   return response;
 }
 
-export async function getChannelsAPI(page: number, wsId: wsId) {
+export async function getChannelsAPI(page: number, wsId: WsId) {
   const endpoint = `/workspace/${wsId}/channels?page=${page}&size=${dummySize}`;
   const response = await apiHandler(
     'GET',
@@ -61,10 +61,11 @@ export async function createWsAPI(wsName: string, channelName: string) {
   return response;
 }
 
-export async function inviteWsAPI(wsId: wsId) {
+export async function inviteWsAPI(wsId: WsId, userId: number) {
   const endpoint = `/workspace/member`;
   const body = {
     wsId,
+    accountId: userId,
   };
   const response = await apiHandler(
     'POST',

@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { openModal } from '../../../../modules/modal';
-import expandIcon from '../../../../icon/downArrow.svg';
-import ImageButton from '../../../Common/ImageButton';
 import { ModalType } from './Modal';
 import ChannelItem, { ItemContainer } from './ChannelItem';
 
@@ -17,7 +15,7 @@ const PaddingLeft8px = styled.span`
   padding-left: 8px;
 `;
 
-export const Text = styled.label`
+export const Label = styled.label`
   display: block;
   padding: 0 16px;
   width: 260px;
@@ -26,7 +24,7 @@ export const Text = styled.label`
   white-space: nowrap;
   cursor: pointer;
   &:hover {
-    color: white;
+    color: gray;
   }
 `;
 
@@ -56,6 +54,15 @@ const PlusIcon = styled.div`
   color: ${(props) => props.theme.color.slack};
 `;
 
+const ArrowDown = styled.div`
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border-top: 10px solid darkgray;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+`;
+
 interface Props {
   type: ModalType;
   channelList: Array<{ id: string; name: string }>;
@@ -74,19 +81,15 @@ export default function ToggleList({
       .type as ModalType;
     dispatch(openModal(modalType));
   };
-
+  const [checked, setChecked] = useState(false);
   return (
     <ToggleType>
-      <Text htmlFor={`${type}-toggle`}>
-        <Flex>
-          <ImageButton
-            size="17px"
-            inline={true}
-            imageUrl={expandIcon}
-          ></ImageButton>
-          <PaddingLeft8px>{type}</PaddingLeft8px>
-        </Flex>
-      </Text>
+      <Label htmlFor={`${type}-toggle`} onClick={() => setChecked(!checked)}>
+        {/* <Flex> */}
+        {checked ? <ArrowDown></ArrowDown> : '▶️'}
+        <PaddingLeft8px>{type}</PaddingLeft8px>
+        {/* </Flex> */}
+      </Label>
       <CheckBox type="checkbox" id={`${type}-toggle`}></CheckBox>
       <ChannelList>
         {channelList.map((channel) => (

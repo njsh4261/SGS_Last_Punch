@@ -1,41 +1,9 @@
 import axios from 'axios';
-import { URL, ERROR_MESSAGE, TOKEN, RESPONSE } from '../constant';
+import { URL, TOKEN, RESPONSE } from '../constant';
 import clearSession from '../util/clearSession';
 import reissueAPI from './reissue';
 
 const getAccessToken = () => localStorage.getItem(TOKEN.ACCESS);
-
-const AxiosRequest = async (
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
-  endpoint: string,
-  successCode: string,
-  body?: any,
-) => {
-  let response;
-  const option = {
-    headers: { 'X-AUTH-TOKEN': getAccessToken()! },
-  };
-
-  switch (method) {
-    case 'GET':
-      response = await axios.get(URL.HOST + endpoint, option);
-      break;
-    case 'POST':
-      response = await axios.post(URL.HOST + endpoint, body, option);
-      break;
-    case 'PUT':
-      response = await axios.put(URL.HOST + endpoint, body, option);
-  }
-
-  const { code, data, err } = response?.data;
-  if (code === successCode) {
-    if (data) return data;
-    return code;
-  }
-
-  if (err) return { err };
-  else console.error('wrong response code');
-};
 
 async function apiHandler(
   method: 'GET',
@@ -86,12 +54,59 @@ async function apiHandler(
         headers: { 'X-AUTH-TOKEN': accessToken },
       };
     }
-    return AxiosRequest(method, endpoint, successCode, body);
+    let response;
+    switch (method) {
+      case 'GET':
+        response = await axios.get(URL.HOST + endpoint, option);
+        break;
+      case 'POST':
+        response = await axios.post(URL.HOST + endpoint, body, option);
+        break;
+      case 'PUT':
+        response = await axios.put(URL.HOST + endpoint, body, option);
+    }
+
+    const { code, data, err } = response?.data;
+    if (code === successCode) {
+      if (data) return data;
+      return code;
+    }
+
+    if (err) return { err };
+    else console.error('wrong response code');
   } catch (e: any) {
     if (e.response?.data.code === RESPONSE.TOKEN.EXPIRED) {
       const reissueResponse = await reissueAPI();
       if (reissueResponse === RESPONSE.SIGNIN.SUCCESS) {
-        return AxiosRequest(method, endpoint, successCode, body);
+        let response;
+        switch (method) {
+          case 'GET':
+            response = await apiHandler(
+              method,
+              endpoint,
+              successCode,
+              needToken,
+            );
+            break;
+          case 'POST':
+            response = await apiHandler(
+              method,
+              endpoint,
+              successCode,
+              body,
+              needToken,
+            );
+            break;
+          case 'PUT':
+            response = await apiHandler(
+              method,
+              endpoint,
+              successCode,
+              body,
+              needToken,
+            );
+        }
+        return response;
       }
     } else {
       clearSession(false);

@@ -27,6 +27,11 @@ class ChannelListCell: UITableViewCell {
         layout()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.cornerRadius = 15
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -36,7 +41,7 @@ class ChannelListCell: UITableViewCell {
         lblName.text = "#     \(chennel.name)"
     }
     
-    private func attribute() {        
+    private func attribute() {
         lblName = lblName.then {
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
         }

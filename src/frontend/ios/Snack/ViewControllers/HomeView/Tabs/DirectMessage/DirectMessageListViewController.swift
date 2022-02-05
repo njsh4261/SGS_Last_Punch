@@ -66,6 +66,12 @@ class DirectMessageListViewController: UIViewController {
             .map { $0.row }
             .bind(to: viewModel.input.itemSelected)
             .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.tableView.deselectRow(at: indexPath, animated: true)
+            })
+            .disposed(by: disposeBag)
 
         // MARK: Bind output
         viewModel.cellData

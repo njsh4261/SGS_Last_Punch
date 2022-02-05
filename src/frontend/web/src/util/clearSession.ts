@@ -1,5 +1,6 @@
 export default function clearSession(reload = true) {
-  sessionStorage.clear();
-  localStorage.clear();
-  if (reload) window.location.reload();
+  console.error('clear session fired');
+  // sessionStorage.clear();
+  // localStorage.clear();
+  // if (reload) window.location.reload();
 }

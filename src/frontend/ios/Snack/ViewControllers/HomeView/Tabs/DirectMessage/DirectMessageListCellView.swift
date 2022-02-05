@@ -36,7 +36,7 @@ class DirectMessageListCellView: UITableViewCell {
     }
     
     private func attribute() {
-        backgroundColor = UIColor(named: "snackBackGroundColor")
+        backgroundColor = UIColor(named: "snackButtonColor")
         
         ivThumbnail.contentMode = .scaleAspectFit
         

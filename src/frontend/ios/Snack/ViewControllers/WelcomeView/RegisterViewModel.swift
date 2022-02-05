@@ -33,6 +33,7 @@ class RegisterViewModel: ViewModelProtocol {
         let visibilityBtnSendEmail = PublishRelay<Bool>()
         let visibilityCode = PublishRelay<Bool>()
         let visibilityPassword = PublishRelay<Bool>()
+        let becomeName = PublishRelay<Void>()
         let successMessage = PublishRelay<String>()
         let errorMessage = PublishRelay<String>()
         let goToLogin = PublishRelay<Void>()
@@ -150,6 +151,8 @@ class RegisterViewModel: ViewModelProtocol {
                                 switch result {
                                 case .success:
                                     self.output.visibilityPassword.accept(false)
+                                    self.output.becomeName.accept((
+                                    ))
                                     self.output.successMessage.accept("인증 확인")
                                 case .fail:
                                     self.output.errorMessage.accept("유효하지 않는 코드\n재발송을 눌러주세요")
@@ -166,13 +169,13 @@ class RegisterViewModel: ViewModelProtocol {
             }.disposed(by: self.disposeBag)
         
         // 회원 가입
-        input.btnSignUpTapped.withLatestFrom(Observable.combineLatest(input.email, input.code, input.password, input.retypePassword))
-            .bind { [weak self] (email, code, password, retypePassword) in
+        input.btnSignUpTapped.withLatestFrom(Observable.combineLatest(input.email, input.code, input.name, input.password, input.retypePassword))
+            .bind { [weak self] (email, code, name, password, retypePassword) in
                 guard let self = self else { return }
                 // API로직을 태워야합니다.
                 ProgressHUD.animationType = .circleSpinFade
                 ProgressHUD.show("정보 확인중..")
-                RegisterService.shared.signUp(email: email, code: code, password: retypePassword)
+                RegisterService.shared.signUp(email: email, code: code, name: name, password: retypePassword)
                     .subscribe { event in
                         switch event {
                         case .next(let result):

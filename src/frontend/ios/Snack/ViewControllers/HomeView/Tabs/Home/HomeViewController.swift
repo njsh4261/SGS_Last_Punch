@@ -11,18 +11,16 @@ import RxCocoa
 import SnapKit
 import ProgressHUD
 import RxDataSources
-import SwiftKeychainWrapper
 import Then
 
 class HomeViewController: UIViewController {
-    
     // MARK: - Properties
+    private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
-    private var dataSource: RxTableViewSectionedReloadDataSource<ChatsSection>!
-    private var channelObjects: [ChannelObject] = []
-    private var directMessageObjects: [MemberListCellModel] = []
-    private var observerId: String?
-    private var workspaceId: Int?
+    private var dataSource: RxTableViewSectionedReloadDataSource<HomeSection.Model>!
+//    private var channelObjects: [ChannelObject] = []
+//    private var directMessageObjects: [MemberListCellModel] = []
+//    private var observerId: String?
     
     // MARK: - UI
     private var searchBar = UISearchBar()
@@ -31,6 +29,7 @@ class HomeViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
+        bind(with: viewModel)
         attribute()
         layout()
     }
@@ -40,30 +39,49 @@ class HomeViewController: UIViewController {
     }
     
     func bind(with viewModel: HomeViewModel) {
-        guard let workspaceId: Int = KeychainWrapper.standard[.workspaceId] else { return }
-        self.workspaceId = workspaceId
         tableView.dataSource = nil
         
-        dataSource = RxTableViewSectionedReloadDataSource<ChatsSection> { dataSource, tableView, indexPath, item in
-            switch dataSource[indexPath] {
-            case .StatusChannel:
-                let cell = tableView.dequeueReusableCell(withIdentifier: ChannelCell.identifier, for: indexPath) as! ChannelCell
-                cell.selectionStyle = .none
-                // cell.configure(itemUserListCell: item)
-                return cell
-            case .StatusDirectMessage:
-                let cell = tableView.dequeueReusableCell(withIdentifier: UserListCell.identifier, for: indexPath) as! UserListCell
-                return cell
+        dataSource = RxTableViewSectionedReloadDataSource<HomeSection.Model> { dataSource, tableView, indexPath, item in
+            self.configureCollectionViewCell(tableView: tableView, indexPath: indexPath, item: item)
+        }
+        
+        dataSource.titleForHeaderInSection = { dataSource, index in
+            let section = dataSource.sectionModels[index].model
+            switch section {
+            case .chennel:
+                return "채널"
+            case .member:
+                return "다이렉트 메시지"
             }
         }
-        let sections = [
-            ChatsSection.SectionOne(items: [SectionItem.StatusChannel(header: "첫번째", items: channelObjects)]),
-            ChatsSection.SectionTwo(items: [SectionItem.StatusDirectMessage(header: "두번째", items: directMessageObjects)])
-        ]
-        
-        Observable.just(sections)
+
+        viewModel.output.sections
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+
+        
+//        let sections = [
+//
+//            ChatsSection.SectionOne(items: [SectionItem.StatusChannel(header: "첫번째", items: channelObjects)]),
+//            ChatsSection.SectionTwo(items: [SectionItem.StatusDirectMessage(header: "두번째", items: directMessageObjects)])
+//        ]
+        
+//        Observable.just(sections)
+//            .bind(to: tableView.rx.items(dataSource: dataSource))
+//            .disposed(by: disposeBag)
+    }
+    
+    private func configureCollectionViewCell(tableView: UITableView, indexPath: IndexPath, item: HomeSection.HomeItem) -> UITableViewCell {
+        switch item {
+        case .chennel(let chennel):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelListCell", for: indexPath) as! ChannelListCell
+            cell.setChennel(chennel)
+            return cell
+        case .member(let member):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MemberListCell", for: indexPath) as! MemberListCell
+            cell.setMember(member)
+            return cell
+        }
     }
     
     private func attribute() {
@@ -81,14 +99,14 @@ class HomeViewController: UIViewController {
         }
         
         tableView = tableView.then {
-            $0.register(ChannelCell.self, forCellReuseIdentifier: "ChannelCell")
-            $0.register(UserListCell.self, forCellReuseIdentifier: "UserListCell")
+            $0.register(ChannelListCell.self, forCellReuseIdentifier: "ChannelListCell")
+            $0.register(MemberListCell.self, forCellReuseIdentifier: "MemberListCell")
             
             $0.bouncesZoom = false
             $0.isOpaque = false
             $0.clearsContextBeforeDrawing = false
             $0.separatorStyle = .singleLine
-            //            $0.tableFooterView = UIView()
+            $0.rowHeight = UITableView.automaticDimension
         }
     }
     
@@ -101,11 +119,6 @@ class HomeViewController: UIViewController {
             $0?.snp.makeConstraints {
                 $0.left.right.equalTo(view.safeAreaLayoutGuide)
             }
-        }
-        
-        searchBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(56)
         }
         
         searchBar.snp.makeConstraints {

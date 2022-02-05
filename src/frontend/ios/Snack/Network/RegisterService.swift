@@ -20,10 +20,11 @@ class RegisterService {
                 "verifyCode": code]
     }
     
-    private func makeSignUpParameter(email: String, code: String, password: String) -> Parameters {
+    private func makeSignUpParameter(email: String, code: String, name:String, password: String) -> Parameters {
         return ["email": email,
                 "password": password,
-                "verifyCode": code]
+                "verifyCode": code,
+                "name": name]
     }
     
     func duplicateEmail(email : String) -> Observable<NetworkResult<Any>> {
@@ -98,12 +99,12 @@ class RegisterService {
         }
     }
     
-    func signUp(email: String, code: String, password:String) -> Observable<NetworkResult<Any>> {
+    func signUp(email: String, code: String, name:String, password:String) -> Observable<NetworkResult<Any>> {
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["Content-Type": "application/json"]
             let dataRequest = AF.request(APIConstants().signUpURL,
                                          method: .post,
-                                         parameters: self.makeSignUpParameter(email: email, code: code, password: password),
+                                         parameters: self.makeSignUpParameter(email: email, code: code, name: name, password: password),
                                          encoding: JSONEncoding.default,
                                          headers: header)
             

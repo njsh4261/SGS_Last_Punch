@@ -41,6 +41,7 @@ class HomeViewController: UIViewController {
     func bind(with viewModel: HomeViewModel) {
         tableView.dataSource = nil
         
+        // MARK: Bind output
         dataSource = RxTableViewSectionedReloadDataSource<HomeSection.Model> { dataSource, tableView, indexPath, item in
             self.configureCollectionViewCell(tableView: tableView, indexPath: indexPath, item: item)
         }
@@ -65,6 +66,9 @@ class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
+        viewModel.output.workspaceTitle
+            .bind(onNext: setTitle)
+            .disposed(by: disposeBag)
 
         
 //        let sections = [
@@ -76,6 +80,10 @@ class HomeViewController: UIViewController {
 //        Observable.just(sections)
 //            .bind(to: tableView.rx.items(dataSource: dataSource))
 //            .disposed(by: disposeBag)
+    }
+    
+    private func setTitle(_ title: String) {
+        self.navigationItem.title = title
     }
     
     private func configureCollectionViewCell(tableView: UITableView, indexPath: IndexPath, item: HomeSection.HomeItem) -> UITableViewCell {
@@ -115,6 +123,7 @@ class HomeViewController: UIViewController {
             
             $0.bouncesZoom = false
             $0.isOpaque = false
+            $0.alwaysBounceVertical = false
             $0.clearsContextBeforeDrawing = false
             $0.separatorStyle = .singleLine
             $0.rowHeight = 50

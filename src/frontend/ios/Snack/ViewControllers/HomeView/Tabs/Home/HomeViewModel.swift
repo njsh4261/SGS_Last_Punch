@@ -17,6 +17,7 @@ class HomeViewModel: ViewModelProtocol {
     }
     
     struct Output {
+        let workspaceTitle = PublishRelay<String>()
         let sections = PublishRelay<[SectionModel<HomeSection.HomeSection, HomeSection.HomeItem>]>()
         let errorMessage = PublishRelay<String>()
     }
@@ -57,7 +58,7 @@ class HomeViewModel: ViewModelProtocol {
         getWorkspace(method: .get, token, workspaceId: workspaceId, isMembers: true)
         
         networkGroup.notify(queue: .main) { [self] in
-            guard let channels = self.channels, let members = self.members else { return }
+            guard let workspace = self.workspace, let channels = self.channels, let members = self.members else { return }
             let sectionChannels = getChannels(channels)
             let sectionMembers = getMembers(members)
             
@@ -66,7 +67,8 @@ class HomeViewModel: ViewModelProtocol {
             
             let channelSection = HomeSection.Model(model: .chennel, items: channelItems)
             let memberSection = HomeSection.Model(model: .member, items: memberItems)
-            
+    
+            output.workspaceTitle.accept(workspace.name)
             output.sections.accept([channelSection, memberSection])
         }
     }

@@ -18,7 +18,7 @@ export default function WelcomeHeader() {
   return (
     <Container>
       <EmptyLeft></EmptyLeft>
-      <Logo color="white"></Logo>
+      <Logo color="black"></Logo>
       <LogoutButton></LogoutButton>
     </Container>
   );

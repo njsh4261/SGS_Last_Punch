@@ -8,7 +8,7 @@ import SignUp from './SignUpButton';
 import signinAPI from '../../Api/signin';
 
 const Container = styled.article`
-  width: 420px;
+  width: 320px;
   & > * {
     margin-bottom: 20px;
   }

@@ -14,10 +14,10 @@ const Hlogo = styled.article`
   cursor: pointer;
 
   animation-name: LogoMove;
-  animation-duration: 30s;
+  animation-duration: 20s;
   animation-direction: alternate;
   animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: linear;
 
   @keyframes LogoMove {
     from {

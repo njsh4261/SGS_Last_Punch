@@ -12,6 +12,8 @@ declare module 'styled-components' {
       snackSide: string;
       snackSideFont: string;
       snackSideHover: string;
+      snackBright: string;
+      snackBrightB: string;
     };
   }
 }

@@ -29,7 +29,7 @@ const GuideText = styled.header`
 `;
 
 const SignupBody = styled.main`
-  width: 420px;
+  width: 320px;
   margin: auto;
 `;
 

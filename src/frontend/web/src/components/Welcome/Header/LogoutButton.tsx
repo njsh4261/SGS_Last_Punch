@@ -3,19 +3,20 @@ import styled from 'styled-components';
 import clearSession from '../../../util/clearSession';
 
 const SlogoutButton = styled.button`
-  color: ${(props) => props.theme.color.slack};
   background-color: white;
   border: none;
   border-radius: 4px;
   outline: none;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 14px;
   height: 38px;
   width: 70px;
   margin-right: 64px;
+  box-shadow: 1px 1px 2px darkgray;
   &:hover {
     cursor: pointer;
-    opacity: 70%;
+    font-weight: bolder;
+    box-shadow: 2px 2px 2px darkgray;
   }
 `;
 

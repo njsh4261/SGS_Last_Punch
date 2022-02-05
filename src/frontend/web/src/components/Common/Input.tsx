@@ -9,6 +9,8 @@ const Sinput = styled.input`
   border-radius: 4px;
   border: 1px solid rgba(29, 28, 29, 0.3);
   width: 100%;
+  outline: none;
+  box-shadow: 1px 1px 2px darkgray;
 `;
 
 interface InputProps {

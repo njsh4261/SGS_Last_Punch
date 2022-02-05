@@ -10,9 +10,8 @@ interface SubmitButtonProps {
 
 const SsubmitButton = styled.button<SubmitButtonProps>`
   width: 100%;
-  background-color: ${({ light, theme }) =>
-    light ? theme.color.lightSlack : theme.color.slack};
-  color: white;
+  background-color: ${({ theme }) => theme.color.snackBrightB};
+  color: black;
   border: none;
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
@@ -20,8 +19,12 @@ const SsubmitButton = styled.button<SubmitButtonProps>`
   min-width: 96px;
   padding: 0 16px 3px;
   border-radius: ${(props) => props.borderRadius};
+  outline: none;
+  box-shadow: 1px 1px 2px darkgray;
   &:hover {
     cursor: pointer;
+    font-weight: bolder;
+    background-color: ${({ theme }) => theme.color.snackBright};
   }
 `;
 

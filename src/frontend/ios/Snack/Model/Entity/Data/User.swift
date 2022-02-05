@@ -21,4 +21,7 @@ struct User: SenderType, Equatable {
     let status: String
     let createDt: String
     let modifyDt: String
+    
+    let authorId: String
+    let content: String
 }

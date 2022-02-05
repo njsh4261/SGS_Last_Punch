@@ -10,12 +10,14 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import Then
+import SwiftKeychainWrapper
 
 class MemberListCell: UITableViewCell {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     static let identifier = "MemberListCell"
-    var chatId: String = "0"
+    var chatId: String = ""
+    var userId: String = ""
 
     // MARK: - UI
     private var ivThumbnail = UIImageView()
@@ -23,7 +25,8 @@ class MemberListCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        guard let userId: String = KeychainWrapper.standard[.id] else { return }
+        self.userId = userId
         attribute()
         layout()
     }
@@ -38,9 +41,9 @@ class MemberListCell: UITableViewCell {
     }
     
     func setMember(_ member: Member) {
-        chatId = member.id
+        chatId = member.id > userId ? "\(member.id)-\(userId)" : "\(userId)-\(member.id)"
         ivThumbnail.image = UIImage(named: "snack")
-        lblName.text = "\(member.name)"
+        lblName.text = member.id == userId ? "\(member.name) (나)" : "\(member.name)"
     }
 
     private func attribute() {        

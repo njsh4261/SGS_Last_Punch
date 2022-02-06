@@ -24,7 +24,8 @@ export const Label = styled.label`
   white-space: nowrap;
   cursor: pointer;
   &:hover {
-    color: gray;
+    color: black;
+    font-weight: bolder;
   }
 `;
 

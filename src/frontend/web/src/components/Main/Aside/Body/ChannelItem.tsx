@@ -11,7 +11,8 @@ export const ItemContainer = styled.section`
   &:hover {
     cursor: pointer;
     background: ${(props) => props.theme.color.snackSideHover};
-    color: gray;
+    color: black;
+    font-weight: bolder;
   }
 `;
 

@@ -7,9 +7,9 @@ export const theme: DefaultTheme = {
     lightSlack: '#611f69',
     lightGrey: '#ebeaeb',
     snackBorder: '#f5f5f5',
-    snackHeader: '#fffde2',
-    snackSide: '#fffef3',
-    snackSideFont: '#cfc3cf',
+    snackHeader: '#ffe189',
+    snackSide: '#fffef3', // #f7f6f3, #fffef3
+    snackSideFont: 'gray',
     snackSideHover: '#fffee8',
     snackBright: '#fdf8aa', // submit
     snackBrightB: '#fffccb', // submit:hover

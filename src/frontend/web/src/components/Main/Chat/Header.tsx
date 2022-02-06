@@ -11,10 +11,10 @@ const ChannelHeader = styled.article`
 `;
 
 const ChannelInfo = styled.section`
-  width: 100%;
   display: flex;
+  border-radius: 4px;
   &:hover {
-    background: #f8f8f8f6;
+    background: hsla(0, 0%, 97.25490196078431%, 0.658);
     cursor: pointer;
   }
 `;
@@ -56,6 +56,9 @@ const Header = ({ channelName }: { channelName: string }) => {
         <ChannelName>{channelName}</ChannelName>
         <ArrowDropDownIcon></ArrowDropDownIcon>
       </ChannelInfo>
+      <div>
+        <button>profile</button>
+      </div>
     </ChannelHeader>
   );
 };

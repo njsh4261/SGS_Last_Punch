@@ -46,9 +46,9 @@ const ChannelList = styled.article`
 const PlusIcon = styled.div`
   display: inline-block;
   padding: 0 4px 2px;
-  background-color: rgb(207, 195, 207);
+  background-color: darkgray;
   border-radius: 4px;
-  color: ${(props) => props.theme.color.slack};
+  color: ${({ theme }) => theme.color.snackSide};
 `;
 
 const ArrowDown = styled.div`

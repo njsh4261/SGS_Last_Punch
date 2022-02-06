@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
+import logoIcon from '../../../icon/cookie-2.png';
 import expandIcon from '../../../icon/expand.svg';
 import ImageButton from '../../Common/ImageButton';
 import arrowRightIcon from '../../../icon/arrowRight.svg';
@@ -57,6 +59,15 @@ const ArrowDropDownIcon = styled.article`
   background-repeat: no-repeat;
 `;
 
+const NavTab = styled.nav`
+  display: flex;
+`;
+
+const GoHomeLogo = styled.img`
+  margin-right: 10px;
+  cursor: pointer;
+`;
+
 interface Props {
   channelName: string;
   sideToggle: boolean;
@@ -64,6 +75,8 @@ interface Props {
 }
 
 const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
+  const navigate = useNavigate();
+
   return (
     <ChannelHeader>
       <ChannelInfo>
@@ -77,9 +90,15 @@ const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
         <ChannelName>{channelName}</ChannelName>
         <ArrowDropDownIcon></ArrowDropDownIcon>
       </ChannelInfo>
-      <div>
+      <NavTab>
+        <GoHomeLogo
+          src={logoIcon}
+          onClick={() => navigate('/')}
+          width="26px"
+          height="26px"
+        ></GoHomeLogo>
         <button>profile</button>
-      </div>
+      </NavTab>
     </ChannelHeader>
   );
 };

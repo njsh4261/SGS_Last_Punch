@@ -7,7 +7,6 @@ const MainAsideFrame = styled.aside`
   background-color: ${({ theme }) => theme.color.snackSide};
   user-select: none;
   transition: width 300ms;
-  position: relative;
 `;
 
 export default MainAsideFrame;

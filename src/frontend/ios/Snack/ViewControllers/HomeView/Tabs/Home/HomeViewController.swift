@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
     
     func bind(with viewModel: HomeViewModel) {
         tableView.dataSource = nil
-        
+                
         // MARK: Bind input
         tableView.rx.itemSelected
             .map { $0.row }
@@ -95,15 +95,6 @@ class HomeViewController: UIViewController {
                 self.show(viewController, sender: nil)
             })
             .disposed(by: disposeBag)
-//        let sections = [
-//
-//            ChatsSection.SectionOne(items: [SectionItem.StatusChannel(header: "첫번째", items: channelObjects)]),
-//            ChatsSection.SectionTwo(items: [SectionItem.StatusDirectMessage(header: "두번째", items: directMessageObjects)])
-//        ]
-        
-//        Observable.just(sections)
-//            .bind(to: tableView.rx.items(dataSource: dataSource))
-//            .disposed(by: disposeBag)
     }
     
     private func setTitle(_ title: String) {

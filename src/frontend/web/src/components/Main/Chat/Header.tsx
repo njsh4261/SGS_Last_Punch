@@ -97,7 +97,6 @@ const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
           width="26px"
           height="26px"
         ></GoHomeLogo>
-        <button>profile</button>
       </NavTab>
     </ChannelHeader>
   );

@@ -6,6 +6,8 @@ import { ReactEditor, withReact } from 'slate-react';
 import { useParams } from 'react-router-dom';
 
 import EditorFrame from './EditorFrame';
+import ImageButton from '../../Common/ImageButton';
+import arrowRightIcon from '../../../icon/arrowRight.svg';
 import { Note } from '../../../../types/note.type';
 import noteSocketHook, { User } from '../../../hook/note/noteSocket';
 import noteApplyInitDataHook from '../../../hook/note/noteApplyInitData';
@@ -41,7 +43,12 @@ const InvisibleInput = styled.input`
   border: 0;
 `;
 
-export default function NoteMain() {
+interface Props {
+  sideToggle: boolean;
+  sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
   const initialValue = [
     {
       type: 'paragraph',
@@ -222,6 +229,13 @@ export default function NoteMain() {
         <div>select any note</div>
       ) : (
         <Container>
+          {!sideToggle && (
+            <ImageButton
+              size="16px"
+              imageUrl={arrowRightIcon}
+              onClick={sideToggleHandler}
+            ></ImageButton>
+          )}
           <label htmlFor="title-input">
             <h1>{title}</h1>
           </label>

@@ -51,7 +51,10 @@ export default function Main() {
         ></Aside>
         {params.channelId ? (
           params.noteId ? (
-            <NoteMain></NoteMain>
+            <NoteMain
+              sideToggle={sideToggle}
+              sideToggleHandler={sideToggleHandler}
+            ></NoteMain>
           ) : (
             <Chat
               sideToggle={sideToggle}

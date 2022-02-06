@@ -7,6 +7,8 @@ import AsideHeader from '../../Common/MainAsideHeader';
 import AsideBody from './Body';
 import { RootState } from '../../../modules';
 import logoIcon from '../../../icon/cookie-2.png';
+import ImageButton from '../../Common/ImageButton';
+import ArrowLeftIcon from '../../../icon/arrowLeft.svg';
 
 const Footer = styled.footer`
   position: absolute;
@@ -38,13 +40,43 @@ const Logo = styled.article`
   }
 `;
 
-export default function Aside({ ws }: { ws: RootState['work'] }) {
+const WorkspaceName = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+interface Props {
+  ws: RootState['work'];
+  hover: boolean;
+  hoverHandler: () => void;
+  sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+export default function Aside({
+  ws,
+  hover,
+  hoverHandler,
+  sideToggleHandler,
+}: Props) {
   const navigate = useNavigate();
 
   return (
     <MainAsideFrame>
-      <AsideHeader onClick={() => alert('todo: ws setting')}>
-        {ws.name}
+      <AsideHeader
+        onMouseEnter={hoverHandler}
+        onMouseLeave={hoverHandler}
+        onClick={() => alert('todo: ws setting')}
+      >
+        <WorkspaceName>{ws.name}</WorkspaceName>
+        {hover && (
+          <ImageButton
+            imageUrl={ArrowLeftIcon}
+            onClick={sideToggleHandler}
+            size="16px"
+            inline={true}
+          ></ImageButton>
+        )}
       </AsideHeader>
       <AsideBody></AsideBody>
       <Footer>

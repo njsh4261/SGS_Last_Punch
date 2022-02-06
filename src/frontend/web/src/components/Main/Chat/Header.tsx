@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import expandIcon from '../../../icon/expand.svg';
+import ImageButton from '../../Common/ImageButton';
+import arrowRightIcon from '../../../icon/arrowRight.svg';
 
 const ChannelHeader = styled.article`
   display: flex;
@@ -12,6 +15,7 @@ const ChannelHeader = styled.article`
 
 const ChannelInfo = styled.section`
   display: flex;
+  align-items: center;
   border-radius: 4px;
   &:hover {
     background: hsla(0, 0%, 97.25490196078431%, 0.658);
@@ -28,6 +32,10 @@ const ChannelName = styled.article`
   border-radius: 6px;
   padding: 3px 8px;
   font-size: 20px;
+
+  * + & {
+    padding-left: 16px;
+  }
 
   @media only screen and (max-width: 900px) {
     max-width: 45vw;
@@ -49,10 +57,23 @@ const ArrowDropDownIcon = styled.article`
   background-repeat: no-repeat;
 `;
 
-const Header = ({ channelName }: { channelName: string }) => {
+interface Props {
+  channelName: string;
+  sideToggle: boolean;
+  sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
   return (
     <ChannelHeader>
       <ChannelInfo>
+        {!sideToggle && (
+          <ImageButton
+            size="16px"
+            imageUrl={arrowRightIcon}
+            onClick={sideToggleHandler}
+          ></ImageButton>
+        )}
         <ChannelName>{channelName}</ChannelName>
         <ArrowDropDownIcon></ArrowDropDownIcon>
       </ChannelInfo>

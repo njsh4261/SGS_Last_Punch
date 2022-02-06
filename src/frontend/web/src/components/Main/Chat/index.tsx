@@ -34,18 +34,23 @@ const MessageBox = styled.section<{ me?: boolean }>`
   }
 `;
 
-const ChatInputLayout = styled.article`
+const ChatInputLayout = styled.article<{ toggle: boolean }>`
   position: fixed;
   bottom: 0;
   right: 0;
-  left: 260px;
+  left: ${({ toggle }) => (toggle ? '260px' : '0px')};
   padding: 10px 20px 20px;
   background-color: white;
 `;
 
 const End = styled.article``;
 
-const Chat = () => {
+interface Props {
+  sideToggle: boolean;
+  sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
   const [
     dummyUser,
     channel,
@@ -62,7 +67,11 @@ const Chat = () => {
         <Loading></Loading>
       ) : (
         <Container>
-          <Header channelName={channel.name} />
+          <Header
+            sideToggle={sideToggle}
+            sideToggleHandler={sideToggleHandler}
+            channelName={channel.name}
+          />
           <MessageListContainer>
             {msgList?.map((msg, idx) => (
               <MessageBox key={idx} me={msg.writerId === dummyUser.id}>
@@ -71,7 +80,7 @@ const Chat = () => {
             ))}
             <End ref={endRef}></End>
           </MessageListContainer>
-          <ChatInputLayout>
+          <ChatInputLayout toggle={sideToggle}>
             <ChatInput
               channelName={channel.name}
               msg={msg}

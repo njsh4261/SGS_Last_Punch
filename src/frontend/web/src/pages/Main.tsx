@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import getWsHook from '../hook/getWs';
@@ -30,15 +30,34 @@ export default function Main() {
   setTitleHook('', params);
   updateChannelStoreHook(params);
 
+  const [hover, setHover] = useState(false);
+  const hoverHandler = () => setHover(!hover);
+
+  const [sideToggle, setSideToggle] = useState(true);
+  const sideToggleHandler = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setSideToggle(!sideToggle);
+  };
+
   return (
     <MainLayout>
       <Body>
-        <Aside ws={ws}></Aside>
+        {sideToggle && (
+          <Aside
+            ws={ws}
+            hover={hover}
+            hoverHandler={hoverHandler}
+            sideToggleHandler={sideToggleHandler}
+          ></Aside>
+        )}
         {params.channelId ? (
           params.noteId ? (
             <NoteMain></NoteMain>
           ) : (
-            <Chat></Chat>
+            <Chat
+              sideToggle={sideToggle}
+              sideToggleHandler={sideToggleHandler}
+            ></Chat>
           )
         ) : (
           <GuideText>🍪 Select Channel 🍪</GuideText>

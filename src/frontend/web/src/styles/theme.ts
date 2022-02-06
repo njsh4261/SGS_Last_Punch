@@ -8,9 +8,9 @@ export const theme: DefaultTheme = {
     lightGrey: '#ebeaeb',
     snackBorder: '#f5f5f5',
     snackHeader: '#ffe189',
-    snackSide: '#fffef3', // #f7f6f3, #fffef3
+    snackSide: '#f7f6f3', // #f7f6f3, #fffef3
     snackSideFont: 'gray',
-    snackSideHover: '#fffee8',
+    snackSideHover: '#e8e7e4', // #e8e7e4 , #fffee8
     snackBright: '#fdf8aa', // submit
     snackBrightB: '#fffccb', // submit:hover
   },

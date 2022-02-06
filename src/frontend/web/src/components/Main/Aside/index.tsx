@@ -18,6 +18,7 @@ interface Props {
   ws: RootState['work'];
   hover: boolean;
   hoverHandler: () => void;
+  sideToggle: boolean;
   sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
@@ -25,10 +26,11 @@ export default function Aside({
   ws,
   hover,
   hoverHandler,
+  sideToggle,
   sideToggleHandler,
 }: Props) {
   return (
-    <MainAsideFrame>
+    <MainAsideFrame toggle={sideToggle}>
       <AsideHeader
         onMouseEnter={hoverHandler}
         onMouseLeave={hoverHandler}

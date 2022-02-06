@@ -41,6 +41,7 @@ const ChatInputLayout = styled.article<{ toggle: boolean }>`
   left: ${({ toggle }) => (toggle ? '260px' : '0px')};
   padding: 10px 20px 20px;
   background-color: white;
+  transition: left 300ms;
 `;
 
 const End = styled.article``;

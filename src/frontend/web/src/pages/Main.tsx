@@ -42,14 +42,13 @@ export default function Main() {
   return (
     <MainLayout>
       <Body>
-        {sideToggle && (
-          <Aside
-            ws={ws}
-            hover={hover}
-            hoverHandler={hoverHandler}
-            sideToggleHandler={sideToggleHandler}
-          ></Aside>
-        )}
+        <Aside
+          ws={ws}
+          hover={hover}
+          hoverHandler={hoverHandler}
+          sideToggle={sideToggle}
+          sideToggleHandler={sideToggleHandler}
+        ></Aside>
         {params.channelId ? (
           params.noteId ? (
             <NoteMain></NoteMain>

@@ -26,6 +26,9 @@ const SsubmitButton = styled.button<SubmitButtonProps>`
     font-weight: bolder;
     background-color: ${({ theme }) => theme.color.snackBright};
   }
+  @media only screen and (min-width: 550px) {
+    width: 110px;
+  }
 `;
 
 interface SubmitProps {

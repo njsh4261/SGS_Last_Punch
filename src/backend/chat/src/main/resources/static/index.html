@@ -45,7 +45,7 @@
     }
 
     function connect() {
-        var socket = new SockJS('/ws/chat');
+        var socket = new SockJS('http://localhost:8083/ws/chat');
         const channelId = document.getElementById('channelId').value;
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function(frame) {

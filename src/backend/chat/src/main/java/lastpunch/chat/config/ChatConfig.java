@@ -2,6 +2,7 @@ package lastpunch.chat.config;
 
 import lastpunch.chat.common.ChatConstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -13,6 +14,18 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class ChatConfig implements WebSocketMessageBrokerConfigurer{
     private StompInterceptor stompInterceptor;
+    
+    @Value("${rabbitmq-stomp.host}")
+    private String stompHost;
+    
+    @Value("${rabbitmq-stomp.port}")
+    private int stompPort;
+    
+    @Value("${rabbitmq-stomp.username}")
+    private String username;
+    
+    @Value("${rabbitmq-stomp.password}")
+    private String password;
     
     @Autowired
     public ChatConfig(StompInterceptor stompInterceptor){
@@ -30,7 +43,11 @@ public class ChatConfig implements WebSocketMessageBrokerConfigurer{
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes(ChatConstant.PUBLISH);
-        registry.enableStompBrokerRelay(ChatConstant.SUBSCRIBE);
+        registry.enableStompBrokerRelay(ChatConstant.SUBSCRIBE)
+            .setRelayHost(stompHost)
+            .setRelayPort(stompPort)
+            .setClientLogin(username)
+            .setClientPasscode(password);
     }
     
     @Override

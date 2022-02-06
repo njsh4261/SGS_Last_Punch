@@ -5,11 +5,17 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/lastpunch
-  rabbitmq:
-    username: guest
-    password: guest
-    host: localhost
-    port: 5672
+  application:
+    name: chat-server
+
+eureka:
+  instance:
+    instance-id: chat-server-instance
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    service-url:
+      defaultZone: http://eureka:8761/eureka
 
 logging:
   level:
@@ -20,5 +26,12 @@ logging:
             core:
               MongoTemplate: DEBUG
 
+
 jwt:
   secret: lastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunch
+
+rabbitmq-stomp:
+  host: localhost
+  port: 61613
+  username: guest
+  password: guest

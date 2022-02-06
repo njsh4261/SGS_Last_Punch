@@ -40,7 +40,7 @@
 
 | Protocol | Action/Method | URL                          | description                   | DTO         | Return        | 호출 시점 |
 |----------|---------------|------------------------------|-------------------------------|-------------|---------------|-------|
-| STOMP    | connect       | `/chat`                      | 소켓 연결 entry point             | -           | -             | 연결 시  |
+| STOMP    | connect       | `/ws/chat`                   | 소켓 연결 entry point             | -           | -             | 연결 시  |
 | STOMP    | publish       | `/app/chat`                  | 메시지를 서버에 전송                   | SendDTO     | Message       | 서비스 중 |
 | STOMP    | subscribe     | `/topic/channel.{channelId}` | {channelId}가 가리키는 채널의 메시지를 구독 | -           | -             | 연결 시  |
 | HTTP     | POST          | `/app/enter`                 | 채팅 채널 입장 시 최근의 메시지를 불러옴       | EnterDTO    | Page<Message> | 연결 시  |

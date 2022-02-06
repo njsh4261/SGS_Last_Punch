@@ -1,150 +1,113 @@
-# 실시간 노트 편집 서버
+# 실시간 노트 선점 편집 서버
 
-실시간 노트 편집 기능에 관련된 서버
-- note-http 서버 (port:9000)
-- note-websocket 서버 (port:9001)
+(작동 gif 추후 추가)
 
-자세한 request, response는 API 문서(https://documenter.getpostman.com/view/7437901/UVe9S9zg) 혹은 postman workspace 참고
+실시간 노트 편집 기능 제공 서버
+- note-http 서버 (port:9000) - 노트 생성, 조회, 수정 기능 + Operation 추가, 조회 기능 
+- note-websocket 서버 (port:9001) - 노트 선점 관리, 업데이트 알림(노트, 제목), 접속자 관리
+
+## 실시간 노트 선점 편집이란?
+ - 문서를 먼저 수정하기 시작한 선점자가 문서의 편집 권한을 갖고 문서에 접속한 다른 유저들은 수정되는 내용을 실시간으로 받아볼 수 있는 기능.
+ - 문서를 동시편집을 위한 기술(OT, CRDT) 라이브러리를 사용하지 않고 선점 시스템을 도입하여 동시 편집을 막아서 기능을 스스로 구현.
+   (라이브러리로 구현하면 라이브러리가 해주는 부분이 너무 많아 기술적으로 더 성장할 수 있는 방향으로 가기 위해 선점 편집 방식으로 구현 )
+
+## 사용 기술 
+<pre>
+- Spring Boot 
+- Redis  
+- WebSocket + STOMP + SockJS
+- MongoDB
+</pre>
+
+## 아키텍쳐 및 작동 방식
+
+## 시나리오
+### **선점**
+
+1. 노트에 들어 왔을 때는 무선점 상태(default)
+2. 무선점 상태일 때는 누구나 입력이 가능하도록 **프론트**에서 처리
+3. 무선점 상태에서 누군가 입력을 할 때 **websocket 서버**로, 선점 정보 publish
+4. **websocket 서버**는 이를 subscriber들에게 전송하고 Redis에 선점 정보(noteId - userId)를 저장
+5. 클라이언트들은 userId를 가진 사람이 선점 상태인걸 알게 되고, **프론트**에서 입력이 불가능하도록 처리
+6. 새로운 클라이언트가 해당 노트에 접속하고 **websocket 서버**로 ENTER 를 publish하면 웹소켓 서버는 Redis로부터 해당 유저에게 현재 선점자의 userId와 노트 사용자 리스트 정보를 보내줌
+
+### **선점 상태 해제**
+
+1. 선점자가 1초간 입력을 하지 않을 때(????) 선점 상태를 해제
+2. **websocket 서버**에서는 Redis에 NoteId - null 으로 업데이트하여 선점이 끝났음을 저장하고 선점 해제 정보 subscriber에게 전송
+3. **프론트**에서 입력 제한을 풀어줌
+4. 유저가 브라우저를 닫거나 네트워크가 끊기는 등 웹소켓 연결이 끊어지면 **websocket 서버**에서 이를 감지하고 선점자였다면 선점 상태를 해지(Redis 업데이트)해주고, UNLOCK과 LEAVE 메세지를 생성하여 subscriber들에게 전달
+
+### **실시간 업데이트 & 저장**
+
+- 설계 1) 업데이트는 websocket 서버를 통해 op를 주고받는 방식으로 이루어지고, 문서 저장은 선점자가 주기적으로 전체 문서를 http 서버에 저장한다.
+  => 매번 전체 문서가 http 서버로 전송되어야하기 때문에 비효율적이다.
+- 설계 2) 선점자가 타이핑을 해서 op가 생기면 http 서버에서 해당 노트를 불러오고 op를 적용한 후 다시 db에 저장한다.
+  => 서버에서 많은 문서에 대해 op 업데이트를 해야하기 때문에 서버에 부담이 많이 간다.
+- 설계 3) 업데이트된 블록만 따로 http 서버에 저장을 하자
+  => 프론트와 백 모두 블록이 update, insert되면 나머지 블록들의 인덱스가 변화하기 때문에 관련된 추가적 처리를 해줘야한다.
+- 최종 설계
+- 선점자가 긴 주기로 전체 문서를 서버로 보내고, op가 업데이트될 때마다 op를 서버에게 보내고 서버는 이를 버전 정보와 함께 기록한다.
 
 
-## API 및 작동 방식
+1. 선점자는 op를 0.5초(???) 마다 ws/http-server로 보낸다. **('update', op), (update, content)**
+2. **endtyping** 시에도 업데이트 필요
+3. 다른 클라이언트들은 웹소켓 서버에서 받은 업데이트 timestamp를 통해 **http 서버**에서 op를 받아 적용시킨다.
 
-### 1. POST `/note` 새 노트 생성
-- 노트 제목(title)과 제목 블록의 id(titleBlockId) 입력 - 모든 블록 id는 프론트에서 생성해야하기 때문에 제목 블록의 id도 프론트에서 생성
-- response: 새로 생성된 노트의 id
+## 예외 케이스
+1. 동시에 두 유저가 선점 상태를 요청했을 때
+    - 서버에서 현재 선점자가 있는지 확인해서 먼저 선점 상태를 요청한 유저만 선점권을 가지도록 한다.
+2. 예상치 못하게 유저의 웹소켓 연결이 끊겼을 때
+    - 기존 구현 방식에는 'LEAVE' 이벤트를 클라이언트에서 노트를 나갈때 보내는 방식으로 구현했다. 하지만 이런 방식에서는 클라이언트의 네트워크 연결이 끊겼을 때 등의 예외상황을 처리하기 힘들었다. 
+    - 그래서, 클라이언트가 아닌 서버에서 웹소켓 연결이 끊겼음을 감지할 때, sessionId를 이용해서 선점자였다면 선점 상태를 해지하고, UNLOCK과 LEAVE 메세지를 생성하여 subscriber들에게 전달하는 방식으로 수정했다.
 
-### 2. GET `/note` 채널에 속한 노트 목록 조회
-- 노트id, 제목 등 노트의 일부 정보만 반환
 
-### 3. PATCH `/note` 노트 수정 (블록 정보 업데이트)
-- transactions에 어떤 블록(id)이 어떻게 수정(op)되었는지 작성하면 서버에서는 기존 노트에 transaction을 적용한 후 mongoDB에 수정된 노트를 저장
-- 각 transaction은 하나의 블록의 수정사항만을 다루고, content에는 블록 텍스트 전체가 들어가야함
-- 아래 예시는 1,2,3번 블록을 생성하고 2번 블록의 content를 수정하고, 3번 블록을 삭제 -> 결과는 4번 GET /note/{noteId} 에서 확인
-```
+## API 문서
+1. note-http 서버
+- https://documenter.getpostman.com/view/7437901/UVeGpQzb
+
+2. note-websocket 서버
+<pre>
+ENTRY POINT: /ws/note
+SUBSCRIBE POINT: /sub/note/{noteId}
+PUBLISH POINT: /pub/note
+
+선점
 {
-    "noteId": "61f01a088118c7207a9fce0d",
-    "transactions":
-    [
-        {
-        "op": "insert",
-        "id": "1",
-        "type": "text",
-        "parentBlockId": "0",
-        "lastModifyDt": "2022-01-19T14:14:03.452", 
-        "lastWriter": 1,
-        "content": "content1"
-        },
-        {
-        "op": "insert",
-        "id": "2",
-        "type": "text",
-        "parentBlockId": "0",
-        "lastModifyDt": "2022-01-19T14:14:03.452", 
-        "lastWriter": 1,
-        "content": "content2"
-        },
-        {
-        "op": "insert",
-        "id": "3",
-        "type": "text",
-        "parentBlockId": "0",
-        "lastModifyDt": "2022-01-19T14:14:03.452", 
-        "lastWriter": 1,
-        "content": "content3"
-        },
-        {
-        "op": "update",
-        "id": "2",
-        "type": "text",
-        "parentBlockId": "0",
-        "lastModifyDt": "2022-01-19T14:14:03.452", 
-        "lastWriter": 2,
-        "content": "content2-updated"
-        },
-        {
-        "op": "delete",
-        "id": "3"
-        }
-    ]
+	type: LOCK, UNLOCK
+	userId,
+	userName,
+	noteId,
 }
-```
 
-### 4. GET `/note/{noteId}` 노트 조회
-- noteId에 해당하는 노트 조회
-- 3번 예시의 결과로 1번 블록이 생성되었고, 2번 블록의 content가 변경되었고, 3번 블록이 삭제됨을 확인 가능.
-```
+업데이트
 {
-    "code": "15000",
-    "data": {
-        "note": {
-            "id": "61f01a088118c7207a9fce0d",
-            "blocks": [
-                {
-                    "id": "some-block-id",
-                    "type": "title",
-                    "parentBlockId": null,
-                    "lastModifyDt": null,
-                    "lastWriter": null,
-                    "content": "Note2"
-                },
-                {
-                    "id": "1",
-                    "type": "text",
-                    "parentBlockId": "0",
-                    "lastModifyDt": "2022-01-19T14:14:03.452",
-                    "lastWriter": 1,
-                    "content": "content1"
-                },
-                {
-                    "id": "2",
-                    "type": "text",
-                    "parentBlockId": "0",
-                    "lastModifyDt": "2022-01-19T14:14:03.452",
-                    "lastWriter": 2,
-                    "content": "content2-updated"
-                }
-            ],
-            "createdt": "2022-01-26T00:40:56.189",
-            "modifydt": "2022-01-26T00:40:56.189"
-        }
-    }
+	type: UPDATE
+	userId, 
+	userName,
+	noteId,
+	timestamp // 해당 timestamp를 가진 operation을 note-http 서버에서 조회
 }
-```
 
-### 5. POST `/note/block`
-- 주의! => 조회 API이지만 body가 필요하기 때문에 POST method 사용
-- 노트Id와 웹소켓을 통해 서버에서 받은 업데이트된 블록들의 id를 사용해 서버에서 업데이트된 블록 데이터 조회
-- 프론트에서 업데이트된 블록 데이터를 사용자의 노트 화면에 반영시켜서 보여줘야함
-
-### 6. WebSocket
-- Entry point: `/ws/note`
-  - http://[gateway-address]/ws/note (sockJS 연결 주소- Web)
-  - ws://[gateway-address]/ws/note (웹소켓 STOMP 연결 주소- iOS)
-
-- Publish message: `/pub/note/update`
-  - 자신이 변경한 블록, 커서 정보를 전송. 정보의 타입은 type으로 구분
-- Subscibe message: `/topic/note/{noteId}`
-  - {noteId}에 해당하는 모든 변경사항 정보 구독
-
-- 데이터 전송 형식
-  - 송수신 모두 JSON 사용
-  - 데이터는 아래 Payload의 형식
-  - Type: ENTER - 노트 입장, UPDATE - 노트 변경, CURSOR - 커서 위치 변경
-```
-public class Payload {
-    // 메시지 타입 : 입장, 노트 업데이트
-    public enum Type {
-        ENTER, UPDATE, CURSOR
-    }
-    private Type type; // 메시지 타입
-    private String noteId; // 노트 번호
-    private String sender; // 메세지 보낸 사람 id
-    private List<String> blockId; // 업데이트된 블록들 id
-    private LocalDateTime createDt;
+문서 참여
+{
+	type: ENTER, LEAVE
+	noteId,
+	userId,
+	userName
 }
-```
+
+SUBSCRIBE POINT: /user/note/{userId}
+처음 ENTER할 경우 현재 선점자, 노트 사용자 리스트 정보 제공
+{
+	ownerId: number,
+    ownerName: string,
+	userList: [{id: number, name: string},...],
+}
+</pre>
 
 
-## 이슈
-(2022.1.25)
-- 노트id, 블록id에 대한 협의 필요 (현재 노트id는 mongoDB에서 쓰는 objectId, 블록id는 String 사용)
+## mongoDB
+<pre>
+</pre>
+

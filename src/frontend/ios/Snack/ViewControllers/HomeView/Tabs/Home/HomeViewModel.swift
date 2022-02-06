@@ -25,7 +25,7 @@ class HomeViewModel: ViewModelProtocol {
     // MARK: - Public properties
     let input = Input()
     let output = Output()
-    let push: Driver<(MessageViewModel, Int)>
+    let push: Driver<Int>
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
@@ -35,28 +35,17 @@ class HomeViewModel: ViewModelProtocol {
     private var workspace: WorkspaceListCellModel?
     private var channels: [WorkspaceChannelCellModel]?
     private var members: [WorkspaceMemberCellModel]?
-//    private var channelSection = HomeSection.Model(
-//        model: .chennel,
-//        items: []
-//    )
-//    private var memberSection = HomeSection.Model(
-//        model: .member,
-//        items: []
-//    )
-    
+
     // MARK: - Init
     init() {
-        let messageViewModel = MessageViewModel()
-
         //MARK: - push
         self.push = input.itemSelected
-            .compactMap { row -> (MessageViewModel, Int) in
-                return (messageViewModel, row)
+            .compactMap { row -> Int in
+                return row
             }
             .asDriver(onErrorDriveWith: .empty())
 
-        
-        guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else {  return }
+        guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
         self.token = token
         self.workspaceId = workspaceId
 
@@ -113,8 +102,6 @@ class HomeViewModel: ViewModelProtocol {
             }.disposed(by: self.disposeBag)
     }
     
-    
-    
     func getChannels(_ channels: [WorkspaceChannelCellModel]) -> [Channel] {
         return channels.map {
             Channel(chatId: "\($0.id)", name: "\($0.name!)")
@@ -132,23 +119,4 @@ class HomeViewModel: ViewModelProtocol {
             User(senderId: $0.id.description, displayName: $0.name!, name: $0.name!, email: $0.email, description: $0.description, phone: $0.phone, country: $0.country, language: $0.language, settings: $0.settings, status: $0.status, createDt: $0.createDt, modifyDt: $0.modifyDt, authorId: $0.id.description, content: $0.email)
         }
     }
-
 }
-
-
-//func reduce(state: State, mutation: Mutation) -> State {
-//    var state = state
-//    switch mutation {
-//    case .setMessages:
-//        let messages = getMessageMock()
-//        let myItems = messages.map(ComplexSection.MyItem.message)
-//        let mySectionModel = ComplexSection.Model(model: .message, items: myItems)
-//        state.messageSection = mySectionModel
-//    case .setPhotos:
-//        let photo = UIImage(named: "snow")
-//        let myItems = ComplexSection.MyItem.photo(photo)
-//        let mySectionModel = ComplexSection.Model(model: .image, items: [myItems])
-//        state.imageSection = mySectionModel
-//    }
-//    return state
-//}

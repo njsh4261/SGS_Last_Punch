@@ -19,19 +19,15 @@ class ProfileViewModel: ViewModelProtocol {
     
     // MARK: - Public properties
     var input = Input()
-    let push: Driver<MessageViewModel>
+    let push: Driver<Void>
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
     
     // MARK: - Init
     init() {
-        let messageViewModel = MessageViewModel()
-        
         self.push = input.btnMessageTapped
-            .compactMap { Void -> MessageViewModel in
-                return messageViewModel
-            }
+            .compactMap { return }
             .asDriver(onErrorDriveWith: .empty())
     }
 }

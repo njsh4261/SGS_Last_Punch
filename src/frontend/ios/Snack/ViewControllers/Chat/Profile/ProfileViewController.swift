@@ -77,8 +77,9 @@ class ProfileViewController: UIViewController {
         
         // MARK: Bind output
         viewModel.push
-            .drive(onNext: { [self] (viewModel) in
+            .drive(onNext: { [self] in
                 let viewController = PrivateMessageViewController(senderInfo: senderInfo!, recipientInfo: recipientInfo!, channel: Channel(chatId: "0", name: recipientInfo?.name ?? "아무개"))
+                let viewModel = MessageViewModel(senderInfo!)
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)

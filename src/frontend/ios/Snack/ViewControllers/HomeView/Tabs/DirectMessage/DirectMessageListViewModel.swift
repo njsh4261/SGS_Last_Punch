@@ -28,22 +28,20 @@ class DirectMessageListViewModel: ViewModelProtocol {
     var input = Input()
     var output = Output()
     var cellData: Driver<[User]>
-    let push: Driver<(MessageViewModel, Int)>
+    let push: Driver<Int>
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
     
     // MARK: - Init
     init() {
-        let messageViewModel = MessageViewModel()
-        
         self.cellData = output.memberListCellData
             .asDriver(onErrorJustReturn: [])
         
         //MARK: - push
         self.push = input.itemSelected
-            .compactMap { row -> (MessageViewModel, Int) in
-                return (messageViewModel, row)
+            .compactMap { row -> Int in
+                return row
             }
             .asDriver(onErrorDriveWith: .empty())
         

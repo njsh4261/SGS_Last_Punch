@@ -8,6 +8,7 @@ const MainAsideFrame = styled.aside<{ toggle?: boolean }>`
   user-select: none;
   transition: width 300ms;
   overflow-y: scroll;
+  border-right: 1px solid ${({ theme }) => theme.color.snackBorder};
 `;
 
 export default MainAsideFrame;

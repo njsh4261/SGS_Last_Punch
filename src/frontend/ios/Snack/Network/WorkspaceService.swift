@@ -17,7 +17,7 @@ class WorkspaceService {
     }
     
     func getWorkspace(method: HTTPMethod, accessToken: String, workspaceId: String = "", name: String = "", chennel: String = "", isCreate: Bool = false, isChannels: Bool = false, isMembers: Bool = false, page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: "")) -> Observable<NetworkResult<WorkspaceResponseModel>> {
-        var url = APIConstants().workspaceList + "/\(workspaceId)"
+        var url = APIConstants().workspaceListURL + "/\(workspaceId)"
         var parameters: Parameters? = nil
         
         if isCreate { parameters = self.makeParameter(name: name, chennel: chennel) }

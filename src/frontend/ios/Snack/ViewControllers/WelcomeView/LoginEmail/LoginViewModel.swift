@@ -54,9 +54,9 @@ class LoginViewModel: ViewModelProtocol {
                             case .next(let result):
                                 DispatchQueue.main.async { // 메인스레드에서 동작
                                     switch result {
-                                    case .success(let data as Token):
+                                    case .success(let data as LoginDataModel):
                                         self.output.successMessage.accept("환영합니다!")
-                                        self.output.goToWorkspaceList.accept(data)
+                                        self.output.goToWorkspaceList.accept(data.data! as Token)
                                     case .fail:
                                         self.output.errorMessage.accept("이메일 혹은 패스워드를 잘못 입력했습니다.")
                                     default:

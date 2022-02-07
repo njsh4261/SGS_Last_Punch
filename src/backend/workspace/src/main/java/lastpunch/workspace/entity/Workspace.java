@@ -39,11 +39,6 @@ public class Workspace{
     @Column(columnDefinition = "tinyint")
     private Integer settings;
     
-    @NotNull
-//    @Convert(converter = WorkspaceStatusConverter.class)
-    @Column(columnDefinition = "tinyint")
-    private Integer status; // TODO: converter 문제 해결 시 String으로
-    
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdt;
@@ -68,7 +63,6 @@ public class Workspace{
                     .name(workspaceName)
                     .description(workspaceDescription)
                     .settings(0)
-                    .status(0)
                     .createdt(LocalDateTime.now())
                     .modifydt(LocalDateTime.now())
                     .build();
@@ -81,7 +75,6 @@ public class Workspace{
                     .topic(channelTopic)
                     .description(channelDescription)
                     .settings(0)
-                    .status(0)
                     .createdt(LocalDateTime.now())
                     .modifydt(LocalDateTime.now())
                     .build();
@@ -105,9 +98,6 @@ public class Workspace{
             if(settings != null){
                 workspace.setSettings(settings);
             }
-            if(status != null){
-                workspace.setStatus(status);
-            }
             return workspace;
         }
     }
@@ -119,25 +109,22 @@ public class Workspace{
         private String name;
         private String description;
         private Integer settings;
-        //    private String status; // TODO: converter 문제 해결 시 String으로
-        private Integer status;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
-        private LocalDateTime createdt;
+        private LocalDateTime createDt;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
-        private LocalDateTime modifydt;
+        private LocalDateTime modifyDt;
 
         @QueryProjection
-        public ExportDto(Long id, String name, String description, Integer settings, Integer status,
-                         LocalDateTime createdt, LocalDateTime modifydt) {
+        public ExportDto(Long id, String name, String description, Integer settings,
+                         LocalDateTime createDt, LocalDateTime modifyDt) {
             this.id = id;
             this.name = name;
             this.description = description;
             this.settings = settings;
-            this.status = status;
-            this.createdt = createdt;
-            this.modifydt = modifydt;
+            this.createDt = createDt;
+            this.modifyDt = modifyDt;
         }
     }
     
@@ -147,9 +134,8 @@ public class Workspace{
             .name(name)
             .description(description)
             .settings(settings)
-            .status(status)
-            .createdt(createdt)
-            .modifydt(modifydt)
+            .createDt(createdt)
+            .modifyDt(modifydt)
             .build();
     }
 }

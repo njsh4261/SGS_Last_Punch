@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { openModal } from '../../../../modules/modal';
-import expandIcon from '../../../../icon/downArrow.svg';
-import ImageButton from '../../../Common/ImageButton';
 import { ModalType } from './Modal';
 import ChannelItem, { ItemContainer } from './ChannelItem';
+import addIcon from '../../../../icon/add.svg';
 
 const ToggleType = styled.section`
   padding: 8px 0px;
@@ -17,7 +16,7 @@ const PaddingLeft8px = styled.span`
   padding-left: 8px;
 `;
 
-export const Text = styled.label`
+export const Label = styled.label`
   display: block;
   padding: 0 16px;
   width: 260px;
@@ -26,7 +25,8 @@ export const Text = styled.label`
   white-space: nowrap;
   cursor: pointer;
   &:hover {
-    color: white;
+    color: black;
+    font-weight: bolder;
   }
 `;
 
@@ -48,12 +48,26 @@ const Flex = styled.div`
   display: flex;
 `;
 
-const PlusIcon = styled.div`
+const PlusIcon = styled.img`
+  opacity: 50%;
+`;
+
+const ArrowDown = styled.div`
   display: inline-block;
-  padding: 0 4px 2px;
-  background-color: rgb(207, 195, 207);
-  border-radius: 4px;
-  color: ${(props) => props.theme.color.slack};
+  width: 0px;
+  height: 0px;
+  border-top: 10px solid darkgray;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+`;
+
+const ArrowRight = styled.div`
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border-left: 10px solid darkgray;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
 `;
 
 interface Props {
@@ -74,19 +88,13 @@ export default function ToggleList({
       .type as ModalType;
     dispatch(openModal(modalType));
   };
-
+  const [checked, setChecked] = useState(false);
   return (
     <ToggleType>
-      <Text htmlFor={`${type}-toggle`}>
-        <Flex>
-          <ImageButton
-            size="17px"
-            inline={true}
-            imageUrl={expandIcon}
-          ></ImageButton>
-          <PaddingLeft8px>{type}</PaddingLeft8px>
-        </Flex>
-      </Text>
+      <Label htmlFor={`${type}-toggle`} onClick={() => setChecked(!checked)}>
+        {checked ? <ArrowDown /> : <ArrowRight />}
+        <PaddingLeft8px>{type}</PaddingLeft8px>
+      </Label>
       <CheckBox type="checkbox" id={`${type}-toggle`}></CheckBox>
       <ChannelList>
         {channelList.map((channel) => (
@@ -100,12 +108,14 @@ export default function ToggleList({
           ></ChannelItem>
         ))}
         <ItemContainer data-type={type} onClick={openModalHandler}>
-          <PlusIcon>+</PlusIcon>
-          {type === 'channel' ? (
-            <PaddingLeft8px>채널 추가</PaddingLeft8px>
-          ) : (
-            <PaddingLeft8px>팀원 추가</PaddingLeft8px>
-          )}
+          <Flex>
+            <PlusIcon src={addIcon} width="16px" height="16px"></PlusIcon>
+            {type === 'channel' ? (
+              <PaddingLeft8px>채널 추가</PaddingLeft8px>
+            ) : (
+              <PaddingLeft8px>팀원 추가</PaddingLeft8px>
+            )}
+          </Flex>
         </ItemContainer>
       </ChannelList>
     </ToggleType>

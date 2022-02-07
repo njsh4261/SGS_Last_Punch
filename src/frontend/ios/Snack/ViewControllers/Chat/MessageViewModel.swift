@@ -11,6 +11,7 @@ import Alamofire
 import ProgressHUD
 import StompClientLib
 import SwiftKeychainWrapper
+import StompClientLib
 
 class MessageViewModel: ViewModelProtocol {
     
@@ -31,40 +32,46 @@ class MessageViewModel: ViewModelProtocol {
     private let channelId: String = ""
 //    private let userInfo: WorkspaceMemberCellModel
     private var messageText : String = ""
-//    private var subscription = Set<AnyCancellable>()
-    
+    private var userId: String?
+    private var chatId: String?
     
     // MARK: - Init
-    init() {
+    init(_ user: User) {
         let accessToken: String = KeychainWrapper.standard[.refreshToken] ?? ""
         self.accessToken = accessToken
+        guard let userId: String = KeychainWrapper.standard[.id] else { return }
+        self.userId = userId
+        
+        self.chatId = user.senderId > userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"
+        registerSockect()
+        subscribe()
     }
     
-    // Socket Connection
+    // Socket 연결
     func registerSockect() {
         socketClient.openSocketWithURLRequest(
             request: NSURLRequest(url: url),
             delegate: self,
             connectionHeaders: ["X-AUTH-TOKEN" : accessToken]
         )
+        print("Sokect is connected successfully")
     }
     
-    // Stomp 클라이언트가 특정 Topic(Destination)을 구독
     func subscribe() {
-        let destination : String = "/topic/channel\(channelId)"
-        
-        socketClient.subscribeWithHeader(destination: destination, withHeader: ["":""])
+        socketClient.subscribe(destination: "/topic/channel." + chatId!)
     }
     
     // Publish Message
-    func sendMessage() {
-        var payloadObject : [String : Any] = [ : ]
-        
-        payloadObject = [
-//            "authorId" : userInfo.id,
-            "channelId" : channelId,
-            "content" : messageText,
-        ]
+    func sendMessage(authorId: String, content: String) {
+        let payloadObject = ["authorId" : authorId, "channelId": chatId!, "content": content] as [String : Any]
+//        guard let dictionaries = try? JSONSerialization.data(withJSONObject: payloadObject), let token = token else { return }
+//
+//        socketClient.sendMessage(
+//            message: String(data: dictionaries, encoding: .utf8)!,
+//            toDestination: "/app/chat",
+//            withHeaders: ["X-AUTH-TOKEN" : token],
+//            withReceipt: nil
+//        )
         
         socketClient.sendJSONForDict(
             dict: payloadObject as AnyObject,
@@ -75,95 +82,41 @@ class MessageViewModel: ViewModelProtocol {
     func disconnect() {
         socketClient.disconnect()
     }
-    
-    func getChatContents(_ chatId : Int) {
-        let header : HTTPHeaders = ["X-AUTH-TOKEN" : accessToken]
-        //            let url = "\(APIConstants().chatWebsoket)/\(channelId)/"
-        
-    }
-    
 }
 
-//MARK: Delegate - CALLBACK Functions
-extension MessageViewModel : StompClientLibDelegate {
-    // didReceiveMessageWithJSONBody ( Message Received via STOMP )
-    func stompClient(
-        client: StompClientLib!,
-        didReceiveMessageWithJSONBody jsonBody: AnyObject?,
-        akaStringBody stringBody: String?,
-        withHeader header: [String : String]?,
-        withDestination destination: String
-    ) {
+//MARK: - StompClientLib Delegate
+extension MessageViewModel: StompClientLibDelegate {
+    func stompClient(client: StompClientLib!, didReceiveMessageWithJSONBody jsonBody: AnyObject?, akaStringBody stringBody: String?, withHeader header: [String : String]?, withDestination destination: String) {
         print("DESTINATION : \(destination)")
-        print("HEADER : \(header ?? ["nil":"nil"])")
         print("JSON BODY : \(String(describing: jsonBody))")
-        
-        guard let JSON = jsonBody as? [String : AnyObject] else { return }
-        //print(JSON)
-        
-        guard let innerJSON_Message = JSON ["message"] else {return}
-        guard let innerJSON_Member = JSON ["member"] else {return}
-        
-        //print("message Info : ")
-        //print(innerJSON_Message)
-        //print("member Info : ")
-        //print(innerJSON_Member)
-//        let newMsg = Message(
-//            member:
-//                Sender(
-//                    memberId: innerJSON_Member["memberId"] as? Int ?? -1,
-//                    username: innerJSON_Member["username"] as? String ?? "",
-//                    description: innerJSON_Member["description"] as? String ?? "",
-//                    profileImage: innerJSON_Member["profileImage"] as? String ?? ""
-//                ),
-//            message :
-//                MessageContents(
-//                    messageId: lastMessageId + 1,
-//                    message: innerJSON_Message["message"] as? String ?? "",
-//                    image: innerJSON_Message["image"] as? String ?? "",
-//                    createdAt: "\(Date(timeIntervalSinceNow: 32400))"
-//                )
-//        )
-//        lastMessageId += 1
-//        MessageList.append(newMsg)
+        print("STRING BODY : \(stringBody ?? "nil")")
     }
     
-    // didReceiveMessageWithJSONBody ( Message Received via STOMP as String )
-    func stompClientJSONBody(
-        client: StompClientLib!,
-        didReceiveMessageWithJSONBody jsonBody: String?,
-        withHeader header: [String : String]?,
-        withDestination destination: String
-    ) {
-        print("DESTINATION : \(destination)")
-        print("String JSON BODY : \(String(describing: jsonBody))")
-    }
-    
-    // Unsubscribe Topic
     func stompClientDidDisconnect(client: StompClientLib!) {
-        print("Stomp socket \(channelId) is disconnected")
+        print("Stomp socket is disconnected")
+//        client.autoDisconnect(time: 3)
+//        client.reconnect(request: NSURLRequest(url: url as URL) , delegate: self)
     }
     
-    // Subscribe Topic
+    // 연결 후, Subscribe Topic
     func stompClientDidConnect(client: StompClientLib!) {
-        print("Stomp socket \(channelId) is connected")
-        
+        print("Stomp socket is connected")
+
         subscribe()
     }
     
-    // Error - disconnect and reconnect socket
+    func serverDidSendReceipt(client: StompClientLib!, withReceiptId receiptId: String) {
+        print("Receipt : \(receiptId)")
+    }
+    
     func serverDidSendError(client: StompClientLib!, withErrorMessage description: String, detailedErrorMessage message: String?) {
         print("Error send : " + description)
         
-        socketClient.disconnect()
+        disconnect()
         registerSockect()
     }
     
     func serverDidSendPing() {
         print("Server ping")
-    }
-    
-    func serverDidSendReceipt(client: StompClientLib!, withReceiptId receiptId: String) {
-        print("Receipt : \(receiptId)")
     }
 }

@@ -182,7 +182,7 @@ class RegisterViewController: UIViewController {
         // email field를 제외한 모든 field 초기화
         viewModel.output.changeClearText
             .observe(on: MainScheduler.instance)
-            .bind(to: fieldCode.rx.setText, fieldPassword.rx.setText, fieldRetypePassword.rx.setText)
+            .bind(to: fieldCode.rx.setText, fieldName.rx.setText, fieldPassword.rx.setText, fieldRetypePassword.rx.setText)
             .disposed(by: disposeBag)
         
         // 버튼 enable
@@ -217,6 +217,11 @@ class RegisterViewController: UIViewController {
         viewModel.output.visibilityPassword
             .observe(on: MainScheduler.instance)
             .bind(onNext: visibilityPassword)
+            .disposed(by: disposeBag)
+        
+        // Name - canBecomeFirstResponder
+        viewModel.output.becomeName
+            .bind(to: fieldPassword.rx.canBecomeFirstResponder, fieldRetypePassword.rx.canBecomeFirstResponder, fieldName.rx.canBecomeFirstResponder)
             .disposed(by: disposeBag)
         
         // 성공/실패 메시지

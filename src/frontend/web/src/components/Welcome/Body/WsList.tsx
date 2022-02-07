@@ -20,7 +20,7 @@ const Box = styled.article`
 `;
 
 const BoxHeader = styled.article`
-  background: #ecdeec;
+  background: ${({ theme }) => theme.color.snackHeader};
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   font-size: 1.125rem;

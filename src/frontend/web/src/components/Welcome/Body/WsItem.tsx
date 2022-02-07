@@ -7,18 +7,25 @@ import { IWorkspace } from '../../../../types/workspace.type';
 
 const Item = styled.section`
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   & + & {
     margin-top: 28px;
     border-top: 1px solid ${(props) => props.theme.color.lightGrey};
     padding-top: 20px;
   }
+  @media only screen and (max-width: 550px) {
+    flex-direction: column;
+    align-items: baseline;
+  }
 `;
 
 const ItemInfoLayer = styled.section`
   display: flex;
-  margin-bottom: 12px;
   align-items: center;
+  @media only screen and (max-width: 550px) {
+    margin-bottom: 12px;
+  }
 `;
 
 const WorkSpaceImage = styled.div`
@@ -64,6 +71,7 @@ export default function WsItem({ ws }: { ws: IWorkspace }) {
         text="Let's Snack"
         borderRadius="5px"
         light={true}
+        responsive={true}
         submitHandler={submitHandler}
       ></SubmitButton>
     </Item>

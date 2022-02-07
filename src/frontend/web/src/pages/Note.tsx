@@ -107,9 +107,7 @@ export default function Note() {
             toggleHandler={toggleHandler}
           ></NoteHeader>
         </HeaderFrame>
-        <MainFrame>
-          <NoteMain></NoteMain>
-        </MainFrame>
+        <MainFrame>{/* <NoteMain></NoteMain> */}</MainFrame>
       </Container>
     </Layout>
   );

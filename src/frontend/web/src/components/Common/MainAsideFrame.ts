@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-// hard value
-
-const MainAsideFrame = styled.aside`
-  min-width: 260px;
-  background-color: #3f0f40;
-  border-top: 1px solid #664167;
-  color: white;
+const MainAsideFrame = styled.aside<{ toggle?: boolean }>`
+  width: ${({ toggle }) => (toggle ? '260px' : '0px')};
+  overflow-x: hidden;
+  white-space: nowrap;
+  background-color: ${({ theme }) => theme.color.snackSide};
+  user-select: none;
+  transition: width 300ms;
+  overflow-y: scroll;
 `;
 
 export default MainAsideFrame;

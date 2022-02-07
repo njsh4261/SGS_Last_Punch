@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import chatHook from '../../../hook/chat';
 import ChatInput from './Input';
 import Header from './Header';
+import Loading from '../../Common/Loading';
 
 const Container = styled.main`
   flex: 1;
@@ -22,9 +23,9 @@ const MessageListContainer = styled.article`
   margin-bottom: 114px; // size of input
 `;
 
-const MessageBox = styled.section<{ me?: boolean }>`
+const MessageBox = styled.article<{ me?: boolean }>`
   display: flex;
-  ${({ me }) => me && `flex: end`}
+  justify-content: ${({ me }) => me && `end`};
   white-space: normal;
   word-break: break-all;
   padding: 8px 20px;
@@ -33,20 +34,30 @@ const MessageBox = styled.section<{ me?: boolean }>`
   }
 `;
 
-const ChatInputLayout = styled.article`
+const MessageContent = styled.div`
+  display: inline-block;
+`;
+
+const ChatInputLayout = styled.article<{ toggle: boolean }>`
   position: fixed;
   bottom: 0;
   right: 0;
-  left: 260px;
+  left: ${({ toggle }) => (toggle ? '260px' : '0px')};
   padding: 10px 20px 20px;
   background-color: white;
+  transition: left 300ms;
 `;
 
 const End = styled.article``;
 
-const Chat = () => {
+interface Props {
+  sideToggle: boolean;
+  sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
   const [
-    dummyUser,
+    user,
     channel,
     msg,
     msgList,
@@ -58,19 +69,23 @@ const Chat = () => {
   return (
     <>
       {channel.loading ? (
-        <div>loading</div>
+        <Loading></Loading>
       ) : (
         <Container>
-          <Header channelName={channel.name} />
+          <Header
+            sideToggle={sideToggle}
+            sideToggleHandler={sideToggleHandler}
+            channelName={channel.name}
+          />
           <MessageListContainer>
             {msgList?.map((msg, idx) => (
-              <MessageBox key={idx} me={msg.writerId === dummyUser.id}>
-                {msg.text}
+              <MessageBox key={idx} me={msg.authorId === user.id.toString()}>
+                <MessageContent>{msg.content}</MessageContent>
               </MessageBox>
             ))}
             <End ref={endRef}></End>
           </MessageListContainer>
-          <ChatInputLayout>
+          <ChatInputLayout toggle={sideToggle}>
             <ChatInput
               channelName={channel.name}
               msg={msg}

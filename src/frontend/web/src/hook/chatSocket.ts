@@ -1,10 +1,11 @@
 import React, { SetStateAction, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Stomp, CompatClient } from '@stomp/stompjs';
+import { TOKEN, URL } from '../constant';
 
 import { SendMessage, ChatMessage } from '../../types/chat.type';
 
-const HOST = 'http://localhost:8083';
+const HOST = URL.HOST;
 
 export default function chatSocketHook(
   channelId: string,
@@ -13,17 +14,24 @@ export default function chatSocketHook(
   const stomp = useRef<CompatClient | null>(null);
 
   const connect = () => {
-    const socket = new SockJS(HOST + '/chat');
-    stomp.current = Stomp.over(socket);
-    stomp.current.connect({}, subscribe);
-  };
-
-  const subscribe = () => {
-    if (stomp.current === null) return;
-    stomp.current.subscribe(HOST + `/topic/channel.${channelId}`, (payload) => {
-      console.log(JSON.parse(payload.body));
-      // setMesgList((msgList) => [...msgList, 'new' ])
-    });
+    const accessToken = localStorage.getItem(TOKEN.ACCESS);
+    if (!accessToken || !HOST) {
+      console.error('fail connect socket - chat');
+      return;
+    }
+    try {
+      const socket = new SockJS(HOST + '/ws/chat');
+      const stompClient = Stomp.over(socket);
+      stompClient.connect({ Authorization: accessToken }, () => {
+        stompClient.subscribe(`/topic/channel.${channelId}`, (payload) => {
+          const msg = JSON.parse(payload.body);
+          setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+        });
+      });
+      stomp.current = stompClient;
+    } catch (e) {
+      console.error('socket Error:', e);
+    }
   };
 
   const disconnect = () => {
@@ -31,7 +39,12 @@ export default function chatSocketHook(
   };
 
   const sendMessage = (msg: SendMessage) => {
-    stomp.current?.send(HOST + 'pub/chat', {}, JSON.stringify(msg));
+    try {
+      if (stomp.current)
+        stomp.current.send('/app/chat', {}, JSON.stringify(msg));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   useEffect(() => {

@@ -6,14 +6,12 @@
 //
 
 import Foundation
-import MessageKit
 
 // MARK: - UserData
-struct UserModel: SenderType, Equatable {
-    var senderId: String
-    var displayName: String
-    var name: String?
+struct UserModel: Codable {
+    var id: Int
     let email: String
+    var name: String
     let description: String?
     let phone: String?
     let country: String
@@ -35,6 +33,7 @@ struct LoginDataModel: Codable {
 struct Token: Codable {
     let access_token: String
     let refresh_token: String
+    let account: UserModel
 }
 
 // ErrData

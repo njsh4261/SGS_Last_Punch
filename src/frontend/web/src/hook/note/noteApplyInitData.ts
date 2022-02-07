@@ -17,9 +17,6 @@ export default function noteApplyInitDataHook(props: HookProps) {
   useEffect(() => {
     if (note) {
       try {
-        // test console
-        console.log('note data from server: ', note);
-
         // apply title
         setTitle(note.title);
 

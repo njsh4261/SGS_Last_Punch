@@ -12,16 +12,10 @@ import { Editor } from 'slate';
 import { getNoteOPAPI, getTitleAPI } from '../../Api/note';
 import { Note } from '../../../types/note.type';
 import { TOKEN, URL } from '../../constant';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../modules';
 
-// const TEST_AWS = 'http://13.125.123.25:9001/ws/note';
-const TEST_LOCAL = 'http://localhost:9001/ws/note';
-
-const HOST = 'http://localhost:8080/ws/note';
-
-export type User = {
-  id: number;
-  name: string;
-};
+export type User = RootState['user'];
 
 enum MESSAGE_TYPE {
   ENTER = 'ENTER',
@@ -51,7 +45,7 @@ interface HookReturns {
   unlockNote: () => void;
   leaveNote: () => void;
   owner: User | null;
-  myUser: User;
+  user: User;
   userList: User[];
   title: string;
   setTitle: React.Dispatch<SetStateAction<string>>;
@@ -131,14 +125,7 @@ export default function noteSocketHook(
   editor: Editor,
   note: Note | null,
 ): HookReturns {
-  // dummy user data
-  const myUser = useMemo(
-    () => ({
-      id: Math.floor(Math.random() * 9999999),
-      name: 'test user myUserame ' + Math.floor(Math.random() * 9999),
-    }),
-    [],
-  );
+  const user = useSelector((state: RootState) => state.user);
 
   const stomp = useRef<CompatClient>();
   const [title, setTitle] = useState('test title');
@@ -147,18 +134,19 @@ export default function noteSocketHook(
 
   const connect = () => {
     const accessToken = localStorage.getItem(TOKEN.ACCESS);
-    if (!accessToken || !HOST) {
+    if (!accessToken || !URL.HOST) {
       console.error('fail connect socket - hook/noteSock');
       return;
     }
     try {
-      const socket = new SockJS(HOST);
+      const socket = new SockJS(URL.HOST + '/ws/note');
       const stompClient = Stomp.over(socket);
+      stompClient.debug = (f) => f;
       stompClient.connect(
         { Authorization: accessToken },
         enterAndSub({
           editor,
-          myUser,
+          myUser: user,
           note,
           setUserList,
           stomp: stompClient,
@@ -193,19 +181,19 @@ export default function noteSocketHook(
   };
 
   const unlockNote = () => {
-    if (stomp.current && owner?.id === myUser.id) {
+    if (stomp.current && owner?.id === user.id) {
       stompSend(stomp.current, MESSAGE_TYPE.UNLOCK);
     }
   };
 
   const updateTitle = () => {
-    if (stomp.current && owner?.id === myUser.id) {
+    if (stomp.current && owner?.id === user.id) {
       stompSend(stomp.current, MESSAGE_TYPE.UPDATE_TITLE);
     }
   };
 
   const updateNote = (timestamp: string) => {
-    if (stomp.current && owner?.id === myUser.id) {
+    if (stomp.current && owner?.id === user.id) {
       stompSend(stomp.current, MESSAGE_TYPE.UPDATE, timestamp);
     }
   };
@@ -222,7 +210,7 @@ export default function noteSocketHook(
         JSON.stringify({
           type: type,
           noteId: note!.id,
-          myUser,
+          myUser: user,
           timestamp,
         }),
       );
@@ -246,7 +234,7 @@ export default function noteSocketHook(
     unlockNote,
     leaveNote,
     owner,
-    myUser,
+    user,
     userList,
     title,
     setTitle,

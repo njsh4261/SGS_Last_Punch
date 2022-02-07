@@ -18,11 +18,12 @@ import CoreLocation
 
 class PrivateMessageViewController: MessagesViewController {
     // MARK: - Properties
+    private var viewModel: MessageViewModel?
     private let disposeBag = DisposeBag()
     let channel: Channel?
     var messages = [MessageModel]()
-    var recipientInfo: UserModel
-    var senderInfo: UserModel
+    var recipientInfo: User
+    var senderInfo: User
     private var userInfo: WorkspaceMemberCellModel?
     private(set) lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
@@ -40,7 +41,7 @@ class PrivateMessageViewController: MessagesViewController {
     
     private var btnAttach = InputBarButtonItem()
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: UserModel, recipientInfo: UserModel, channel: Channel) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, channel: Channel) {
         self.senderInfo = senderInfo
         self.recipientInfo = recipientInfo
         self.channel = channel
@@ -62,7 +63,14 @@ class PrivateMessageViewController: MessagesViewController {
         layout()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel?.disconnect()
+    }
+    
     func bind(_ viewModel: MessageViewModel) {
+        self.viewModel = viewModel
+//        viewModel.registerSockect()
+        
         // MARK: Bind input
         btnBack.rx.tap
             .subscribe(onNext: goToMessage)
@@ -75,7 +83,7 @@ class PrivateMessageViewController: MessagesViewController {
         btnAttach.rx.tap
             .subscribe(onNext: showImagePickerControllerActionSheet)
             .disposed(by: disposeBag)
-        
+                
         //        btnTransform.rx.tap
         //            .bind(to: viewModel.input.btnTransformTapped)
         //            .disposed(by: disposeBag)
@@ -88,7 +96,7 @@ class PrivateMessageViewController: MessagesViewController {
     
     private func goToProfile() {
         // 추가 본인 정보를 넣어야함
-        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: recipientInfo, recipientInfo: recipientInfo, isChat: false)
+        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: senderInfo, recipientInfo: recipientInfo, isChat: false)
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)
     }
@@ -157,7 +165,7 @@ class PrivateMessageViewController: MessagesViewController {
         // library InputBarAccessoryView의 속성
         messageInputBar = messageInputBar.then {
             $0.delegate = self
-            $0.inputTextView.placeholder = "\(recipientInfo.displayName)에(게) 메시지 보내기"
+            $0.inputTextView.placeholder = "\(recipientInfo.name!)에(게) 메시지 보내기"
             $0.backgroundView.backgroundColor = UIColor(named: "snackBackGroundColor")
             
             $0.setStackViewItems([btnAttach], forStack: .left, animated: false)
@@ -208,23 +216,20 @@ class PrivateMessageViewController: MessagesViewController {
         navigationItem.titleView = viewTitle
         navigationItem.leftBarButtonItem = btnBack
         navigationItem.rightBarButtonItem = btnTransform
-        
-        viewTitle = UIView(frame: CGRect(x: 0, y: 0, width: max(lblTitle.frame.size.width, lblSubTitle.frame.size.width), height: 30))
-        
-        //        viewTitle.backgroundColor = .red
-        //        btnViewTitle.backgroundColor = .red
-        //        btnViewTitle.setTitle("왜 안돼", for: .normal)
+//        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
+//        viewTitle.backgroundColor = .red
+//        btnViewTitle.setBackgroundColor(.red, for: .normal)
+//        btnViewTitle.setTitle("왜 안돼", for: .normal)
         
         [lblTitle, lblSubTitle].forEach {
             $0.backgroundColor = UIColor.clear
             $0.textAlignment = .center
             $0.adjustsFontSizeToFitWidth = true
-            $0.tintColor = .white
             $0.sizeToFit()
         }
         
         lblTitle = lblTitle.then {
-            $0.text = recipientInfo.displayName
+            $0.text = recipientInfo.name
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
         }
         
@@ -232,7 +237,7 @@ class PrivateMessageViewController: MessagesViewController {
             $0.text = "세부정보 보기"
             $0.font = UIFont(name: "NotoSansKR-Regular", size: 10)
         }
-        
+                
         btnBack = btnBack.then {
             $0.image = UIImage(systemName: "chevron.backward")
             $0.style = .plain
@@ -262,16 +267,16 @@ class PrivateMessageViewController: MessagesViewController {
         lblTitle.snp.makeConstraints {
             $0.top.equalToSuperview()
         }
-        
+
         lblSubTitle.snp.makeConstraints {
             $0.top.equalTo(lblTitle.snp.bottom)
         }
-        //
-        //        btnViewTitle.snp.makeConstraints {
-        //            $0.centerX.centerY.equalToSuperview()
-        //            $0.width.equalTo(lblTitle)
-        //            $0.height.equalTo(40)
-        //        }
+        
+        btnViewTitle.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(lblTitle)
+            $0.height.equalTo(50)
+        }
     }
 }
 
@@ -427,7 +432,12 @@ extension PrivateMessageViewController: MessagesDisplayDelegate {
 extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        processInputBar(messageInputBar)
+        let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
+        viewModel!.sendMessage(authorId: senderInfo.senderId, content: text)
+        insertNewMessage(message)
+        inputBar.inputTextView.text.removeAll()
+
+//        processInputBar(messageInputBar)
     }
     
     func processInputBar(_ inputBar: InputBarAccessoryView) {

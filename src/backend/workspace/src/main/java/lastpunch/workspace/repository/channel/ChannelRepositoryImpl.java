@@ -30,7 +30,7 @@ public class ChannelRepositoryImpl implements ChannelRepositoryCustom{
     public Page<Account.ExportDto> getMembers(Long id, Pageable pageable) {
         List<Account.ExportDto> results = jpaQueryFactory
                 .select(new QAccount_ExportDto(
-                    account.id, account.email, account.name, account.displayname,
+                    account.id, account.email, account.name,
                     account.description, account.phone, account.country, account.language,
                     account.settings, account.status, account.createdt, account.modifydt
                 ))

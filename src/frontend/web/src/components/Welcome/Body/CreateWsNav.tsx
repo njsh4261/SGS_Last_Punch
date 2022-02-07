@@ -29,7 +29,6 @@ const CreateWsButton = styled.button`
   width: 100%;
   font-weight: 600;
   font-size: 16px;
-  color: ${(props) => props.theme.color.slack};
   height: 50.5px;
 
   &:hover {

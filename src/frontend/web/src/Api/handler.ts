@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { URL, ERROR_MESSAGE, TOKEN, RESPONSE } from '../constant';
+import { URL, TOKEN, RESPONSE } from '../constant';
 import clearSession from '../util/clearSession';
 import reissueAPI from './reissue';
 
@@ -55,7 +55,6 @@ async function apiHandler(
       };
     }
     let response;
-
     switch (method) {
       case 'GET':
         response = await axios.get(URL.HOST + endpoint, option);
@@ -74,9 +73,41 @@ async function apiHandler(
     }
 
     if (err) return { err };
+    else console.error('wrong response code');
   } catch (e: any) {
     if (e.response?.data.code === RESPONSE.TOKEN.EXPIRED) {
-      await reissueAPI(); // todo: 예외처리 필요
+      const reissueResponse = await reissueAPI();
+      if (reissueResponse === RESPONSE.SIGNIN.SUCCESS) {
+        let response;
+        switch (method) {
+          case 'GET':
+            response = await apiHandler(
+              method,
+              endpoint,
+              successCode,
+              needToken,
+            );
+            break;
+          case 'POST':
+            response = await apiHandler(
+              method,
+              endpoint,
+              successCode,
+              body,
+              needToken,
+            );
+            break;
+          case 'PUT':
+            response = await apiHandler(
+              method,
+              endpoint,
+              successCode,
+              body,
+              needToken,
+            );
+        }
+        return response;
+      }
     } else {
       clearSession(false);
       return; // return undefined when server error

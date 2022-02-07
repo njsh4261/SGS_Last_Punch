@@ -6,6 +6,8 @@ import { ReactEditor, withReact } from 'slate-react';
 import { useParams } from 'react-router-dom';
 
 import EditorFrame from './EditorFrame';
+import ImageButton from '../../Common/ImageButton';
+import arrowRightIcon from '../../../icon/arrowRight.svg';
 import { Note } from '../../../../types/note.type';
 import noteSocketHook, { User } from '../../../hook/note/noteSocket';
 import noteApplyInitDataHook from '../../../hook/note/noteApplyInitData';
@@ -41,7 +43,12 @@ const InvisibleInput = styled.input`
   border: 0;
 `;
 
-export default function NoteMain() {
+interface Props {
+  sideToggle: boolean;
+  sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
   const initialValue = [
     {
       type: 'paragraph',
@@ -65,7 +72,7 @@ export default function NoteMain() {
     unlockNote,
     leaveNote,
     owner,
-    myUser,
+    user,
     userList,
     title,
     setTitle,
@@ -92,7 +99,7 @@ export default function NoteMain() {
       return false;
     });
 
-    if (owner && owner.id === myUser.id && ops.length > 0) {
+    if (owner && owner.id === user.id && ops.length > 0) {
       opQueue.current.push(...ops);
     }
   };
@@ -108,7 +115,7 @@ export default function NoteMain() {
     }
 
     // 선점자 처리 로직
-    if (owner && owner.id === myUser.id) {
+    if (owner && owner.id === user.id) {
       if (e.ctrlKey) {
         switch (e.key) {
           case 'b':
@@ -177,7 +184,7 @@ export default function NoteMain() {
   const titleHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (owner === null) {
       lockNote();
-    } else if (owner.id === myUser.id) {
+    } else if (owner.id === user.id) {
       setTitle(e.target.value);
 
       if (typingTitle.current) clearTimeout(typingTitle.current);
@@ -199,7 +206,7 @@ export default function NoteMain() {
 
   // 선점권을 갖자 마자 unlock을 위한 시간 체크
   useEffect(() => {
-    if (owner && owner.id === myUser.id) {
+    if (owner && owner.id === user.id) {
       resetTypingTimer();
     }
   }, [note, owner]);
@@ -209,7 +216,7 @@ export default function NoteMain() {
 
   useEffect(() => {
     window.addEventListener('beforeunload', () => {
-      if (owner && owner.id === myUser.id) {
+      if (owner && owner.id === user.id) {
         updateAllHandler();
       }
       leaveNote();
@@ -222,6 +229,13 @@ export default function NoteMain() {
         <div>select any note</div>
       ) : (
         <Container>
+          {!sideToggle && (
+            <ImageButton
+              size="16px"
+              imageUrl={arrowRightIcon}
+              onClick={sideToggleHandler}
+            ></ImageButton>
+          )}
           <label htmlFor="title-input">
             <h1>{title}</h1>
           </label>
@@ -238,7 +252,7 @@ export default function NoteMain() {
             editor={editor}
           ></EditorFrame>
           <TestContainer>
-            <div>my: {JSON.stringify(myUser)}</div>
+            <div>my: {JSON.stringify(user)}</div>
             <div>owner: {JSON.stringify(owner)}</div>
             <div>
               userList:

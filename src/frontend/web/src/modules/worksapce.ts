@@ -23,7 +23,7 @@ type WorkAction = ReturnType<typeof selectWork>;
 
 const initWorkState: WorkState = {
   id: 1351,
-  name: 'default workspace',
+  name: '',
   loading: false,
   error: false,
 };

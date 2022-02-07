@@ -41,7 +41,6 @@ public class Account{
     @Column(length = 30)
     private String name;
     
-    private String displayname;
     private String description;
     private String phone;
     private String country;
@@ -82,7 +81,6 @@ public class Account{
         private Long id;
         private String email;
         private String name;
-        private String displayname;
         private String description;
         private String phone;
         private String country;
@@ -99,13 +97,12 @@ public class Account{
         private Message lastMessage;
 
         @QueryProjection
-        public ExportDto(Long id, String email, String name, String displayname, String description,
-                         String phone, String country, String language, Integer settings, String status,
+        public ExportDto(Long id, String email, String name, String description, String phone,
+                         String country, String language, Integer settings, String status,
                          LocalDateTime createDt, LocalDateTime modifyDt) {
             this.id = id;
             this.email = email;
             this.name = name;
-            this.displayname = displayname;
             this.description = description;
             this.phone = phone;
             this.country = country;
@@ -122,7 +119,6 @@ public class Account{
             .id(id)
             .email(email)
             .name(name)
-            .displayname(displayname)
             .description(description)
             .phone(phone)
             .country(country)

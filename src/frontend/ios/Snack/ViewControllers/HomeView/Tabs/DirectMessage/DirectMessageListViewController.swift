@@ -17,7 +17,8 @@ class DirectMessageListViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private var accessTokenField = UITextField()
-    private var members = [UserModel]()
+    private var userInfo: User?
+    private var members = [User]()
     private var accessToken: String = ""
     private var workspaceId: String = ""
     private let HEADER_HEIGHT: Float = 66
@@ -32,6 +33,10 @@ class DirectMessageListViewController: UIViewController {
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, workspaceId: String) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let accessToken: String = KeychainWrapper.standard[.refreshToken] else { return }
+        if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
+            let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
+            self.userInfo = getUser(userInfo!)
+        }
         self.accessToken = accessToken
         self.workspaceId = workspaceId
         tableView.dataSource = nil
@@ -66,13 +71,19 @@ class DirectMessageListViewController: UIViewController {
             .map { $0.row }
             .bind(to: viewModel.input.itemSelected)
             .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.tableView.deselectRow(at: indexPath, animated: true)
+            })
+            .disposed(by: disposeBag)
 
         // MARK: Bind output
         viewModel.cellData
             .asDriver(onErrorJustReturn: [])
-            .drive(tableView.rx.items) { tv, row, data in
+            .drive(tableView.rx.items) { tableView, row, data in
                 let index = IndexPath(row: row, section: 0)
-                let cell = tv.dequeueReusableCell(withIdentifier: "DirectMessageListViewCell", for: index) as! DirectMessageListCellView
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DirectMessageListViewCell", for: index) as! DirectMessageListCellView
                 
                 cell.setData(data, row)
                 return cell
@@ -90,9 +101,10 @@ class DirectMessageListViewController: UIViewController {
             .disposed(by: disposeBag)
                 
         viewModel.push
-            .drive(onNext: { [self] (viewModel, row) in
+            .drive(onNext: { [self] row in
                 // 추가) 본인 user정보를 넣어야함
-                let viewController = PrivateMessageViewController(senderInfo: members[row], recipientInfo: members[row], channel: Channel(chatId: "0", name: self.members[row].name ?? "아무개"))
+                let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members[row], channel: Channel(chatId: "0", name: self.members[row].name ?? ""))
+                let viewModel = MessageViewModel(members[row])
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)
@@ -105,8 +117,12 @@ class DirectMessageListViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func setMembers(_ members: [UserModel]) {
+    private func setMembers(_ members: [User]) {
         self.members = members
+    }
+    
+    private func getUser(_ userInfo: UserModel) -> User {
+        return User(senderId: userInfo.id.description, displayName: userInfo.name, name: userInfo.name, email: userInfo.email, description: userInfo.description, phone: userInfo.phone, country: userInfo.country, language: userInfo.language, settings: userInfo.settings, status: userInfo.status, createDt: userInfo.createDt, modifyDt: userInfo.modifyDt, authorId: userInfo.id.description, content: userInfo.email)
     }
     
     private func showFailedAlert(_ message: String) {
@@ -118,13 +134,16 @@ class DirectMessageListViewController: UIViewController {
         tabBarItem.image = UIImage(systemName: "message")
         tabBarItem.selectedImage = UIImage(systemName: "message.fill")
         tabBarItem.title = "DM"
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(named: "snackBackGroundColor2")
         
         searchBar = searchBar.then {
             $0.placeholder = "다음으로 이동..."
+            $0.barTintColor = UIColor(named: "snackBackGroundColor2")
+            $0.searchTextField.backgroundColor = UIColor(named: "snackButtonColor")
+            $0.backgroundImage = UIImage()
         }
         
-        [viewHeader, btnAddMemeber].forEach {
+        [viewHeader, btnAddMemeber, searchBar.searchTextField].forEach {
             $0.layer.cornerRadius = 15
         }
         
@@ -137,7 +156,7 @@ class DirectMessageListViewController: UIViewController {
             $0.setTitle("팀원 추가", for: .normal)
             $0.setImage(UIImage(systemName: "person.crop.circle.badge.plus"), for: .normal)
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 17)
-            $0.backgroundColor = UIColor(named: "snackBackGroundColor")
+            $0.backgroundColor = UIColor(named: "snackButtonColor")
             $0.setTitleColor(.label.withAlphaComponent(0.3), for: .highlighted)
             $0.setTitleColor(.label, for: .normal)
             $0.tintColor = .label
@@ -147,6 +166,7 @@ class DirectMessageListViewController: UIViewController {
         }
         
         tableView = tableView.then {
+            $0.backgroundColor = UIColor(named: "snackBackGroundColor2")
             $0.register(DirectMessageListCellView.self, forCellReuseIdentifier: "DirectMessageListViewCell")
             $0.refreshControl = refreshControl
             $0.tableHeaderView = viewHeader

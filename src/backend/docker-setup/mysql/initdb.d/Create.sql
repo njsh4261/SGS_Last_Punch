@@ -8,7 +8,6 @@ CREATE TABLE `account`(
     `country` CHAR(255) NOT NULL,
     `language` CHAR(255) NOT NULL,
     `settings` TINYINT NOT NULL,
-    `status` TINYINT NOT NULL,
     `level` TINYINT NOT NULL,
     `point` BIGINT NOT NULL,
     `createDt` DATETIME NOT NULL,
@@ -20,7 +19,6 @@ CREATE TABLE `workspace`(
     `name` VARCHAR(255) NOT NULL,
     `description` TEXT NULL,
     `settings` TINYINT NOT NULL,
-    `status` TINYINT NOT NULL,
     `createDt` DATETIME NOT NULL,
     `modifyDt` DATETIME NOT NULL
 );
@@ -32,7 +30,6 @@ CREATE TABLE `channel`(
     `topic` VARCHAR(255) NULL,
     `description` TEXT NULL,
     `settings` TINYINT NOT NULL,
-    `status` TINYINT NOT NULL,
     `createDt` DATETIME NOT NULL,
     `modifyDt` DATETIME NOT NULL,
     INDEX (`workspaceId`),
@@ -88,7 +85,6 @@ CREATE TABLE `file`(
     `ownerId` BIGINT UNSIGNED NOT NULL,
     `thumbnail` BINARY(16) NULL,
     `location` VARCHAR(255) NOT NULL,
-    `status` TINYINT NOT NULL,
     `createDt` DATETIME NOT NULL,
     `modifyDt` DATETIME NOT NULL
 );

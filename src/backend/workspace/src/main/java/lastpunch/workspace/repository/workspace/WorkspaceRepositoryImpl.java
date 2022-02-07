@@ -33,8 +33,8 @@ public class WorkspaceRepositoryImpl implements WorkspaceRepositoryCustom{
     public Page<Workspace.ExportDto> getListWithUserId(Long id, Pageable pageable){
         List<Workspace.ExportDto> results = jpaQueryFactory
                 .select(new QWorkspace_ExportDto(
-                    workspace.id, workspace.name, workspace.description, workspace.settings,
-                    workspace.status, workspace.createdt, workspace.modifydt
+                    workspace.id, workspace.name, workspace.description,
+                    workspace.settings, workspace.createdt, workspace.modifydt
                 ))
                 .from(workspace)
                 .join(workspace.accounts, accountWorkspace)
@@ -64,7 +64,7 @@ public class WorkspaceRepositoryImpl implements WorkspaceRepositoryCustom{
                 .select(new QAccount_ExportDto(
                         account.id, account.email, account.name,
                         account.description, account.phone, account.country, account.language,
-                        account.settings, account.status, account.createdt, account.modifydt
+                        account.settings, account.createdt, account.modifydt
                 ))
                 .from(account)
                 .join(account.workspaces, accountWorkspace)
@@ -93,7 +93,7 @@ public class WorkspaceRepositoryImpl implements WorkspaceRepositoryCustom{
         List<Channel.ExportDto> results = jpaQueryFactory
                 .select(new QChannel_ExportDto(
                         channel.id, channel.workspace, channel.name, channel.topic,
-                        channel.description, channel.settings, channel.status, channel.createdt, channel.modifydt
+                        channel.description, channel.settings, channel.createdt, channel.modifydt
                 ))
                 .from(channel)
                 .join(channel.workspace, workspace)

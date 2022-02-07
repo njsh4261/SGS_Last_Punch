@@ -3,19 +3,26 @@ package lastpunch.workspace.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import lombok.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-
-import lastpunch.workspace.common.converter.AccountStatusConverter;
 
 @Entity
 @Table(name="account")
@@ -48,10 +55,6 @@ public class Account{
     
     @Column(columnDefinition = "tinyint")
     private Integer settings;
-    
-    @Convert(converter = AccountStatusConverter.class)
-    @Column(columnDefinition = "tinyint")
-    private String status;
     
     @CreatedDate
     @Column(updatable = false)
@@ -86,7 +89,6 @@ public class Account{
         private String country;
         private String language;
         private Integer settings;
-        private String status;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createDt;
@@ -98,7 +100,7 @@ public class Account{
 
         @QueryProjection
         public ExportDto(Long id, String email, String name, String description, String phone,
-                         String country, String language, Integer settings, String status,
+                         String country, String language, Integer settings,
                          LocalDateTime createDt, LocalDateTime modifyDt) {
             this.id = id;
             this.email = email;
@@ -108,7 +110,6 @@ public class Account{
             this.country = country;
             this.language = language;
             this.settings = settings;
-            this.status = status;
             this.createDt = createDt;
             this.modifyDt = modifyDt;
         }
@@ -124,7 +125,6 @@ public class Account{
             .country(country)
             .language(language)
             .settings(settings)
-            .status(status)
             .createDt(createdt)
             .modifyDt(modifydt)
             .build();

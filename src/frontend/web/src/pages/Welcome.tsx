@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+
+import getSelfInfoHook from '../hook/getSelfInfo';
 import setTitleHook from '../hook/setTitle';
 import WelcomeHeader from '../components/Welcome/Header';
 import WelcomeBody from '../components/Welcome/Body';
@@ -14,6 +16,7 @@ const WelcomePage = styled.div`
 
 export default function Welcome() {
   setTitleHook('Welcome');
+  getSelfInfoHook();
 
   return (
     <WelcomePage>

@@ -7,8 +7,8 @@ const AsideHeader = styled.header`
   width: 260px;
   min-height: 49px;
   color: black;
-  font-size: 19px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: bold;
   font-family: sans-serif;
   padding: 12.5px 10px 12.5px 16px;
 `;

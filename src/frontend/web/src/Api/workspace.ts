@@ -61,7 +61,7 @@ export async function createWsAPI(wsName: string, channelName: string) {
   return response;
 }
 
-export async function inviteWsAPI(wsId: WsId, userId: number) {
+export async function inviteWsAPI(wsId: number, userId: number) {
   const endpoint = `/workspace/member`;
   const body = {
     wsId,

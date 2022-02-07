@@ -25,13 +25,19 @@ const Container = styled.article`
 
 export type ModalType = 'channel' | 'direct message';
 
-export default function Modal({ type }: { type: ModalType }) {
+export default function Modal({
+  type,
+  wsId,
+}: {
+  type: ModalType;
+  wsId?: string;
+}) {
   return (
     <Container>
       {type === 'channel' ? (
         <ChannelModal></ChannelModal>
       ) : (
-        <InviteModal></InviteModal>
+        <InviteModal wsId={wsId!}></InviteModal>
       )}
     </Container>
   );

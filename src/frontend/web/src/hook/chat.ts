@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 
 import { RootState } from '../modules';
 import chatSocketHook from './chatSocket';
 import { ChatMessage } from '../../types/chat.type';
 
 export default function chatHook(): [
-  dummyUser: { id: string; name: string },
+  user: RootState['user'],
   channel: RootState['channel'],
   msg: string,
   msgList: ChatMessage[],
@@ -15,15 +14,11 @@ export default function chatHook(): [
   msgTypingHandler: (e: React.ChangeEvent<HTMLInputElement>) => void,
   msgSubmitHandler: () => void,
 ] {
+  const user = useSelector((state: RootState) => state.user);
   const channel = useSelector((state: RootState) => state.channel);
   const endRef = useRef<null | HTMLDivElement>(null);
   const [msg, setMsg] = useState<string>('');
   const [msgList, setMsgList] = useState<ChatMessage[]>([]);
-  // dummy
-  const [dummyUser, setUser] = useState({
-    id: uuidv4(),
-    name: uuidv4(),
-  });
 
   const sendMessage = chatSocketHook(channel.id, setMsgList);
 
@@ -33,7 +28,7 @@ export default function chatHook(): [
   const msgSubmitHandler = () => {
     if (msg !== '') {
       sendMessage({
-        authorId: dummyUser.id,
+        authorId: user.id.toString(),
         channelId: channel.id.toString(),
         content: msg,
       });
@@ -51,7 +46,7 @@ export default function chatHook(): [
   }, [msgList]);
 
   return [
-    dummyUser,
+    user,
     channel,
     msg,
     msgList,

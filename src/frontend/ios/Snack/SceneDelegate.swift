@@ -11,43 +11,17 @@ import ProgressHUD
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var tabBarController: UITabBarController!
     var welcomeViewController: WelcomeViewController!
-//    var homeView: HomeViewController!
-//    var DMView: DirectMessageListViewController!
-//    var profileView: SettingsViewController!
-
-    // 추가예정 : DirectMessageViewConrooler!, NoticeViewConrooler!, SearchViewConrooler!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
         
-//        homeView = HomeViewController()
-//        DMView = DirectMessageListViewController()
-//        profileView = ProfileViewController(nibName: "ProfileView", bundle: nil)
-//
-//        let navController0 = NavigationController(rootViewController: homeView)
-//        let navController1 = NavigationController(rootViewController: DMView)
-//        let navController4 = NavigationController(rootViewController: profileView)
-//
-//        tabBarController = UITabBarController()
-//        tabBarController.viewControllers = [navController0, navController1, navController4]
-//        tabBarController.tabBar.isTranslucent = false
-//        tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
-//        tabBarController.modalPresentationStyle = .fullScreen
-//        tabBarController.selectedIndex = App.DefaultTab
-//
-//        if #available(iOS 15.0, *) {
-//            let appearance = UITabBarAppearance()
-//            appearance.configureWithOpaqueBackground()
-//            tabBarController.tabBar.standardAppearance = appearance
-//            tabBarController.tabBar.scrollEdgeAppearance = appearance
-//        }
-        
         welcomeViewController = WelcomeViewController()
         self.window?.rootViewController = welcomeViewController
-//        self.window?.rootViewController = tabBarController
+//        let tt = PrivateMessageViewController(senderInfo: User(senderId: "1", displayName: "dd", name: "22", email: "", description: "", phone: "", country: "", language: "", settings: 0, status: "", createDt: "", modifyDt: "", authorId: "", content: ""), recipientInfo: User(senderId: "2", displayName: "dddddddd", name: "dddddddd", email: "", description: "", phone: "", country: "", language: "", settings: 0, status: "", createDt: "", modifyDt: "", authorId: "", content: ""))
+//        tt.bind(MessageViewModel(User(senderId: "2", displayName: "dddddddd", name: "dddddddd", email: "", description: "", phone: "", country: "", language: "", settings: 0, status: "", createDt: "", modifyDt: "", authorId: "", content: "")))
+//        self.window?.rootViewController = NavigationController(rootViewController: tt)
 
         self.window?.makeKeyAndVisible()
                 

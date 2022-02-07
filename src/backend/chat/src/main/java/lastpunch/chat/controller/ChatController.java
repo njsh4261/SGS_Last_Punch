@@ -31,6 +31,7 @@ public class ChatController{
     
     @MessageMapping("/chat")
     public void send(SendDto sendDto){
+        logger.info("message received: " + sendDto);
         rabbitMqService.send(sendDto.toEntity());
     }
     

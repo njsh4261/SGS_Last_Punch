@@ -44,6 +44,7 @@ public class Message{
     }
     
     @Getter
+    @ToString
     public static class SendDto{
         private String authorId;
         private String channelId;

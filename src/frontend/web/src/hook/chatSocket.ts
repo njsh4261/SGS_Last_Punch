@@ -24,8 +24,8 @@ export default function chatSocketHook(
       const stompClient = Stomp.over(socket);
       stompClient.connect({ Authorization: accessToken }, () => {
         stompClient.subscribe(`/topic/channel.${channelId}`, (payload) => {
-          console.log('receive >>>> ', payload);
-          // setMesgList((msgList) => [...msgList, 'new' ])
+          const msg = JSON.parse(payload.body);
+          setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
         });
       });
       stomp.current = stompClient;
@@ -40,7 +40,8 @@ export default function chatSocketHook(
 
   const sendMessage = (msg: SendMessage) => {
     try {
-      stomp.current?.send('/app/chat', {}, JSON.stringify(msg));
+      if (stomp.current)
+        stomp.current.send('/app/chat', {}, JSON.stringify(msg));
     } catch (e) {
       console.error(e);
     }

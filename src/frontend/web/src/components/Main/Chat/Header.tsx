@@ -66,6 +66,14 @@ const NavTab = styled.nav`
 const GoHomeLogo = styled.img`
   margin-right: 10px;
   cursor: pointer;
+  :hover {
+    animation: rotate_image 6s linear infinite;
+  }
+  @keyframes rotate_image {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 interface Props {

@@ -13,7 +13,7 @@ import Alamofire
 
 class HomeViewModel: ViewModelProtocol {
     struct Input {
-        let itemSelected = PublishRelay<Int>()
+        let itemSelected = PublishRelay<(Int, Int)>()
     }
     
     struct Output {
@@ -25,7 +25,7 @@ class HomeViewModel: ViewModelProtocol {
     // MARK: - Public properties
     let input = Input()
     let output = Output()
-    let push: Driver<Int>
+    let push: Driver<(Int, Int)>
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
@@ -40,8 +40,8 @@ class HomeViewModel: ViewModelProtocol {
     init() {
         //MARK: - push
         self.push = input.itemSelected
-            .compactMap { row -> Int in
-                return row
+            .compactMap { (row, section) -> (Int, Int) in
+                return (row, section)
             }
             .asDriver(onErrorDriveWith: .empty())
 

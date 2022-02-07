@@ -32,11 +32,11 @@ public class StompInterceptor implements ChannelInterceptor{
             String accessToken = accessor.getFirstNativeHeader("Authorization");
             if(ObjectUtils.isEmpty(accessToken)){
                 logger.info("StompInterceptor: Message is blocked; token does not exist");
-                throw new BusinessException(StatusCode.TOKEN_NOT_EXIST);
+                return null;
             }
             if(!jwtProvider.validateToken(accessToken)){
                 logger.info("StompInterceptor: Message is blocked; token is not valid");
-                throw new BusinessException(StatusCode.TOKEN_INVALID);
+                return null;
             }
         }
         return message;

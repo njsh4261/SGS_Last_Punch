@@ -116,12 +116,16 @@ services:
       - lastpunch-network
 
   chat-server:
-    image: njsh4261/chat-server:0.2.4-noic
+    image: njsh4261/chat-server:0.2.6
     ports:
       - "8083:8083"
     environment:
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
       spring.data.mongodb.uri: mongodb://mongodb:27017/lastpunch
+      spring.rabbitmq.host: rabbitmq
+      spring.rabbitmq.port: 5672
+      spring.rabbitmq.username: guest
+      spring.rabbitmq.password: guest
       rabbitmq-stomp.host: rabbitmq
       rabbitmq-stomp.port: 61613
       rabbitmq-stomp.username: guest

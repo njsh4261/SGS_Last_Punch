@@ -17,6 +17,7 @@ class NoteListCell: UITableViewCell {
     var data: NoteListCellModel?
     
     // MARK: - UI
+    var id: String?
     var lblName = UILabel()
     
     override func layoutSubviews() {
@@ -29,7 +30,8 @@ class NoteListCell: UITableViewCell {
     
     func setData(_ data: NoteListCellModel, _ row: Int) {
         self.data = data
-        lblName.text = data.title + row.description
+        self.id = data.id
+        self.lblName.text = data.title + row.description
     }
     
     private func attribute() {

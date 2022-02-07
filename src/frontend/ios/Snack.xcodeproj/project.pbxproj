@@ -102,6 +102,7 @@
 		8CC9E8CC27B10CAE008BE1EA /* NoteListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8CB27B10CAE008BE1EA /* NoteListCellModel.swift */; };
 		8CC9E8CE27B11BBB008BE1EA /* GroupMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8CD27B11BBB008BE1EA /* GroupMessageViewController.swift */; };
 		8CC9E8D027B128C3008BE1EA /* GroupMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8CF27B128C3008BE1EA /* GroupMessageViewModel.swift */; };
+		8CC9E8D227B161B1008BE1EA /* CreateWKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8D127B161B1008BE1EA /* CreateWKWebView.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -208,6 +209,7 @@
 		8CC9E8CB27B10CAE008BE1EA /* NoteListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListCellModel.swift; sourceTree = "<group>"; };
 		8CC9E8CD27B11BBB008BE1EA /* GroupMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMessageViewController.swift; sourceTree = "<group>"; };
 		8CC9E8CF27B128C3008BE1EA /* GroupMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMessageViewModel.swift; sourceTree = "<group>"; };
+		8CC9E8D127B161B1008BE1EA /* CreateWKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWKWebView.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -663,6 +665,7 @@
 				8CC9E8C227B10A17008BE1EA /* NoteListViewContoller.swift */,
 				8CC9E8C427B10A24008BE1EA /* NoteListViewMoel.swift */,
 				8CC9E8C727B10B8A008BE1EA /* NoteListCell.swift */,
+				8CC9E8D127B161B1008BE1EA /* CreateWKWebView.swift */,
 			);
 			path = Note;
 			sourceTree = "<group>";
@@ -869,6 +872,7 @@
 				8CBD4544279F0CD50056A557 /* LogOutViewModel.swift in Sources */,
 				8CBD45DD27A865C30056A557 /* MeidaView.swift in Sources */,
 				8C962B6327AEDD4F00A9A1F5 /* User.swift in Sources */,
+				8CC9E8D227B161B1008BE1EA /* CreateWKWebView.swift in Sources */,
 				8C68AB2D2797F5E400C1711E /* SettingsViewController.swift in Sources */,
 				8CC1E79527ABF66000BFE4D1 /* Media.swift in Sources */,
 				8C68AAF027952F6500C1711E /* NavigationController.swift in Sources */,

@@ -96,7 +96,7 @@ class GroupMessageViewController: MessagesViewController {
     
     private func goToNoteList() {
         let viewmodel = NoteListViewMoel(workspaceId: (channel?.workspace.id.description)!, (channel?.id.description)!)
-        let viewController = NoteListViewContoller(nibName: nil, bundle: nil, viewModel: viewmodel)
+        let viewController = NoteListViewContoller(nibName: nil, bundle: nil, viewModel: viewmodel, workspaceId: (channel?.workspace.id.description)!, (channel?.id.description)!)
         viewController.bind(with: viewmodel)
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)
@@ -118,8 +118,8 @@ class GroupMessageViewController: MessagesViewController {
                 
         let alertCancle = UIAlertAction(title: "취소", style: .cancel)
         
-        let configuration    = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
-        let imageNote      = UIImage(systemName: "square.and.pencil", withConfiguration: configuration)?
+        let configuration       = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
+        let imageNote           = UIImage(systemName: "square.and.pencil", withConfiguration: configuration)?
             .withTintColor(UIColor(named: "snackColor")!, renderingMode: .alwaysOriginal)
         let imageCalendar       = UIImage(systemName: "calendar", withConfiguration: configuration)?
             .withTintColor(UIColor.lightGray.withAlphaComponent(0.5), renderingMode: .alwaysOriginal)
@@ -130,7 +130,7 @@ class GroupMessageViewController: MessagesViewController {
 
         alertCalendar.isEnabled = false
         alertNote.setValue(imageNote, forKey: "image");         alert.addAction(alertNote)
-        alertCalendar.setValue(imageCalendar, forKey: "image");           alert.addAction(alertCalendar)
+        alertCalendar.setValue(imageCalendar, forKey: "image"); alert.addAction(alertCalendar)
 
         alert.addAction(alertCancle)
 

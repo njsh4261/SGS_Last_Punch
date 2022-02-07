@@ -18,14 +18,18 @@ class NoteListViewContoller: UIViewController {
     private var viewModel: NoteListViewMoel
     private let disposeBag = DisposeBag()
     private let channelIdField = UITextField()
+    private var workspaceId: String
+    private var channelId: String
     
     // MARK: - UI
     var btnAdd = UIBarButtonItem()
     var refreshControl = UIRefreshControl()
     var tableView = UITableView()
     
-    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, viewModel: NoteListViewMoel) {
+    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, viewModel: NoteListViewMoel, workspaceId: String, _ channelId: String) {
         self.viewModel = viewModel
+        self.workspaceId = workspaceId
+        self.channelId = channelId
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 //        guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
 
@@ -56,9 +60,9 @@ class NoteListViewContoller: UIViewController {
         tableView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 guard let self = self else { return }
-//                let cell = self.tableView.cellForRow(at: indexPath) as? NoteListCell
                 self.tableView.deselectRow(at: indexPath, animated: true)
-                
+                let cell = self.tableView.cellForRow(at: indexPath) as? NoteListCell
+                self.goToNote((cell?.id)!)
             }).disposed(by: disposeBag)
                 
 //        tableView.rx.itemDeleted
@@ -113,10 +117,16 @@ class NoteListViewContoller: UIViewController {
     private func showEmptyAlert(_ message: String) {
         ProgressHUD.showAdded(message)
     }
+    
+    private func goToNote(_ noteId: String) {
+        let webView = CreateWKWebView(nibName: nil, bundle: nil, url: "http://localhost:3000/\(workspaceId)/\(channelId)/note/" + noteId)
+        self.show(webView, sender: nil)
+    }
  
     private func attribute() {
         title = "노트 목록"
         view.backgroundColor = UIColor(named: "snackBackGroundColor2")
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "목록", style: .plain, target: nil, action: nil)
         navigationItem.rightBarButtonItem = btnAdd
         
         btnAdd = btnAdd.then {
@@ -129,7 +139,6 @@ class NoteListViewContoller: UIViewController {
             $0.backgroundColor = UIColor(named: "snackBackGroundColor2")
             $0.refreshControl = refreshControl
             $0.clearsContextBeforeDrawing = false
-            $0.separatorStyle = .none
             $0.bouncesZoom = false
             $0.isOpaque = false
             $0.rowHeight = 61

@@ -1,6 +1,6 @@
 const SET_USER = 'user/set';
 
-type UserState = {
+export type UserState = {
   id: number;
   name: string;
 };

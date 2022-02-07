@@ -53,7 +53,7 @@ interface Props {
 
 const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
   const [
-    dummyUser,
+    user,
     channel,
     msg,
     msgList,
@@ -75,7 +75,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
           />
           <MessageListContainer>
             {msgList?.map((msg, idx) => (
-              <MessageBox key={idx} me={msg.authorId === dummyUser.id}>
+              <MessageBox key={idx} me={msg.authorId === user.id.toString()}>
                 {msg.content}
               </MessageBox>
             ))}

@@ -75,8 +75,8 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
           />
           <MessageListContainer>
             {msgList?.map((msg, idx) => (
-              <MessageBox key={idx} me={msg.writerId === dummyUser.id}>
-                {msg.text}
+              <MessageBox key={idx} me={msg.authorId === dummyUser.id}>
+                {msg.content}
               </MessageBox>
             ))}
             <End ref={endRef}></End>

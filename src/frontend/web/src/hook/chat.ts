@@ -37,7 +37,6 @@ export default function chatHook(): [
         channelId: channel.id,
         content: msg,
       });
-      // setMsgList([...msgList, msg]);
       setMsg('');
     }
   };

@@ -122,7 +122,7 @@ class GroupMessageViewController: MessagesViewController {
         let imageNote      = UIImage(systemName: "square.and.pencil", withConfiguration: configuration)?
             .withTintColor(UIColor(named: "snackColor")!, renderingMode: .alwaysOriginal)
         let imageCalendar       = UIImage(systemName: "calendar", withConfiguration: configuration)?
-            .withTintColor(UIColor.lightGray.withAlphaComponent(0.3), renderingMode: .alwaysOriginal)
+            .withTintColor(UIColor.lightGray.withAlphaComponent(0.5), renderingMode: .alwaysOriginal)
 
         alertNote.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
         alertCalendar.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")

@@ -116,7 +116,7 @@ class NoteListViewContoller: UIViewController {
  
     private func attribute() {
         title = "노트 목록"
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(named: "snackBackGroundColor2")
         navigationItem.rightBarButtonItem = btnAdd
         
         btnAdd = btnAdd.then {
@@ -126,7 +126,7 @@ class NoteListViewContoller: UIViewController {
                 
         tableView = tableView.then {
             $0.register(NoteListCell.self, forCellReuseIdentifier: "NoteListCell")
-            $0.backgroundColor = UIColor(named: "snackBackGroundColor")
+            $0.backgroundColor = UIColor(named: "snackBackGroundColor2")
             $0.refreshControl = refreshControl
             $0.clearsContextBeforeDrawing = false
             $0.separatorStyle = .none

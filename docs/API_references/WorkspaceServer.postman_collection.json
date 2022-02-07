@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "90715e61-a323-48f9-81ec-2e14cb1d8ccd",
+		"_postman_id": "4b945f96-a59e-4f1f-9c62-291a28994e6d",
 		"name": "WorkspaceServer",
 		"description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests an user can send?",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -16,7 +16,7 @@
 						"header": [
 							{
 								"key": "X-AUTH-TOKEN",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxd2VyQHF3ZXIiLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJJZCI6MywiZXhwIjoxNjQ0MjA4NDMyfQ.UDNrnkMt4N7Cq1ikfw7AdyzzAYUUV3SK01SCxXQHoyOTFqAgPbFs6i5cHIPxH2Ohw6D5tBysqIeJDnIsWRLe2Q",
 								"type": "text"
 							}
 						],
@@ -231,6 +231,89 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"accounts\": {\n            \"content\": [],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"unsorted\": true,\n                    \"sorted\": false\n                },\n                \"offset\": 0,\n                \"pageNumber\": 0,\n                \"pageSize\": 10,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"totalElements\": 0,\n            \"totalPages\": 0,\n            \"last\": true,\n            \"size\": 10,\n            \"number\": 0,\n            \"numberOfElements\": 0,\n            \"sort\": {\n                \"empty\": true,\n                \"unsorted\": true,\n                \"sorted\": false\n            },\n            \"first\": true,\n            \"empty\": true\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get account of himself/herself",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxd2VyQHF3ZXIiLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJJZCI6MywiZXhwIjoxNjQ0MjA4NDMyfQ.UDNrnkMt4N7Cq1ikfw7AdyzzAYUUV3SK01SCxXQHoyOTFqAgPbFs6i5cHIPxH2Ohw6D5tBysqIeJDnIsWRLe2Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/account/self",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"self"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success - 12000",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxd2VyQHF3ZXIiLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJJZCI6MywiZXhwIjoxNjQ0MjA4NDMyfQ.UDNrnkMt4N7Cq1ikfw7AdyzzAYUUV3SK01SCxXQHoyOTFqAgPbFs6i5cHIPxH2Ohw6D5tBysqIeJDnIsWRLe2Q",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/account/self",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"account",
+										"self"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 07 Feb 2022 04:26:38 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"account\": {\n            \"id\": 3,\n            \"email\": \"qwer@qwer\",\n            \"name\": \"name\",\n            \"description\": null,\n            \"phone\": null,\n            \"country\": \"kor\",\n            \"language\": \"eng\",\n            \"settings\": 1,\n            \"status\": \"ROLE_ADMIN\",\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\",\n            \"lastMessage\": null\n        }\n    },\n    \"code\": \"12000\"\n}"
 						}
 					]
 				}
@@ -669,10 +752,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
 									"raw": "http://localhost:8080/workspace/1/members",
 									"protocol": "http",
@@ -732,10 +811,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
 									"raw": "http://localhost:8080/workspace/1234/members",
 									"protocol": "http",

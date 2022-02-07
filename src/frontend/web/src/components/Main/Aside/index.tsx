@@ -12,6 +12,7 @@ const WorkspaceName = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: pointer;
 `;
 
 interface Props {
@@ -31,12 +32,10 @@ export default function Aside({
 }: Props) {
   return (
     <MainAsideFrame toggle={sideToggle}>
-      <AsideHeader
-        onMouseEnter={hoverHandler}
-        onMouseLeave={hoverHandler}
-        onClick={() => alert('todo: ws setting')}
-      >
-        <WorkspaceName>{ws.name}</WorkspaceName>
+      <AsideHeader onMouseEnter={hoverHandler} onMouseLeave={hoverHandler}>
+        <WorkspaceName onClick={() => alert('todo: ws setting')}>
+          {ws.name}
+        </WorkspaceName>
         {hover && (
           <ImageButton
             imageUrl={ArrowLeftIcon}

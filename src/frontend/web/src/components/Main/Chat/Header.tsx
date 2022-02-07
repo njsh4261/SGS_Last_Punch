@@ -1,20 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
+import logoIcon from '../../../icon/cookie-2.png';
 import expandIcon from '../../../icon/expand.svg';
+import ImageButton from '../../Common/ImageButton';
+import arrowRightIcon from '../../../icon/arrowRight.svg';
 
 const ChannelHeader = styled.article`
   display: flex;
   flex-shrink: 0;
   justify-content: space-between;
   padding: 9.5px 20px;
-  border-bottom: 1px solid ${({ theme }) => theme.color.snackBorder};
+  /* border-bottom: 1px solid ${({ theme }) => theme.color.snackBorder}; */
 `;
 
 const ChannelInfo = styled.section`
-  width: 100%;
   display: flex;
+  align-items: center;
+  border-radius: 4px;
   &:hover {
-    background: #f8f8f8f6;
+    background: hsla(0, 0%, 97.25490196078431%, 0.658);
     cursor: pointer;
   }
 `;
@@ -28,6 +34,10 @@ const ChannelName = styled.article`
   border-radius: 6px;
   padding: 3px 8px;
   font-size: 20px;
+
+  * + & {
+    padding-left: 16px;
+  }
 
   @media only screen and (max-width: 900px) {
     max-width: 45vw;
@@ -49,13 +59,45 @@ const ArrowDropDownIcon = styled.article`
   background-repeat: no-repeat;
 `;
 
-const Header = ({ channelName }: { channelName: string }) => {
+const NavTab = styled.nav`
+  display: flex;
+`;
+
+const GoHomeLogo = styled.img`
+  margin-right: 10px;
+  cursor: pointer;
+`;
+
+interface Props {
+  channelName: string;
+  sideToggle: boolean;
+  sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
+  const navigate = useNavigate();
+
   return (
     <ChannelHeader>
       <ChannelInfo>
+        {!sideToggle && (
+          <ImageButton
+            size="16px"
+            imageUrl={arrowRightIcon}
+            onClick={sideToggleHandler}
+          ></ImageButton>
+        )}
         <ChannelName>{channelName}</ChannelName>
         <ArrowDropDownIcon></ArrowDropDownIcon>
       </ChannelInfo>
+      <NavTab>
+        <GoHomeLogo
+          src={logoIcon}
+          onClick={() => navigate('/')}
+          width="26px"
+          height="26px"
+        ></GoHomeLogo>
+      </NavTab>
     </ChannelHeader>
   );
 };

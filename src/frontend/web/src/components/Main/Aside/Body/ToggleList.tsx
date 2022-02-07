@@ -24,7 +24,8 @@ export const Label = styled.label`
   white-space: nowrap;
   cursor: pointer;
   &:hover {
-    color: gray;
+    color: black;
+    font-weight: bolder;
   }
 `;
 
@@ -42,16 +43,12 @@ const ChannelList = styled.article`
   }
 `;
 
-const Flex = styled.div`
-  display: flex;
-`;
-
 const PlusIcon = styled.div`
   display: inline-block;
   padding: 0 4px 2px;
-  background-color: rgb(207, 195, 207);
+  background-color: darkgray;
   border-radius: 4px;
-  color: ${(props) => props.theme.color.slack};
+  color: ${({ theme }) => theme.color.snackSide};
 `;
 
 const ArrowDown = styled.div`
@@ -61,6 +58,15 @@ const ArrowDown = styled.div`
   border-top: 10px solid darkgray;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
+`;
+
+const ArrowRight = styled.div`
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border-left: 10px solid darkgray;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
 `;
 
 interface Props {
@@ -85,10 +91,8 @@ export default function ToggleList({
   return (
     <ToggleType>
       <Label htmlFor={`${type}-toggle`} onClick={() => setChecked(!checked)}>
-        {/* <Flex> */}
-        {checked ? <ArrowDown></ArrowDown> : '▶️'}
+        {checked ? <ArrowDown /> : <ArrowRight />}
         <PaddingLeft8px>{type}</PaddingLeft8px>
-        {/* </Flex> */}
       </Label>
       <CheckBox type="checkbox" id={`${type}-toggle`}></CheckBox>
       <ChannelList>

@@ -23,6 +23,7 @@ const BodyLayout = styled.div`
 
 const Label = styled.label`
   font-weight: 700;
+  padding-right: 10px;
 `;
 
 const Input = styled.input`
@@ -35,14 +36,15 @@ const Input = styled.input`
 
 const InputLayer = styled.article`
   margin-bottom: 20px;
-  ${Label} + ${Input} {
-    margin-top: 10px;
-  }
+  display: flex;
+  align-items: center;
 `;
 
 const Explain = styled.section`
   opacity: 50%;
   margin-bottom: 26px;
+  overflow: hidden;
+  white-space: normal;
 `;
 
 const Footer = styled.section`

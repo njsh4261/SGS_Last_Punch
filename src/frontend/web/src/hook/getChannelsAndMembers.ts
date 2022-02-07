@@ -2,7 +2,7 @@ import React, { useState, useEffect, SetStateAction } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../modules';
-import { Params, useParams } from 'react-router-dom';
+import { Params, useNavigate, useParams } from 'react-router-dom';
 import { getChannelsAPI, getMembersAPI } from '../Api/workspace';
 
 export default function getChannelsAndMembersHook(): [
@@ -16,6 +16,7 @@ export default function getChannelsAndMembersHook(): [
   const [memberPage, setMemberPage] = useState(0);
   const [channelList, setChannelList] = useState([]);
   const [memberList, setMemberList] = useState([]);
+  const navigate = useNavigate();
   const modalActive = useSelector((state: RootState) => state.modal.active);
   const params = useParams();
 
@@ -23,7 +24,12 @@ export default function getChannelsAndMembersHook(): [
     const workspaceId = Number(params.wsId);
     const resChannels = await getChannelsAPI(channelPage, workspaceId);
     const resMembers = await getMembersAPI(memberPage, workspaceId);
-    if (resChannels) setChannelList(resChannels.channels.content);
+    if (resChannels) {
+      if (!params.channelId) {
+        navigate(`/${workspaceId}/${resChannels.channels.content[0].id}`);
+      }
+      setChannelList(resChannels.channels.content);
+    }
     if (resMembers) setMemberList(resMembers.members.content);
   };
 

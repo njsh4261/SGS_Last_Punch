@@ -43,9 +43,9 @@ class NoteListViewContoller: UIViewController {
     
     func bind(with viewModel: NoteListViewMoel) {
         // MARK: Bind input
-//        btnAdd.rx.tap
-//            .subscribe(onNext: goToHome)
-//            .disposed(by: disposeBag)
+        btnAdd.rx.tap
+            .bind(to: viewModel.input.btnAddTapped)
+            .disposed(by: disposeBag)
         
         // pull down
         refreshControl.rx.controlEvent(.valueChanged)
@@ -58,6 +58,7 @@ class NoteListViewContoller: UIViewController {
                 guard let self = self else { return }
 //                let cell = self.tableView.cellForRow(at: indexPath) as? NoteListCell
                 self.tableView.deselectRow(at: indexPath, animated: true)
+                
             }).disposed(by: disposeBag)
                 
 //        tableView.rx.itemDeleted
@@ -82,8 +83,14 @@ class NoteListViewContoller: UIViewController {
         viewModel.output.refreshLoading
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
+            
         
-                
+        // message
+        viewModel.output.successMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showSuccessAlert)
+            .disposed(by: disposeBag)
+
         viewModel.output.errorMessage
             .observe(on: MainScheduler.instance)
             .bind(onNext: showFailedAlert)
@@ -95,6 +102,10 @@ class NoteListViewContoller: UIViewController {
             .disposed(by: disposeBag)
     }
         
+    private func showSuccessAlert(_ message: String) {
+        ProgressHUD.showSucceed(message)
+    }
+
     private func showFailedAlert(_ message: String) {
         ProgressHUD.showFailed(message)
     }

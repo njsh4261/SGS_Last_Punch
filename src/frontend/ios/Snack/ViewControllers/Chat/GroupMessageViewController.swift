@@ -95,7 +95,7 @@ class GroupMessageViewController: MessagesViewController {
     }
     
     private func goToNoteList() {
-        let viewmodel = NoteListViewMoel((channel?.id.description)!)
+        let viewmodel = NoteListViewMoel(workspaceId: (channel?.workspace.id.description)!, (channel?.id.description)!)
         let viewController = NoteListViewContoller(nibName: nil, bundle: nil, viewModel: viewmodel)
         viewController.bind(with: viewmodel)
         viewController.hidesBottomBarWhenPushed = true

@@ -55,7 +55,7 @@ class NoteService {
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<NoteResponseModel> {
         let decoder = JSONDecoder()
         
-//         데이터량이 너무 많음
+        // 데이터량이 너무 많음
 //        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
         
         guard let decodedData = try? decoder.decode(NoteResponseModel.self, from: data) else { return

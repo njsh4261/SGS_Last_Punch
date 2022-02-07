@@ -17,7 +17,7 @@ struct NoteData: Codable {
 }
 
 struct NoteListCellModel: Codable {
-    var id: Int
+    var id: String
     let title: String
     var creatorId: Int
     let createDt: String

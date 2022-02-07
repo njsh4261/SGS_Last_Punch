@@ -21,7 +21,8 @@ class NoteListCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        self.layer.cornerRadius = 15
+
         attribute()
         layout()
     }

@@ -16,11 +16,13 @@ class NoteListViewMoel: ViewModelProtocol {
     struct Input {
         let channelId = PublishSubject<String>()
         let refresh = PublishSubject<Void>()
+        let btnAddTapped = PublishSubject<Void>()
         let noteListCellData = PublishSubject<[NoteListCellModel]>()
     }
     
     struct Output {
         let refreshLoading = PublishRelay<Bool>()
+        let successMessage = PublishRelay<String>()
         let errorMessage = PublishRelay<String>()
         let emptyMessage = PublishRelay<String>()
     }
@@ -30,18 +32,20 @@ class NoteListViewMoel: ViewModelProtocol {
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
+    private let networkGroup = DispatchGroup()
     var cellData: Driver<[NoteListCellModel]>
     var accessToken: String
     var channelId: String?
     
     // MARK: - Init
-    init(_ channelId: String) {
+    init(workspaceId: String, _ channelId: String) {
+        let userId: String = KeychainWrapper.standard[.id]!
         let accessToken: String = KeychainWrapper.standard[.refreshToken]!
-        self.accessToken = accessToken
         self.channelId = channelId
         self.cellData = input.noteListCellData
             .asDriver(onErrorJustReturn: [])
-                
+        self.accessToken = accessToken
+        
         // refresh
         input.refresh
             .bind { [weak self] in
@@ -50,6 +54,17 @@ class NoteListViewMoel: ViewModelProtocol {
                 DispatchQueue.main.asyncAfter(deadline: when) {
                     self.getNote(method: .get, accessToken: accessToken, channelId: channelId)
                     self.output.refreshLoading.accept(false)
+                }
+            }.disposed(by: disposeBag)
+        
+        // Add Note
+        input.btnAddTapped
+            .bind { [weak self] in
+                guard let self = self else { return }
+                self.networkGroup.enter()
+                self.getNote(method: .post, accessToken: accessToken, workspaceId: workspaceId, channelId: channelId, creatorId: userId, isCreate: true)
+                self.networkGroup.notify(queue: .main) { [self] in
+                    self.getNoteList()
                 }
             }.disposed(by: disposeBag)
     }
@@ -71,6 +86,9 @@ class NoteListViewMoel: ViewModelProtocol {
                     switch result {
                     case .success(let decodedData):
                         switch method {
+                        case .post:
+                            self.output.successMessage.accept("추가되었습니다")
+                            self.networkGroup.leave()
                         case .get:
                             guard let noteList = decodedData.data?.noteList else {
                                 self.output.errorMessage.accept("노트 목록을 불러오지 못했습니다")

@@ -129,7 +129,7 @@ class HomeViewController: UIViewController {
             return cell
         case .member(let member):
             let cell = tableView.dequeueReusableCell(withIdentifier: "MemberListCell", for: indexPath) as! MemberListCell
-            cell.setMember(member)
+            cell.setMember(member, indexPath.row)
             return cell
         }
     }

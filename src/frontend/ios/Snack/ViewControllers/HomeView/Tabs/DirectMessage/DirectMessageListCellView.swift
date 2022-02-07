@@ -44,7 +44,7 @@ class DirectMessageListCellView: UITableViewCell {
     
     func setData(_ member: User, _ index: Int) {
         chatId = member.senderId > userId ? "\(member.senderId)-\(userId)" : "\(userId)-\(member.senderId)"
-        ivThumbnail.image = (index/2) == 0 ? UIImage(named: "snack") : UIImage(named: "snack_solid")
+        ivThumbnail.image = index%2 == 0 ? UIImage(named: "snack") : UIImage(named: "snack_solid")
         lblDate.text = member.modifyDt.toDate()?.toString()
 
         if member.senderId == userId {

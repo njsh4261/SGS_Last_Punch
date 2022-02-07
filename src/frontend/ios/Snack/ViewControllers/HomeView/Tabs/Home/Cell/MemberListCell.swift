@@ -40,9 +40,9 @@ class MemberListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setMember(_ member: Member) {
+    func setMember(_ member: Member, _ index: Int) {
         chatId = member.id > userId ? "\(member.id)-\(userId)" : "\(userId)-\(member.id)"
-        ivThumbnail.image = UIImage(named: "snack")
+        ivThumbnail.image = index%2 == 0 ? UIImage(named: "snack") : UIImage(named: "snack_solid")
         lblName.text = member.id == userId ? "\(member.name) (나)" : "\(member.name)"
     }
 

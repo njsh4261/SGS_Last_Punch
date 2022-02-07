@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import DropdownSettingHook from '../../../hook/DropdownSetting';
+import DropdownHook from '../../../hook/Dropdown';
 import logoIcon from '../../../icon/cookie-2.png';
 import expandIcon from '../../../icon/expand.svg';
 import ImageButton from '../../Common/ImageButton';
 import arrowRightIcon from '../../../icon/arrowRight.svg';
 import DropdownSetting from './DropdownSetting';
-import DropdownWsChannel from '../../Common/DropdownWsChannel';
 
 const ChannelHeader = styled.article`
   display: flex;
@@ -89,7 +88,7 @@ interface Props {
 
 const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
   const { drop, dropdownHandler, NAV_BUTTON_ID, NAV_DROPDOWN_ID } =
-    DropdownSettingHook();
+    DropdownHook();
   return (
     <ChannelHeader>
       <ChannelInfo>

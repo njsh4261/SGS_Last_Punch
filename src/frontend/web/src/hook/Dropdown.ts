@@ -7,7 +7,7 @@ interface Returns {
   NAV_DROPDOWN_ID: string;
 }
 
-export default function DropdownSettingHook(): Returns {
+export default function DropdownHook(): Returns {
   const NAV_BUTTON_ID = 'nav-button';
   const NAV_DROPDOWN_ID = 'nav-modal';
 
@@ -15,7 +15,7 @@ export default function DropdownSettingHook(): Returns {
   const [drop, setDrop] = useState(false);
 
   const clickOutOfDropdownHandler = useCallback((e: MouseEvent) => {
-    const { id } = e.target as Element;
+    const { id } = e.currentTarget as Element;
     if (dropRef.current && id !== NAV_BUTTON_ID && id !== NAV_DROPDOWN_ID) {
       dropdownHandler();
     }

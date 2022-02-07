@@ -154,7 +154,7 @@ class PrivateMessageViewController: MessagesViewController {
         messageInputBar = messageInputBar.then {
             $0.delegate = self
             $0.inputTextView.placeholder = "\(recipientInfo.name!)에(게) 메시지 보내기"
-            $0.backgroundView.backgroundColor = UIColor(named: "snackBackGroundColor")
+            $0.backgroundView.backgroundColor = UIColor(named: "snackBackGroundColor3")
             
             $0.setStackViewItems([btnAttach], forStack: .left, animated: false)
             
@@ -204,8 +204,9 @@ class PrivateMessageViewController: MessagesViewController {
         navigationItem.titleView = viewTitle
         navigationItem.rightBarButtonItem = btnProfile
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "채팅", style: .plain, target: nil, action: nil)
-        messagesCollectionView.backgroundColor = UIColor(named: "snackBackGroundColor")
-        
+        view.backgroundColor = UIColor(named: "snackBackGroundColor3")
+        messagesCollectionView.backgroundColor = UIColor(named: "snackBackGroundColor2")
+
         [lblTitle, lblSubTitle].forEach {
             $0.backgroundColor = UIColor.clear
             $0.textAlignment = .center

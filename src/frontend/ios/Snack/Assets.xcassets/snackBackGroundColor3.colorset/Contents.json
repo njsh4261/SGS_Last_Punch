@@ -5,9 +5,9 @@
         "color-space" : "srgb",
         "components" : {
           "alpha" : "1.000",
-          "blue" : "247",
-          "green" : "242",
-          "red" : "242"
+          "blue" : "255",
+          "green" : "255",
+          "red" : "255"
         }
       },
       "idiom" : "universal"
@@ -20,8 +20,13 @@
         }
       ],
       "color" : {
-        "platform" : "ios",
-        "reference" : "groupTableViewBackgroundColor"
+        "color-space" : "extended-srgb",
+        "components" : {
+          "alpha" : "1.000",
+          "blue" : "32",
+          "green" : "28",
+          "red" : "26"
+        }
       },
       "idiom" : "universal"
     }

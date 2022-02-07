@@ -198,7 +198,7 @@ class GroupMessageViewController: MessagesViewController {
             guard let title = channel?.name else { return }
             $0.delegate = self
             $0.inputTextView.placeholder = "# \(title)에(게) 메시지 보내기"
-            $0.backgroundView.backgroundColor = UIColor(named: "snackBackGroundColor")
+            $0.backgroundView.backgroundColor = UIColor(named: "snackBackGroundColor3")
             
             $0.setStackViewItems([btnAttach], forStack: .left, animated: false)
             
@@ -248,7 +248,8 @@ class GroupMessageViewController: MessagesViewController {
         navigationItem.titleView = viewTitle
         navigationItem.rightBarButtonItem = btnTransform
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "채팅", style: .plain, target: nil, action: nil)
-        messagesCollectionView.backgroundColor = UIColor(named: "snackBackGroundColor")
+        view.backgroundColor = UIColor(named: "snackBackGroundColor3")
+        messagesCollectionView.backgroundColor = UIColor(named: "snackBackGroundColor2")
 //        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
 //        viewTitle.backgroundColor = .red
 //        btnViewTitle.setBackgroundColor(.red, for: .normal)

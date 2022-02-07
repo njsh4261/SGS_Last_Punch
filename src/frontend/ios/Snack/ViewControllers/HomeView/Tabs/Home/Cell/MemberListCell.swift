@@ -46,7 +46,8 @@ class MemberListCell: UITableViewCell {
         lblName.text = member.id == userId ? "\(member.name) (나)" : "\(member.name)"
     }
 
-    private func attribute() {        
+    private func attribute() {
+        backgroundColor = UIColor(named: "snackButtonColor")
         ivThumbnail.contentMode = .scaleAspectFit
 
         lblName = lblName.then {

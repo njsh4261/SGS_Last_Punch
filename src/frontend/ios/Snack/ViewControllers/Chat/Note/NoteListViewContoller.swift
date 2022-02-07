@@ -116,7 +116,7 @@ class NoteListViewContoller: UIViewController {
  
     private func attribute() {
         title = "노트 목록"
-        view.backgroundColor = UIColor(named: "snackBackGroundColor")
+        view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = btnAdd
         
         btnAdd = btnAdd.then {

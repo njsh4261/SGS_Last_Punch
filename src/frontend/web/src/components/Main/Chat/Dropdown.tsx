@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+
+import clearSession from '../../../util/clearSession';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
@@ -15,10 +17,11 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const Layer = styled.article`
+const Layer = styled.article<{ color?: string }>`
   border-bottom: 1px solid lightgray;
   text-align: center;
   padding: 4px 0;
+  color: ${({ color }) => color};
   :hover {
     cursor: pointer;
     background-color: lightgray;
@@ -31,6 +34,9 @@ export default function Dropdown({ id }: { id: string }) {
     <Container id={id}>
       <Layer onClick={() => navigate('/')}>Home</Layer>
       <Layer onClick={() => alert('todo: profile')}>Profile</Layer>
+      <Layer onClick={() => clearSession()} color="red">
+        Logout
+      </Layer>
     </Container>
   );
 }

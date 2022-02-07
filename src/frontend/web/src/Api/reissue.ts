@@ -17,6 +17,8 @@ export default async function reissueAPI() {
     if (response.data.code === RESPONSE.SIGNIN.SUCCESS) {
       localStorage.setItem(TOKEN.ACCESS, response.data.data.access_token);
       return response.data.code;
+    } else if (response.data.code === RESPONSE.TOKEN.INVALID_REFRESH_TOKEN) {
+      console.error('invalid refresh token');
     }
   } catch (e) {
     return;

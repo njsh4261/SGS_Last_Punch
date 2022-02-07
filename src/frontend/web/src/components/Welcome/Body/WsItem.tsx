@@ -71,6 +71,7 @@ export default function WsItem({ ws }: { ws: IWorkspace }) {
         text="Let's Snack"
         borderRadius="5px"
         light={true}
+        responsive={true}
         submitHandler={submitHandler}
       ></SubmitButton>
     </Item>

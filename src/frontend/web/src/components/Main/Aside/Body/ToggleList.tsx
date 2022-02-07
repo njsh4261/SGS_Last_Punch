@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { openModal } from '../../../../modules/modal';
 import { ModalType } from './Modal';
 import ChannelItem, { ItemContainer } from './ChannelItem';
+import addIcon from '../../../../icon/add.svg';
 
 const ToggleType = styled.section`
   padding: 8px 0px;
@@ -43,12 +44,12 @@ const ChannelList = styled.article`
   }
 `;
 
-const PlusIcon = styled.div`
-  display: inline-block;
-  padding: 0 4px 2px;
-  background-color: darkgray;
-  border-radius: 4px;
-  color: ${({ theme }) => theme.color.snackSide};
+const Flex = styled.div`
+  display: flex;
+`;
+
+const PlusIcon = styled.img`
+  opacity: 50%;
 `;
 
 const ArrowDown = styled.div`
@@ -107,12 +108,14 @@ export default function ToggleList({
           ></ChannelItem>
         ))}
         <ItemContainer data-type={type} onClick={openModalHandler}>
-          <PlusIcon>+</PlusIcon>
-          {type === 'channel' ? (
-            <PaddingLeft8px>채널 추가</PaddingLeft8px>
-          ) : (
-            <PaddingLeft8px>팀원 추가</PaddingLeft8px>
-          )}
+          <Flex>
+            <PlusIcon src={addIcon} width="16px" height="16px"></PlusIcon>
+            {type === 'channel' ? (
+              <PaddingLeft8px>채널 추가</PaddingLeft8px>
+            ) : (
+              <PaddingLeft8px>팀원 추가</PaddingLeft8px>
+            )}
+          </Flex>
         </ItemContainer>
       </ChannelList>
     </ToggleType>

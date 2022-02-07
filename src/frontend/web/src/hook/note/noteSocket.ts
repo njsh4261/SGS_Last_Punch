@@ -13,8 +13,6 @@ import { getNoteOPAPI, getTitleAPI } from '../../Api/note';
 import { Note } from '../../../types/note.type';
 import { TOKEN, URL } from '../../constant';
 
-const HOST = 'http://localhost:8080/ws/note';
-
 export type User = {
   id: number;
   name: string;
@@ -144,12 +142,12 @@ export default function noteSocketHook(
 
   const connect = () => {
     const accessToken = localStorage.getItem(TOKEN.ACCESS);
-    if (!accessToken || !HOST) {
+    if (!accessToken || !URL.HOST) {
       console.error('fail connect socket - hook/noteSock');
       return;
     }
     try {
-      const socket = new SockJS(HOST);
+      const socket = new SockJS(URL.HOST + '/ws/note');
       const stompClient = Stomp.over(socket);
       stompClient.debug = (f) => f;
       stompClient.connect(

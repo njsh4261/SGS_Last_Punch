@@ -7,6 +7,7 @@ import expandIcon from '../../../icon/expand.svg';
 import ImageButton from '../../Common/ImageButton';
 import arrowRightIcon from '../../../icon/arrowRight.svg';
 import DropdownSetting from './DropdownSetting';
+import DropdownChannel from './DropdownChannel';
 
 const ChannelHeader = styled.article`
   display: flex;
@@ -76,8 +77,9 @@ const NavButton = styled.img`
   }
 `;
 
-const Flex = styled.div`
+const ChannelTab = styled.div`
   display: flex;
+  position: relative;
 `;
 
 interface Props {
@@ -87,8 +89,15 @@ interface Props {
 }
 
 const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
-  const { drop, dropdownHandler, NAV_BUTTON_ID, NAV_DROPDOWN_ID } =
-    DropdownHook();
+  const {
+    drop,
+    channelDrop,
+    dropdownHandler,
+    NAV_BUTTON_ID,
+    NAV_DROPDOWN_ID,
+    CHANNEL_BUTTON_CLASSNAME,
+    CHANNEL_DROPDOWN_ID,
+  } = DropdownHook();
   return (
     <ChannelHeader>
       <ChannelInfo>
@@ -99,10 +108,20 @@ const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
             onClick={sideToggleHandler}
           ></ImageButton>
         )}
-        <Flex onClick={() => alert('h')}>
-          <ChannelName>{channelName}</ChannelName>
-          <ArrowDropDownIcon></ArrowDropDownIcon>
-        </Flex>
+        <ChannelTab
+          className={CHANNEL_BUTTON_CLASSNAME}
+          onClick={dropdownHandler}
+        >
+          <ChannelName className={CHANNEL_BUTTON_CLASSNAME}>
+            {channelName}
+          </ChannelName>
+          <ArrowDropDownIcon
+            className={CHANNEL_BUTTON_CLASSNAME}
+          ></ArrowDropDownIcon>
+          {channelDrop && (
+            <DropdownChannel id={CHANNEL_DROPDOWN_ID}></DropdownChannel>
+          )}
+        </ChannelTab>
       </ChannelInfo>
       <NavTab>
         <NavButton

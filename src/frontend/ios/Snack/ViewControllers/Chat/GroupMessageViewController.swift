@@ -259,6 +259,7 @@ class GroupMessageViewController: MessagesViewController {
             $0.backgroundColor = UIColor.clear
             $0.textAlignment = .center
             $0.adjustsFontSizeToFitWidth = true
+            $0.textColor = .white
             $0.sizeToFit()
         }
         

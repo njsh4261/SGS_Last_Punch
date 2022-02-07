@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import MainAsideFrame from '../../Common/MainAsideFrame';
@@ -7,6 +7,12 @@ import AsideBody from './Body';
 import { RootState } from '../../../modules';
 import ImageButton from '../../Common/ImageButton';
 import ArrowLeftIcon from '../../../icon/arrowLeft.svg';
+import DropdownWorkspace from './DropdownWorkspace';
+
+const DropdownBox = styled.div`
+  display: flex;
+  position: relative;
+`;
 
 const WorkspaceName = styled.div`
   overflow: hidden;
@@ -30,12 +36,19 @@ export default function Aside({
   sideToggle,
   sideToggleHandler,
 }: Props) {
+  const [drop, setDrop] = useState(false);
+
+  const dropdownHandler = () => {
+    setDrop((current: boolean) => !current);
+  };
+
   return (
     <MainAsideFrame toggle={sideToggle}>
       <AsideHeader onMouseEnter={hoverHandler} onMouseLeave={hoverHandler}>
-        <WorkspaceName onClick={() => alert('todo: ws setting')}>
-          {ws.name}
-        </WorkspaceName>
+        <DropdownBox onClick={dropdownHandler}>
+          <WorkspaceName>{ws.name}</WorkspaceName>
+          {drop && <DropdownWorkspace></DropdownWorkspace>}
+        </DropdownBox>
         {hover && (
           <ImageButton
             imageUrl={ArrowLeftIcon}

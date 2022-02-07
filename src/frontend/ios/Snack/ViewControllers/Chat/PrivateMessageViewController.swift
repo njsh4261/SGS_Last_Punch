@@ -20,7 +20,7 @@ class PrivateMessageViewController: MessagesViewController {
     // MARK: - Properties
     private var viewModel: MessageViewModel?
     private let disposeBag = DisposeBag()
-    let channel: Channel?
+//    let channel: Channel?
     var messages = [MessageModel]()
     var recipientInfo: User
     var senderInfo: User
@@ -41,10 +41,10 @@ class PrivateMessageViewController: MessagesViewController {
     
     private var btnAttach = InputBarButtonItem()
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, channel: Channel) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User) {
         self.senderInfo = senderInfo
         self.recipientInfo = recipientInfo
-        self.channel = channel
+//        self.channel = channel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
         NSLog("accessToken: " + token)
@@ -84,11 +84,9 @@ class PrivateMessageViewController: MessagesViewController {
             .subscribe(onNext: showImagePickerControllerActionSheet)
             .disposed(by: disposeBag)
                 
-        //        btnTransform.rx.tap
-        //            .bind(to: viewModel.input.btnTransformTapped)
-        //            .disposed(by: disposeBag)
-        
-        
+        btnTransform.rx.tap
+            .bind(onNext: showActionSheet)
+            .disposed(by: disposeBag)
         
         // MARK: Bind output
         
@@ -105,6 +103,36 @@ class PrivateMessageViewController: MessagesViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    private func showActionSheet() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let alertNote = UIAlertAction(title: "노트", style: .default) { action in
+
+        }
+
+        let alertCalendar = UIAlertAction(title: "일정", style: .default) { action in
+        }
+                
+        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
+        
+        let configuration    = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
+        let imageNote      = UIImage(systemName: "square.and.pencil", withConfiguration: configuration)?
+            .withTintColor(UIColor(named: "snackColor")!, renderingMode: .alwaysOriginal)
+        let imageCalendar       = UIImage(systemName: "calendar", withConfiguration: configuration)?
+            .withTintColor(UIColor.lightGray.withAlphaComponent(0.3), renderingMode: .alwaysOriginal)
+
+        alertNote.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        alertCalendar.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alertCalendar.isEnabled = false
+        alertNote.setValue(imageNote, forKey: "image");         alert.addAction(alertNote)
+        alertCalendar.setValue(imageCalendar, forKey: "image");           alert.addAction(alertCalendar)
+
+        alert.addAction(alertCancle)
+
+        present(alert, animated: true)
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -280,7 +308,7 @@ class PrivateMessageViewController: MessagesViewController {
     }
 }
 
-extension PrivateMessageViewController : UIImagePickerControllerDelegate , UINavigationControllerDelegate {
+extension PrivateMessageViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func showImagePickerControllerActionSheet()  {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 

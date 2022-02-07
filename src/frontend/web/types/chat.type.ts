@@ -1,11 +1,16 @@
 export interface SendMessage {
-  sender: string;
-  content: string;
+  authorId: string;
   channelId: string;
+  content: string;
 }
 
 export interface ChatMessage {
-  writerId: string;
-  text: string;
+  id: string;
+  authorId: string;
+  channelId: string;
+  content: string;
+  status: number;
+  createDt: Date;
+  modifyDt: Date;
   profileImg?: string;
 }

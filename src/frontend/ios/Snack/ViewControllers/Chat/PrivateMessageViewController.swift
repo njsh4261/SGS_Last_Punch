@@ -71,10 +71,6 @@ class PrivateMessageViewController: MessagesViewController {
 //        viewModel.registerSockect()
         
         // MARK: Bind input
-//        btnViewTitle.rx.tap
-//            .subscribe(onNext: goToProfile)
-//            .disposed(by: disposeBag)
-        
         btnAttach.rx.tap
             .subscribe(onNext: showImagePickerControllerActionSheet)
             .disposed(by: disposeBag)
@@ -208,10 +204,7 @@ class PrivateMessageViewController: MessagesViewController {
         navigationItem.titleView = viewTitle
         navigationItem.rightBarButtonItem = btnProfile
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "채팅", style: .plain, target: nil, action: nil)
-//        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
-//        viewTitle.backgroundColor = .red
-//        btnViewTitle.setBackgroundColor(.red, for: .normal)
-//        btnViewTitle.setTitle("왜 안돼", for: .normal)
+        messagesCollectionView.backgroundColor = UIColor(named: "snackBackGroundColor")
         
         [lblTitle, lblSubTitle].forEach {
             $0.backgroundColor = UIColor.clear

@@ -247,8 +247,8 @@ class GroupMessageViewController: MessagesViewController {
     private func attribute() {
         navigationItem.titleView = viewTitle
         navigationItem.rightBarButtonItem = btnTransform
-        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "채팅", style: .plain, target: nil, action: nil)
+        messagesCollectionView.backgroundColor = UIColor(named: "snackBackGroundColor")
 //        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
 //        viewTitle.backgroundColor = .red
 //        btnViewTitle.setBackgroundColor(.red, for: .normal)

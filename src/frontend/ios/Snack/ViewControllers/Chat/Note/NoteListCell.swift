@@ -33,7 +33,7 @@ class NoteListCell: UITableViewCell {
     }
     
     private func attribute() {
-        backgroundColor = UIColor(named: "snackBackGroundColor")
+        backgroundColor = UIColor(named: "snackButtonColor")
         
         lblName = lblName.then {
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)

@@ -34,7 +34,7 @@ export default function chatHook(): [
     if (msg !== '') {
       sendMessage({
         authorId: dummyUser.id,
-        channelId: channel.id,
+        channelId: channel.id.toString(),
         content: msg,
       });
       setMsg('');

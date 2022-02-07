@@ -216,23 +216,20 @@ class PrivateMessageViewController: MessagesViewController {
         navigationItem.titleView = viewTitle
         navigationItem.leftBarButtonItem = btnBack
         navigationItem.rightBarButtonItem = btnTransform
-        
-        viewTitle = UIView(frame: CGRect(x: 0, y: 0, width: max(lblTitle.frame.size.width, lblSubTitle.frame.size.width), height: 30))
-        
-        //        viewTitle.backgroundColor = .red
-        //        btnViewTitle.backgroundColor = .red
-        //        btnViewTitle.setTitle("왜 안돼", for: .normal)
+//        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
+//        viewTitle.backgroundColor = .red
+//        btnViewTitle.setBackgroundColor(.red, for: .normal)
+//        btnViewTitle.setTitle("왜 안돼", for: .normal)
         
         [lblTitle, lblSubTitle].forEach {
             $0.backgroundColor = UIColor.clear
             $0.textAlignment = .center
             $0.adjustsFontSizeToFitWidth = true
-            $0.tintColor = .white
             $0.sizeToFit()
         }
         
         lblTitle = lblTitle.then {
-            $0.text = recipientInfo.displayName
+            $0.text = recipientInfo.name
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
         }
         
@@ -240,7 +237,7 @@ class PrivateMessageViewController: MessagesViewController {
             $0.text = "세부정보 보기"
             $0.font = UIFont(name: "NotoSansKR-Regular", size: 10)
         }
-        
+                
         btnBack = btnBack.then {
             $0.image = UIImage(systemName: "chevron.backward")
             $0.style = .plain
@@ -270,16 +267,16 @@ class PrivateMessageViewController: MessagesViewController {
         lblTitle.snp.makeConstraints {
             $0.top.equalToSuperview()
         }
-        
+
         lblSubTitle.snp.makeConstraints {
             $0.top.equalTo(lblTitle.snp.bottom)
         }
-        //
-        //        btnViewTitle.snp.makeConstraints {
-        //            $0.centerX.centerY.equalToSuperview()
-        //            $0.width.equalTo(lblTitle)
-        //            $0.height.equalTo(40)
-        //        }
+        
+        btnViewTitle.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(lblTitle)
+            $0.height.equalTo(50)
+        }
     }
 }
 

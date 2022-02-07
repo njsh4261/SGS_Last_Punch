@@ -35,7 +35,9 @@ export default function AsideBody() {
 
   return (
     <Container>
-      {modalState.active && <Modal type={modalState.modalType}></Modal>}
+      {modalState.active && (
+        <Modal type={modalState.modalType} wsId={params.wsId}></Modal>
+      )}
       <SecitonType>
         <Label>알림</Label>
       </SecitonType>

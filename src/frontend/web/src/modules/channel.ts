@@ -24,7 +24,7 @@ type ChannelAction = ReturnType<typeof selectChannel>;
 
 const initChannelState: ChannelState = {
   id: '',
-  name: 'default name',
+  name: '',
   loading: false,
   error: false,
 };

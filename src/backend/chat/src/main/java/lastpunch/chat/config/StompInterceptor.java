@@ -1,5 +1,7 @@
 package lastpunch.chat.config;
 
+import lastpunch.chat.common.exception.BusinessException;
+import lastpunch.chat.common.exception.StatusCode;
 import lastpunch.chat.common.jwt.JwtProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +32,11 @@ public class StompInterceptor implements ChannelInterceptor{
             String accessToken = accessor.getFirstNativeHeader("Authorization");
             if(ObjectUtils.isEmpty(accessToken)){
                 logger.info("StompInterceptor: Message is blocked; token does not exist");
-                return null;
+                throw new BusinessException(StatusCode.TOKEN_NOT_EXIST);
             }
             if(!jwtProvider.validateToken(accessToken)){
                 logger.info("StompInterceptor: Message is blocked; token is not valid");
-                return null;
+                throw new BusinessException(StatusCode.TOKEN_INVALID);
             }
         }
         return message;

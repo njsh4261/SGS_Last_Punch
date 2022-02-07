@@ -19,7 +19,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
     }
     
     struct Output {
-        let memberListCellData = PublishSubject<[UserModel]>()
+        let memberListCellData = PublishSubject<[User]>()
         let refreshLoading = PublishRelay<Bool>()
         let goToMessage = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
@@ -27,23 +27,21 @@ class DirectMessageListViewModel: ViewModelProtocol {
     // MARK: - Public properties
     var input = Input()
     var output = Output()
-    var cellData: Driver<[UserModel]>
-    let push: Driver<(MessageViewModel, Int)>
+    var cellData: Driver<[User]>
+    let push: Driver<Int>
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
     
     // MARK: - Init
     init() {
-        let messageViewModel = MessageViewModel()
-        
         self.cellData = output.memberListCellData
             .asDriver(onErrorJustReturn: [])
         
         //MARK: - push
         self.push = input.itemSelected
-            .compactMap { row -> (MessageViewModel, Int) in
-                return (messageViewModel, row)
+            .compactMap { row -> Int in
+                return row
             }
             .asDriver(onErrorDriveWith: .empty())
         
@@ -90,11 +88,11 @@ class DirectMessageListViewModel: ViewModelProtocol {
         }
     }
     
-    func convertData(members: [WorkspaceMemberCellModel]) -> [UserModel] {
-        var userList = [UserModel]()
+    func convertData(members: [WorkspaceMemberCellModel]) -> [User] {
+        var userList = [User]()
         
         for member in members {
-            let user = UserModel(
+            let user = User(
                 senderId: member.id.description,
                 displayName: member.displayname ?? "이름 없음",
                 name: member.name,
@@ -106,7 +104,9 @@ class DirectMessageListViewModel: ViewModelProtocol {
                 settings: member.settings,
                 status: member.status,
                 createDt: member.createDt,
-                modifyDt: member.modifyDt
+                modifyDt: member.modifyDt,
+                authorId: member.lastMessage.id?.description ?? "",
+                content: member.lastMessage.content ?? ""
             )
             userList.append(user)
         }

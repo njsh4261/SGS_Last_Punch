@@ -10,7 +10,7 @@ import ProgressHUD
 
 class StatusView: UIViewController {
     // MARK: - Properties
-    private var userInfo: UserModel?
+    private var userInfo: User?
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
@@ -118,7 +118,7 @@ extension StatusView: UITableViewDelegate {
         }
 
         if (indexPath.section == 2) {
-            updateStatus(status: "")
+            updateStatus(status: "대화 가능")
         }
     }
 }

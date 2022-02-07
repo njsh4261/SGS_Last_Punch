@@ -1,8 +1,8 @@
 //
-//  MemberListCell.swift
+//  ChannelListCell.swift
 //  Snack
 //
-//  Created by ghyeongkim-MN on 2022/01/28.
+//  Created by ghyeongkim-MN on 2022/01/17.
 //
 
 import UIKit
@@ -11,14 +11,13 @@ import RxSwift
 import RxCocoa
 import Then
 
-class MemberListCell: UITableViewCell {
+class ChannelListCell: UITableViewCell {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
-    static let identifier = "MemberListCell"
+    static let identifier = "ChannelListCell"
     var chatId: String = "0"
 
     // MARK: - UI
-    private var ivThumbnail = UIImageView()
     private var lblName = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -28,38 +27,32 @@ class MemberListCell: UITableViewCell {
         layout()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.cornerRadius = 15
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setMember(_ member: Member) {
-        chatId = member.id
-        ivThumbnail.image = UIImage(named: "snack")
-        lblName.text = "\(member.name)"
+    func setChennel(_ chennel: Channel) {
+        chatId = chennel.chatId
+        lblName.text = "#     \(chennel.name)"
     }
-
-    private func attribute() {        
-        ivThumbnail.contentMode = .scaleAspectFit
-
+    
+    private func attribute() {
         lblName = lblName.then {
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
         }
     }
     
     private func layout() {
-        [ivThumbnail, lblName].forEach {
-            contentView.addSubview($0)
-        }
+        contentView.addSubview(lblName)
         
-        ivThumbnail.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().inset(10)
-            $0.width.height.equalTo(25)
-        }
-
         lblName.snp.makeConstraints {
+            $0.left.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
-            $0.left.equalTo(ivThumbnail.snp.right).offset(10)
         }
     }
 }

@@ -15,5 +15,5 @@ struct APIConstants {
     let authEmailURL = "http://localhost:8080/auth/email"
     let signUpURL = "http://localhost:8080/auth/signup"
     let workspaceList = "http://localhost:8080/workspace"
-    let chatWebsoket = "http://localhost:8083/chat"
+    let chatWebsoket = "localhost:8083/ws/chat"
 }

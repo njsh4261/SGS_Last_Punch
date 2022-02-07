@@ -13,16 +13,19 @@ import Alamofire
 
 class HomeViewModel: ViewModelProtocol {
     struct Input {
-//        let cellData: Driver<[String]>
+        let itemSelected = PublishRelay<Int>()
     }
     
     struct Output {
+        let workspaceTitle = PublishRelay<String>()
+        let setData = PublishRelay<([User], [WorkspaceChannelCellModel])>()
         let sections = PublishRelay<[SectionModel<HomeSection.HomeSection, HomeSection.HomeItem>]>()
         let errorMessage = PublishRelay<String>()
     }
     // MARK: - Public properties
     let input = Input()
     let output = Output()
+    let push: Driver<Int>
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
@@ -32,18 +35,17 @@ class HomeViewModel: ViewModelProtocol {
     private var workspace: WorkspaceListCellModel?
     private var channels: [WorkspaceChannelCellModel]?
     private var members: [WorkspaceMemberCellModel]?
-//    private var channelSection = HomeSection.Model(
-//        model: .chennel,
-//        items: []
-//    )
-//    private var memberSection = HomeSection.Model(
-//        model: .member,
-//        items: []
-//    )
-    
+
     // MARK: - Init
     init() {
-        guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else {  return }
+        //MARK: - push
+        self.push = input.itemSelected
+            .compactMap { row -> Int in
+                return row
+            }
+            .asDriver(onErrorDriveWith: .empty())
+
+        guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
         self.token = token
         self.workspaceId = workspaceId
 
@@ -57,7 +59,8 @@ class HomeViewModel: ViewModelProtocol {
         getWorkspace(method: .get, token, workspaceId: workspaceId, isMembers: true)
         
         networkGroup.notify(queue: .main) { [self] in
-            guard let channels = self.channels, let members = self.members else { return }
+            guard let workspace = self.workspace, let channels = self.channels, let members = self.members else { return }
+            output.setData.accept((getUser(members), channels))
             let sectionChannels = getChannels(channels)
             let sectionMembers = getMembers(members)
             
@@ -66,7 +69,8 @@ class HomeViewModel: ViewModelProtocol {
             
             let channelSection = HomeSection.Model(model: .chennel, items: channelItems)
             let memberSection = HomeSection.Model(model: .member, items: memberItems)
-            
+    
+            output.workspaceTitle.accept(workspace.name)
             output.sections.accept([channelSection, memberSection])
         }
     }
@@ -109,22 +113,10 @@ class HomeViewModel: ViewModelProtocol {
             Member(id: "\($0.id)", name: "\($0.name!)", thumbnail: "")
         }
     }
+    
+    func getUser(_ members: [WorkspaceMemberCellModel]) -> [User] {
+        return members.map {
+            User(senderId: $0.id.description, displayName: $0.name!, name: $0.name!, email: $0.email, description: $0.description, phone: $0.phone, country: $0.country, language: $0.language, settings: $0.settings, status: $0.status, createDt: $0.createDt, modifyDt: $0.modifyDt, authorId: $0.id.description, content: $0.email)
+        }
+    }
 }
-
-
-//func reduce(state: State, mutation: Mutation) -> State {
-//    var state = state
-//    switch mutation {
-//    case .setMessages:
-//        let messages = getMessageMock()
-//        let myItems = messages.map(ComplexSection.MyItem.message)
-//        let mySectionModel = ComplexSection.Model(model: .message, items: myItems)
-//        state.messageSection = mySectionModel
-//    case .setPhotos:
-//        let photo = UIImage(named: "snow")
-//        let myItems = ComplexSection.MyItem.photo(photo)
-//        let mySectionModel = ComplexSection.Model(model: .image, items: [myItems])
-//        state.imageSection = mySectionModel
-//    }
-//    return state
-//}

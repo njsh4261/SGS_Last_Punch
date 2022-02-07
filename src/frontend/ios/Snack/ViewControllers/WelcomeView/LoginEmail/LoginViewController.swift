@@ -121,9 +121,11 @@ class LoginViewController: UIViewController {
     
     private func goToWorkspaceList(_ token: Token) {
         // keychain에 email과 token 보관
+        KeychainWrapper.standard[.id] = token.account.id.description
         KeychainWrapper.standard[.email] = fieldEmail.text
         KeychainWrapper.standard[.accessToken] = token.access_token
         KeychainWrapper.standard[.refreshToken] = token.refresh_token
+        KeychainWrapper.standard.set(try! PropertyListEncoder().encode(token.account), forKey: "userInfo")
         
         let navController = WorkspaceListViewController()
         navigationController?.pushViewController(navController, animated: true)

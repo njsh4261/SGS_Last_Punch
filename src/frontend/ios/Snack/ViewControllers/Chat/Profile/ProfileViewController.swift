@@ -144,7 +144,7 @@ class ProfileViewController: UIViewController {
         
         lblInitials.text = userInfo.name?.first?.description
         
-        lblName.text = "\(userInfo.name ?? "")/\(userInfo.displayName)"
+        lblName.text = "\(userInfo.name ?? "")"
         lblDetails.text = "마지막 수정일 : \(userInfo.modifyDt.toDate()?.toString2() ?? "yy.MM.dd hh:mm")"
         
         cellStatus.detailTextLabel?.text = userInfo.status

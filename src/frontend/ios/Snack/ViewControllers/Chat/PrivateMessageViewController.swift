@@ -1,5 +1,5 @@
 //
-//  MessageView.swift
+//  PrivateMessageViewController.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/27.
@@ -32,8 +32,7 @@ class PrivateMessageViewController: MessagesViewController {
     }()
 
     // MARK: - UI
-    private var btnBack = UIBarButtonItem()
-    private var btnTransform = UIBarButtonItem()
+    private var btnProfile = UIBarButtonItem()
     private var viewTitle =  UIView()
     private var lblTitle = UILabel()
     private var lblSubTitle = UILabel()
@@ -72,20 +71,16 @@ class PrivateMessageViewController: MessagesViewController {
 //        viewModel.registerSockect()
         
         // MARK: Bind input
-        btnBack.rx.tap
-            .subscribe(onNext: goToMessage)
-            .disposed(by: disposeBag)
-        
-        btnViewTitle.rx.tap
-            .subscribe(onNext: goToProfile)
-            .disposed(by: disposeBag)
+//        btnViewTitle.rx.tap
+//            .subscribe(onNext: goToProfile)
+//            .disposed(by: disposeBag)
         
         btnAttach.rx.tap
             .subscribe(onNext: showImagePickerControllerActionSheet)
             .disposed(by: disposeBag)
                 
-        btnTransform.rx.tap
-            .bind(onNext: showActionSheet)
+        btnProfile.rx.tap
+            .bind(onNext: goToProfile)
             .disposed(by: disposeBag)
         
         // MARK: Bind output
@@ -98,42 +93,11 @@ class PrivateMessageViewController: MessagesViewController {
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)
     }
-    
+        
     private func goToMessage() {
         navigationController?.popViewController(animated: true)
     }
-    
-    private func showActionSheet() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-        let alertNote = UIAlertAction(title: "노트", style: .default) { action in
-
-        }
-
-        let alertCalendar = UIAlertAction(title: "일정", style: .default) { action in
-        }
-                
-        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
         
-        let configuration    = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
-        let imageNote      = UIImage(systemName: "square.and.pencil", withConfiguration: configuration)?
-            .withTintColor(UIColor(named: "snackColor")!, renderingMode: .alwaysOriginal)
-        let imageCalendar       = UIImage(systemName: "calendar", withConfiguration: configuration)?
-            .withTintColor(UIColor.lightGray.withAlphaComponent(0.3), renderingMode: .alwaysOriginal)
-
-        alertNote.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
-        alertCalendar.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
-        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
-
-        alertCalendar.isEnabled = false
-        alertNote.setValue(imageNote, forKey: "image");         alert.addAction(alertNote)
-        alertCalendar.setValue(imageCalendar, forKey: "image");           alert.addAction(alertCalendar)
-
-        alert.addAction(alertCancle)
-
-        present(alert, animated: true)
-    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -242,8 +206,8 @@ class PrivateMessageViewController: MessagesViewController {
     
     private func attribute() {
         navigationItem.titleView = viewTitle
-        navigationItem.leftBarButtonItem = btnBack
-        navigationItem.rightBarButtonItem = btnTransform
+        navigationItem.rightBarButtonItem = btnProfile
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "채팅", style: .plain, target: nil, action: nil)
 //        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
 //        viewTitle.backgroundColor = .red
 //        btnViewTitle.setBackgroundColor(.red, for: .normal)
@@ -265,14 +229,9 @@ class PrivateMessageViewController: MessagesViewController {
             $0.text = "세부정보 보기"
             $0.font = UIFont(name: "NotoSansKR-Regular", size: 10)
         }
-                
-        btnBack = btnBack.then {
-            $0.image = UIImage(systemName: "chevron.backward")
-            $0.style = .plain
-        }
-        
-        btnTransform = btnTransform.then {
-            $0.title = "전환"
+                        
+        btnProfile = btnProfile.then {
+            $0.title = "프로필"
             $0.style = .plain
         }
         
@@ -467,53 +426,49 @@ extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
 
 //        processInputBar(messageInputBar)
     }
-    
-    func processInputBar(_ inputBar: InputBarAccessoryView) {
-//        let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
 //
-//        insertNewMessage(message)
-//        inputBar.inputTextView.text.removeAll()
-        let attributedText = inputBar.inputTextView.attributedText!
-        let range = NSRange(location: 0, length: attributedText.length)
-        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
-
-            let substring = attributedText.attributedSubstring(from: range)
-            let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
-            print("Autocompleted: `", substring, "` with context: ", context ?? [])
-        }
-
-        let components = inputBar.inputTextView.components
-        inputBar.inputTextView.text = String()
-        inputBar.invalidatePlugins()
-        // Send button activity animation
-        inputBar.sendButton.startAnimating()
-        inputBar.inputTextView.placeholder = "전송중..."
-        // Resign first responder for iPad split view
-        inputBar.inputTextView.resignFirstResponder()
-        DispatchQueue.global(qos: .default).async {
-            // fake send request task
-            sleep(1)
-            DispatchQueue.main.async { [weak self] in
-                inputBar.sendButton.stopAnimating()
-                inputBar.inputTextView.placeholder = "\(self?.recipientInfo.displayName ?? "")에(게) 메시지 보내기"
-                self?.insertMessages(components)
-                self?.messagesCollectionView.scrollToLastItem(animated: true)
-            }
-        }
-    }
-    
-    private func insertMessages(_ data: [Any]) {
-        for component in data {
-            if let str = component as? String {
-                let message = MessageModel(text: str, user: senderInfo, messageId: UUID().uuidString, date: Date())
-                insertMessage(message)
-            } else if let img = component as? UIImage {
-                let message = MessageModel(image: img, user: senderInfo, messageId: UUID().uuidString, date: Date())
-                insertMessage(message)
-            } else if let location = component as? CLLocation {
-                let message = MessageModel(location: location, user: senderInfo, messageId: UUID().uuidString, date: Date())
-                insertMessage(message)
-            }
-        }
-    }
+//    func processInputBar(_ inputBar: InputBarAccessoryView) {
+//        let attributedText = inputBar.inputTextView.attributedText!
+//        let range = NSRange(location: 0, length: attributedText.length)
+//        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
+//
+//            let substring = attributedText.attributedSubstring(from: range)
+//            let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
+//            print("Autocompleted: `", substring, "` with context: ", context ?? [])
+//        }
+//
+//        let components = inputBar.inputTextView.components
+//        inputBar.inputTextView.text = String()
+//        inputBar.invalidatePlugins()
+//        // Send button activity animation
+//        inputBar.sendButton.startAnimating()
+//        inputBar.inputTextView.placeholder = "전송중..."
+//        // Resign first responder for iPad split view
+//        inputBar.inputTextView.resignFirstResponder()
+//        DispatchQueue.global(qos: .default).async {
+//            // fake send request task
+//            sleep(1)
+//            DispatchQueue.main.async { [weak self] in
+//                inputBar.sendButton.stopAnimating()
+//                inputBar.inputTextView.placeholder = "\(self?.recipientInfo.displayName ?? "")에(게) 메시지 보내기"
+//                self?.insertMessages(components)
+//                self?.messagesCollectionView.scrollToLastItem(animated: true)
+//            }
+//        }
+//    }
+//
+//    private func insertMessages(_ data: [Any]) {
+//        for component in data {
+//            if let str = component as? String {
+//                let message = MessageModel(text: str, user: senderInfo, messageId: UUID().uuidString, date: Date())
+//                insertMessage(message)
+//            } else if let img = component as? UIImage {
+//                let message = MessageModel(image: img, user: senderInfo, messageId: UUID().uuidString, date: Date())
+//                insertMessage(message)
+//            } else if let location = component as? CLLocation {
+//                let message = MessageModel(location: location, user: senderInfo, messageId: UUID().uuidString, date: Date())
+//                insertMessage(message)
+//            }
+//        }
+//    }
 }

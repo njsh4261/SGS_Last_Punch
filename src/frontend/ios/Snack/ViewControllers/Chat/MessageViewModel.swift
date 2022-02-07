@@ -29,7 +29,6 @@ class MessageViewModel: ViewModelProtocol {
     private var socketClient = StompClientLib()
     private let url = URL(string: "ws://\(APIConstants().chatWebsoket)/websocket")!
     private var accessToken: String = ""
-    private let channelId: String = ""
 //    private let userInfo: WorkspaceMemberCellModel
     private var messageText : String = ""
     private var userId: String?
@@ -37,14 +36,10 @@ class MessageViewModel: ViewModelProtocol {
     
     // MARK: - Init
     init(_ user: User) {
-        let accessToken: String = KeychainWrapper.standard[.refreshToken] ?? ""
+        guard let accessToken: String = KeychainWrapper.standard[.refreshToken], let userId: String = KeychainWrapper.standard[.id] else { return }
         self.accessToken = accessToken
-        guard let userId: String = KeychainWrapper.standard[.id] else { return }
         self.userId = userId
-        
         self.chatId = user.senderId > userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"
-        registerSockect()
-        subscribe()
     }
     
     // Socket 연결

@@ -3,8 +3,9 @@ import { all } from 'redux-saga/effects';
 import modal from './modal';
 import channel, { channelSaga } from './channel';
 import work, { workSaga } from './worksapce';
+import user from './user';
 
-const rootReducer = combineReducers({ modal, channel, work });
+const rootReducer = combineReducers({ modal, channel, work, user });
 
 export default rootReducer;
 

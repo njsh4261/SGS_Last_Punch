@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import DropdownHook from '../../../hook/Dropdown';
+import DropdownSettingHook from '../../../hook/DropdownSetting';
 import logoIcon from '../../../icon/cookie-2.png';
 import expandIcon from '../../../icon/expand.svg';
 import ImageButton from '../../Common/ImageButton';
 import arrowRightIcon from '../../../icon/arrowRight.svg';
-import Dropdown from './Dropdown';
+import DropdownSetting from './DropdownSetting';
+import DropdownWsChannel from '../../Common/DropdownWsChannel';
 
 const ChannelHeader = styled.article`
   display: flex;
@@ -21,7 +22,6 @@ const ChannelInfo = styled.section`
   align-items: center;
   border-radius: 4px;
   &:hover {
-    background: hsla(0, 0%, 97.25490196078431%, 0.658);
     cursor: pointer;
   }
 `;
@@ -31,7 +31,6 @@ const ChannelName = styled.article`
   white-space: nowrap;
   text-overflow: ellipsis;
   font-weight: bold;
-  margin-left: -8px;
   border-radius: 6px;
   padding: 3px 8px;
   font-size: 20px;
@@ -78,6 +77,10 @@ const NavButton = styled.img`
   }
 `;
 
+const Flex = styled.div`
+  display: flex;
+`;
+
 interface Props {
   channelName: string;
   sideToggle: boolean;
@@ -86,7 +89,7 @@ interface Props {
 
 const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
   const { drop, dropdownHandler, NAV_BUTTON_ID, NAV_DROPDOWN_ID } =
-    DropdownHook();
+    DropdownSettingHook();
   return (
     <ChannelHeader>
       <ChannelInfo>
@@ -97,8 +100,10 @@ const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
             onClick={sideToggleHandler}
           ></ImageButton>
         )}
-        <ChannelName>{channelName}</ChannelName>
-        <ArrowDropDownIcon></ArrowDropDownIcon>
+        <Flex onClick={() => alert('h')}>
+          <ChannelName>{channelName}</ChannelName>
+          <ArrowDropDownIcon></ArrowDropDownIcon>
+        </Flex>
       </ChannelInfo>
       <NavTab>
         <NavButton
@@ -108,7 +113,7 @@ const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
           width="26px"
           height="26px"
         ></NavButton>
-        {drop && <Dropdown id={NAV_DROPDOWN_ID}></Dropdown>}
+        {drop && <DropdownSetting id={NAV_DROPDOWN_ID}></DropdownSetting>}
       </NavTab>
     </ChannelHeader>
   );

@@ -7,7 +7,7 @@ interface Returns {
   NAV_DROPDOWN_ID: string;
 }
 
-export default function DropdownHook(): Returns {
+export default function DropdownSettingHook(): Returns {
   const NAV_BUTTON_ID = 'nav-button';
   const NAV_DROPDOWN_ID = 'nav-modal';
 

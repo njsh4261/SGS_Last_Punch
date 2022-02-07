@@ -1,10 +1,11 @@
 import React, { SetStateAction, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Stomp, CompatClient } from '@stomp/stompjs';
+import { TOKEN, URL } from '../constant';
 
 import { SendMessage, ChatMessage } from '../../types/chat.type';
 
-const HOST = 'http://localhost:8083';
+const HOST = 'http://localhost:8080';
 
 export default function chatSocketHook(
   channelId: string,
@@ -13,9 +14,18 @@ export default function chatSocketHook(
   const stomp = useRef<CompatClient | null>(null);
 
   const connect = () => {
-    const socket = new SockJS(HOST + '/chat');
-    stomp.current = Stomp.over(socket);
-    stomp.current.connect({}, subscribe);
+    const accessToken = localStorage.getItem(TOKEN.ACCESS);
+    if (!accessToken || !HOST) {
+      console.error('fail connect socket - chat');
+      return;
+    }
+    try {
+      const socket = new SockJS(HOST + '/ws/chat');
+      stomp.current = Stomp.over(socket);
+      stomp.current.connect({ Authorization: accessToken }, subscribe);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const subscribe = () => {
@@ -31,7 +41,11 @@ export default function chatSocketHook(
   };
 
   const sendMessage = (msg: SendMessage) => {
-    stomp.current?.send(HOST + 'pub/chat', {}, JSON.stringify(msg));
+    try {
+      stomp.current?.send(HOST + '/app/chat', {}, JSON.stringify(msg));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   useEffect(() => {

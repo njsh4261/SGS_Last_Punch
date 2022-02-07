@@ -33,7 +33,7 @@ export default function chatHook(): [
   const msgSubmitHandler = () => {
     if (msg !== '') {
       sendMessage({
-        sender: dummyUser.id,
+        authorId: dummyUser.id,
         channelId: channel.id,
         content: msg,
       });

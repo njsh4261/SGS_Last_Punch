@@ -5,7 +5,7 @@ import { TOKEN, URL } from '../constant';
 
 import { SendMessage, ChatMessage } from '../../types/chat.type';
 
-const HOST = 'http://localhost:8080';
+const HOST = URL.HOST;
 
 export default function chatSocketHook(
   channelId: string,
@@ -21,19 +21,17 @@ export default function chatSocketHook(
     }
     try {
       const socket = new SockJS(HOST + '/ws/chat');
-      stomp.current = Stomp.over(socket);
-      stomp.current.connect({ Authorization: accessToken }, subscribe);
+      const stompClient = Stomp.over(socket);
+      stompClient.connect({ Authorization: accessToken }, () => {
+        stompClient.subscribe(`/topic/channel.${channelId}`, (payload) => {
+          console.log('receive >>>> ', payload);
+          // setMesgList((msgList) => [...msgList, 'new' ])
+        });
+      });
+      stomp.current = stompClient;
     } catch (e) {
-      console.error(e);
+      console.error('socket Error:', e);
     }
-  };
-
-  const subscribe = () => {
-    if (stomp.current === null) return;
-    stomp.current.subscribe(HOST + `/topic/channel.${channelId}`, (payload) => {
-      console.log(JSON.parse(payload.body));
-      // setMesgList((msgList) => [...msgList, 'new' ])
-    });
   };
 
   const disconnect = () => {
@@ -42,7 +40,7 @@ export default function chatSocketHook(
 
   const sendMessage = (msg: SendMessage) => {
     try {
-      stomp.current?.send(HOST + '/app/chat', {}, JSON.stringify(msg));
+      stomp.current?.send('/app/chat', {}, JSON.stringify(msg));
     } catch (e) {
       console.error(e);
     }

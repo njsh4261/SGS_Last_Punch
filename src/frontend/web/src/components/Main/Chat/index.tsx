@@ -23,15 +23,19 @@ const MessageListContainer = styled.article`
   margin-bottom: 114px; // size of input
 `;
 
-const MessageBox = styled.section<{ me?: boolean }>`
+const MessageBox = styled.article<{ me?: boolean }>`
   display: flex;
-  ${({ me }) => me && `flex: end`}
+  justify-content: ${({ me }) => me && `end`};
   white-space: normal;
   word-break: break-all;
   padding: 8px 20px;
   &:hover {
     background: #f8f8f8;
   }
+`;
+
+const MessageContent = styled.div`
+  display: inline-block;
 `;
 
 const ChatInputLayout = styled.article<{ toggle: boolean }>`
@@ -76,7 +80,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
           <MessageListContainer>
             {msgList?.map((msg, idx) => (
               <MessageBox key={idx} me={msg.authorId === user.id.toString()}>
-                {msg.content}
+                <MessageContent>{msg.content}</MessageContent>
               </MessageBox>
             ))}
             <End ref={endRef}></End>

@@ -16,8 +16,8 @@ import org.springframework.util.ObjectUtils;
 
 @Component
 public class StompInterceptor implements ChannelInterceptor{
-    private JwtProvider jwtProvider;
-    private Logger logger;
+    private final JwtProvider jwtProvider;
+    private final Logger logger;
     
     @Autowired
     public StompInterceptor(JwtProvider jwtProvider){
@@ -28,17 +28,22 @@ public class StompInterceptor implements ChannelInterceptor{
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel){
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
-        if(accessor.getCommand().equals(StompCommand.CONNECT)){
-            String accessToken = accessor.getFirstNativeHeader("Authorization");
-            if(ObjectUtils.isEmpty(accessToken)){
-                logger.info("StompInterceptor: Message is blocked; token does not exist");
-                return null;
-            }
-            if(!jwtProvider.validateToken(accessToken)){
-                logger.info("StompInterceptor: Message is blocked; token is not valid");
-                return null;
+        StompCommand stompCommand = accessor.getCommand();
+        
+        if(stompCommand != null){
+            if(stompCommand.equals(StompCommand.CONNECT)){
+                String accessToken = accessor.getFirstNativeHeader("Authorization");
+                if(ObjectUtils.isEmpty(accessToken)){
+                    logger.info("StompInterceptor: Message is blocked; token does not exist");
+                    return null;
+                }
+                if(!jwtProvider.validateToken(accessToken)){
+                    logger.info("StompInterceptor: Message is blocked; token is not valid");
+                    return null;
+                }
             }
         }
+        
         return message;
     }
 }

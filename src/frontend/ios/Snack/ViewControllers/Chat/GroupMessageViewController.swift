@@ -1,8 +1,8 @@
 //
-//  PrivateMessageViewController.swift
+//  GroupMessageViewController.swift
 //  Snack
 //
-//  Created by ghyeongkim-MN on 2022/01/27.
+//  Created by ghyeongkim-MN on 2022/02/07.
 //
 
 import UIKit
@@ -16,13 +16,13 @@ import InputBarAccessoryView
 import MessageKit
 import CoreLocation
 
-class PrivateMessageViewController: MessagesViewController {
+class GroupMessageViewController: MessagesViewController {
     // MARK: - Properties
-    private var viewModel: MessageViewModel?
+    private var viewModel: GroupMessageViewModel?
     private let disposeBag = DisposeBag()
-//    let channel: Channel?
+    let channel: WorkspaceChannelCellModel?
     var messages = [MessageModel]()
-    var recipientInfo: User
+    var recipientInfoList: [User]
     var senderInfo: User
     private var userInfo: WorkspaceMemberCellModel?
     private(set) lazy var refreshControl: UIRefreshControl = {
@@ -32,7 +32,7 @@ class PrivateMessageViewController: MessagesViewController {
     }()
 
     // MARK: - UI
-    private var btnProfile = UIBarButtonItem()
+    private var btnTransform = UIBarButtonItem()
     private var viewTitle =  UIView()
     private var lblTitle = UILabel()
     private var lblSubTitle = UILabel()
@@ -40,10 +40,10 @@ class PrivateMessageViewController: MessagesViewController {
     
     private var btnAttach = InputBarButtonItem()
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfoList: [User], channel: WorkspaceChannelCellModel) {
         self.senderInfo = senderInfo
-        self.recipientInfo = recipientInfo
-//        self.channel = channel
+        self.recipientInfoList = recipientInfoList
+        self.channel = channel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
         NSLog("accessToken: " + token)
@@ -66,17 +66,21 @@ class PrivateMessageViewController: MessagesViewController {
         viewModel?.disconnect()
     }
     
-    func bind(_ viewModel: MessageViewModel) {
+    func bind(_ viewModel: GroupMessageViewModel) {
         self.viewModel = viewModel
 //        viewModel.registerSockect()
         
         // MARK: Bind input
+        btnViewTitle.rx.tap
+            .subscribe(onNext: goToProfile)
+            .disposed(by: disposeBag)
+        
         btnAttach.rx.tap
             .subscribe(onNext: showImagePickerControllerActionSheet)
             .disposed(by: disposeBag)
                 
-        btnProfile.rx.tap
-            .bind(onNext: goToProfile)
+        btnTransform.rx.tap
+            .bind(onNext: showActionSheet)
             .disposed(by: disposeBag)
         
         // MARK: Bind output
@@ -84,15 +88,55 @@ class PrivateMessageViewController: MessagesViewController {
     }
     
     private func goToProfile() {
-        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: senderInfo, recipientInfo: recipientInfo, isChat: false)
+        // 추가 본인 정보를 넣어야함
+//        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: senderInfo, recipientInfo: recipientInfo, isChat: false)
+//        viewController.hidesBottomBarWhenPushed = true
+//        self.show(viewController, sender: nil)
+    }
+    
+    private func goToNoteList() {
+        let viewmodel = NoteListViewMoel(workspaceId: (channel?.workspace.id.description)!, (channel?.id.description)!)
+        let viewController = NoteListViewContoller(nibName: nil, bundle: nil, viewModel: viewmodel, workspaceId: (channel?.workspace.id.description)!, (channel?.id.description)!)
+        viewController.bind(with: viewmodel)
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)
     }
-        
+    
     private func goToMessage() {
         navigationController?.popViewController(animated: true)
     }
+    
+    private func showActionSheet() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let alertNote = UIAlertAction(title: "노트", style: .default) { action in
+            self.goToNoteList()
+        }
+
+        let alertCalendar = UIAlertAction(title: "일정", style: .default) { action in
+        }
+                
+        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
         
+        let configuration       = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
+        let imageNote           = UIImage(systemName: "square.and.pencil", withConfiguration: configuration)?
+            .withTintColor(UIColor(named: "snackColor")!, renderingMode: .alwaysOriginal)
+        let imageCalendar       = UIImage(systemName: "calendar", withConfiguration: configuration)?
+            .withTintColor(UIColor.lightGray.withAlphaComponent(0.5), renderingMode: .alwaysOriginal)
+
+        alertNote.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        alertCalendar.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alertCalendar.isEnabled = false
+        alertNote.setValue(imageNote, forKey: "image");         alert.addAction(alertNote)
+        alertCalendar.setValue(imageCalendar, forKey: "image"); alert.addAction(alertCalendar)
+
+        alert.addAction(alertCancle)
+
+        present(alert, animated: true)
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -151,7 +195,9 @@ class PrivateMessageViewController: MessagesViewController {
         
         // library InputBarAccessoryView의 속성
         messageInputBar = messageInputBar.then {
+            guard let title = channel?.name else { return }
             $0.delegate = self
+            $0.inputTextView.placeholder = "# \(title)에(게) 메시지 보내기"
             $0.backgroundView.backgroundColor = UIColor(named: "snackBackGroundColor3")
             
             $0.setStackViewItems([btnAttach], forStack: .left, animated: false)
@@ -200,16 +246,15 @@ class PrivateMessageViewController: MessagesViewController {
     
     private func attribute() {
         navigationItem.titleView = viewTitle
-        if senderInfo.senderId != recipientInfo.senderId {
-            navigationItem.rightBarButtonItem = btnProfile
-            messageInputBar.inputTextView.placeholder = "\(recipientInfo.name!)에(게) 메시지 보내기"
-        } else {
-            messageInputBar.inputTextView.placeholder = "\(recipientInfo.name!)(나)에(게) 메시지 보내기"
-        }
+        navigationItem.rightBarButtonItem = btnTransform
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "채팅", style: .plain, target: nil, action: nil)
         view.backgroundColor = UIColor(named: "snackBackGroundColor3")
         messagesCollectionView.backgroundColor = UIColor(named: "snackBackGroundColor2")
-
+//        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
+//        viewTitle.backgroundColor = .red
+//        btnViewTitle.setBackgroundColor(.red, for: .normal)
+//        btnViewTitle.setTitle("왜 안돼", for: .normal)
+        
         [lblTitle, lblSubTitle].forEach {
             $0.backgroundColor = UIColor.clear
             $0.textAlignment = .center
@@ -219,7 +264,7 @@ class PrivateMessageViewController: MessagesViewController {
         }
         
         lblTitle = lblTitle.then {
-            $0.text = recipientInfo.name
+            $0.text = channel?.name
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
         }
         
@@ -228,8 +273,8 @@ class PrivateMessageViewController: MessagesViewController {
             $0.font = UIFont(name: "NotoSansKR-Regular", size: 10)
         }
                         
-        btnProfile = btnProfile.then {
-            $0.title = "프로필"
+        btnTransform = btnTransform.then {
+            $0.title = "전환"
             $0.style = .plain
         }
         
@@ -265,7 +310,7 @@ class PrivateMessageViewController: MessagesViewController {
     }
 }
 
-extension PrivateMessageViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension GroupMessageViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func showImagePickerControllerActionSheet()  {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
@@ -343,7 +388,7 @@ extension PrivateMessageViewController : UIImagePickerControllerDelegate, UINavi
 
 
 // MARK: - Message DataSource (메시지 데이터 정의)
-extension PrivateMessageViewController: MessagesDataSource {
+extension GroupMessageViewController: MessagesDataSource {
     func currentSender() -> SenderType {
         return senderInfo
     }
@@ -383,7 +428,7 @@ extension PrivateMessageViewController: MessagesDataSource {
 }
 
 // MARK: - Message Layout Delegate (셀 관련 높이 값)
-extension PrivateMessageViewController: MessagesLayoutDelegate {
+extension GroupMessageViewController: MessagesLayoutDelegate {
     // 아래 여백
     func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return CGSize(width: 0, height: 8)
@@ -396,7 +441,7 @@ extension PrivateMessageViewController: MessagesLayoutDelegate {
 }
 
 // MARK: - Messages Display Delegate (상대방이 보낸 메시지, 내가 보낸 메시지를 구분하여 색상과 모양 지정)
-extension PrivateMessageViewController: MessagesDisplayDelegate {
+extension GroupMessageViewController: MessagesDisplayDelegate {
     // 말풍선의 배경 색상
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .red : .blue
@@ -414,7 +459,7 @@ extension PrivateMessageViewController: MessagesDisplayDelegate {
 }
 
 // MARK: - InputBarAccessoryView Delegate (검색창에서 send 버튼을 누를 경우 이벤트 처리)
-extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
+extension GroupMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())

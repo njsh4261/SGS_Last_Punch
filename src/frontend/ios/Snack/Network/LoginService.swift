@@ -74,9 +74,9 @@ class LoginService {
         switch statusCode {
         case 200:
             if decodedData.code == "11000" {
-                return .success(decodedData.data!)
+                return .success(decodedData)
             } else { // 이메일, 비밀번호를 일치하지 않을때,
-                return .fail(decodedData.code)
+                return .fail(decodedData)
             }
         case 400: return .requestErr(decodedData.code)
         case 401: return .unAuthorized

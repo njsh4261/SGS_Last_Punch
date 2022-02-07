@@ -49,7 +49,9 @@ class HomeViewController: UIViewController {
                 
         // MARK: Bind input
         tableView.rx.itemSelected
-            .map { $0.row }
+            .compactMap {
+                ($0.row, $0.section)
+            }
             .bind(to: viewModel.input.itemSelected)
             .disposed(by: disposeBag)
         
@@ -87,13 +89,21 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.push
-            .drive(onNext: { [self] row in
+            .drive(onNext: { [self] (row, section) in
                 // 추가) 본인 user정보를 넣어야함
-                let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: users![row], channel: Channel(chatId: "", name: users![row].name!))
-                let viewModel = MessageViewModel(users![row])
-                viewController.hidesBottomBarWhenPushed = true
-                viewController.bind(viewModel)
-                self.show(viewController, sender: nil)
+                if section == 0 {
+                    let viewController = GroupMessageViewController(senderInfo: userInfo!, recipientInfoList: users!, channel: channels![row])
+                    let viewModel = GroupMessageViewModel(users!, channel: channels![row])
+                    viewController.bind(viewModel)
+                    viewController.hidesBottomBarWhenPushed = true
+                    self.show(viewController, sender: nil)
+                } else {
+                    let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: users![row])
+                    let viewModel = MessageViewModel(users![row])
+                    viewController.bind(viewModel)
+                    viewController.hidesBottomBarWhenPushed = true
+                    self.show(viewController, sender: nil)
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -119,7 +129,7 @@ class HomeViewController: UIViewController {
             return cell
         case .member(let member):
             let cell = tableView.dequeueReusableCell(withIdentifier: "MemberListCell", for: indexPath) as! MemberListCell
-            cell.setMember(member)
+            cell.setMember(member, indexPath.row)
             return cell
         }
     }
@@ -128,6 +138,7 @@ class HomeViewController: UIViewController {
         title = "Workspace명"
         tabBarItem.image = UIImage(systemName: "house")
         tabBarItem.selectedImage = UIImage(systemName: "house.fill")
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "홈", style: .plain, target: nil, action: nil)
         tabBarItem.title = "홈"
         
         [view, tableView].forEach {

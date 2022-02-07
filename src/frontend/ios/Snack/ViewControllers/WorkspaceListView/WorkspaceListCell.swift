@@ -29,9 +29,9 @@ class WorkspaceListCell: UITableViewCell {
         layout()
     }
     
-    func setData(_ data: WorkspaceListCellModel) {
+    func setData(_ data: WorkspaceListCellModel, _ index: Int) {
         workspaceId = data.id
-        ivThumbnail.image = UIImage(named: "snack")
+        ivThumbnail.image = index%2 == 0 ? UIImage(named: "snack") : UIImage(named: "snack_solid")
         lblName.text = data.name
         lblAddress.text = "고유주소 : \(data.id)"
         

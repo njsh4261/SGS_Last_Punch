@@ -1,8 +1,8 @@
 //
-//  MessageViewModel.swift
+//  GroupMessageViewModel.swift
 //  Snack
 //
-//  Created by ghyeongkim-MN on 2022/01/28.
+//  Created by ghyeongkim-MN on 2022/02/07.
 //
 
 import RxSwift
@@ -13,7 +13,7 @@ import StompClientLib
 import SwiftKeychainWrapper
 import StompClientLib
 
-class MessageViewModel: ViewModelProtocol {
+class GroupMessageViewModel: ViewModelProtocol {
     
     struct Input {
     }
@@ -29,17 +29,20 @@ class MessageViewModel: ViewModelProtocol {
     private var socketClient = StompClientLib()
     private let url = URL(string: "ws://\(APIConstants().chatWebsoket)/websocket")!
     private var accessToken: String = ""
+    private let channel: WorkspaceChannelCellModel
 //    private let userInfo: WorkspaceMemberCellModel
     private var messageText : String = ""
     private var userId: String?
-    private var chatId: String?
+    private var users: [User]
     
     // MARK: - Init
-    init(_ user: User) {
-        guard let accessToken: String = KeychainWrapper.standard[.refreshToken], let userId: String = KeychainWrapper.standard[.id] else { return }
+    init(_ users: [User], channel : WorkspaceChannelCellModel) {
+        self.channel = channel
+        self.users = users
+
+        guard let userId: String = KeychainWrapper.standard[.id], let accessToken: String = KeychainWrapper.standard[.refreshToken] else { return }
         self.accessToken = accessToken
         self.userId = userId
-        self.chatId = user.senderId > userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"
     }
     
     // Socket 연결
@@ -53,12 +56,12 @@ class MessageViewModel: ViewModelProtocol {
     }
     
     func subscribe() {
-        socketClient.subscribe(destination: "/topic/channel." + chatId!)
+        socketClient.subscribe(destination: "/topic/channel." + channel.id.description)
     }
     
     // Publish Message
     func sendMessage(authorId: String, content: String) {
-        let payloadObject = ["authorId" : authorId, "channelId": chatId!, "content": content] as [String : Any]
+        let payloadObject = ["authorId" : authorId, "channelId": channel.id.description, "content": content] as [String : Any]
 //        guard let dictionaries = try? JSONSerialization.data(withJSONObject: payloadObject), let token = token else { return }
 //
 //        socketClient.sendMessage(
@@ -80,7 +83,7 @@ class MessageViewModel: ViewModelProtocol {
 }
 
 //MARK: - StompClientLib Delegate
-extension MessageViewModel: StompClientLibDelegate {
+extension GroupMessageViewModel: StompClientLibDelegate {
     func stompClient(client: StompClientLib!, didReceiveMessageWithJSONBody jsonBody: AnyObject?, akaStringBody stringBody: String?, withHeader header: [String : String]?, withDestination destination: String) {
         print("DESTINATION : \(destination)")
         print("JSON BODY : \(String(describing: jsonBody))")

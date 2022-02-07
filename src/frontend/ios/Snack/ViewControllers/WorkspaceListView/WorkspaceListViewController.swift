@@ -145,7 +145,7 @@ class WorkspaceListViewController: UIViewController {
                 self.selectWorkspace = -1
                 self.btnNext.isEnabled = false
                 
-                cell.setData(data)
+                cell.setData(data, row)
                 return cell
             }
             .disposed(by: disposeBag)

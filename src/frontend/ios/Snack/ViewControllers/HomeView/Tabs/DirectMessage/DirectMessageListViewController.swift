@@ -103,7 +103,7 @@ class DirectMessageListViewController: UIViewController {
         viewModel.push
             .drive(onNext: { [self] row in
                 // 추가) 본인 user정보를 넣어야함
-                let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members[row], channel: Channel(chatId: "0", name: self.members[row].name ?? ""))
+                let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members[row])
                 let viewModel = MessageViewModel(members[row])
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
@@ -134,6 +134,7 @@ class DirectMessageListViewController: UIViewController {
         tabBarItem.image = UIImage(systemName: "message")
         tabBarItem.selectedImage = UIImage(systemName: "message.fill")
         tabBarItem.title = "DM"
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "DM", style: .plain, target: nil, action: nil)
         view.backgroundColor = UIColor(named: "snackBackGroundColor2")
         
         searchBar = searchBar.then {

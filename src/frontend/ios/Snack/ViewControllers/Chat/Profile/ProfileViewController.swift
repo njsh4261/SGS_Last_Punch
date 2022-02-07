@@ -78,7 +78,7 @@ class ProfileViewController: UIViewController {
         // MARK: Bind output
         viewModel.push
             .drive(onNext: { [self] in
-                let viewController = PrivateMessageViewController(senderInfo: senderInfo!, recipientInfo: recipientInfo!, channel: Channel(chatId: "0", name: recipientInfo?.name ?? "아무개"))
+                let viewController = PrivateMessageViewController(senderInfo: senderInfo!, recipientInfo: recipientInfo!)
                 let viewModel = MessageViewModel(senderInfo!)
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
@@ -144,7 +144,7 @@ class ProfileViewController: UIViewController {
         
         lblInitials.text = userInfo.name?.first?.description
         
-        lblName.text = "\(userInfo.name ?? "")/\(userInfo.displayName)"
+        lblName.text = "\(userInfo.name ?? "")"
         lblDetails.text = "마지막 수정일 : \(userInfo.modifyDt.toDate()?.toString2() ?? "yy.MM.dd hh:mm")"
         
         cellStatus.detailTextLabel?.text = userInfo.status

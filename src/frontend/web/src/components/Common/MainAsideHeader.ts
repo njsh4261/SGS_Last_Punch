@@ -11,8 +11,6 @@ const AsideHeader = styled.header`
   font-weight: 600;
   font-family: sans-serif;
   padding: 12.5px 10px 12.5px 16px;
-  /* border-bottom: 1px solid ${({ theme }) => theme.color.snackBorder}; */
-  cursor: pointer;
 `;
 
 export default AsideHeader;

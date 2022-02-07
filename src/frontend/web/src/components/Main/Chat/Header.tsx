@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
+import DropdownHook from '../../../hook/Dropdown';
 import logoIcon from '../../../icon/cookie-2.png';
 import expandIcon from '../../../icon/expand.svg';
 import ImageButton from '../../Common/ImageButton';
 import arrowRightIcon from '../../../icon/arrowRight.svg';
+import Dropdown from './Dropdown';
 
 const ChannelHeader = styled.article`
   display: flex;
@@ -61,11 +62,20 @@ const ArrowDropDownIcon = styled.article`
 
 const NavTab = styled.nav`
   display: flex;
+  position: relative;
 `;
 
-const GoHomeLogo = styled.img`
-  margin-right: 10px;
+const NavButton = styled.img`
   cursor: pointer;
+
+  :hover {
+    animation: rotate_image 6s linear infinite;
+  }
+  @keyframes rotate_image {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 interface Props {
@@ -75,8 +85,8 @@ interface Props {
 }
 
 const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
-  const navigate = useNavigate();
-
+  const { drop, dropdownHandler, NAV_BUTTON_ID, NAV_DROPDOWN_ID } =
+    DropdownHook();
   return (
     <ChannelHeader>
       <ChannelInfo>
@@ -91,12 +101,14 @@ const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
         <ArrowDropDownIcon></ArrowDropDownIcon>
       </ChannelInfo>
       <NavTab>
-        <GoHomeLogo
+        <NavButton
+          id={NAV_BUTTON_ID}
           src={logoIcon}
-          onClick={() => navigate('/')}
+          onClick={dropdownHandler}
           width="26px"
           height="26px"
-        ></GoHomeLogo>
+        ></NavButton>
+        {drop && <Dropdown id={NAV_DROPDOWN_ID}></Dropdown>}
       </NavTab>
     </ChannelHeader>
   );

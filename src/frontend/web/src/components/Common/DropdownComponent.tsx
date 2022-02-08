@@ -6,6 +6,7 @@ export const Container = styled.div<{ left?: boolean }>`
   top: 0;
   transform: translateY(50%);
   width: 100px;
+  font-size: 16px;
   border: 1px solid darkgray;
   border-radius: 8px;
   box-shadow: 0 8px 14px rgba(0, 0, 0, 0.35);

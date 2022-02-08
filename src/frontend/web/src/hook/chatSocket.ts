@@ -49,9 +49,8 @@ export default function chatSocketHook(
 
   useEffect(() => {
     connect();
-    console.log('useEffect - chat socket'); // remove
     return disconnect;
-  }, [channelId]);
+  }, []);
 
   return sendMessage;
 }

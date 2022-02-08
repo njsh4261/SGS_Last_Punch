@@ -7,6 +7,8 @@ import { openModal } from '../../../../modules/modal';
 import { ModalType } from './Modal';
 import ChannelItem, { ItemContainer } from './ChannelItem';
 import addIcon from '../../../../icon/add.svg';
+import { ChannelListState } from '../../../../modules/channeList';
+import { UserState } from '../../../../modules/user';
 
 const ToggleType = styled.section`
   padding: 8px 0px;
@@ -72,7 +74,7 @@ const ArrowRight = styled.div`
 
 interface Props {
   type: ModalType;
-  channelList: Array<{ id: string; name: string }>;
+  channelList: ChannelListState | UserState[];
   selectHandler: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 

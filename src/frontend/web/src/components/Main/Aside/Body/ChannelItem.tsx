@@ -21,10 +21,7 @@ const PaddingLeft8px = styled.span`
 `;
 
 interface Props {
-  channel: {
-    id: string;
-    name: string;
-  };
+  channel: any;
   wsId: string;
   type: ModalType;
   isSelected?: boolean;

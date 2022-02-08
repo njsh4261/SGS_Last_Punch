@@ -5,12 +5,12 @@ export type ChannelListState = {
   name: string;
 }[];
 
-export const setChannelList = (channelList: ChannelListState) => ({
+export const setChannelListRedux = (channelList: ChannelListState) => ({
   type: SET_CHANNEL_LIST,
   channelList,
 });
 
-type ChannelListAction = ReturnType<typeof setChannelList>;
+type ChannelListAction = ReturnType<typeof setChannelListRedux>;
 
 const initialChannelList: any[] = [];
 
@@ -21,7 +21,6 @@ export default function channelList(
   switch (action.type) {
     case SET_CHANNEL_LIST:
       return [...action.channelList];
-      break;
     default:
       return state;
   }

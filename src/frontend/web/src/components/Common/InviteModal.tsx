@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 import { closeModal } from '../../modules/modal';
 import { inviteWsAPI } from '../../Api/workspace';
@@ -129,6 +130,9 @@ export default function InviteModal({
       switch (type) {
         case 'invite-workspace':
           response = await inviteWsAPI(+wsId, +(selectedUser as any).id);
+          if (response?.err) {
+            Swal.fire(response.err.desc, '', 'error');
+          }
           break;
         case 'invite-channel':
           response = await inviteChannelAPI(
@@ -136,6 +140,9 @@ export default function InviteModal({
             +params.channelId!,
             1,
           );
+          if (response?.err) {
+            Swal.fire(response.err.desc, '', 'error');
+          }
           break;
       }
       if (response) {

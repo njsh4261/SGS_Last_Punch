@@ -1,17 +1,17 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Container, Layer } from '../../Common/DropdownComponent';
 import { exitWsAPI } from '../../../Api/workspace';
 import { RootState } from '../../../modules';
+import { openModal } from '../../../modules/modal';
 
 export default function DropdownWorkspace({ wsId }: { wsId: number }) {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
 
   const inviteHandler = async () => {
-    alert('open modal, search, invtie');
+    dispatch(openModal('invite-workspace'));
   };
 
   const exitHandler = async () => {

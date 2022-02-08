@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
-import { closeModal } from '../../../../modules/modal';
-import { inviteWsAPI } from '../../../../Api/workspace';
-import { searchMemberAPI } from '../../../../Api/account';
+import { closeModal } from '../../modules/modal';
+import { inviteWsAPI } from '../../Api/workspace';
+import { inviteChannelAPI } from '../../Api/channel';
+import { searchMemberAPI } from '../../Api/account';
+import { ModalType } from '../Main/Aside/Body/Modal';
+import { useParams } from 'react-router-dom';
 
 const Header = styled.section`
   width: 100%;
@@ -99,13 +102,20 @@ const Button = styled.button<{ active: boolean }>`
   padding: 0 12px 1px;
   color: white;
 `;
-export default function InviteModal({ wsId }: { wsId: string }) {
+export default function InviteModal({
+  wsId,
+  type,
+}: {
+  wsId: string;
+  type: ModalType;
+}) {
   const [candidates, setCandidates] = useState([]);
   const [selectedUser, selectUser] = useState();
   const [inviteEmail, setInviteEmail] = useState('');
+  const params = useParams();
   const dispatch = useDispatch();
 
-  const inviteHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const searchHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setInviteEmail(e.target.value);
     const members = await searchMemberAPI(e.target.value);
     if (members) {
@@ -113,9 +123,21 @@ export default function InviteModal({ wsId }: { wsId: string }) {
     }
   };
 
-  const submitHandler = async () => {
+  const inviteHandler = async () => {
     if (selectedUser) {
-      const response = await inviteWsAPI(+wsId, +(selectedUser as any).id);
+      let response;
+      switch (type) {
+        case 'invite-workspace':
+          response = await inviteWsAPI(+wsId, +(selectedUser as any).id);
+          break;
+        case 'invite-channel':
+          response = await inviteChannelAPI(
+            +(selectedUser as any).id,
+            +params.channelId!,
+            1,
+          );
+          break;
+      }
       if (response) {
         dispatch(closeModal());
       }
@@ -132,7 +154,7 @@ export default function InviteModal({ wsId }: { wsId: string }) {
   return (
     <>
       <Header>
-        <HeaderH1>이 워크스페이스로 사용자 초대</HeaderH1>
+        <HeaderH1>{type}</HeaderH1>
       </Header>
       <Body>
         <BodyLayout>
@@ -142,7 +164,7 @@ export default function InviteModal({ wsId }: { wsId: string }) {
               name="inviteEmail"
               placeholder="name@gmail.com"
               value={inviteEmail}
-              onChange={inviteHandler}
+              onChange={searchHandler}
             ></Input>
           </InputLayer>
           <CandidateList>
@@ -159,7 +181,7 @@ export default function InviteModal({ wsId }: { wsId: string }) {
         </BodyLayout>
       </Body>
       <Footer>
-        <Button active={inviteEmail !== ''} onClick={submitHandler}>
+        <Button active={inviteEmail !== ''} onClick={inviteHandler}>
           보내기
         </Button>
       </Footer>

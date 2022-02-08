@@ -98,6 +98,7 @@ const Header = ({ channel, sideToggle, sideToggleHandler }: Props) => {
     CHANNEL_BUTTON_CLASSNAME,
     CHANNEL_DROPDOWN_ID,
   } = DropdownHook();
+
   return (
     <ChannelHeader>
       <ChannelInfo>

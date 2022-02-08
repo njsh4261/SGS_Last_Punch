@@ -8,6 +8,7 @@ CREATE TABLE `account`(
     `country` CHAR(255) NOT NULL,
     `language` CHAR(255) NOT NULL,
     `settings` TINYINT NOT NULL,
+    `status` TINYINT NOT NULL,
     `level` TINYINT NOT NULL,
     `point` BIGINT NOT NULL,
     `createDt` DATETIME NOT NULL,

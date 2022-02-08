@@ -55,6 +55,9 @@ public class Account{
     
     @Column(columnDefinition = "tinyint")
     private Integer settings;
+
+    @Column(columnDefinition = "tinyint")
+    private Integer status;
     
     @CreatedDate
     @Column(updatable = false)
@@ -89,6 +92,7 @@ public class Account{
         private String country;
         private String language;
         private Integer settings;
+        private Integer status;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createDt;
@@ -100,7 +104,7 @@ public class Account{
 
         @QueryProjection
         public ExportDto(Long id, String email, String name, String description, String phone,
-                         String country, String language, Integer settings,
+                         String country, String language, Integer settings, Integer status,
                          LocalDateTime createDt, LocalDateTime modifyDt) {
             this.id = id;
             this.email = email;
@@ -110,6 +114,7 @@ public class Account{
             this.country = country;
             this.language = language;
             this.settings = settings;
+            this.status = status;
             this.createDt = createDt;
             this.modifyDt = modifyDt;
         }
@@ -125,6 +130,7 @@ public class Account{
             .country(country)
             .language(language)
             .settings(settings)
+            .status(status)
             .createDt(createdt)
             .modifyDt(modifydt)
             .build();

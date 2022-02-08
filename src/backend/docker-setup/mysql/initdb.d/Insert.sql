@@ -6,31 +6,30 @@ DELETE FROM accountchannel;
 DELETE FROM role;
 
 
-INSERT INTO account (email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES ('1', '$2a$10$eU4gRbKP1WWUczJpH9BI5.CEmdyROfZoAOFJYRzeUFp.UPgW766Ku', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES ('asdf@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES ('qwer@qwer', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES ('zxcv@zxcv', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES ('1111@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES ('2222@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES ('3333@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES ('4444@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES ('5555@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES ('6666@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES ('7777@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
-
-INSERT INTO account (id, email, password, name, country, language, settings, createDt, modifyDt)
-    VALUES (123456789123456, 'test@test', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES ('1', '$2a$10$eU4gRbKP1WWUczJpH9BI5.CEmdyROfZoAOFJYRzeUFp.UPgW766Ku', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES ('asdf@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES ('qwer@qwer', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES ('zxcv@zxcv', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES ('1111@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES ('2222@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES ('3333@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES ('4444@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES ('5555@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES ('6666@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
+INSERT INTO account (email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES ('7777@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
+INSERT INTO account (id, email, password, name, country, language, settings, status, createDt, modifyDt)
+    VALUES (123456789123456, 'test@test', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'name', 'kor', 'eng', 1, 2, '1234-01-01', '9999-12-31');
 
 INSERT INTO workspace(name, settings, createDt, modifyDt)
     VALUES ('ws1', 0, '1234-01-01', '9999-12-31');

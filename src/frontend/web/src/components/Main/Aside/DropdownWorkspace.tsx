@@ -16,7 +16,7 @@ export default function DropdownWorkspace({ wsId }: { wsId: number }) {
 
   const exitHandler = async () => {
     const response = await exitWsAPI(wsId, user.id);
-    console.log(response);
+    console.log('res:', response);
   };
 
   return (

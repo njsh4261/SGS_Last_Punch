@@ -18,7 +18,7 @@ export default function DropdownChannel({
 
   const exitHandler = async () => {
     const response = await exitChannelAPI(user.id, channelId);
-    console.log(response);
+    console.log('res:', response);
   };
 
   return (

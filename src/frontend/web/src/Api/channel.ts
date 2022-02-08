@@ -40,13 +40,11 @@ export async function inviteChannelAPI(
 }
 
 export async function exitChannelAPI(accountId: number, channelId: number) {
-  const endpoint = `/channel/member`;
-  const body = { accountId, channelId };
+  const endpoint = `/channel/member?accountId=${accountId}&channelId=${channelId}`;
   const response = await apiHandler(
     'DELETE',
     endpoint,
     RESPONSE.WORKSPACE.SUCCESS,
-    body,
   );
   return response;
 }

@@ -78,16 +78,11 @@ export async function inviteWsAPI(wsId: number, userId: number) {
 }
 
 export async function exitWsAPI(wsId: number, userId: number) {
-  const endpoint = `/workspace/member`;
-  const body = {
-    workspaceId: wsId,
-    accountId: userId,
-  };
+  const endpoint = `/workspace/member?workspaceId=${wsId}&accountId=${userId}`;
   const response = await apiHandler(
     'DELETE',
     endpoint,
     RESPONSE.WORKSPACE.SUCCESS,
-    body,
   );
   return response;
 }

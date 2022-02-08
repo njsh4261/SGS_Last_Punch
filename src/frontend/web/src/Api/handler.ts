@@ -32,7 +32,6 @@ async function apiHandler(
   method: 'DELETE',
   endpoint: string,
   successCode: string,
-  body: any,
   needToken?: boolean,
 ): Promise<any>;
 
@@ -72,6 +71,10 @@ async function apiHandler(
         break;
       case 'PUT':
         response = await axios.put(URL.HOST + endpoint, body, option);
+        break;
+      case 'DELETE':
+        response = await axios.delete(URL.HOST + endpoint, option);
+        break;
     }
 
     const { code, data, err } = response?.data;

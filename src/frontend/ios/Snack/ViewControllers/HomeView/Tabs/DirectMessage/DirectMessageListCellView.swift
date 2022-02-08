@@ -45,18 +45,18 @@ class DirectMessageListCellView: UITableViewCell {
     func setData(_ member: User, _ index: Int) {
         chatId = member.senderId > userId ? "\(member.senderId)-\(userId)" : "\(userId)-\(member.senderId)"
         ivThumbnail.image = index%2 == 0 ? UIImage(named: "snack") : UIImage(named: "snack_solid")
-        lblDate.text = member.modifyDt.toDate()?.toString()
+        lblDate.text = Date().toString()
 
         if member.senderId == userId {
-            lblName.text =  "\(member.name!) (나)"
+            lblName.text =  "\(member.displayName) (나)"
             lblLastMessage.text = "고객님만 사용하는 스페이스입니다. 메시지 초안을 작성하거나, 할 일 목록을 만들거나, 링크와 파일을 쉽게 보관해보세요. 또한 여기에서 혼잣말을 할 수도 있지만 혼자서 대화를 주고받으셔야 한다는 점에 유의하세요"
         } else {
-            lblName.text = "\(member.name!)"
+            lblName.text = "\(member.displayName)"
             if member.content == "" {
                 if member.authorId == userId {
                     lblLastMessage.text = "나 : \(member.content)"
                 } else {
-                    lblLastMessage.text = "\(member.name!)님이 Snack의 멤버로 참가하였습니다.\n'안녕하세요'로 대화를 시작해보세요."
+                    lblLastMessage.text = "\(member.displayName)님이 Snack의 멤버로 참가하였습니다.\n'안녕하세요'로 대화를 시작해보세요."
                 }
             } else {
                 lblLastMessage.text = member.content

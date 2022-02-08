@@ -29,8 +29,13 @@ class SettingsViewController: UITableViewController {
     @IBOutlet private var cellLogout: UITableViewCell!
     @IBOutlet private var cellDeleteUser: UITableViewCell!
     
-    private var userInfo = User(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createDt: "2022-02-25T12:00:00", modifyDt: "2022-02-25T12:00:00", authorId: "", content: "")
-    
+    private var userInfo = User(
+        senderId: "-1",
+        displayName: "김스낵",
+        authorId: "-1",
+        content: ""
+    )
+        
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
@@ -60,9 +65,9 @@ class SettingsViewController: UITableViewController {
     
     // MARK: - Load User
     func loadUser() {
-        labelName.text = "\(userInfo.name!)/\(userInfo.displayName)"
+        labelName.text = "\(userInfo.displayName)"
         cellPasscode.detailTextLabel?.text = PasscodeKit.enabled() ? "켜짐" : "꺼짐"
-        lblStatus.text = userInfo.status
+        lblStatus.text = "대화 가능"
         tableView.reloadData()
     }
     
@@ -134,9 +139,6 @@ class SettingsViewController: UITableViewController {
     
     // test
     func actionDeleteUser() {
-        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: User(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createDt: "2022-02-25T12:00:00", modifyDt: "2022-02-25T12:00:00", authorId: "", content: ""), recipientInfo: User(senderId: "-1", displayName: "별명", name: "김스낵", email: "test.gamil.com", description: "설명", phone: "010-1234-1234", country: "kor", language: "kor", settings: 0, status: "대화 가능", createDt: "2022-02-25T12:00:00", modifyDt: "2022-02-25T12:00:00", authorId: "", content: ""), isChat: true)
-        viewController.hidesBottomBarWhenPushed = true
-        self.show(viewController, sender: nil)
     }
     
     // MARK: - TableView dataSource

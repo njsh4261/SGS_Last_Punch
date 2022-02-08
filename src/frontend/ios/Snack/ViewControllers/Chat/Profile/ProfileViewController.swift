@@ -88,7 +88,7 @@ class ProfileViewController: UIViewController {
     }
     
     func actionMobile() {
-        let number = "tel://\(recipientInfo?.phone ?? "010-1234-1234")"
+        let number = "tel://010-1234-1234"
 
         if let url = URL(string: number) {
             if (UIApplication.shared.canOpenURL(url)) {
@@ -105,13 +105,13 @@ class ProfileViewController: UIViewController {
 
         if (MFMailComposeViewController.canSendMail()) {
             let mailCompose = MFMailComposeViewController()
-            mailCompose.setToRecipients([recipientInfo?.email ?? "test@test.com"])
+            mailCompose.setToRecipients(["test@test.com"])
             mailCompose.setSubject(subject)
             mailCompose.setMessageBody(message, isHTML: false)
             mailCompose.mailComposeDelegate = self
             present(mailCompose, animated: true)
         } else {
-            let link = "mailto:\(recipientInfo?.email ?? "test@test.com")?subject=\(subject)&body=\(message)"
+            let link = "mailto:test@test.com?subject=\(subject)&body=\(message)"
             if let encoded = link.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
                 if let url = URL(string: encoded) {
                     if (UIApplication.shared.canOpenURL(url)) {
@@ -142,15 +142,15 @@ class ProfileViewController: UIViewController {
         btnHeaderMobile.isEnabled = true
         btnHeaderMail.isEnabled = true
         
-        lblInitials.text = userInfo.name?.first?.description
+        lblInitials.text = userInfo.displayName.first?.description
         
-        lblName.text = "\(userInfo.name ?? "")"
-        lblDetails.text = "마지막 수정일 : \(userInfo.modifyDt.toDate()?.toString2() ?? "yy.MM.dd hh:mm")"
+        lblName.text = userInfo.displayName
+        lblDetails.text = "마지막 수정일 : \(Date().toString2())"
         
-        cellStatus.detailTextLabel?.text = userInfo.status
-        cellDescription.detailTextLabel?.text = userInfo.description ?? "설명 없음"
-        cellCountry.detailTextLabel?.text = userInfo.country == "kor" ? "대한민국" : "해외"
-        cellPhone.detailTextLabel?.text = userInfo.phone ?? "010-1234-1234"
+        cellStatus.detailTextLabel?.text = "대화 가능"
+        cellDescription.detailTextLabel?.text = "설명"
+        cellCountry.detailTextLabel?.text = "대한민구"
+        cellPhone.detailTextLabel?.text = "010-1234-1234"
     }
 }
 

@@ -104,7 +104,7 @@ class HomeViewModel: ViewModelProtocol {
     
     func getChannels(_ channels: [WorkspaceChannelCellModel]) -> [Channel] {
         return channels.map {
-            Channel(chatId: "\($0.id)", name: "\($0.name!)")
+            Channel(chatId: "\($0.id)", name: "\($0.name)")
         }
     }
     
@@ -116,7 +116,12 @@ class HomeViewModel: ViewModelProtocol {
     
     func getUser(_ members: [WorkspaceMemberCellModel]) -> [User] {
         return members.map {
-            User(senderId: $0.id.description, displayName: $0.name, name: $0.name, email: $0.email, description: $0.description, phone: $0.phone, country: $0.country, language: $0.language, settings: $0.settings, status: String($0.status ?? 1), createDt: $0.createDt, modifyDt: $0.modifyDt, authorId: $0.id.description, content: $0.email)
+            User(
+                senderId: $0.id.description,
+                displayName: $0.name,
+                authorId: $0.id.description,
+                content: $0.lastMessage.content ?? ""
+            )
         }
     }
 }

@@ -99,8 +99,9 @@ class GroupMessageViewController: MessagesViewController {
     }
     
     private func goToNoteList() {
-        let viewmodel = NoteListViewModel(workspaceId: (channel?.workspace.id.description)!, (channel?.id.description)!)
-        let viewController = NoteListViewContoller(nibName: nil, bundle: nil, viewModel: viewmodel, workspaceId: (channel?.workspace.id.description)!, (channel?.id.description)!)
+        guard let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
+        let viewmodel = NoteListViewModel(workspaceId: workspaceId, (channel?.id.description)!)
+        let viewController = NoteListViewContoller(nibName: nil, bundle: nil, viewModel: viewmodel, workspaceId: workspaceId, (channel?.id.description)!)
         viewController.bind(with: viewmodel)
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)

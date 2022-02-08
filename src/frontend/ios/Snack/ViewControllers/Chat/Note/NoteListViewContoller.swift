@@ -14,7 +14,7 @@ import SwiftKeychainWrapper
 import RxDataSources
 import Then
 
-class NoteListViewContoller: UIViewController {
+class NoteListViewContoller: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Properties
     private var viewModel: NoteListViewModel
     private let disposeBag = DisposeBag()
@@ -121,7 +121,6 @@ class NoteListViewContoller: UIViewController {
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
             
-        
         // message
         viewModel.output.successMessage
             .observe(on: MainScheduler.instance)
@@ -154,6 +153,24 @@ class NoteListViewContoller: UIViewController {
     private func goToNote(_ noteId: String) {
         let webView = CreateWKWebView(nibName: nil, bundle: nil, url: "http://localhost:3000/\(workspaceId)/\(channelId)/note/" + noteId)
         self.show(webView, sender: nil)
+    }
+    
+    private func setupLongGestureRecognizerOnCollection() {
+        let longPressedGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
+        longPressedGesture.minimumPressDuration = 0.5
+        longPressedGesture.delegate = self
+        longPressedGesture.delaysTouchesBegan = true
+        collectionView.addGestureRecognizer(longPressedGesture)
+    }
+    
+    @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
+        if (gestureRecognizer.state != .began) { return }
+
+        let point = gestureRecognizer.location(in: collectionView)
+
+        if let indexPath = collectionView.indexPathForItem(at: point) {
+            print("Long press at item: \(indexPath.row)")
+        }
     }
  
     private func attribute() {

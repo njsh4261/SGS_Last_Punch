@@ -70,11 +70,11 @@ class EditProfileView: UIViewController {
     // MARK: - Load User
     func loadUser() {
         labelInitials.text = userInfo?.displayName.first?.description
-        fieldName.text = userInfo?.name
+        fieldName.text = userInfo?.displayName
         fieldDisplayName.text = userInfo?.displayName
-        fieldDescription.text = userInfo?.description
-        lblCountry.text = userInfo?.country == "kor" ? "대한민국" : "해외"
-        fieldPhone.text = userInfo?.phone
+        fieldDescription.text = "설명"
+        lblCountry.text = "대한민국"
+        fieldPhone.text = "010-1234-1234"
 
         lblPlaceholder.isHidden = (lblCountry.text != "")
     }

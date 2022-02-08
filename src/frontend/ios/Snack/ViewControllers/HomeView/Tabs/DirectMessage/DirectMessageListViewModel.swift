@@ -95,16 +95,6 @@ class DirectMessageListViewModel: ViewModelProtocol {
             let user = User(
                 senderId: member.id.description,
                 displayName: member.name,
-                name: member.name,
-                email: member.email,
-                description: member.description,
-                phone: member.phone,
-                country: member.country,
-                language: member.language,
-                settings: member.settings,
-                status: String(member.status ?? 1),
-                createDt: member.createDt,
-                modifyDt: member.modifyDt,
                 authorId: member.lastMessage.id?.description ?? "",
                 content: member.lastMessage.content ?? ""
             )

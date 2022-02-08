@@ -122,7 +122,12 @@ class DirectMessageListViewController: UIViewController {
     }
     
     private func getUser(_ userInfo: UserModel) -> User {
-        return User(senderId: userInfo.id.description, displayName: userInfo.name, name: userInfo.name, email: userInfo.email, description: userInfo.description, phone: userInfo.phone, country: userInfo.country, language: userInfo.language, settings: userInfo.settings, status: userInfo.status, createDt: userInfo.createDt, modifyDt: userInfo.modifyDt, authorId: userInfo.id.description, content: userInfo.email)
+        return User(
+            senderId: userInfo.id.description,
+            displayName: userInfo.name,
+            authorId: userInfo.id.description,
+            content: userInfo.email
+        )
     }
     
     private func showFailedAlert(_ message: String) {

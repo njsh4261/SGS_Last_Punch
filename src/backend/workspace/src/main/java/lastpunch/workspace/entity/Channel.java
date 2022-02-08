@@ -50,10 +50,6 @@ public class Channel{
     @Column(columnDefinition = "tinyint")
     private Integer settings;
     
-    @NotNull
-    @Column(columnDefinition = "tinyint")
-    private Integer status; // TODO: converter 문제 해결 시 String으로
-    
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdt;
@@ -79,7 +75,6 @@ public class Channel{
                 .topic(topic)
                 .description(description)
                 .settings(0)
-                .status(0)
                 .createdt(LocalDateTime.now())
                 .modifydt(LocalDateTime.now())
                 .build();
@@ -106,9 +101,6 @@ public class Channel{
             if(settings != null){
                 channel.setSettings(settings);
             }
-            if(status != null){
-                channel.setStatus(status);
-            }
             return channel;
         }
     }
@@ -130,8 +122,8 @@ public class Channel{
         private LocalDateTime modifyDt;
 
         @QueryProjection
-        public ExportDto(Long id, Workspace workspace, String name, String topic,
-                         String description, Integer settings, Integer status,
+        public ExportDto(Long id, Workspace workspace, String name,
+                         String topic, String description, Integer settings,
                          LocalDateTime createDt, LocalDateTime modifyDt) {
             this.id = id;
             this.workspace = workspace.export();
@@ -139,7 +131,6 @@ public class Channel{
             this.topic = topic;
             this.description = description;
             this.settings = settings;
-            this.status = status;
             this.createDt = createDt;
             this.modifyDt = modifyDt;
         }
@@ -147,7 +138,7 @@ public class Channel{
     
     public ExportDto export(){
         return new ExportDto(
-                id, workspace, name, topic, description, settings, status, createdt, modifydt
+                id, workspace, name, topic, description, settings, createdt, modifydt
         );
     }
 }

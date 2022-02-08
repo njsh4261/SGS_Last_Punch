@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import clearSession from '../../../util/clearSession';
+import logout from '../../../util/logout';
 
 const SlogoutButton = styled.button`
   background-color: white;
@@ -21,6 +21,5 @@ const SlogoutButton = styled.button`
 `;
 
 export default function LogoutButton() {
-  const logoutHandler = () => clearSession();
-  return <SlogoutButton onClick={logoutHandler}>logout</SlogoutButton>;
+  return <SlogoutButton onClick={() => logout()}>logout</SlogoutButton>;
 }

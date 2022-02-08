@@ -12,7 +12,7 @@ export async function getSelfInfoAPI() {
 }
 
 export async function searchMemberAPI(email: string) {
-  const endpoint = `/account`;
+  const endpoint = `/account?page=0&size=999`; // dummy size
   const body = {
     email,
   };

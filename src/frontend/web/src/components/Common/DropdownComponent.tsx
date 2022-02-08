@@ -4,7 +4,7 @@ export const Container = styled.div<{ left?: boolean }>`
   position: absolute;
   z-index: 1;
   top: 0;
-  transform: translateY(50%);
+  transform: translateY(35%);
   width: 100px;
   font-size: 16px;
   border: 1px solid darkgray;

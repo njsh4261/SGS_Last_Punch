@@ -1,7 +1,5 @@
 package lastpunch.chat.config;
 
-import lastpunch.chat.common.exception.BusinessException;
-import lastpunch.chat.common.exception.StatusCode;
 import lastpunch.chat.common.jwt.JwtProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -12,11 +12,11 @@ import Then
 class NoteListCell: UICollectionViewCell {
     
     // MARK: - Properties
-    var note: Note?
+    private var note: Note?
     
     // MARK: - UI
-    var id: String?
-    var lblName = UILabel()
+    private var id: String?
+    private var lblName = UILabel()
     
     override func layoutSubviews() {
         super.layoutSubviews()

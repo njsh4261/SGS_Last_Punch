@@ -16,7 +16,7 @@ class NoteListCell: UICollectionViewCell {
     
     // MARK: - UI
     var id: String?
-    private var lblName = UILabel()
+    var lblName = UILabel()
     
     override func layoutSubviews() {
         super.layoutSubviews()

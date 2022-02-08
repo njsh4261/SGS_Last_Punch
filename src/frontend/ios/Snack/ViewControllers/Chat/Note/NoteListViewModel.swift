@@ -17,6 +17,7 @@ class NoteListViewModel: ViewModelProtocol {
     struct Input {
         let channelId = PublishSubject<String>()
         let refresh = PublishSubject<Void>()
+        let noteId = PublishSubject<String>()
         let btnAddTapped = PublishSubject<Void>()
         let noteListCellData = PublishSubject<[NoteListCellModel]>()
     }
@@ -79,8 +80,19 @@ class NoteListViewModel: ViewModelProtocol {
         }
     }
     
-    func getNote(method: HTTPMethod, accessToken: String, workspaceId: String = "", channelId: String, creatorId: String = "", isCreate: Bool = false) {
-        NoteService.shared.getNote(method: method, accessToken: accessToken, workspaceId: workspaceId, channelId: channelId, creatorId: creatorId, isCreate: isCreate)
+    // delete Note
+    func deleteNote(noteId: String) {
+        self.networkGroup.enter()
+        DispatchQueue.main.async { [self] in // 메인스레드에서 동작
+            self.getNote(method: .delete, accessToken: accessToken, noteId: noteId, isDelete: true)
+        }
+        self.networkGroup.notify(queue: .main) { [self] in
+            self.getNoteList()
+        }
+    }
+    
+    func getNote(method: HTTPMethod, accessToken: String, workspaceId: String = "", channelId: String = "", creatorId: String = "", noteId: String = "", isCreate: Bool = false, isDelete: Bool = false) {
+        NoteService.shared.getNote(method: method, accessToken: accessToken, workspaceId: workspaceId, channelId: channelId, creatorId: creatorId, noteId: noteId, isCreate: isCreate, isDelete: isDelete)
             .observe(on: MainScheduler.instance)
             .subscribe{ [self] event in
                 switch event {
@@ -97,11 +109,13 @@ class NoteListViewModel: ViewModelProtocol {
                                 return
                             }
                             if noteList.isEmpty { self.output.emptyMessage.accept("노트 목록이 비어있습니다") }
-//                            self.input.noteListCellData.onNext(noteList)
                             let sectionNoteList = self.getNoteList(noteList)
                             let noteItems = sectionNoteList.map(NoteSection.NoteItem.note)
                             let noteSection = NoteSection.Model(model: .note, items: noteItems)
                             output.sections.accept([noteSection])
+                        case .delete:
+                            self.output.successMessage.accept("삭제되었습니다")
+                            self.networkGroup.leave()
                         default:
                             break
                         }

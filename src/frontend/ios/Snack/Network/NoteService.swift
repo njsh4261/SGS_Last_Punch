@@ -18,7 +18,7 @@ class NoteService {
         ]
     }
     
-    func getNote(method: HTTPMethod, accessToken: String, workspaceId: String = "", channelId: String, creatorId: String = "", isCreate: Bool = false) -> Observable<NetworkResult<NoteResponseModel>> {
+    func getNote(method: HTTPMethod, accessToken: String, workspaceId: String = "", channelId: String, creatorId: String = "", noteId: String = "", isCreate: Bool = false, isDelete: Bool = false) -> Observable<NetworkResult<NoteResponseModel>> {
         var url: String = ""
         var parameters: Parameters? = nil
         
@@ -26,7 +26,11 @@ class NoteService {
             url = APIConstants().noteListURL
             parameters = self.makeParameter(workspaceId: Int(workspaceId)!, channelId: Int(channelId)!, creatorId: Int(creatorId)!)
         } else {
-            url = APIConstants().noteListURL + "s?channelId=\(channelId)"
+            if isDelete {
+                url = APIConstants().noteListURL + "/\(noteId)"
+            } else {
+                url = APIConstants().noteListURL + "s?channelId=\(channelId)"
+            }
         }
         
         return Observable.create { observer -> Disposable in

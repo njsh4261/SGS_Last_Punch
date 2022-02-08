@@ -18,7 +18,6 @@ class NoteListViewContoller: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Properties
     private var viewModel: NoteListViewModel
     private let disposeBag = DisposeBag()
-    private let channelIdField = UITextField()
     private var workspaceId: String
     private var channelId: String
     
@@ -157,7 +156,7 @@ class NoteListViewContoller: UIViewController, UIGestureRecognizerDelegate {
     
     private func setupLongGestureRecognizerOnCollection() {
         let longPressedGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
-        longPressedGesture.minimumPressDuration = 0.5
+        longPressedGesture.minimumPressDuration = 1.0
         longPressedGesture.delegate = self
         longPressedGesture.delaysTouchesBegan = true
         collectionView.addGestureRecognizer(longPressedGesture)
@@ -170,7 +169,23 @@ class NoteListViewContoller: UIViewController, UIGestureRecognizerDelegate {
 
         if let indexPath = collectionView.indexPathForItem(at: point) {
             print("Long press at item: \(indexPath.row)")
+            let cell = self.collectionView.cellForItem(at: indexPath) as? NoteListCell
+            guard let cell = cell, let noteId = cell.id else { return }
+            print(cell.lblName.text)
+            self.showWarningAlert(noteId)
         }
+    }
+    
+    private func showWarningAlert(_ noteId: String) {
+        let alert = UIAlertController(title: "노트를 삭제하시겠습니까?", message: "[경고] 멤버에게 알리는 로직이 구현되어 있지 않아 문제를 초례할 수 있습니다", preferredStyle: .alert)
+        let cancle = UIAlertAction(title: "취소", style: .cancel)
+        cancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        let delete = UIAlertAction(title: "삭제", style: .destructive, handler: { action in
+            self.viewModel.deleteNote(noteId: noteId)
+        })
+        alert.addAction(cancle)
+        alert.addAction(delete)
+        present(alert, animated: true, completion: nil)
     }
  
     private func attribute() {
@@ -192,6 +207,7 @@ class NoteListViewContoller: UIViewController, UIGestureRecognizerDelegate {
             $0.clearsContextBeforeDrawing = false
             $0.bouncesZoom = false
             $0.isOpaque = false
+            setupLongGestureRecognizerOnCollection()
         }
         
         refreshControl = refreshControl.then {

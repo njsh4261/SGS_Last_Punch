@@ -29,7 +29,9 @@ public class AccountChannelController{
     }
 
     @DeleteMapping
-    public ResponseEntity<Object> delete(@RequestBody AccountChannel.Dto accountChannelDto){
-        return Response.ok(ServerCode.WORKSPACE, accountChannelService.delete(accountChannelDto));
+    public ResponseEntity<Object> delete(
+            @RequestParam(value = "accountId") Long accountId,
+            @RequestParam(value = "workspaceId") Long workspaceId){
+        return Response.ok(ServerCode.WORKSPACE, accountChannelService.delete(accountId, workspaceId));
     }
 }

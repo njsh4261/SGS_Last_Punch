@@ -102,6 +102,8 @@
 		8CC9E8CE27B11BBB008BE1EA /* GroupMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8CD27B11BBB008BE1EA /* GroupMessageViewController.swift */; };
 		8CC9E8D027B128C3008BE1EA /* GroupMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8CF27B128C3008BE1EA /* GroupMessageViewModel.swift */; };
 		8CC9E8D227B161B1008BE1EA /* CreateWKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8D127B161B1008BE1EA /* CreateWKWebView.swift */; };
+		8CC9E8D827B22B4C008BE1EA /* NoteSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8D727B22B4C008BE1EA /* NoteSection.swift */; };
+		8CC9E8DA27B22BDB008BE1EA /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8D927B22BDB008BE1EA /* Note.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -208,6 +210,8 @@
 		8CC9E8CD27B11BBB008BE1EA /* GroupMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMessageViewController.swift; sourceTree = "<group>"; };
 		8CC9E8CF27B128C3008BE1EA /* GroupMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMessageViewModel.swift; sourceTree = "<group>"; };
 		8CC9E8D127B161B1008BE1EA /* CreateWKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWKWebView.swift; sourceTree = "<group>"; };
+		8CC9E8D727B22B4C008BE1EA /* NoteSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSection.swift; sourceTree = "<group>"; };
+		8CC9E8D927B22BDB008BE1EA /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -497,6 +501,7 @@
 				8C962B6227AEDD4F00A9A1F5 /* User.swift */,
 				8C962B5A27ADABE400A9A1F5 /* Channel.swift */,
 				8C962B5F27ADAD3100A9A1F5 /* Member.swift */,
+				8CC9E8D927B22BDB008BE1EA /* Note.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -879,6 +884,7 @@
 				8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */,
 				8CC9E8C527B10A24008BE1EA /* NoteListViewModel.swift in Sources */,
 				8CBD45D527A7EF6D0056A557 /* PasswordView.swift in Sources */,
+				8CC9E8D827B22B4C008BE1EA /* NoteSection.swift in Sources */,
 				8CBD45B827A6CFAB0056A557 /* ProfileViewController.swift in Sources */,
 				8CBD45CB27A71A310056A557 /* Ex+Data.swift in Sources */,
 				8CBD45E827A872300056A557 /* CacheView.swift in Sources */,
@@ -888,6 +894,7 @@
 				8CBD459F27A56F0A0056A557 /* MessageModel.swift in Sources */,
 				8C962B6027ADAD3100A9A1F5 /* Member.swift in Sources */,
 				8CC9E8D027B128C3008BE1EA /* GroupMessageViewModel.swift in Sources */,
+				8CC9E8DA27B22BDB008BE1EA /* Note.swift in Sources */,
 				8CBD456C27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift in Sources */,
 				8CBD45C527A7172C0056A557 /* Ex+UIImage.swift in Sources */,
 				8C68AACB279117FA00C1711E /* UserModel.swift in Sources */,

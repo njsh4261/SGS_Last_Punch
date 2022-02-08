@@ -3,6 +3,7 @@ const SET_CHANNEL_LIST = 'channelList/set';
 export type ChannelListState = {
   id: number;
   name: string;
+  alarm?: boolean;
 }[];
 
 export const setChannelListRedux = (channelList: ChannelListState) => ({

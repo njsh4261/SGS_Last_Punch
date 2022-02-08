@@ -25,6 +25,7 @@ interface Props {
   wsId: string;
   type: ModalType;
   isSelected?: boolean;
+  alarm?: boolean;
   selectHandler: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
@@ -62,6 +63,7 @@ export default function ChannelItem(props: Props) {
       <div>
         #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
       </div>
+      {channel.alram && <span>*</span>}
       {type === 'channel' && isSelected && (
         <button onClick={createNoteHandler}>create note</button>
       )}

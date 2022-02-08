@@ -9,8 +9,8 @@ CREATE TABLE `account`(
     `language` CHAR(255) NOT NULL,
     `settings` TINYINT NOT NULL,
     `status` TINYINT NOT NULL,
-    `level` TINYINT NOT NULL,
-    `point` BIGINT NOT NULL,
+    `level` TINYINT NULL,
+    `point` BIGINT NULL,
     `createDt` DATETIME NOT NULL,
     `modifyDt` DATETIME NOT NULL
 );

@@ -116,7 +116,7 @@ services:
       - lastpunch-network
 
   chat-server:
-    image: njsh4261/chat-server:0.2.6
+    image: njsh4261/chat-server
     ports:
       - "8083:8083"
     environment:

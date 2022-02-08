@@ -94,7 +94,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
         for member in members {
             let user = User(
                 senderId: member.id.description,
-                displayName: member.displayname ?? "이름 없음",
+                displayName: member.name,
                 name: member.name,
                 email: member.email,
                 description: member.description,
@@ -102,7 +102,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
                 country: member.country,
                 language: member.language,
                 settings: member.settings,
-                status: member.status,
+                status: String(member.status ?? 1),
                 createDt: member.createDt,
                 modifyDt: member.modifyDt,
                 authorId: member.lastMessage.id?.description ?? "",

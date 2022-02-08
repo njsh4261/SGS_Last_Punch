@@ -61,7 +61,6 @@ class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        // MARK: Bind output
         dataSource = RxTableViewSectionedReloadDataSource<HomeSection.Model> { dataSource, tableView, indexPath, item in
             self.configureCollectionViewCell(tableView: tableView, indexPath: indexPath, item: item)
         }
@@ -75,7 +74,8 @@ class HomeViewController: UIViewController {
                 return "다이렉트 메시지"
             }
         }
-
+        
+        // MARK: Bind output
         viewModel.output.sections
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)

@@ -29,7 +29,6 @@
 		8C68AAF027952F6500C1711E /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAEF27952F6500C1711E /* NavigationController.swift */; };
 		8C68AAFD27954FCB00C1711E /* ChannelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AAFC27954FCB00C1711E /* ChannelListCell.swift */; };
 		8C68AB042795545900C1711E /* Channel.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AB032795545900C1711E /* Channel.json */; };
-		8C68AB062795754900C1711E /* ChatsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB052795754900C1711E /* ChatsSection.swift */; };
 		8C68AB0827957ADD00C1711E /* Ex+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB0727957ADD00C1711E /* Ex+DateFormatter.swift */; };
 		8C68AB0C2795AA4100C1711E /* User.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C68AB0B2795AA4100C1711E /* User.json */; };
 		8C68AB1527969D1200C1711E /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C68AB1427969D1200C1711E /* NetworkResult.swift */; };
@@ -96,7 +95,7 @@
 		8CC1E7A227AD895B00BFE4D1 /* CreateHomeTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC1E7A127AD895A00BFE4D1 /* CreateHomeTabController.swift */; };
 		8CC9E8BF27B10487008BE1EA /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8BE27B10487008BE1EA /* APIConstants.swift */; };
 		8CC9E8C327B10A17008BE1EA /* NoteListViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8C227B10A17008BE1EA /* NoteListViewContoller.swift */; };
-		8CC9E8C527B10A24008BE1EA /* NoteListViewMoel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8C427B10A24008BE1EA /* NoteListViewMoel.swift */; };
+		8CC9E8C527B10A24008BE1EA /* NoteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8C427B10A24008BE1EA /* NoteListViewModel.swift */; };
 		8CC9E8C827B10B8A008BE1EA /* NoteListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8C727B10B8A008BE1EA /* NoteListCell.swift */; };
 		8CC9E8CA27B10C9D008BE1EA /* NoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8C927B10C9D008BE1EA /* NoteService.swift */; };
 		8CC9E8CC27B10CAE008BE1EA /* NoteListCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8CB27B10CAE008BE1EA /* NoteListCellModel.swift */; };
@@ -136,7 +135,6 @@
 		8C68AAEF27952F6500C1711E /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		8C68AAFC27954FCB00C1711E /* ChannelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListCell.swift; sourceTree = "<group>"; };
 		8C68AB032795545900C1711E /* Channel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Channel.json; sourceTree = "<group>"; };
-		8C68AB052795754900C1711E /* ChatsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsSection.swift; sourceTree = "<group>"; };
 		8C68AB0727957ADD00C1711E /* Ex+DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+DateFormatter.swift"; sourceTree = "<group>"; };
 		8C68AB0B2795AA4100C1711E /* User.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = User.json; sourceTree = "<group>"; };
 		8C68AB1427969D1200C1711E /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
@@ -203,7 +201,7 @@
 		8CC1E7A127AD895A00BFE4D1 /* CreateHomeTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateHomeTabController.swift; sourceTree = "<group>"; };
 		8CC9E8BE27B10487008BE1EA /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIConstants.swift; path = "../../../../../../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/last-punch 오후 3.47.43/src/frontend/ios/Snack/Network/APIConstants.swift"; sourceTree = "<group>"; };
 		8CC9E8C227B10A17008BE1EA /* NoteListViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewContoller.swift; sourceTree = "<group>"; };
-		8CC9E8C427B10A24008BE1EA /* NoteListViewMoel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewMoel.swift; sourceTree = "<group>"; };
+		8CC9E8C427B10A24008BE1EA /* NoteListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListViewModel.swift; sourceTree = "<group>"; };
 		8CC9E8C727B10B8A008BE1EA /* NoteListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListCell.swift; sourceTree = "<group>"; };
 		8CC9E8C927B10C9D008BE1EA /* NoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteService.swift; sourceTree = "<group>"; };
 		8CC9E8CB27B10CAE008BE1EA /* NoteListCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListCellModel.swift; sourceTree = "<group>"; };
@@ -521,7 +519,6 @@
 		8CBD454A27A064FA0056A557 /* Section */ = {
 			isa = PBXGroup;
 			children = (
-				8C68AB052795754900C1711E /* ChatsSection.swift */,
 				8C962B5827ADAB4300A9A1F5 /* HomeSection.swift */,
 			);
 			path = Section;
@@ -663,7 +660,6 @@
 			isa = PBXGroup;
 			children = (
 				8CC9E8C227B10A17008BE1EA /* NoteListViewContoller.swift */,
-				8CC9E8C427B10A24008BE1EA /* NoteListViewMoel.swift */,
 				8CC9E8C727B10B8A008BE1EA /* NoteListCell.swift */,
 				8CC9E8D127B161B1008BE1EA /* CreateWKWebView.swift */,
 			);
@@ -863,7 +859,6 @@
 				8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */,
 				8CBD458F27A3E46B0056A557 /* DirectMessageListViewController.swift in Sources */,
 				8CBD45C927A719780056A557 /* Cryptor.swift in Sources */,
-				8C68AB062795754900C1711E /* ChatsSection.swift in Sources */,
 				8CBD45ED27A8746E0056A557 /* KeepMediaView.swift in Sources */,
 				8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */,
 				8CC1E79E27ACADA800BFE4D1 /* NewWorkspaceViewModel.swift in Sources */,
@@ -882,7 +877,7 @@
 				8CBD45342799B0E00056A557 /* WorkspaceListCellModel.swift in Sources */,
 				8CBD457527A22A2D0056A557 /* AppConstant.swift in Sources */,
 				8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */,
-				8CC9E8C527B10A24008BE1EA /* NoteListViewMoel.swift in Sources */,
+				8CC9E8C527B10A24008BE1EA /* NoteListViewModel.swift in Sources */,
 				8CBD45D527A7EF6D0056A557 /* PasswordView.swift in Sources */,
 				8CBD45B827A6CFAB0056A557 /* ProfileViewController.swift in Sources */,
 				8CBD45CB27A71A310056A557 /* Ex+Data.swift in Sources */,

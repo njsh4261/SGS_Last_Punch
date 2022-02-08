@@ -15,7 +15,7 @@ import Then
 
 class NoteListViewContoller: UIViewController {
     // MARK: - Properties
-    private var viewModel: NoteListViewMoel
+    private var viewModel: NoteListViewModel
     private let disposeBag = DisposeBag()
     private let channelIdField = UITextField()
     private var workspaceId: String
@@ -44,7 +44,7 @@ class NoteListViewContoller: UIViewController {
         return cv
     }()
     
-    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, viewModel: NoteListViewMoel, workspaceId: String, _ channelId: String) {
+    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, viewModel: NoteListViewModel, workspaceId: String, _ channelId: String) {
         self.viewModel = viewModel
         self.workspaceId = workspaceId
         self.channelId = channelId

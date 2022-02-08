@@ -66,9 +66,25 @@ export async function inviteWsAPI(wsId: number, userId: number) {
   const body = {
     workspaceId: wsId,
     accountId: userId,
+    roleId: 1,
   };
   const response = await apiHandler(
     'POST',
+    endpoint,
+    RESPONSE.WORKSPACE.SUCCESS,
+    body,
+  );
+  return response;
+}
+
+export async function exitWsAPI(wsId: number, userId: number) {
+  const endpoint = `/workspace/member`;
+  const body = {
+    workspaceId: wsId,
+    accountId: userId,
+  };
+  const response = await apiHandler(
+    'DELETE',
     endpoint,
     RESPONSE.WORKSPACE.SUCCESS,
     body,

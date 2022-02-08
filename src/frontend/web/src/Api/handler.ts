@@ -28,6 +28,14 @@ async function apiHandler(
   needToken?: boolean,
 ): Promise<any>;
 
+async function apiHandler(
+  method: 'DELETE',
+  endpoint: string,
+  successCode: string,
+  body: any,
+  needToken?: boolean,
+): Promise<any>;
+
 /** RETURN
  * ERROR: err{msg, desc: ERROR_MESSAGE}
  * SUCCESS:

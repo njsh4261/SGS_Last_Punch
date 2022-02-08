@@ -38,3 +38,15 @@ export async function inviteChannelAPI(
   );
   return response;
 }
+
+export async function exitChannelAPI(accountId: number, channelId: number) {
+  const endpoint = `/channel/member`;
+  const body = { accountId, channelId };
+  const response = await apiHandler(
+    'DELETE',
+    endpoint,
+    RESPONSE.WORKSPACE.SUCCESS,
+    body,
+  );
+  return response;
+}

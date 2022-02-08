@@ -1,5 +1,6 @@
 package lastpunch.notehttpserver.service;
 
+import com.mongodb.client.result.DeleteResult;
 import java.util.List;
 import java.util.stream.Collectors;
 import lastpunch.notehttpserver.common.exception.BusinessException;
@@ -42,5 +43,15 @@ public class NoteMainService {
         return noteList.stream()
             .map(noteInfo::new)
             .collect(Collectors.toList());
+    }
+    
+    public void delete(String id){
+        ObjectId noteId = new ObjectId(id);
+        Query query = new Query(Criteria.where("_id").is(noteId));
+        DeleteResult result = mongoTemplate.remove(query, Note.class);
+        System.out.println("result = " + result);
+        if (result.getDeletedCount() == 0){
+            throw new BusinessException(ErrorCode.NOTE_NOT_EXIST);
+        }
     }
 }

@@ -2,12 +2,14 @@ package lastpunch.notehttpserver.controller;
 
 import java.util.List;
 import java.util.Map;
+import javax.ws.rs.DELETE;
 import lastpunch.notehttpserver.common.Response;
 import lastpunch.notehttpserver.dto.NoteDto;
 import lastpunch.notehttpserver.service.NoteMainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +23,7 @@ public class NoteMainController {
     private final NoteMainService noteMainService;
     
     @PostMapping("/note")
-    public ResponseEntity<Object> createNote(@RequestBody NoteDto.createRequest request){
+    public ResponseEntity<Object> create(@RequestBody NoteDto.createRequest request){
         
         String noteId = noteMainService.create(request);
         
@@ -42,5 +44,13 @@ public class NoteMainController {
         NoteDto.getResponse note = noteMainService.find(id);
         
         return Response.toResponseEntity("15000", HttpStatus.OK, Map.of("note", note));
+    }
+    
+    @DeleteMapping("note/{id}")
+    public ResponseEntity<Object> delete(@PathVariable("id") String id){
+        
+        noteMainService.delete(id);
+        
+        return Response.toResponseEntity("15000", HttpStatus.OK);
     }
 }

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 import chatHook from '../../../hook/chat';
 import ChatInput from './Input';
 import Header from './Header';
 import Loading from '../../Common/Loading';
+import { RootState } from '../../../modules';
 
 const Container = styled.main`
   flex: 1;
@@ -23,7 +25,7 @@ const MessageListContainer = styled.article`
   margin-bottom: 114px; // size of input
 `;
 
-const MessageBox = styled.article<{ me?: boolean }>`
+const MessagItemContainer = styled.article<{ me?: boolean }>`
   display: flex;
   justify-content: ${({ me }) => me && `end`};
   white-space: normal;
@@ -32,6 +34,15 @@ const MessageBox = styled.article<{ me?: boolean }>`
   &:hover {
     background: #f8f8f8;
   }
+`;
+
+const MessageBox = styled.article`
+  display: flex;
+  flex-direction: column;
+`;
+
+const MessageWriter = styled.div`
+  font-weight: bold;
 `;
 
 const MessageContent = styled.div`
@@ -66,6 +77,13 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     msgSubmitHandler,
   ] = chatHook();
 
+  const userList = useSelector((state: RootState) => state.userList);
+  const userDictionary = useMemo(() => {
+    const obj: { [index: string]: string } = {};
+    userList.map((user) => (obj[user.id] = user.name));
+    return obj;
+  }, [userList]);
+
   return (
     <>
       {channel.loading ? (
@@ -78,11 +96,21 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
             channel={channel}
           />
           <MessageListContainer>
-            {msgList?.map((msg, idx) => (
-              <MessageBox key={idx} me={msg.authorId === user.id.toString()}>
-                <MessageContent>{msg.content}</MessageContent>
-              </MessageBox>
-            ))}
+            {msgList?.map((msg, idx) => {
+              return (
+                <MessagItemContainer
+                  key={idx}
+                  me={msg.authorId === user.id.toString()}
+                >
+                  <MessageBox>
+                    <MessageWriter>
+                      {userDictionary[msg.authorId]}
+                    </MessageWriter>
+                    <MessageContent>{msg.content}</MessageContent>
+                  </MessageBox>
+                </MessagItemContainer>
+              );
+            })}
             <End ref={endRef}></End>
           </MessageListContainer>
           <ChatInputLayout toggle={sideToggle}>

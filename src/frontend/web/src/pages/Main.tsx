@@ -45,7 +45,7 @@ export default function Main() {
       (el) => el.id.toString() === params.channelId,
     );
     const newList = [...channelList];
-    if (newList[index].alarm === true) {
+    if (newList[index]?.alarm) {
       newList[index] = { ...newList[index], alarm: false };
       dispatch(setChannelListRedux(newList));
     }

@@ -28,6 +28,13 @@ async function apiHandler(
   needToken?: boolean,
 ): Promise<any>;
 
+async function apiHandler(
+  method: 'DELETE',
+  endpoint: string,
+  successCode: string,
+  needToken?: boolean,
+): Promise<any>;
+
 /** RETURN
  * ERROR: err{msg, desc: ERROR_MESSAGE}
  * SUCCESS:
@@ -64,6 +71,10 @@ async function apiHandler(
         break;
       case 'PUT':
         response = await axios.put(URL.HOST + endpoint, body, option);
+        break;
+      case 'DELETE':
+        response = await axios.delete(URL.HOST + endpoint, option);
+        break;
     }
 
     const { code, data, err } = response?.data;

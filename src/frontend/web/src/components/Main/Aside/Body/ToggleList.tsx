@@ -7,6 +7,8 @@ import { openModal } from '../../../../modules/modal';
 import { ModalType } from './Modal';
 import ChannelItem, { ItemContainer } from './ChannelItem';
 import addIcon from '../../../../icon/add.svg';
+import { ChannelListState } from '../../../../modules/channeList';
+import { UserState } from '../../../../modules/user';
 
 const ToggleType = styled.section`
   padding: 8px 0px;
@@ -72,7 +74,7 @@ const ArrowRight = styled.div`
 
 interface Props {
   type: ModalType;
-  channelList: Array<{ id: string; name: string }>;
+  channelList: ChannelListState | UserState[];
   selectHandler: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
@@ -100,6 +102,7 @@ export default function ToggleList({
         {channelList.map((channel) => (
           <ChannelItem
             channel={channel}
+            paramChannelId={params.channelId}
             wsId={params.wsId as string}
             key={channel.id}
             type={type}
@@ -113,7 +116,7 @@ export default function ToggleList({
             {type === 'channel' ? (
               <PaddingLeft8px>채널 추가</PaddingLeft8px>
             ) : (
-              <PaddingLeft8px>팀원 추가</PaddingLeft8px>
+              <PaddingLeft8px>DM 추가</PaddingLeft8px>
             )}
           </Flex>
         </ItemContainer>

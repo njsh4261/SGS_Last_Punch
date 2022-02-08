@@ -2,15 +2,20 @@ import React, { SetStateAction, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Stomp, CompatClient } from '@stomp/stompjs';
 import { TOKEN, URL } from '../constant';
+import { useDispatch } from 'react-redux';
 
 import { SendMessage, ChatMessage } from '../../types/chat.type';
+import { setChannelListRedux } from '../modules/channeList';
 
 const HOST = URL.HOST;
 
 export default function chatSocketHook(
   channelId: string,
   setMsgList: React.Dispatch<SetStateAction<ChatMessage[]>>,
+  channelList: any[],
 ) {
+  const channelRef = useRef(channelId);
+  const dispatch = useDispatch();
   const stomp = useRef<CompatClient | null>(null);
 
   const connect = () => {
@@ -19,13 +24,26 @@ export default function chatSocketHook(
       console.error('fail connect socket - chat');
       return;
     }
+
     try {
       const socket = new SockJS(HOST + '/ws/chat');
       const stompClient = Stomp.over(socket);
       stompClient.connect({ Authorization: accessToken }, () => {
-        stompClient.subscribe(`/topic/channel.${channelId}`, (payload) => {
-          const msg = JSON.parse(payload.body);
-          setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+        if (channelList.length < 1) return;
+
+        channelList.map((channel) => {
+          stompClient.subscribe(`/topic/channel.${channel.id}`, (payload) => {
+            if (channel.id === +channelRef.current) {
+              const msg = JSON.parse(payload.body);
+              setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+            } else {
+              // alarm on
+              const index = channelList.findIndex((el) => el.id === channel.id);
+              const newList = [...channelList];
+              newList[index] = { ...newList[index], alarm: true };
+              dispatch(setChannelListRedux(newList));
+            }
+          });
         });
       });
       stomp.current = stompClient;
@@ -49,8 +67,11 @@ export default function chatSocketHook(
 
   useEffect(() => {
     connect();
-    console.log('useEffect - chat socket'); // remove
     return disconnect;
+  }, []);
+
+  useEffect(() => {
+    channelRef.current = channelId;
   }, [channelId]);
 
   return sendMessage;

@@ -28,6 +28,7 @@ export default function chatSocketHook(
     try {
       const socket = new SockJS(HOST + '/ws/chat');
       const stompClient = Stomp.over(socket);
+      stompClient.debug = (f) => f;
       stompClient.connect({ Authorization: accessToken }, () => {
         if (channelList.length < 1) return;
 

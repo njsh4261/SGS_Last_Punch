@@ -42,11 +42,11 @@ class PrivateMessageViewModel: ViewModelProtocol {
         self.userId = userId
         self.chatId = user.senderId > userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"
         
-//        registerSockect()
+        registerSockect()
 //        disconnect()
 //        subscribe()
     }
-    
+
     // Socket 연결
     func registerSockect() {
         socketClient.openSocketWithURLRequest(

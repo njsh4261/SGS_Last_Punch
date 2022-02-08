@@ -60,6 +60,10 @@ class DirectMessageListViewController: UIViewController {
             }
             .bind(to: viewModel.input.getMember)
             .disposed(by: disposeBag)
+        
+        btnAddMemeber.rx.tap
+            .subscribe(onNext: goToInvitation)
+            .disposed(by: disposeBag)
 
         // pull down
         refreshControl.rx.controlEvent(.valueChanged)
@@ -115,6 +119,11 @@ class DirectMessageListViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: showFailedAlert)
             .disposed(by: disposeBag)
+    }
+    
+    private func goToInvitation() {
+        let userInvitationVC = NavigationController(rootViewController: UserInvitationViewController())
+        self.present(userInvitationVC, animated: true, completion: nil)
     }
     
     private func setMembers(_ members: [User]) {

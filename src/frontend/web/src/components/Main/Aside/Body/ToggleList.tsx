@@ -113,7 +113,7 @@ export default function ToggleList({
             {type === 'channel' ? (
               <PaddingLeft8px>채널 추가</PaddingLeft8px>
             ) : (
-              <PaddingLeft8px>팀원 추가</PaddingLeft8px>
+              <PaddingLeft8px>DM 추가</PaddingLeft8px>
             )}
           </Flex>
         </ItemContainer>

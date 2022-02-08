@@ -18,11 +18,13 @@ class UserInvitationViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private var dataSource: RxTableViewSectionedReloadDataSource<UserInvitationSection.Model>!
-    private let FOOTER_HEIGHT = 60
+    private let FOOTER_HEIGHT = 80
     
     // MARK: - UI
     private var tableView = UITableView()
     private var footerView = UIView()
+    private var lblLinkDesciption = UILabel()
+    private var lblTip = UILabel()
     private var btnSend = UIBarButtonItem()
         
     override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
@@ -88,12 +90,7 @@ class UserInvitationViewController: UIViewController {
             $0.title = "보내기"
             $0.style = .plain
         }
-        
-        footerView = footerView.then {
-            $0.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat(FOOTER_HEIGHT))
-            $0.clipsToBounds = true
-        }
-                
+                    
         tableView = tableView.then {
             $0.backgroundColor = UIColor(named: "snackBackGroundColor2")
             $0.register(EmailInvitationListCell.self, forCellReuseIdentifier: "EmailInvitationListCell")
@@ -103,19 +100,51 @@ class UserInvitationViewController: UIViewController {
             $0.isOpaque = false
             $0.rowHeight = 60
         }
+        
+        footerView = footerView.then {
+            $0.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat(FOOTER_HEIGHT))
+            $0.clipsToBounds = true
+        }
+
+        lblLinkDesciption = lblLinkDesciption.then {
+            $0.text = "공유할 링크를 생성합니다. 누구나 이 링크를 사용해\n워크스페이스에 참여할 수 있습니다."
+            $0.lineBreakMode = .byWordWrapping
+            $0.textColor = .darkGray
+            $0.font = UIFont(name: "NotoSansKR-Bold", size: 13)
+            $0.numberOfLines = 2
+            $0.textAlignment = .left
+        }
+        
+        lblTip = lblTip.then {
+            $0.text = "Snack은 다른 사용자들과 함께 할 때 더 유용합니다."
+            $0.textColor = .darkGray
+            $0.font = UIFont(name: "NotoSansKR-Bold", size: 13)
+            $0.textAlignment = .left
+        }
     }
     
     private func layout() {
         view.addSubview(tableView)
-        
+                
         tableView.snp.makeConstraints {
-            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(8)
+            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         footerView.snp.makeConstraints {
             $0.height.equalTo(FOOTER_HEIGHT)
         }
+        
+        [lblLinkDesciption, lblTip].forEach {
+            footerView.addSubview($0)
+            $0.snp.makeConstraints {
+                $0.left.right.equalToSuperview().inset(15)
+            }
+        }
+        
+        lblLinkDesciption.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.bottom.equalTo(lblTip.snp.top).offset(-20)
+        }
     }
-
 }

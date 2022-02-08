@@ -43,17 +43,27 @@ public class WorkspaceController{
     }
 
     @GetMapping("/{id}/members")
-    public ResponseEntity<Object> getMembers(
+    public ResponseEntity<Object> getAllMembers(@PathVariable("id") Long id){
+        return Response.ok(ServerCode.WORKSPACE, workspaceService.getAllMembers(id));
+    }
+
+    @GetMapping("/{id}/members/paging")
+    public ResponseEntity<Object> getMembersPaging(
             @PathVariable("id") Long id,
             @PageableDefault(size = PAGE_SIZE_MEMBER) Pageable pageable){
-        return Response.ok(ServerCode.WORKSPACE, workspaceService.getMembers(id, pageable));
+        return Response.ok(ServerCode.WORKSPACE, workspaceService.getMembersPaging(id, pageable));
     }
 
     @GetMapping("/{id}/channels")
-    public ResponseEntity<Object> getChannels(
+    public ResponseEntity<Object> getAllChannels(@PathVariable("id") Long id){
+        return Response.ok(ServerCode.WORKSPACE, workspaceService.getAllChannels(id));
+    }
+
+    @GetMapping("/{id}/channels/paging")
+    public ResponseEntity<Object> getChannelsPaging(
             @PathVariable("id") Long id,
             @PageableDefault(size = PAGE_SIZE_CHANNEL) Pageable pageable){
-        return Response.ok(ServerCode.WORKSPACE, workspaceService.getChannels(id, pageable));
+        return Response.ok(ServerCode.WORKSPACE, workspaceService.getChannelsPaging(id, pageable));
     }
 
     @PostMapping

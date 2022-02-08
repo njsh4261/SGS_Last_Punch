@@ -8,12 +8,8 @@ import static lastpunch.workspace.entity.QWorkspace.workspace;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import javax.persistence.EntityManager;
-import lastpunch.workspace.entity.Account;
-import lastpunch.workspace.entity.Channel;
-import lastpunch.workspace.entity.QAccount_ExportDto;
-import lastpunch.workspace.entity.QChannel_ExportDto;
-import lastpunch.workspace.entity.QWorkspace_ExportDto;
-import lastpunch.workspace.entity.Workspace;
+
+import lastpunch.workspace.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -59,7 +55,35 @@ public class WorkspaceRepositoryImpl implements WorkspaceRepositoryCustom{
     }
 
     @Override
-    public Page<Account.ExportDto> getMembers(Long id, Pageable pageable){
+    public List<Account.ExportSimpleDto> getAllMembers(Long id) {
+        return jpaQueryFactory.select(
+                    new QAccount_ExportSimpleDto(account.id, account.name)
+                )
+                .from(account)
+                .join(account.workspaces, accountWorkspace)
+                .where(
+                        account.workspaces.contains(accountWorkspace),
+                        accountWorkspace.workspace.id.eq(id)
+                )
+                .fetch();
+    }
+
+    @Override
+    public List<Channel.ExportSimpleDto> getAllChannels(Long id) {
+        return jpaQueryFactory.select(
+                    new QChannel_ExportSimpleDto(channel.id, channel.name)
+                )
+                .from(channel)
+                .join(channel.workspace, workspace)
+                .where(
+                        channel.workspace.eq(workspace),
+                        workspace.id.eq(id)
+                )
+                .fetch();
+    }
+
+    @Override
+    public Page<Account.ExportDto> getMembersPaging(Long id, Pageable pageable){
         List<Account.ExportDto> results = jpaQueryFactory
                 .select(new QAccount_ExportDto(
                         account.id, account.email, account.name,
@@ -89,7 +113,7 @@ public class WorkspaceRepositoryImpl implements WorkspaceRepositoryCustom{
     }
 
     @Override
-    public Page<Channel.ExportDto> getChannels(Long id, Pageable pageable){
+    public Page<Channel.ExportDto> getChannelsPaging(Long id, Pageable pageable){
         List<Channel.ExportDto> results = jpaQueryFactory
                 .select(new QChannel_ExportDto(
                         channel.id, channel.workspace, channel.name, channel.topic,

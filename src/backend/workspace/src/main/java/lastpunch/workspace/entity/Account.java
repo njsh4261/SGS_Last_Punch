@@ -80,9 +80,7 @@ public class Account{
     }
     
     @Getter
-    @Setter
     @Builder
-    @AllArgsConstructor
     public static class ExportDto{
         private Long id;
         private String email;
@@ -99,13 +97,11 @@ public class Account{
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime modifyDt;
-        
-        private Message lastMessage;
 
         @QueryProjection
         public ExportDto(Long id, String email, String name, String description, String phone,
                          String country, String language, Integer settings, Integer status,
-                         LocalDateTime createDt, LocalDateTime modifyDt) {
+                         LocalDateTime createDt, LocalDateTime modifyDt){
             this.id = id;
             this.email = email;
             this.name = name;
@@ -134,5 +130,19 @@ public class Account{
             .createDt(createdt)
             .modifyDt(modifydt)
             .build();
+    }
+
+    @Getter
+    @Setter
+    public static class ExportSimpleDto{
+        private Long id;
+        private String name;
+        private Message lastMessage;
+
+        @QueryProjection
+        public ExportSimpleDto(Long id, String name){
+            this.id = id;
+            this.name = name;
+        }
     }
 }

@@ -11,7 +11,7 @@ import RxCocoa
 import SnapKit
 import Then
 
-class NoteListCell: UITableViewCell {
+class NoteListCell: UICollectionViewCell {
     
     // MARK: - Properties
     var data: NoteListCellModel?
@@ -39,6 +39,7 @@ class NoteListCell: UITableViewCell {
         
         lblName = lblName.then {
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
+            $0.numberOfLines = 3
         }
     }
     

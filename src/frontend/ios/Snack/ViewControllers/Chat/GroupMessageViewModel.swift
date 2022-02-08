@@ -16,6 +16,7 @@ import StompClientLib
 class GroupMessageViewModel: ViewModelProtocol {
     
     struct Input {
+        let btnTtitleTapped = PublishSubject<Void>()
     }
     
     struct Output {
@@ -43,6 +44,11 @@ class GroupMessageViewModel: ViewModelProtocol {
         guard let userId: String = KeychainWrapper.standard[.id], let accessToken: String = KeychainWrapper.standard[.refreshToken] else { return }
         self.accessToken = accessToken
         self.userId = userId
+        
+        input.btnTtitleTapped
+            .bind {
+                print("11")
+            }.disposed(by: disposeBag)
     }
     
     // Socket 연결

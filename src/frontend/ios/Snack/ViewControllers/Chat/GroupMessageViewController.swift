@@ -37,7 +37,6 @@ class GroupMessageViewController: MessagesViewController {
     private var lblTitle = UILabel()
     private var lblSubTitle = UILabel()
     private var btnViewTitle = UIButton()
-    
     private var btnAttach = InputBarButtonItem()
     
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfoList: [User], channel: WorkspaceChannelCellModel) {
@@ -68,11 +67,11 @@ class GroupMessageViewController: MessagesViewController {
     
     func bind(_ viewModel: GroupMessageViewModel) {
         self.viewModel = viewModel
-//        viewModel.registerSockect()
+        viewModel.registerSockect()
         
         // MARK: Bind input
         btnViewTitle.rx.tap
-            .subscribe(onNext: goToProfile)
+            .bind(to: viewModel.input.btnTtitleTapped)
             .disposed(by: disposeBag)
         
         btnAttach.rx.tap
@@ -87,11 +86,16 @@ class GroupMessageViewController: MessagesViewController {
         
     }
     
-    private func goToProfile() {
+//    private func goToProfile() {
         // 추가 본인 정보를 넣어야함
+//        print(1)
 //        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: senderInfo, recipientInfo: recipientInfo, isChat: false)
 //        viewController.hidesBottomBarWhenPushed = true
 //        self.show(viewController, sender: nil)
+//    }
+    
+    @objc private func goToProfile() {
+        NSLog("Hello, titleWasTapped!")
     }
     
     private func goToNoteList() {
@@ -254,6 +258,13 @@ class GroupMessageViewController: MessagesViewController {
 //        viewTitle.backgroundColor = .red
 //        btnViewTitle.setBackgroundColor(.red, for: .normal)
 //        btnViewTitle.setTitle("왜 안돼", for: .normal)
+        viewTitle = viewTitle.then {
+            let width = $0.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
+            $0.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: 150, height: 500))
+            let recognizer = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
+            $0.isUserInteractionEnabled = true
+            $0.addGestureRecognizer(recognizer)
+        }
         
         [lblTitle, lblSubTitle].forEach {
             $0.backgroundColor = UIColor.clear
@@ -264,12 +275,13 @@ class GroupMessageViewController: MessagesViewController {
         }
         
         lblTitle = lblTitle.then {
-            $0.text = channel?.name
+            guard let channelName = channel?.name else { return }
+            $0.text = "#\(String(describing: channelName))"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
         }
         
         lblSubTitle = lblSubTitle.then {
-            $0.text = "세부정보 보기"
+            $0.text = "\(recipientInfoList.count)명의 멤버 >"
             $0.font = UIFont(name: "NotoSansKR-Regular", size: 10)
         }
                         
@@ -302,11 +314,11 @@ class GroupMessageViewController: MessagesViewController {
             $0.top.equalTo(lblTitle.snp.bottom)
         }
         
-        btnViewTitle.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(lblTitle)
-            $0.height.equalTo(50)
-        }
+//        btnViewTitle.snp.makeConstraints {
+//            $0.centerX.equalToSuperview()
+//            $0.width.equalTo(150)
+//            $0.height.equalTo(50)
+//        }
     }
 }
 

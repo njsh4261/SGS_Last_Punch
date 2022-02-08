@@ -224,7 +224,7 @@ class PrivateMessageViewController: MessagesViewController {
         }
         
         lblSubTitle = lblSubTitle.then {
-            $0.text = "세부정보 보기"
+            $0.text = "대화 가능"
             $0.font = UIFont(name: "NotoSansKR-Regular", size: 10)
         }
                         

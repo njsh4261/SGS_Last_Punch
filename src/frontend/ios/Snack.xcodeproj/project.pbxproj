@@ -542,9 +542,9 @@
 				8CBD45B627A6CF320056A557 /* Profile */,
 				8CC9E8C627B10A28008BE1EA /* Note */,
 				8CC9E8CD27B11BBB008BE1EA /* GroupMessageViewController.swift */,
+				8CC9E8CF27B128C3008BE1EA /* GroupMessageViewModel.swift */,
 				8CBD457727A25E430056A557 /* PrivateMessageViewController.swift */,
 				8CBD459927A41B510056A557 /* MessageViewModel.swift */,
-				8CC9E8CF27B128C3008BE1EA /* GroupMessageViewModel.swift */,
 				8CBD457D27A28AEF0056A557 /* MessageKit.swift */,
 			);
 			path = Chat;

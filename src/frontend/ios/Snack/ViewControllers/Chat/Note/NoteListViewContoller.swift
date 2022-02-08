@@ -24,14 +24,31 @@ class NoteListViewContoller: UIViewController {
     // MARK: - UI
     var btnAdd = UIBarButtonItem()
     var refreshControl = UIRefreshControl()
-    var tableView = UITableView()
+    let SIDE_EDGE_INSET: CGFloat = 15
+    var collectionView : UICollectionView = {
+        let sectionInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = sectionInsets.left
+        layout.scrollDirection = .vertical
+        layout.sectionInset = .zero
+        
+        let size:CGSize = UIScreen.main.bounds.size
+        let width = size.width
+        let height = size.height
+        let itemsPerRow: CGFloat = 3 // 최초 화면에 보여져야하는 row 갯수
+        let widthPadding = sectionInsets.left * (itemsPerRow + 1) + 15 * 2
+        let cellWidth = (width - widthPadding) / itemsPerRow
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth)
+
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return cv
+    }()
     
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, viewModel: NoteListViewMoel, workspaceId: String, _ channelId: String) {
         self.viewModel = viewModel
         self.workspaceId = workspaceId
         self.channelId = channelId
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-//        guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
 
         attribute()
         layout()
@@ -57,11 +74,11 @@ class NoteListViewContoller: UIViewController {
             .drive(viewModel.input.refresh)
             .disposed(by: disposeBag)
         
-        tableView.rx.itemSelected
+        collectionView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 guard let self = self else { return }
-                self.tableView.deselectRow(at: indexPath, animated: true)
-                let cell = self.tableView.cellForRow(at: indexPath) as? NoteListCell
+                self.collectionView.deselectItem(at: indexPath, animated: true)
+                let cell = self.collectionView.cellForItem(at: indexPath) as? NoteListCell                
                 self.goToNote((cell?.id)!)
             }).disposed(by: disposeBag)
                 
@@ -74,9 +91,9 @@ class NoteListViewContoller: UIViewController {
         // MARK: Bind output
         viewModel.cellData
             .asDriver(onErrorJustReturn: [])
-            .drive(tableView.rx.items) { tv, row, data in
+            .drive(collectionView.rx.items) { tv, row, data in
                 let index = IndexPath(row: row, section: 0)
-                let cell = tv.dequeueReusableCell(withIdentifier: "NoteListCell", for: index) as! NoteListCell
+                let cell = tv.dequeueReusableCell(withReuseIdentifier: "NoteListCell", for: index) as! NoteListCell
                 
                 cell.setData(data, row)
                 return cell
@@ -134,14 +151,13 @@ class NoteListViewContoller: UIViewController {
             $0.style = .plain
         }
                 
-        tableView = tableView.then {
-            $0.register(NoteListCell.self, forCellReuseIdentifier: "NoteListCell")
+        collectionView = collectionView.then {
+            $0.register(NoteListCell.self, forCellWithReuseIdentifier: "NoteListCell")
             $0.backgroundColor = UIColor(named: "snackBackGroundColor2")
             $0.refreshControl = refreshControl
             $0.clearsContextBeforeDrawing = false
             $0.bouncesZoom = false
             $0.isOpaque = false
-            $0.rowHeight = 61
         }
         
         refreshControl = refreshControl.then {
@@ -153,10 +169,10 @@ class NoteListViewContoller: UIViewController {
     }
     
     private func layout() {
-        view.addSubview(tableView)
+        view.addSubview(collectionView)
         
-        tableView.snp.makeConstraints {
-            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(15)
+        collectionView.snp.makeConstraints {
+            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(SIDE_EDGE_INSET)
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }

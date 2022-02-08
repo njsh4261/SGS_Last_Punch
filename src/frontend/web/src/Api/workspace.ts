@@ -86,3 +86,13 @@ export async function exitWsAPI(wsId: number, userId: number) {
   );
   return response;
 }
+
+export async function getWsMemberAPI(wsId: number) {
+  const endpoint = `/workspace/${wsId}/members`;
+  const response = await apiHandler(
+    'GET',
+    endpoint,
+    RESPONSE.WORKSPACE.SUCCESS,
+  );
+  return response;
+}

@@ -79,7 +79,7 @@ class ProfileViewController: UIViewController {
         viewModel.push
             .drive(onNext: { [self] in
                 let viewController = PrivateMessageViewController(senderInfo: senderInfo!, recipientInfo: recipientInfo!)
-                let viewModel = MessageViewModel(senderInfo!)
+                let viewModel = PrivateMessageViewModel(senderInfo!)
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)

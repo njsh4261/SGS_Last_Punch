@@ -99,7 +99,7 @@ class HomeViewController: UIViewController {
                     self.show(viewController, sender: nil)
                 } else {
                     let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: users![row])
-                    let viewModel = MessageViewModel(users![row])
+                    let viewModel = PrivateMessageViewModel(users![row])
                     viewController.bind(viewModel)
                     viewController.hidesBottomBarWhenPushed = true
                     self.show(viewController, sender: nil)

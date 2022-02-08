@@ -18,7 +18,7 @@ import CoreLocation
 
 class PrivateMessageViewController: MessagesViewController {
     // MARK: - Properties
-    private var viewModel: MessageViewModel?
+    private var viewModel: PrivateMessageViewModel?
     private let disposeBag = DisposeBag()
 //    let channel: Channel?
     var messages = [MessageModel]()
@@ -66,9 +66,10 @@ class PrivateMessageViewController: MessagesViewController {
         viewModel?.disconnect()
     }
     
-    func bind(_ viewModel: MessageViewModel) {
+    func bind(_ viewModel: PrivateMessageViewModel) {
         self.viewModel = viewModel
 //        viewModel.registerSockect()
+//        viewModel.subscribe()
         
         // MARK: Bind input
         btnAttach.rx.tap

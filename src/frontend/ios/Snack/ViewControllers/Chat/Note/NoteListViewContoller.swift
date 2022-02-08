@@ -171,7 +171,6 @@ class NoteListViewContoller: UIViewController, UIGestureRecognizerDelegate {
             print("Long press at item: \(indexPath.row)")
             let cell = self.collectionView.cellForItem(at: indexPath) as? NoteListCell
             guard let cell = cell, let noteId = cell.id else { return }
-            print(cell.lblName.text)
             self.showWarningAlert(noteId)
         }
     }

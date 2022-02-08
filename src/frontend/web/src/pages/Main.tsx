@@ -11,6 +11,7 @@ import Aside from '../components/Main/Aside';
 import { RootState } from '../modules';
 import Loading from '../components/Common/Loading';
 import { setChannelListRedux } from '../modules/channeList';
+import getSelfInfoHook from '../hook/getSelfInfo';
 
 const MainLayout = styled.div`
   display: flex;
@@ -38,6 +39,8 @@ export default function Main() {
     e.stopPropagation();
     setSideToggle(!sideToggle);
   };
+
+  getSelfInfoHook();
 
   // alarm off
   useEffect(() => {

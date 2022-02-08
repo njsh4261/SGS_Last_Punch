@@ -527,6 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				8C962B5827ADAB4300A9A1F5 /* HomeSection.swift */,
+				8CC9E8D727B22B4C008BE1EA /* NoteSection.swift */,
 			);
 			path = Section;
 			sourceTree = "<group>";
@@ -667,6 +668,7 @@
 			isa = PBXGroup;
 			children = (
 				8CC9E8C227B10A17008BE1EA /* NoteListViewContoller.swift */,
+				8CC9E8C427B10A24008BE1EA /* NoteListViewModel.swift */,
 				8CC9E8C727B10B8A008BE1EA /* NoteListCell.swift */,
 				8CC9E8D527B20C8D008BE1EA /* NoteListReusableView.swift */,
 				8CC9E8D127B161B1008BE1EA /* CreateWKWebView.swift */,

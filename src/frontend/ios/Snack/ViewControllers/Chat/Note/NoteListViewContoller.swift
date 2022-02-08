@@ -11,6 +11,7 @@ import RxCocoa
 import SnapKit
 import ProgressHUD
 import SwiftKeychainWrapper
+import RxDataSources
 import Then
 
 class NoteListViewContoller: UIViewController {
@@ -22,16 +23,18 @@ class NoteListViewContoller: UIViewController {
     private var channelId: String
     
     // MARK: - UI
-    var btnAdd = UIBarButtonItem()
-    var refreshControl = UIRefreshControl()
-    let SIDE_EDGE_INSET: CGFloat = 15
-    var collectionView : UICollectionView = {
+    private var btnAdd = UIBarButtonItem()
+    private var refreshControl = UIRefreshControl()
+    private let SIDE_EDGE_INSET: CGFloat = 15
+    private var dataSource: RxCollectionViewSectionedReloadDataSource<NoteSection.Model>!
+    private var collectionView : UICollectionView = {
         let sectionInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = sectionInsets.left
         layout.scrollDirection = .vertical
         layout.sectionInset = .zero
         
+        // Cell Size
         let size:CGSize = UIScreen.main.bounds.size
         let width = size.width
         let height = size.height
@@ -39,6 +42,10 @@ class NoteListViewContoller: UIViewController {
         let widthPadding = sectionInsets.left * (itemsPerRow + 1) + 15 * 2
         let cellWidth = (width - widthPadding) / itemsPerRow
         layout.itemSize = CGSize(width: cellWidth, height: cellWidth)
+        
+        // Header
+        layout.sectionInset = .init(top: 10, left: 0, bottom: 0, right: 0)
+        layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 180)
 
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return cv
@@ -62,7 +69,9 @@ class NoteListViewContoller: UIViewController {
         viewModel.getNoteList()
     }
     
-    func bind(with viewModel: NoteListViewMoel) {
+    func bind(with viewModel: NoteListViewModel) {
+        collectionView.dataSource = nil
+        
         // MARK: Bind input
         btnAdd.rx.tap
             .bind(to: viewModel.input.btnAddTapped)
@@ -81,25 +90,32 @@ class NoteListViewContoller: UIViewController {
                 let cell = self.collectionView.cellForItem(at: indexPath) as? NoteListCell                
                 self.goToNote((cell?.id)!)
             }).disposed(by: disposeBag)
-                
+        
 //        tableView.rx.itemDeleted
 //            .subscribe(onNext: { [weak self] indexPath in
 //                guard let self = self else { return }
 //                let cell = self.tableView.cellForRow(at: indexPath) as? WorkspaceListCell
 //            }).disposed(by: disposeBag)
         
-        // MARK: Bind output
-        viewModel.cellData
-            .asDriver(onErrorJustReturn: [])
-            .drive(collectionView.rx.items) { tv, row, data in
-                let index = IndexPath(row: row, section: 0)
-                let cell = tv.dequeueReusableCell(withReuseIdentifier: "NoteListCell", for: index) as! NoteListCell
-                
-                cell.setData(data, row)
+        dataSource = RxCollectionViewSectionedReloadDataSource<NoteSection.Model> { dataSource, collectionView, indexPath, item in
+            switch item {
+            case .note(let note):
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NoteListCell", for: indexPath) as! NoteListCell
+                cell.setData(note, indexPath.row)
                 return cell
             }
-            .disposed(by: disposeBag)
+        }
         
+        dataSource.configureSupplementaryView = { (dataSource, collectionView, kind, indexPath) -> UICollectionReusableView in
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "NoteListReusableView", for: indexPath) as! NoteListReusableView
+            return header
+        }
+
+        // MARK: Bind output
+        viewModel.output.sections
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
         // refresh
         viewModel.output.refreshLoading
             .bind(to: refreshControl.rx.isRefreshing)
@@ -154,6 +170,7 @@ class NoteListViewContoller: UIViewController {
         collectionView = collectionView.then {
             $0.register(NoteListCell.self, forCellWithReuseIdentifier: "NoteListCell")
             $0.backgroundColor = UIColor(named: "snackBackGroundColor2")
+            $0.register(NoteListReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "NoteListReusableView")
             $0.refreshControl = refreshControl
             $0.clearsContextBeforeDrawing = false
             $0.bouncesZoom = false

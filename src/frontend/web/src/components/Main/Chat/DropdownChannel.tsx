@@ -18,7 +18,7 @@ export default function DropdownChannel({
   const dispatch = useDispatch();
 
   const inviteHandler = async () => {
-    dispatch(openModal('invite-workspace'));
+    dispatch(openModal('invite-channel'));
   };
 
   const exitHandler = async () => {

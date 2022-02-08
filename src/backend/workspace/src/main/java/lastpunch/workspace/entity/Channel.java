@@ -140,15 +140,8 @@ public class Channel{
         );
     }
 
-    @Getter
-    public static class ExportSimpleDto{
-        private Long id;
-        private String name;
-
-        @QueryProjection
-        public ExportSimpleDto(Long id, String name){
-            this.id = id;
-            this.name = name;
-        }
+    public interface ExportSimpleDto{
+        Long getId();
+        String getName();
     }
 }

@@ -55,8 +55,11 @@ public class WorkspaceController{
     }
 
     @GetMapping("/{id}/channels")
-    public ResponseEntity<Object> getAllChannels(@PathVariable("id") Long id){
-        return Response.ok(ServerCode.WORKSPACE, workspaceService.getAllChannels(id));
+    public ResponseEntity<Object> getAllChannels(
+                @PathVariable("id") Long workspaceId, @RequestHeader Map<String, Object> header){
+        return Response.ok(
+                ServerCode.WORKSPACE, workspaceService.getAllChannels(workspaceId, Parser.getHeaderId(header))
+        );
     }
 
     @GetMapping("/{id}/channels/paging")

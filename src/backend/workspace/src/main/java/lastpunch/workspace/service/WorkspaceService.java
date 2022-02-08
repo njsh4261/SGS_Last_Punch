@@ -92,8 +92,8 @@ public class WorkspaceService{
             : String.format("%d-%d", userId2, userId1);
     }
 
-    public Map<String, Object> getAllChannels(Long id){
-        return Map.of("channels", new Members(workspaceRepository.getAllChannels(id)));
+    public Map<String, Object> getAllChannels(Long workspaceId, Long userId){
+        return Map.of("channels", new Members(workspaceRepository.getAllChannels(workspaceId, userId)));
     }
 
     public Map<String, Object> getChannelsPaging(Long id, Pageable pageable){

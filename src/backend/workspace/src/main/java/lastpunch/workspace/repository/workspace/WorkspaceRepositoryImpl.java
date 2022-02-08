@@ -69,20 +69,6 @@ public class WorkspaceRepositoryImpl implements WorkspaceRepositoryCustom{
     }
 
     @Override
-    public List<Channel.ExportSimpleDto> getAllChannels(Long id) {
-        return jpaQueryFactory.select(
-                    new QChannel_ExportSimpleDto(channel.id, channel.name)
-                )
-                .from(channel)
-                .join(channel.workspace, workspace)
-                .where(
-                        channel.workspace.eq(workspace),
-                        workspace.id.eq(id)
-                )
-                .fetch();
-    }
-
-    @Override
     public Page<Account.ExportDto> getMembersPaging(Long id, Pageable pageable){
         List<Account.ExportDto> results = jpaQueryFactory
                 .select(new QAccount_ExportDto(

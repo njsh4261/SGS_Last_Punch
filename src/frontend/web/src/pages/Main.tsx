@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import getWsHook from '../hook/getWs';
 import updateChannelStoreHook from '../hook/updateChannelStore';
@@ -10,6 +10,7 @@ import NoteMain from '../components/Note/Main';
 import Aside from '../components/Main/Aside';
 import { RootState } from '../modules';
 import Loading from '../components/Common/Loading';
+import { setChannelListRedux } from '../modules/channeList';
 
 const MainLayout = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ const Body = styled.div`
 `;
 
 export default function Main() {
+  const dispatch = useDispatch();
   const [params, ws] = getWsHook();
   setTitleHook('', params);
   updateChannelStoreHook(params);
@@ -36,6 +38,18 @@ export default function Main() {
     e.stopPropagation();
     setSideToggle(!sideToggle);
   };
+
+  // alarm off
+  useEffect(() => {
+    const index = channelList.findIndex(
+      (el) => el.id.toString() === params.channelId,
+    );
+    const newList = [...channelList];
+    if (newList[index].alarm === true) {
+      newList[index] = { ...newList[index], alarm: false };
+      dispatch(setChannelListRedux(newList));
+    }
+  }, [params]);
 
   return (
     <MainLayout>

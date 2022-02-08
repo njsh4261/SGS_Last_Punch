@@ -22,6 +22,7 @@ const PaddingLeft8px = styled.span`
 
 interface Props {
   channel: any;
+  paramChannelId: string | undefined;
   wsId: string;
   type: ModalType;
   isSelected?: boolean;
@@ -30,7 +31,8 @@ interface Props {
 }
 
 export default function ChannelItem(props: Props) {
-  const { channel, wsId, selectHandler, type, isSelected } = props;
+  const { channel, wsId, paramChannelId, selectHandler, type, isSelected } =
+    props;
 
   const [noteList, setNoteList] = useState<any[]>([]);
 
@@ -63,7 +65,9 @@ export default function ChannelItem(props: Props) {
       <div>
         #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
       </div>
-      {channel.alram && <span>*</span>}
+      {channel.alarm && channel.id.toString() !== paramChannelId && (
+        <span>new Message</span>
+      )}
       {type === 'channel' && isSelected && (
         <button onClick={createNoteHandler}>create note</button>
       )}

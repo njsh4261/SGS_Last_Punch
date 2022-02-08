@@ -29,7 +29,7 @@ export async function inviteChannelAPI(
   roleId: 1,
 ) {
   const endpoint = `/channel/member`;
-  const body = { userId, channelId, roleId };
+  const body = { accountId: userId, channelId, roleId };
   const response = await apiHandler(
     'POST',
     endpoint,

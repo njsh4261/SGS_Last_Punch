@@ -1,4 +1,4 @@
-import { ENDPOINT, RESPONSE } from '../constant';
+import { RESPONSE } from '../constant';
 import apiHandler from './handler';
 
 const dummySize = 999; // todo: remove
@@ -64,7 +64,7 @@ export async function createWsAPI(wsName: string, channelName: string) {
 export async function inviteWsAPI(wsId: number, userId: number) {
   const endpoint = `/workspace/member`;
   const body = {
-    wsId,
+    workspaceId: wsId,
     accountId: userId,
   };
   const response = await apiHandler(

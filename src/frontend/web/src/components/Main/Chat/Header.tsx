@@ -83,12 +83,12 @@ const ChannelTab = styled.div`
 `;
 
 interface Props {
-  channelName: string;
+  channel: any;
   sideToggle: boolean;
   sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
+const Header = ({ channel, sideToggle, sideToggleHandler }: Props) => {
   const {
     drop,
     channelDrop,
@@ -113,13 +113,16 @@ const Header = ({ channelName, sideToggle, sideToggleHandler }: Props) => {
           onClick={dropdownHandler}
         >
           <ChannelName className={CHANNEL_BUTTON_CLASSNAME}>
-            {channelName}
+            {channel.name}
           </ChannelName>
           <ArrowDropDownIcon
             className={CHANNEL_BUTTON_CLASSNAME}
           ></ArrowDropDownIcon>
           {channelDrop && (
-            <DropdownChannel id={CHANNEL_DROPDOWN_ID}></DropdownChannel>
+            <DropdownChannel
+              channelId={channel.id}
+              id={CHANNEL_DROPDOWN_ID}
+            ></DropdownChannel>
           )}
         </ChannelTab>
       </ChannelInfo>

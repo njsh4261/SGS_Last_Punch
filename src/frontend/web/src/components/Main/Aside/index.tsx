@@ -47,7 +47,7 @@ export default function Aside({
       <AsideHeader onMouseEnter={hoverHandler} onMouseLeave={hoverHandler}>
         <DropdownBox onClick={dropdownHandler}>
           <WorkspaceName>{ws.name}</WorkspaceName>
-          {drop && <DropdownWorkspace></DropdownWorkspace>}
+          {drop && <DropdownWorkspace wsId={ws.id}></DropdownWorkspace>}
         </DropdownBox>
         {hover && (
           <ImageButton

@@ -75,7 +75,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
           <Header
             sideToggle={sideToggle}
             sideToggleHandler={sideToggleHandler}
-            channelName={channel.name}
+            channel={channel}
           />
           <MessageListContainer>
             {msgList?.map((msg, idx) => (

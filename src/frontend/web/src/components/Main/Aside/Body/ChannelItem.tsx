@@ -21,18 +21,18 @@ const PaddingLeft8px = styled.span`
 `;
 
 interface Props {
-  channel: {
-    id: string;
-    name: string;
-  };
+  channel: any;
+  paramChannelId: string | undefined;
   wsId: string;
   type: ModalType;
   isSelected?: boolean;
+  alarm?: boolean;
   selectHandler: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export default function ChannelItem(props: Props) {
-  const { channel, wsId, selectHandler, type, isSelected } = props;
+  const { channel, wsId, paramChannelId, selectHandler, type, isSelected } =
+    props;
 
   const [noteList, setNoteList] = useState<any[]>([]);
 
@@ -57,7 +57,7 @@ export default function ChannelItem(props: Props) {
   };
 
   useEffect(() => {
-    if (isSelected) getNoteListHandler();
+    if (isSelected && type === 'channel') getNoteListHandler();
   }, [isSelected]);
 
   return (
@@ -65,8 +65,14 @@ export default function ChannelItem(props: Props) {
       <div>
         #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
       </div>
-      {isSelected && <button onClick={createNoteHandler}>create note</button>}
-      {isSelected &&
+      {channel.alarm && channel.id.toString() !== paramChannelId && (
+        <span>new Message</span>
+      )}
+      {type === 'channel' && isSelected && (
+        <button onClick={createNoteHandler}>create note</button>
+      )}
+      {type === 'channel' &&
+        isSelected &&
         noteList.map((note) => (
           <div id={note} key={note} onClick={selectNoteHandler}>
             {note}

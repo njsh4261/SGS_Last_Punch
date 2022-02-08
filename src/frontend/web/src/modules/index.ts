@@ -4,8 +4,17 @@ import modal from './modal';
 import channel, { channelSaga } from './channel';
 import work, { workSaga } from './worksapce';
 import user from './user';
+import channelList from './channeList';
+import userList from './userList';
 
-const rootReducer = combineReducers({ modal, channel, work, user });
+const rootReducer = combineReducers({
+  modal,
+  channel,
+  work,
+  user,
+  channelList,
+  userList,
+});
 
 export default rootReducer;
 

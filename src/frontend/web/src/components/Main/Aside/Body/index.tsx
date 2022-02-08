@@ -26,12 +26,12 @@ const SecitonType = styled.section`
 `;
 
 export default function AsideBody() {
-  // todo: get more list channel/member
-  const [channelList, memberList, params, setChannelPage, setMemberPage] =
-    getChannelsAndMembersHook();
+  const [params] = getChannelsAndMembersHook();
   setTitleHook('', params);
   const selectChannelHandler = selectChannelHook(params);
   const modalState = useSelector((state: RootState) => state.modal);
+  const channelList = useSelector((state: RootState) => state.channelList);
+  const memberList = useSelector((state: RootState) => state.userList);
 
   return (
     <Container>
@@ -49,7 +49,7 @@ export default function AsideBody() {
       <ToggleList
         channelList={memberList}
         selectHandler={selectChannelHandler}
-        type="direct message"
+        type="invite-dm"
       ></ToggleList>
     </Container>
   );

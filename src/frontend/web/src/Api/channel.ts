@@ -48,3 +48,13 @@ export async function exitChannelAPI(accountId: number, channelId: number) {
   );
   return response;
 }
+
+export async function getChannelMember(channelId: number | string) {
+  const endpoint = `/channel/${channelId}/members`;
+  const response = await apiHandler(
+    'GET',
+    endpoint,
+    RESPONSE.WORKSPACE.SUCCESS,
+  );
+  return response;
+}

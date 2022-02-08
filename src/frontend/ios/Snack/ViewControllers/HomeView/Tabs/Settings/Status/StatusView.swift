@@ -30,7 +30,7 @@ class StatusView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        cellStatus.textLabel?.text = userInfo?.status ?? "대화 가능"
+        cellStatus.textLabel?.text = "대화 가능"
     }
 
     // MARK: - Load methods

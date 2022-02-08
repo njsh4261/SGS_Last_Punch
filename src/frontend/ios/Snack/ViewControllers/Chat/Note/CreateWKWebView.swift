@@ -61,8 +61,10 @@ class CreateWKWebView: UIViewController {
         webKitView!.navigationDelegate = self
         // 스와이프를 통해서 뒤로가기 앞으로가기를 할수 있게 해주는 설정값 입니다.
         self.webKitView?.allowsBackForwardNavigationGestures = true
+        webKitView?.evaluateJavaScript("localStorage.setItem(\"access_token\", \"\(self.accessToken)\")", completionHandler: nil)
+        webKitView?.evaluateJavaScript("localStorage.setItem(\"refresh_token\", \"\(self.refreshToken)\")", completionHandler: nil)
     }
-    
+        
     // MARK: - Func
     func loadUrl() {
         if let url = URL(string: url!) {
@@ -76,13 +78,30 @@ class CreateWKWebView: UIViewController {
     }
 }
 
+//MARK: - WKNavigation Delegate
 extension CreateWKWebView: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         webView.evaluateJavaScript("localStorage.getItem(\"access_token\")") { (result, error) in
             webView.evaluateJavaScript("localStorage.setItem(\"access_token\", \"\(self.accessToken)\")") { (result, error) in
             }
             webView.evaluateJavaScript("localStorage.setItem(\"refresh_token\", \"\(self.refreshToken)\")") { (result, error) in
             }
         }
+
+//        webKitView?.evaluateJavaScript("localStorage.setItem(\"access_token\", \"\(self.accessToken)\")", completionHandler: nil)
+//        webKitView?.evaluateJavaScript("localStorage.setItem(\"refresh_token\", \"\(self.refreshToken)\")", completionHandler: nil)
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webView.evaluateJavaScript("localStorage.setItem(\"access_token\", \"\(self.accessToken)\")") { (result, error) in
+        }
+        webView.evaluateJavaScript("localStorage.setItem(\"refresh_token\", \"\(self.refreshToken)\")") { (result, error) in
+        }
+//        webView.evaluateJavaScript("localStorage.getItem(\"access_token\")") { (result, error) in
+//            webView.evaluateJavaScript("localStorage.setItem(\"access_token\", \"\(self.accessToken)\")") { (result, error) in
+//            }
+//            webView.evaluateJavaScript("localStorage.setItem(\"refresh_token\", \"\(self.refreshToken)\")") { (result, error) in
+//            }
+//        }
     }
 }

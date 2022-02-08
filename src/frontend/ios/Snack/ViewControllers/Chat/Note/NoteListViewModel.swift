@@ -1,5 +1,5 @@
 //
-//  NoteListViewMoel.swift
+//  NoteListViewModel.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/02/07.
@@ -9,18 +9,21 @@ import RxSwift
 import RxCocoa
 import CoreGraphics
 import Alamofire
+import RxDataSources
 import SwiftKeychainWrapper
 
-class NoteListViewMoel: ViewModelProtocol {
+class NoteListViewModel: ViewModelProtocol {
     
     struct Input {
         let channelId = PublishSubject<String>()
         let refresh = PublishSubject<Void>()
+        let noteId = PublishSubject<String>()
         let btnAddTapped = PublishSubject<Void>()
         let noteListCellData = PublishSubject<[NoteListCellModel]>()
     }
     
     struct Output {
+        let sections = PublishRelay<[SectionModel<NoteSection.NoteSection, NoteSection.NoteItem>]>()
         let refreshLoading = PublishRelay<Bool>()
         let successMessage = PublishRelay<String>()
         let errorMessage = PublishRelay<String>()
@@ -77,10 +80,21 @@ class NoteListViewMoel: ViewModelProtocol {
         }
     }
     
-    func getNote(method: HTTPMethod, accessToken: String, workspaceId: String = "", channelId: String, creatorId: String = "", isCreate: Bool = false) {
-        NoteService.shared.getNote(method: method, accessToken: accessToken, workspaceId: workspaceId, channelId: channelId, creatorId: creatorId, isCreate: isCreate)
+    // delete Note
+    func deleteNote(noteId: String) {
+        self.networkGroup.enter()
+        DispatchQueue.main.async { [self] in // 메인스레드에서 동작
+            self.getNote(method: .delete, accessToken: accessToken, noteId: noteId, isDelete: true)
+        }
+        self.networkGroup.notify(queue: .main) { [self] in
+            self.getNoteList()
+        }
+    }
+    
+    func getNote(method: HTTPMethod, accessToken: String, workspaceId: String = "", channelId: String = "", creatorId: String = "", noteId: String = "", isCreate: Bool = false, isDelete: Bool = false) {
+        NoteService.shared.getNote(method: method, accessToken: accessToken, workspaceId: workspaceId, channelId: channelId, creatorId: creatorId, noteId: noteId, isCreate: isCreate, isDelete: isDelete)
             .observe(on: MainScheduler.instance)
-            .subscribe{ event in
+            .subscribe{ [self] event in
                 switch event {
                 case .next(let result):
                     switch result {
@@ -95,7 +109,13 @@ class NoteListViewMoel: ViewModelProtocol {
                                 return
                             }
                             if noteList.isEmpty { self.output.emptyMessage.accept("노트 목록이 비어있습니다") }
-                            self.input.noteListCellData.onNext(noteList)
+                            let sectionNoteList = self.getNoteList(noteList)
+                            let noteItems = sectionNoteList.map(NoteSection.NoteItem.note)
+                            let noteSection = NoteSection.Model(model: .note, items: noteItems)
+                            output.sections.accept([noteSection])
+                        case .delete:
+                            self.output.successMessage.accept("삭제되었습니다")
+                            self.networkGroup.leave()
                         default:
                             break
                         }
@@ -107,4 +127,15 @@ class NoteListViewMoel: ViewModelProtocol {
                 }
             }.disposed(by: self.disposeBag)
     }
+        
+    func getNoteList(_ notelist: [NoteListCellModel]) -> [Note] {
+        return notelist.map {
+            Note(
+                id: $0.id,
+                title: $0.title,
+                creatorId: $0.creatorId,
+                createDt: $0.createDt,
+                modifyDt: $0.modifyDt)
+        }
+    }    
 }

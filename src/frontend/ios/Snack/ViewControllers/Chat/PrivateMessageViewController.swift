@@ -18,7 +18,7 @@ import CoreLocation
 
 class PrivateMessageViewController: MessagesViewController {
     // MARK: - Properties
-    private var viewModel: MessageViewModel?
+    private var viewModel: PrivateMessageViewModel?
     private let disposeBag = DisposeBag()
 //    let channel: Channel?
     var messages = [MessageModel]()
@@ -66,9 +66,10 @@ class PrivateMessageViewController: MessagesViewController {
         viewModel?.disconnect()
     }
     
-    func bind(_ viewModel: MessageViewModel) {
+    func bind(_ viewModel: PrivateMessageViewModel) {
         self.viewModel = viewModel
 //        viewModel.registerSockect()
+//        viewModel.subscribe()
         
         // MARK: Bind input
         btnAttach.rx.tap
@@ -202,9 +203,9 @@ class PrivateMessageViewController: MessagesViewController {
         navigationItem.titleView = viewTitle
         if senderInfo.senderId != recipientInfo.senderId {
             navigationItem.rightBarButtonItem = btnProfile
-            messageInputBar.inputTextView.placeholder = "\(recipientInfo.name!)에(게) 메시지 보내기"
+            messageInputBar.inputTextView.placeholder = "\(recipientInfo.displayName)에(게) 메시지 보내기"
         } else {
-            messageInputBar.inputTextView.placeholder = "\(recipientInfo.name!)(나)에(게) 메시지 보내기"
+            messageInputBar.inputTextView.placeholder = "\(recipientInfo.displayName)(나)에(게) 메시지 보내기"
         }
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "채팅", style: .plain, target: nil, action: nil)
         view.backgroundColor = UIColor(named: "snackBackGroundColor3")
@@ -219,12 +220,12 @@ class PrivateMessageViewController: MessagesViewController {
         }
         
         lblTitle = lblTitle.then {
-            $0.text = recipientInfo.name
+            $0.text = recipientInfo.displayName
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
         }
         
         lblSubTitle = lblSubTitle.then {
-            $0.text = "세부정보 보기"
+            $0.text = "대화 가능"
             $0.font = UIFont(name: "NotoSansKR-Regular", size: 10)
         }
                         

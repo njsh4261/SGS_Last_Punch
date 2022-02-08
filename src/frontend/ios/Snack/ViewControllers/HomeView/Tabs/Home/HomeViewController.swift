@@ -61,7 +61,6 @@ class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        // MARK: Bind output
         dataSource = RxTableViewSectionedReloadDataSource<HomeSection.Model> { dataSource, tableView, indexPath, item in
             self.configureCollectionViewCell(tableView: tableView, indexPath: indexPath, item: item)
         }
@@ -75,7 +74,8 @@ class HomeViewController: UIViewController {
                 return "다이렉트 메시지"
             }
         }
-
+        
+        // MARK: Bind output
         viewModel.output.sections
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -99,7 +99,7 @@ class HomeViewController: UIViewController {
                     self.show(viewController, sender: nil)
                 } else {
                     let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: users![row])
-                    let viewModel = MessageViewModel(users![row])
+                    let viewModel = PrivateMessageViewModel(users![row])
                     viewController.bind(viewModel)
                     viewController.hidesBottomBarWhenPushed = true
                     self.show(viewController, sender: nil)
@@ -118,7 +118,12 @@ class HomeViewController: UIViewController {
     }
     
     private func getUser(_ userInfo: UserModel) -> User {
-        return User(senderId: userInfo.id.description, displayName: userInfo.name, name: userInfo.name, email: userInfo.email, description: userInfo.description, phone: userInfo.phone, country: userInfo.country, language: userInfo.language, settings: userInfo.settings, status: userInfo.status, createDt: userInfo.createDt, modifyDt: userInfo.modifyDt, authorId: userInfo.id.description, content: userInfo.email)
+        return User(
+            senderId: userInfo.id.description,
+            displayName: userInfo.name,
+            authorId: userInfo.id.description,
+            content: userInfo.email
+        )
     }
     
     private func configureCollectionViewCell(tableView: UITableView, indexPath: IndexPath, item: HomeSection.HomeItem) -> UITableViewCell {

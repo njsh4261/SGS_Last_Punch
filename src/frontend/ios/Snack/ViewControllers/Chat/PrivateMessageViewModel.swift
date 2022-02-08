@@ -13,7 +13,7 @@ import StompClientLib
 import SwiftKeychainWrapper
 import StompClientLib
 
-class MessageViewModel: ViewModelProtocol {
+class PrivateMessageViewModel: ViewModelProtocol {
     
     struct Input {
     }
@@ -26,7 +26,7 @@ class MessageViewModel: ViewModelProtocol {
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
-    private var socketClient = StompClientLib()
+    private var socketClient: StompClientLib
     private let url = URL(string: "ws://\(APIConstants().chatWebsoket)/websocket")!
     private var accessToken: String = ""
 //    private let userInfo: WorkspaceMemberCellModel
@@ -36,10 +36,15 @@ class MessageViewModel: ViewModelProtocol {
     
     // MARK: - Init
     init(_ user: User) {
+        self.socketClient = StompClientLib()
         guard let accessToken: String = KeychainWrapper.standard[.refreshToken], let userId: String = KeychainWrapper.standard[.id] else { return }
         self.accessToken = accessToken
         self.userId = userId
         self.chatId = user.senderId > userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"
+        
+//        registerSockect()
+//        disconnect()
+//        subscribe()
     }
     
     // Socket 연결
@@ -80,7 +85,7 @@ class MessageViewModel: ViewModelProtocol {
 }
 
 //MARK: - StompClientLib Delegate
-extension MessageViewModel: StompClientLibDelegate {
+extension PrivateMessageViewModel: StompClientLibDelegate {
     func stompClient(client: StompClientLib!, didReceiveMessageWithJSONBody jsonBody: AnyObject?, akaStringBody stringBody: String?, withHeader header: [String : String]?, withDestination destination: String) {
         print("DESTINATION : \(destination)")
         print("JSON BODY : \(String(describing: jsonBody))")
@@ -96,7 +101,7 @@ extension MessageViewModel: StompClientLibDelegate {
     // 연결 후, Subscribe Topic
     func stompClientDidConnect(client: StompClientLib!) {
         print("Stomp socket is connected")
-
+        
         subscribe()
     }
     

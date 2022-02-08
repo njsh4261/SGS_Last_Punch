@@ -104,7 +104,7 @@ class DirectMessageListViewController: UIViewController {
             .drive(onNext: { [self] row in
                 // 추가) 본인 user정보를 넣어야함
                 let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members[row])
-                let viewModel = MessageViewModel(members[row])
+                let viewModel = PrivateMessageViewModel(members[row])
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)
@@ -122,7 +122,12 @@ class DirectMessageListViewController: UIViewController {
     }
     
     private func getUser(_ userInfo: UserModel) -> User {
-        return User(senderId: userInfo.id.description, displayName: userInfo.name, name: userInfo.name, email: userInfo.email, description: userInfo.description, phone: userInfo.phone, country: userInfo.country, language: userInfo.language, settings: userInfo.settings, status: userInfo.status, createDt: userInfo.createDt, modifyDt: userInfo.modifyDt, authorId: userInfo.id.description, content: userInfo.email)
+        return User(
+            senderId: userInfo.id.description,
+            displayName: userInfo.name,
+            authorId: userInfo.id.description,
+            content: userInfo.email
+        )
     }
     
     private func showFailedAlert(_ message: String) {

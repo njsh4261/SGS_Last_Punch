@@ -37,30 +37,30 @@ struct WorkspacesModel: Codable {
 
 struct WorkspacesChannels: Codable {
     let content: [WorkspaceChannelCellModel]?
-    let pageable: Pageable?
-    let last: Bool
-    let totalPages: Int
-    let totalElements: Int
-    let size: Int
-    let number: Int
-    let sort: Sort
-    let first: Bool
-    let numberOfElements: Int
-    let empty: Bool
+//    let pageable: Pageable?
+//    let last: Bool
+//    let totalPages: Int
+//    let totalElements: Int
+//    let size: Int
+//    let number: Int
+//    let sort: Sort
+//    let first: Bool
+//    let numberOfElements: Int
+//    let empty: Bool
 }
 
 struct WorkspaceMemberModel: Codable {
     let content: [WorkspaceMemberCellModel]?
-    let pageable: Pageable?
-    let last: Bool
-    let totalPages: Int
-    let totalElements: Int
-    let size: Int
-    let number: Int
-    let sort: Sort
-    let first: Bool
-    let numberOfElements: Int
-    let empty: Bool
+//    let pageable: Pageable?
+//    let last: Bool
+//    let totalPages: Int
+//    let totalElements: Int
+//    let size: Int
+//    let number: Int
+//    let sort: Sort
+//    let first: Bool
+//    let numberOfElements: Int
+//    let empty: Bool
 }
 
 struct WorkspaceListCellModel: Codable {
@@ -68,36 +68,33 @@ struct WorkspaceListCellModel: Codable {
     let name: String
     var description: String? = ""
     let settings: Int
-    let status: Int
-    let createdt: String
-    let modifydt: String
+    let createDt: String
+    let modifyDt: String
 }
 
 struct WorkspaceChannelCellModel: Codable {
     let id: Int
-    let workspace: WorkspaceListCellModel
-    var name: String?
-    let topic: String?
-    let description: String?
-    let settings: Int
-    let status: Int
-    let createDt: String
-    let modifyDt: String
+//    let workspace: WorkspaceListCellModel?
+    var name: String
+//    let topic: String?
+//    let description: String?
+//    let settings: Int?
+//    let createDt: String?
+//    let modifyDt: String?
 }
 
 struct WorkspaceMemberCellModel: Codable {
     let id: Int
-    let email: String
-    var name: String?
-    let displayname: String?
-    let description: String?
-    let phone: String?
-    let country: String
-    let language: String
-    let settings: Int
-    let status: String
-    let createDt: String
-    let modifyDt: String
+//    let email: String
+    var name: String
+//    let description: String?
+//    let phone: String?
+//    let country: String
+//    let language: String
+//    let settings: Int
+//    let status: Int?
+//    let createDt: String
+//    let modifyDt: String
     let lastMessage: LastMessage
     
 }

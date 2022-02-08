@@ -6,15 +6,13 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 import SnapKit
 import Then
 
-class NoteListCell: UITableViewCell {
+class NoteListCell: UICollectionViewCell {
     
     // MARK: - Properties
-    var data: NoteListCellModel?
+    private var note: Note?
     
     // MARK: - UI
     var id: String?
@@ -28,10 +26,10 @@ class NoteListCell: UITableViewCell {
         layout()
     }
     
-    func setData(_ data: NoteListCellModel, _ row: Int) {
-        self.data = data
-        self.id = data.id
-        self.lblName.text = data.title + row.description
+    func setData(_ note: Note, _ row: Int) {
+        self.note = note
+        self.id = note.id
+        self.lblName.text = note.title == "Untitled" ? note.title + row.description : note.title
     }
     
     private func attribute() {
@@ -39,6 +37,7 @@ class NoteListCell: UITableViewCell {
         
         lblName = lblName.then {
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
+            $0.numberOfLines = 3
         }
     }
     

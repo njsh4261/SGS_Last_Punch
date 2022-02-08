@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 import getWsHook from '../hook/getWs';
 import updateChannelStoreHook from '../hook/updateChannelStore';
@@ -7,6 +8,8 @@ import setTitleHook from '../hook/setTitle';
 import Chat from '../components/Main/Chat';
 import NoteMain from '../components/Note/Main';
 import Aside from '../components/Main/Aside';
+import { RootState } from '../modules';
+import Loading from '../components/Common/Loading';
 
 const MainLayout = styled.div`
   display: flex;
@@ -19,16 +22,11 @@ const Body = styled.div`
   height: 100%;
 `;
 
-const GuideText = styled.div`
-  margin: auto;
-  font-size: 30px;
-  font-weight: bold;
-`;
-
 export default function Main() {
   const [params, ws] = getWsHook();
   setTitleHook('', params);
   updateChannelStoreHook(params);
+  const channelList = useSelector((state: RootState) => state.channelList);
 
   const [hover, setHover] = useState(false);
   const hoverHandler = () => setHover(!hover);
@@ -49,7 +47,7 @@ export default function Main() {
           sideToggle={sideToggle}
           sideToggleHandler={sideToggleHandler}
         ></Aside>
-        {params.channelId ? (
+        {channelList.length > 0 && params.channelId ? (
           params.noteId ? (
             <NoteMain
               sideToggle={sideToggle}
@@ -62,7 +60,7 @@ export default function Main() {
             ></Chat>
           )
         ) : (
-          <GuideText>🍪 Select Channel 🍪</GuideText>
+          <Loading></Loading>
         )}
       </Body>
     </MainLayout>

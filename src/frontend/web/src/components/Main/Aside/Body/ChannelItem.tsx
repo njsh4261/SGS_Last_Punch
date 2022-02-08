@@ -57,7 +57,7 @@ export default function ChannelItem(props: Props) {
   };
 
   useEffect(() => {
-    if (isSelected) getNoteListHandler();
+    if (isSelected && type === 'channel') getNoteListHandler();
   }, [isSelected]);
 
   return (
@@ -65,8 +65,11 @@ export default function ChannelItem(props: Props) {
       <div>
         #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
       </div>
-      {isSelected && <button onClick={createNoteHandler}>create note</button>}
-      {isSelected &&
+      {type === 'channel' && isSelected && (
+        <button onClick={createNoteHandler}>create note</button>
+      )}
+      {type === 'channel' &&
+        isSelected &&
         noteList.map((note) => (
           <div id={note} key={note} onClick={selectNoteHandler}>
             {note}

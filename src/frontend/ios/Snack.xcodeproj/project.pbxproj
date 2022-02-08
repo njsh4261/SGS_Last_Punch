@@ -102,6 +102,7 @@
 		8CC9E8CE27B11BBB008BE1EA /* GroupMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8CD27B11BBB008BE1EA /* GroupMessageViewController.swift */; };
 		8CC9E8D027B128C3008BE1EA /* GroupMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8CF27B128C3008BE1EA /* GroupMessageViewModel.swift */; };
 		8CC9E8D227B161B1008BE1EA /* CreateWKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8D127B161B1008BE1EA /* CreateWKWebView.swift */; };
+		8CC9E8D627B20C8D008BE1EA /* NoteListReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8D527B20C8D008BE1EA /* NoteListReusableView.swift */; };
 		8CC9E8D827B22B4C008BE1EA /* NoteSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8D727B22B4C008BE1EA /* NoteSection.swift */; };
 		8CC9E8DA27B22BDB008BE1EA /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8D927B22BDB008BE1EA /* Note.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
@@ -210,6 +211,7 @@
 		8CC9E8CD27B11BBB008BE1EA /* GroupMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMessageViewController.swift; sourceTree = "<group>"; };
 		8CC9E8CF27B128C3008BE1EA /* GroupMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMessageViewModel.swift; sourceTree = "<group>"; };
 		8CC9E8D127B161B1008BE1EA /* CreateWKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWKWebView.swift; sourceTree = "<group>"; };
+		8CC9E8D527B20C8D008BE1EA /* NoteListReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListReusableView.swift; sourceTree = "<group>"; };
 		8CC9E8D727B22B4C008BE1EA /* NoteSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSection.swift; sourceTree = "<group>"; };
 		8CC9E8D927B22BDB008BE1EA /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
@@ -666,6 +668,7 @@
 			children = (
 				8CC9E8C227B10A17008BE1EA /* NoteListViewContoller.swift */,
 				8CC9E8C727B10B8A008BE1EA /* NoteListCell.swift */,
+				8CC9E8D527B20C8D008BE1EA /* NoteListReusableView.swift */,
 				8CC9E8D127B161B1008BE1EA /* CreateWKWebView.swift */,
 			);
 			path = Note;
@@ -862,6 +865,7 @@
 				8C68AAC92791166F00C1711E /* ViewModelProtocol.swift in Sources */,
 				8C68AAD027911A1000C1711E /* LoginService.swift in Sources */,
 				8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */,
+				8CC9E8D627B20C8D008BE1EA /* NoteListReusableView.swift in Sources */,
 				8CBD458F27A3E46B0056A557 /* DirectMessageListViewController.swift in Sources */,
 				8CBD45C927A719780056A557 /* Cryptor.swift in Sources */,
 				8CBD45ED27A8746E0056A557 /* KeepMediaView.swift in Sources */,

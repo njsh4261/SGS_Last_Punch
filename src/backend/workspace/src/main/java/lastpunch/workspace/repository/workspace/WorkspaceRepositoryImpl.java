@@ -88,7 +88,7 @@ public class WorkspaceRepositoryImpl implements WorkspaceRepositoryCustom{
                 .select(new QAccount_ExportDto(
                         account.id, account.email, account.name,
                         account.description, account.phone, account.country, account.language,
-                        account.status, account.settings, account.createdt, account.modifydt
+                        account.settings, account.createdt, account.modifydt
                 ))
                 .from(account)
                 .join(account.workspaces, accountWorkspace)

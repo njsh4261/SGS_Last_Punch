@@ -8,6 +8,7 @@ import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.exception.DBExceptionMapper;
 import lastpunch.workspace.common.type.RoleType;
+import lastpunch.workspace.dto.Members;
 import lastpunch.workspace.entity.Account;
 import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.entity.Message;
@@ -78,7 +79,7 @@ public class WorkspaceService{
             );
         }
         
-        return Map.of("members", members);
+        return Map.of("members", new Members(members));
     }
 
     public Map<String, Object> getMembersPaging(Long id, Pageable pageable){
@@ -92,7 +93,7 @@ public class WorkspaceService{
     }
 
     public Map<String, Object> getAllChannels(Long id){
-        return Map.of("channels", workspaceRepository.getAllChannels(id));
+        return Map.of("channels", new Members(workspaceRepository.getAllChannels(id)));
     }
 
     public Map<String, Object> getChannelsPaging(Long id, Pageable pageable){

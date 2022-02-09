@@ -16,6 +16,7 @@ const ChannelLayer = styled.div`
 `;
 
 const ChannelName = styled.section<{ newMessage: boolean }>`
+  padding: 3px 0 2px 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -39,12 +40,13 @@ const ButtonCreateNote = styled.button`
   border: none;
   background: inherit;
   color: inherit;
-  padding: 1px 3px 0px 3px;
+  padding: 1px 4px 0px 4px;
   border: 1px solid ${({ theme }) => theme.color.snackSideFont};
   border-radius: 4px;
   cursor: pointer;
   :hover {
     color: black;
+    background-color: lightgray;
   }
 `;
 

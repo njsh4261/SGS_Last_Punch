@@ -1,0 +1,32 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: presence-server
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  redis:
+    host: localhost
+    port: 6379
+
+eureka:
+  instance:
+    instance-id: presence-server-instance
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    service-url:
+      defaultZone: http://eureka:8761/eureka
+
+jwt:
+  secret: lastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunchlastpunch
+
+rabbitmq-stomp:
+  host: localhost
+  port: 61613
+  username: guest
+  password: guest

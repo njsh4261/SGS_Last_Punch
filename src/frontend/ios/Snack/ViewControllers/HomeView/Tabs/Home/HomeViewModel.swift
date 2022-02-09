@@ -64,7 +64,7 @@ class HomeViewModel: ViewModelProtocol {
             let sectionChannels = getChannels(channels)
             let sectionMembers = getMembers(members)
             
-            let channelItems = sectionChannels.map(HomeSection.HomeItem.chennel)
+            let channelItems = sectionChannels.map(HomeSection.HomeItem.channel)
             let memberItems = sectionMembers.map(HomeSection.HomeItem.member)
             
             let channelSection = HomeSection.Model(model: .chennel, items: channelItems)

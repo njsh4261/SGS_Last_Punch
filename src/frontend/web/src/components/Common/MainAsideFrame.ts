@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const MainAsideFrame = styled.aside<{ toggle?: boolean }>`
   width: ${({ toggle }) => (toggle ? '260px' : '0px')};
+  flex: 0 0 auto;
   overflow-x: hidden;
   white-space: nowrap;
   background-color: ${({ theme }) => theme.color.snackSide};

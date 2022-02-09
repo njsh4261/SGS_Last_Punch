@@ -14,10 +14,11 @@ class CreateHomeTabController {
         KeychainWrapper.standard[.workspaceId] = workspaceId
         let accessToken: String = KeychainWrapper.standard[.accessToken]!
         
-        let DMViewModel = DirectMessageListViewModel(accessToken: accessToken, workSpaceId: workspaceId)
+        let HomeViewModel = HomeViewModel(accessToken: accessToken, workspaceId: workspaceId)
+        let DMViewModel = DirectMessageListViewModel(accessToken: accessToken, workspaceId: workspaceId)
         
-        let homeView = HomeViewController()
-        let DMView = DirectMessageListViewController(workspaceId: workspaceId.description, viewModel: DMViewModel)
+        let homeView = HomeViewController(viewModel: HomeViewModel)
+        let DMView = DirectMessageListViewController(viewModel: DMViewModel)
         let profileView = SettingsViewController(nibName: "SettingsView", bundle: nil)
         
         let navController0 = NavigationController(rootViewController: homeView)

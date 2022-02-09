@@ -20,8 +20,6 @@ class DirectMessageListViewController: UIViewController {
     private var accessTokenField = UITextField()
     private var userInfo: User?
     private var members = [User]()
-    private var accessToken: String = ""
-    private var workspaceId: String = ""
     private let HEADER_HEIGHT: Float = 66
     
     // MARK: - UI
@@ -31,17 +29,13 @@ class DirectMessageListViewController: UIViewController {
     private var tableView = UITableView()
     private var refreshControl = UIRefreshControl()
         
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, workspaceId: String, viewModel: DirectMessageListViewModel) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, viewModel: DirectMessageListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        guard let accessToken: String = KeychainWrapper.standard[.refreshToken] else { return }
         if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
             let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
             self.userInfo = getUser(userInfo!)
         }
-        self.accessToken = accessToken
-        self.workspaceId = workspaceId
-        tableView.dataSource = nil
 
         bind(with: viewModel)
         attribute()
@@ -53,7 +47,7 @@ class DirectMessageListViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.viewModel.viewWillApper()
+        self.viewModel.viewWillAppear()
     }
     
     func bind(with viewModel: DirectMessageListViewModel) {

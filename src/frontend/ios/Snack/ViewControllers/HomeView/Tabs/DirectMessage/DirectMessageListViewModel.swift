@@ -35,9 +35,9 @@ class DirectMessageListViewModel: ViewModelProtocol {
     private let disposeBag = DisposeBag()
     
     // MARK: - Init
-    init(accessToken:String, workSpaceId: String) {
+    init(accessToken: String, workspaceId: String) {
         self.accessToken = accessToken
-        self.workspaceId = workSpaceId
+        self.workspaceId = workspaceId
         
         self.cellData = output.memberListCellData
             .asDriver(onErrorJustReturn: [])
@@ -61,7 +61,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
             }.disposed(by: disposeBag)
     }
     
-    func viewWillApper() {
+    func viewWillAppear() {
         self.getWorkspace(method: .get, self.accessToken, self.workspaceId)
     }
     

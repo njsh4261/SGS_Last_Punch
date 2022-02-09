@@ -16,7 +16,7 @@ import Then
 
 class HomeViewController: UIViewController {
     // MARK: - Properties
-    private let viewModel = HomeViewModel()
+    private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
     private var dataSource: RxTableViewSectionedReloadDataSource<HomeSection.Model>!
     private var users: [User]?
@@ -28,7 +28,8 @@ class HomeViewController: UIViewController {
     private var searchBar = UISearchBar()
     private var tableView = UITableView()
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle?  = nil, viewModel: HomeViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
             let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
@@ -39,14 +40,16 @@ class HomeViewController: UIViewController {
         attribute()
         layout()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.viewModel.viewWillAppear()
+    }
         
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func bind(with viewModel: HomeViewModel) {
-        tableView.dataSource = nil
-                
         // MARK: Bind input
         tableView.rx.itemSelected
             .compactMap {

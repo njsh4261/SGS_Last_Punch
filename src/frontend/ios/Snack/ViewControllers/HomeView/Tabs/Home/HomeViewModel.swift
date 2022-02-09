@@ -37,26 +37,27 @@ class HomeViewModel: ViewModelProtocol {
     private var members: [WorkspaceMemberCellModel]?
 
     // MARK: - Init
-    init() {
+    init(accessToken: String, workspaceId: String) {
+        self.token = accessToken
+        self.workspaceId = workspaceId
+        
         //MARK: - push
         self.push = input.itemSelected
             .compactMap { (row, section) -> (Int, Int) in
                 return (row, section)
             }
             .asDriver(onErrorDriveWith: .empty())
-
-        guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
-        self.token = token
-        self.workspaceId = workspaceId
-
+    }
+    
+    func viewWillAppear() {
         networkGroup.enter()
-        getWorkspace(method: .get, token, workspaceId: workspaceId)
+        getWorkspace(method: .get, self.token!, workspaceId: workspaceId!)
         
         networkGroup.enter()
-        getWorkspace(method: .get, token, workspaceId: workspaceId, isChannels: true)
+        getWorkspace(method: .get, self.token!, workspaceId: workspaceId!, isChannels: true)
 
         networkGroup.enter()
-        getWorkspace(method: .get, token, workspaceId: workspaceId, isMembers: true)
+        getWorkspace(method: .get, self.token!, workspaceId: workspaceId!, isMembers: true)
         
         networkGroup.notify(queue: .main) { [self] in
             guard let workspace = self.workspace, let channels = self.channels, let members = self.members else { return }
@@ -73,6 +74,7 @@ class HomeViewModel: ViewModelProtocol {
             output.workspaceTitle.accept(workspace.name)
             output.sections.accept([channelSection, memberSection])
         }
+
     }
     
     func getWorkspace(method: HTTPMethod, _ token: String, workspaceId: String, isChannels: Bool = false, isMembers: Bool = false) {

@@ -9,9 +9,14 @@ import WelcomeBody from '../components/Welcome/Body';
 const WelcomePage = styled.div`
   background-color: ${(props) => props.theme.color.snackSide};
   height: 100%;
+  overflow-y: scroll;
+`;
+
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  max-width: 650px;
+  margin: 0 auto;
 `;
 
 export default function Welcome() {
@@ -20,8 +25,10 @@ export default function Welcome() {
 
   return (
     <WelcomePage>
-      <WelcomeHeader></WelcomeHeader>
-      <WelcomeBody></WelcomeBody>
+      <Layout>
+        <WelcomeHeader></WelcomeHeader>
+        <WelcomeBody></WelcomeBody>
+      </Layout>
     </WelcomePage>
   );
 }

@@ -12,6 +12,7 @@ export const ItemContainer = styled.section`
 const ChannelLayer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const ChannelName = styled.section<{ newMessage: boolean }>`
@@ -33,19 +34,22 @@ const PaddingLeft8px = styled.span`
 `;
 
 const ButtonCreateNote = styled.button`
+  font-size: 16px;
   outline: none;
   border: none;
   background: inherit;
   color: inherit;
+  padding: 1px 3px 0px 3px;
+  border: 1px solid ${({ theme }) => theme.color.snackSideFont};
+  border-radius: 4px;
+  cursor: pointer;
   :hover {
-    cursor: pointer;
     color: black;
-    font-weight: bolder;
   }
 `;
 
 const NoteItem = styled.article`
-  padding: 7px 0px 0px 14px;
+  padding: 7px 0px 0px 12px;
   width: 130px;
   outline: none;
   border: none;
@@ -76,12 +80,13 @@ export default function ChannelItem(props: Props) {
     props;
 
   const [noteList, setNoteList] = useState<any[]>([]);
+  const [hover, setHover] = useState(false);
 
   const navigate = useNavigate();
 
   const createNoteHandler = async () => {
-    const noteId = await createNoteAPI(+wsId, +channel.id, 1);
-    if (noteId) setNoteList([...noteList, noteId]);
+    const note = await createNoteAPI(+wsId, +channel.id, 1);
+    if (note) setNoteList([...noteList, note]);
   };
 
   const getNoteListHandler = async () => {
@@ -97,22 +102,28 @@ export default function ChannelItem(props: Props) {
     else alert('no-note.id. aside-body-ChannelItem');
   };
 
+  const hoverHandler = () => setHover((current) => !current);
+
   useEffect(() => {
     if (isSelected && type === 'channel') getNoteListHandler();
   }, [isSelected]);
 
   return (
-    <ItemContainer id={channel.id} data-type={type} onClick={selectHandler}>
+    <ItemContainer
+      id={channel.id}
+      data-type={type}
+      onClick={selectHandler}
+      onMouseEnter={hoverHandler}
+      onMouseLeave={hoverHandler}
+    >
       <ChannelLayer>
         <ChannelName
           newMessage={channel.alarm && channel.id.toString() !== paramChannelId}
         >
           #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
         </ChannelName>
-        {type === 'channel' && isSelected && (
-          <ButtonCreateNote onClick={createNoteHandler}>
-            + Add Note
-          </ButtonCreateNote>
+        {type === 'channel' && isSelected && hover && (
+          <ButtonCreateNote onClick={createNoteHandler}>+</ButtonCreateNote>
         )}
       </ChannelLayer>
       {type === 'channel' &&
@@ -123,7 +134,7 @@ export default function ChannelItem(props: Props) {
             key={`${note.id}`}
             onClick={selectNoteHandler}
           >
-            - {note.title}
+            {note.title}
           </NoteItem>
         ))}
     </ItemContainer>

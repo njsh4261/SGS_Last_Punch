@@ -90,28 +90,36 @@ export default function ToggleList({
       .type as ModalType;
     dispatch(openModal(modalType));
   };
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   return (
     <ToggleType>
       <Label htmlFor={`${type}-toggle`} onClick={() => setChecked(!checked)}>
         {checked ? <ArrowDown /> : <ArrowRight />}
-        <PaddingLeft8px>
-          {type === 'channel' ? 'channel' : 'direct message'}
-        </PaddingLeft8px>
+        <PaddingLeft8px>{type}</PaddingLeft8px>
       </Label>
-      <CheckBox type="checkbox" id={`${type}-toggle`}></CheckBox>
+      <CheckBox
+        type="checkbox"
+        id={`${type}-toggle`}
+        defaultChecked={true}
+      ></CheckBox>
       <ChannelList>
-        {channelList.map((channel) => (
-          <ChannelItem
-            channel={channel}
-            paramChannelId={params.channelId}
-            wsId={params.wsId as string}
-            key={channel.id}
-            type={type}
-            selectHandler={selectHandler}
-            isSelected={params.channelId === channel.id.toString()}
-          ></ChannelItem>
-        ))}
+        {channelList.map(
+          (channel) =>
+            !(
+              type === 'direct message' &&
+              !(channel as any).lastMessage.createDt
+            ) && (
+              <ChannelItem
+                channel={channel}
+                paramChannelId={params.channelId}
+                wsId={params.wsId as string}
+                key={channel.id}
+                type={type}
+                selectHandler={selectHandler}
+                isSelected={params.channelId === channel.id.toString()}
+              ></ChannelItem>
+            ),
+        )}
         <ItemContainer data-type={type} onClick={openModalHandler}>
           <Flex>
             <PlusIcon src={addIcon} width="16px" height="16px"></PlusIcon>

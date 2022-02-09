@@ -3,16 +3,20 @@ import SockJS from 'sockjs-client';
 import { Stomp, CompatClient } from '@stomp/stompjs';
 import { TOKEN, URL } from '../constant';
 import { useDispatch } from 'react-redux';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { SendMessage, ChatMessage } from '../../types/chat.type';
 import { setChannelListRedux } from '../modules/channeList';
+import { setUserList } from '../modules/userList';
 
 const HOST = URL.HOST;
 
 export default function chatSocketHook(
+  userId: number,
   channelId: string,
   setMsgList: React.Dispatch<SetStateAction<ChatMessage[]>>,
   channelList: any[],
+  memberList: any[],
 ) {
   const channelRef = useRef(channelId);
   const dispatch = useDispatch();
@@ -30,8 +34,6 @@ export default function chatSocketHook(
       const stompClient = Stomp.over(socket);
       stompClient.debug = (f) => f;
       stompClient.connect({ Authorization: accessToken }, () => {
-        if (channelList.length < 1) return;
-
         channelList.map((channel) => {
           stompClient.subscribe(`/topic/channel.${channel.id}`, (payload) => {
             if (channel.id === +channelRef.current) {
@@ -40,9 +42,26 @@ export default function chatSocketHook(
             } else {
               // alarm on
               const index = channelList.findIndex((el) => el.id === channel.id);
-              const newList = [...channelList];
+              const newList = cloneDeep(channelList);
               newList[index] = { ...newList[index], alarm: true };
               dispatch(setChannelListRedux(newList));
+            }
+          });
+        });
+
+        memberList.map((member) => {
+          const [low, high] =
+            userId < member.id ? [userId, member.id] : [member.id, userId];
+          stompClient.subscribe(`/topic/${low}-${high}`, (payload) => {
+            if (`${low}-${high}` === channelRef.current) {
+              const msg = JSON.parse(payload.body);
+              setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+            } else {
+              // alarm on
+              const index = memberList.findIndex((el) => el.id === member.id);
+              const newList = cloneDeep(memberList);
+              newList[index] = { ...newList[index], alarm: true };
+              dispatch(setUserList(newList));
             }
           });
         });

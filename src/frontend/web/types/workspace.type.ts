@@ -10,3 +10,17 @@ export interface ICreateWs {
   workspaceName: string;
   channelName: string;
 }
+
+export interface IMemberInWS {
+  id: number;
+  name: string;
+  lastMessage: {
+    authorId: number;
+    channelId: number;
+    content: string;
+    id: number;
+    createDt: any;
+    modifyDt: any;
+    status: any;
+  };
+}

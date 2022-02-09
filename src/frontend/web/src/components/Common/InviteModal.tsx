@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { closeModal } from '../../modules/modal';
 import { inviteWsAPI } from '../../Api/workspace';
 import { inviteChannelAPI } from '../../Api/channel';
 import { searchMemberAPI } from '../../Api/account';
 import { ModalType } from '../Main/Aside/Body/Modal';
-import { useParams } from 'react-router-dom';
+import { RootState } from '../../modules';
+import { setUserList } from '../../modules/userList';
 
 const Header = styled.section`
   width: 100%;
@@ -113,6 +116,7 @@ export default function InviteModal({
   const [candidates, setCandidates] = useState([]);
   const [selectedUser, selectUser] = useState();
   const [inviteEmail, setInviteEmail] = useState('');
+  const memberList = useSelector((state: RootState) => state.userList);
   const params = useParams();
   const dispatch = useDispatch();
 
@@ -126,23 +130,34 @@ export default function InviteModal({
 
   const inviteHandler = async () => {
     if (selectedUser) {
+      const targetId = +(selectedUser as any).id;
+
       let response;
       switch (type) {
         case 'invite-workspace':
-          response = await inviteWsAPI(+wsId, +(selectedUser as any).id);
+          response = await inviteWsAPI(+wsId, targetId);
           if (response?.err) {
             Swal.fire(response.err.desc, '', 'error');
           }
           break;
         case 'invite-channel':
-          response = await inviteChannelAPI(
-            +(selectedUser as any).id,
-            +params.channelId!,
-            1,
-          );
+          response = await inviteChannelAPI(targetId, +params.channelId!, 1);
           if (response?.err) {
             Swal.fire(response.err.desc, '', 'error');
           }
+          break;
+        case 'direct message':
+          // change member's state of 'memberList'
+          const index = memberList.findIndex(
+            (member) => member.id === targetId,
+          );
+          const newList: any[] = cloneDeep(memberList);
+          newList[index].lastMessage = {
+            ...newList[index].lastMessage,
+            createDt: true,
+          };
+          dispatch(setUserList(newList));
+          response = true;
           break;
       }
       if (response) {

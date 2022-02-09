@@ -70,6 +70,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
   const [
     user,
     channel,
+    memberList,
     msg,
     msgList,
     endRef,
@@ -77,12 +78,11 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     msgSubmitHandler,
   ] = chatHook();
 
-  const userList = useSelector((state: RootState) => state.userList);
   const userDictionary = useMemo(() => {
     const obj: { [index: string]: string } = {};
-    userList.map((user) => (obj[user.id] = user.name));
+    memberList.map((member) => (obj[member.id] = member.name));
     return obj;
-  }, [userList]);
+  }, [memberList]);
 
   return (
     <>

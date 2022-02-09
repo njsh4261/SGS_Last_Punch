@@ -8,6 +8,7 @@ import { ChatMessage } from '../../types/chat.type';
 export default function chatHook(): [
   user: RootState['user'],
   channel: RootState['channel'],
+  memberList: RootState['userList'],
   msg: string,
   msgList: ChatMessage[],
   endRef: React.MutableRefObject<HTMLDivElement | null>,
@@ -53,9 +54,14 @@ export default function chatHook(): [
     scrollToBottom();
   }, [msgList]);
 
+  useEffect(() => {
+    setMsgList([]);
+  }, [channel]);
+
   return [
     user,
     channel,
+    memberList,
     msg,
     msgList,
     endRef,

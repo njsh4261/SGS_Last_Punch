@@ -65,6 +65,9 @@ class NewWorkspaceFirstViewController: UIViewController {
     private func goToNewWorkspaceChennel() {
         let navController = NewWorkspaceSecondViewController()
         navController.bind(with: viewModel)
+        if newWorkspaceNameField.text == "새 워크스페이스" {
+            newWorkspaceNameField.text = "새 워크스페이스"
+        }
         navigationController?.pushViewController(navController, animated: true)
     }
         

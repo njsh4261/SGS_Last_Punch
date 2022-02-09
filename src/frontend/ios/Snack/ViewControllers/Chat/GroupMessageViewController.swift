@@ -18,7 +18,6 @@ import CoreLocation
 
 class GroupMessageViewController: MessagesViewController {
     // MARK: - Properties
-    private var viewModel: GroupMessageViewModel?
     private let disposeBag = DisposeBag()
     let channel: WorkspaceChannelCellModel?
     var messages = [MessageModel]()
@@ -61,14 +60,7 @@ class GroupMessageViewController: MessagesViewController {
         layout()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        viewModel?.disconnect()
-    }
-    
     func bind(_ viewModel: GroupMessageViewModel) {
-        self.viewModel = viewModel
-        viewModel.registerSockect()
-        
         // MARK: Bind input
         btnViewTitle.rx.tap
             .bind(to: viewModel.input.btnTtitleTapped)
@@ -476,7 +468,6 @@ extension GroupMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
-        viewModel!.sendMessage(authorId: senderInfo.senderId, content: text)
         insertNewMessage(message)
         inputBar.inputTextView.text.removeAll()
 

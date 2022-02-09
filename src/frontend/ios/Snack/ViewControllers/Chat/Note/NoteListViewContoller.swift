@@ -170,7 +170,7 @@ class NoteListViewContoller: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func showWarningAlert(_ noteId: String) {
-        let alert = UIAlertController(title: "노트를 삭제하시겠습니까?", message: "[경고] 멤버에게 알리는 로직이 구현되어 있지 않아 문제를 초례할 수 있습니다", preferredStyle: .alert)
+        let alert = UIAlertController(title: "노트를 삭제하시겠습니까?", message: "[경고] 멤버에게 알리는 로직이 구현되어 있지 않아 문제를 초래할 수 있습니다", preferredStyle: .alert)
         let cancle = UIAlertAction(title: "취소", style: .cancel)
         cancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
         let delete = UIAlertAction(title: "삭제", style: .destructive, handler: { action in

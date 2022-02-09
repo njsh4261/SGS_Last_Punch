@@ -18,7 +18,6 @@ import CoreLocation
 
 class PrivateMessageViewController: MessagesViewController {
     // MARK: - Properties
-    private var viewModel: PrivateMessageViewModel?
     private let disposeBag = DisposeBag()
 //    let channel: Channel?
     var messages = [MessageModel]()
@@ -62,15 +61,7 @@ class PrivateMessageViewController: MessagesViewController {
         layout()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        viewModel?.disconnect()
-    }
-    
     func bind(_ viewModel: PrivateMessageViewModel) {
-        self.viewModel = viewModel
-//        viewModel.registerSockect()
-//        viewModel.subscribe()
-        
         // MARK: Bind input
         btnAttach.rx.tap
             .subscribe(onNext: showImagePickerControllerActionSheet)
@@ -419,7 +410,6 @@ extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
-        viewModel!.sendMessage(authorId: senderInfo.senderId, content: text)
         insertNewMessage(message)
         inputBar.inputTextView.text.removeAll()
 

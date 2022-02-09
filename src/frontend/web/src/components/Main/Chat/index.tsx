@@ -39,6 +39,7 @@ const MessagItemContainer = styled.article<{ me?: boolean }>`
 const MessageBox = styled.article`
   display: flex;
   flex-direction: column;
+  text-align: end;
 `;
 
 const MessageWriter = styled.div`

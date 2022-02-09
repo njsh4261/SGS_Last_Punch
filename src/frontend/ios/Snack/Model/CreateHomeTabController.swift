@@ -12,10 +12,12 @@ import SwiftKeychainWrapper
 class CreateHomeTabController {
     func getTabController(_ workspaceId: String) -> UITabBarController {
         KeychainWrapper.standard[.workspaceId] = workspaceId
+        let accessToken: String = KeychainWrapper.standard[.accessToken]!
+        
+        let DMViewModel = DirectMessageListViewModel(accessToken: accessToken, workSpaceId: workspaceId)
         
         let homeView = HomeViewController()
-        let DMView = DirectMessageListViewController(workspaceId: workspaceId.description)
-        DMView.bind(with: DirectMessageListViewModel())
+        let DMView = DirectMessageListViewController(workspaceId: workspaceId.description, viewModel: DMViewModel)
         let profileView = SettingsViewController(nibName: "SettingsView", bundle: nil)
         
         let navController0 = NavigationController(rootViewController: homeView)

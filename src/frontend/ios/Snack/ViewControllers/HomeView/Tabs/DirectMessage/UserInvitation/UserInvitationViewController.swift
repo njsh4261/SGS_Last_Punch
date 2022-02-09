@@ -49,7 +49,10 @@ class UserInvitationViewController: UIViewController {
     }
     
     @objc func actionDismiss() {
-        dismiss(animated: true)
+        guard let pvc = self.presentingViewController else { return }
+        pvc.dismiss(animated: true) {
+            pvc.viewWillAppear(true)
+        }
     }
     
     @objc func actionSend() {

@@ -16,6 +16,7 @@ import Then
 class DirectMessageListViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
+    private var viewModel: DirectMessageListViewModel
     private var accessTokenField = UITextField()
     private var userInfo: User?
     private var members = [User]()
@@ -30,7 +31,8 @@ class DirectMessageListViewController: UIViewController {
     private var tableView = UITableView()
     private var refreshControl = UIRefreshControl()
         
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, workspaceId: String) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, workspaceId: String, viewModel: DirectMessageListViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let accessToken: String = KeychainWrapper.standard[.refreshToken] else { return }
         if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
@@ -41,12 +43,17 @@ class DirectMessageListViewController: UIViewController {
         self.workspaceId = workspaceId
         tableView.dataSource = nil
 
+        bind(with: viewModel)
         attribute()
         layout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.viewModel.viewWillApper()
     }
     
     func bind(with viewModel: DirectMessageListViewModel) {

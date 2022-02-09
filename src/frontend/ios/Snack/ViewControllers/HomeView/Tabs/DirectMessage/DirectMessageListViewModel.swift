@@ -29,12 +29,17 @@ class DirectMessageListViewModel: ViewModelProtocol {
     var output = Output()
     var cellData: Driver<[User]>
     let push: Driver<Int>
+    let accessToken: String
+    let workspaceId: String
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
     
     // MARK: - Init
-    init() {
+    init(accessToken:String, workSpaceId: String) {
+        self.accessToken = accessToken
+        self.workspaceId = workSpaceId
+        
         self.cellData = output.memberListCellData
             .asDriver(onErrorJustReturn: [])
         
@@ -55,13 +60,10 @@ class DirectMessageListViewModel: ViewModelProtocol {
                     self.output.refreshLoading.accept(false)
                 }
             }.disposed(by: disposeBag)
-        
-        // init - Cell Data
-        input.getMember.withLatestFrom(input.getMember)
-            .bind { [weak self] (member) in
-                guard let self = self else { return }
-                self.getWorkspace(method: .get, member.accessToken, member.workspaceId)
-            }.disposed(by: disposeBag)
+    }
+    
+    func viewWillApper() {
+        self.getWorkspace(method: .get, self.accessToken, self.workspaceId)
     }
     
     func getWorkspace(method: HTTPMethod, _ token:String, _ workspaceId: String) {

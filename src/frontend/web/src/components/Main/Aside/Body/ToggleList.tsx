@@ -95,9 +95,7 @@ export default function ToggleList({
     <ToggleType>
       <Label htmlFor={`${type}-toggle`} onClick={() => setChecked(!checked)}>
         {checked ? <ArrowDown /> : <ArrowRight />}
-        <PaddingLeft8px>
-          {type === 'channel' ? 'channel' : 'direct message'}
-        </PaddingLeft8px>
+        <PaddingLeft8px>{type}</PaddingLeft8px>
       </Label>
       <CheckBox type="checkbox" id={`${type}-toggle`}></CheckBox>
       <ChannelList>

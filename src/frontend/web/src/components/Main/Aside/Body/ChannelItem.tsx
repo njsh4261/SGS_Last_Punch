@@ -16,6 +16,13 @@ export const ItemContainer = styled.section`
   }
 `;
 
+const ChannelName = styled.section`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px;
+`;
+
 const PaddingLeft8px = styled.span`
   padding-left: 8px;
 `;
@@ -68,9 +75,9 @@ export default function ChannelItem(props: Props) {
 
   return (
     <ItemContainer id={channel.id} data-type={type} onClick={selectHandler}>
-      <div>
+      <ChannelName>
         #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
-      </div>
+      </ChannelName>
       {channel.alarm && channel.id.toString() !== paramChannelId && (
         <span>new Message</span>
       )}

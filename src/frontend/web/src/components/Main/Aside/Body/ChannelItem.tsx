@@ -87,12 +87,12 @@ export default function ChannelItem(props: Props) {
   const getNoteListHandler = async () => {
     const responseNoteList = await getNoteListAPI(+channel.id);
     if (responseNoteList)
-      setNoteList(responseNoteList.map((resNote) => resNote.id));
+      setNoteList(responseNoteList.map((resNote) => resNote));
   };
 
   const selectNoteHandler = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    const noteId = (e.target as any).id;
+    const noteId = (e.target as Element).id;
     if (noteId) navigate(`/${wsId}/${channel.id}/note/${noteId}`);
     else alert('no-note.id. aside-body-ChannelItem');
   };
@@ -118,8 +118,12 @@ export default function ChannelItem(props: Props) {
       {type === 'channel' &&
         isSelected &&
         noteList.map((note) => (
-          <NoteItem id={note} key={note} onClick={selectNoteHandler}>
-            - {note}
+          <NoteItem
+            id={`${note.id}`}
+            key={`${note.id}`}
+            onClick={selectNoteHandler}
+          >
+            - {note.title}
           </NoteItem>
         ))}
     </ItemContainer>

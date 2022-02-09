@@ -6,18 +6,18 @@ import { ReactEditor, withReact } from 'slate-react';
 import { useParams } from 'react-router-dom';
 
 import EditorFrame from './EditorFrame';
-import ImageButton from '../../Common/ImageButton';
-import arrowRightIcon from '../../../icon/arrowRight.svg';
-import { Note } from '../../../../types/note.type';
-import noteSocketHook, { User } from '../../../hook/note/noteSocket';
-import noteApplyInitDataHook from '../../../hook/note/noteApplyInitData';
+import ImageButton from '../Common/ImageButton';
+import arrowRightIcon from '../../icon/arrowRight.svg';
+import { Note } from '../../../types/note.type';
+import noteSocketHook, { User } from '../../hook/note/noteSocket';
+import noteApplyInitDataHook from '../../hook/note/noteApplyInitData';
 import {
   updateNoteAllAPI,
   getSpecificNoteAPI,
   updateTitleAPI,
-} from '../../../Api/note';
-import noteOPintervalHook from '../../../hook/note/noteOPinterval';
-import Loading from '../../Common/Loading';
+} from '../../Api/note';
+import noteOPintervalHook from '../../hook/note/noteOPinterval';
+import Loading from '../Common/Loading';
 
 const TYPING_TIME = 1500;
 const UPDATE_OP_TIME = 1000;

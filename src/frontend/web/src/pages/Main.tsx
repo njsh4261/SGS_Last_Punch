@@ -6,7 +6,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import getWsHook from '../hook/getWs';
 import updateChannelStoreHook from '../hook/updateChannelStore';
 import Chat from '../components/Main/Chat';
-import NoteMain from '../components/Note/Main';
+import NoteMain from '../components/Note';
 import Aside from '../components/Main/Aside';
 import { RootState } from '../modules';
 import Loading from '../components/Common/Loading';

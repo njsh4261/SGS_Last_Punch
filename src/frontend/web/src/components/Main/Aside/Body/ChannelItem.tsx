@@ -11,24 +11,37 @@ export const ItemContainer = styled.section`
 
 const ChannelLayer = styled.div`
   display: flex;
-  &:hover {
-    cursor: pointer;
-    color: black;
-    font-weight: bolder;
-  }
+  justify-content: space-between;
 `;
 
 const ChannelName = styled.section<{ newMessage: boolean }>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 200px;
+  width: 125px;
   font-weight: ${({ newMessage }) => newMessage && 'bolder'};
   font-style: ${({ newMessage }) => newMessage && 'italic'};
+  :hover {
+    cursor: pointer;
+    color: black;
+    font-weight: bolder;
+  }
 `;
 
 const PaddingLeft8px = styled.span`
   padding-left: 8px;
+`;
+
+const ButtonCreateNote = styled.button`
+  outline: none;
+  border: none;
+  background: inherit;
+  color: inherit;
+  :hover {
+    cursor: pointer;
+    color: black;
+    font-weight: bolder;
+  }
 `;
 
 interface Props {
@@ -80,7 +93,9 @@ export default function ChannelItem(props: Props) {
           #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
         </ChannelName>
         {type === 'channel' && isSelected && (
-          <button onClick={createNoteHandler}>create note</button>
+          <ButtonCreateNote onClick={createNoteHandler}>
+            + Add Note
+          </ButtonCreateNote>
         )}
       </ChannelLayer>
       {type === 'channel' &&

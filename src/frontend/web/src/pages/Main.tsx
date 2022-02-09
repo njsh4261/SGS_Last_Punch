@@ -15,12 +15,6 @@ import getSelfInfoHook from '../hook/getSelfInfo';
 
 const MainLayout = styled.div`
   display: flex;
-  flex-direction: column;
-  height: 100%;
-`;
-
-const Body = styled.div`
-  display: flex;
   height: 100%;
 `;
 
@@ -55,30 +49,28 @@ export default function Main() {
 
   return (
     <MainLayout>
-      <Body>
-        <Aside
-          ws={ws}
-          hover={hover}
-          hoverHandler={hoverHandler}
-          sideToggle={sideToggle}
-          sideToggleHandler={sideToggleHandler}
-        ></Aside>
-        {channelList.length > 0 && memberList.length > 0 && params.channelId ? (
-          params.noteId ? (
-            <NoteMain
-              sideToggle={sideToggle}
-              sideToggleHandler={sideToggleHandler}
-            ></NoteMain>
-          ) : (
-            <Chat
-              sideToggle={sideToggle}
-              sideToggleHandler={sideToggleHandler}
-            ></Chat>
-          )
+      <Aside
+        ws={ws}
+        hover={hover}
+        hoverHandler={hoverHandler}
+        sideToggle={sideToggle}
+        sideToggleHandler={sideToggleHandler}
+      ></Aside>
+      {channelList.length > 0 && memberList.length > 0 && params.channelId ? (
+        params.noteId ? (
+          <NoteMain
+            sideToggle={sideToggle}
+            sideToggleHandler={sideToggleHandler}
+          ></NoteMain>
         ) : (
-          <Loading></Loading>
-        )}
-      </Body>
+          <Chat
+            sideToggle={sideToggle}
+            sideToggleHandler={sideToggleHandler}
+          ></Chat>
+        )
+      ) : (
+        <Loading></Loading>
+      )}
     </MainLayout>
   );
 }

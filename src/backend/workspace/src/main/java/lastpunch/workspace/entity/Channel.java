@@ -86,7 +86,6 @@ public class Channel{
         private String topic;
         private String description;
         private Integer settings;
-        private Integer status;
         
         public Channel toEntity(Channel channel){
             if(name != null){
@@ -113,7 +112,6 @@ public class Channel{
         private String topic;
         private String description;
         private Integer settings;
-        private Integer status;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createDt;
@@ -140,5 +138,10 @@ public class Channel{
         return new ExportDto(
                 id, workspace, name, topic, description, settings, createdt, modifydt
         );
+    }
+
+    public interface ExportSimpleDto{
+        Long getId();
+        String getName();
     }
 }

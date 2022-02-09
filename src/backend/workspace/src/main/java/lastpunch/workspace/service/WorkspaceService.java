@@ -8,7 +8,8 @@ import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.exception.DBExceptionMapper;
 import lastpunch.workspace.common.type.RoleType;
-import lastpunch.workspace.entity.Account.ExportDto;
+import lastpunch.workspace.dto.Members;
+import lastpunch.workspace.entity.Account;
 import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.entity.Message;
 import lastpunch.workspace.entity.Workspace;
@@ -22,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -66,30 +66,38 @@ public class WorkspaceService{
         return Map.of("workspace", commonService.getWorkspace(id).export());
     }
 
-    public Map<String, Object> getMembers(Long id, Pageable pageable){
-        Page<ExportDto> members = workspaceRepository.getMembers(id, pageable);
-        List<String> dmList = members.getContent().stream().map(
-            exportDto -> getDMChannelId(id, exportDto.getId())
+    public Map<String, Object> getAllMembers(Long id){
+        List<Account.ExportSimpleDto> members = workspaceRepository.getAllMembers(id);
+        List<String> dmList = members.stream().map(
+            exportSimpleDto -> getDMChannelId(id, exportSimpleDto.getId())
         ).collect(Collectors.toList());
         
         Map<String, Message> messages = messageRepository.getRecentDMs(dmList);
-        for(ExportDto member: members.getContent()){
+        for(Account.ExportSimpleDto member: members){
             member.setLastMessage(
                 messages.getOrDefault(getDMChannelId(id, member.getId()), new Message())
             );
         }
         
-        return Map.of("members", members);
+        return Map.of("members", new Members(members));
     }
-    
+
+    public Map<String, Object> getMembersPaging(Long id, Pageable pageable){
+        return Map.of("members", workspaceRepository.getMembersPaging(id, pageable));
+    }
+
     private String getDMChannelId(Long userId1, Long userId2){
         return userId1 < userId2
             ? String.format("%d-%d", userId1, userId2)
             : String.format("%d-%d", userId2, userId1);
     }
 
-    public Map<String, Object> getChannels(Long id, Pageable pageable){
-        return Map.of("channels", workspaceRepository.getChannels(id, pageable));
+    public Map<String, Object> getAllChannels(Long workspaceId, Long userId){
+        return Map.of("channels", new Members(workspaceRepository.getAllChannels(workspaceId, userId)));
+    }
+
+    public Map<String, Object> getChannelsPaging(Long id, Pageable pageable){
+        return Map.of("channels", workspaceRepository.getChannelsPaging(id, pageable));
     }
 
     public Map<String, Object> create(Long userId, Workspace.CreateDto workspaceDto){

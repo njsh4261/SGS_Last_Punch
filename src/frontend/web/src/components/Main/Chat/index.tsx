@@ -74,7 +74,6 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     msg,
     msgList,
     setMsgList,
-    endRef,
     msgTypingHandler,
     msgSubmitHandler,
   ] = chatHook();
@@ -85,7 +84,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     return obj;
   }, [memberList]);
 
-  const { scrollObserverRef, scrollLoading } = chatScrollHook(
+  const { scrollObserverRef, scrollLoading, endRef } = chatScrollHook(
     channel.id,
     msgList,
     setMsgList,

@@ -13,7 +13,6 @@ import ProgressHUD
 class DirectMessageListViewModel: ViewModelProtocol {
     
     struct Input {
-        let getMember = PublishSubject<getMemberAction>()
         let refresh = PublishSubject<Void>()
         let itemSelected = PublishRelay<Int>()
     }
@@ -51,12 +50,12 @@ class DirectMessageListViewModel: ViewModelProtocol {
             .asDriver(onErrorDriveWith: .empty())
         
         // refresh
-        input.refresh.withLatestFrom(input.getMember)
-            .bind { [weak self] (member) in
+        input.refresh
+            .bind { [weak self] _ in
                 guard let self = self else { return }
                 let when = DispatchTime.now() + 1.0
                 DispatchQueue.main.asyncAfter(deadline: when) {
-                    self.getWorkspace(method: .get, member.accessToken, member.workspaceId)
+                    self.getWorkspace(method: .get, self.accessToken, self.workspaceId)
                     self.output.refreshLoading.accept(false)
                 }
             }.disposed(by: disposeBag)

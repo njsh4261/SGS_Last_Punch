@@ -58,16 +58,6 @@ class DirectMessageListViewController: UIViewController {
     
     func bind(with viewModel: DirectMessageListViewModel) {
         // MARK: Bind input
-        accessTokenField.rx.text
-            .map {_ in
-                getMemberAction.init(
-                    accessToken: self.accessToken,
-                    workspaceId: self.workspaceId
-                )
-            }
-            .bind(to: viewModel.input.getMember)
-            .disposed(by: disposeBag)
-        
         btnAddMemeber.rx.tap
             .subscribe(onNext: goToInvitation)
             .disposed(by: disposeBag)

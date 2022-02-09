@@ -28,21 +28,20 @@ const Body = styled.div`
 export default function Main() {
   const dispatch = useDispatch();
   const [params, ws] = getWsHook();
-  setTitleHook('', params);
-  updateChannelStoreHook(params);
   const channelList = useSelector((state: RootState) => state.channelList);
   const memberList = useSelector((state: RootState) => state.userList);
-
   const [hover, setHover] = useState(false);
-  const hoverHandler = () => setHover(!hover);
-
   const [sideToggle, setSideToggle] = useState(true);
+
+  const hoverHandler = () => setHover(!hover);
   const sideToggleHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     setSideToggle(!sideToggle);
   };
 
+  setTitleHook('', params);
   getSelfInfoHook();
+  updateChannelStoreHook(params, memberList);
 
   // alarm off
   useEffect(() => {

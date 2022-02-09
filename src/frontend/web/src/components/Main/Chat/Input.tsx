@@ -69,7 +69,7 @@ const ChatInput = ({
       <InputLayer
         value={msg}
         onChange={msgTypingHandler}
-        onKeyDown={enterKeyHandler}
+        onKeyPress={enterKeyHandler}
         placeholder={`#${channelName}에게 메시지 보내기`}
       ></InputLayer>
       <ButtonLayer>

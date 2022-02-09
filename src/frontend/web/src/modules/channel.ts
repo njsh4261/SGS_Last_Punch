@@ -7,6 +7,8 @@ const SELECT_CAHNNEL = 'channel/select';
 const SELECT_CHANNEL_SUCCESS = 'channel/success';
 const SELECT_CHANNEL_FAILURE = 'channel/failure';
 
+const SELECT_DM = '/channel/select/dm';
+
 type ChannelState = {
   id: string;
   name: string;
@@ -16,6 +18,12 @@ type ChannelState = {
 
 export const selectChannel = (id: string, name = '') => ({
   type: SELECT_CAHNNEL,
+  id,
+  name,
+});
+
+export const selectDM = (id: string, name: string) => ({
+  type: SELECT_DM,
   id,
   name,
 });
@@ -78,6 +86,12 @@ export default function channel(
         ...state,
         loading: false,
         error: true,
+      };
+    case SELECT_DM:
+      return {
+        ...state,
+        id: action.id,
+        name: action.name,
       };
     default:
       return state;

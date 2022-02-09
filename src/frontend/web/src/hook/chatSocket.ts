@@ -3,6 +3,7 @@ import SockJS from 'sockjs-client';
 import { Stomp, CompatClient } from '@stomp/stompjs';
 import { TOKEN, URL } from '../constant';
 import { useDispatch } from 'react-redux';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { SendMessage, ChatMessage } from '../../types/chat.type';
 import { setChannelListRedux } from '../modules/channeList';
@@ -41,7 +42,7 @@ export default function chatSocketHook(
             } else {
               // alarm on
               const index = channelList.findIndex((el) => el.id === channel.id);
-              const newList = [...channelList];
+              const newList = cloneDeep(channelList);
               newList[index] = { ...newList[index], alarm: true };
               dispatch(setChannelListRedux(newList));
             }
@@ -58,7 +59,7 @@ export default function chatSocketHook(
             } else {
               // alarm on
               const index = memberList.findIndex((el) => el.id === member.id);
-              const newList = [...memberList];
+              const newList = cloneDeep(memberList);
               newList[index] = { ...newList[index], alarm: true };
               dispatch(setUserList(newList));
             }

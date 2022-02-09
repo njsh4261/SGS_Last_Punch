@@ -45,12 +45,6 @@ export default function ChannelItem(props: Props) {
   const { channel, wsId, paramChannelId, selectHandler, type, isSelected } =
     props;
 
-  if (type === 'direct message') {
-    if (!channel.lastMessage.createDt) {
-      return <></>;
-    }
-  }
-
   const [noteList, setNoteList] = useState<any[]>([]);
 
   const navigate = useNavigate();

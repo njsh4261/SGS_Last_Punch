@@ -99,17 +99,23 @@ export default function ToggleList({
       </Label>
       <CheckBox type="checkbox" id={`${type}-toggle`}></CheckBox>
       <ChannelList>
-        {channelList.map((channel) => (
-          <ChannelItem
-            channel={channel}
-            paramChannelId={params.channelId}
-            wsId={params.wsId as string}
-            key={channel.id}
-            type={type}
-            selectHandler={selectHandler}
-            isSelected={params.channelId === channel.id.toString()}
-          ></ChannelItem>
-        ))}
+        {channelList.map(
+          (channel) =>
+            !(
+              type === 'direct message' &&
+              !(channel as any).lastMessage.createDt
+            ) && (
+              <ChannelItem
+                channel={channel}
+                paramChannelId={params.channelId}
+                wsId={params.wsId as string}
+                key={channel.id}
+                type={type}
+                selectHandler={selectHandler}
+                isSelected={params.channelId === channel.id.toString()}
+              ></ChannelItem>
+            ),
+        )}
         <ItemContainer data-type={type} onClick={openModalHandler}>
           <Flex>
             <PlusIcon src={addIcon} width="16px" height="16px"></PlusIcon>

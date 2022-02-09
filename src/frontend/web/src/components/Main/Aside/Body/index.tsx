@@ -6,7 +6,6 @@ import { RootState } from '../../../../modules';
 import Modal from './Modal';
 import getChannelsAndMembersHook from '../../../../hook/getChannelsAndMembers';
 import selectChannelHook from '../../../../hook/selectChannel';
-import setTitleHook from '../../../../hook/setTitle';
 import ToggleList, { Label } from './ToggleList';
 
 const Container = styled.article`
@@ -27,7 +26,6 @@ const SecitonType = styled.section`
 
 export default function AsideBody() {
   const [params] = getChannelsAndMembersHook();
-  setTitleHook('', params);
   const selectChannelHandler = selectChannelHook(params);
   const modalState = useSelector((state: RootState) => state.modal);
   const channelList = useSelector((state: RootState) => state.channelList);

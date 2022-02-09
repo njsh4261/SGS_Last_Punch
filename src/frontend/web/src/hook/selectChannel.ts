@@ -13,10 +13,10 @@ export default function selectChannelHook(params: Params) {
       const [low, high] =
         user.id < +channel.id ? [user.id, channel.id] : [channel.id, user.id];
       navigate(`/${wsId}/${low}-${high}`);
-      document.title = `snack/${wsId}/${low}-${high}`;
+      document.title = `Snack/${wsId}/${low}-${high}`;
     } else {
       navigate(`/${wsId}/${channel.id}`);
-      document.title = `snack/${wsId}/${channel.id}`;
+      document.title = `Snack/${wsId}/${channel.id}`;
     }
   };
   return selectChannelHandler;

@@ -5,7 +5,6 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import getWsHook from '../hook/getWs';
 import updateChannelStoreHook from '../hook/updateChannelStore';
-import setTitleHook from '../hook/setTitle';
 import Chat from '../components/Main/Chat';
 import NoteMain from '../components/Note/Main';
 import Aside from '../components/Main/Aside';
@@ -39,7 +38,6 @@ export default function Main() {
     setSideToggle(!sideToggle);
   };
 
-  setTitleHook('', params);
   getSelfInfoHook();
   updateChannelStoreHook(params, memberList);
 

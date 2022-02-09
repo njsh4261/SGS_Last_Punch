@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Params, useNavigate } from 'react-router-dom';
+import { Params } from 'react-router-dom';
 import { selectChannel } from '../modules/channel';
 
 export default function updateChannelStoreHook(params: Params) {

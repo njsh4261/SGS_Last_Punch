@@ -3,7 +3,6 @@ import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Main from '../pages/Main';
 import Welcome from '../pages/Welcome';
 import WsCreator from '../pages/CreateWs';
-import Note from '../pages/Note';
 import Task from '../pages/Task';
 
 export default function PrivateRoute() {

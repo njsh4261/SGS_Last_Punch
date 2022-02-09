@@ -17,10 +17,11 @@ import {
   updateTitleAPI,
 } from '../../../Api/note';
 import noteOPintervalHook from '../../../hook/note/noteOPinterval';
+import Loading from '../../Common/Loading';
 
-const TYPING_TIME = 2000;
+const TYPING_TIME = 1500;
 const UPDATE_OP_TIME = 1000;
-const UPDATE_NOTE_TIME = 10000;
+
 const ARROW_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
 
 const Container = styled.article`
@@ -226,7 +227,7 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
   return (
     <>
       {!note ? (
-        <div>select any note</div>
+        <Loading></Loading>
       ) : (
         <Container>
           {!sideToggle && (

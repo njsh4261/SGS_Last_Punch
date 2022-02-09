@@ -8,7 +8,7 @@ CREATE TABLE `account`(
     `country` CHAR(255) NOT NULL,
     `language` CHAR(255) NOT NULL,
     `settings` TINYINT NOT NULL,
-    `status` TINYINT NOT NULL,
+    `status` TINYINT NULL,
     `level` TINYINT NULL,
     `point` BIGINT NULL,
     `createDt` DATETIME NOT NULL,
@@ -37,16 +37,6 @@ CREATE TABLE `channel`(
     UNIQUE (`workspaceId`, `name`)
 );
 ALTER TABLE `channel` ADD CONSTRAINT `channel_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`) ON DELETE CASCADE;
-
-CREATE TABLE `presence`(
-    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `accountId` BIGINT UNSIGNED NOT NULL,
-    `mac` VARCHAR(255) NOT NULL,
-    `loginDt` DATETIME NOT NULL,
-    `logoutDt` DATETIME NULL,
-    INDEX (`accountId`)
-);
-ALTER TABLE `presence` ADD CONSTRAINT `presence_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`) ON DELETE CASCADE;
 
 CREATE TABLE `role`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

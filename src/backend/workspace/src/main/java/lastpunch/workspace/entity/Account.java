@@ -55,9 +55,6 @@ public class Account{
     
     @Column(columnDefinition = "tinyint")
     private Integer settings;
-
-    @Column(columnDefinition = "tinyint")
-    private Integer status;
     
     @CreatedDate
     @Column(updatable = false)
@@ -80,9 +77,7 @@ public class Account{
     }
     
     @Getter
-    @Setter
     @Builder
-    @AllArgsConstructor
     public static class ExportDto{
         private Long id;
         private String email;
@@ -92,20 +87,17 @@ public class Account{
         private String country;
         private String language;
         private Integer settings;
-        private Integer status;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createDt;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime modifyDt;
-        
-        private Message lastMessage;
 
         @QueryProjection
         public ExportDto(Long id, String email, String name, String description, String phone,
-                         String country, String language, Integer settings, Integer status,
-                         LocalDateTime createDt, LocalDateTime modifyDt) {
+                         String country, String language, Integer settings,
+                         LocalDateTime createDt, LocalDateTime modifyDt){
             this.id = id;
             this.email = email;
             this.name = name;
@@ -114,7 +106,6 @@ public class Account{
             this.country = country;
             this.language = language;
             this.settings = settings;
-            this.status = status;
             this.createDt = createDt;
             this.modifyDt = modifyDt;
         }
@@ -130,9 +121,22 @@ public class Account{
             .country(country)
             .language(language)
             .settings(settings)
-            .status(status)
             .createDt(createdt)
             .modifyDt(modifydt)
             .build();
+    }
+
+    @Getter
+    @Setter
+    public static class ExportSimpleDto{
+        private Long id;
+        private String name;
+        private Message lastMessage;
+
+        @QueryProjection
+        public ExportSimpleDto(Long id, String name){
+            this.id = id;
+            this.name = name;
+        }
     }
 }

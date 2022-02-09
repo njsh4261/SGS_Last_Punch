@@ -1,13 +1,12 @@
 import { RESPONSE } from '../constant';
 import apiHandler from './handler';
 
-const dummySize = 999; // todo: remove
-const SIZE = 3;
+const WS_PAGING_SIZE = 3;
 
 type WsId = number;
 
 export async function getWsListAPI(page: number) {
-  const endpoint = `/workspace?page=${page}&size=${SIZE}`;
+  const endpoint = `/workspace?page=${page}&size=${WS_PAGING_SIZE}`;
   const response = await apiHandler(
     'GET',
     endpoint,
@@ -27,7 +26,7 @@ export async function getWsInfoAPI(wsId: WsId) {
 }
 
 export async function getMembersAPI(page: number, wsId: WsId) {
-  const endpoint = `/workspace/${wsId}/members?page=${page}&size=${dummySize}`;
+  const endpoint = `/workspace/${wsId}/members`;
   const response = await apiHandler(
     'GET',
     endpoint,
@@ -37,7 +36,7 @@ export async function getMembersAPI(page: number, wsId: WsId) {
 }
 
 export async function getChannelsAPI(page: number, wsId: WsId) {
-  const endpoint = `/workspace/${wsId}/channels?page=${page}&size=${dummySize}`;
+  const endpoint = `/workspace/${wsId}/channels`;
   const response = await apiHandler(
     'GET',
     endpoint,

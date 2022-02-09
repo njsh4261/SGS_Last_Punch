@@ -27,6 +27,7 @@ const MessageListContainer = styled.article`
 const MessagItemContainer = styled.article<{ me?: boolean }>`
   display: flex;
   justify-content: ${({ me }) => me && `end`};
+  text-align: ${({ me }) => (me ? 'end' : 'start')};
   white-space: normal;
   word-break: break-all;
   padding: 8px 20px;
@@ -38,7 +39,6 @@ const MessagItemContainer = styled.article<{ me?: boolean }>`
 const MessageBox = styled.article`
   display: flex;
   flex-direction: column;
-  text-align: end;
 `;
 
 const MessageWriter = styled.div`

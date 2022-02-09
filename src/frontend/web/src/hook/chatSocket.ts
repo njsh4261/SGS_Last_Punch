@@ -31,12 +31,8 @@ export default function chatSocketHook(
     try {
       const socket = new SockJS(HOST + '/ws/chat');
       const stompClient = Stomp.over(socket);
-      stompClient.debug = (f) => f;
+      // stompClient.debug = (f) => f;
       stompClient.connect({ Authorization: accessToken }, () => {
-        if (channelList.length < 1 || memberList.length < 1) {
-          return;
-        }
-
         channelList.map((channel) => {
           stompClient.subscribe(`/topic/channel.${channel.id}`, (payload) => {
             if (channel.id === +channelRef.current) {

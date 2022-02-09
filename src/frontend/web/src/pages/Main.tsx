@@ -30,6 +30,7 @@ export default function Main() {
   setTitleHook('', params);
   updateChannelStoreHook(params);
   const channelList = useSelector((state: RootState) => state.channelList);
+  const memberList = useSelector((state: RootState) => state.userList);
 
   const [hover, setHover] = useState(false);
   const hoverHandler = () => setHover(!hover);
@@ -64,7 +65,7 @@ export default function Main() {
           sideToggle={sideToggle}
           sideToggleHandler={sideToggleHandler}
         ></Aside>
-        {channelList.length > 0 && params.channelId ? (
+        {channelList.length > 0 && memberList.length > 0 && params.channelId ? (
           params.noteId ? (
             <NoteMain
               sideToggle={sideToggle}

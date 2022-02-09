@@ -44,6 +44,23 @@ const ButtonCreateNote = styled.button`
   }
 `;
 
+const NoteItem = styled.article`
+  padding: 7px 0px 0px 14px;
+  width: 130px;
+  outline: none;
+  border: none;
+  background: inherit;
+  color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  :hover {
+    cursor: pointer;
+    color: black;
+    font-weight: bolder;
+  }
+`;
+
 interface Props {
   channel: any;
   paramChannelId: string | undefined;
@@ -101,9 +118,9 @@ export default function ChannelItem(props: Props) {
       {type === 'channel' &&
         isSelected &&
         noteList.map((note) => (
-          <div id={note} key={note} onClick={selectNoteHandler}>
-            {note}
-          </div>
+          <NoteItem id={note} key={note} onClick={selectNoteHandler}>
+            - {note}
+          </NoteItem>
         ))}
     </ItemContainer>
   );

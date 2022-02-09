@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import ChannelModal from './ChannelModal';
 import InviteModal from '../../../Common/InviteModal';
@@ -7,7 +6,7 @@ import ModalBox from '../../../Common/ModalBox';
 
 export type ModalType =
   | 'channel'
-  | 'invite-dm'
+  | 'direct message'
   | 'invite-channel'
   | 'invite-workspace';
 

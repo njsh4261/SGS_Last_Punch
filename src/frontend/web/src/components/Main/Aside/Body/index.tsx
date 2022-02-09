@@ -49,7 +49,7 @@ export default function AsideBody() {
       <ToggleList
         channelList={memberList}
         selectHandler={selectChannelHandler}
-        type="invite-dm"
+        type="direct message"
       ></ToggleList>
     </Container>
   );

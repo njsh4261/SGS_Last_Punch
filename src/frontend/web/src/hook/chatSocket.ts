@@ -6,13 +6,16 @@ import { useDispatch } from 'react-redux';
 
 import { SendMessage, ChatMessage } from '../../types/chat.type';
 import { setChannelListRedux } from '../modules/channeList';
+import { setUserList } from '../modules/userList';
 
 const HOST = URL.HOST;
 
 export default function chatSocketHook(
+  userId: number,
   channelId: string,
   setMsgList: React.Dispatch<SetStateAction<ChatMessage[]>>,
   channelList: any[],
+  memberList: any[],
 ) {
   const channelRef = useRef(channelId);
   const dispatch = useDispatch();
@@ -30,7 +33,9 @@ export default function chatSocketHook(
       const stompClient = Stomp.over(socket);
       stompClient.debug = (f) => f;
       stompClient.connect({ Authorization: accessToken }, () => {
-        if (channelList.length < 1) return;
+        if (channelList.length < 1 || memberList.length < 1) {
+          return;
+        }
 
         channelList.map((channel) => {
           stompClient.subscribe(`/topic/channel.${channel.id}`, (payload) => {
@@ -43,6 +48,23 @@ export default function chatSocketHook(
               const newList = [...channelList];
               newList[index] = { ...newList[index], alarm: true };
               dispatch(setChannelListRedux(newList));
+            }
+          });
+        });
+
+        memberList.map((member) => {
+          const [low, high] =
+            userId < member.id ? [userId, member.id] : [member.id, userId];
+          stompClient.subscribe(`/topic/${low}-${high}`, (payload) => {
+            if (`${low}-${high}` === channelRef.current) {
+              const msg = JSON.parse(payload.body);
+              setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+            } else {
+              // alarm on
+              const index = memberList.findIndex((el) => el.id === member.id);
+              const newList = [...memberList];
+              newList[index] = { ...newList[index], alarm: true };
+              dispatch(setUserList(newList));
             }
           });
         });

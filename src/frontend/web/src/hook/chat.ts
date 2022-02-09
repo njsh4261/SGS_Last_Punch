@@ -20,8 +20,15 @@ export default function chatHook(): [
   const [msg, setMsg] = useState<string>('');
   const [msgList, setMsgList] = useState<ChatMessage[]>([]);
   const channelList = useSelector((state: RootState) => state.channelList);
+  const memberList = useSelector((state: RootState) => state.userList);
 
-  const sendMessage = chatSocketHook(channel.id, setMsgList, channelList);
+  const sendMessage = chatSocketHook(
+    user.id,
+    channel.id,
+    setMsgList,
+    channelList,
+    memberList,
+  );
 
   const msgTypingHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setMsg(e.target.value);

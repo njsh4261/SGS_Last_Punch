@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import cloneDeep from 'lodash/cloneDeep';
 
 import getWsHook from '../hook/getWs';
 import updateChannelStoreHook from '../hook/updateChannelStore';
@@ -48,7 +49,7 @@ export default function Main() {
     const index = channelList.findIndex(
       (el) => el.id.toString() === params.channelId,
     );
-    const newList = [...channelList];
+    const newList = cloneDeep(channelList);
     if (newList[index]?.alarm) {
       newList[index] = { ...newList[index], alarm: false };
       dispatch(setChannelListRedux(newList));

@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 
 import chatHook from '../../../hook/chat';
 import ChatInput from './Input';
 import Header from './Header';
 import Loading from '../../Common/Loading';
-import { RootState } from '../../../modules';
+import chatScrollHook from '../../../hook/chatScroll';
 
 const Container = styled.main`
   flex: 1;
@@ -74,6 +73,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     memberList,
     msg,
     msgList,
+    setMsgList,
     endRef,
     msgTypingHandler,
     msgSubmitHandler,
@@ -84,6 +84,8 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     memberList.map((member) => (obj[member.id] = member.name));
     return obj;
   }, [memberList]);
+
+  const scrollObserverRef = chatScrollHook(channel.id, msgList, setMsgList);
 
   return (
     <>
@@ -97,21 +99,19 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
             channel={channel}
           />
           <MessageListContainer>
-            {msgList?.map((msg, idx) => {
-              return (
-                <MessagItemContainer
-                  key={idx}
-                  me={msg.authorId === user.id.toString()}
-                >
-                  <MessageBox>
-                    <MessageWriter>
-                      {userDictionary[msg.authorId]}
-                    </MessageWriter>
-                    <MessageContent>{msg.content}</MessageContent>
-                  </MessageBox>
-                </MessagItemContainer>
-              );
-            })}
+            {msgList?.map((msg, idx) => (
+              <MessagItemContainer
+                key={`message-${idx}`}
+                me={msg.authorId === user.id.toString()}
+                ref={idx === 0 ? scrollObserverRef : null}
+                data-date={msg.createDt}
+              >
+                <MessageBox>
+                  <MessageWriter>{userDictionary[msg.authorId]}</MessageWriter>
+                  <MessageContent>{msg.content}</MessageContent>
+                </MessageBox>
+              </MessagItemContainer>
+            ))}
             <End ref={endRef}></End>
           </MessageListContainer>
           <ChatInputLayout toggle={sideToggle}>

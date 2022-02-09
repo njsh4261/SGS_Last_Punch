@@ -7,20 +7,24 @@ import { createNoteAPI, getNoteListAPI } from '../../../../Api/note';
 
 export const ItemContainer = styled.section`
   padding: 7px 0 7px 26px;
+`;
 
+const ChannelLayer = styled.div`
+  display: flex;
   &:hover {
     cursor: pointer;
-    background: ${(props) => props.theme.color.snackSideHover};
     color: black;
     font-weight: bolder;
   }
 `;
 
-const ChannelName = styled.section`
+const ChannelName = styled.section<{ newMessage: boolean }>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 200px;
+  font-weight: ${({ newMessage }) => newMessage && 'bolder'};
+  font-style: ${({ newMessage }) => newMessage && 'italic'};
 `;
 
 const PaddingLeft8px = styled.span`
@@ -75,15 +79,16 @@ export default function ChannelItem(props: Props) {
 
   return (
     <ItemContainer id={channel.id} data-type={type} onClick={selectHandler}>
-      <ChannelName>
-        #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
-      </ChannelName>
-      {channel.alarm && channel.id.toString() !== paramChannelId && (
-        <span>new Message</span>
-      )}
-      {type === 'channel' && isSelected && (
-        <button onClick={createNoteHandler}>create note</button>
-      )}
+      <ChannelLayer>
+        <ChannelName
+          newMessage={channel.alarm && channel.id.toString() !== paramChannelId}
+        >
+          #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
+        </ChannelName>
+        {type === 'channel' && isSelected && (
+          <button onClick={createNoteHandler}>create note</button>
+        )}
+      </ChannelLayer>
       {type === 'channel' &&
         isSelected &&
         noteList.map((note) => (

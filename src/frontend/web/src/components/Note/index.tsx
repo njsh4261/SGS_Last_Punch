@@ -28,8 +28,18 @@ const Container = styled.article`
   display: flex;
   flex-direction: column;
   width: 500px;
-  margin: 0 96px;
+  padding: 13px 20px;
   height: 100%;
+`;
+
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+`;
+
+const H1 = styled.h1`
+  margin: 0;
+  padding-left: 8px;
 `;
 
 const TestContainer = styled.div`
@@ -230,22 +240,24 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
         <Loading></Loading>
       ) : (
         <Container>
-          {!sideToggle && (
-            <ImageButton
-              size="16px"
-              imageUrl={arrowRightIcon}
-              onClick={sideToggleHandler}
-            ></ImageButton>
-          )}
-          <label htmlFor="title-input">
-            <h1>{title}</h1>
-          </label>
-          <InvisibleInput
-            id="title-input"
-            value={title}
-            onChange={titleHandler}
-          ></InvisibleInput>
-          <button onClick={updateAllHandler}>update</button>
+          <Header>
+            {!sideToggle && (
+              <ImageButton
+                size="16px"
+                imageUrl={arrowRightIcon}
+                onClick={sideToggleHandler}
+              ></ImageButton>
+            )}
+            <label htmlFor="title-input">
+              <H1>{title}</H1>
+            </label>
+            <InvisibleInput
+              id="title-input"
+              value={title}
+              onChange={titleHandler}
+            ></InvisibleInput>
+          </Header>
+
           <EditorFrame
             value={value}
             onChange={changeHandler}

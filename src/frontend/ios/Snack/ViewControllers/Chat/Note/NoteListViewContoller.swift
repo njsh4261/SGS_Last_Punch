@@ -89,13 +89,7 @@ class NoteListViewContoller: UIViewController, UIGestureRecognizerDelegate {
                 let cell = self.collectionView.cellForItem(at: indexPath) as? NoteListCell                
                 self.goToNote((cell?.id)!)
             }).disposed(by: disposeBag)
-        
-//        tableView.rx.itemDeleted
-//            .subscribe(onNext: { [weak self] indexPath in
-//                guard let self = self else { return }
-//                let cell = self.tableView.cellForRow(at: indexPath) as? WorkspaceListCell
-//            }).disposed(by: disposeBag)
-        
+                
         dataSource = RxCollectionViewSectionedReloadDataSource<NoteSection.Model> { dataSource, collectionView, indexPath, item in
             switch item {
             case .note(let note):

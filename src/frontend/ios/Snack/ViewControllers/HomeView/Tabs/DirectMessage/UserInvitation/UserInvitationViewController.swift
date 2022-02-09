@@ -6,158 +6,171 @@
 //
 
 import UIKit
+import ProgressHUD
 import RxSwift
 import RxCocoa
-import SnapKit
-import ProgressHUD
 import SwiftKeychainWrapper
-import RxDataSources
-import Then
 
 class UserInvitationViewController: UIViewController {
     // MARK: - Properties
+    private var btnSend = UIBarButtonItem()
     private let disposeBag = DisposeBag()
-    private var dataSource: RxTableViewSectionedReloadDataSource<UserInvitationSection.Model>!
-    private let FOOTER_HEIGHT = 100
+    private var accessToken: String = ""
+    private var userId: String = ""
+    private var workspaceId: String = ""
+    private var networkGroup = DispatchGroup()
+    private var userList = [UserModel2]()
     
     // MARK: - UI
-    private var tableView = UITableView()
-    private var footerView = UIView()
-    private var lblLinkDesciption = UILabel()
-    private var lblTip = UILabel()
-    private var btnSend = UIBarButtonItem()
-    private var ivSnack = UIImageView()
+    @IBOutlet private var tableView: UITableView!
+    @IBOutlet private var emailCell: UITableViewCell!
+    @IBOutlet private var emailField: UITextField!
+    @IBOutlet private var addressCell: UITableViewCell!
+    @IBOutlet private var googleCell: UITableViewCell!
+    @IBOutlet private var linkCell: UITableViewCell!
+    @IBOutlet private var viewFooter: UIView!
+    @IBOutlet private var labelFooter1: UILabel!
+    @IBOutlet private var labelFooter2: UILabel!
+
+    override func viewDidLoad() {
+        guard let accessToken: String = KeychainWrapper.standard[.refreshToken], let userId: String = KeychainWrapper.standard[.id], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
+        self.accessToken = accessToken
+        self.userId = userId
+        self.workspaceId = workspaceId
         
-    override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-
-        attribute()
-        layout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func bind(with viewModel: DirectMessageListViewModel) {
-        // MARK: Bind input
-        tableView.rx.itemSelected
-            .subscribe(onNext: { [weak self] indexPath in
-                self?.tableView.deselectRow(at: indexPath, animated: true)
-            })
-            .disposed(by: disposeBag)
-
-        // MARK: Bind output
-        dataSource = RxTableViewSectionedReloadDataSource<UserInvitationSection.Model> { dataSource, tableView, indexPath, item in
-            self.configureCollectionViewCell(tableView: tableView, indexPath: indexPath, item: item)
-        }
-
-        viewModel.output.errorMessage
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: showFailedAlert)
-            .disposed(by: disposeBag)
-    }
-    
-    // MARK: -  Method
-    private func configureCollectionViewCell(tableView: UITableView, indexPath: IndexPath, item: UserInvitationSection.UserInvitationItem) -> UITableViewCell {
-        switch item {
-        case .email:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "EmailInvitationListCell", for: indexPath) as! EmailInvitationListCell
-            return cell
-        case .other(_):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "EmailInvitationListCell", for: indexPath) as! EmailInvitationListCell
-            return cell
-        case .link(_):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "EmailInvitationListCell", for: indexPath) as! EmailInvitationListCell
-            return cell
-        }
-    }
-
-    private func showFailedAlert(_ message: String) {
-        ProgressHUD.showFailed(message)
+        title = "사용자 초대"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(actionDismiss))
+        btnSend = UIBarButtonItem(title: "보내기", style: .plain, target: self, action: #selector(actionSend))
+        btnSend.isEnabled = false
+        navigationItem.rightBarButtonItem = btnSend
+        view.backgroundColor = UIColor(named: "snackBackGroundColor2")
+        tableView.tableFooterView = viewFooter
+        emailField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
     
     @objc func actionDismiss() {
         dismiss(animated: true)
     }
     
-    private func attribute() {
-        title = "사용자 초대"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(actionDismiss))
-        navigationItem.rightBarButtonItem = btnSend
-        view.backgroundColor = UIColor(named: "snackBackGroundColor2")
+    @objc func actionSend() {
+        guard let email = emailField.text else { return }
         
-        btnSend = btnSend.then {
-            $0.title = "보내기"
-            $0.style = .plain
-        }
-                    
-        tableView = tableView.then {
-            $0.backgroundColor = UIColor(named: "snackBackGroundColor2")
-            $0.register(EmailInvitationListCell.self, forCellReuseIdentifier: "EmailInvitationListCell")
-            $0.tableFooterView = footerView
-            $0.clearsContextBeforeDrawing = false
-            $0.bouncesZoom = false
-            $0.isOpaque = false
-            $0.rowHeight = 60
-        }
+        networkGroup.enter()
+        getAccount(email: email)
         
-        footerView = footerView.then {
-            $0.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat(FOOTER_HEIGHT))
-            $0.clipsToBounds = true
-        }
-
-        lblLinkDesciption = lblLinkDesciption.then {
-            $0.text = "공유할 링크를 생성합니다. 누구나 이 링크를 사용해\n워크스페이스에 참여할 수 있습니다."
-            $0.lineBreakMode = .byWordWrapping
-            $0.textColor = .secondaryLabel
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 13)
-            $0.numberOfLines = 2
-            $0.textAlignment = .left
-        }
-        
-        lblTip = lblTip.then {
-            $0.text = "Snack은 다른 사용자들과 함께 할 때 더 유용합니다 :D"
-            $0.textColor = .tertiaryLabel
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 13)
-            $0.textAlignment = .left
-        }
-        
-        ivSnack = ivSnack.then {
-            $0.frame = CGRect(x: 0, y: 0, width: 2, height: 2)
-            $0.image = UIImage(named: "snack_darkGray")
+        networkGroup.notify(queue: .main) { [self] in
+            if userList.isEmpty {
+                ProgressHUD.showFailed("Snack 사용자가 아닙니다")
+            } else if userList.count == 1 {
+                if userList.first!.email == email { // 이메일이 정확히 일치하는 user에게 초대
+                    addAccount(accountId: (userList.first?.id.description)!)
+                } else {
+                    ProgressHUD.showFailed("Snack 사용자가 아닙니다")
+                }
+            } else { // 여러개가 나올 경우
+                for user in userList {
+                    if user.email == email { // 이메일이 정확히 일치하는 user에게 초대
+                        addAccount(accountId: user.id.description)
+                    }
+                }
+            }
         }
     }
     
-    private func layout() {
-        view.addSubview(tableView)
-                
-        tableView.snp.makeConstraints {
-            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+    @objc func textFieldDidChange() {
+        if emailField.text!.count > 0 {
+            btnSend.isEnabled = true
+        } else {
+            btnSend.isEnabled = false
         }
+    }
         
-        footerView.snp.makeConstraints {
-            $0.height.equalTo(FOOTER_HEIGHT)
+    func getAccount(email: String) {
+        DispatchQueue.main.async { [self] in // 메인스레드에서 동작
+            AccountSerivce.shared.getAccount(method: .post, accessToken: accessToken, email: email)
+                .subscribe { event in
+                    switch event {
+                    case .next(let result):
+                        switch result {
+                        case .success(let decodedData):
+                            guard let userModel = decodedData.data?.accounts?.content else { return }
+                            self.userList = userModel
+                            networkGroup.leave()
+                        default:
+                            ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                        }
+                    default:
+                        ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                    }
+                }.disposed(by: self.disposeBag)
         }
-        
-        [lblLinkDesciption, lblTip, ivSnack].forEach {
-            footerView.addSubview($0)
+    }
+    
+    func addAccount(accountId: String) {
+        DispatchQueue.main.async { // 메인스레드에서 동작
+            WorkspaceService.shared.workspaceAccount(method: .post, accessToken: self.accessToken, accountId: accountId, workspaceId: self.workspaceId)
+                .subscribe { event in
+                    switch event {
+                    case .next(let result):
+                        DispatchQueue.main.async { // 메인스레드에서 동작
+                            switch result {
+                            case .success:
+                                ProgressHUD.showSucceed("전송했습니다")
+                                self.actionDismiss()
+                            case .fail(let decodedData):
+                                switch decodedData.code {
+                                case "12001":
+                                    ProgressHUD.showFailed("존재하지 않는 워크스페이스 입니다")
+                                case "12002":
+                                    ProgressHUD.showFailed("Snack 사용자가 아닙니다")
+                                case "12005":
+                                    ProgressHUD.showFailed("이미 워크스페이스 멤버입니다")
+                                default:
+                                    ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                                }
+                            default:
+                                ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                            }
+                        }
+                    default:
+                        ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                    }
+                }.disposed(by: self.disposeBag)
         }
-        
-        lblLinkDesciption.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.left.right.equalToSuperview().inset(15)
-            $0.bottom.equalTo(lblTip.snp.top).offset(-20)
-        }
-        
-        lblTip.snp.makeConstraints {
-            $0.left.equalToSuperview().inset(15)
-            $0.right.equalTo(ivSnack.snp.left)
-        }
+    }
+}
 
-        ivSnack.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-        }
+// MARK: - UITableView DataSource
+extension UserInvitationViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (section == 0) { return 1 }
+        if (section == 1) { return 2 }
+        if (section == 2) { return 1 }
+
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        if (indexPath.section == 0) && (indexPath.row == 0) { return emailCell      }
+        if (indexPath.section == 1) && (indexPath.row == 0) { return addressCell    }
+        if (indexPath.section == 1) && (indexPath.row == 1) { return googleCell     }
+        if (indexPath.section == 2) && (indexPath.row == 0) { return linkCell       }
+        return UITableViewCell()
+    }
+}
+
+// MARK: - UITableView Delegate
+extension UserInvitationViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if (indexPath.section == 0) && (indexPath.row == 0) {        }
+        if (indexPath.section == 1) && (indexPath.row == 0) {        }
+        if (indexPath.section == 1) && (indexPath.row == 1) {        }
+        if (indexPath.section == 2) && (indexPath.row == 0) {        }
     }
 }

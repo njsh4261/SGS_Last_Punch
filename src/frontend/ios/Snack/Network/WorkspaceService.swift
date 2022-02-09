@@ -16,6 +16,13 @@ class WorkspaceService {
                 "channelName" : chennel]
     }
     
+    // add
+    private func makeParameter2(accountId : String, workspaceId : String) -> Parameters {
+        return ["accountId" : accountId,
+                "workspaceId" : workspaceId]
+    }
+
+    
     func getWorkspace(method: HTTPMethod, accessToken: String, workspaceId: String = "", name: String = "", chennel: String = "", isCreate: Bool = false, isChannels: Bool = false, isMembers: Bool = false, page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: "")) -> Observable<NetworkResult<WorkspaceResponseModel>> {
         var url = APIConstants().workspaceListURL + "/\(workspaceId)"
         var parameters: Parameters? = nil
@@ -48,11 +55,38 @@ class WorkspaceService {
         }
     }
     
+    func workspaceAccount(method: HTTPMethod, accessToken: String, accountId: String = "", workspaceId: String = "") -> Observable<NetworkResult<WorkspaceResponseModel>> {
+        let url = APIConstants().workspaceListURL + "/member"
+        let parameters = self.makeParameter2(accountId: accountId, workspaceId: workspaceId)
+                
+        return Observable.create { observer -> Disposable in
+            let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
+            let dataRequest = AF.request(url,
+                                         method: method,
+                                         parameters: parameters,
+                                         encoding: JSONEncoding.default,
+                                         headers: header)
+
+            dataRequest.validate().responseData { [self] response in
+                switch response.result {
+                case .success:
+                    guard let statusCode = response.response?.statusCode else {return}
+                    guard let value = response.value else {return}
+                    let networkResult = judgeStatus(by: statusCode, value)
+                    return observer.onNext(networkResult)
+                case .failure:
+                    return observer.onNext(.pathErr)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<WorkspaceResponseModel> {
         let decoder = JSONDecoder()
         
 //         데이터량이 너무 많음
-//        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
+        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
         
         guard let decodedData = try? decoder.decode(WorkspaceResponseModel.self, from: data) else { return
                 .pathErr

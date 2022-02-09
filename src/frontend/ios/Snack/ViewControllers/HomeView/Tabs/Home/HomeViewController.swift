@@ -128,7 +128,7 @@ class HomeViewController: UIViewController {
     
     private func configureCollectionViewCell(tableView: UITableView, indexPath: IndexPath, item: HomeSection.HomeItem) -> UITableViewCell {
         switch item {
-        case .chennel(let chennel):
+        case .channel(let chennel):
             let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelListCell", for: indexPath) as! ChannelListCell
             cell.setChennel(chennel)
             return cell

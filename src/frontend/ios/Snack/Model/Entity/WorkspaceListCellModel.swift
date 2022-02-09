@@ -11,6 +11,7 @@ import MessageKit
 struct WorkspaceResponseModel: Codable {
     let code: String
     let data: WorkspacesData?
+    let err: Err?
 }
 
 struct WorkspacesData: Codable {

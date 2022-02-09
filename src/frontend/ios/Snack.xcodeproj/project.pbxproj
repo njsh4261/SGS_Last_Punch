@@ -106,9 +106,9 @@
 		8CC9E8D827B22B4C008BE1EA /* NoteSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8D727B22B4C008BE1EA /* NoteSection.swift */; };
 		8CC9E8DA27B22BDB008BE1EA /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8D927B22BDB008BE1EA /* Note.swift */; };
 		8CC9E8FC27B2DABF008BE1EA /* UserInvitationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8FB27B2DABF008BE1EA /* UserInvitationViewController.swift */; };
-		8CC9E8FE27B2DAC8008BE1EA /* UserInvitationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8FD27B2DAC8008BE1EA /* UserInvitationViewModel.swift */; };
-		8CC9E90127B2DE2B008BE1EA /* UserInvitationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90027B2DE2B008BE1EA /* UserInvitationSection.swift */; };
-		8CC9E90327B2E09F008BE1EA /* EmailInvitationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90227B2E09F008BE1EA /* EmailInvitationListCell.swift */; };
+		8CC9E90A27B38FC9008BE1EA /* UserInvitationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9E90927B38FC8008BE1EA /* UserInvitationView.xib */; };
+		8CC9E90C27B3B939008BE1EA /* AccountSerivce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90B27B3B939008BE1EA /* AccountSerivce.swift */; };
+		8CC9E90E27B3BA01008BE1EA /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90D27B3BA01008BE1EA /* AccountModel.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -219,9 +219,9 @@
 		8CC9E8D727B22B4C008BE1EA /* NoteSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSection.swift; sourceTree = "<group>"; };
 		8CC9E8D927B22BDB008BE1EA /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		8CC9E8FB27B2DABF008BE1EA /* UserInvitationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInvitationViewController.swift; sourceTree = "<group>"; };
-		8CC9E8FD27B2DAC8008BE1EA /* UserInvitationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInvitationViewModel.swift; sourceTree = "<group>"; };
-		8CC9E90027B2DE2B008BE1EA /* UserInvitationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInvitationSection.swift; sourceTree = "<group>"; };
-		8CC9E90227B2E09F008BE1EA /* EmailInvitationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailInvitationListCell.swift; sourceTree = "<group>"; };
+		8CC9E90927B38FC8008BE1EA /* UserInvitationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInvitationView.xib; sourceTree = "<group>"; };
+		8CC9E90B27B3B939008BE1EA /* AccountSerivce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSerivce.swift; sourceTree = "<group>"; };
+		8CC9E90D27B3BA01008BE1EA /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -356,6 +356,7 @@
 				8C68AACF27911A1000C1711E /* LoginService.swift */,
 				8C68AADA2791B57100C1711E /* RegisterService.swift */,
 				8CBD4537279D3F350056A557 /* WorkspaceService.swift */,
+				8CC9E90B27B3B939008BE1EA /* AccountSerivce.swift */,
 				8CC9E8C927B10C9D008BE1EA /* NoteService.swift */,
 				8C68AB1427969D1200C1711E /* NetworkResult.swift */,
 				8CC9E8BE27B10487008BE1EA /* APIConstants.swift */,
@@ -440,6 +441,7 @@
 				8C962B6427AEDD5600A9A1F5 /* Data */,
 				8C68AACA279117FA00C1711E /* UserModel.swift */,
 				8CBD45332799B0E00056A557 /* WorkspaceListCellModel.swift */,
+				8CC9E90D27B3BA01008BE1EA /* AccountModel.swift */,
 				8CBD459E27A56F0A0056A557 /* MessageModel.swift */,
 				8CC9E8CB27B10CAE008BE1EA /* NoteListCellModel.swift */,
 			);
@@ -536,7 +538,6 @@
 			children = (
 				8C962B5827ADAB4300A9A1F5 /* HomeSection.swift */,
 				8CC9E8D727B22B4C008BE1EA /* NoteSection.swift */,
-				8CC9E90027B2DE2B008BE1EA /* UserInvitationSection.swift */,
 			);
 			path = Section;
 			sourceTree = "<group>";
@@ -689,19 +690,10 @@
 		8CC9E8FF27B2DACC008BE1EA /* UserInvitation */ = {
 			isa = PBXGroup;
 			children = (
-				8CC9E90427B2E760008BE1EA /* Cell */,
 				8CC9E8FB27B2DABF008BE1EA /* UserInvitationViewController.swift */,
-				8CC9E8FD27B2DAC8008BE1EA /* UserInvitationViewModel.swift */,
+				8CC9E90927B38FC8008BE1EA /* UserInvitationView.xib */,
 			);
 			path = UserInvitation;
-			sourceTree = "<group>";
-		};
-		8CC9E90427B2E760008BE1EA /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				8CC9E90227B2E09F008BE1EA /* EmailInvitationListCell.swift */,
-			);
-			path = Cell;
 			sourceTree = "<group>";
 		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
@@ -799,6 +791,7 @@
 				8CBD45BE27A70C440056A557 /* EditProfileView.xib in Resources */,
 				8C68AABE278ED9C100C1711E /* NotoSansKR-Bold.otf in Resources */,
 				8CBD45EA27A8735B0056A557 /* CacheView.xib in Resources */,
+				8CC9E90A27B38FC9008BE1EA /* UserInvitationView.xib in Resources */,
 				8CBD45E627A869CC0056A557 /* NetworkView.xib in Resources */,
 				8CBD45D727A7F0C80056A557 /* PasswordView.xib in Resources */,
 			);
@@ -906,6 +899,8 @@
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
 				8CBD4544279F0CD50056A557 /* LogOutViewModel.swift in Sources */,
 				8CBD45DD27A865C30056A557 /* MeidaView.swift in Sources */,
+				8CC9E90C27B3B939008BE1EA /* AccountSerivce.swift in Sources */,
+				8CC9E90E27B3BA01008BE1EA /* AccountModel.swift in Sources */,
 				8C962B6327AEDD4F00A9A1F5 /* User.swift in Sources */,
 				8CC9E8D227B161B1008BE1EA /* CreateWKWebView.swift in Sources */,
 				8C68AB2D2797F5E400C1711E /* SettingsViewController.swift in Sources */,
@@ -919,18 +914,15 @@
 				8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */,
 				8CC9E8C527B10A24008BE1EA /* NoteListViewModel.swift in Sources */,
 				8CBD45D527A7EF6D0056A557 /* PasswordView.swift in Sources */,
-				8CC9E8FE27B2DAC8008BE1EA /* UserInvitationViewModel.swift in Sources */,
 				8CC9E8D827B22B4C008BE1EA /* NoteSection.swift in Sources */,
 				8CBD45B827A6CFAB0056A557 /* ProfileViewController.swift in Sources */,
 				8CBD45CB27A71A310056A557 /* Ex+Data.swift in Sources */,
 				8CBD45E827A872300056A557 /* CacheView.swift in Sources */,
 				8C68AAD327911AD700C1711E /* Ex+Observable.swift in Sources */,
-				8CC9E90127B2DE2B008BE1EA /* UserInvitationSection.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
 				8CC9E8C827B10B8A008BE1EA /* NoteListCell.swift in Sources */,
 				8CBD459F27A56F0A0056A557 /* MessageModel.swift in Sources */,
 				8C962B6027ADAD3100A9A1F5 /* Member.swift in Sources */,
-				8CC9E90327B2E09F008BE1EA /* EmailInvitationListCell.swift in Sources */,
 				8CC9E8D027B128C3008BE1EA /* GroupMessageViewModel.swift in Sources */,
 				8CC9E8DA27B22BDB008BE1EA /* Note.swift in Sources */,
 				8CBD456C27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift in Sources */,

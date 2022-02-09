@@ -90,14 +90,18 @@ export default function ToggleList({
       .type as ModalType;
     dispatch(openModal(modalType));
   };
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   return (
     <ToggleType>
       <Label htmlFor={`${type}-toggle`} onClick={() => setChecked(!checked)}>
         {checked ? <ArrowDown /> : <ArrowRight />}
         <PaddingLeft8px>{type}</PaddingLeft8px>
       </Label>
-      <CheckBox type="checkbox" id={`${type}-toggle`}></CheckBox>
+      <CheckBox
+        type="checkbox"
+        id={`${type}-toggle`}
+        defaultChecked={true}
+      ></CheckBox>
       <ChannelList>
         {channelList.map(
           (channel) =>

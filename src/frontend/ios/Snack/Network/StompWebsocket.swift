@@ -58,14 +58,14 @@ class StompWebsocket {
     func sendMessage(authorId: String, channelId: String, content: String) {
         let payloadObject = ["authorId" : authorId, "channelId": channelId, "content": content] as [String : Any]
 //        guard let dictionaries = try? JSONSerialization.data(withJSONObject: payloadObject) else { return }
-
+//
 //        socketClient.sendMessage(
 //            message: String(data: dictionaries, encoding: .utf8)!,
 //            toDestination: "/app/chat",
 //            withHeaders: ["X-AUTH-TOKEN" : accessToken],
 //            withReceipt: nil
 //        )
-        
+
         socketClient.sendJSONForDict(
             dict: payloadObject as AnyObject,
             toDestination: "/app/chat")
@@ -80,10 +80,16 @@ class StompWebsocket {
 //MARK: - StompClientLib Delegate
 extension StompWebsocket: StompClientLibDelegate {
     func stompClient(client: StompClientLib!, didReceiveMessageWithJSONBody jsonBody: AnyObject?, akaStringBody stringBody: String?, withHeader header: [String : String]?, withDestination destination: String) {
-        print("DESTINATION : \(destination)")
+        guard let json = stringBody!.data(using: .utf8) else { return }
+//        print("DESTINATION : \(destination)")
 //        print("HEADER : \(header ?? ["nil":"nil"])")
-        print("JSON BODY : \(String(describing: jsonBody))")
-        print("STRING BODY : \(stringBody ?? "nil")")
+//        print("JSON BODY : \(String(describing: jsonBody))")
+//        print("STRING BODY : \(stringBody ?? "nil")")
+        
+//        if let JSONString = String(data: json, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString)
+//        }
+        guard let decodedData = try? JSONDecoder().decode(SendMessageModel.self, from: json) else { return
+        }
     }
     
     func stompClientDidDisconnect(client: StompClientLib!) {

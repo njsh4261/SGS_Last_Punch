@@ -360,6 +360,7 @@
 				8CBD4537279D3F350056A557 /* WorkspaceService.swift */,
 				8CC9E90B27B3B939008BE1EA /* AccountSerivce.swift */,
 				8CC9E8C927B10C9D008BE1EA /* NoteService.swift */,
+				8CC9E90F27B3FDB5008BE1EA /* StompWebsocket.swift */,
 				8C68AB1427969D1200C1711E /* NetworkResult.swift */,
 				8CC9E8BE27B10487008BE1EA /* APIConstants.swift */,
 			);
@@ -523,7 +524,6 @@
 		8CBD454927A064C70056A557 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				8CC9E90F27B3FDB5008BE1EA /* StompWebsocket.swift */,
 				8CC1E7A127AD895A00BFE4D1 /* CreateHomeTabController.swift */,
 				8CBD4543279F0CD50056A557 /* LogOutViewModel.swift */,
 				8C68AACC2791186400C1711E /* Credentials.swift */,

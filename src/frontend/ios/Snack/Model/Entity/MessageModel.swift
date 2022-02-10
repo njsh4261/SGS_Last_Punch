@@ -34,6 +34,16 @@ struct ImageMediaItemModel: MediaItem {
     }
 }
 
+struct SendMessageModel: Codable {
+    var id: String?
+    var authorId: String
+    var channelId: String
+    var content: String
+    var status: Int
+    var createDt: String
+    var modifyDt: String
+}
+
 struct MessageModel: MessageType {
     
 //    let id: String?

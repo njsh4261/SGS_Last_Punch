@@ -19,9 +19,13 @@ const MessageListContainer = styled.article`
   max-height: calc(
     100% - 198px
   ); // hard coding. 198 is main-header, chat-header
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
   margin-bottom: 114px; // size of input
+  :hover,
+  :focus {
+    overflow-y: auto;
+  }
 `;
 
 const MessagItemContainer = styled.article<{ me?: boolean }>`

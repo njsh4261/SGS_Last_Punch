@@ -50,8 +50,8 @@ public class PresenceConfig implements WebSocketMessageBrokerConfigurer{
             .setClientPasscode(password);
     }
     
-//    @Override
-//    public void configureClientInboundChannel(ChannelRegistration registration){
-//        registration.interceptors(stompInterceptor);
-//    }
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration){
+        registration.interceptors(stompInterceptor);
+    }
 }

@@ -1,9 +1,11 @@
 var stompClient = null;
+var presenceList = document.getElementById('presenceList');
 
 function setConnected(connected) {
     document.getElementById('connect').disabled = connected;
     document.getElementById('disconnect').disabled = !connected;
     document.getElementById('presenceDiv').style.visibility = connected ? 'visible' : 'hidden';
+    presenceList.innerHTML = '';
 }
 
 function connect() {
@@ -22,16 +24,20 @@ function connect() {
             }
         );
 
-        // update status of current user
-        stompClient.send("/app/update", {},
-        JSON.stringify({
-            'workspaceId': document.getElementById('workspaceId').value,
-            'userId': document.getElementById('userId').value,
-            'status': 'ONLINE'
-            })
-        );
+        getPresenceList().done(function() {
+            stompClient.send("/app/update", {},
+                JSON.stringify({
+                    'workspaceId': document.getElementById('workspaceId').value,
+                    'userId': document.getElementById('userId').value,
+                    'userStatus': 'ONLINE'
+                })
+            );
+        }).fail(function(err) {
+            console.log('fail to send init message!')
+        });
 
-        getPresenceList();
+        // update status of current user and add it to list
+        
     });
 }
 
@@ -48,7 +54,7 @@ function sendMessage() {
         JSON.stringify({
             'workspaceId': document.getElementById('workspaceId').value,
             'userId': document.getElementById('userId').value,
-            'status': document.getElementById('status').value
+            'userStatus': document.getElementById('userStatus').value
         })
     );
 }
@@ -62,13 +68,8 @@ function getPresenceList(){
     }).done(function(res) {
         console.log('GET /presence/' + workspaceId + ': ' + JSON.stringify(res))
 
-        // initialize presence list
-        var presenceList = document.getElementById('presenceList');
-        presenceList.innerHTML = '';
-
-        // print new list
         res.data.forEach(presence => {
-            addToList(presenceList, presence);
+            updatePresence(presence);
         });
     }).fail(function(err) {
         console.log('fail to get presence information!')
@@ -81,25 +82,21 @@ function updatePresence(presence) {
         while(p.lastChild) {
             p.removeChild(p.lastChild);
         }
-        p.appendChild(
-            document.createTextNode(
-                "[userId: " + presence.userId + ", status: " + presence.status + "]"
-            )
-        );
+        append(p, presence);
     }
     else{
-        addToList(document.getElementById('presenceList'), presence);
+        var n = document.createElement('p');
+        n.style.wordBreak = 'break-all';
+        n.setAttribute('id', 'user-' + presence.userId)
+        append(n, presence);
     }
 }
 
-function addToList(list, newElement){
-    var p = document.createElement('p');
-    p.style.wordBreak = 'break-all';
-    p.setAttribute('id', 'user-' + newElement.userId)
+function append(p, newElement){
     p.appendChild(
         document.createTextNode(
-            "[userId: " + newElement.userId + ", status: " + newElement.status + "]"
+            "[userId: " + newElement.userId + ", status: " + newElement.userStatus + "]"
         )
     );
-    list.appendChild(p);
+    presenceList.appendChild(p);
 }

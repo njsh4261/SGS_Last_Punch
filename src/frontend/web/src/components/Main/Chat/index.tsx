@@ -89,11 +89,8 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     return obj;
   }, [memberList]);
 
-  const { scrollObserverRef, scrollLoading, endRef } = chatScrollHook(
-    channel.id,
-    msgList,
-    setMsgList,
-  );
+  const { scrollObserverRef, scrollLoading, endRef, chatBodyRef } =
+    chatScrollHook(channel.id, msgList, setMsgList);
 
   return (
     <>
@@ -106,8 +103,8 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
             sideToggleHandler={sideToggleHandler}
             channel={channel}
           />
-          <MessageListContainer>
-            <Start>{scrollLoading.current && <Loading></Loading>}</Start>
+          <MessageListContainer ref={chatBodyRef}>
+            <Start>{scrollLoading && <Loading></Loading>}</Start>
             {msgList?.map((msg, idx) => (
               <MessagItemContainer
                 key={`message-${idx}`}

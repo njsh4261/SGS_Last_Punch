@@ -1,10 +1,11 @@
 package lastpunch.presence.repository;
 
-import java.util.ArrayList;
+import com.mongodb.client.result.UpdateResult;
 import java.util.List;
 import java.util.stream.Collectors;
 import lastpunch.presence.entity.Presence;
 import lastpunch.presence.entity.Presence.UpdateDto;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -46,8 +49,25 @@ public class PresenceRepositoryImpl implements PresenceRepositoryCustom{
     }
     
     @Getter
-    private class PresenceOutput{
+    @AllArgsConstructor
+    private static class PresenceOutput{
         private String _id;
         private List<Presence> presences;
+    }
+    
+    @Override
+    public void saveAndUpdate(Presence presence){
+        mongoTemplate.save(presence);
+        
+        Query query = new Query();
+        query.addCriteria(
+            Criteria.where("workspaceId").is(presence.getWorkspaceId())
+                .and("userId").is(presence.getUserId())
+        );
+        Update update = new Update();
+        update.set("userStatus", presence.getUserStatus());
+        
+        UpdateResult updateResult = mongoTemplate.updateMulti(query, update, Presence.class);
+        logger.info("saveOrUpdate: " + updateResult.getMatchedCount() + " results");
     }
 }

@@ -27,8 +27,8 @@ public class MongoService{
     }
     
     @Async
-    public void save(Presence presence){
-        presenceRepository.save(presence);
+    public void saveOrUpdate(Presence presence){
+        presenceRepository.saveOrUpdate(presence);
     }
     
     @Async

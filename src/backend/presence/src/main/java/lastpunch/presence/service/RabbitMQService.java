@@ -21,7 +21,7 @@ public class RabbitMQService{
     }
     
     public void updateUserStatus(UpdateDto updateDto, String sessionId){
-        mongoService.save(updateDto.toEntity(sessionId));
+        mongoService.saveOrUpdate(updateDto.toEntity(sessionId));
         sendMessage(updateDto);
     }
     

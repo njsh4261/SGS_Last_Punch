@@ -24,20 +24,14 @@ function connect() {
             }
         );
 
-        getPresenceList().done(function() {
-            stompClient.send("/app/update", {},
-                JSON.stringify({
-                    'workspaceId': document.getElementById('workspaceId').value,
-                    'userId': document.getElementById('userId').value,
-                    'userStatus': 'ONLINE'
-                })
-            );
-        }).fail(function(err) {
-            console.log('fail to send init message!')
-        });
-
-        // update status of current user and add it to list
-        
+        getPresenceList();
+        stompClient.send("/app/update", {},
+            JSON.stringify({
+                'workspaceId': document.getElementById('workspaceId').value,
+                'userId': document.getElementById('userId').value,
+                'userStatus': 'ONLINE'
+            })
+        );
     });
 }
 

@@ -95,6 +95,13 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
   const stringValue = useRef<string>(JSON.stringify(initialValue));
   const opQueue = useRef<any[]>([]);
 
+  /////////////////// Handler //////////////////////
+
+  const readOnlyHandler = () => {
+    if (owner && owner.id !== user.id) return true;
+    else return false;
+  };
+
   const resetTypingTimer = () => {
     if (typing.current) clearTimeout(typing.current);
     typing.current = setTimeout(() => {
@@ -207,6 +214,8 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
     }
   };
 
+  ///////////// Hooks ////////////////
+
   // get note from server - 현재 url에 적힌 noteId 바탕
   useEffect(() => {
     if (params.noteId) getSpecificNoteHandler();
@@ -233,6 +242,8 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
       leaveNote();
     });
   }, [note, owner]);
+
+  ///////////// Render //////////////////////
 
   return (
     <>
@@ -263,6 +274,7 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
             onChange={changeHandler}
             onKeyDown={keydownHandler}
             editor={editor}
+            readOnly={readOnlyHandler()}
           ></EditorFrame>
           <TestContainer>
             <div>my: {JSON.stringify(user)}</div>

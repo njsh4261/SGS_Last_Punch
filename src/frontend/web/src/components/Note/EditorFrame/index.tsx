@@ -18,6 +18,7 @@ export interface EditorFrame {
   value: Node[];
   onChange: (value: Node[]) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+  readOnly: boolean;
 }
 
 const renderElement = (props: any) => <Element {...props} />;
@@ -27,6 +28,7 @@ const EditorFrame: React.FC<EditorFrame> = ({
   value,
   onChange,
   onKeyDown,
+  readOnly,
 }) => {
   const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
 
@@ -58,6 +60,7 @@ const EditorFrame: React.FC<EditorFrame> = ({
           <LinkButton />
         </div>
         <Editable
+          readOnly={readOnly}
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           onKeyDown={onKeyDown}

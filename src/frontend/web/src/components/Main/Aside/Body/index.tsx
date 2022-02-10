@@ -14,7 +14,12 @@ const Container = styled.article`
   flex-direction: column;
   color: ${({ theme }) => theme.color.snackSideFont};
   font-size: 14px;
-  overflow-y: scroll;
+  /* overflow-x: hidden; */
+  height: 100%;
+  :hover,
+  :focus {
+    overflow-y: auto;
+  }
 `;
 
 const SecitonType = styled.section`

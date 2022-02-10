@@ -9,10 +9,6 @@ const MainAsideFrame = styled.aside<{ toggle?: boolean }>`
   background-color: ${({ theme }) => theme.color.snackSide};
   user-select: none;
   transition: width 300ms;
-  :hover,
-  :focus {
-    overflow-y: auto;
-  }
 `;
 
 export default MainAsideFrame;

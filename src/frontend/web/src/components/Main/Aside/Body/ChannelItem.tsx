@@ -7,6 +7,11 @@ import { createNoteAPI, getNoteListAPI } from '../../../../Api/note';
 
 export const ItemContainer = styled.section`
   padding: 7px 0 7px 26px;
+  border-radius: 6px;
+  :hover {
+    background-color: ${({ theme }) => theme.color.snackSideHover};
+    cursor: pointer;
+  }
 `;
 
 const ChannelLayer = styled.div`
@@ -28,11 +33,6 @@ const ChannelName = styled.section<{
   font-weight: ${({ newMessage, isSelected }) =>
     (newMessage || isSelected) && 'bolder'};
   font-style: ${({ newMessage }) => newMessage && 'italic'};
-  :hover {
-    cursor: pointer;
-    color: black;
-    font-weight: bolder;
-  }
 `;
 
 const PaddingLeft8px = styled.span`
@@ -48,6 +48,7 @@ const ButtonCreateNote = styled.button`
   padding: 1px 4px 0px 4px;
   border: 1px solid ${({ theme }) => theme.color.snackSideFont};
   border-radius: 4px;
+  margin-right: 5px;
   cursor: pointer;
   :hover {
     color: black;

@@ -10,6 +10,7 @@ import RxCocoa
 import SwiftKeychainWrapper
 import RxDataSources
 import Alamofire
+import StompClientLib
 
 class HomeViewModel: ViewModelProtocol {
     struct Input {
@@ -35,7 +36,9 @@ class HomeViewModel: ViewModelProtocol {
     private var workspace: WorkspaceListCellModel?
     private var channels: [WorkspaceChannelCellModel]?
     private var members: [WorkspaceMemberCellModel]?
-
+//    private let url = URL(string: "ws://\(APIConstants().chatWebsoket)/websocket")!
+//    var socketClient = StompClientLib()
+    
     // MARK: - Init
     init(accessToken: String, workspaceId: String) {
         self.token = accessToken
@@ -47,6 +50,8 @@ class HomeViewModel: ViewModelProtocol {
                 return (row, section)
             }
             .asDriver(onErrorDriveWith: .empty())
+        
+        StompWebsocket.shared.registerSockect()
     }
     
     func viewWillAppear() {
@@ -71,10 +76,12 @@ class HomeViewModel: ViewModelProtocol {
             let channelSection = HomeSection.Model(model: .chennel, items: channelItems)
             let memberSection = HomeSection.Model(model: .member, items: memberItems)
     
+            StompWebsocket.shared.channels = channels
+            StompWebsocket.shared.members = members
+            StompWebsocket.shared.subscribe()
             output.workspaceTitle.accept(workspace.name)
             output.sections.accept([channelSection, memberSection])
         }
-
     }
     
     func getWorkspace(method: HTTPMethod, _ token: String, workspaceId: String, isChannels: Bool = false, isMembers: Bool = false) {

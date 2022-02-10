@@ -28,11 +28,11 @@ class DirectMessageListViewModel: ViewModelProtocol {
     var output = Output()
     var cellData: Driver<[User]>
     let push: Driver<Int>
-    let accessToken: String
-    let workspaceId: String
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
+    private let accessToken: String
+    private let workspaceId: String
     
     // MARK: - Init
     init(accessToken: String, workspaceId: String) {
@@ -78,6 +78,8 @@ class DirectMessageListViewModel: ViewModelProtocol {
                                 self.output.errorMessage.accept("워크스페이스를 찾지 못했습니다")
                                 return
                             }
+                            StompWebsocket.shared.members = members
+                            StompWebsocket.shared.subscribe()
                             self.output.memberListCellData.onNext(self.convertData(members: members))
                         default:
                             self.output.errorMessage.accept("일시적인 문제가 발생했습니다")

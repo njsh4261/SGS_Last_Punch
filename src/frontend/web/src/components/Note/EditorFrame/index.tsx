@@ -31,7 +31,7 @@ const EditorFrame: React.FC<EditorFrame> = ({
   readOnly,
 }) => {
   const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
-  console.log({ readOnly });
+
   return (
     <ClientFrame>
       <Slate editor={editor} value={value} onChange={onChange}>

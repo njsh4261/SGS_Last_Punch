@@ -26,7 +26,7 @@ class StompWebsocket {
         self.accessToken = KeychainWrapper.standard[.refreshToken]!
     }
     
-    // Home 진입시, Socket 연결 
+    // Home 진입시, Socket 연결
     func registerSockect() {
         socketClient.openSocketWithURLRequest(
             request: NSURLRequest(url: url),
@@ -94,8 +94,6 @@ extension StompWebsocket: StompClientLibDelegate {
     // 연결 후, Subscribe Topic
     func stompClientDidConnect(client: StompClientLib!) {
         print("Stomp socket is connected")
-        
-//        subscribe()
     }
     
     func serverDidSendReceipt(client: StompClientLib!, withReceiptId receiptId: String) {

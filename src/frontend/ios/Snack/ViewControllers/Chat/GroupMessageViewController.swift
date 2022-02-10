@@ -252,7 +252,7 @@ class GroupMessageViewController: MessagesViewController {
 //        btnViewTitle.setBackgroundColor(.red, for: .normal)
 //        btnViewTitle.setTitle("왜 안돼", for: .normal)
         viewTitle = viewTitle.then {
-            let width = $0.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
+//            let width = $0.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
             $0.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: 150, height: 500))
             let recognizer = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
             $0.isUserInteractionEnabled = true

@@ -60,7 +60,7 @@ const EditorFrame: React.FC<EditorFrame> = ({
           <LinkButton />
         </div>
         <Editable
-          // readOnly={readOnly}
+          readOnly={readOnly}
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           onKeyDown={onKeyDown}

@@ -21,6 +21,10 @@ import Loading from '../Common/Loading';
 import { toggleMark } from './EditorFrame/plugin/mark';
 import { toggleBlock } from './EditorFrame/plugin/block';
 
+import logoIcon from '../../icon/cookie-2.png';
+import DropdownHook from '../../hook/Dropdown';
+import DropdownSetting from '../Main/Chat/DropdownSetting';
+
 const TYPING_TIME = 1500;
 const UPDATE_OP_TIME = 1000;
 
@@ -28,15 +32,39 @@ const ARROW_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
 
 const Container = styled.article`
   display: flex;
+  flex: 1;
   flex-direction: column;
-  width: 500px;
-  padding: 13px 20px;
   height: 100%;
+  padding: 13px 20px;
 `;
 
 const Header = styled.header`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  user-select: none;
+`;
+
+const HeaderLeft = styled.div`
+  display: flex;
+`;
+
+const NavTab = styled.nav`
+  display: flex;
+  position: relative;
+`;
+
+const NavButton = styled.img`
+  cursor: pointer;
+
+  :hover {
+    animation: rotate_image 6s linear infinite;
+  }
+  @keyframes rotate_image {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const H1 = styled.h1`
@@ -54,6 +82,10 @@ const InvisibleInput = styled.input`
   padding: 0;
   margin: 0;
   border: 0;
+`;
+
+const Body = styled.main`
+  margin: 50px 50px 0 50px;
 `;
 
 interface Props {
@@ -215,6 +247,12 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
 
   ///////////// Hooks ////////////////
 
+  useEffect(() => {
+    const point = { path: [0, 0], offset: 0 };
+    editor.selection = { anchor: point, focus: point }; // clean up selection
+    editor.history = { redos: [], undos: [] }; // clean up history
+  }, []);
+
   // get note from server - 현재 url에 적힌 noteId 바탕
   useEffect(() => {
     if (params.noteId) getSpecificNoteHandler();
@@ -243,7 +281,8 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
   }, [note, owner]);
 
   ///////////// Render //////////////////////
-
+  const { drop, dropdownHandler, NAV_BUTTON_ID, NAV_DROPDOWN_ID } =
+    DropdownHook();
   return (
     <>
       {!note ? (
@@ -251,30 +290,43 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
       ) : (
         <Container>
           <Header>
-            {!sideToggle && (
-              <ImageButton
-                size="16px"
-                imageUrl={arrowRightIcon}
-                onClick={sideToggleHandler}
-              ></ImageButton>
-            )}
-            <label htmlFor="title-input">
-              <H1>{title}</H1>
-            </label>
-            <InvisibleInput
-              id="title-input"
-              value={title}
-              onChange={titleHandler}
-            ></InvisibleInput>
+            <HeaderLeft>
+              {!sideToggle && (
+                <ImageButton
+                  size="16px"
+                  imageUrl={arrowRightIcon}
+                  onClick={sideToggleHandler}
+                ></ImageButton>
+              )}
+              <label htmlFor="title-input">
+                <H1>{title}</H1>
+              </label>
+              <InvisibleInput
+                id="title-input"
+                value={title}
+                onChange={titleHandler}
+              ></InvisibleInput>
+            </HeaderLeft>
+            <NavTab>
+              <NavButton
+                id={NAV_BUTTON_ID}
+                src={logoIcon}
+                onClick={dropdownHandler}
+                width="26px"
+                height="26px"
+              ></NavButton>
+              {drop && <DropdownSetting id={NAV_DROPDOWN_ID}></DropdownSetting>}
+            </NavTab>
           </Header>
-
-          <EditorFrame
-            value={value}
-            onChange={changeHandler}
-            onKeyDown={keydownHandler}
-            editor={editor}
-            readOnly={readOnlyHandler()}
-          ></EditorFrame>
+          <Body>
+            <EditorFrame
+              value={value}
+              onChange={changeHandler}
+              onKeyDown={keydownHandler}
+              editor={editor}
+              readOnly={readOnlyHandler()}
+            ></EditorFrame>
+          </Body>
           <TestContainer>
             <div>my: {JSON.stringify(user)}</div>
             <div>owner: {JSON.stringify(owner)}</div>

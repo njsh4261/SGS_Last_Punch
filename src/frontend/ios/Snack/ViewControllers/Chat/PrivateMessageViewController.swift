@@ -395,11 +395,11 @@ extension PrivateMessageViewController: MessagesLayoutDelegate {
 extension PrivateMessageViewController: MessagesDisplayDelegate {
     // 말풍선의 배경 색상
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? UIColor(named: "snackColor")! : UIColor(named: "snackButtonColor")!
+        return isFromCurrentSender(message: message) ? UIColor(named: "snackColor")! : UIColor(named: "snackBackGroundColor3")!
     }
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .label : UIColor(named: "snackTextColor")!
+        return isFromCurrentSender(message: message) ? .label : .label
     }
     
     // 말풍선의 꼬리 모양 방향

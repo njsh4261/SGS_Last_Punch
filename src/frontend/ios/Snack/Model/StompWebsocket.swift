@@ -9,21 +9,24 @@ import StompClientLib
 import SwiftKeychainWrapper
 
 class StompWebsocket {
+    // MARK: - Private properties
     static let shared = StompWebsocket()
     private let url = URL(string: "ws://\(APIConstants().chatWebsoket)/websocket")!
     private var socketClient = StompClientLib()
     private var accessToken: String
+    private var chatIdList = [String]()
+    
+    // MARK: - Public properties
     var userId: String = "-1"
     var channels = [WorkspaceChannelCellModel]()
     var members = [WorkspaceMemberCellModel]()
-    private var chatIdList = [String]()
 
     init() {
         self.userId = KeychainWrapper.standard[.id]!
         self.accessToken = KeychainWrapper.standard[.refreshToken]!
     }
     
-    // Socket 연결
+    // Home 진입시, Socket 연결 
     func registerSockect() {
         socketClient.openSocketWithURLRequest(
             request: NSURLRequest(url: url),
@@ -33,6 +36,7 @@ class StompWebsocket {
         print("Sokect is connected successfully")
     }
     
+    // ViewWillAppear 될때 마다, subscibe
     func subscribe() {
         for channel in channels {
             if chatIdList.contains(channel.id.description) { continue }

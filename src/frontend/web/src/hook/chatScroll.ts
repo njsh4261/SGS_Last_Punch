@@ -16,14 +16,15 @@ export default function chatScrollHook(
   const scrollObserverRef = useRef(null); // intersactionObserver
   const [scrollLoading, setLoading] = useState(false); // loading component
   const isOldMsgAdd = useRef(false);
+  const noOldMsg = useRef(false);
 
   const option = {
     threshold: 1,
   };
 
   const getOldChatHandler = async (entries: IntersectionObserverEntry[]) => {
+    if (noOldMsg.current) return;
     const [entry] = entries;
-
     // 뷰포트에 잡힘, api 호출 중이 아닐 때
     if (entry.isIntersecting) {
       // 처음 화면에 잡힐 때는 무시 - 화면 렌더링될 때 동작
@@ -36,6 +37,11 @@ export default function chatScrollHook(
       const chatBodyElement = chatBodyRef.current as any;
       const date = target.dataset.date;
 
+      // 채팅이 몇개 없을 때 렌더링 방지
+      if (chatBodyElement.scrollHeight === chatBodyElement.clientHeight) {
+        return;
+      }
+
       setLoading(true);
       const response = await getOldChat(channelId.toString(), date!);
       if (response) {
@@ -47,7 +53,7 @@ export default function chatScrollHook(
           isOldMsgAdd.current = true;
           setMsgList([...old, ...current]);
         } else {
-          chatBodyElement.scrollTo(0, 10);
+          noOldMsg.current = true;
         }
       } else console.error('fail getting old message');
     }

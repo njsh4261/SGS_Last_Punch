@@ -15,13 +15,18 @@ const ChannelLayer = styled.div`
   align-items: center;
 `;
 
-const ChannelName = styled.section<{ newMessage: boolean }>`
+const ChannelName = styled.section<{
+  newMessage: boolean;
+  isSelected: boolean;
+}>`
   padding: 3px 0 2px 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 125px;
-  font-weight: ${({ newMessage }) => newMessage && 'bolder'};
+  color: ${({ isSelected }) => isSelected && 'black'};
+  font-weight: ${({ newMessage, isSelected }) =>
+    (newMessage || isSelected) && 'bolder'};
   font-style: ${({ newMessage }) => newMessage && 'italic'};
   :hover {
     cursor: pointer;
@@ -121,6 +126,7 @@ export default function ChannelItem(props: Props) {
       <ChannelLayer>
         <ChannelName
           newMessage={channel.alarm && channel.id.toString() !== paramChannelId}
+          isSelected={!!isSelected}
         >
           #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
         </ChannelName>

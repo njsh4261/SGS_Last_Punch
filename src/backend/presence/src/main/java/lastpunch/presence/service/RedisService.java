@@ -2,6 +2,7 @@ package lastpunch.presence.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import lastpunch.presence.common.UserStatus;
 import lastpunch.presence.dto.PresenceDto;
 import lastpunch.presence.repository.PresenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class RedisService{
                 entry -> PresenceDto.builder()
                     .workspaceId(workspaceId)
                     .userId(entry.getKey())
-                    .status(entry.getValue())
+                    .status(UserStatus.toEnum(entry.getValue()))
                     .build()
             ).collect(Collectors.toList());
     }

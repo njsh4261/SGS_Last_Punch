@@ -1,5 +1,6 @@
 package lastpunch.presence.dto;
 
+import lastpunch.presence.common.UserStatus;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,5 +9,5 @@ import lombok.Getter;
 public class PresenceDto{
     private String workspaceId;
     private String userId;
-    private String status; // TODO: Enum UserStatus로 변경
+    private UserStatus status;
 }

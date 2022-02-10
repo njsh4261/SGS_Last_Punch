@@ -2,7 +2,6 @@ package lastpunch.presence.controller;
 
 import java.util.Map;
 import lastpunch.presence.dto.PresenceDto;
-import lastpunch.presence.entity.Presence;
 import lastpunch.presence.service.RabbitMQService;
 import lastpunch.presence.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,10 @@ public class PresenceController{
     @GetMapping("/presence/{id}")
     public ResponseEntity<Object> getMemberPresence(@PathVariable("id") String workspaceId){
         return new ResponseEntity<>(
-            Map.of("presence", redisService.getMemberPresence(workspaceId)),
+            Map.of(
+                "code", "14000",
+                "data", redisService.getMemberPresence(workspaceId)
+            ),
             HttpStatus.OK
         );
     }

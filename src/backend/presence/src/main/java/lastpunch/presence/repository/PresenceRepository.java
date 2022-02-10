@@ -1,6 +1,5 @@
 package lastpunch.presence.repository;
 
-import java.util.List;
 import java.util.Map;
 import lastpunch.presence.dto.PresenceDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class PresenceRepository{
     
     public void save(PresenceDto presenceDto){
         redisTemplate.opsForHash().put(
-            presenceDto.getWorkspaceId(), presenceDto.getUserId(), presenceDto.getStatus()
+            presenceDto.getWorkspaceId(), presenceDto.getUserId(), presenceDto.getStatus().toString()
         );
     }
     

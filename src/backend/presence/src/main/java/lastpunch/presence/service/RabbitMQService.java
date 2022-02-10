@@ -2,7 +2,6 @@ package lastpunch.presence.service;
 
 import lastpunch.presence.common.PresenceConstant;
 import lastpunch.presence.dto.PresenceDto;
-import lastpunch.presence.entity.Presence;
 import lastpunch.presence.repository.PresenceRepository;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -66,7 +66,7 @@ class LoginService {
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<Any> {
         let decoder = JSONDecoder()
         
-        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
+//        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
         
         guard let decodedData = try? decoder.decode(LoginDataModel.self, from: data)
         else { return .pathErr}

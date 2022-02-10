@@ -19,6 +19,7 @@ class PrivateMessageViewModel: ViewModelProtocol {
     }
     
     struct Output {
+        let sokectMessage = PublishRelay<MessageModel>()
     }
     // MARK: - Public properties
     var input = Input()
@@ -32,7 +33,7 @@ class PrivateMessageViewModel: ViewModelProtocol {
 //    private let userInfo: WorkspaceMemberCellModel
     private var messageText : String = ""
     private var userId: String?
-    private var chatId: String?
+    private var channelId: String?
     
     // MARK: - Init
     init(_ user: User) {
@@ -40,83 +41,14 @@ class PrivateMessageViewModel: ViewModelProtocol {
         guard let accessToken: String = KeychainWrapper.standard[.refreshToken], let userId: String = KeychainWrapper.standard[.id] else { return }
         self.accessToken = accessToken
         self.userId = userId
-        self.chatId = user.senderId > userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"
+        self.channelId = user.senderId < userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"
         
-        registerSockect()
-//        disconnect()
-//        subscribe()
-    }
-
-    // Socket 연결
-    func registerSockect() {
-        socketClient.openSocketWithURLRequest(
-            request: NSURLRequest(url: url),
-            delegate: self,
-            connectionHeaders: ["X-AUTH-TOKEN" : accessToken]
-        )
-        print("Sokect is connected successfully")
-    }
-    
-    func subscribe() {
-        socketClient.subscribe(destination: "/topic/channel." + chatId!)
-    }
-    
-    // Publish Message
-    func sendMessage(authorId: String, content: String) {
-        let payloadObject = ["authorId" : authorId, "channelId": chatId!, "content": content] as [String : Any]
-//        guard let dictionaries = try? JSONSerialization.data(withJSONObject: payloadObject), let token = token else { return }
-//
-//        socketClient.sendMessage(
-//            message: String(data: dictionaries, encoding: .utf8)!,
-//            toDestination: "/app/chat",
-//            withHeaders: ["X-AUTH-TOKEN" : token],
-//            withReceipt: nil
-//        )
-        
-        socketClient.sendJSONForDict(
-            dict: payloadObject as AnyObject,
-            toDestination: "/app/chat")
-    }
-    
-    // Unsubscribe
-    func disconnect() {
-        socketClient.disconnect()
-    }
-}
-
-//MARK: - StompClientLib Delegate
-extension PrivateMessageViewModel: StompClientLibDelegate {
-    func stompClient(client: StompClientLib!, didReceiveMessageWithJSONBody jsonBody: AnyObject?, akaStringBody stringBody: String?, withHeader header: [String : String]?, withDestination destination: String) {
-        print("DESTINATION : \(destination)")
-        print("JSON BODY : \(String(describing: jsonBody))")
-        print("STRING BODY : \(stringBody ?? "nil")")
-    }
-    
-    func stompClientDidDisconnect(client: StompClientLib!) {
-        print("Stomp socket is disconnected")
-//        client.autoDisconnect(time: 3)
-//        client.reconnect(request: NSURLRequest(url: url as URL) , delegate: self)
-    }
-    
-    // 연결 후, Subscribe Topic
-    func stompClientDidConnect(client: StompClientLib!) {
-        print("Stomp socket is connected")
-        
-        subscribe()
-    }
-    
-    func serverDidSendReceipt(client: StompClientLib!, withReceiptId receiptId: String) {
-        print("Receipt : \(receiptId)")
-    }
-    
-    func serverDidSendError(client: StompClientLib!, withErrorMessage description: String, detailedErrorMessage message: String?) {
-        print("Error send : " + description)
-        
-        disconnect()
-        registerSockect()
-    }
-    
-    func serverDidSendPing() {
-        print("Server ping")
+        // socket
+        StompWebsocket.shared.message
+            .filter {
+                $0.channelId == self.channelId
+            }
+            .bind(to: output.sokectMessage)
+            .disposed(by: disposeBag)
     }
 }

@@ -34,45 +34,56 @@ struct ImageMediaItemModel: MediaItem {
     }
 }
 
+struct Message: Codable {
+    var id: String?
+    var authorId: String
+    var channelId: String
+    var content: String
+    var status: Int
+    var createDt: String
+    var modifyDt: String
+}
+
 struct MessageModel: MessageType {
     
 //    let id: String?
     var messageId: String
+    var channelId: String
     var sender: SenderType {
         return user
     }
     var sentDate: Date
     var kind: MessageKind
-
     var user: User
 
-    private init(kind: MessageKind, user: User, messageId: String, date: Date) {
+    private init(kind: MessageKind, channelId: String, user: User, messageId: String, date: Date) {
         self.kind = kind
+        self.channelId = channelId
         self.user = user
         self.messageId = messageId
         self.sentDate = date
     }
     
-    init(custom: Any?, user: User, messageId: String, date: Date) {
-        self.init(kind: .custom(custom), user: user, messageId: messageId, date: date)
+    init(channelId: String, custom: Any?, user: User, messageId: String, date: Date) {
+        self.init(kind: .custom(custom), channelId: channelId, user: user, messageId: messageId, date: date)
     }
 
-    init(text: String, user: User, messageId: String, date: Date) {
-        self.init(kind: .text(text), user: user, messageId: messageId, date: date)
+    init(channelId: String, text: String, user: User, messageId: String, date: Date) {
+        self.init(kind: .text(text), channelId: channelId, user: user, messageId: messageId, date: date)
     }
 
-    init(attributedText: NSAttributedString, user: User, messageId: String, date: Date) {
-        self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
+    init(channelId: String, attributedText: NSAttributedString, user: User, messageId: String, date: Date) {
+        self.init(kind: .attributedText(attributedText), channelId: channelId, user: user, messageId: messageId, date: date)
     }
 
-    init(image: UIImage, user: User, messageId: String, date: Date) {
+    init(channelId: String, image: UIImage, user: User, messageId: String, date: Date) {
         let mediaItem = ImageMediaItemModel(image: image)
-        self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date)
+        self.init(kind: .photo(mediaItem), channelId: channelId, user: user, messageId: messageId, date: date)
     }
     
-    init(location: CLLocation, user: User, messageId: String, date: Date) {
+    init(channelId: String, location: CLLocation, user: User, messageId: String, date: Date) {
         let locationItem = CoordinateItemModel(location: location)
-        self.init(kind: .location(locationItem), user: user, messageId: messageId, date: date)
+        self.init(kind: .location(locationItem), channelId: channelId, user: user, messageId: messageId, date: date)
     }
 }
 

@@ -65,9 +65,6 @@ class NewWorkspaceFirstViewController: UIViewController {
     private func goToNewWorkspaceChennel() {
         let navController = NewWorkspaceSecondViewController()
         navController.bind(with: viewModel)
-        if newWorkspaceNameField.text == "새 워크스페이스" {
-            newWorkspaceNameField.text = "새 워크스페이스"
-        }
         navigationController?.pushViewController(navController, animated: true)
     }
         
@@ -94,6 +91,7 @@ class NewWorkspaceFirstViewController: UIViewController {
             $0.textAlignment = .left
             $0.returnKeyType = .go
             $0.autocorrectionType = .no
+            $0.becomeFirstResponder()
         }
         
         lblWarning = lblWarning.then {

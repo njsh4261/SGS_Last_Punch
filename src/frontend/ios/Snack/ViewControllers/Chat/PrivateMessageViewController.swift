@@ -18,9 +18,9 @@ import CoreLocation
 
 class PrivateMessageViewController: MessagesViewController {
     // MARK: - Properties
-    private var viewModel: PrivateMessageViewModel?
     private let disposeBag = DisposeBag()
 //    let channel: Channel?
+    var channelId: String
     var messages = [MessageModel]()
     var recipientInfo: User
     var senderInfo: User
@@ -40,7 +40,8 @@ class PrivateMessageViewController: MessagesViewController {
     
     private var btnAttach = InputBarButtonItem()
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, channelId: String) {
+        self.channelId = channelId
         self.senderInfo = senderInfo
         self.recipientInfo = recipientInfo
 //        self.channel = channel
@@ -62,15 +63,7 @@ class PrivateMessageViewController: MessagesViewController {
         layout()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        viewModel?.disconnect()
-    }
-    
     func bind(_ viewModel: PrivateMessageViewModel) {
-        self.viewModel = viewModel
-//        viewModel.registerSockect()
-//        viewModel.subscribe()
-        
         // MARK: Bind input
         btnAttach.rx.tap
             .subscribe(onNext: showImagePickerControllerActionSheet)
@@ -81,7 +74,9 @@ class PrivateMessageViewController: MessagesViewController {
             .disposed(by: disposeBag)
         
         // MARK: Bind output
-        
+        viewModel.output.sokectMessage
+            .bind(onNext: insertNewMessage )
+            .disposed(by: disposeBag)
     }
     
     private func goToProfile() {
@@ -400,11 +395,11 @@ extension PrivateMessageViewController: MessagesLayoutDelegate {
 extension PrivateMessageViewController: MessagesDisplayDelegate {
     // 말풍선의 배경 색상
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .red : .blue
+        return isFromCurrentSender(message: message) ? UIColor(named: "snackColor")! : UIColor(named: "snackBackGroundColor3")!
     }
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .black : .white
+        return isFromCurrentSender(message: message) ? .label : .label
     }
     
     // 말풍선의 꼬리 모양 방향
@@ -418,9 +413,9 @@ extension PrivateMessageViewController: MessagesDisplayDelegate {
 extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
-        viewModel!.sendMessage(authorId: senderInfo.senderId, content: text)
-        insertNewMessage(message)
+//        let message = MessageModel(channelId: channelId, text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
+//        insertNewMessage(message)
+        StompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channelId, content: text)
         inputBar.inputTextView.text.removeAll()
 
 //        processInputBar(messageInputBar)

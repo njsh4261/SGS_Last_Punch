@@ -16,11 +16,10 @@ import Then
 class DirectMessageListViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
+    private var viewModel: DirectMessageListViewModel
     private var accessTokenField = UITextField()
     private var userInfo: User?
     private var members = [User]()
-    private var accessToken: String = ""
-    private var workspaceId: String = ""
     private let HEADER_HEIGHT: Float = 66
     
     // MARK: - UI
@@ -30,17 +29,15 @@ class DirectMessageListViewController: UIViewController {
     private var tableView = UITableView()
     private var refreshControl = UIRefreshControl()
         
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, workspaceId: String) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, viewModel: DirectMessageListViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        guard let accessToken: String = KeychainWrapper.standard[.refreshToken] else { return }
         if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
             let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
             self.userInfo = getUser(userInfo!)
         }
-        self.accessToken = accessToken
-        self.workspaceId = workspaceId
-        tableView.dataSource = nil
 
+        bind(with: viewModel)
         attribute()
         layout()
     }
@@ -49,18 +46,12 @@ class DirectMessageListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.viewModel.viewWillAppear()
+    }
+    
     func bind(with viewModel: DirectMessageListViewModel) {
         // MARK: Bind input
-        accessTokenField.rx.text
-            .map {_ in
-                getMemberAction.init(
-                    accessToken: self.accessToken,
-                    workspaceId: self.workspaceId
-                )
-            }
-            .bind(to: viewModel.input.getMember)
-            .disposed(by: disposeBag)
-        
         btnAddMemeber.rx.tap
             .subscribe(onNext: goToInvitation)
             .disposed(by: disposeBag)
@@ -107,7 +98,8 @@ class DirectMessageListViewController: UIViewController {
         viewModel.push
             .drive(onNext: { [self] row in
                 // 추가) 본인 user정보를 넣어야함
-                let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members[row])
+                let channelId = userInfo!.senderId < members[row].senderId ? "\(userInfo!.senderId)-\(members[row].senderId)" : "\( members[row].senderId)-\(userInfo!.senderId)"
+                let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members[row], channelId: channelId)
                 let viewModel = PrivateMessageViewModel(members[row])
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)

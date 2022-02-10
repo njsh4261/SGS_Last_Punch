@@ -13,7 +13,6 @@ import ProgressHUD
 class DirectMessageListViewModel: ViewModelProtocol {
     
     struct Input {
-        let getMember = PublishSubject<getMemberAction>()
         let refresh = PublishSubject<Void>()
         let itemSelected = PublishRelay<Int>()
     }
@@ -32,9 +31,14 @@ class DirectMessageListViewModel: ViewModelProtocol {
     
     // MARK: - Private properties
     private let disposeBag = DisposeBag()
+    private let accessToken: String
+    private let workspaceId: String
     
     // MARK: - Init
-    init() {
+    init(accessToken: String, workspaceId: String) {
+        self.accessToken = accessToken
+        self.workspaceId = workspaceId
+        
         self.cellData = output.memberListCellData
             .asDriver(onErrorJustReturn: [])
         
@@ -46,22 +50,19 @@ class DirectMessageListViewModel: ViewModelProtocol {
             .asDriver(onErrorDriveWith: .empty())
         
         // refresh
-        input.refresh.withLatestFrom(input.getMember)
-            .bind { [weak self] (member) in
+        input.refresh
+            .bind { [weak self] _ in
                 guard let self = self else { return }
                 let when = DispatchTime.now() + 1.0
                 DispatchQueue.main.asyncAfter(deadline: when) {
-                    self.getWorkspace(method: .get, member.accessToken, member.workspaceId)
+                    self.getWorkspace(method: .get, self.accessToken, self.workspaceId)
                     self.output.refreshLoading.accept(false)
                 }
             }.disposed(by: disposeBag)
-        
-        // init - Cell Data
-        input.getMember.withLatestFrom(input.getMember)
-            .bind { [weak self] (member) in
-                guard let self = self else { return }
-                self.getWorkspace(method: .get, member.accessToken, member.workspaceId)
-            }.disposed(by: disposeBag)
+    }
+    
+    func viewWillAppear() {
+        self.getWorkspace(method: .get, self.accessToken, self.workspaceId)
     }
     
     func getWorkspace(method: HTTPMethod, _ token:String, _ workspaceId: String) {
@@ -77,6 +78,8 @@ class DirectMessageListViewModel: ViewModelProtocol {
                                 self.output.errorMessage.accept("워크스페이스를 찾지 못했습니다")
                                 return
                             }
+                            StompWebsocket.shared.members = members
+                            StompWebsocket.shared.subscribe()
                             self.output.memberListCellData.onNext(self.convertData(members: members))
                         default:
                             self.output.errorMessage.accept("일시적인 문제가 발생했습니다")

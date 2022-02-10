@@ -20,6 +20,7 @@ class GroupMessageViewModel: ViewModelProtocol {
     }
     
     struct Output {
+        let sokectMessage = PublishRelay<MessageModel>()
     }
     // MARK: - Public properties
     var input = Input()
@@ -43,5 +44,11 @@ class GroupMessageViewModel: ViewModelProtocol {
         guard let userId: String = KeychainWrapper.standard[.id], let accessToken: String = KeychainWrapper.standard[.refreshToken] else { return }
         self.accessToken = accessToken
         self.userId = userId
+        
+        // socket
+        StompWebsocket.shared.message
+            .filter {$0.channelId == self.channel.id.description}
+            .bind(to: output.sokectMessage)
+            .disposed(by: disposeBag)
     }
 }

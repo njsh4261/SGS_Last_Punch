@@ -467,7 +467,7 @@ extension GroupMessageViewController: MessagesDisplayDelegate {
 extension GroupMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
+        let message = MessageModel(channelId: channel!.id.description, text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
         insertNewMessage(message)
         StompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channel!.id.description, content: text)
         inputBar.inputTextView.text.removeAll()

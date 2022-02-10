@@ -11,7 +11,7 @@ import SwiftKeychainWrapper
 class CreateHomeTabController {
     func getTabController(_ workspaceId: String) -> UITabBarController {
         KeychainWrapper.standard[.workspaceId] = workspaceId
-        let accessToken: String = KeychainWrapper.standard[.accessToken]!
+        let accessToken: String = KeychainWrapper.standard[.refreshToken]!
         
         let HomeViewModel = HomeViewModel(accessToken: accessToken, workspaceId: workspaceId)
         let DMViewModel = DirectMessageListViewModel(accessToken: accessToken, workspaceId: workspaceId)

@@ -74,7 +74,9 @@ class PrivateMessageViewController: MessagesViewController {
             .disposed(by: disposeBag)
         
         // MARK: Bind output
-        
+        viewModel.output.sokectMessage
+            .bind(onNext: insertNewMessage )
+            .disposed(by: disposeBag)
     }
     
     private func goToProfile() {
@@ -411,8 +413,8 @@ extension PrivateMessageViewController: MessagesDisplayDelegate {
 extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
-        insertNewMessage(message)
+//        let message = MessageModel(channelId: channelId, text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
+//        insertNewMessage(message)
         StompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channelId, content: text)
         inputBar.inputTextView.text.removeAll()
 

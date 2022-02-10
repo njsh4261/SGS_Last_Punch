@@ -19,6 +19,7 @@ class PrivateMessageViewModel: ViewModelProtocol {
     }
     
     struct Output {
+        let sokectMessage = PublishRelay<MessageModel>()
     }
     // MARK: - Public properties
     var input = Input()
@@ -32,7 +33,7 @@ class PrivateMessageViewModel: ViewModelProtocol {
 //    private let userInfo: WorkspaceMemberCellModel
     private var messageText : String = ""
     private var userId: String?
-    private var chatId: String?
+    private var channelId: String?
     
     // MARK: - Init
     init(_ user: User) {
@@ -40,6 +41,14 @@ class PrivateMessageViewModel: ViewModelProtocol {
         guard let accessToken: String = KeychainWrapper.standard[.refreshToken], let userId: String = KeychainWrapper.standard[.id] else { return }
         self.accessToken = accessToken
         self.userId = userId
-        self.chatId = user.senderId > userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"
+        self.channelId = user.senderId < userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"
+        
+        // socket
+        StompWebsocket.shared.message
+            .filter {
+                $0.channelId == self.channelId
+            }
+            .bind(to: output.sokectMessage)
+            .disposed(by: disposeBag)
     }
 }

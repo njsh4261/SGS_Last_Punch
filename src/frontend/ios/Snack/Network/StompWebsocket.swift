@@ -7,12 +7,14 @@
 
 import StompClientLib
 import SwiftKeychainWrapper
+import RxSwift
 
 class StompWebsocket {
     // MARK: - Private properties
     static let shared = StompWebsocket()
     private let url = URL(string: "ws://\(APIConstants().chatWebsoket)/websocket")!
     private var socketClient = StompClientLib()
+    private var nameDict = [String:String]()
     private var accessToken: String
     private var chatIdList = [String]()
     
@@ -20,7 +22,8 @@ class StompWebsocket {
     var userId: String = "-1"
     var channels = [WorkspaceChannelCellModel]()
     var members = [WorkspaceMemberCellModel]()
-
+    var message = PublishSubject<MessageModel>()
+    
     init() {
         self.userId = KeychainWrapper.standard[.id]!
         self.accessToken = KeychainWrapper.standard[.refreshToken]!
@@ -50,6 +53,7 @@ class StompWebsocket {
             if chatIdList.contains(chatId) { continue }
             socketClient.subscribe(destination: "/topic/channel." + chatId)
             chatIdList.append(chatId)
+            nameDict["\(member.id.description)"] = member.name
             print("Subscribe successfully : \(chatId)")
         }
     }
@@ -57,14 +61,6 @@ class StompWebsocket {
     // Publish Message
     func sendMessage(authorId: String, channelId: String, content: String) {
         let payloadObject = ["authorId" : authorId, "channelId": channelId, "content": content] as [String : Any]
-//        guard let dictionaries = try? JSONSerialization.data(withJSONObject: payloadObject) else { return }
-//
-//        socketClient.sendMessage(
-//            message: String(data: dictionaries, encoding: .utf8)!,
-//            toDestination: "/app/chat",
-//            withHeaders: ["X-AUTH-TOKEN" : accessToken],
-//            withReceipt: nil
-//        )
 
         socketClient.sendJSONForDict(
             dict: payloadObject as AnyObject,
@@ -88,8 +84,22 @@ extension StompWebsocket: StompClientLibDelegate {
         
 //        if let JSONString = String(data: json, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString)
 //        }
-        guard let decodedData = try? JSONDecoder().decode(SendMessageModel.self, from: json) else { return
-        }
+        let decoder = JSONDecoder()
+        guard let messagePlayload = try? decoder.decode(Message.self, from: json) else { return }
+        
+        let newMessage = MessageModel(
+            channelId: messagePlayload.channelId,
+            text: messagePlayload.content,
+            user: User(
+                senderId: messagePlayload.authorId,
+                displayName: nameDict[messagePlayload.authorId]!,
+                authorId: messagePlayload.authorId,
+                content: messagePlayload.content
+            ),
+            messageId: messagePlayload.id ?? "",
+            date: messagePlayload.createDt.toDate() ?? Date()
+        )
+        self.message.onNext(newMessage)
     }
     
     func stompClientDidDisconnect(client: StompClientLib!) {

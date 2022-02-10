@@ -49,11 +49,11 @@ class StompWebsocket {
         }
         
         for member in members {
+            nameDict["\(member.id.description)"] = member.name
             let chatId = userId < member.id.description ? "\(userId)-\(member.id.description)" : "\(member.id.description)-\(userId)"
             if chatIdList.contains(chatId) { continue }
             socketClient.subscribe(destination: "/topic/channel." + chatId)
             chatIdList.append(chatId)
-            nameDict["\(member.id.description)"] = member.name
             print("Subscribe successfully : \(chatId)")
         }
     }

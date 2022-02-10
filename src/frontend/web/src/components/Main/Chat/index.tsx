@@ -59,7 +59,12 @@ const ChatInputLayout = styled.article<{ toggle: boolean }>`
   transition: left 300ms;
 `;
 
-const End = styled.article``;
+const Start = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
+const End = styled.div``;
 
 interface Props {
   sideToggle: boolean;
@@ -102,7 +107,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
             channel={channel}
           />
           <MessageListContainer>
-            {scrollLoading && <Loading></Loading>}
+            <Start>{scrollLoading.current && <Loading></Loading>}</Start>
             {msgList?.map((msg, idx) => (
               <MessagItemContainer
                 key={`message-${idx}`}

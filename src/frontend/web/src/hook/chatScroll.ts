@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { getOldChat } from '../Api/chat';
 import { ChatMessage } from '../../types/chat.type';
@@ -8,28 +9,60 @@ export default function chatScrollHook(
   msgList: ChatMessage[],
   setMsgList: React.Dispatch<React.SetStateAction<ChatMessage[]>>,
 ) {
-  const scrollObserverRef = useRef(null);
-  const [scrollLoading, setScrollLoading] = useState(false);
+  const chatBodyRef = useRef(null); // for scrollTo(old message)
+  const MESSAGE_HIEHGT = 88; // for scrollTo
+  const endRef = useRef<null | HTMLDivElement>(null); // for scorll to end(new message, recent message)
+  const firstTime = useRef(true); // 최초 이벤트 방지
+  const scrollObserverRef = useRef(null); // intersactionObserver
+  const [scrollLoading, setLoading] = useState(false); // loading component
+  const isOldMsgAdd = useRef(false);
 
   const option = {
-    threshold: 0.3,
+    threshold: 1,
   };
 
   const getOldChatHandler = async (entries: IntersectionObserverEntry[]) => {
     const [entry] = entries;
-    console.log(entry);
+
+    // 뷰포트에 잡힘, api 호출 중이 아닐 때
     if (entry.isIntersecting) {
-      const date = (entry.target as HTMLElement).dataset.date;
-      if (date) {
-        setScrollLoading(true);
-        setTimeout(() => setScrollLoading(false), 1000);
-        // const response = await getOldChat(channelId.toString(), date);
-        // console.log({ response });
-        // setMsgList(old + current)
-        console.log('hello api called');
+      // 처음 화면에 잡힐 때는 무시 - 화면 렌더링될 때 동작
+      if (firstTime.current) {
+        firstTime.current = false;
+        return;
       }
+
+      const target = entry.target as HTMLElement;
+      const chatBodyElement = chatBodyRef.current as any;
+      const date = target.dataset.date;
+
+      setLoading(true);
+      const response = await getOldChat(channelId.toString(), date!);
+      if (response) {
+        const current = cloneDeep(msgList);
+        const old = cloneDeep(response.content);
+
+        if (old.length !== 0) {
+          chatBodyElement.scrollTo(0, MESSAGE_HIEHGT * old.length);
+          isOldMsgAdd.current = true;
+          setMsgList([...old, ...current]);
+        } else {
+          chatBodyElement.scrollTo(0, 10);
+        }
+      } else console.error('fail getting old message');
     }
+    setLoading(false);
   };
+
+  const scrollToBottom = () =>
+    endRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
+
+  useEffect(() => {
+    if (!isOldMsgAdd.current) scrollToBottom();
+  }, [msgList]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(getOldChatHandler, option);
@@ -42,5 +75,5 @@ export default function chatScrollHook(
     };
   }, [msgList]);
 
-  return { scrollObserverRef, scrollLoading };
+  return { scrollObserverRef, scrollLoading, endRef, chatBodyRef };
 }

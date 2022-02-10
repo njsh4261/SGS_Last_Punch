@@ -27,6 +27,7 @@ const MessageListContainer = styled.article`
 const MessagItemContainer = styled.article<{ me?: boolean }>`
   display: flex;
   justify-content: ${({ me }) => me && `end`};
+  text-align: ${({ me }) => (me ? 'end' : 'start')};
   white-space: normal;
   word-break: break-all;
   padding: 8px 20px;
@@ -38,7 +39,6 @@ const MessagItemContainer = styled.article<{ me?: boolean }>`
 const MessageBox = styled.article`
   display: flex;
   flex-direction: column;
-  text-align: end;
 `;
 
 const MessageWriter = styled.div`
@@ -59,7 +59,12 @@ const ChatInputLayout = styled.article<{ toggle: boolean }>`
   transition: left 300ms;
 `;
 
-const End = styled.article``;
+const Start = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
+const End = styled.div``;
 
 interface Props {
   sideToggle: boolean;
@@ -74,7 +79,6 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     msg,
     msgList,
     setMsgList,
-    endRef,
     msgTypingHandler,
     msgSubmitHandler,
   ] = chatHook();
@@ -85,11 +89,8 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     return obj;
   }, [memberList]);
 
-  const { scrollObserverRef, scrollLoading } = chatScrollHook(
-    channel.id,
-    msgList,
-    setMsgList,
-  );
+  const { scrollObserverRef, scrollLoading, endRef, chatBodyRef } =
+    chatScrollHook(channel.id, msgList, setMsgList);
 
   return (
     <>
@@ -102,8 +103,8 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
             sideToggleHandler={sideToggleHandler}
             channel={channel}
           />
-          <MessageListContainer>
-            {scrollLoading && <Loading></Loading>}
+          <MessageListContainer ref={chatBodyRef}>
+            <Start>{scrollLoading && <Loading></Loading>}</Start>
             {msgList?.map((msg, idx) => (
               <MessagItemContainer
                 key={`message-${idx}`}

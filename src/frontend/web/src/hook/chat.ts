@@ -14,13 +14,11 @@ export default function chatHook(): [
   msg: string,
   msgList: ChatMessage[],
   setMsgList: React.Dispatch<React.SetStateAction<ChatMessage[]>>,
-  endRef: React.MutableRefObject<HTMLDivElement | null>,
   msgTypingHandler: (e: React.ChangeEvent<HTMLInputElement>) => void,
   msgSubmitHandler: () => void,
 ] {
   const user = useSelector((state: RootState) => state.user);
   const channel = useSelector((state: RootState) => state.channel);
-  const endRef = useRef<null | HTMLDivElement>(null);
   const [msg, setMsg] = useState<string>('');
   const [msgList, setMsgList] = useState<ChatMessage[]>([]);
   const channelList = useSelector((state: RootState) => state.channelList);
@@ -48,12 +46,6 @@ export default function chatHook(): [
     }
   };
 
-  const scrollToBottom = () =>
-    endRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-    });
-
   const getRecentChatHandler = async () => {
     const response = await getRecentChat(channel.id);
     if (response) {
@@ -62,10 +54,6 @@ export default function chatHook(): [
       Swal.fire(response.err, '', 'error');
     }
   };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [msgList]);
 
   useEffect(() => {
     getRecentChatHandler();
@@ -78,7 +66,6 @@ export default function chatHook(): [
     msg,
     msgList,
     setMsgList,
-    endRef,
     msgTypingHandler,
     msgSubmitHandler,
   ];

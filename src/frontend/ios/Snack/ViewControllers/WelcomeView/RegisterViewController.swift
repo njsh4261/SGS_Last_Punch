@@ -318,7 +318,7 @@ class RegisterViewController: UIViewController {
         
         [btnTogglePassword, btnToggleRetypePassword].forEach {
             $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
-            $0.tintColor = UIColor(named: "snackTextColor")
+            $0.tintColor = .label
         }
         
         // init시 숨겨야 할 것들

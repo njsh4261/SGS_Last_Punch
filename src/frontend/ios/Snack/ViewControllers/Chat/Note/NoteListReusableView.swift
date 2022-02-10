@@ -30,7 +30,7 @@ class NoteListReusableView: UICollectionReusableView {
     
     private func attribute() {
         [lblTitle, lblDescription].forEach {
-            $0.textColor = UIColor(named: "snackTextColor")
+            $0.textColor = .label
         }
         
         lblTitle = lblTitle.then {

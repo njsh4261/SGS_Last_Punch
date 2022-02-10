@@ -449,11 +449,11 @@ extension GroupMessageViewController: MessagesLayoutDelegate {
 extension GroupMessageViewController: MessagesDisplayDelegate {
     // 말풍선의 배경 색상
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .red : .blue
+        return isFromCurrentSender(message: message) ? UIColor(named: "snackColor")! : UIColor(named: "snackButtonColor")!
     }
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .black : .white
+        return isFromCurrentSender(message: message) ? .label : UIColor(named: "snackTextColor")!
     }
     
     // 말풍선의 꼬리 모양 방향

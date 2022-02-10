@@ -15,7 +15,7 @@ const Container = styled.article`
   color: ${({ theme }) => theme.color.snackSideFont};
   font-size: 14px;
   /* overflow-x: hidden; */
-  height: 100px;
+  height: 100%;
   :hover,
   :focus {
     overflow-y: auto;

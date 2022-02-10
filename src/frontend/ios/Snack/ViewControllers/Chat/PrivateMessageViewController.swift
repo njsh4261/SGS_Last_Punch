@@ -20,6 +20,7 @@ class PrivateMessageViewController: MessagesViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
 //    let channel: Channel?
+    var channelId: String
     var messages = [MessageModel]()
     var recipientInfo: User
     var senderInfo: User
@@ -39,7 +40,8 @@ class PrivateMessageViewController: MessagesViewController {
     
     private var btnAttach = InputBarButtonItem()
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, channelId: String) {
+        self.channelId = channelId
         self.senderInfo = senderInfo
         self.recipientInfo = recipientInfo
 //        self.channel = channel
@@ -411,6 +413,7 @@ extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
         insertNewMessage(message)
+        StompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channelId, content: text)
         inputBar.inputTextView.text.removeAll()
 
 //        processInputBar(messageInputBar)

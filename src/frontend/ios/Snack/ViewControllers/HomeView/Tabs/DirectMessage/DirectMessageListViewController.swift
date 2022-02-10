@@ -98,7 +98,8 @@ class DirectMessageListViewController: UIViewController {
         viewModel.push
             .drive(onNext: { [self] row in
                 // 추가) 본인 user정보를 넣어야함
-                let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members[row])
+                let channelId = userInfo!.senderId < members[row].senderId ? "\(userInfo!.senderId)-\(members[row].senderId)" : "\( members[row].senderId)-\(userInfo!.senderId)"
+                let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members[row], channelId: channelId)
                 let viewModel = PrivateMessageViewModel(members[row])
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)

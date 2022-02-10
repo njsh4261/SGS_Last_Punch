@@ -42,6 +42,7 @@ class StompWebsocket {
             if chatIdList.contains(channel.id.description) { continue }
             socketClient.subscribe(destination: "/topic/channel." + "\(channel.id.description)")
             chatIdList.append(channel.id.description)
+            print("Subscribe successfully : \(channel.id.description)")
         }
         
         for member in members {
@@ -49,26 +50,25 @@ class StompWebsocket {
             if chatIdList.contains(chatId) { continue }
             socketClient.subscribe(destination: "/topic/channel." + chatId)
             chatIdList.append(chatId)
+            print("Subscribe successfully : \(chatId)")
         }
-        
-        print("Subscribe successfully")
     }
     
     // Publish Message
-    func sendMessage(authorId: String, content: String) {
-//        let payloadObject = ["authorId" : authorId, "channelId": chatId!, "content": content] as [String : Any]
-//        guard let dictionaries = try? JSONSerialization.data(withJSONObject: payloadObject), let token = token else { return }
-//
+    func sendMessage(authorId: String, channelId: String, content: String) {
+        let payloadObject = ["authorId" : authorId, "channelId": channelId, "content": content] as [String : Any]
+//        guard let dictionaries = try? JSONSerialization.data(withJSONObject: payloadObject) else { return }
+
 //        socketClient.sendMessage(
 //            message: String(data: dictionaries, encoding: .utf8)!,
 //            toDestination: "/app/chat",
-//            withHeaders: ["X-AUTH-TOKEN" : token],
+//            withHeaders: ["X-AUTH-TOKEN" : accessToken],
 //            withReceipt: nil
 //        )
         
-//        socketClient.sendJSONForDict(
-//            dict: payloadObject as AnyObject,
-//            toDestination: "/app/chat")
+        socketClient.sendJSONForDict(
+            dict: payloadObject as AnyObject,
+            toDestination: "/app/chat")
     }
     
     // Unsubscribe
@@ -81,6 +81,7 @@ class StompWebsocket {
 extension StompWebsocket: StompClientLibDelegate {
     func stompClient(client: StompClientLib!, didReceiveMessageWithJSONBody jsonBody: AnyObject?, akaStringBody stringBody: String?, withHeader header: [String : String]?, withDestination destination: String) {
         print("DESTINATION : \(destination)")
+//        print("HEADER : \(header ?? ["nil":"nil"])")
         print("JSON BODY : \(String(describing: jsonBody))")
         print("STRING BODY : \(stringBody ?? "nil")")
     }

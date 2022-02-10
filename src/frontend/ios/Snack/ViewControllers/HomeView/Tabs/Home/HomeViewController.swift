@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
     private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
     private var dataSource: RxTableViewSectionedReloadDataSource<HomeSection.Model>!
-    private var users: [User]?
+    private var members: [User]?
     private var channels: [WorkspaceChannelCellModel]?
     private var userInfo: User?
     private var channel: Channel?
@@ -95,14 +95,15 @@ class HomeViewController: UIViewController {
             .drive(onNext: { [self] (row, section) in
                 // 추가) 본인 user정보를 넣어야함
                 if section == 0 {
-                    let viewController = GroupMessageViewController(senderInfo: userInfo!, recipientInfoList: users!, channel: channels![row])
-                    let viewModel = GroupMessageViewModel(users!, channel: channels![row])
+                    let viewController = GroupMessageViewController(senderInfo: userInfo!, recipientInfoList: members!, channel: channels![row])
+                    let viewModel = GroupMessageViewModel(members!, channel: channels![row])
                     viewController.bind(viewModel)
                     viewController.hidesBottomBarWhenPushed = true
                     self.show(viewController, sender: nil)
                 } else {
-                    let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: users![row])
-                    let viewModel = PrivateMessageViewModel(users![row])
+                    let channelId = userInfo!.senderId < members![row].senderId ? "\(userInfo!.senderId)-\(members![row].senderId)" : "\( members![row].senderId)-\(userInfo!.senderId)"
+                    let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members![row], channelId: channelId)
+                    let viewModel = PrivateMessageViewModel(members![row])
                     viewController.bind(viewModel)
                     viewController.hidesBottomBarWhenPushed = true
                     self.show(viewController, sender: nil)
@@ -116,7 +117,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setData(_ users: [User], _ channels: [WorkspaceChannelCellModel]) {
-        self.users = users
+        self.members = users
         self.channels = channels
     }
     

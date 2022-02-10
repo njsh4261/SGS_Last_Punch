@@ -22,7 +22,8 @@
     // 설정하고 싶은 규칙 작성
     // 밑은 예시일 뿐, 아무거나 추가 가능
     "prettier/prettier": ["error"], // eslint-plugin-prettier
-    "react/jsx-uses-vars": "error" // eslint-plugin-react
+    "react/jsx-uses-vars": "error", // eslint-plugin-react
+    "react/prop-types": 0
   },
   "ignorePatterns": ["*.config.js"] // 제외하려는 파일
   }

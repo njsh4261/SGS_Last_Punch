@@ -7,6 +7,11 @@ import { createNoteAPI, getNoteListAPI } from '../../../../Api/note';
 
 export const ItemContainer = styled.section`
   padding: 7px 0 7px 26px;
+  border-radius: 6px;
+  :hover {
+    background-color: ${({ theme }) => theme.color.snackSideHover};
+    cursor: pointer;
+  }
 `;
 
 const ChannelLayer = styled.div`
@@ -15,19 +20,19 @@ const ChannelLayer = styled.div`
   align-items: center;
 `;
 
-const ChannelName = styled.section<{ newMessage: boolean }>`
+const ChannelName = styled.section<{
+  newMessage: boolean;
+  isSelected: boolean;
+}>`
   padding: 3px 0 2px 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 125px;
-  font-weight: ${({ newMessage }) => newMessage && 'bolder'};
+  color: ${({ isSelected }) => isSelected && 'black'};
+  font-weight: ${({ newMessage, isSelected }) =>
+    (newMessage || isSelected) && 'bolder'};
   font-style: ${({ newMessage }) => newMessage && 'italic'};
-  :hover {
-    cursor: pointer;
-    color: black;
-    font-weight: bolder;
-  }
 `;
 
 const PaddingLeft8px = styled.span`
@@ -43,6 +48,7 @@ const ButtonCreateNote = styled.button`
   padding: 1px 4px 0px 4px;
   border: 1px solid ${({ theme }) => theme.color.snackSideFont};
   border-radius: 4px;
+  margin-right: 5px;
   cursor: pointer;
   :hover {
     color: black;
@@ -121,6 +127,7 @@ export default function ChannelItem(props: Props) {
       <ChannelLayer>
         <ChannelName
           newMessage={channel.alarm && channel.id.toString() !== paramChannelId}
+          isSelected={!!isSelected}
         >
           #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
         </ChannelName>

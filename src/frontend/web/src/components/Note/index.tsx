@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { createEditor, Node, Text, Transforms, Editor } from 'slate';
+import { createEditor, Node, Editor } from 'slate';
 import { HistoryEditor, withHistory } from 'slate-history';
 import { ReactEditor, withReact } from 'slate-react';
 import { useParams } from 'react-router-dom';
@@ -18,6 +18,8 @@ import {
 } from '../../Api/note';
 import noteOPintervalHook from '../../hook/note/noteOPinterval';
 import Loading from '../Common/Loading';
+import { toggleMark } from './EditorFrame/plugin/mark';
+import { toggleBlock } from './EditorFrame/plugin/block';
 
 const TYPING_TIME = 1500;
 const UPDATE_OP_TIME = 1000;
@@ -128,45 +130,42 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
    * @ 비선점자: 선점자가 있으면 입력 금지, 없으면 선점 요창
    */
   const keydownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    // 방향키 입력은 선점에 대한 이벤트로 보지 않음
     if (ARROW_KEYS.includes(e.key)) {
       return;
     }
 
-    // 선점자 처리 로직
+    // 선점자일 때 단축키 처리
     if (owner && owner.id === user.id) {
       if (e.ctrlKey) {
+        e.preventDefault();
         switch (e.key) {
           case 'b':
-            e.preventDefault();
-            Transforms.setNodes(
-              editor,
-              { bold: true },
-              { match: (n) => Text.isText(n), split: true },
-            );
+            toggleMark(editor, 'bold');
             break;
           case 'i':
-            e.preventDefault();
-            Transforms.setNodes(
-              editor,
-              { italic: true },
-              { match: (n) => Text.isText(n), split: true },
-            );
+            toggleMark(editor, 'italic');
             break;
           case 'u':
-            e.preventDefault();
-            Transforms.setNodes(
-              editor,
-              { underline: true },
-              { match: (n) => Text.isText(n), split: true },
-            );
+            toggleMark(editor, 'underline');
             break;
           case '`':
-            e.preventDefault();
-            Transforms.setNodes(
-              editor,
-              { code: true },
-              { match: (n) => Text.isText(n), split: true },
-            );
+            toggleMark(editor, 'code');
+            break;
+          case '1':
+            toggleBlock(editor, 'heading-one');
+            break;
+          case '2':
+            toggleBlock(editor, 'heading-two');
+            break;
+          case '3':
+            toggleBlock(editor, 'block-quote');
+            break;
+          case '4':
+            toggleBlock(editor, 'bulleted-list');
+            break;
+          case '5':
+            toggleBlock(editor, 'numbered-list');
             break;
         }
       }
@@ -175,7 +174,7 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
       return;
     }
 
-    // 비선점자 처리
+    // 비선점자라면 선점권 경쟁 충돌을 방지하기 위해 일단 이벤트를 막고 선점권 요청
     e.preventDefault();
     if (owner === null) {
       lockNote();

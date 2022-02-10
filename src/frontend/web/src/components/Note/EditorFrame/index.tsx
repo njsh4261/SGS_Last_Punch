@@ -1,8 +1,9 @@
 import Caret from './Caret';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Node } from 'slate';
 import { Editable, ReactEditor, RenderLeafProps, Slate } from 'slate-react';
 import { ClientFrame } from './Components';
+import HoveringToolbar from './HoveringToolbar/index';
 
 export interface EditorFrame {
   editor: ReactEditor;
@@ -11,33 +12,6 @@ export interface EditorFrame {
   onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
   readOnly: boolean;
 }
-
-const renderElement = (props: any) => <Element {...props} />;
-
-const EditorFrame: React.FC<EditorFrame> = ({
-  editor,
-  value,
-  onChange,
-  onKeyDown,
-  readOnly,
-}) => {
-  const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
-
-  return (
-    <ClientFrame>
-      <Slate editor={editor} value={value} onChange={onChange}>
-        <Editable
-          readOnly={readOnly}
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-          onKeyDown={onKeyDown}
-        />
-      </Slate>
-    </ClientFrame>
-  );
-};
-
-export default EditorFrame;
 
 const Element: React.FC<any> = ({ attributes, children, element }) => {
   switch (element.type) {
@@ -103,3 +77,30 @@ const Leaf: React.FC<RenderLeafProps> = ({ attributes, children, leaf }) => {
     </span>
   );
 };
+
+const renderElement = (props: any) => <Element {...props} />;
+const renderLeaf = (props: any) => <Leaf {...props} />;
+
+const EditorFrame: React.FC<EditorFrame> = ({
+  editor,
+  value,
+  onChange,
+  onKeyDown,
+  readOnly,
+}) => {
+  return (
+    <ClientFrame>
+      <HoveringToolbar editor={editor}></HoveringToolbar>
+      <Slate editor={editor} value={value} onChange={onChange}>
+        <Editable
+          readOnly={readOnly}
+          renderElement={renderElement}
+          renderLeaf={renderLeaf}
+          onKeyDown={onKeyDown}
+        />
+      </Slate>
+    </ClientFrame>
+  );
+};
+
+export default EditorFrame;

@@ -3,7 +3,7 @@ import { Popper, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
 import { Range, Editor } from 'slate';
-import { useSlate, ReactEditor } from 'slate-react';
+import { ReactEditor } from 'slate-react';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
 import FormatUnderlinedIcon from '@material-ui/icons/FormatUnderlined';
@@ -17,16 +17,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function HoveringToolbar() {
+export default function HoveringToolbar({ editor }: { editor: ReactEditor }) {
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<any>(null);
   const [formats, setFormats] = useState(() => []);
   const classes = useStyles();
-  const editor = useSlate();
   const { selection } = editor;
   const id = open ? 'hovering-toolbar' : undefined;
 
-  const handleFormats = (_, newFormat) => {
+  const handleFormats = (_: any, newFormat: any) => {
     setFormats(newFormat);
     setOpen(false);
   };
@@ -47,12 +46,10 @@ function HoveringToolbar() {
     const getBoundingClientRect = () =>
       domSelection?.getRangeAt(0).getBoundingClientRect();
 
-    // console.log(getBoundingClientRect().height);
-
     setOpen(true);
     setAnchorEl({
-      clientWidth: getBoundingClientRect().width,
-      clientHeight: getBoundingClientRect().height,
+      clientWidth: getBoundingClientRect()?.width,
+      clientHeight: getBoundingClientRect()?.height,
       getBoundingClientRect,
     });
   }, [editor, selection]);
@@ -77,13 +74,13 @@ function HoveringToolbar() {
           aria-label="text format"
           onChange={handleFormats}
         >
-          <MarkButton format="bold" label="bold">
+          <MarkButton editor={editor} format="bold" label="bold">
             <FormatBoldIcon />
           </MarkButton>
-          <MarkButton format="italic" label="italic">
+          <MarkButton editor={editor} format="italic" label="italic">
             <FormatItalicIcon />
           </MarkButton>
-          <MarkButton format="underline" label="underlne">
+          <MarkButton editor={editor} format="underline" label="underlne">
             <FormatUnderlinedIcon />
           </MarkButton>
         </StyledToggleButtonGroup>
@@ -91,5 +88,3 @@ function HoveringToolbar() {
     </Popper>
   );
 }
-
-export default HoveringToolbar;

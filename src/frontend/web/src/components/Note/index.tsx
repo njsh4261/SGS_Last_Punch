@@ -35,6 +35,7 @@ const Container = styled.article`
   flex: 1;
   flex-direction: column;
   height: 100%;
+  overflow-x: hidden;
   padding: 13px 20px;
 `;
 

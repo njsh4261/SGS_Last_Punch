@@ -125,7 +125,7 @@ export default function ToggleList({
             ) && (
               <ChannelItem
                 channel={channel}
-                paramChannelId={params.channelId}
+                params={params}
                 wsId={params.wsId as string}
                 key={channel.id}
                 type={type}

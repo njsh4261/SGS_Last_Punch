@@ -2,7 +2,8 @@ package lastpunch.presence.controller;
 
 import java.util.Map;
 import lastpunch.presence.common.PresenceConstant;
-import lastpunch.presence.entity.Presence.UpdateDto;
+import lastpunch.presence.dto.UpdateDto;
+import lastpunch.presence.entity.Presence;
 import lastpunch.presence.service.RabbitMQService;
 import lastpunch.presence.service.MongoService;
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class PresenceController{
     }
     
     @MessageMapping("/update")
-    public void updateUserStatus(Message<UpdateDto> message){
+    public void updateUserStatus(Message<Presence.UpdateDto> message){
         logger.info("received: " + message.getPayload());
         rabbitMQService.updateUserStatus(
             message.getPayload(),
@@ -43,7 +44,7 @@ public class PresenceController{
         return new ResponseEntity<>(
             Map.of(
                 "code", "14000",
-                "data", mongoService.getList(workspaceId)
+                "data", mongoService.getByWorkspaceId(workspaceId)
             ),
             HttpStatus.OK
         );

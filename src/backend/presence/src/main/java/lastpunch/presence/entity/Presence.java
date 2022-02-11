@@ -1,52 +1,54 @@
 package lastpunch.presence.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDateTime;
+
 import lastpunch.presence.common.UserStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 @Document(collection = "presences")
 @Getter
 @Setter
 @Builder
 public class Presence{
-    @Id
-    private String sessionId;
-    
     private String workspaceId;
     private String userId;
     private UserStatus userStatus;
-    
-    @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
-    private LocalDateTime modifyDt;
-    
+    private List<String> sessions;
+
     @Getter
     @Builder
     public static class UpdateDto{
         private String workspaceId;
         private String userId;
         private String userStatus;
-        
-        public Presence toEntity(String sessionId){
-            return Presence.builder()
-                .sessionId(sessionId)
+    }
+
+    @Getter
+    @Builder
+    public static class ExportDto{
+        private String workspaceId;
+        private String userId;
+        private UserStatus userStatus;
+    }
+
+    public ExportDto export(){
+        return ExportDto.builder()
                 .workspaceId(workspaceId)
                 .userId(userId)
-                .userStatus(UserStatus.toEnum(userStatus))
-                .modifyDt(LocalDateTime.now())
+                .userStatus(userStatus)
                 .build();
-        }
     }
-    
-    public UpdateDto toDto(){
-        return UpdateDto.builder()
-            .workspaceId(workspaceId)
-            .userId(userId)
-            .userStatus(userStatus.toString())
-            .build();
+
+    public static Presence make(UpdateDto updateDto, String sessionId){
+        return Presence.builder()
+                .workspaceId(updateDto.getWorkspaceId())
+                .userId(updateDto.getUserId())
+                .userStatus(UserStatus.toEnum(updateDto.getUserStatus()))
+                .sessions(List.of(sessionId))
+                .build();
     }
 }

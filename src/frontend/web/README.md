@@ -23,58 +23,6 @@
 
 <br>
 
-## 기능 💡
-
-TODO: 주요 기능과 로직에 대한 설명, 그리고 컴포넌트 및 로직 코드의 위치를 적는다
-
-<br>
-
-### 로그인/회원가입 페이지
-
-|추후 추가|![loginlogout](https://user-images.githubusercontent.com/44664867/153588913-cdc4aaee-2b01-46f8-8eb5-cd070620e487.gif)|
-|---|---|
-|회원가입|로그인, 로그아웃|
-|이메일 인증 후 회원가입|이메일로 로그인하여 localStorage에 access/refresh token 저장|
-
-<br>
-
-### 웰컴 페이지
-
-유저의 워크스페이스 리스트가 렌더링 됩니다. 워크스페이스 더 보기, 선택, 개설, 로그아웃을 할 수 있습니다.
-
-|![더보기](https://user-images.githubusercontent.com/44664867/153590304-1ea5081d-62dc-4a1c-9363-2b7d3a3d255b.gif)|![워크스페이스선택](https://user-images.githubusercontent.com/44664867/153590298-72e25cc7-4a89-4610-b02f-31750eed0335.gif)|![워크스페이스생성](https://user-images.githubusercontent.com/44664867/153590300-635c7f76-c7ce-4086-a619-c8652a3684fe.gif)|
-|---|---|---|
-|더 보기|선택|개설|
-|페이징된 결과를 불러옵니다|워크스페이스 페이지로 이동|새 워크스페이스 생성|
-
-
-<br>
-
-### 메인 페이지 & 채팅
-
-|![유저초대](https://user-images.githubusercontent.com/44664867/153591700-641e26c7-8faf-4b02-8d08-430f50d85f4e.gif)|미구현|미구현|
-|---|---|---|
-|초대|나가기|멤버 보기|
-|유저 검색 후 워크스페이스/채널에 초대|워크스페이스/채널에서 나가기|워크스페이스/채널에 참가한 멤버 상태 보기|
-
-|![homelogout](https://user-images.githubusercontent.com/44664867/153592206-4a5aaa93-3499-404b-b0f7-901c4d4df11c.gif)|미구현|![chatting](https://user-images.githubusercontent.com/44664867/153592212-0684d281-36af-422c-b72a-59f2ac252bb3.gif)|
-|---|---|---|
-|웰컴페이지 이동, 로그아웃|프로필|채팅|
-|쿠키를 눌러 웰컴페이지로 이동하거나 로그아웃|프로필 정보 모달(구현 예정)|채팅 기능(UI 수정중)|
-
-<br>
-
-### 노트 기능
-
-> *Snack에는 선점 개념이 있습니다. 동료끼리 동시에 편집하는 것은 때론 방해가 됩니다. 선점자만 문서 편집이 가능하고 실시간 업데이트 됩니다. 타이핑을 1.5초 동안 하지 않으면 선점권이 해제 됩니다.*
-
-|![note](https://user-images.githubusercontent.com/44664867/153594223-0ae9ba5a-f3d2-4e60-b347-a3d353a2aa40.gif)|
-|---|
-|노트 조회/생성/선택/편집|
-|채널을 선택하면 채널에 속한 노트 리스트가 표시됩니다. 채널 부분에 hover하면 노트 생성 버튼이 나타납니다. 노트 선택을 하면 채팅 화면에서 노트 화면으로 전환됩니다. 현재 [control+단축키]로 효과를 줄 수 있습니다.|
-
-<br>
-
 ## 기술 스택 🛠
 
 ![Generic badge](https://img.shields.io/badge/17.0.2-React-skyblue.svg)
@@ -124,14 +72,66 @@ TODO: 주요 기능과 로직에 대한 설명, 그리고 컴포넌트 및 로�
 |--- pages: 라우팅 되는 페이지. 여러 컴포넌트를 조합한다.
 |--- component
       |--- common: 재사용되는 presenter 컴포넌트
-      |--- topic: 특정 화면에 대한 컴포넌트들
-            |--- CreateWs: 워크스페이스 개설
-            |--- Main: 메인의 사이드바 + 채팅
-            |--- Note: 노트
-            |--- Signin: 로그인
-            |--- SignupEmail: 회원가입
-            |--- Welcome: 워크스페이스 선택, 개설 버튼
+      |  (topics: 특정 화면에 대한 컴포넌트들)
+      |--- CreateWs: 워크스페이스 개설
+      |--- Main: 메인의 사이드바 + 채팅
+      |--- Note: 노트
+      |--- Signin: 로그인
+      |--- SignupEmail: 회원가입
+      |--- Welcome: 워크스페이스 선택, 개설 버튼
 ```
+
+<br>
+
+## 기능 💡
+
+TODO: 주요 기능과 로직에 대한 설명, 그리고 컴포넌트 및 로직 코드의 위치를 적는다
+
+<br>
+
+### 로그인/회원가입 페이지
+
+|추후 추가|![loginlogout](https://user-images.githubusercontent.com/44664867/153588913-cdc4aaee-2b01-46f8-8eb5-cd070620e487.gif)|
+|---|---|
+|회원가입|로그인, 로그아웃|
+|이메일 인증 후 회원가입|이메일로 로그인하여 localStorage에 access/refresh token 저장|
+
+<br>
+
+### 웰컴 페이지
+
+유저의 워크스페이스 리스트가 렌더링 됩니다. 워크스페이스 더 보기, 선택, 개설, 로그아웃을 할 수 있습니다.
+
+|![더보기](https://user-images.githubusercontent.com/44664867/153590304-1ea5081d-62dc-4a1c-9363-2b7d3a3d255b.gif)|![워크스페이스선택](https://user-images.githubusercontent.com/44664867/153590298-72e25cc7-4a89-4610-b02f-31750eed0335.gif)|![워크스페이스생성](https://user-images.githubusercontent.com/44664867/153590300-635c7f76-c7ce-4086-a619-c8652a3684fe.gif)|
+|---|---|---|
+|더 보기|선택|개설|
+|페이징된 결과를 불러옵니다|워크스페이스 페이지로 이동|새 워크스페이스 생성|
+
+
+<br>
+
+### 메인 페이지 & 채팅
+
+|![유저초대](https://user-images.githubusercontent.com/44664867/153591700-641e26c7-8faf-4b02-8d08-430f50d85f4e.gif)|미구현|미구현|
+|---|---|---|
+|초대|나가기|멤버 보기|
+|유저 검색 후 워크스페이스/채널에 초대|워크스페이스/채널에서 나가기|워크스페이스/채널에 참가한 멤버 상태 보기|
+
+|![homelogout](https://user-images.githubusercontent.com/44664867/153592206-4a5aaa93-3499-404b-b0f7-901c4d4df11c.gif)|미구현|![chatting](https://user-images.githubusercontent.com/44664867/153592212-0684d281-36af-422c-b72a-59f2ac252bb3.gif)|
+|---|---|---|
+|웰컴페이지 이동, 로그아웃|프로필|채팅|
+|쿠키를 눌러 웰컴페이지로 이동하거나 로그아웃|프로필 정보 모달(구현 예정)|채팅 기능(UI 수정중)|
+
+<br>
+
+### 노트 기능
+
+> *Snack에는 선점 개념이 있습니다. 동료끼리 동시에 편집하는 것은 때론 방해가 됩니다. 선점자만 문서 편집이 가능하고 실시간 업데이트 됩니다. 타이핑을 1.5초 동안 하지 않으면 선점권이 해제 됩니다.*
+
+|![note](https://user-images.githubusercontent.com/44664867/153594223-0ae9ba5a-f3d2-4e60-b347-a3d353a2aa40.gif)|
+|---|
+|노트 조회/생성/선택/편집|
+|채널을 선택하면 채널에 속한 노트 리스트가 표시됩니다. 채널 부분에 hover하면 노트 생성 버튼이 나타납니다. 노트 선택을 하면 채팅 화면에서 노트 화면으로 전환됩니다. 현재 [control+단축키]로 효과를 줄 수 있습니다.|
 
 <br>
 

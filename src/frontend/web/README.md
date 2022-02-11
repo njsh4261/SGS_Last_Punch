@@ -5,6 +5,7 @@
 ![Generic badge](https://img.shields.io/badge/17.0.2-React-skyblue.svg)
 ![Generic badge](https://img.shields.io/badge/4.5.4-TypeScript-green.svg)
 ![Generic badge](https://img.shields.io/badge/5.3.3-Styled%20Component-pink.svg)
+
 ![Generic badge](https://img.shields.io/badge/4.1.2-Redux-yellow.svg)
 ![Generic badge](https://img.shields.io/badge/0.59-Slate-yellowgreen.svg)
 ![Generic badge](https://img.shields.io/badge/6.1.2-stompJS-brightgreen.svg)
@@ -12,7 +13,7 @@
 
 <br>
 
-## Snack?
+## Snack? <img height="20px" width="20px" src="https://user-images.githubusercontent.com/44664867/153584703-0fc34cd1-0091-46de-94ad-290415fb5fc1.png">
 
 *여러 협업 툴을 사용하면서 새 창을 키거나 알트탭은 그만!*
 
@@ -22,57 +23,31 @@
 
 <br>
 
-## 주요 기능
+## 기능 💡
 
 TODO: 주요 기능과 로직에 대한 설명, 그리고 컴포넌트 및 로직 코드의 위치를 적는다
 
 <br>
 
-### 회원가입
+### 로그인/회원가입 페이지
 
-이메일을 통해 회원가입을 할 수 있습니다.
-
-- 이미지
-
-<br>
-
-### 로그인
-
-유저 정보를 입력하고 성공하면 토큰을 localStorage에 저장합니다.
-
-- image
+|||
+|---|---|
+|![loginlogout](https://user-images.githubusercontent.com/44664867/153588913-cdc4aaee-2b01-46f8-8eb5-cd070620e487.gif)|![loginlogout](https://user-images.githubusercontent.com/44664867/153588913-cdc4aaee-2b01-46f8-8eb5-cd070620e487.gif)|
+|회원가입|로그인, 로그아웃|
+|이메일 인증 후 회원가입|이메일로 로그인하여 localStorage에 access/refresh token 저장|
 
 <br>
 
 ### 웰컴 페이지
 
-유저의 워크스페이스 리스트가 렌더링 됩니다.
+유저의 워크스페이스 리스트가 렌더링 됩니다. 워크스페이스 더 보기, 선택, 개설, 로그아웃을 할 수 있습니다.
 
-- image
+|![더보기](https://user-images.githubusercontent.com/44664867/153590304-1ea5081d-62dc-4a1c-9363-2b7d3a3d255b.gif)|![워크스페이스선택](https://user-images.githubusercontent.com/44664867/153590298-72e25cc7-4a89-4610-b02f-31750eed0335.gif)|![워크스페이스생성](https://user-images.githubusercontent.com/44664867/153590300-635c7f76-c7ce-4086-a619-c8652a3684fe.gif)|
+|---|---|---|
+|img|img|img|
+|더 보기|선택|개설|
 
-더보기를 통해 페이징된 결과를 응답받아 렌더링 합니다.
-
-- image
-
-워크스페이스를 선택하여 메인 페이지로 이동합니다.
-
-- image
-
-워크스페이스 개설 페이지로 이동합니다.
-
-- image
-
-로그아웃 합니다.
-
-- image
-
-<br>
-
-### 워크스페이스 개설
-
-워크스페이스 이름과 채널 이름을 입력하여 워크스페이스를 개설합니다.
-
-- image
 
 <br>
 
@@ -92,26 +67,40 @@ TODO: 주요 기능과 로직에 대한 설명, 그리고 컴포넌트 및 로�
 
 <br>
 
-## 기술 스택
+## 기술 스택 🛠
 
-- React: 최신 버전을 사용했습니다. 빠른 개발을 위해 CRA를 사용했기 때문에 반강제적인 선택이 됐습니다. 후에 외부 라이브러리를 사용할 떄 호환 문제를 겪고 버전에 신중해야 한다는 점을 몸으로 느꼈습니다.
+![Generic badge](https://img.shields.io/badge/17.0.2-React-skyblue.svg)
+
+- 최신 버전을 사용했습니다. 빠른 개발을 위해 CRA를 사용했기 때문에 반강제적인 선택이 됐습니다. 후에 외부 라이브러리를 사용할 떄 호환 문제를 겪고 버전에 신중해야 한다는 점을 몸으로 느꼈습니다.
+
+![Generic badge](https://img.shields.io/badge/4.5.4-TypeScript-green.svg)
 
 - TypeScript: 정적 타입 지원으로 안전하고 편리함까지 제공해주는 타입스크립트에 대한 소문을 듣고 도전하기 위해 도입했습니다.
 
+![Generic badge](https://img.shields.io/badge/5.3.3-Styled%20Component-pink.svg)
+
 - Styled-Component: css를 컴포넌트로 관리하기 위해 선택했습니다.
+
+![Generic badge](https://img.shields.io/badge/4.1.2-Redux-yellow.svg)
 
 - Redux: 상태의 전역 관리, Redux의 미들웨어를 사용해보기 위해 도전해보았습니다.
 
+![Generic badge](https://img.shields.io/badge/0.59-Slate-yellowgreen.svg)
+
+
 - Slate: 위지위그(WYSIWYG: What You See Is What You Get) 프레임워크입니다. 노트(공동편집) 기능 기획 단계에서 적절한 기능을 제공해주어 선택했습니다.
+
+![Generic badge](https://img.shields.io/badge/6.1.2-stompJS-brightgreen.svg)
 
 - stompJS: 서버 측에서 보다 편한 구현 및 확장성을 위해 선택하여 프로콜을 맞추기 위해 선택했습니다.
 
-- sockJS: websocket이 지원되지 않는 브라우저에서도 API가 잘 동작되는 뛰어난 호환성을 지닌 라이브러리입니다.
+![Generic badge](https://img.shields.io/badge/1.5.2-sockJS-red.svg)
+
+- websocket이 지원되지 않는 브라우저에서도 API가 잘 동작되는 뛰어난 호환성을 지닌 라이브러리입니다.
 
 <br>
 
-
-## 디렉토리 구조
+## 디렉토리 구조 🔍
 
 ```
 - types : 외부 라이브러리, 혹은 특정 주제에 대한 타입 정의
@@ -138,7 +127,13 @@ TODO: 주요 기능과 로직에 대한 설명, 그리고 컴포넌트 및 로�
 
 <br>
 
-## 실행
+## 개인 목표 및 회고 😎
+
+[TODO] 프로젝트 하면서 느낀 것들
+
+<br>
+
+## 실행 🔥
 
 git clone을 했을 때 실행할 수 있는 방법입니다.
 

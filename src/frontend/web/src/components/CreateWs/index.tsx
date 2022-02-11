@@ -73,9 +73,15 @@ export default function CreateWsContainer({
       <Question>{questions[step]}</Question>
       <Explanation>{explanation[step]}</Explanation>
       {step === 1 ? (
-        <Input name="ws" value={wsName} onChange={inputHandler} />
+        <Input
+          autoComplete="off"
+          name="ws"
+          value={wsName}
+          onChange={inputHandler}
+        />
       ) : (
         <Input
+          autoComplete="off"
           name="channel"
           placeholder="예: 수다방, 공지사항"
           value={channelName}

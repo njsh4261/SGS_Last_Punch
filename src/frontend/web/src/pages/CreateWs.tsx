@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import setTitleHook from '../hook/setTitle';
 import createWsHook from '../hook/createWs';
 import MainHeaderFrame from '../components/Common/MainHeaderFrame';
 import MainAsideFrame from '../components/Common/MainAsideFrame';
 import CreateWsContainer from '../components/CreateWs';
 import AsideHeader from '../components/Common/MainAsideHeader';
+import { WorkspaceName } from '../components/Common/WorkspaceName';
 
 const PageLayout = styled.div`
   display: flex;
@@ -27,8 +29,10 @@ export default function WsCreator() {
     <PageLayout>
       <MainHeaderFrame></MainHeaderFrame>
       <Body>
-        <MainAsideFrame>
-          <AsideHeader>{wsName}</AsideHeader>
+        <MainAsideFrame toggle={true}>
+          <AsideHeader>
+            <WorkspaceName>{wsName}</WorkspaceName>
+          </AsideHeader>
         </MainAsideFrame>
         <CreateWsContainer
           step={step}

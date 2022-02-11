@@ -15,6 +15,7 @@ const ChannelHeader = styled.article`
   justify-content: space-between;
   padding: 9.5px 20px;
   user-select: none;
+  border-bottom: 1px solid lightgray;
 `;
 
 const ChannelInfo = styled.section`

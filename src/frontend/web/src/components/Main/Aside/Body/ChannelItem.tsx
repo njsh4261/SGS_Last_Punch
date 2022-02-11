@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Params, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ModalType } from './Modal';
@@ -56,16 +56,18 @@ const ButtonCreateNote = styled.button`
   }
 `;
 
-const NoteItem = styled.article`
+const NoteItem = styled.article<{ isSelected: boolean }>`
   padding: 7px 0px 0px 12px;
   width: 130px;
   outline: none;
   border: none;
   background: inherit;
-  color: inherit;
+  color: ${({ isSelected }) => (isSelected ? 'black' : 'inherit')};
+  font-weight: ${({ isSelected }) => isSelected && 'bolder'};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
   :hover {
     cursor: pointer;
     color: black;
@@ -75,7 +77,7 @@ const NoteItem = styled.article`
 
 interface Props {
   channel: any;
-  paramChannelId: string | undefined;
+  params: Params;
   wsId: string;
   type: ModalType;
   isSelected?: boolean;
@@ -84,8 +86,7 @@ interface Props {
 }
 
 export default function ChannelItem(props: Props) {
-  const { channel, wsId, paramChannelId, selectHandler, type, isSelected } =
-    props;
+  const { channel, wsId, params, selectHandler, type, isSelected } = props;
 
   const [noteList, setNoteList] = useState<any[]>([]);
   const [hover, setHover] = useState(false);
@@ -126,7 +127,9 @@ export default function ChannelItem(props: Props) {
     >
       <ChannelLayer>
         <ChannelName
-          newMessage={channel.alarm && channel.id.toString() !== paramChannelId}
+          newMessage={
+            channel.alarm && channel.id.toString() !== params.channelId
+          }
           isSelected={!!isSelected}
         >
           #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
@@ -141,6 +144,7 @@ export default function ChannelItem(props: Props) {
           <NoteItem
             id={`${note.id}`}
             key={`${note.id}`}
+            isSelected={note.id === params.noteId}
             onClick={selectNoteHandler}
           >
             {note.title}

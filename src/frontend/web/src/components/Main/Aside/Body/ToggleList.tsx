@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { openModal } from '../../../../modules/modal';
@@ -9,6 +9,7 @@ import ChannelItem, { ItemContainer } from './ChannelItem';
 import addIcon from '../../../../icon/add.svg';
 import { ChannelListState } from '../../../../modules/channeList';
 import { UserState } from '../../../../modules/user';
+import { RootState } from '../../../../modules';
 
 const ToggleType = styled.section`
   padding: 8px 0px;
@@ -90,7 +91,20 @@ export default function ToggleList({
       .type as ModalType;
     dispatch(openModal(modalType));
   };
+  const user = useSelector((state: RootState) => state.user);
   const [checked, setChecked] = useState(true);
+
+  const isSelectHandler = (type: ModalType, channelId: string) => {
+    console.log(type, channelId, params.channelId);
+    if (type === 'channel') return params.channelId === channelId;
+    // type은 'direct message', channel.id은 상대 userId를 의미
+    const userId = user.id.toString();
+    return (
+      params.channelId ===
+      (userId < channelId ? `${userId}-${channelId}` : `${channelId}-${userId}`)
+    );
+  };
+
   return (
     <ToggleType>
       <Label htmlFor={`${type}-toggle`} onClick={() => setChecked(!checked)}>
@@ -111,12 +125,12 @@ export default function ToggleList({
             ) && (
               <ChannelItem
                 channel={channel}
-                paramChannelId={params.channelId}
+                params={params}
                 wsId={params.wsId as string}
                 key={channel.id}
                 type={type}
                 selectHandler={selectHandler}
-                isSelected={params.channelId === channel.id.toString()}
+                isSelected={isSelectHandler(type, channel.id.toString())}
               ></ChannelItem>
             ),
         )}

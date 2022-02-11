@@ -8,18 +8,11 @@ import { RootState } from '../../../modules';
 import ImageButton from '../../Common/ImageButton';
 import ArrowLeftIcon from '../../../icon/arrowLeft.svg';
 import DropdownWorkspace from './DropdownWorkspace';
+import { WorkspaceName } from '../../Common/WorkspaceName';
 
 const DropdownBox = styled.div`
   display: flex;
   position: relative;
-`;
-
-const WorkspaceName = styled.div`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 200px;
-  cursor: pointer;
 `;
 
 interface Props {

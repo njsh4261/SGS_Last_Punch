@@ -35,6 +35,7 @@ const Container = styled.article`
   flex: 1;
   flex-direction: column;
   height: 100%;
+  overflow-x: hidden;
   padding: 13px 20px;
 `;
 
@@ -85,7 +86,13 @@ const InvisibleInput = styled.input`
 `;
 
 const Body = styled.main`
-  margin: 50px 50px 0 50px;
+  margin-top: 40px;
+  padding: 0 50px;
+  max-height: 100%;
+  overflow-y: hidden;
+  :hover {
+    overflow-y: auto;
+  }
 `;
 
 interface Props {
@@ -327,7 +334,7 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
               readOnly={readOnlyHandler()}
             ></EditorFrame>
           </Body>
-          <TestContainer>
+          {/* <TestContainer>
             <div>my: {JSON.stringify(user)}</div>
             <div>owner: {JSON.stringify(owner)}</div>
             <div>
@@ -336,7 +343,7 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
                 <div key={u.id}>{JSON.stringify(u)}</div>
               ))}
             </div>
-          </TestContainer>
+          </TestContainer> */}
         </Container>
       )}
     </>

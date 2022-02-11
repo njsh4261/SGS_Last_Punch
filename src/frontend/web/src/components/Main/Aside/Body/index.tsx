@@ -10,11 +10,11 @@ import ToggleList, { Label } from './ToggleList';
 
 const Container = styled.article`
   padding-top: 8px;
+  padding-bottom: 130px;
   display: flex;
   flex-direction: column;
   color: ${({ theme }) => theme.color.snackSideFont};
   font-size: 14px;
-  /* overflow-x: hidden; */
   height: 100%;
   :hover,
   :focus {

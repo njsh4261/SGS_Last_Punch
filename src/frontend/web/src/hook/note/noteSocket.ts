@@ -58,7 +58,6 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
     note,
     setUserList,
     stomp,
-    owner,
     setOwner,
     enterNote,
     setTitle,

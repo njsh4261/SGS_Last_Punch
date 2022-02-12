@@ -5,25 +5,31 @@ import { HistoryEditor, withHistory } from 'slate-history';
 import { ReactEditor, withReact } from 'slate-react';
 import { useParams } from 'react-router-dom';
 
+// type
+import { Note } from '../../../types/note.type';
+
+// components
 import EditorFrame from './EditorFrame';
 import ImageButton from '../Common/ImageButton';
-import arrowRightIcon from '../../icon/arrowRight.svg';
-import { Note } from '../../../types/note.type';
-import noteSocketHook, { User } from '../../hook/note/noteSocket';
-import noteApplyInitDataHook from '../../hook/note/noteApplyInitData';
-import {
-  updateNoteAllAPI,
-  getSpecificNoteAPI,
-  updateTitleAPI,
-} from '../../Api/note';
-import noteOPintervalHook from '../../hook/note/noteOPinterval';
+import DropdownSetting from '../Main/Chat/DropdownSetting';
 import Loading from '../Common/Loading';
+
+// hooks
+import noteSetup from '../../hook/note/noteSetup';
+import DropdownHook from '../../hook/Dropdown';
+import noteSocketHook from '../../hook/note/noteSocket';
+import noteOPintervalHook from '../../hook/note/noteOPinterval';
+
+// API
+import { updateNoteAllAPI, updateTitleAPI } from '../../Api/note';
+
+// slate editor function
 import { toggleMark } from './EditorFrame/plugin/mark';
 import { toggleBlock } from './EditorFrame/plugin/block';
 
+// image files
+import arrowRightIcon from '../../icon/arrowRight.svg';
 import logoIcon from '../../icon/cookie-2.png';
-import DropdownHook from '../../hook/Dropdown';
-import DropdownSetting from '../Main/Chat/DropdownSetting';
 
 const TYPING_TIME = 1500;
 const UPDATE_OP_TIME = 1000;
@@ -116,19 +122,6 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
   if (!editorRef.current)
     editorRef.current = withReact(withHistory(createEditor()));
   const editor = editorRef.current;
-
-  const {
-    updateNote,
-    updateTitle,
-    lockNote,
-    unlockNote,
-    leaveNote,
-    owner,
-    user,
-    userList,
-    title,
-    setTitle,
-  } = noteSocketHook(editor, note);
 
   type Timeout = ReturnType<typeof setTimeout>;
   const typing = useRef<Timeout | null>(null);
@@ -227,11 +220,6 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
     if (!res) console.error('update note all fail');
   };
 
-  const getSpecificNoteHandler = async () => {
-    const responseNote = await getSpecificNoteAPI(params.noteId!.toString());
-    setNote(responseNote);
-  };
-
   const endtypingHandler = () => {
     updateAllHandler();
     unlockNote();
@@ -254,42 +242,42 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
 
   ///////////// Hooks ////////////////
 
-  useEffect(() => {
-    const point = { path: [0, 0], offset: 0 };
-    editor.selection = { anchor: point, focus: point }; // clean up selection
-    editor.history = { redos: [], undos: [] }; // clean up history
-  }, []);
+  // 노트 소켓
+  const {
+    updateNote,
+    updateTitle,
+    lockNote,
+    unlockNote,
+    leaveNote,
+    owner,
+    user,
+    title,
+    setTitle,
+  } = noteSocketHook(editor, note);
 
-  // get note from server - 현재 url에 적힌 noteId 바탕
-  useEffect(() => {
-    if (params.noteId) getSpecificNoteHandler();
-  }, [params]);
-
-  // apply note - 서버로부터 받은 노트 정보
-  noteApplyInitDataHook({ note, setTitle, setValue, editor });
-
-  // 선점권을 갖자 마자 unlock을 위한 시간 체크
-  useEffect(() => {
-    if (owner && owner.id === user.id) {
-      resetTypingTimer();
-    }
-  }, [note, owner]);
+  // 노트 세팅 (GET NOTE API, editor에 적용, 특수키 선점시 타이머(예외처리) )
+  noteSetup({
+    note,
+    setNote,
+    setTitle,
+    setValue,
+    user,
+    owner,
+    editor,
+    params,
+    leaveNote,
+    resetTypingTimer,
+    updateAllHandler,
+  });
 
   // 주기마다 op 업데이트
   noteOPintervalHook(opQueue, note, UPDATE_OP_TIME, updateNote);
 
-  useEffect(() => {
-    window.addEventListener('beforeunload', () => {
-      if (owner && owner.id === user.id) {
-        updateAllHandler();
-      }
-      leaveNote();
-    });
-  }, [note, owner]);
-
-  ///////////// Render //////////////////////
+  // dropdown
   const { drop, dropdownHandler, NAV_BUTTON_ID, NAV_DROPDOWN_ID } =
     DropdownHook();
+
+  ///////////// Render //////////////////////
   return (
     <>
       {!note ? (

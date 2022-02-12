@@ -95,7 +95,6 @@ export default function ToggleList({
   const [checked, setChecked] = useState(true);
 
   const isSelectHandler = (type: ModalType, channelId: string) => {
-    console.log(type, channelId, params.channelId);
     if (type === 'channel') return params.channelId === channelId;
     // type은 'direct message', channel.id은 상대 userId를 의미
     const userId = user.id.toString();

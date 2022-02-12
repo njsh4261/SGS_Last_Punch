@@ -54,6 +54,7 @@ const Header = styled.header`
 
 const HeaderLeft = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const NavTab = styled.nav`

@@ -7,9 +7,12 @@
 ![Generic badge](https://img.shields.io/badge/5.3.3-Styled%20Component-pink.svg)
 
 ![Generic badge](https://img.shields.io/badge/4.1.2-Redux-yellow.svg)
-![Generic badge](https://img.shields.io/badge/0.59-Slate-yellowgreen.svg)
-![Generic badge](https://img.shields.io/badge/6.1.2-stompJS-brightgreen.svg)
+![Generic badge](https://img.shields.io/badge/0.59-Slate-white.svg)
+![Generic badge](https://img.shields.io/badge/6.1.2-stompJS-beige.svg)
 ![Generic badge](https://img.shields.io/badge/1.5.2-sockJS-red.svg)
+
+![Generic badge](https://img.shields.io/badge/2.5.1-Prettier-orange.svg)
+![Generic badge](https://img.shields.io/badge/8.9.0-ESLint-blue.svg)
 
 <br>
 

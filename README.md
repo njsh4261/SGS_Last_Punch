@@ -1,8 +1,4 @@
-# Snack
-
-<br>
-
-## Snack? <img height="20px" width="20px" src="https://user-images.githubusercontent.com/44664867/153584703-0fc34cd1-0091-46de-94ad-290415fb5fc1.png">
+# Snack <img height="20px" width="20px" src="https://user-images.githubusercontent.com/44664867/153584703-0fc34cd1-0091-46de-94ad-290415fb5fc1.png">
 
 *여러 협업 툴을 사용하면서 새 창을 키거나 알트탭은 그만!*
 

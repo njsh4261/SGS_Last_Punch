@@ -1,4 +1,12 @@
-# Snack - Web Front
+# Snack - Web Front <img height="20px" width="20px" src="https://user-images.githubusercontent.com/44664867/153584703-0fc34cd1-0091-46de-94ad-290415fb5fc1.png">
+
+*여러 협업 툴을 사용하면서 새 창을 키거나 알트탭은 그만!*
+
+*Slack과 Notion의 기능을 합친 Snack으로 쾌적한 협업을 경험해보세요!*
+
+*워크스페이스와 채널을 생성하고 팀원을 초대하여 **채팅**하고 노트를 만들어 **공동 편집**을 할 수 있습니다!*
+
+*Let's Snack! (url)*
 
 <br>
 
@@ -26,16 +34,6 @@
 ![Generic badge](https://img.shields.io/badge/1.5.2-sockJS-red.svg)
 ![Generic badge](https://img.shields.io/badge/2.5.1-Prettier-orange.svg)
 ![Generic badge](https://img.shields.io/badge/8.9.0-ESLint-blue.svg)
-
-<br>
-
-## Snack? <img height="20px" width="20px" src="https://user-images.githubusercontent.com/44664867/153584703-0fc34cd1-0091-46de-94ad-290415fb5fc1.png">
-
-*여러 협업 툴을 사용하면서 새 창을 키거나 알트탭은 그만!*
-
-*Slack과 Notion의 기능을 합친 Snack으로 쾌적한 협업을 경험해보세요!*
-
-*워크스페이스와 채널을 생성하고 팀원을 초대하여 **채팅**하고 노트를 만들어 **공동 편집**을 할 수 있습니다!*
 
 <br>
 

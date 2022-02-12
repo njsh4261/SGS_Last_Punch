@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { createEditor, Node, Editor } from 'slate';
 import { HistoryEditor, withHistory } from 'slate-history';
@@ -6,30 +6,30 @@ import { ReactEditor, withReact } from 'slate-react';
 import { useParams } from 'react-router-dom';
 
 // type
-import { Note } from '../../../types/note.type';
+import { Note } from '../../../../types/note.type';
 
 // components
 import EditorFrame from './EditorFrame';
-import ImageButton from '../Common/ImageButton';
-import DropdownSetting from '../Main/Chat/DropdownSetting';
-import Loading from '../Common/Loading';
+import ImageButton from '../../Common/ImageButton';
+import DropdownSetting from '../Chat/DropdownSetting';
+import Loading from '../../Common/Loading';
 
 // hooks
-import noteSetup from '../../hook/note/noteSetup';
-import DropdownHook from '../../hook/Dropdown';
-import noteSocketHook from '../../hook/note/noteSocket';
-import noteOPintervalHook from '../../hook/note/noteOPinterval';
+import noteSetup from '../../../hook/note/noteSetup';
+import DropdownHook from '../../../hook/Dropdown';
+import noteSocketHook from '../../../hook/note/noteSocket';
+import noteOPintervalHook from '../../../hook/note/noteOPinterval';
 
 // API
-import { updateNoteAllAPI, updateTitleAPI } from '../../Api/note';
+import { updateNoteAllAPI, updateTitleAPI } from '../../../Api/note';
 
 // slate editor function
 import { toggleMark } from './EditorFrame/plugin/mark';
 import { toggleBlock } from './EditorFrame/plugin/block';
 
 // image files
-import arrowRightIcon from '../../icon/arrowRight.svg';
-import logoIcon from '../../icon/cookie-2.png';
+import arrowRightIcon from '../../../icon/arrowRight.svg';
+import logoIcon from '../../../icon/cookie-2.png';
 
 const TYPING_TIME = 1500;
 const UPDATE_OP_TIME = 1000;

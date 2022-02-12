@@ -62,14 +62,14 @@
 - types : 외부 라이브러리, 혹은 특정 주제에 대한 타입 정의
 - src
 |--- Api: 주제별 API
-|--- modules: Redux 모듈, ducks 패턴 적용
 |--- icon: 아이콘 이미지
-|--- constant: 상수
 |--- util: 재사용되는 함수
 |--- hook: custom hook
+|--- pages: 라우팅 되는 페이지. 여러 컴포넌트를 조합한다.
 |--- styles: global style, theme
 |--- routes: 로그인 상태에 따라 public, private 라우팅
-|--- pages: 라우팅 되는 페이지. 여러 컴포넌트를 조합한다.
+|--- modules: Redux 모듈, ducks 패턴 적용
+|--- constant: 상수
 |--- component
       |--- common: 재사용되는 presenter 컴포넌트
       |  (topics: 특정 화면에 대한 컴포넌트들)

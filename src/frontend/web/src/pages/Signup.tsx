@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SignupEmailContainer from '../components/SignupEmail';
+import SignupEmailContainer from '../components/Signup';
 
 const LoginLayout = styled.main`
   position: absolute;

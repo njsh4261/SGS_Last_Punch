@@ -28,11 +28,16 @@ export default function Signin() {
   return (
     <Container>
       <Logo></Logo>
-      <Input value={email} inputHandler={inputHandler}></Input>
+      <Input
+        value={email}
+        placeholder="sitama@gmail.com"
+        inputHandler={inputHandler}
+      ></Input>
       <Input
         name="pass"
         value={pass}
         inputHandler={inputHandler}
+        placeholder="password"
         type="password"
       ></Input>
       {email !== '' && pass !== '' ? (

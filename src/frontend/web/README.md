@@ -2,14 +2,30 @@
 
 <br>
 
+## Hyojun Cha 🐶
+
+항상 애정을 갖고 프로젝트에 참여하는 웹 개발자입니다!
+
+나 뿐만 아니라 다른 사람도 사랑할 수 있는 멋진 프로젝트를 만들어 나가기 위해 노력하고 있습니다.
+
+현재 프론트엔드에 집중하고 있지만 백엔드에 대한 관심도 놓지 않고 공부 중입니다.
+
+제 프로젝트, 코드에 대한 질문, 피드백은 사소한 거라도 언제든지 환영입니다!
+
+📬 chahtk@gmail.com
+
+<br>
+
 ![Generic badge](https://img.shields.io/badge/17.0.2-React-skyblue.svg)
 ![Generic badge](https://img.shields.io/badge/4.5.4-TypeScript-green.svg)
 ![Generic badge](https://img.shields.io/badge/5.3.3-Styled%20Component-pink.svg)
-
 ![Generic badge](https://img.shields.io/badge/4.1.2-Redux-yellow.svg)
-![Generic badge](https://img.shields.io/badge/0.59-Slate-yellowgreen.svg)
-![Generic badge](https://img.shields.io/badge/6.1.2-stompJS-brightgreen.svg)
+
+![Generic badge](https://img.shields.io/badge/0.59-Slate-white.svg)
+![Generic badge](https://img.shields.io/badge/6.1.2-stompJS-beige.svg)
 ![Generic badge](https://img.shields.io/badge/1.5.2-sockJS-red.svg)
+![Generic badge](https://img.shields.io/badge/2.5.1-Prettier-orange.svg)
+![Generic badge](https://img.shields.io/badge/8.9.0-ESLint-blue.svg)
 
 <br>
 
@@ -85,8 +101,6 @@
 
 ## 기능 💡
 
-TODO: 주요 기능과 로직에 대한 설명, 그리고 컴포넌트 및 로직 코드의 위치를 적는다
-
 <br>
 
 ### 로그인/회원가입 페이지
@@ -135,9 +149,17 @@ TODO: 주요 기능과 로직에 대한 설명, 그리고 컴포넌트 및 로�
 
 <br>
 
-## 개인 목표 및 회고 😎
+## 목표 및 회고 😎
 
-[TODO] 프로젝트 하면서 느낀 것들
+### 목표
+
+> 내가 진짜로 쓸 수 있는 Snack을 만들자!
+
+내가 쓰기 위한 Snack의 모습은 아래와 같았습니다.
+
+- UI: Slack과 Notion의 UI를 잘 조합하여, 일관성 있고 Notion처럼 심플한 아름다움을 지닌 UI를 디자인!
+- UX: 처음 접하는 사람도 쉽게 사용할 수 있는 직관적인 UX!
+- 유지보수 및 최적화: 직관적인 프로젝트 구조를 갖고 렌더링에 대한 최적화!
 
 <br>
 

@@ -20,10 +20,12 @@ const ChannelLayer = styled.div`
   align-items: center;
 `;
 
-const ChannelName = styled.section<{
+interface ChannelNameProps {
   newMessage: boolean;
   isSelected: boolean;
-}>`
+}
+
+const ChannelName = styled.section<ChannelNameProps>`
   padding: 3px 0 2px 0;
   overflow: hidden;
   text-overflow: ellipsis;

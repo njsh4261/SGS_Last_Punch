@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { createEditor, Node, Editor } from 'slate';
 import { HistoryEditor, withHistory } from 'slate-history';
@@ -6,30 +6,30 @@ import { ReactEditor, withReact } from 'slate-react';
 import { useParams } from 'react-router-dom';
 
 // type
-import { Note } from '../../../types/note.type';
+import { Note } from '../../../../types/note.type';
 
 // components
 import EditorFrame from './EditorFrame';
-import ImageButton from '../Common/ImageButton';
-import DropdownSetting from '../Main/Chat/DropdownSetting';
-import Loading from '../Common/Loading';
+import ImageButton from '../../Common/ImageButton';
+import DropdownSetting from '../Chat/DropdownSetting';
+import Loading from '../../Common/Loading';
 
 // hooks
-import noteSetup from '../../hook/note/noteSetup';
-import DropdownHook from '../../hook/Dropdown';
-import noteSocketHook from '../../hook/note/noteSocket';
-import noteOPintervalHook from '../../hook/note/noteOPinterval';
+import noteSetup from '../../../hook/note/noteSetup';
+import DropdownHook from '../../../hook/Dropdown';
+import noteSocketHook from '../../../hook/note/noteSocket';
+import noteOPintervalHook from '../../../hook/note/noteOPinterval';
 
 // API
-import { updateNoteAllAPI, updateTitleAPI } from '../../Api/note';
+import { updateNoteAllAPI, updateTitleAPI } from '../../../Api/note';
 
 // slate editor function
 import { toggleMark } from './EditorFrame/plugin/mark';
 import { toggleBlock } from './EditorFrame/plugin/block';
 
 // image files
-import arrowRightIcon from '../../icon/arrowRight.svg';
-import logoIcon from '../../icon/cookie-2.png';
+import arrowRightIcon from '../../../icon/arrowRight.svg';
+import logoIcon from '../../../icon/cookie-2.png';
 
 const TYPING_TIME = 1500;
 const UPDATE_OP_TIME = 1000;
@@ -54,6 +54,7 @@ const Header = styled.header`
 
 const HeaderLeft = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const NavTab = styled.nav`
@@ -113,29 +114,26 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
       children: [{ text: '' }],
     },
   ];
-
   const params = useParams();
   const [note, setNote] = useState<Note | null>(null);
   const [value, setValue] = useState<Node[]>(initialValue);
   const editorRef = useRef<Editor & ReactEditor & HistoryEditor>();
-  // const editor = useMemo(() => withReact(withHistory(createEditor())), []);
   if (!editorRef.current)
     editorRef.current = withReact(withHistory(createEditor()));
   const editor = editorRef.current;
-
   type Timeout = ReturnType<typeof setTimeout>;
   const typing = useRef<Timeout | null>(null);
   const typingTitle = useRef<Timeout | null>(null);
-  const stringValue = useRef<string>(JSON.stringify(initialValue));
+  const currentValue = useRef<Node[]>(initialValue);
   const opQueue = useRef<any[]>([]);
 
-  /////////////////// Handler //////////////////////
-
+  // 선점자가 있으면 true를 리턴. text editor의 readOnly값.
   const readOnlyHandler = () => {
     if (owner && owner.id !== user.id) return true;
     else return false;
   };
 
+  // typing timer를 초기화 시키는 핸들러.
   const resetTypingTimer = () => {
     if (typing.current) clearTimeout(typing.current);
     typing.current = setTimeout(() => {
@@ -143,14 +141,21 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
     }, TYPING_TIME);
   };
 
+  // 'keydownHandler'에 의해 선점자 판정을 받아야 수행 되는 핸들러.
+  // 주기적으로 보낼 operation queue와 문서 전체의 value를 업데이트 한다.
   const changeHandler = async (value: Node[]) => {
+    // 문서 정보 업데이트 (currnetValue: update API에서 사용)
     setValue(value);
-    stringValue.current = JSON.stringify(value); // for update all api
+    currentValue.current = value;
+
+    // 드래그 이벤트는 무시
     const ops = editor.operations.filter((op) => {
       if (op) return op.type !== 'set_selection';
       return false;
     });
 
+    // 선점자의 Op를 queue에 등록. API를 통해 DB에 저장.
+    // 소켓을 통해 op update를 받은 다른 사용가 이 내용을 조회함.
     if (owner && owner.id === user.id && ops.length > 0) {
       opQueue.current.push(...ops);
     }
@@ -202,6 +207,7 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
         }
       }
 
+      // 선점권의 타이핑이므로 typingTimer를 리셋.
       resetTypingTimer();
       return;
     }
@@ -213,13 +219,19 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
     }
   };
 
+  // 문서 전체를 업데이트 하는 핸들러. 타이핑 종료, 브라우저 종료 시에 호출 됨.
   const updateAllHandler = async () => {
     if (!note) return;
     const { id } = note;
-    const res = await updateNoteAllAPI(id, title, stringValue.current);
+    const res = await updateNoteAllAPI(
+      id,
+      title,
+      JSON.stringify(currentValue.current),
+    );
     if (!res) console.error('update note all fail');
   };
 
+  // 타이핑 종료되는 시점에 호출되는 핸들러. 문서 업데이트와 선점권 해제.
   const endtypingHandler = () => {
     updateAllHandler();
     unlockNote();
@@ -242,17 +254,17 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
 
   ///////////// Hooks ////////////////
 
-  // 노트 소켓
+  // 노트 소켓 훅
   const {
-    updateNote,
+    updateNote, // 소켓에 노트의 업데이트 사실을 알리는 함수 (받으면 op를 업데이 API를 호출함)
     updateTitle,
-    lockNote,
-    unlockNote,
-    leaveNote,
-    owner,
-    user,
-    title,
-    setTitle,
+    lockNote, // 소켓에 선점권 요청을 하는 함수.
+    unlockNote, // 선점권 해제를 하는 함수.
+    leaveNote, // note를 떠났다는 것을 소켓에 알리는 함수.
+    owner, // 현재 선점자
+    user, // 내 정보
+    title, // 현재 제목
+    setTitle, // 제목 변경 함수 (React.Dispatch<React.SetStateAction<string>>)
   } = noteSocketHook(editor, note);
 
   // 노트 세팅 (GET NOTE API, editor에 적용, 특수키 선점시 타이머(예외처리) )

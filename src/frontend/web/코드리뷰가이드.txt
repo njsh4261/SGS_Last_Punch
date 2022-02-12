@@ -11,6 +11,7 @@
 - 노트: 채널에 종속되어 있는 문서. 공동 편집을 위한 기능을 제공
 - 선점: 같은 노트에 접속해 있는 사람들 중 오직 한 명만 편집 가능
 
+
 ## 주요 디렉토리
 - hook: 기능별 custom hooks
 - Api: 주제별 API
@@ -21,8 +22,77 @@
   - Signup: 회원가입 컴포넌트
   - Welcome: 웰컴페이지 컴포넌트
   - CreateWs: 워크스페이스 개설 컴포넌트
-  - Main: 메인페이지 컴포넌트. 하위 컴포넌트로 Aside, Chat, Note가 있음
+  - Main: 메인페이지 컴포넌트. 하위 컴포넌트로 Aside(채널/DM/Note 리스트), Chat, Note가 있음
 
-## 주요 변수
-- owner: 선점자
-- ws: workspace
+
+## 기능별 설명
+
+엔트리 포인트의 경우 앞에 /src 를 생략합니다! (/src/hook -> /hook)
+
+### 로그인
+
+엔트리 포인트: `/components/Signin/index.tsx`
+설명
+- email 입력: 현재 테스트로 빠른 로그인을 하기 위해 email 형식 검증을 하지 않음. 검증 함수는 `/util/isEmail.ts`
+- 로그인 버튼: signinAPI 호출(`/Api/signin.tsx`)
+- signinAPI: https를 고려하여 암호화 하지 않고 데이터를 보냄
+  - 로그인 실패: 서버에서 준 에러 메시지, 혹은 요창 자체가 실패시 서버 에러를 표시
+  - 로그인 성공: localStorage에 token 저장 후 웰컴페이지로 이동
+
+
+### 회원가입
+
+엔트리 포인트: `/components/Signup/index.tsx`
+설명
+- 회원가입 단계에 따라 조건부 렌더링 하도록 설계(단계에 따라 필요한 컨텐츠만 제공)
+- api를 편하게 사용하기 위한 `apiHandler(/api/handler)` 사용
+  - API 요청 시 token이 만료된 경우에 대한 처리
+
+
+### 웰컴
+
+엔트리 포인트(헤더): `/components/Welcome/Header/index.tsx`
+설명: 로고 + 로그아웃(토큰 삭제) 버튼
+
+엔트리 포인트(바디): `/components/Welcome/Body/index.tsx`
+설명: 유저의 페이징된 워크스페이스 리스트를 출력. 더 보기시 다음 페이지 결과를 가져와 렌더링
+- hook: `/hook/getWsList.tsx`
+- API: `/Api/workspace.tsx`의 getWsListAPI
+- 워크스페이스 개설 버튼: 해당 페이지로 이동
+- 워크스페이스 선택: 해당 워크스페이스 아이디의 주소로 url 변경
+
+
+### 워크스페이스 개설
+
+엔트리 포인트: `/page/CreateWs.tsx`
+설명: 단계에 따른 렌더링.
+- hook: `/hook/createWs.tsx`
+- API: `/Api/workspace.tsx`의 `createWsAPI`
+- 주요 컴포넌트 component: `/components/CreateWs/index.tsx`
+
+
+### 메인
+
+엔트리 포인트: `/pages/Main.tsx`
+설명
+- 사이드바 토글 핸들러
+- 내 유저 정보를 받아옴(메인 페이지에서 유저정보가 필요하고 새로고침 때도 받아올 수 있도록 하기 위해서)
+- 미들웨어인 redux-saga로 해당 channelId의 정보를 API로 받아옴
+- 알림된 채널 진입시 해제
+- hook(/hook): `/getSelfInfo`, `/updateChannelStore`
+- modules(/modules): `/user.tsx`, `/channel.tsx`, `/channelList`
+- API(/Api): `/account.tsx/getSelfInfo`, `/channel.tsx/getChannelInfoAPI`
+
+
+### 메인 - 사이드
+
+엔트리 포인트: `/components/Main/Aside/index.tsx`
+설명: 
+
+### 메인 - 채팅
+
+엔트리 포인트: `/components/Main/Chat/index.tsx`
+
+### 메인 - 노트
+
+엔트리 포인트: `/components/Main/Note/index.tsx`

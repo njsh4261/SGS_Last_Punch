@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import SignupEmailContainer from '../components/Signup';
 
-const LoginLayout = styled.main`
+const Layout = styled.main`
   position: absolute;
   left: 50%;
   top: 40%;
@@ -11,8 +11,8 @@ const LoginLayout = styled.main`
 
 export default function Signup() {
   return (
-    <LoginLayout>
+    <Layout>
       <SignupEmailContainer></SignupEmailContainer>
-    </LoginLayout>
+    </Layout>
   );
 }

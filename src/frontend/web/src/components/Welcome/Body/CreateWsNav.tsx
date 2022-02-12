@@ -20,7 +20,7 @@ const GuideText = styled.p`
   font-weight: 700;
 `;
 
-const CreateWsButton = styled.button`
+const Button = styled.button`
   appearance: none;
   background: 0 0;
   border: 1px solid grey;
@@ -41,7 +41,7 @@ const Image = styled.img`
   margin: 16px -16px -47px -16px;
 `;
 
-export default function CreateWs() {
+export default function CreateWsButton() {
   const navigate = useNavigate();
   const createWsHandler = () => {
     navigate('/create-workspace');
@@ -50,9 +50,7 @@ export default function CreateWs() {
     <Container>
       <Box>
         <GuideText>다른 팀과 Snack을 사용하고 싶으세요?</GuideText>
-        <CreateWsButton onClick={createWsHandler}>
-          새 워크스페이스 개설
-        </CreateWsButton>
+        <Button onClick={createWsHandler}>새 워크스페이스 개설</Button>
         <Image
           src="https://a.slack-edge.com/613463e/marketing/img/homepage/bold-existing-users/create-new-workspace-module/woman-with-laptop-color-background.png"
           height="121"

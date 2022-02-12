@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
+import { signupAPI, duplicateAPI, sendAPI, verifyAPI } from '../../Api/signup';
+
 import Logo from '../Common/Logo';
 import Input from '../Common/Input';
 import SubmitButton from '../Common/SubmitButton';
 import DisableButton from '../Common/DisableButton';
-import { signupAPI, duplicateAPI, sendAPI, verifyAPI } from '../../Api/signup';
 import { RESPONSE, ERROR_MESSAGE } from '../../constant';
 import Pass from './Pass';
 import Verify from './Verify';
@@ -36,16 +39,16 @@ const SignupBody = styled.main`
 export default function SignupEmailContainer() {
   const [input, setInput] = useState({
     email: '',
-    code: '',
-    displayName: '',
+    code: '', // 메일로 온 인증 코드
+    displayName: '', // 사용할 user name
     pass: '',
-    passCheck: '',
+    passCheck: '', // 비밀번호 확인
   });
 
   const [step, setStep] = useState({
-    duplicate: false,
-    send: false,
-    verify: false,
+    duplicate: false, // true가 중복되지 않은 이메일
+    send: false, // 인증 코드를 보내면 true로 바뀜
+    verify: false, // 맞는 인증 코드를 적으면 true로 바뀜
   });
 
   const navigate = useNavigate();
@@ -57,7 +60,9 @@ export default function SignupEmailContainer() {
     });
 
     if (e.target.name === 'email') {
+      // 입력된 문자열이 email 형식인지 검증
       if (isEmail(e.target.value)) {
+        // 중복된 이메일인지 API로 확인
         const response = await duplicateAPI(e.target.value);
         if (response === RESPONSE.SIGNIN.SUCCESS) {
           setStep({
@@ -69,11 +74,12 @@ export default function SignupEmailContainer() {
             ...step,
             duplicate: false,
           });
-          if (response === undefined) alert(ERROR_MESSAGE.SERVER);
+          if (response === undefined)
+            Swal.fire(ERROR_MESSAGE.SERVER, '', 'error');
           else if (response.err) {
             if (response.err.msg === ERROR_MESSAGE.SIGNUP.DUPLICATE) {
-              alert(response.err.desc);
-            } else alert(ERROR_MESSAGE.UNKNOWN);
+              Swal.fire(response.err.desc, '', 'error');
+            } else Swal.fire(ERROR_MESSAGE.UNKNOWN, '', 'error');
           }
         }
       } else {
@@ -85,6 +91,7 @@ export default function SignupEmailContainer() {
     }
   };
 
+  // 이메일 인증 핸들러
   const sendHandler = async () => {
     const response = await sendAPI(input.email);
     if (response === RESPONSE.SIGNIN.SUCCESS) {
@@ -93,10 +100,11 @@ export default function SignupEmailContainer() {
         send: true,
       });
     } else {
-      alert(ERROR_MESSAGE.SERVER);
+      Swal.fire(ERROR_MESSAGE.SERVER, '', 'error');
     }
   };
 
+  // 인증 코드 검증 핸들러
   const verifyHandler = async () => {
     const response = await verifyAPI(input.email, input.code);
     if (response === RESPONSE.SIGNIN.SUCCESS) {
@@ -105,16 +113,17 @@ export default function SignupEmailContainer() {
         verify: true,
       });
     } else {
-      if (response === undefined) alert(ERROR_MESSAGE.SERVER);
+      if (response === undefined) Swal.fire(ERROR_MESSAGE.SERVER, '', 'error');
       else if (response.err.msg === ERROR_MESSAGE.SIGNUP.INVALID_VERIFY_CODE) {
-        alert(response.err.desc);
-      } else alert(ERROR_MESSAGE.UNKNOWN);
+        Swal.fire(response.err.desc, '', 'error');
+      } else Swal.fire(ERROR_MESSAGE.UNKNOWN, '', 'error');
     }
   };
 
+  // 최종 단계에서 회원가입 버튼을 눌렀을 때의 핸들러
   const signupHandler = async () => {
     if (input.pass !== input.passCheck) {
-      return alert('비밀번호가 서로 다릅니다');
+      return Swal.fire('비밀번호가 서로 다릅니다', '', 'error');
     }
     const response = await signupAPI(
       input.email,
@@ -123,14 +132,14 @@ export default function SignupEmailContainer() {
       input.code,
     );
     if (response === RESPONSE.SIGNIN.SUCCESS) {
-      alert('회원가입 성공');
+      Swal.fire('회원가입 성공', '', 'success');
       navigate('/signin');
     }
-    if (response === undefined) alert(ERROR_MESSAGE.SERVER);
+    if (response === undefined) Swal.fire(ERROR_MESSAGE.SERVER, '', 'error');
     else if (response.err) {
       if (response.err.msg === ERROR_MESSAGE.SIGNUP.DUPLICATE) {
-        alert(response.err.desc);
-      } else alert(ERROR_MESSAGE.UNKNOWN);
+        Swal.fire(response.err.desc, '', 'error');
+      } else Swal.fire(ERROR_MESSAGE.UNKNOWN, '', 'error');
     }
   };
 

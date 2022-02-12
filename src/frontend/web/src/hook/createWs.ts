@@ -18,15 +18,16 @@ export default function createWsHook(): [
 
   const navigate = useNavigate();
 
+  // 개설 단계에 따른 핸들링
   const nextStepHandler = async () => {
     if (step + 1 === 3) {
       if (channelName === '') {
-        alert('팀이 사용할 채널 명을 입력하세요');
+        Swal.fire('팀이 사용할 채널 명을 입력하세요', '', 'info');
         return;
       }
       const response = await createWsAPI(wsName, channelName);
       if (response === undefined) {
-        alert(ERROR_MESSAGE.SERVER);
+        Swal.fire(ERROR_MESSAGE.SERVER, '', 'error');
         navigate('/');
       } else {
         Swal.fire('워크스페이스가 생성됐어요 :)', '', 'success');

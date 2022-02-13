@@ -110,3 +110,35 @@
 - description?
 
 <br>
+
+## 역할 분담
+
+### Frontend
+[김건형🐮](https://github.com/GeonHyeongKim):  [iOS App](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/frontend/ios)
+
+[차효준🐶](https://github.com/chahtk): [Web App](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/frontend/web), 노트 기획
+
+### Backend
+[김지수🦉](https://github.com/SooKim1110): [인증 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/authServer), [노트 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/note-server), [게이트웨이](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/gateway), [Eureka 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/eureka-server)
+
+[김지효🐻](https://github.com/njsh4261): [워크스페이스 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/workspace), [채팅 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/chat), [프리젠스 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/presence)
+
+## 디렉토리 구조
+
+```
+├── config (코딩 컨벤션 xml)
+├── docs (API Reference, 에러코드, DB 스키마 이미지 등)
+├── scripts (DB 스키마 및 테스트 데이터 스크립트)
+└── src
+    ├── frontend
+    │   ├── ios (iOS App)
+    │   └── web (Web App)
+    └── backend
+        ├── authServer (인증 서버)
+        ├── workspace (워크스페이스 서버)
+        ├── chat (채팅 서버)
+        ├── note-server (노트 서버)
+        ├── presence (프리젠스 서버)
+        ├── gateway (게이트웨이)
+        └── eureka-server (Eureka 서버)
+``` 

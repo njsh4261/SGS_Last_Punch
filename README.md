@@ -104,3 +104,34 @@
 - description?
 
 <br>
+
+## 역할 분담
+
+### Frontend
+[GeonHyeongKim](https://github.com/GeonHyeongKim):  [iOS App](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/frontend/ios)
+
+[chahtk](https://github.com/chahtk): [Web App](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/frontend/web), [노트 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/note-server)
+
+
+### Backend
+[SooKim1110](https://github.com/SooKim1110): [인증 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/authServer), [노트 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/note-server), [게이트웨이](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/gateway), [Eureka 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/eureka-server)
+
+[njsh4261](https://github.com/njsh4261): [워크스페이스 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/workspace), [채팅 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/chat), [프레젠스 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/presence)
+
+
+## 디렉토리 구조
+
+```
+src
+├── frontend
+│   ├── ios (iOS App)
+│   └── web (Web App)
+└── backend
+    ├── authServer (인증 서버)
+    ├── workspace (워크스페이스 서버)
+    ├── chat (채팅 서버)
+    ├── note-server (노트 서버)
+    ├── presence (프레젠스 서버)
+    ├── gateway (게이트웨이)
+    └── eureka-server (Eureka 서버)
+``` 

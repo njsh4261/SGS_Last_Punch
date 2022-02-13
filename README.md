@@ -10,13 +10,33 @@
 
 <br>
 
-## 기술 스택 🛠
+## Snack의 특징
 
-### IOS
+### 기본 구조
+
+- workspace: 팀원들이 모이는 공간으로 채널을 만들거나 DM을 보낼 수 있습니다.
+
+- channel: 워크스페이스 내의 그룹으로 채팅을 이용할 수 있습니다.
+
+- note: 채널에 종속되어 있으며 같은 노트에 들어와 있는 사람들 간에 공동 편집을 할 수 있습니다.
 
 <br>
 
-- badges
+### 노트(공동 편집) 기능
+
+*편집은 선점권을 지닌 단 한 명만 할 수 있습니다!*
+
+팀원들이 같은 문서를 편집할 때 좀 더 안전하고 편집 내용에 집중할 수 있는 경험을 제공합니다.
+
+<br>
+
+## 기술 스택 🛠
+
+### iOS
+
+<br>
+
+![RxSwift](https://img.shields.io/badge/RxSwift-v6.2.0-b7178c?logo=reactivex) ![Swift](https://img.shields.io/badge/swift-v5.5.2-orange?logo=swift) ![Xcode](https://img.shields.io/badge/xcode-v13.2.1-blue?logo=xcode)
 
 <br>
 
@@ -49,49 +69,35 @@
 
 <br>
 
-### 로그인/회원가입 페이지
+### 스크린샷
 
-|추후 추가|![loginlogout](https://user-images.githubusercontent.com/44664867/153588913-cdc4aaee-2b01-46f8-8eb5-cd070620e487.gif)|
-|---|---|
-|회원가입|로그인, 로그아웃|
-|이메일 인증 후 회원가입|이메일로 로그인하여 localStorage에 access/refresh token 저장|
+- [WEB](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/frontend/web#%EA%B8%B0%EB%8A%A5-)
 
-<br>
+- [iOS](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/frontend/ios#-screenshots)
 
-### 웰컴 페이지
+### 기능 목록
 
-유저의 워크스페이스 리스트가 렌더링 됩니다. 워크스페이스 더 보기, 선택, 개설, 로그아웃을 할 수 있습니다.
+- 회원가입/로그인 화면: 이메일 기반의 회원가입, 로그인
 
-|![더보기](https://user-images.githubusercontent.com/44664867/153590304-1ea5081d-62dc-4a1c-9363-2b7d3a3d255b.gif)|![워크스페이스선택](https://user-images.githubusercontent.com/44664867/153590298-72e25cc7-4a89-4610-b02f-31750eed0335.gif)|![워크스페이스생성](https://user-images.githubusercontent.com/44664867/153590300-635c7f76-c7ce-4086-a619-c8652a3684fe.gif)|
-|---|---|---|
-|더 보기|선택|개설|
-|페이징된 결과를 불러옵니다|워크스페이스 페이지로 이동|새 워크스페이스 생성|
+- 웰컴 화면: 워크스페이스 관련 기능 수행
 
+  - 목록 조회
 
-<br>
+  - 선택
 
-### 메인 페이지 & 채팅
+  - 생성
 
-|![유저초대](https://user-images.githubusercontent.com/44664867/153591700-641e26c7-8faf-4b02-8d08-430f50d85f4e.gif)|미구현|미구현|
-|---|---|---|
-|초대|나가기|멤버 보기|
-|유저 검색 후 워크스페이스/채널에 초대|워크스페이스/채널에서 나가기|워크스페이스/채널에 참가한 멤버 상태 보기|
+- 메인 화면: 특정 워크스페이스의 화면
 
-|![homelogout](https://user-images.githubusercontent.com/44664867/153592206-4a5aaa93-3499-404b-b0f7-901c4d4df11c.gif)|미구현|![chatting](https://user-images.githubusercontent.com/44664867/153592212-0684d281-36af-422c-b72a-59f2ac252bb3.gif)|
-|---|---|---|
-|웰컴페이지 이동, 로그아웃|프로필|채팅|
-|쿠키를 눌러 웰컴페이지로 이동하거나 로그아웃|프로필 정보 모달(구현 예정)|채팅 기능(UI 수정중)|
+  - 워크스페이스: 멤버 초대/조회, 나가기
 
-<br>
+  - 채널: 목록 조회, 생성, 선택, 나가기, 멤버 초대/조회
 
-### 노트 기능
+  - 채팅: 특정 채널에서의 채팅
 
-> *Snack에는 선점 개념이 있습니다. 동료끼리 동시에 편집하는 것은 때론 방해가 됩니다. 선점자만 문서 편집이 가능하고 실시간 업데이트 됩니다. 타이핑을 1.5초 동안 하지 않으면 선점권이 해제 됩니다.*
+  - 노트: 특정 채널에 속한 노트 목록 조회, 생성, 선택, 공동 편집
 
-|![note](https://user-images.githubusercontent.com/44664867/153594223-0ae9ba5a-f3d2-4e60-b347-a3d353a2aa40.gif)|
-|---|
-|노트 조회/생성/선택/편집|
-|채널을 선택하면 채널에 속한 노트 리스트가 표시됩니다. 채널 부분에 hover하면 노트 생성 버튼이 나타납니다. 노트 선택을 하면 채팅 화면에서 노트 화면으로 전환됩니다. 현재 [control+단축키]로 효과를 줄 수 있습니다.|
+  - 유저: 워크스페이스/채널에 초대, 검색, 로그아웃, 프로필
 
 <br>
 

@@ -8,8 +8,8 @@
 import RxSwift
 import Alamofire
 
-class AccountSerivce {
-    static let shared = AccountSerivce()
+class AccountService {
+    static let shared = AccountService()
     
     private func makeParameter(email: String) -> Parameters {
         return ["email" : email]

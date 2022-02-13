@@ -26,16 +26,20 @@ export default function Main() {
   const [hover, setHover] = useState(false);
   const [sideToggle, setSideToggle] = useState(true);
 
+  // hover시 사이드바를 감추는 버튼 노출
   const hoverHandler = () => setHover(!hover);
+  // 사이드바 토글로 감추거나 노출시킴
   const sideToggleHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     setSideToggle(!sideToggle);
   };
 
+  // API로 사용자 정보를 가져오고 store에 저장
   getSelfInfoHook();
+  // url 변경시 파라미터의 채널 id와 그 name을 store에 저장
   updateChannelStoreHook(params, memberList);
 
-  // alarm off
+  // 알림이 표시된 채널에 진입시 알림 해제
   useEffect(() => {
     const index = channelList.findIndex(
       (el) => el.id.toString() === params.channelId,

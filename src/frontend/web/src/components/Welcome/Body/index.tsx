@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import WsList from './WsList';
-import CreateWs from './CreateWsNav';
+import CreateWsButton from './CreateWsNav';
 
 const SwelcomeBody = styled.main`
   margin: 0 64px 0 64px;
@@ -16,7 +16,7 @@ export default function WelcomeBody() {
   return (
     <SwelcomeBody>
       <WsList></WsList>
-      <CreateWs></CreateWs>
+      <CreateWsButton></CreateWsButton>
     </SwelcomeBody>
   );
 }

@@ -63,6 +63,7 @@ const ShowMoreIcon = styled.div`
 `;
 
 export default function WsList() {
+  // getWsLit: 다음 페이지의 워크스페이스 리스트를 가져오는 함수
   const [wsList, getWsList] = getWsListHook();
 
   return (

@@ -107,9 +107,13 @@
 		8CC9E8DA27B22BDB008BE1EA /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8D927B22BDB008BE1EA /* Note.swift */; };
 		8CC9E8FC27B2DABF008BE1EA /* UserInvitationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8FB27B2DABF008BE1EA /* UserInvitationViewController.swift */; };
 		8CC9E90A27B38FC9008BE1EA /* UserInvitationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CC9E90927B38FC8008BE1EA /* UserInvitationView.xib */; };
-		8CC9E90C27B3B939008BE1EA /* AccountSerivce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90B27B3B939008BE1EA /* AccountSerivce.swift */; };
+		8CC9E90C27B3B939008BE1EA /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90B27B3B939008BE1EA /* AccountService.swift */; };
 		8CC9E90E27B3BA01008BE1EA /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90D27B3BA01008BE1EA /* AccountModel.swift */; };
 		8CC9E91027B3FDB5008BE1EA /* StompWebsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90F27B3FDB5008BE1EA /* StompWebsocket.swift */; };
+		8CCFFA6627B95179005D4D13 /* NewChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA6527B95179005D4D13 /* NewChannelViewController.swift */; };
+		8CCFFA6C27B9524F005D4D13 /* NewChannelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFA6B27B9524F005D4D13 /* NewChannelView.xib */; };
+		8CCFFA6E27B964B2005D4D13 /* ChannelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA6D27B964B2005D4D13 /* ChannelService.swift */; };
+		8CCFFA7027B965A8005D4D13 /* ChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA6F27B965A8005D4D13 /* ChannelModel.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -221,9 +225,13 @@
 		8CC9E8D927B22BDB008BE1EA /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		8CC9E8FB27B2DABF008BE1EA /* UserInvitationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInvitationViewController.swift; sourceTree = "<group>"; };
 		8CC9E90927B38FC8008BE1EA /* UserInvitationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInvitationView.xib; sourceTree = "<group>"; };
-		8CC9E90B27B3B939008BE1EA /* AccountSerivce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSerivce.swift; sourceTree = "<group>"; };
+		8CC9E90B27B3B939008BE1EA /* AccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		8CC9E90D27B3BA01008BE1EA /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		8CC9E90F27B3FDB5008BE1EA /* StompWebsocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StompWebsocket.swift; sourceTree = "<group>"; };
+		8CCFFA6527B95179005D4D13 /* NewChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChannelViewController.swift; sourceTree = "<group>"; };
+		8CCFFA6B27B9524F005D4D13 /* NewChannelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewChannelView.xib; sourceTree = "<group>"; };
+		8CCFFA6D27B964B2005D4D13 /* ChannelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelService.swift; sourceTree = "<group>"; };
+		8CCFFA6F27B965A8005D4D13 /* ChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelModel.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -358,7 +366,8 @@
 				8C68AACF27911A1000C1711E /* LoginService.swift */,
 				8C68AADA2791B57100C1711E /* RegisterService.swift */,
 				8CBD4537279D3F350056A557 /* WorkspaceService.swift */,
-				8CC9E90B27B3B939008BE1EA /* AccountSerivce.swift */,
+				8CC9E90B27B3B939008BE1EA /* AccountService.swift */,
+				8CCFFA6D27B964B2005D4D13 /* ChannelService.swift */,
 				8CC9E8C927B10C9D008BE1EA /* NoteService.swift */,
 				8CC9E90F27B3FDB5008BE1EA /* StompWebsocket.swift */,
 				8C68AB1427969D1200C1711E /* NetworkResult.swift */,
@@ -407,6 +416,7 @@
 			isa = PBXGroup;
 			children = (
 				8C962B6127AE6A1C00A9A1F5 /* Cell */,
+				8CCFFA6427B95146005D4D13 /* NewChannel */,
 				8C68AAE0279526C600C1711E /* HomeViewController.swift */,
 				8C68AAE2279526CF00C1711E /* HomeViewModel.swift */,
 			);
@@ -445,6 +455,7 @@
 				8C68AACA279117FA00C1711E /* UserModel.swift */,
 				8CBD45332799B0E00056A557 /* WorkspaceListCellModel.swift */,
 				8CC9E90D27B3BA01008BE1EA /* AccountModel.swift */,
+				8CCFFA6F27B965A8005D4D13 /* ChannelModel.swift */,
 				8CBD459E27A56F0A0056A557 /* MessageModel.swift */,
 				8CC9E8CB27B10CAE008BE1EA /* NoteListCellModel.swift */,
 			);
@@ -699,6 +710,15 @@
 			path = UserInvitation;
 			sourceTree = "<group>";
 		};
+		8CCFFA6427B95146005D4D13 /* NewChannel */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFA6527B95179005D4D13 /* NewChannelViewController.swift */,
+				8CCFFA6B27B9524F005D4D13 /* NewChannelView.xib */,
+			);
+			name = NewChannel;
+			sourceTree = "<group>";
+		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -783,6 +803,7 @@
 				8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */,
 				8C68AB042795545900C1711E /* Channel.json in Resources */,
 				8CBD45E127A868040056A557 /* MediaView.xib in Resources */,
+				8CCFFA6C27B9524F005D4D13 /* NewChannelView.xib in Resources */,
 				8C68AB0C2795AA4100C1711E /* User.json in Resources */,
 				8C68AABD278ED9BF00C1711E /* NotoSansKR-Regular.otf in Resources */,
 				8C68AB2F2797F62D00C1711E /* SettingsView.xib in Resources */,
@@ -870,6 +891,7 @@
 				8C68AAC527909BD000C1711E /* LoginViewModel.swift in Sources */,
 				8CBD456F27A18EDE0056A557 /* SearchURLWorkspaceVeiwModel.swift in Sources */,
 				8C68AACD2791186400C1711E /* Credentials.swift in Sources */,
+				8CCFFA6E27B964B2005D4D13 /* ChannelService.swift in Sources */,
 				8CBD45B527A6C9680056A557 /* ImagePicker.swift in Sources */,
 				8CBD45D327A7C2200056A557 /* Ex+Reactive.swift in Sources */,
 				8CC1E79C27ACAC6B00BFE4D1 /* NewWorkspaceFirstViewController.swift in Sources */,
@@ -896,13 +918,14 @@
 				8CBD458F27A3E46B0056A557 /* DirectMessageListViewController.swift in Sources */,
 				8CBD45C927A719780056A557 /* Cryptor.swift in Sources */,
 				8CBD45ED27A8746E0056A557 /* KeepMediaView.swift in Sources */,
+				8CCFFA7027B965A8005D4D13 /* ChannelModel.swift in Sources */,
 				8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */,
 				8CC1E79E27ACADA800BFE4D1 /* NewWorkspaceViewModel.swift in Sources */,
 				8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */,
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
 				8CBD4544279F0CD50056A557 /* LogOutViewModel.swift in Sources */,
 				8CBD45DD27A865C30056A557 /* MeidaView.swift in Sources */,
-				8CC9E90C27B3B939008BE1EA /* AccountSerivce.swift in Sources */,
+				8CC9E90C27B3B939008BE1EA /* AccountService.swift in Sources */,
 				8CC9E90E27B3BA01008BE1EA /* AccountModel.swift in Sources */,
 				8C962B6327AEDD4F00A9A1F5 /* User.swift in Sources */,
 				8CC9E8D227B161B1008BE1EA /* CreateWKWebView.swift in Sources */,
@@ -925,6 +948,7 @@
 				8C68AAD327911AD700C1711E /* Ex+Observable.swift in Sources */,
 				8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */,
 				8CC9E8C827B10B8A008BE1EA /* NoteListCell.swift in Sources */,
+				8CCFFA6627B95179005D4D13 /* NewChannelViewController.swift in Sources */,
 				8CBD459F27A56F0A0056A557 /* MessageModel.swift in Sources */,
 				8C962B6027ADAD3100A9A1F5 /* Member.swift in Sources */,
 				8CC9E8D027B128C3008BE1EA /* GroupMessageViewModel.swift in Sources */,

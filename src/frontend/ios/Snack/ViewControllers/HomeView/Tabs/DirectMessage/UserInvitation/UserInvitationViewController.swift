@@ -40,7 +40,7 @@ class UserInvitationViewController: UIViewController {
         
         title = "사용자 초대"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(actionDismiss))
-        btnSend = UIBarButtonItem(title: "보내기", style: .plain, target: self, action: #selector(actionSend))
+        btnSend = UIBarButtonItem(title: "보내기", style: .plain, target: self, action: #selector(actionCreate))
         btnSend.isEnabled = false
         navigationItem.rightBarButtonItem = btnSend
         view.backgroundColor = UIColor(named: "snackBackGroundColor2")
@@ -55,7 +55,7 @@ class UserInvitationViewController: UIViewController {
         }
     }
     
-    @objc func actionSend() {
+    @objc func actionCreate() {
         guard let email = emailField.text else { return }
         
         networkGroup.enter()
@@ -90,7 +90,7 @@ class UserInvitationViewController: UIViewController {
         
     func getAccount(email: String) {
         DispatchQueue.main.async { [self] in // 메인스레드에서 동작
-            AccountSerivce.shared.getAccount(method: .post, accessToken: accessToken, email: email)
+            AccountService.shared.getAccount(method: .post, accessToken: accessToken, email: email)
                 .subscribe { event in
                     switch event {
                     case .next(let result):

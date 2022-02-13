@@ -17,7 +17,7 @@ class LogOutViewModel {
     private let disposeBag = DisposeBag()
     
     init(viewContoller: UIViewController) {
-        guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
+        guard let token: String = KeychainWrapper.standard[.accessToken] else { return }
         
         ProgressHUD.show(nil, interaction: false)
         logOutService(viewContoller: viewContoller, token: token)

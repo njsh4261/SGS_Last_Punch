@@ -38,7 +38,7 @@ class PrivateMessageViewModel: ViewModelProtocol {
     // MARK: - Init
     init(_ user: User) {
         self.socketClient = StompClientLib()
-        guard let accessToken: String = KeychainWrapper.standard[.refreshToken], let userId: String = KeychainWrapper.standard[.id] else { return }
+        guard let accessToken: String = KeychainWrapper.standard[.accessToken], let userId: String = KeychainWrapper.standard[.id] else { return }
         self.accessToken = accessToken
         self.userId = userId
         self.channelId = user.senderId < userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"

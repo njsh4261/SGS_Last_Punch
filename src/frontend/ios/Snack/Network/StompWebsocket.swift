@@ -26,7 +26,7 @@ class StompWebsocket {
     
     init() {
         self.userId = KeychainWrapper.standard[.id]!
-        self.accessToken = KeychainWrapper.standard[.refreshToken]!
+        self.accessToken = KeychainWrapper.standard[.accessToken]!
     }
     
     // Home 진입시, Socket 연결
@@ -102,7 +102,7 @@ extension StompWebsocket: StompClientLibDelegate {
         self.message.onNext(newMessage)
     }
     
-    func stompClientDidDisconnect(client: StompClientLib!) {
+    func stompClientDidxDisconnect(client: StompClientLib!) {
         print("Stomp socket is disconnected")
 //        client.autoDisconnect(time: 3)
 //        client.reconnect(request: NSURLRequest(url: url as URL), delegate: self)
@@ -112,6 +112,11 @@ extension StompWebsocket: StompClientLibDelegate {
     func stompClientDidConnect(client: StompClientLib!) {
         print("Stomp socket is connected")
     }
+    
+    func stompClientDidDisconnect(client: StompClientLib!) {
+        print("Stomp socket is Disconnected")
+    }
+
     
     func serverDidSendReceipt(client: StompClientLib!, withReceiptId receiptId: String) {
         print("Receipt : \(receiptId)")

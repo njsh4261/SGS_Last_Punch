@@ -38,7 +38,7 @@ class NewWorkspaceViewModel: ViewModelProtocol {
     
     // MARK: - Init
     init() {
-        guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
+        guard let token: String = KeychainWrapper.standard[.accessToken] else { return }
 
         Observable.asObservable(input.newWorkspaceName)()
             .map{ 0 < $0.count && $0.count < 16 }

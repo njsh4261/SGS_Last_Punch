@@ -29,7 +29,7 @@ class SearchURLWorkspaceViewController: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
+        guard let token: String = KeychainWrapper.standard[.accessToken] else { return }
         accessTokenField.text = token
         NSLog("accessToken: " + token)
         

@@ -5,17 +5,19 @@
 //  Created by ghyeongkim-MN on 2022/02/05.
 //
 
-import Foundation
 import UIKit
 import SwiftKeychainWrapper
 
 class CreateHomeTabController {
     func getTabController(_ workspaceId: String) -> UITabBarController {
         KeychainWrapper.standard[.workspaceId] = workspaceId
+        let accessToken: String = KeychainWrapper.standard[.refreshToken]!
         
-        let homeView = HomeViewController()
-        let DMView = DirectMessageListViewController(workspaceId: workspaceId.description)
-        DMView.bind(with: DirectMessageListViewModel())
+        let HomeViewModel = HomeViewModel(accessToken: accessToken, workspaceId: workspaceId)
+        let DMViewModel = DirectMessageListViewModel(accessToken: accessToken, workspaceId: workspaceId)
+        
+        let homeView = HomeViewController(viewModel: HomeViewModel)
+        let DMView = DirectMessageListViewController(viewModel: DMViewModel)
         let profileView = SettingsViewController(nibName: "SettingsView", bundle: nil)
         
         let navController0 = NavigationController(rootViewController: homeView)

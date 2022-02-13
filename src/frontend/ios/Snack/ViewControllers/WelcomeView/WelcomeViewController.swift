@@ -66,7 +66,7 @@ class WelcomeViewController: UIViewController {
         lblTitle = lblTitle.then {
             $0.text = "Snack"
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 40)
-            $0.textColor = UIColor(named: "snackTextColor")
+            $0.textColor = .label
         }
         
         ivLogo.image = UIImage(named: "snack")
@@ -80,7 +80,7 @@ class WelcomeViewController: UIViewController {
         btnSignIn = btnSignIn.then {
             $0.setTitle("로그인", for: .normal)
             $0.setBackgroundColor(UIColor(named: "snackColor")!, for: .normal)
-            $0.setTitleColor(UIColor(named: "snackTextColor")?.withAlphaComponent(0.3), for: .highlighted)
+            $0.setTitleColor(.label.withAlphaComponent(0.3), for: .highlighted)
             $0.clipsToBounds = true
         }
         

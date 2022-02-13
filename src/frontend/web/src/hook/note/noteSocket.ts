@@ -51,6 +51,7 @@ interface HookReturns {
   setTitle: React.Dispatch<SetStateAction<string>>;
 }
 
+// 소켓 연결시 수행되는 로직. 소켓에 enter 메시지를 보내고 subscribe한다.
 const enterAndSub = (props: EnterAndSubProps) => () => {
   const {
     editor,
@@ -58,7 +59,6 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
     note,
     setUserList,
     stomp,
-    owner,
     setOwner,
     enterNote,
     setTitle,
@@ -165,8 +165,6 @@ export default function noteSocketHook(
 
   const leaveNote = () => {
     if (stomp.current) {
-      // stompSend(stomp.current, MESSAGE_TYPE.UNLOCK);
-      // stompSend(stomp.current, MESSAGE_TYPE.LEAVE);
       stomp.current.disconnect();
     }
   };

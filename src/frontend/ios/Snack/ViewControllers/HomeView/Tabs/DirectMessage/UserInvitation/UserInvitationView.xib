@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NotoSansKR-Regular.otf">
+            <string>NotoSansKR-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserInvitationViewController" customModule="Snack" customModuleProvider="target">
+            <connections>
+                <outlet property="addressCell" destination="QLK-tB-ki4" id="0Dl-KO-KIO"/>
+                <outlet property="emailCell" destination="CgD-am-czd" id="LIO-r0-arB"/>
+                <outlet property="emailField" destination="KC8-o9-wNk" id="qgc-O6-Sfr"/>
+                <outlet property="googleCell" destination="lT3-JP-d98" id="TRP-0m-s3Z"/>
+                <outlet property="labelFooter1" destination="8Z6-gF-pSt" id="9Zb-Ub-HcS"/>
+                <outlet property="labelFooter2" destination="dub-Oc-NSD" id="x5r-XC-YCm"/>
+                <outlet property="linkCell" destination="n3N-1V-IjX" id="2cf-dx-pXc"/>
+                <outlet property="tableView" destination="i5M-Pr-FkT" id="mBw-sj-Tq5"/>
+                <outlet property="view" destination="gVL-Kb-l2i" id="2i0-s5-LbV"/>
+                <outlet property="viewFooter" destination="AQb-9p-OKj" id="P55-AH-74X"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="gVL-Kb-l2i">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" bouncesZoom="NO" style="insetGrouped" separatorStyle="default" rowHeight="50" sectionHeaderHeight="10" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="i5M-Pr-FkT">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Tng-2m-Rnh"/>
+                        <outlet property="delegate" destination="-1" id="9aC-8N-iBw"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="c2C-sf-Qtg"/>
+            <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="i5M-Pr-FkT" firstAttribute="top" secondItem="c2C-sf-Qtg" secondAttribute="top" id="9LU-E6-2Sf"/>
+                <constraint firstItem="c2C-sf-Qtg" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="Qp0-oe-iqg"/>
+                <constraint firstItem="i5M-Pr-FkT" firstAttribute="leading" secondItem="c2C-sf-Qtg" secondAttribute="leading" id="a92-y2-hlc"/>
+                <constraint firstItem="c2C-sf-Qtg" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="bp8-7x-rji"/>
+            </constraints>
+            <point key="canvasLocation" x="103" y="185"/>
+        </view>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="CgD-am-czd">
+            <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CgD-am-czd" id="liN-wy-7qj">
+                <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="초대할 이메일 주소 입력" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="KC8-o9-wNk">
+                        <rect key="frame" x="60" y="12.5" width="290" height="25.5"/>
+                        <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="16"/>
+                        <textInputTraits key="textInputTraits" textContentType="email"/>
+                    </textField>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mail" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fLN-Qf-JyE">
+                        <rect key="frame" x="5" y="13" width="50" height="24"/>
+                        <color key="tintColor" systemColor="labelColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="bB5-fl-Vsn"/>
+                            <constraint firstAttribute="width" constant="50" id="jsa-Yf-i05"/>
+                        </constraints>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="KC8-o9-wNk" firstAttribute="centerY" secondItem="liN-wy-7qj" secondAttribute="centerY" id="JRw-od-Vwr"/>
+                    <constraint firstItem="fLN-Qf-JyE" firstAttribute="leading" secondItem="liN-wy-7qj" secondAttribute="leading" constant="5" id="b3I-DG-o3A"/>
+                    <constraint firstItem="KC8-o9-wNk" firstAttribute="leading" secondItem="fLN-Qf-JyE" secondAttribute="trailing" constant="5" id="fL2-Yl-zoL"/>
+                    <constraint firstItem="fLN-Qf-JyE" firstAttribute="centerY" secondItem="liN-wy-7qj" secondAttribute="centerY" id="fyg-07-vMw"/>
+                    <constraint firstAttribute="trailing" secondItem="KC8-o9-wNk" secondAttribute="trailing" id="ked-rO-zNk"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="818" y="-82"/>
+        </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="kJC-Y7-BXp" imageView="6qN-Dh-vO9" style="IBUITableViewCellStyleDefault" id="QLK-tB-ki4">
+            <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QLK-tB-ki4" id="Cdz-fO-Hvr">
+                <rect key="frame" x="0.0" y="0.0" width="325.5" height="50"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="연락처에서 초대" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kJC-Y7-BXp">
+                        <rect key="frame" x="55.25" y="0.0" width="262.25" height="50"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="16"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="person.crop.circle.badge.plus" catalog="system" id="6qN-Dh-vO9">
+                        <rect key="frame" x="12.25" y="12" width="28" height="26"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                    </imageView>
+                </subviews>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="817.5" y="44.366197183098592"/>
+        </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ZgI-Xp-BM3" imageView="IjL-cC-cRL" style="IBUITableViewCellStyleDefault" id="lT3-JP-d98">
+            <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lT3-JP-d98" id="pVJ-wr-DBy">
+                <rect key="frame" x="0.0" y="0.0" width="325.5" height="50"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Google 연락처에서 초대" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZgI-Xp-BM3">
+                        <rect key="frame" x="53.75" y="0.0" width="263.75" height="50"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="16"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="person.crop.square" catalog="system" id="IjL-cC-cRL">
+                        <rect key="frame" x="13.75" y="13" width="25" height="24"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                    </imageView>
+                </subviews>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="818" y="143"/>
+        </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="dQR-RK-q4C" imageView="a2Z-ND-F4s" style="IBUITableViewCellStyleDefault" id="n3N-1V-IjX">
+            <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n3N-1V-IjX" id="aHP-lC-YJc">
+                <rect key="frame" x="0.0" y="0.0" width="325.5" height="50"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="초대 링크 생성" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dQR-RK-q4C">
+                        <rect key="frame" x="52.5" y="0.0" width="265" height="50"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="16"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="link" catalog="system" id="a2Z-ND-F4s">
+                        <rect key="frame" x="15" y="13" width="22.5" height="23"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </imageView>
+                </subviews>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="818" y="265"/>
+        </tableViewCell>
+        <view contentMode="scaleToFill" id="AQb-9p-OKj">
+            <rect key="frame" x="0.0" y="0.0" width="383" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="공유할 링크를 생성합니다. 누구나 이 링크를 사용해 워크스페이스에 참여할 수 있습니다." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Z6-gF-pSt">
+                    <rect key="frame" x="40" y="10" width="343" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="vOI-YA-bT9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Snack은 다른 사용자들과 함께 할 때 더 유용합니다 :D" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dub-Oc-NSD">
+                    <rect key="frame" x="40" y="60" width="343" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="6iI-cl-w92"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" systemColor="tertiaryLabelColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="8Z6-gF-pSt" firstAttribute="top" secondItem="AQb-9p-OKj" secondAttribute="top" constant="10" id="2yx-Ro-trz"/>
+                <constraint firstItem="dub-Oc-NSD" firstAttribute="top" secondItem="AQb-9p-OKj" secondAttribute="top" constant="60" id="6aw-bo-2ci"/>
+                <constraint firstItem="dub-Oc-NSD" firstAttribute="leading" secondItem="AQb-9p-OKj" secondAttribute="leading" constant="40" id="CMN-FE-qrA"/>
+                <constraint firstAttribute="trailing" secondItem="dub-Oc-NSD" secondAttribute="trailing" id="YQm-rR-LQm"/>
+                <constraint firstAttribute="trailing" secondItem="8Z6-gF-pSt" secondAttribute="trailing" id="h71-x3-ASg"/>
+                <constraint firstItem="8Z6-gF-pSt" firstAttribute="leading" secondItem="AQb-9p-OKj" secondAttribute="leading" constant="40" id="hcg-w2-UZq"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="848.4375" y="397.18309859154931"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="link" catalog="system" width="128" height="122"/>
+        <image name="mail" catalog="system" width="128" height="93"/>
+        <image name="person.crop.circle.badge.plus" catalog="system" width="128" height="113"/>
+        <image name="person.crop.square" catalog="system" width="128" height="114"/>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

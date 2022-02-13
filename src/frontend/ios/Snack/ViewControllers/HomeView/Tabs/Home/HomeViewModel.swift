@@ -10,6 +10,7 @@ import RxCocoa
 import SwiftKeychainWrapper
 import RxDataSources
 import Alamofire
+import StompClientLib
 
 class HomeViewModel: ViewModelProtocol {
     struct Input {
@@ -35,28 +36,33 @@ class HomeViewModel: ViewModelProtocol {
     private var workspace: WorkspaceListCellModel?
     private var channels: [WorkspaceChannelCellModel]?
     private var members: [WorkspaceMemberCellModel]?
-
+//    private let url = URL(string: "ws://\(APIConstants().chatWebsoket)/websocket")!
+//    var socketClient = StompClientLib()
+    
     // MARK: - Init
-    init() {
+    init(accessToken: String, workspaceId: String) {
+        self.token = accessToken
+        self.workspaceId = workspaceId
+        
         //MARK: - push
         self.push = input.itemSelected
             .compactMap { (row, section) -> (Int, Int) in
                 return (row, section)
             }
             .asDriver(onErrorDriveWith: .empty())
-
-        guard let token: String = KeychainWrapper.standard[.refreshToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
-        self.token = token
-        self.workspaceId = workspaceId
-
+        
+        StompWebsocket.shared.registerSockect()
+    }
+    
+    func viewWillAppear() {
         networkGroup.enter()
-        getWorkspace(method: .get, token, workspaceId: workspaceId)
+        getWorkspace(method: .get, self.token!, workspaceId: workspaceId!)
         
         networkGroup.enter()
-        getWorkspace(method: .get, token, workspaceId: workspaceId, isChannels: true)
+        getWorkspace(method: .get, self.token!, workspaceId: workspaceId!, isChannels: true)
 
         networkGroup.enter()
-        getWorkspace(method: .get, token, workspaceId: workspaceId, isMembers: true)
+        getWorkspace(method: .get, self.token!, workspaceId: workspaceId!, isMembers: true)
         
         networkGroup.notify(queue: .main) { [self] in
             guard let workspace = self.workspace, let channels = self.channels, let members = self.members else { return }
@@ -64,12 +70,15 @@ class HomeViewModel: ViewModelProtocol {
             let sectionChannels = getChannels(channels)
             let sectionMembers = getMembers(members)
             
-            let channelItems = sectionChannels.map(HomeSection.HomeItem.chennel)
+            let channelItems = sectionChannels.map(HomeSection.HomeItem.channel)
             let memberItems = sectionMembers.map(HomeSection.HomeItem.member)
             
             let channelSection = HomeSection.Model(model: .chennel, items: channelItems)
             let memberSection = HomeSection.Model(model: .member, items: memberItems)
     
+            StompWebsocket.shared.channels = channels
+            StompWebsocket.shared.members = members
+            StompWebsocket.shared.subscribe()
             output.workspaceTitle.accept(workspace.name)
             output.sections.accept([channelSection, memberSection])
         }

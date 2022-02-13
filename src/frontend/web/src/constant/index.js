@@ -52,6 +52,9 @@ export const RESPONSE = {
     ACCOUNT_NOT_EXIST: '12002',
     ACCOUNTWORKSPACE_ALREADY_EXIST: '12005',
   },
+  CHAT: {
+    SUCCESS: '13000',
+  },
   NOTE: {
     SUCCESS: '15000',
   },

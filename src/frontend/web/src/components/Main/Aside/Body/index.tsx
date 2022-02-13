@@ -6,16 +6,20 @@ import { RootState } from '../../../../modules';
 import Modal from './Modal';
 import getChannelsAndMembersHook from '../../../../hook/getChannelsAndMembers';
 import selectChannelHook from '../../../../hook/selectChannel';
-import setTitleHook from '../../../../hook/setTitle';
 import ToggleList, { Label } from './ToggleList';
 
 const Container = styled.article`
   padding-top: 8px;
+  padding-bottom: 130px;
   display: flex;
   flex-direction: column;
   color: ${({ theme }) => theme.color.snackSideFont};
   font-size: 14px;
-  overflow-y: scroll;
+  height: 100%;
+  :hover,
+  :focus {
+    overflow-y: auto;
+  }
 `;
 
 const SecitonType = styled.section`
@@ -27,7 +31,6 @@ const SecitonType = styled.section`
 
 export default function AsideBody() {
   const [params] = getChannelsAndMembersHook();
-  setTitleHook('', params);
   const selectChannelHandler = selectChannelHook(params);
   const modalState = useSelector((state: RootState) => state.modal);
   const channelList = useSelector((state: RootState) => state.channelList);
@@ -49,7 +52,7 @@ export default function AsideBody() {
       <ToggleList
         channelList={memberList}
         selectHandler={selectChannelHandler}
-        type="invite-dm"
+        type="direct message"
       ></ToggleList>
     </Container>
   );

@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 
 import chatHook from '../../../hook/chat';
 import ChatInput from './Input';
 import Header from './Header';
 import Loading from '../../Common/Loading';
-import { RootState } from '../../../modules';
+import chatScrollHook from '../../../hook/chatScroll';
 
 const Container = styled.main`
   flex: 1;
@@ -20,14 +19,19 @@ const MessageListContainer = styled.article`
   max-height: calc(
     100% - 198px
   ); // hard coding. 198 is main-header, chat-header
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
   margin-bottom: 114px; // size of input
+  :hover,
+  :focus {
+    overflow-y: auto;
+  }
 `;
 
 const MessagItemContainer = styled.article<{ me?: boolean }>`
   display: flex;
   justify-content: ${({ me }) => me && `end`};
+  text-align: ${({ me }) => (me ? 'end' : 'start')};
   white-space: normal;
   word-break: break-all;
   padding: 8px 20px;
@@ -59,7 +63,12 @@ const ChatInputLayout = styled.article<{ toggle: boolean }>`
   transition: left 300ms;
 `;
 
-const End = styled.article``;
+const Start = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
+const End = styled.div``;
 
 interface Props {
   sideToggle: boolean;
@@ -70,19 +79,22 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
   const [
     user,
     channel,
+    memberList,
     msg,
     msgList,
-    endRef,
+    setMsgList,
     msgTypingHandler,
     msgSubmitHandler,
   ] = chatHook();
 
-  const userList = useSelector((state: RootState) => state.userList);
   const userDictionary = useMemo(() => {
     const obj: { [index: string]: string } = {};
-    userList.map((user) => (obj[user.id] = user.name));
+    memberList.map((member) => (obj[member.id] = member.name));
     return obj;
-  }, [userList]);
+  }, [memberList]);
+
+  const { scrollObserverRef, scrollLoading, endRef, chatBodyRef } =
+    chatScrollHook(channel.id, msgList, setMsgList);
 
   return (
     <>
@@ -95,22 +107,21 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
             sideToggleHandler={sideToggleHandler}
             channel={channel}
           />
-          <MessageListContainer>
-            {msgList?.map((msg, idx) => {
-              return (
-                <MessagItemContainer
-                  key={idx}
-                  me={msg.authorId === user.id.toString()}
-                >
-                  <MessageBox>
-                    <MessageWriter>
-                      {userDictionary[msg.authorId]}
-                    </MessageWriter>
-                    <MessageContent>{msg.content}</MessageContent>
-                  </MessageBox>
-                </MessagItemContainer>
-              );
-            })}
+          <MessageListContainer ref={chatBodyRef}>
+            <Start>{scrollLoading && <Loading></Loading>}</Start>
+            {msgList?.map((msg, idx) => (
+              <MessagItemContainer
+                key={`message-${idx}`}
+                me={msg.authorId === user.id.toString()}
+                ref={idx === 0 ? scrollObserverRef : null}
+                data-date={msg.createDt}
+              >
+                <MessageBox>
+                  <MessageWriter>{userDictionary[msg.authorId]}</MessageWriter>
+                  <MessageContent>{msg.content}</MessageContent>
+                </MessageBox>
+              </MessagItemContainer>
+            ))}
             <End ref={endRef}></End>
           </MessageListContainer>
           <ChatInputLayout toggle={sideToggle}>

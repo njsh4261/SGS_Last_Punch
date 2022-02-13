@@ -225,7 +225,7 @@ class WorkspaceListViewController: UIViewController {
         }
         
         [lblTitle, lblDescription, lblSearch].forEach {
-            $0.textColor = UIColor(named: "snackTextColor")
+            $0.textColor = .label
         }
         
         lblTitle = lblTitle.then {
@@ -281,9 +281,9 @@ class WorkspaceListViewController: UIViewController {
         
         [btnNewWorkspace, btnURLWorkspace].forEach {
             $0.titleLabel?.font = UIFont(name: "NotoSansKR-Regular", size: 18)
-            $0.setTitleColor(UIColor(named: "snackTextColor"), for: .normal)
-            $0.setTitleColor(UIColor(named: "snackTextColor")?.withAlphaComponent(0.3), for: .highlighted)
-            $0.tintColor = UIColor(named: "snackTextColor")
+            $0.setTitleColor(.label, for: .normal)
+            $0.setTitleColor(.label.withAlphaComponent(0.3), for: .highlighted)
+            $0.tintColor = .label
             
             $0.imageEdgeInsets = .init(top: 0, left: -15, bottom: 0, right: 0)
         }

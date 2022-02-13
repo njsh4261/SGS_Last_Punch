@@ -21,9 +21,7 @@ public class MongoDbService{
     }
     
     public Page<Message> getRecentMessages(String channelId){
-        return mongoDbRepository.findAllByChannelIdOrderByCreateDtDesc(
-            channelId, PageRequest.of(page, size)
-        );
+        return mongoDbRepository.findRecentMessages(channelId, PageRequest.of(page, size));
     }
     
     public Page<Message> getOldMessages(GetOlderDto getOlderDto){

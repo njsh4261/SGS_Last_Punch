@@ -18,7 +18,7 @@ export async function createNoteAPI(
     RESPONSE.NOTE.SUCCESS,
     body,
   );
-  return response?.noteId;
+  return response?.note;
 }
 
 export async function getNoteListAPI(

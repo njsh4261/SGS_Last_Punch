@@ -18,7 +18,6 @@ import CoreLocation
 
 class GroupMessageViewController: MessagesViewController {
     // MARK: - Properties
-    private var viewModel: GroupMessageViewModel?
     private let disposeBag = DisposeBag()
     let channel: WorkspaceChannelCellModel?
     var messages = [MessageModel]()
@@ -61,14 +60,7 @@ class GroupMessageViewController: MessagesViewController {
         layout()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        viewModel?.disconnect()
-    }
-    
     func bind(_ viewModel: GroupMessageViewModel) {
-        self.viewModel = viewModel
-        viewModel.registerSockect()
-        
         // MARK: Bind input
         btnViewTitle.rx.tap
             .bind(to: viewModel.input.btnTtitleTapped)
@@ -260,7 +252,7 @@ class GroupMessageViewController: MessagesViewController {
 //        btnViewTitle.setBackgroundColor(.red, for: .normal)
 //        btnViewTitle.setTitle("왜 안돼", for: .normal)
         viewTitle = viewTitle.then {
-            let width = $0.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
+//            let width = $0.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
             $0.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: 150, height: 500))
             let recognizer = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
             $0.isUserInteractionEnabled = true
@@ -457,13 +449,13 @@ extension GroupMessageViewController: MessagesLayoutDelegate {
 extension GroupMessageViewController: MessagesDisplayDelegate {
     // 말풍선의 배경 색상
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .red : .blue
+        return isFromCurrentSender(message: message) ? UIColor(named: "snackColor")! : UIColor(named: "snackBackGroundColor3")!
     }
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .black : .white
+        return isFromCurrentSender(message: message) ? .label : .label
     }
-    
+
     // 말풍선의 꼬리 모양 방향
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         let cornerDirection: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
@@ -475,9 +467,9 @@ extension GroupMessageViewController: MessagesDisplayDelegate {
 extension GroupMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        let message = MessageModel(text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
-        viewModel!.sendMessage(authorId: senderInfo.senderId, content: text)
+        let message = MessageModel(channelId: channel!.id.description, text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
         insertNewMessage(message)
+        StompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channel!.id.description, content: text)
         inputBar.inputTextView.text.removeAll()
 
 //        processInputBar(messageInputBar)

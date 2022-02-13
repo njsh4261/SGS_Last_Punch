@@ -3,6 +3,7 @@ const SET_USER = 'user/set';
 export type UserState = {
   id: number;
   name: string;
+  lastMessage?: any;
 };
 
 export const setUser = ({ id, name }: UserState) => ({

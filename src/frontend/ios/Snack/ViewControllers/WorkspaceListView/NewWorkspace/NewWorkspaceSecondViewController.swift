@@ -121,6 +121,7 @@ class NewWorkspaceSecondViewController: UIViewController {
             $0.textAlignment = .left
             $0.returnKeyType = .go
             $0.autocorrectionType = .no
+            $0.becomeFirstResponder()
         }
         
         lblWarning = lblWarning.then {

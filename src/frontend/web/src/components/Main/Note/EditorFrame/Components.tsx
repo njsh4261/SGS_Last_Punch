@@ -69,7 +69,6 @@ export const Instance = styled.div<{ online: boolean }>`
 `;
 
 export const ClientFrame = styled.div`
-  box-shadow: 2px 2px 4px rgba(128, 128, 128, 0.2);
   padding: 10px;
   min-height: 70px;
   margin-left: -10px;

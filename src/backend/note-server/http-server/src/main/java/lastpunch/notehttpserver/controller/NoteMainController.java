@@ -24,10 +24,10 @@ public class NoteMainController {
     
     @PostMapping("/note")
     public ResponseEntity<Object> create(@RequestBody NoteDto.createRequest request){
+    
+        NoteDto.noteInfo noteInfo = noteMainService.create(request);
         
-        String noteId = noteMainService.create(request);
-        
-        return Response.toResponseEntity("15000", HttpStatus.OK, Map.of("noteId", noteId));
+        return Response.toResponseEntity("15000", HttpStatus.OK, Map.of("note", noteInfo));
     }
     
     @GetMapping("/notes")

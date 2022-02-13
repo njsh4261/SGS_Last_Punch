@@ -14,7 +14,8 @@ const ChannelHeader = styled.article`
   flex-shrink: 0;
   justify-content: space-between;
   padding: 9.5px 20px;
-  /* border-bottom: 1px solid ${({ theme }) => theme.color.snackBorder}; */
+  user-select: none;
+  border-bottom: 1px solid lightgray;
 `;
 
 const ChannelInfo = styled.section`

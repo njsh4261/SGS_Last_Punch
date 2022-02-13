@@ -16,7 +16,7 @@ struct HomeSection {
     }
     
     enum HomeItem: Equatable {
-        case chennel(Channel)
+        case channel(Channel)
         case member(Member)
     }
 }

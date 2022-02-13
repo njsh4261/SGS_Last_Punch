@@ -40,6 +40,8 @@ public class Message{
     @Getter
     public static class GetOlderDto{
         private String channelId;
+
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime dateTime;
     }
     

@@ -22,9 +22,10 @@ public class NoteMainService {
     @Autowired
     MongoTemplate mongoTemplate;
     
-    public String create(NoteDto.createRequest request){
+    public NoteDto.noteInfo create(NoteDto.createRequest request){
         Note newNote = request.toEntity();
-        return  mongoTemplate.insert(newNote).getId().toString();
+        Note insertedNote = mongoTemplate.insert(newNote);
+        return new noteInfo(insertedNote);
     }
     
     public NoteDto.getResponse find(String id) {

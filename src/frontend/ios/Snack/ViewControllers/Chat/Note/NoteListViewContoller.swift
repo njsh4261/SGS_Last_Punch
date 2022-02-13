@@ -89,13 +89,7 @@ class NoteListViewContoller: UIViewController, UIGestureRecognizerDelegate {
                 let cell = self.collectionView.cellForItem(at: indexPath) as? NoteListCell                
                 self.goToNote((cell?.id)!)
             }).disposed(by: disposeBag)
-        
-//        tableView.rx.itemDeleted
-//            .subscribe(onNext: { [weak self] indexPath in
-//                guard let self = self else { return }
-//                let cell = self.tableView.cellForRow(at: indexPath) as? WorkspaceListCell
-//            }).disposed(by: disposeBag)
-        
+                
         dataSource = RxCollectionViewSectionedReloadDataSource<NoteSection.Model> { dataSource, collectionView, indexPath, item in
             switch item {
             case .note(let note):
@@ -176,7 +170,7 @@ class NoteListViewContoller: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func showWarningAlert(_ noteId: String) {
-        let alert = UIAlertController(title: "노트를 삭제하시겠습니까?", message: "[경고] 멤버에게 알리는 로직이 구현되어 있지 않아 문제를 초례할 수 있습니다", preferredStyle: .alert)
+        let alert = UIAlertController(title: "노트를 삭제하시겠습니까?", message: "[경고] 멤버에게 알리는 로직이 구현되어 있지 않아 문제를 초래할 수 있습니다", preferredStyle: .alert)
         let cancle = UIAlertAction(title: "취소", style: .cancel)
         cancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
         let delete = UIAlertAction(title: "삭제", style: .destructive, handler: { action in

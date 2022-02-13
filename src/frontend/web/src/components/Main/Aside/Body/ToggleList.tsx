@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { openModal } from '../../../../modules/modal';
@@ -9,6 +9,7 @@ import ChannelItem, { ItemContainer } from './ChannelItem';
 import addIcon from '../../../../icon/add.svg';
 import { ChannelListState } from '../../../../modules/channeList';
 import { UserState } from '../../../../modules/user';
+import { RootState } from '../../../../modules';
 
 const ToggleType = styled.section`
   padding: 8px 0px;
@@ -90,28 +91,48 @@ export default function ToggleList({
       .type as ModalType;
     dispatch(openModal(modalType));
   };
-  const [checked, setChecked] = useState(false);
+  const user = useSelector((state: RootState) => state.user);
+  const [checked, setChecked] = useState(true);
+
+  const isSelectHandler = (type: ModalType, channelId: string) => {
+    if (type === 'channel') return params.channelId === channelId;
+    // type은 'direct message', channel.id은 상대 userId를 의미
+    const userId = user.id.toString();
+    return (
+      params.channelId ===
+      (userId < channelId ? `${userId}-${channelId}` : `${channelId}-${userId}`)
+    );
+  };
+
   return (
     <ToggleType>
       <Label htmlFor={`${type}-toggle`} onClick={() => setChecked(!checked)}>
         {checked ? <ArrowDown /> : <ArrowRight />}
-        <PaddingLeft8px>
-          {type === 'channel' ? 'channel' : 'direct message'}
-        </PaddingLeft8px>
+        <PaddingLeft8px>{type}</PaddingLeft8px>
       </Label>
-      <CheckBox type="checkbox" id={`${type}-toggle`}></CheckBox>
+      <CheckBox
+        type="checkbox"
+        id={`${type}-toggle`}
+        defaultChecked={true}
+      ></CheckBox>
       <ChannelList>
-        {channelList.map((channel) => (
-          <ChannelItem
-            channel={channel}
-            paramChannelId={params.channelId}
-            wsId={params.wsId as string}
-            key={channel.id}
-            type={type}
-            selectHandler={selectHandler}
-            isSelected={params.channelId === channel.id.toString()}
-          ></ChannelItem>
-        ))}
+        {channelList.map(
+          (channel) =>
+            !(
+              type === 'direct message' &&
+              !(channel as any).lastMessage.createDt
+            ) && (
+              <ChannelItem
+                channel={channel}
+                params={params}
+                wsId={params.wsId as string}
+                key={channel.id}
+                type={type}
+                selectHandler={selectHandler}
+                isSelected={isSelectHandler(type, channel.id.toString())}
+              ></ChannelItem>
+            ),
+        )}
         <ItemContainer data-type={type} onClick={openModalHandler}>
           <Flex>
             <PlusIcon src={addIcon} width="16px" height="16px"></PlusIcon>

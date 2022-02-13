@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 import { createWsAPI } from '../Api/workspace';
 import { ERROR_MESSAGE } from '../constant';
 
@@ -27,7 +29,7 @@ export default function createWsHook(): [
         alert(ERROR_MESSAGE.SERVER);
         navigate('/');
       } else {
-        alert('success');
+        Swal.fire('워크스페이스가 생성됐어요 :)', '', 'success');
         navigate('/');
       }
       return;

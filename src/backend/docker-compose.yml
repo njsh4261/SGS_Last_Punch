@@ -139,6 +139,30 @@ services:
     networks:
       - lastpunch-network
 
+  presence-server:
+    image: njsh4261/presence-server
+    ports:
+      - "8084:8084"
+    environment:
+      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+      spring.data.mongodb.uri: mongodb://mongodb:27017/lastpunch
+      spring.rabbitmq.host: rabbitmq
+      spring.rabbitmq.port: 5672
+      spring.rabbitmq.username: guest
+      spring.rabbitmq.password: guest
+      rabbitmq-stomp.host: rabbitmq
+      rabbitmq-stomp.port: 61613
+      rabbitmq-stomp.username: guest
+      rabbitmq-stomp.password: guest
+    depends_on:
+      - eureka-server
+      - mongodb
+      - rabbitmq
+    restart:
+      always
+    networks:
+      - lastpunch-network
+
   note-server:
     image: sookim1110/note-server
     ports:

@@ -55,6 +55,13 @@ public class GatewayApplication{
                 .uri("lb://CHAT-SERVER"))
             .route("chat-websocket", r -> r.path("/ws/chat/**")
                 .uri("lb://CHAT-SERVER"))
+            .route("presence-http", r -> r.path("/presence/**")
+                .filters(f -> f
+                    .filter(accessTokenFilter)
+                )
+                .uri("lb://PRESENCE-SERVER"))
+            .route("presence-websocket", r -> r.path("/ws/presence/**")
+                .uri("lb://PRESENCE-SERVER"))
             .build();
     }
 }

@@ -46,7 +46,7 @@ class PrivateMessageViewController: MessagesViewController {
         self.recipientInfo = recipientInfo
 //        self.channel = channel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        guard let token: String = KeychainWrapper.standard[.refreshToken] else { return }
+        guard let token: String = KeychainWrapper.standard[.accessToken] else { return }
         NSLog("accessToken: " + token)
     }
     

@@ -43,7 +43,7 @@ class NoteListViewModel: ViewModelProtocol {
     // MARK: - Init
     init(workspaceId: String, _ channelId: String) {
         let userId: String = KeychainWrapper.standard[.id]!
-        let accessToken: String = KeychainWrapper.standard[.refreshToken]!
+        let accessToken: String = KeychainWrapper.standard[.accessToken]!
         self.channelId = channelId
         self.cellData = input.noteListCellData
             .asDriver(onErrorJustReturn: [])

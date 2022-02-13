@@ -41,7 +41,7 @@ class GroupMessageViewModel: ViewModelProtocol {
         self.channel = channel
         self.users = users
 
-        guard let userId: String = KeychainWrapper.standard[.id], let accessToken: String = KeychainWrapper.standard[.refreshToken] else { return }
+        guard let userId: String = KeychainWrapper.standard[.id], let accessToken: String = KeychainWrapper.standard[.accessToken] else { return }
         self.accessToken = accessToken
         self.userId = userId
         

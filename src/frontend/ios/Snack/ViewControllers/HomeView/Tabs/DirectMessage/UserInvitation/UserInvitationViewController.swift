@@ -33,7 +33,7 @@ class UserInvitationViewController: UIViewController {
     @IBOutlet private var labelFooter2: UILabel!
 
     override func viewDidLoad() {
-        guard let accessToken: String = KeychainWrapper.standard[.refreshToken], let userId: String = KeychainWrapper.standard[.id], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
+        guard let accessToken: String = KeychainWrapper.standard[.accessToken], let userId: String = KeychainWrapper.standard[.id], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
         self.accessToken = accessToken
         self.userId = userId
         self.workspaceId = workspaceId

@@ -1,4 +1,6 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 import { RESPONSE, ERROR_MESSAGE, URL, ENDPOINT, TOKEN } from '../constant';
 
 export default async function signinAPI(email: string, pass: string) {
@@ -13,6 +15,7 @@ export default async function signinAPI(email: string, pass: string) {
     const response = await axios.post(host + endpoint, body);
     const { code, data, err } = response.data;
 
+    // 로그인 성공: localStorage에 token 저장 후 url 변경
     if (code === RESPONSE.SIGNIN.SUCCESS) {
       const { access_token, refresh_token } = data;
       localStorage.setItem(TOKEN.ACCESS, access_token);
@@ -20,10 +23,12 @@ export default async function signinAPI(email: string, pass: string) {
       location.href = URL.REDIRECT_HOME;
     }
 
+    // 로그인 실패
     if (code === RESPONSE.SIGNIN.FAIL) {
-      alert(err.desc);
+      Swal.fire(err.desc, '', 'error');
     }
   } catch (e) {
+    // 요청 실패
     alert(ERROR_MESSAGE.SERVER);
     return;
   }

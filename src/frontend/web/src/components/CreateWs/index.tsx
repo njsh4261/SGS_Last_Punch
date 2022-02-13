@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import StepCounter from './StepCounter';
 import SubmitButton from '../Common/SubmitButton';
 
 const Container = styled.main`
@@ -37,6 +36,14 @@ const Input = styled.input`
 const ButtonBox = styled.section`
   width: 200px;
   margin-top: 48px;
+`;
+
+const StepCounter = styled.div`
+  flex-grow: 0;
+  margin-bottom: 24px;
+  font-size: 13px;
+  line-height: 1.38463;
+  font-weight: 400;
 `;
 
 interface Props {

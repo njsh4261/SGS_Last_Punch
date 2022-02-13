@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { URL, TOKEN, RESPONSE } from '../constant';
-import clearSession from '../util/clearSession';
+import logout from '../util/logout';
 import reissueAPI from './reissue';
 
 const getAccessToken = () => localStorage.getItem(TOKEN.ACCESS);
@@ -45,23 +45,24 @@ async function apiHandler(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   endpoint: string,
   successCode: string,
-  body?: any,
-  needToken = true,
+  body?: any, // POST, PUT
+  needToken = true, // 토큰이 필요한 API 유형인지
 ) {
   try {
-    let accessToken, option;
+    let accessToken, option, response;
 
     if (needToken) {
       accessToken = getAccessToken();
+      // 토큰이 필요한 API인데 토큰이 없는 경우
       if (!accessToken) {
-        clearSession();
+        logout();
         return;
       }
       option = {
         headers: { 'X-AUTH-TOKEN': accessToken },
       };
     }
-    let response;
+
     switch (method) {
       case 'GET':
         response = await axios.get(URL.HOST + endpoint, option);
@@ -86,6 +87,7 @@ async function apiHandler(
     if (err) return { err };
     else console.error('wrong response code');
   } catch (e: any) {
+    // access 토큰이 만료된 경우 reissueAPI를 통해 재발급
     if (e.response?.data.code === RESPONSE.TOKEN.EXPIRED) {
       const reissueResponse = await reissueAPI();
       if (reissueResponse === RESPONSE.SIGNIN.SUCCESS) {
@@ -120,7 +122,7 @@ async function apiHandler(
         return response;
       }
     } else {
-      clearSession(false);
+      logout();
       return; // return undefined when server error
     }
   }

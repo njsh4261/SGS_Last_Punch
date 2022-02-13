@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../modules/user';
 import { getSelfInfoAPI } from '../Api/account';
 
+/** 내 유저 정보를 가져온다
+ */
 export default function getSelfInfoHook() {
   const dispatch = useDispatch();
 

@@ -21,5 +21,6 @@ const SlogoutButton = styled.button`
 `;
 
 export default function LogoutButton() {
+  // 버튼 클릭시 localStorage의 토큰 지우고 페이지 리로드
   return <SlogoutButton onClick={() => logout()}>logout</SlogoutButton>;
 }

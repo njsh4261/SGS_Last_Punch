@@ -76,7 +76,7 @@
 
 ### 로그인/회원가입 페이지
 
-|추후 추가|![loginlogout](https://user-images.githubusercontent.com/44664867/153588913-cdc4aaee-2b01-46f8-8eb5-cd070620e487.gif)|
+|![signup](https://user-images.githubusercontent.com/44664867/153739297-75455016-4d3e-47a2-9bfe-656fafcddc72.gif)|![loginlogout](https://user-images.githubusercontent.com/44664867/153588913-cdc4aaee-2b01-46f8-8eb5-cd070620e487.gif)|
 |---|---|
 |회원가입|로그인, 로그아웃|
 |이메일 인증 후 회원가입|이메일로 로그인하여 localStorage에 access/refresh token 저장|
@@ -97,12 +97,12 @@
 
 ### 메인 페이지 & 채팅
 
-|![유저초대](https://user-images.githubusercontent.com/44664867/153591700-641e26c7-8faf-4b02-8d08-430f50d85f4e.gif)|미구현|미구현|
+|![유저초대](https://user-images.githubusercontent.com/44664867/153591700-641e26c7-8faf-4b02-8d08-430f50d85f4e.gif)|구현중|구현중|
 |---|---|---|
 |초대|나가기|멤버 보기|
 |유저 검색 후 워크스페이스/채널에 초대|워크스페이스/채널에서 나가기|워크스페이스/채널에 참가한 멤버 상태 보기|
 
-|![homelogout](https://user-images.githubusercontent.com/44664867/153592206-4a5aaa93-3499-404b-b0f7-901c4d4df11c.gif)|미구현|![chatting](https://user-images.githubusercontent.com/44664867/153592212-0684d281-36af-422c-b72a-59f2ac252bb3.gif)|
+|![homelogout](https://user-images.githubusercontent.com/44664867/153592206-4a5aaa93-3499-404b-b0f7-901c4d4df11c.gif)|구현예정|![chatting](https://user-images.githubusercontent.com/44664867/153592212-0684d281-36af-422c-b72a-59f2ac252bb3.gif)|
 |---|---|---|
 |웰컴페이지 이동, 로그아웃|프로필|채팅|
 |쿠키를 눌러 웰컴페이지로 이동하거나 로그아웃|프로필 정보 모달(구현 예정)|채팅 기능(UI 수정중)|
@@ -138,11 +138,13 @@
       |--- common: 재사용되는 presenter 컴포넌트
       |  (topics: 특정 화면에 대한 컴포넌트들)
       |--- CreateWs: 워크스페이스 개설
-      |--- Main: 메인의 사이드바 + 채팅
-      |--- Note: 노트
       |--- Signin: 로그인
       |--- SignupEmail: 회원가입
       |--- Welcome: 워크스페이스 선택, 개설 버튼
+      |--- Main: 메인 페이지
+            |--- Aside: 사이드바 (채널 및 DM중인 사용자 리스트)
+            |--- Note: 노트 (동시 편집을 위한 소켓, REST API)
+            |--- Chat: 채팅 (채팅을 위한 소켓, REST API)
 ```
 
 <br>

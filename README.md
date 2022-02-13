@@ -10,18 +10,6 @@
 
 <br>
 
-## Member 👨‍👩‍👦‍👦
-
-||김건형🐮|김지수🦉|김지효🐻|차효준🐶|
-|---|---|---|---|---|
-|사진?|[empty]|[empty]|[empty]|[empty]|
-|담당 업무|IOS|Note/Auth/Gateway Server|Workspace/Chat/Presence Server|Web Front|
-|README|https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/frontend/ios|[지수님 url]|[지효님 url]|https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/frontend/web|
-|연락처|[건형님 메일]|[지수님 메일]|[지효님 메일]|chahtk@gmail.com|
-
-
-<br>
-
 ## 기술 스택 🛠
 
 ### IOS

@@ -1,15 +1,12 @@
 package lastpunch.presence.repository;
 
-import lastpunch.presence.dto.UpdateDto;
+import java.util.Optional;
 import lastpunch.presence.entity.Presence;
-import lastpunch.presence.entity.Presence.User;
-
-import java.util.List;
+import lastpunch.presence.entity.Presence.UpdateDto;
+import lastpunch.presence.repository.PresenceRepositoryImpl.UpdateType;
 
 public interface PresenceRepositoryCustom{
-//    List<UpdateDto> findWorkspacePresence(String workspaceId);
-//    User getUser(String workspaceId, String userId);
-//    void saveOrUpdate(UpdateDto updateDto, String sessionId);
-//    void deleteAndUpdateRest(UserPresence userPresence);
-    List<Presence> findBySessionId(String sessionId);
+    Optional<Presence> findBySessionId(String sessionId);
+    void update(UpdateDto updateDto, String sessionId, UpdateType updateType);
+    void deleteBySessionId(String sessionId);
 }

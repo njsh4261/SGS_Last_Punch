@@ -27,19 +27,11 @@ public class Presence{
         private String userStatus;
     }
 
-    @Getter
-    @Builder
-    public static class ExportDto{
-        private String workspaceId;
-        private String userId;
-        private UserStatus userStatus;
-    }
-
-    public ExportDto export(){
-        return ExportDto.builder()
+    public UpdateDto export(){
+        return UpdateDto.builder()
                 .workspaceId(workspaceId)
                 .userId(userId)
-                .userStatus(userStatus)
+                .userStatus(userStatus.toString())
                 .build();
     }
 

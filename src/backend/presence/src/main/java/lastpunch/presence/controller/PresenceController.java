@@ -2,10 +2,9 @@ package lastpunch.presence.controller;
 
 import java.util.Map;
 import lastpunch.presence.common.PresenceConstant;
-import lastpunch.presence.dto.UpdateDto;
 import lastpunch.presence.entity.Presence;
-import lastpunch.presence.service.RabbitMQService;
 import lastpunch.presence.service.MongoService;
+import lastpunch.presence.service.RabbitMQService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

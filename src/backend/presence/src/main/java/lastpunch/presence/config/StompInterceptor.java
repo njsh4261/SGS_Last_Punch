@@ -13,19 +13,17 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 @Component
 public class StompInterceptor implements ChannelInterceptor{
     private final JwtProvider jwtProvider;
-    private final MongoService mongoService;
     private final RabbitMQService rabbitMQService;
     private final Logger logger;
     
     @Autowired
-    public StompInterceptor(
-            JwtProvider jwtProvider, MongoService mongoService, RabbitMQService rabbitMQService){
+    public StompInterceptor(JwtProvider jwtProvider, RabbitMQService rabbitMQService){
         this.jwtProvider = jwtProvider;
-        this.mongoService = mongoService;
         this.rabbitMQService = rabbitMQService;
         this.logger = LoggerFactory.getLogger(StompInterceptor.class);
     }

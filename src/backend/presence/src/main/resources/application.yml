@@ -4,9 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: lastpunch
+      uri: mongodb://localhost:27017/lastpunch
   application:
     name: presence-server
   rabbitmq:

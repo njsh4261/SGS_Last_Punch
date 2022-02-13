@@ -1,9 +1,7 @@
 package lastpunch.presence.config;
 
-import java.util.Optional;
 import lastpunch.presence.common.PresenceConstant;
 import lastpunch.presence.common.jwt.JwtProvider;
-import lastpunch.presence.entity.Presence;
 import lastpunch.presence.service.MongoService;
 import lastpunch.presence.service.RabbitMQService;
 import org.slf4j.Logger;

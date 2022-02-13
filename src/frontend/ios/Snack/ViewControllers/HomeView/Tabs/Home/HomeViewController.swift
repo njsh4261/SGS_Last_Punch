@@ -23,11 +23,14 @@ class HomeViewController: UIViewController {
     private var channels: [WorkspaceChannelCellModel]?
     private var userInfo: User?
     private var channel: Channel?
+    private let HEADER_HEIGHT: Float = 66
     
     // MARK: - UI
     private var searchBar = UISearchBar()
     private var tableView = UITableView()
-    
+    private var viewHeader = UIView()
+    private var btnAddChannel = UIButton()
+
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle?  = nil, viewModel: HomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -51,6 +54,10 @@ class HomeViewController: UIViewController {
     
     func bind(with viewModel: HomeViewModel) {
         // MARK: Bind input
+        btnAddChannel.rx.tap
+            .subscribe(onNext: goToNewChannel)
+            .disposed(by: disposeBag)
+        
         tableView.rx.itemSelected
             .compactMap {
                 ($0.row, $0.section)
@@ -112,6 +119,11 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+    private func goToNewChannel() {
+        let newChannelVC = NavigationController(rootViewController: NewChannelViewController())
+        self.present(newChannelVC, animated: true, completion: nil)
+    }
+    
     private func setTitle(_ title: String) {
         self.navigationItem.title = title
     }
@@ -162,10 +174,37 @@ class HomeViewController: UIViewController {
             $0.searchTextField.layer.cornerRadius = 15
         }
         
+        [viewHeader, btnAddChannel].forEach {
+            $0.layer.cornerRadius = 15
+        }
+        
+        viewHeader = viewHeader.then {
+            $0.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat(HEADER_HEIGHT))
+            $0.clipsToBounds = true
+        }
+        
+        btnAddChannel = btnAddChannel.then {
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Bold", size: 17)
+            $0.backgroundColor = UIColor(named: "snackButtonColor")
+            $0.setTitleColor(.label.withAlphaComponent(0.3), for: .highlighted)
+            $0.setTitleColor(.label, for: .normal)
+            $0.tintColor = .label
+            $0.contentHorizontalAlignment = .left
+            $0.contentEdgeInsets = .init(top: 0, left: 17, bottom: 0, right: 0)
+            $0.imageEdgeInsets = .init(top: 0, left: -5, bottom: 0, right: 0)
+        }
+        
+        btnAddChannel = btnAddChannel.then {
+            $0.setTitle("채널 추가", for: .normal)
+            $0.setImage(UIImage(systemName: "plus.message"), for: .normal)
+        }
+        
         tableView = tableView.then {
             $0.register(ChannelListCell.self, forCellReuseIdentifier: "ChannelListCell")
             $0.register(MemberListCell.self, forCellReuseIdentifier: "MemberListCell")
+            $0.tableHeaderView = viewHeader
             
+            $0.translatesAutoresizingMaskIntoConstraints = false
             $0.bouncesZoom = false
             $0.isOpaque = false
             $0.alwaysBounceVertical = false
@@ -186,10 +225,26 @@ class HomeViewController: UIViewController {
             $0.height.equalTo(56)
         }
         
+        viewHeader.addSubview(btnAddChannel)
+
+        [viewHeader, tableView].forEach {
+            $0.snp.makeConstraints {
+                $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(8)
+            }
+        }
+        
         tableView.snp.makeConstraints {
-            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(8)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.top.equalTo(56)
+        }
+        
+        viewHeader.snp.makeConstraints {
+            $0.height.equalTo(HEADER_HEIGHT)
+        }
+        
+        btnAddChannel.snp.makeConstraints {
+            $0.left.right.top.equalToSuperview()
+            $0.height.equalTo(56)
         }
     }
 }

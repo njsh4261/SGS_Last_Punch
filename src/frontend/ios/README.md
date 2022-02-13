@@ -42,7 +42,7 @@ Spring Boot로 서버를 구축하고 Amazon AWS로 운영하고 있는 RxSwift�
 실제 앱 구동화면입니다
 </Blockquote>
 <Blockquote>
-회원가입 / 로그인입니다
+회원가입 / 로그인
 </Blockquote>
 
 | ![register](./image/1.png) | ![login](./image/) |  |  |
@@ -107,8 +107,8 @@ Spring Boot로 서버를 구축하고 Amazon AWS로 운영하고 있는 RxSwift�
 | ![home](./image/blockedUser.gif) | ![showChannel](./image/addMemo.gif) | ![showDM](./image/editAccount.gif) | 구연중 |
 | :-: | :-: | :-: | :-: |
 | 홈 탭 | 채널 입장 | DM 입장 | 채널 추가 및 사용자 초대 |
-| ![home](./image/blockedUser.gif) | ![showChannel](./image/addMemo.gif) | ![showDM](./image/editAccount.gif) | |
-| 그룹 채팅 | 그룹 설정 |  |  |
+| ![groupChat](./image/blockedUser.gif) | ![channelSettings](./image/addMemo.gif) | | |
+| 그룹 채팅 | 채널 설정 |  |  |
 
 ### 4) 홈탭 및 그룹 채팅
 - 홈 - 채널 및 DM Section으로 목록 제공
@@ -171,7 +171,6 @@ DM
 | 나 탭 | 프로필 수정 | 비밀번호 수정 | 패스코드 설정 |
 | ![presence](./image/blockedUser.gif) | ![cashe](./image/addMemo.gif) | ![media](./image/editAccount.gif) | |
 | 상태 변경 | 캐쉬 설정 | 미디어 관리 | |
-<br/>
 
 ### 7) 나(설정)탭
   - 이름 - 이름, 설명, 국적, 전화번호 변경

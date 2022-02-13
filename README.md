@@ -30,7 +30,7 @@
 
 <br>
 
-## 기술 스택 🛠
+## 🛠 기술 스택
 
 ### iOS
 
@@ -66,8 +66,6 @@
 <br>
 
 ## 기능 💡
-
-<br>
 
 ### 스크린샷
 
@@ -106,17 +104,16 @@
 <br>
 
 ![Architecture](https://user-images.githubusercontent.com/47516074/153741477-548d63ed-3f79-41e7-9a20-f7ea646d76db.jpg)
-< 서버별 역할 > 
+### 서버별 역할
 - API Gateway: 라우팅, 토큰 유효성 검증, CORS 설정, 로드밸런싱
 - 워크스페이스: 워크스페이스, 채널, 멤버에 대한 REST API 제공
 - 채팅: WebSocket, STOMP, RabbitMQ를 사용한 Scale-out 가능한 채팅 기능
 - 실시간 노트 편집: WebSocket, STOMP, Redis를 사용한 노트 공동 편집 기능
 - 프리젠스: WebSocket, STOMP, RabbitMQ를 사용한 사용자 접속 상태 확인 및 접속 기록 관리
 - 인증: 회원가입, 로그인, 토큰 생성
-- 알림: FCM을 이용한 
+- 알림: FCM을 이용한 알림
 
 채팅은 웹소켓으로 직접 메세지를 전달하기 때문에 안정적으로 메세지를 전달할 수 있는 RabbitMQ를 사용했고, 노트 편집 서버에서는 웹소켓으로 업데이트 여부 등 간단한 정보만을 전달하기 때문에 빠르고, 간편한 Redis를 사용했습니다.
-
 
 <br>
 
@@ -131,6 +128,8 @@
 [김지수🦉](https://github.com/SooKim1110): [인증 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/authServer), [노트 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/note-server), [게이트웨이](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/gateway), [Eureka 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/eureka-server)
 
 [김지효🐻](https://github.com/njsh4261): [워크스페이스 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/workspace), [채팅 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/chat), [프리젠스 서버](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/src/backend/presence)
+
+<br>
 
 ## 디렉토리 구조
 

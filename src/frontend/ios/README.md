@@ -1,5 +1,5 @@
 # Snack
-![RxSwift](https://img.shields.io/badge/RxSwift-v6.2.0-b7178c?logo=reactivex) ![Swift](https://img.shields.io/badge/swift-v5.5.2-orange?logo=swift) ![Xcode](https://img.shields.io/badge/xcode-v13.2.1-blue?logo=xcode)
+![RxSwift](https://img.shields.io/badge/RxSwift-v6.2.0-b7178c?logo=reactivex&logoColor=b7178c) ![Swift](https://img.shields.io/badge/swift-v5.5.2-orange?logo=swift) ![Xcode](https://img.shields.io/badge/xcode-v13.2.1-blue?logo=xcode)
 </br>
 
 ## 👊 About Project
@@ -182,7 +182,7 @@ DM
 
 <br/>
 
-## 📚 Library
+<!-- ## 📚 Library
 - RxSwift, RxCocoa, RxDataSources
 - SnapKit, Then
 - Alamofire
@@ -191,17 +191,20 @@ DM
 - SwiftKeychainWrapper
 - ProgressHUD
 - PasscodeKit
-- Firebase
+- Firebase -->
 
 ## 🛠 Architecture
 ### iOS 구조
 > MVVM 패턴을 채택하였습니다. 화면 간 연결은 아래와 같이 구성되었습니다.
 
 ![iOS_Structure](./image/iOS_Structure.png)
+
 <br/>
-## 🤷 Difficult point / problem
+
+## 🤷 Difficult point / Problem
 ### WebView
 - 
+<br/>
 
 ## 🔥 Feeling & Technical Achievements
 ### iOS 사이드

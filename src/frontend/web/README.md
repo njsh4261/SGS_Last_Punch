@@ -138,11 +138,13 @@
       |--- common: 재사용되는 presenter 컴포넌트
       |  (topics: 특정 화면에 대한 컴포넌트들)
       |--- CreateWs: 워크스페이스 개설
-      |--- Main: 메인의 사이드바 + 채팅
-      |--- Note: 노트
       |--- Signin: 로그인
       |--- SignupEmail: 회원가입
       |--- Welcome: 워크스페이스 선택, 개설 버튼
+      |--- Main: 메인 페이지
+            |--- Aside: 사이드바 (채널 및 DM중인 사용자 리스트)
+            |--- Note: 노트 (동시 편집을 위한 소켓, REST API)
+            |--- Chat: 채팅 (채팅을 위한 소켓, REST API)
 ```
 
 <br>

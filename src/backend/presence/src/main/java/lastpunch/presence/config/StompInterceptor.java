@@ -34,15 +34,15 @@ public class StompInterceptor implements ChannelInterceptor{
         StompCommand stompCommand = accessor.getCommand();
         if(stompCommand != null){
             if(stompCommand == StompCommand.CONNECT){
-//                String accessToken = accessor.getFirstNativeHeader("Authorization");
-//                if(ObjectUtils.isEmpty(accessToken)){
-//                    logger.info("StompInterceptor: Message is blocked; token does not exist");
-//                    return null;
-//                }
-//                if(!jwtProvider.validateToken(accessToken)){
-//                    logger.info("StompInterceptor: Message is blocked; token is not valid");
-//                    return null;
-//                }
+                String accessToken = accessor.getFirstNativeHeader("Authorization");
+                if(ObjectUtils.isEmpty(accessToken)){
+                    logger.info("StompInterceptor: Message is blocked; token does not exist");
+                    return null;
+                }
+                if(!jwtProvider.validateToken(accessToken)){
+                    logger.info("StompInterceptor: Message is blocked; token is not valid");
+                    return null;
+                }
             }
         }
         return message;

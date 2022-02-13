@@ -64,14 +64,17 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
     setTitle,
   } = props;
 
+  // publish 'Enter'
   enterNote(stomp);
 
+  // 처음 접속 시에 받는 정보 (선점자, 유저 리스트)
   stomp.subscribe(`/user/note/${myUser.id}`, (payload) => {
     const transaction = JSON.parse(payload.body);
     if (transaction.owner) setOwner(JSON.parse(transaction.owner));
     setUserList(transaction.userList.map((u: string) => JSON.parse(u)));
   });
 
+  // 실시간 업데이트를 위한 구독
   stomp.subscribe(`/sub/note/${note!.id}`, async (payload) => {
     const transaction = JSON.parse(payload.body);
 
@@ -99,6 +102,7 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
       case MESSAGE_TYPE.UPDATE:
         if (transaction.myUser.id !== myUser.id) {
           const { noteId, timestamp } = transaction;
+          // 특정 시점의 op를 가져옴
           const data = await getNoteOPAPI(noteId.toString(), timestamp);
           if (!data) {
             console.error('fail get operations - hook/noteSocket');
@@ -106,6 +110,7 @@ const enterAndSub = (props: EnterAndSubProps) => () => {
           }
 
           try {
+            // op를 slate editor에 적용
             const ops = JSON.parse(data.op);
             Editor.withoutNormalizing(editor, () => {
               ops.forEach((op: any) => editor.apply(op));
@@ -196,10 +201,11 @@ export default function noteSocketHook(
     }
   };
 
+  // publish message
   const stompSend = (
     stomp: CompatClient,
     type: MESSAGE_TYPE,
-    timestamp?: string, // todo: change date
+    timestamp?: string,
   ) => {
     try {
       stomp.send(

@@ -8,16 +8,18 @@ target 'Snack' do
   # Pods for Snack
   pod 'RxSwift', '6.2.0'
   pod 'RxCocoa', '6.2.0'
+  pod 'RxDataSources', '~> 5.0'
+
   pod 'SnapKit', '~> 5.0.0'
   pod 'Then'
-  pod 'ProgressHUD'
-  pod 'RxDataSources', '~> 5.0'
+
   pod 'Alamofire', '~> 5.5'
-  pod 'SwiftKeychainWrapper'
-  pod 'InputBarAccessoryView'
-  pod 'PasscodeKit'
   pod 'StompClientLib'
+
   pod 'MessageKit'
+  pod 'SwiftKeychainWrapper'
+  pod 'ProgressHUD'
+  pod 'PasscodeKit'
 
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'

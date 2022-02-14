@@ -122,7 +122,8 @@ async function apiHandler(
         return response;
       }
     } else {
-      logout();
+      // logout();
+      console.error('error in apiHandler');
       return; // return undefined when server error
     }
   }

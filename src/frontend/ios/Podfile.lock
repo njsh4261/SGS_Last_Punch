@@ -129,7 +129,6 @@ DEPENDENCIES:
   - Alamofire (~> 5.5)
   - Firebase/Analytics
   - Firebase/Messaging
-  - InputBarAccessoryView
   - MessageKit
   - PasscodeKit
   - ProgressHUD
@@ -198,6 +197,6 @@ SPEC CHECKSUMS:
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: 06ac6571a0d2539db27a8da5d6496d3a67b0bc11
+PODFILE CHECKSUM: b47a0a04c425de8c65c5ba3e1def882f1a382fb2
 
 COCOAPODS: 1.11.2

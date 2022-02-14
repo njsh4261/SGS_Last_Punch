@@ -21,11 +21,14 @@
 - 제공된 jar 파일을 통해 서버 가동: `> java -jar ./build/libs/presence-server-with-prototype.jar`
 
 ## How To Use Prototype
-![image](https://user-images.githubusercontent.com/54832818/150924382-95512f7d-20df-41dd-bfce-de4f79168e99.png)
-- user name, channel id를 입력하고 Connect 버튼 누르기
-- 메시지를 입력하고 send를 누르면 메시지가 전송되고, 같은 채널에서 전송된 메시지들이 하단에 출력됨
-- 같은 채널의 메시지만 볼 수 있고, 채널이 다르면 메시지가 보이지 않음
-- Disconnect 버튼을 눌러서 소켓 연결을 해제할 수 있음
+![image](https://user-images.githubusercontent.com/54832818/153785351-73c66980-d7b9-4bc5-b291-0bf05e8cd975.png)
+- Workspace ID, user ID를 입력하고 Connect 버튼 누르면 하단 목록에 현재 워크스페이스에 접속 중인 멤버들의 상태가 표시됨
+- User status를 입력하고 Send 버튼을 누르면 해당 워크스페이스의 모든 멤버들에게 상태 변경 사항이 전파됨
+- `Get presence list` 버튼을 통해 워크스페이스에 접속 중인 멤버들의 상태 목록을 수동으로 업데이트 할 수 있음
+
+![image](https://user-images.githubusercontent.com/54832818/153785493-5544bce3-c0ff-4a1a-a15b-010464fa992a.png)
+- 멤버가 Disconnect 버튼을 클릭하거나 브라우저를 닫아서 연결이 해제되는 경우 해당 유저의 상태가 DISCONNECT 되었다는 메시지가 전파됨
+  - DB에서 Disconnect된 유저의 프리젠스 정보 삭제
 
 ## APIs
 [API 문서 링크](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/docs/API_references/presence_apis.md) 를 참조

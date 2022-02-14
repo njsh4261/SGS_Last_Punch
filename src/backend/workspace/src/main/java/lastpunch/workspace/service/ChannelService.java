@@ -1,10 +1,12 @@
 package lastpunch.workspace.service;
 
 import java.util.HashMap;
+import java.util.List;
 import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.exception.DBExceptionMapper;
 import lastpunch.workspace.common.type.RoleType;
+import lastpunch.workspace.entity.Account;
 import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.repository.AccountChannelRepository;
 import lastpunch.workspace.repository.channel.ChannelRepository;
@@ -36,7 +38,10 @@ public class ChannelService{
     }
     
     public Map<String, Object> getOne(Long id){
-        return Map.of("channel", commonService.getChannel(id).export());
+        return Map.of(
+            "channel", commonService.getChannel(id).export(),
+            "owner", channelRepository.getOwnerOfChannel(id)
+        );
     }
     
     public Map<String, Object> getMembers(Long id, Pageable pageable){
@@ -54,6 +59,7 @@ public class ChannelService{
             accountChannelRepository.add(userId, newChannel.getId(), RoleType.OWNER.getId());
             return Map.of("channel", newChannel.export());
         } catch(DataIntegrityViolationException e){
+            // DB 접근 과정에서 에러 발생 시, BusinessException에 정의된 것들은 별도로 처리하도록 구분
             BusinessException be = dbExceptionMapper.getException(e);
             throw (be != null) ? be : e;
         }

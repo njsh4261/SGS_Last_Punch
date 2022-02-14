@@ -7,14 +7,6 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum StatusCode{
-    AUTH_OK(HttpStatus.OK, "11000", "AUTH_OK", "인증 API 성공"),
-
-    //Signup
-    DUPLICATE_EMAIL(HttpStatus.OK, "11001", "DUPLICATE_EMAIL", "이미 가입된 이메일입니다."),
-
-    //Login
-    BAD_CREDENTIALS(HttpStatus.OK, "11002", "BAD_CREDENTIALS", "이메일 혹은 패스워드를 잘못 입력했습니다."),
-
     WORKSPACE_OK(HttpStatus.OK, "12000", "WORKSPACE_OK", "워크스페이스 API 성공"),
     WORKSPACE_NOT_EXIST(HttpStatus.OK, "12001", "WORKSPACE_NOT_EXIST", "존재하지 않는 워크스페이스입니다."),
     ACCOUNT_NOT_EXIST(HttpStatus.OK, "12002", "ACCOUNT_NOT_EXIST", "존재하지 않는 사용자입니다."),
@@ -26,7 +18,8 @@ public enum StatusCode{
     INVALID_USERID(HttpStatus.OK, "12008", "INVALID_USERID", "사용자 ID가 정상적으로 제공되지 않았습니다."),
     PERMISSION_DENIED(HttpStatus.OK, "12009", "PERMISSION_DENIED", "해당 작업을 실행할 권한이 없습니다."),
     ROLE_NOT_EXIST(HttpStatus.OK, "12010", "ROLE_NOT_EXIST", "존재하지 않는 역할입니다."),
-    CHANNEL_ALREADY_EXIST(HttpStatus.OK, "12011", "CHANNEL_ALREADY_EXIST", "이미 존재하는 채널입니다.");
+    CHANNEL_ALREADY_EXIST(HttpStatus.OK, "12011", "CHANNEL_ALREADY_EXIST", "이미 존재하는 채널입니다."),
+    CHANNEL_OWNER_SET_ERROR(HttpStatus.OK, "12012", " CHANNEL_OWNER_SET_ERROR", "채널의 소유자가 정상적으로 지정되지 않았습니다.");
     
     private HttpStatus status;
     private final String code;

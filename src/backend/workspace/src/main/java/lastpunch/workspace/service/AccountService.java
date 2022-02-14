@@ -1,8 +1,7 @@
 package lastpunch.workspace.service;
 
 import java.util.Map;
-import lastpunch.workspace.entity.Account;
-import lastpunch.workspace.repository.AccountRepository;
+import lastpunch.workspace.repository.account.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,16 +19,13 @@ public class AccountService{
     
     public Map<String, Object> getSelf(Long id){
         return Map.of(
-            "account",
-            commonService.getAccount(id).export()
+            "account", commonService.getAccount(id).export()
         );
     }
     
-    public Map<String, Object> getByEmail(String email, Pageable pageable){
+    public Map<String, Object> getByEmail(String email, Pageable pageable, Long id){
         return Map.of(
-            "accounts",
-            accountRepository.findByEmailContaining(email, pageable)
-                .map(Account::export)
+            "accounts", accountRepository.findByEmail(email, pageable, id)
         );
     }
 }

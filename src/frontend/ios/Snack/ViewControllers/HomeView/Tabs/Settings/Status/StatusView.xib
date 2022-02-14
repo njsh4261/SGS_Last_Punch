@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="NotoSansKR-Regular.otf">
+        <array key="NotoSansKR-Regular 2.otf">
             <string>NotoSansKR-Regular</string>
         </array>
     </customFonts>

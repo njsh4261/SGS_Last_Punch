@@ -6,6 +6,7 @@ import ModalBox from '../../../Common/ModalBox';
 
 export type ModalType =
   | 'channel'
+  | 'workspace'
   | 'direct message'
   | 'invite-channel'
   | 'invite-workspace';

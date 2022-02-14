@@ -38,7 +38,11 @@ const ItemL2 = styled.div`
   opacity: 50%;
 `;
 
-export default function ModalInfo() {
+interface Props {
+  type: 'channel' | 'workspace';
+}
+
+export default function ModalInfo({ type }: Props) {
   return (
     <Container>
       <ItemBox>
@@ -62,7 +66,9 @@ export default function ModalInfo() {
         <ItemL2>소유자: [소유자이름], 생성 날짜: [createDt]</ItemL2>
       </ItemBox>
       <ItemBox>
-        <ItemL1>채널에서 나가기</ItemL1>
+        <ItemL1>
+          {type === 'channel' ? '채널' : '워크스페이스'}에서 나가기
+        </ItemL1>
       </ItemBox>
     </Container>
   );

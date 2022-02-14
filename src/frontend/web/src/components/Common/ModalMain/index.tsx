@@ -50,10 +50,10 @@ const Body = styled.main<{ bgWhite: boolean }>`
 `;
 
 interface Props {
-  type: 'CHANNEL' | 'WORKSPACE';
+  type: 'channel' | 'workspace';
 }
 
-export default function ModalMain() {
+export default function ModalMain({ type }: Props) {
   const NAV_INFO = 'nav-info';
   const NAV_MEMBER = 'nav-member';
 
@@ -98,7 +98,7 @@ export default function ModalMain() {
         </Header>
         <Body bgWhite={selected.member}>
           {selected.info ? (
-            <ModalInfo></ModalInfo>
+            <ModalInfo type={type}></ModalInfo>
           ) : (
             <ModalMember></ModalMember>
           )}

@@ -109,25 +109,17 @@ class GroupMessageViewController: MessagesViewController {
         let alertNote = UIAlertAction(title: "노트", style: .default) { action in
             self.goToNoteList()
         }
-
-        let alertCalendar = UIAlertAction(title: "일정", style: .default) { action in
-        }
                 
         let alertCancle = UIAlertAction(title: "취소", style: .cancel)
         
         let configuration       = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
         let imageNote           = UIImage(systemName: "square.and.pencil", withConfiguration: configuration)?
             .withTintColor(UIColor(named: "snackColor")!, renderingMode: .alwaysOriginal)
-        let imageCalendar       = UIImage(systemName: "calendar", withConfiguration: configuration)?
-            .withTintColor(UIColor.lightGray.withAlphaComponent(0.5), renderingMode: .alwaysOriginal)
 
         alertNote.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
-        alertCalendar.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
         alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
 
-        alertCalendar.isEnabled = false
         alertNote.setValue(imageNote, forKey: "image");         alert.addAction(alertNote)
-        alertCalendar.setValue(imageCalendar, forKey: "image"); alert.addAction(alertCalendar)
 
         alert.addAction(alertCancle)
 

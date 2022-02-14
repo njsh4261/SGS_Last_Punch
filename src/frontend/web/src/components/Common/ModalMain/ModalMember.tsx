@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
+import { Params } from 'react-router-dom';
+import cloneDeep from 'lodash/cloneDeep';
 
 import seacrhImage from '../../../icon/search.svg';
 import addPersonImage from '../../../icon/addPerson.svg';
+import { getChannelMember } from '../../../Api/channel';
+import Loading from '../Loading';
+import { getWsMemberAPI } from '../../../Api/workspace';
 
 const Container = styled.article`
   border-radius: 6px;
@@ -39,6 +44,7 @@ const Input = styled.input`
 `;
 
 const MemberLayers = styled.article`
+  border-top: 1px solid lightgray;
   height: 200px;
   overflow: hidden;
   :hover {
@@ -62,45 +68,65 @@ const ImageIcon = styled.img`
   margin-right: 8px;
 `;
 
-export default function ModalMember() {
+interface Props {
+  type: 'channel' | 'workspace';
+  params: Params;
+}
+
+export default function ModalMember({ type, params }: Props) {
   const [focus, setFocus] = useState(false);
+
+  // 채널 혹은 워크스페이스의 멤버리스트. API로 새로 받아온다
+  const [memberList, setMemberList] = useState<{ id: number; name: string }[]>(
+    [],
+  );
+
+  const getMemberListHandler = async () => {
+    if (type === 'channel') {
+      if (params.channelId) {
+        const response = await getChannelMember(params.channelId);
+        setMemberList(cloneDeep(response.members.content));
+      }
+    } else {
+      if (params.wsId) {
+        const response = await getWsMemberAPI(+params.wsId);
+        setMemberList(cloneDeep(response.members.content));
+      }
+    }
+  };
+
+  useEffect(() => {
+    getMemberListHandler();
+  }, []);
+
   return (
-    <Container>
-      <SearchBar focus={focus}>
-        <SearchIcon src={seacrhImage}></SearchIcon>
-        <Input
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
-          placeholder="멤버 찾기"
-        ></Input>
-      </SearchBar>
-      <Layer>
-        <ImageIcon src={addPersonImage}></ImageIcon>
-        <div>사용자 추가</div>
-      </Layer>
-      <MemberLayers>
-        {/** test */}
-        <Layer>
-          <ImageIcon src={addPersonImage}></ImageIcon>
-          <div>사용자 추가</div>
-        </Layer>
-        <Layer>
-          <ImageIcon src={addPersonImage}></ImageIcon>
-          <div>사용자 추가</div>
-        </Layer>
-        <Layer>
-          <ImageIcon src={addPersonImage}></ImageIcon>
-          <div>사용자 추가</div>
-        </Layer>
-        <Layer>
-          <ImageIcon src={addPersonImage}></ImageIcon>
-          <div>사용자 추가1</div>
-        </Layer>
-        <Layer>
-          <ImageIcon src={addPersonImage}></ImageIcon>
-          <div>사용자 추가1</div>
-        </Layer>
-      </MemberLayers>
-    </Container>
+    <>
+      {memberList.length === 0 ? (
+        <Loading></Loading>
+      ) : (
+        <Container>
+          <SearchBar focus={focus}>
+            <SearchIcon src={seacrhImage}></SearchIcon>
+            <Input
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
+              placeholder="멤버 찾기"
+            ></Input>
+          </SearchBar>
+          <Layer>
+            <ImageIcon src={addPersonImage}></ImageIcon>
+            <div>사용자 추가</div>
+          </Layer>
+          <MemberLayers>
+            {memberList.map((member) => (
+              <Layer key={`member-${member.id}`}>
+                <ImageIcon src={addPersonImage}></ImageIcon>
+                <div>{member.name}</div>
+              </Layer>
+            ))}
+          </MemberLayers>
+        </Container>
+      )}
+    </>
   );
 }

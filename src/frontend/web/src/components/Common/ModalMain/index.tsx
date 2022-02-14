@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ModalBox from '../ModalBox';
 import ModalMember from './ModalMember';
 import ModalInfo from './ModalInfo';
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
   height: 450px;
@@ -57,6 +58,7 @@ export default function ModalMain({ type }: Props) {
   const NAV_INFO = 'nav-info';
   const NAV_MEMBER = 'nav-member';
 
+  const params = useParams();
   const [selected, setSelected] = useState({
     info: true,
     member: false,
@@ -98,9 +100,9 @@ export default function ModalMain({ type }: Props) {
         </Header>
         <Body bgWhite={selected.member}>
           {selected.info ? (
-            <ModalInfo type={type}></ModalInfo>
+            <ModalInfo type={type} params={params}></ModalInfo>
           ) : (
-            <ModalMember></ModalMember>
+            <ModalMember type={type} params={params}></ModalMember>
           )}
         </Body>
       </Container>

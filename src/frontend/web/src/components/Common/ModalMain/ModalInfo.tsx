@@ -6,7 +6,7 @@ import { RootState } from '../../../modules';
 import { exitChannelAPI, getChannelInfoAPI } from '../../../Api/channel';
 import { exitWsAPI } from '../../../Api/workspace';
 import { IChannel } from '../../../../types/channel.type';
-import { useParams } from 'react-router-dom';
+import { Params, useParams } from 'react-router-dom';
 import Loading from '../Loading';
 
 const Container = styled.article`
@@ -48,10 +48,10 @@ const ItemL2 = styled.div`
 
 interface Props {
   type: 'channel' | 'workspace';
+  params: Params;
 }
 
-export default function ModalInfo({ type }: Props) {
-  const params = useParams();
+export default function ModalInfo({ type, params }: Props) {
   const [channel, setChannel] = useState<IChannel | undefined>();
   const user = useSelector((state: RootState) => state.user);
 

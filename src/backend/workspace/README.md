@@ -4,7 +4,7 @@
 ## 기술 스택
 ![Generic badge](https://img.shields.io/badge/11-OpenJDK-537E99.svg)
 ![Generic badge](https://img.shields.io/badge/2.6.2-SpringBoot-6DB33F.svg)
-![Generic badge](https://img.shields.io/badge/3.9.13-MySQL-01578B.svg)
+![Generic badge](https://img.shields.io/badge/8.0-MySQL-01578B.svg)
 ![Generic badge](https://img.shields.io/badge/5.0-MongoDB-81C564.svg)
 
 ## Setup & How To Run

@@ -453,7 +453,7 @@
 				8C68AABF279093B600C1711E /* WelcomeView */,
 				8C68AB182796E67200C1711E /* WorkspaceListView */,
 				8C68AADC279524EB00C1711E /* HomeView */,
-				8CBD457627A25D9A0056A557 /* Chat */,
+				8CBD457627A25D9A0056A557 /* ChatView */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -505,7 +505,7 @@
 			path = SearchURLWorkspace;
 			sourceTree = "<group>";
 		};
-		8CBD457627A25D9A0056A557 /* Chat */ = {
+		8CBD457627A25D9A0056A557 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
 				8CBD45B627A6CF320056A557 /* Profile */,
@@ -516,7 +516,7 @@
 				8CBD459927A41B510056A557 /* PrivateMessageViewModel.swift */,
 				8CBD457D27A28AEF0056A557 /* MessageKit.swift */,
 			);
-			path = Chat;
+			path = ChatView;
 			sourceTree = "<group>";
 		};
 		8CBD458727A3E2E20056A557 /* DirectMessage */ = {

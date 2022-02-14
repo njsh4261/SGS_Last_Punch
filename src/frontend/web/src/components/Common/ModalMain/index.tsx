@@ -49,6 +49,10 @@ const Body = styled.main<{ bgWhite: boolean }>`
   background-color: ${({ bgWhite }) => (bgWhite ? 'white' : '#f6f6f6')};
 `;
 
+interface Props {
+  type: 'CHANNEL' | 'WORKSPACE';
+}
+
 export default function ModalMain() {
   const NAV_INFO = 'nav-info';
   const NAV_MEMBER = 'nav-member';

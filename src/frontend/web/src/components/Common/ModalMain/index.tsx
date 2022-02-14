@@ -7,6 +7,8 @@ import ModalInfo from './ModalInfo';
 
 const Container = styled.div`
   height: 450px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Header = styled.header`
@@ -45,7 +47,6 @@ const NavItem = styled.section<NavItemProps>`
 
 const Body = styled.main<{ bgWhite: boolean }>`
   background-color: ${({ bgWhite }) => (bgWhite ? 'white' : '#f6f6f6')};
-  padding-bottom: 40px;
 `;
 
 export default function ModalMain() {

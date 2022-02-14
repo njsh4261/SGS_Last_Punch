@@ -1,6 +1,6 @@
 export const URL = {
   HOST: process.env.REACT_APP_BACKEND_HOST,
-  REDIRECT_HOME: 'http://localhost:3000',
+  REDIRECT_HOME: process.env.REACT_APP_FRONTEND_HOST,
 };
 
 export const HEADER = {

@@ -5,6 +5,7 @@
 ![Generic badge](https://img.shields.io/badge/11-OpenJDK-537E99.svg)
 ![Generic badge](https://img.shields.io/badge/2.6.2-SpringBoot-6DB33F.svg)
 ![Generic badge](https://img.shields.io/badge/3.9.13-MySQL-01578B.svg)
+![Generic badge](https://img.shields.io/badge/2.6.2-MongoDB-81C564.svg)
 
 ## Setup & How To Run
 
@@ -32,9 +33,29 @@
 - 위의 모든 설정 완료 후 터미널 통해 build & run (Windows는 gradlew.bat으로 build)
   ```
   > ./gradlew build -x test
-  > java -jar ./build/libs/workspace-0.0.1-SNAPSHOT.jar
+  > java -jar ./build/libs/workspace-server.jar
   ```
 - `http://localhost:8082/` 주소를 통해 REST API 호출
 
-# API Reference
+## 프로젝트 구조
+```
+/src/main
+├── resources
+│   └── application.yml           (프로젝트 관련 설정 파일)
+└── java/lastpunch/workspace
+    ├── common                    (에러 처리와 서버 상태 코드 관련)
+    │   └── exception             (글로벌 에러 처리 핸들러 및 BusinessException 포함)
+    ├── config                    (MongoDB 관련 설정)
+    ├── controller                (API 엔드포인트를 명시하는 컨트롤러)
+    ├── dto                       (Entity에 관련 DTO는 하위 클래스로 포함; Wrapping을 위한 DTO만 남겨 두었음)
+    ├── entity                    (DB 테이블과 entity를 1:1 매칭)
+    ├── repository
+    │   ├── ...Repository         (Spring JPA에서 제공하는 CRUD 인터페이스 및 @Query annotation 활용)
+    │   ├── ...RepositoryCustom   (QueryDSL을 통해 query를 작성하고 하는 메소드를 정의)
+    │   └── ...RepositoryImpl     (QueryDSL 메소드 구현)
+    ├── service                   (controller와 repository를 연결, 비즈니스 로직 처리)
+    └── WorkspaceApplication.java (애플리케이션 실행)
+```
+
+## API Reference
 [API 문서 링크](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/docs/API_references/workspace_apis.md) 를 참조

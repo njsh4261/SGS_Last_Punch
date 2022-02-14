@@ -1,0 +1,31 @@
+<!--original source code from https://www.baeldung.com/websockets-spring-->
+<html>
+<head>
+  <title>Presence Prototype</title>
+</head>
+<body onload="disconnect();">
+<div>
+  <div>
+    <input type="text" id="workspaceId" placeholder="Type workspace ID"/>
+    <input type="text" id="userId" placeholder="Type user ID"/>
+  </div>
+  <br />
+  <div>
+    <button id="connect" onclick="connect();">Connect</button>
+    <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+  </div>
+  <br />
+  <div id="presenceDiv">
+    <input type="text" id="userStatus" placeholder="Type user status"/>
+    <button id="sendMessage" onclick="sendMessage();">Send</button>
+    <button id="getPresence" onclick="getPresenceList();">Get presence list</button>
+    <p>Status must be one of ONLINE, ABSENT, BUSY, or OFFLINE</p>
+    <p id="presenceList"></p>
+  </div>
+</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="index.js"></script>
+</html>

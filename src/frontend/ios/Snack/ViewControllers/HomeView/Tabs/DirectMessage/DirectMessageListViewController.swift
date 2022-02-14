@@ -23,6 +23,7 @@ class DirectMessageListViewController: UIViewController {
     private let HEADER_HEIGHT: Float = 66
     
     // MARK: - UI
+    private var btnSearch = UIButton()
     private var searchBar = UISearchBar()
     private var viewHeader = UIView()
     private var btnAddMemeber = UIButton()
@@ -52,6 +53,10 @@ class DirectMessageListViewController: UIViewController {
     
     func bind(with viewModel: DirectMessageListViewModel) {
         // MARK: Bind input
+        btnSearch.rx.tap
+            .subscribe(onNext: goToUserSearch)
+            .disposed(by: disposeBag)
+        
         btnAddMemeber.rx.tap
             .subscribe(onNext: goToInvitation)
             .disposed(by: disposeBag)
@@ -113,6 +118,11 @@ class DirectMessageListViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+    private func goToUserSearch() {
+        let userSearchVC = UserSearchViewController()
+        self.present(userSearchVC, animated: true, completion: nil)
+    }
+    
     private func goToInvitation() {
         let userInvitationVC = NavigationController(rootViewController: UserInvitationViewController())
         self.present(userInvitationVC, animated: true, completion: nil)
@@ -143,14 +153,16 @@ class DirectMessageListViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "DM", style: .plain, target: nil, action: nil)
         view.backgroundColor = UIColor(named: "snackBackGroundColor2")
         
-        searchBar = searchBar.then {
-            $0.placeholder = "다음으로 이동..."
-            $0.barTintColor = UIColor(named: "snackBackGroundColor2")
-            $0.searchTextField.backgroundColor = UIColor(named: "snackButtonColor")
-            $0.backgroundImage = UIImage()
+        btnSearch = btnSearch.then {
+            $0.setTitle("다음으로 이동...", for: .normal)
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Regular", size: 17)
+            $0.setTitleColor(.placeholderText, for: .normal)
+            $0.backgroundColor = UIColor(named: "snackButtonColor")
+            $0.contentHorizontalAlignment = .left
+            $0.contentEdgeInsets = .init(top: 0, left: 17, bottom: 0, right: 0)
         }
         
-        [viewHeader, btnAddMemeber, searchBar.searchTextField].forEach {
+        [viewHeader, btnAddMemeber, btnSearch, searchBar.searchTextField].forEach {
             $0.layer.cornerRadius = 15
         }
         
@@ -193,16 +205,16 @@ class DirectMessageListViewController: UIViewController {
     }
     
     private func layout() {
-        [searchBar, tableView].forEach {
+        [btnSearch, tableView].forEach {
             view.addSubview($0)
         }
         
         viewHeader.addSubview(btnAddMemeber)
         
-        searchBar.snp.makeConstraints {
-            $0.left.right.equalTo(view.safeAreaLayoutGuide)
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(56)
+        btnSearch.snp.makeConstraints {
+            $0.left.right.equalTo(view.safeAreaLayoutGuide).inset(8)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(8)
+            $0.height.equalTo(40)
         }
         
         [viewHeader, tableView].forEach {

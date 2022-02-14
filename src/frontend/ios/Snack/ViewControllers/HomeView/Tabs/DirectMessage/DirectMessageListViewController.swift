@@ -53,6 +53,10 @@ class DirectMessageListViewController: UIViewController {
     
     func bind(with viewModel: DirectMessageListViewModel) {
         // MARK: Bind input
+        btnSearch.rx.tap
+            .subscribe(onNext: goToUserSearch)
+            .disposed(by: disposeBag)
+        
         btnAddMemeber.rx.tap
             .subscribe(onNext: goToInvitation)
             .disposed(by: disposeBag)
@@ -112,6 +116,11 @@ class DirectMessageListViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind(onNext: showFailedAlert)
             .disposed(by: disposeBag)
+    }
+    
+    private func goToUserSearch() {
+        let userSearchVC = UserSearchViewController()
+        self.present(userSearchVC, animated: true, completion: nil)
     }
     
     private func goToInvitation() {

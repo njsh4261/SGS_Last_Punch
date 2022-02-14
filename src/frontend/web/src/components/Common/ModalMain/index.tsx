@@ -5,8 +5,12 @@ import ModalBox from '../ModalBox';
 import ModalMember from './ModalMember';
 import ModalInfo from './ModalInfo';
 
+const Container = styled.div`
+  height: 450px;
+`;
+
 const Header = styled.header`
-  border-bottom: 1px solid darkgray;
+  border-bottom: 1px solid lightgray;
   width: 100%;
   padding: 20px 76px 0px 28px;
 `;
@@ -22,12 +26,11 @@ const NavTab = styled.nav`
 `;
 
 interface NavItemProps {
-  color?: string;
   selected?: boolean;
 }
 
 const NavItem = styled.section<NavItemProps>`
-  color: ${({ color }) => (color ? color : 'black')};
+  color: 'black';
   margin-right: 20px;
   padding-bottom: 8px;
   opacity: ${({ selected }) => (selected ? '100%' : '50%')};
@@ -40,8 +43,9 @@ const NavItem = styled.section<NavItemProps>`
   }
 `;
 
-const Body = styled.main`
-  background-color: #f6f6f6;
+const Body = styled.main<{ bgWhite: boolean }>`
+  background-color: ${({ bgWhite }) => (bgWhite ? 'white' : '#f6f6f6')};
+  padding-bottom: 40px;
 `;
 
 export default function ModalMain() {
@@ -67,29 +71,34 @@ export default function ModalMain() {
 
   return (
     <ModalBox>
-      <Header>
-        <HeaderH1>channel Name</HeaderH1>
-        <NavTab>
-          <NavItem
-            id={NAV_INFO}
-            selected={selected.info}
-            onClick={selectHandler}
-          >
-            정보
-          </NavItem>
-          <NavItem
-            id={NAV_MEMBER}
-            selected={selected.member}
-            onClick={selectHandler}
-          >
-            멤버
-          </NavItem>
-          <NavItem color="red">나가기</NavItem>
-        </NavTab>
-      </Header>
-      <Body>
-        {selected.info ? <ModalInfo></ModalInfo> : <ModalMember></ModalMember>}
-      </Body>
+      <Container>
+        <Header>
+          <HeaderH1>channel Name</HeaderH1>
+          <NavTab>
+            <NavItem
+              id={NAV_INFO}
+              selected={selected.info}
+              onClick={selectHandler}
+            >
+              정보
+            </NavItem>
+            <NavItem
+              id={NAV_MEMBER}
+              selected={selected.member}
+              onClick={selectHandler}
+            >
+              멤버
+            </NavItem>
+          </NavTab>
+        </Header>
+        <Body bgWhite={selected.member}>
+          {selected.info ? (
+            <ModalInfo></ModalInfo>
+          ) : (
+            <ModalMember></ModalMember>
+          )}
+        </Body>
+      </Container>
     </ModalBox>
   );
 }

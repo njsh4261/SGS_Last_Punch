@@ -30,5 +30,25 @@
 - 멤버가 Disconnect 버튼을 클릭하거나 브라우저를 닫아서 연결이 해제되는 경우 해당 유저의 상태가 DISCONNECT 되었다는 메시지가 전파됨
   - DB에서 Disconnect된 유저의 프리젠스 정보 삭제
 
+## 프로젝트 구조
+```
+/src/main
+├── resources
+│   ├── static                        (프리젠스 서버 테스트를 위한 프론트엔드 프로토타입)
+│   └── application.yml               (프로젝트 관련 설정 파일)
+└── java/lastpunch/presence
+    ├── common                        (상수 및 enum, JWT 토큰 인증 코드)
+    │   └── jwt                       (소켓 연결 시 JWT 토큰 인증을 위한 패키지)
+    ├── config                        (STOMP, RabbitMQ, MongoDB, CORS, @Async 및 message interceptor 관련 설정)
+    ├── controller                    (메시지 및 REST API 요청 수신)
+    ├── entity                        (MongoDB에 저장하는 프리젠스 정보 및 관련 DTO)
+    ├── repository
+    │   ├── PresenceRepository        (Spring JPA에서 제공하는 CRUD 인터페이스 활용)
+    │   ├── PresenceRepositoryCustom  (MongoTemplate을 활용한 DB 접근 메소드 정의)
+    │   └── PresenceRepositoryImpl    (DB 접근 메소드 구현)
+    ├── service                       (메시지 전달 및 비즈니스 로직 처리)
+    └── PresenceApplication.java      (애플리케이션 실행)
+```
+
 ## APIs
 [API 문서 링크](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/docs/API_references/presence_apis.md) 를 참조

@@ -115,6 +115,7 @@
 		8CCFFA9727B9E98F005D4D13 /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFA8A27B9E98F005D4D13 /* NotoSansKR-Regular.otf */; };
 		8CCFFA9827B9E98F005D4D13 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA8B27B9E98F005D4D13 /* Credentials.swift */; };
 		8CCFFA9A27B9EAC2005D4D13 /* PaginationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA9927B9EAC2005D4D13 /* PaginationAction.swift */; };
+		8CCFFAA427BA767B005D4D13 /* UserInvitationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAA327BA767B005D4D13 /* UserInvitationView.xib */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -234,6 +235,7 @@
 		8CCFFA8A27B9E98F005D4D13 /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 		8CCFFA8B27B9E98F005D4D13 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		8CCFFA9927B9EAC2005D4D13 /* PaginationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationAction.swift; sourceTree = "<group>"; };
+		8CCFFAA327BA767B005D4D13 /* UserInvitationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInvitationView.xib; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -646,6 +648,7 @@
 			isa = PBXGroup;
 			children = (
 				8CC9E8FB27B2DABF008BE1EA /* UserInvitationViewController.swift */,
+				8CCFFAA327BA767B005D4D13 /* UserInvitationView.xib */,
 			);
 			path = UserInvitation;
 			sourceTree = "<group>";
@@ -794,6 +797,7 @@
 			files = (
 				8CCFFA9627B9E98F005D4D13 /* NotoSansKR-Bold 2.otf in Resources */,
 				8CBD45EF27A874950056A557 /* KeepMediaView.xib in Resources */,
+				8CCFFAA427BA767B005D4D13 /* UserInvitationView.xib in Resources */,
 				8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */,
 				8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */,
 				8CCFFA9427B9E98F005D4D13 /* NotoSansKR-Regular 2.otf in Resources */,

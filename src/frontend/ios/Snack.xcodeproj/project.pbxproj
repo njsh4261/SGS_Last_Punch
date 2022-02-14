@@ -100,7 +100,7 @@
 		8CCFFA6E27B964B2005D4D13 /* ChannelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA6D27B964B2005D4D13 /* ChannelService.swift */; };
 		8CCFFA7027B965A8005D4D13 /* ChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA6F27B965A8005D4D13 /* ChannelModel.swift */; };
 		8CCFFA7327B97DAE005D4D13 /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA7227B97DAE005D4D13 /* UserSearchViewController.swift */; };
-		8CCFFA7727B984A3005D4D13 /* UserSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA7627B984A3005D4D13 /* UserSearchTableViewCell.swift */; };
+		8CCFFA7727B984A3005D4D13 /* UserSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA7627B984A3005D4D13 /* UserSearchCell.swift */; };
 		8CCFFA7927B98CCA005D4D13 /* UserSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFA7827B98CCA005D4D13 /* UserSearchView.xib */; };
 		8CCFFA8C27B9E98F005D4D13 /* LogOutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA7D27B9E98E005D4D13 /* LogOutViewModel.swift */; };
 		8CCFFA8D27B9E98F005D4D13 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA7F27B9E98E005D4D13 /* ImagePicker.swift */; };
@@ -116,6 +116,7 @@
 		8CCFFA9827B9E98F005D4D13 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA8B27B9E98F005D4D13 /* Credentials.swift */; };
 		8CCFFA9A27B9EAC2005D4D13 /* PaginationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA9927B9EAC2005D4D13 /* PaginationAction.swift */; };
 		8CCFFAA427BA767B005D4D13 /* UserInvitationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAA327BA767B005D4D13 /* UserInvitationView.xib */; };
+		8CCFFAA927BAA783005D4D13 /* UserSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAA827BAA783005D4D13 /* UserSearchCell.xib */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -220,7 +221,7 @@
 		8CCFFA6D27B964B2005D4D13 /* ChannelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelService.swift; sourceTree = "<group>"; };
 		8CCFFA6F27B965A8005D4D13 /* ChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelModel.swift; sourceTree = "<group>"; };
 		8CCFFA7227B97DAE005D4D13 /* UserSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
-		8CCFFA7627B984A3005D4D13 /* UserSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchTableViewCell.swift; sourceTree = "<group>"; };
+		8CCFFA7627B984A3005D4D13 /* UserSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchCell.swift; sourceTree = "<group>"; };
 		8CCFFA7827B98CCA005D4D13 /* UserSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserSearchView.xib; sourceTree = "<group>"; };
 		8CCFFA7D27B9E98E005D4D13 /* LogOutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutViewModel.swift; sourceTree = "<group>"; };
 		8CCFFA7F27B9E98E005D4D13 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -236,6 +237,7 @@
 		8CCFFA8B27B9E98F005D4D13 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		8CCFFA9927B9EAC2005D4D13 /* PaginationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationAction.swift; sourceTree = "<group>"; };
 		8CCFFAA327BA767B005D4D13 /* UserInvitationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInvitationView.xib; sourceTree = "<group>"; };
+		8CCFFAA827BAA783005D4D13 /* UserSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserSearchCell.xib; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -709,11 +711,20 @@
 		8CCFFAA227BA056A005D4D13 /* UserSearch */ = {
 			isa = PBXGroup;
 			children = (
+				8CCFFAA727BAA66D005D4D13 /* UserSearchCell */,
 				8CCFFA7227B97DAE005D4D13 /* UserSearchViewController.swift */,
-				8CCFFA7627B984A3005D4D13 /* UserSearchTableViewCell.swift */,
 				8CCFFA7827B98CCA005D4D13 /* UserSearchView.xib */,
 			);
 			path = UserSearch;
+			sourceTree = "<group>";
+		};
+		8CCFFAA727BAA66D005D4D13 /* UserSearchCell */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFA7627B984A3005D4D13 /* UserSearchCell.swift */,
+				8CCFFAA827BAA783005D4D13 /* UserSearchCell.xib */,
+			);
+			path = UserSearchCell;
 			sourceTree = "<group>";
 		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
@@ -802,6 +813,7 @@
 				8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */,
 				8CCFFA9427B9E98F005D4D13 /* NotoSansKR-Regular 2.otf in Resources */,
 				8CCFFA9527B9E98F005D4D13 /* NotoSansKR-Bold.otf in Resources */,
+				8CCFFAA927BAA783005D4D13 /* UserSearchCell.xib in Resources */,
 				8CBD45E127A868040056A557 /* MediaView.xib in Resources */,
 				8CCFFA6C27B9524F005D4D13 /* NewChannelView.xib in Resources */,
 				8CCFFA7927B98CCA005D4D13 /* UserSearchView.xib in Resources */,
@@ -925,7 +937,7 @@
 				8CCFFA8C27B9E98F005D4D13 /* LogOutViewModel.swift in Sources */,
 				8CBD45DD27A865C30056A557 /* MeidaView.swift in Sources */,
 				8CC9E90C27B3B939008BE1EA /* AccountService.swift in Sources */,
-				8CCFFA7727B984A3005D4D13 /* UserSearchTableViewCell.swift in Sources */,
+				8CCFFA7727B984A3005D4D13 /* UserSearchCell.swift in Sources */,
 				8CC9E90E27B3BA01008BE1EA /* AccountModel.swift in Sources */,
 				8C962B6327AEDD4F00A9A1F5 /* User.swift in Sources */,
 				8CC9E8D227B161B1008BE1EA /* CreateWKWebView.swift in Sources */,

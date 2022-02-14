@@ -9,6 +9,7 @@ import arrowRightIcon from '../../../icon/arrowRight.svg';
 import DropdownSetting from './DropdownSetting';
 import ModalMenuHook from '../../../hook/ModalMenu';
 import ModalMain from '../../Common/ModalMain';
+import { RootState } from '../../../modules';
 
 const ChannelHeader = styled.article`
   display: flex;
@@ -86,7 +87,7 @@ const ChannelTab = styled.div`
 `;
 
 interface Props {
-  channel: any;
+  channel: RootState['channel'];
   sideToggle: boolean;
   sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
 }

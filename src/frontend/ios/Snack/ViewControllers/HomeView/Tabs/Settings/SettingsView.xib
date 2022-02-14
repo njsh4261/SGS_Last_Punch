@@ -11,7 +11,7 @@
         <array key="NotoSansKR-Bold.otf">
             <string>NotoSansKR-Bold</string>
         </array>
-        <array key="NotoSansKR-Regular.otf">
+        <array key="NotoSansKR-Regular 2.otf">
             <string>NotoSansKR-Regular</string>
         </array>
     </customFonts>
@@ -140,7 +140,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="741" y="219"/>
+            <point key="canvasLocation" x="741" y="145"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="tnX-oP-wet" style="IBUITableViewCellStyleDefault" id="wNU-C5-MnA">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -158,7 +158,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="741" y="350"/>
+            <point key="canvasLocation" x="741" y="236"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="csv-Pj-3aW" style="IBUITableViewCellStyleDefault" id="DjV-hq-RP0">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -176,7 +176,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="741" y="476"/>
+            <point key="canvasLocation" x="741" y="358"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Al9-6K-88B" style="IBUITableViewCellStyleDefault" id="UOC-eD-kCW">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -194,7 +194,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="741" y="570"/>
+            <point key="canvasLocation" x="741" y="451"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="epl-8y-7rv" style="IBUITableViewCellStyleDefault" id="8xF-qI-TWS">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -212,7 +212,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="741" y="713"/>
+            <point key="canvasLocation" x="741" y="577"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="fq3-vD-231" style="IBUITableViewCellStyleDefault" id="tC4-IV-SoW">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -230,7 +230,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="741" y="808"/>
+            <point key="canvasLocation" x="741" y="685"/>
         </tableViewCell>
     </objects>
     <resources>

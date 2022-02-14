@@ -1,9 +1,9 @@
-# 워크스페이스 서버 API 명세서
+# Workspace Server API Reference
 
 ## 워크스페이스 API
 | Method | URI                             | Description               | Request Body       | Response Body      | etc                    |
 |--------|---------------------------------|---------------------------|--------------------|--------------------|------------------------|
-| GET    | /workspace                      | 사용자 1명의 워크스페이스 목록 조회      | -                  | 워크스페이스 목록          | paging                 |
+| GET    | /workspace                      | 사용자 1명의 워크스페이스 목록 조회      | -                  | List\<ExportDto>          | paging                 |
 | GET    | /workspace/{id}                 | 워크스페이스 1개의 정보 조회          | -                  | 워크스페이스 1개 정보       | -                      |
 | GET    | /workspace/{id}/members         | 워크스페이스 1개의 멤버 전체 조회       | -                  | 멤버 목록              |                        |
 | GET    | /workspace/{id}/members/paging  | 워크스페이스 1개의 멤버 조회 (paging) | -                  | 멤버 목록              | paging                 |

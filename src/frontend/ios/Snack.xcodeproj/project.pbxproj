@@ -311,19 +311,10 @@
 			isa = PBXGroup;
 			children = (
 				8C68AAC1279093F300C1711E /* LoginEmail */,
-				8C68AAC0279093ED00C1711E /* RegisterEmail */,
+				8CCFFA9C27B9F077005D4D13 /* RegisterEmail */,
 				8C953BD2278E90F200D5677E /* WelcomeViewController.swift */,
 			);
 			path = WelcomeView;
-			sourceTree = "<group>";
-		};
-		8C68AAC0279093ED00C1711E /* RegisterEmail */ = {
-			isa = PBXGroup;
-			children = (
-				8C68AAD62791AF1100C1711E /* RegisterViewController.swift */,
-				8C68AAD82791AF3300C1711E /* RegisterViewModel.swift */,
-			);
-			name = RegisterEmail;
 			sourceTree = "<group>";
 		};
 		8C68AAC1279093F300C1711E /* LoginEmail */ = {
@@ -400,7 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				8C962B6127AE6A1C00A9A1F5 /* Cell */,
-				8CCFFA6427B95146005D4D13 /* NewChannel */,
+				8CCFFA9D27B9F134005D4D13 /* NewChannel */,
 				8C68AAE0279526C600C1711E /* HomeViewController.swift */,
 				8C68AAE2279526CF00C1711E /* HomeViewModel.swift */,
 			);
@@ -464,7 +455,7 @@
 				8C68AABF279093B600C1711E /* WelcomeView */,
 				8C68AB182796E67200C1711E /* WorkspaceListView */,
 				8C68AADC279524EB00C1711E /* HomeView */,
-				8CBD457627A25D9A0056A557 /* Chat */,
+				8CBD457627A25D9A0056A557 /* ChatView */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -516,7 +507,7 @@
 			path = SearchURLWorkspace;
 			sourceTree = "<group>";
 		};
-		8CBD457627A25D9A0056A557 /* Chat */ = {
+		8CBD457627A25D9A0056A557 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
 				8CBD45B627A6CF320056A557 /* Profile */,
@@ -527,13 +518,13 @@
 				8CBD459927A41B510056A557 /* PrivateMessageViewModel.swift */,
 				8CBD457D27A28AEF0056A557 /* MessageKit.swift */,
 			);
-			path = Chat;
+			path = ChatView;
 			sourceTree = "<group>";
 		};
 		8CBD458727A3E2E20056A557 /* DirectMessage */ = {
 			isa = PBXGroup;
 			children = (
-				8CCFFA7127B978B6005D4D13 /* UserSearch */,
+				8CCFFA9E27B9F15D005D4D13 /* UserSearch */,
 				8CC9E8FF27B2DACC008BE1EA /* UserInvitation */,
 				8CBD458E27A3E46B0056A557 /* DirectMessageListViewController.swift */,
 				8CBD458C27A3E42B0056A557 /* DirectMessageListViewModel.swift */,
@@ -662,25 +653,6 @@
 			path = UserInvitation;
 			sourceTree = "<group>";
 		};
-		8CCFFA6427B95146005D4D13 /* NewChannel */ = {
-			isa = PBXGroup;
-			children = (
-				8CCFFA6527B95179005D4D13 /* NewChannelViewController.swift */,
-				8CCFFA6B27B9524F005D4D13 /* NewChannelView.xib */,
-			);
-			name = NewChannel;
-			sourceTree = "<group>";
-		};
-		8CCFFA7127B978B6005D4D13 /* UserSearch */ = {
-			isa = PBXGroup;
-			children = (
-				8CCFFA7227B97DAE005D4D13 /* UserSearchViewController.swift */,
-				8CCFFA7627B984A3005D4D13 /* UserSearchTableViewCell.swift */,
-				8CCFFA7827B98CCA005D4D13 /* UserSearchView.xib */,
-			);
-			name = UserSearch;
-			sourceTree = "<group>";
-		};
 		8CCFFA7C27B9E98E005D4D13 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -714,6 +686,34 @@
 				8CCFFA8A27B9E98F005D4D13 /* NotoSansKR-Regular.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		8CCFFA9C27B9F077005D4D13 /* RegisterEmail */ = {
+			isa = PBXGroup;
+			children = (
+				8C68AAD62791AF1100C1711E /* RegisterViewController.swift */,
+				8C68AAD82791AF3300C1711E /* RegisterViewModel.swift */,
+			);
+			path = RegisterEmail;
+			sourceTree = "<group>";
+		};
+		8CCFFA9D27B9F134005D4D13 /* NewChannel */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFA6527B95179005D4D13 /* NewChannelViewController.swift */,
+				8CCFFA6B27B9524F005D4D13 /* NewChannelView.xib */,
+			);
+			path = NewChannel;
+			sourceTree = "<group>";
+		};
+		8CCFFA9E27B9F15D005D4D13 /* UserSearch */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFA7227B97DAE005D4D13 /* UserSearchViewController.swift */,
+				8CCFFA7627B984A3005D4D13 /* UserSearchTableViewCell.swift */,
+				8CCFFA7827B98CCA005D4D13 /* UserSearchView.xib */,
+			);
+			path = UserSearch;
 			sourceTree = "<group>";
 		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {

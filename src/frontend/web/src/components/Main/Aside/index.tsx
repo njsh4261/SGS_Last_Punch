@@ -34,12 +34,12 @@ export default function Aside({
 
   return (
     <MainAsideFrame toggle={sideToggle}>
+      {modal.active && modal.modalType === 'workspace' && (
+        <ModalMain type="workspace"></ModalMain>
+      )}
       <AsideHeader onMouseEnter={hoverHandler} onMouseLeave={hoverHandler}>
         <ModalBox onClick={openModalHandler}>
           <WorkspaceName>{ws.name}</WorkspaceName>
-          {modal.active && modal.modalType === 'workspace' && (
-            <ModalMain type="workspace"></ModalMain>
-          )}
         </ModalBox>
         {hover && (
           <ImageButton

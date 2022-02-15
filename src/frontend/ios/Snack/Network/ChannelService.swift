@@ -98,6 +98,34 @@ class ChannelService {
         }
     }
     
+    func editChannel(method: HTTPMethod, accessToken: String, workspaceId: Int, name: String, description: String) -> Observable<NetworkResult<ChannelResponseModel>> {
+        let url = APIConstants().channelURL
+        let parameters = self.makeParameter(workspaceId: workspaceId, name: name, description: description)
+                
+        return Observable.create { observer -> Disposable in
+            let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
+            let dataRequest = AF.request(url,
+                                         method: method,
+                                         parameters: parameters,
+                                         encoding: JSONEncoding.default,
+                                         headers: header)
+
+            dataRequest.validate().responseData { [self] response in
+                switch response.result {
+                case .success:
+                    guard let statusCode = response.response?.statusCode else {return}
+                    guard let value = response.value else {return}
+                    let networkResult = judgeStatus(by: statusCode, value)
+                    return observer.onNext(networkResult)
+                case .failure:
+                    return observer.onNext(.pathErr)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+
+    
     func deleteMember(method: HTTPMethod, accessToken: String, accountId: String,  channelId: String) -> Observable<NetworkResult<ChannelResponseModel>> {
         let url = APIConstants().channelURL + "/member?accountId=\(accountId)&channelId=\(channelId)"
                 

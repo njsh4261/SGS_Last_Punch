@@ -96,7 +96,7 @@ class GroupDetailsViewController: UIViewController {
         }
         
         let alertRenameGroup = UIAlertAction(title: "정보 변경", style: .default) { action in
-            self.actionRenameGroup()
+            self.actionEditChannelInfo()
         }
         
         let alertCancle = UIAlertAction(title: "취소", style: .cancel)
@@ -126,29 +126,39 @@ class GroupDetailsViewController: UIViewController {
 //        present(navController, animated: true)
     }
 
-    func actionRenameGroup() {
+    func actionEditChannelInfo() {
+        let alert = UIAlertController(title: "채널 정보 변경", message: "첫 번째는 이름, 두 번째는 설명입니다", preferredStyle: .alert)
 
-//        let alert = UIAlertController(title: "Rename Group", message: "Enter a new name for this Group", preferredStyle: .alert)
-//
-//        alert.addTextField(configurationHandler: { textField in
-//            textField.text = self.dbgroup.name
-//            textField.placeholder = "Group name"
-//            textField.autocapitalizationType = .words
-//        })
-//
-//        alert.addAction(UIAlertAction(title: "Save", style: .default) { action in
-//            if let textField = alert.textFields?[0] {
-//                self.actionRenameGroup(textField.text)
-//            }
-//        })
+        alert.addTextField(configurationHandler: { [self] textField in
+            textField.text = channelInfo?.channel?.name
+            textField.placeholder = "채널 이름"
+            textField.autocapitalizationType = .words
+        })
+        
+        alert.addTextField(configurationHandler: { [self] textField in
+            textField.text = channelInfo?.channel?.description
+            textField.placeholder = "채널 설명"
+            textField.autocapitalizationType = .words
+        })
 
-//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-//
-//        present(alert, animated: true)
+        let alertSave = UIAlertAction(title: "저장", style: .destructive) { [self] action in
+            if alert.textFields?[0] != nil {
+                self.actionEditChannelInfo(channelInfo?.channel?.name, channelInfo?.channel?.description)
+            }
+        }
+        
+        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
+        
+        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        
+        alert.addAction(alertSave)
+        alert.addAction(alertCancle)
+
+        present(alert, animated: true)
     }
 
-    func actionRenameGroup(_ text: String?) {
-
+    func actionEditChannelInfo(_ name: String?, _ description: String?) {
+        print("채널 수정")
 //        guard let name = text else { return }
 //        guard (name.count != 0) else { return }
 //
@@ -183,7 +193,7 @@ class GroupDetailsViewController: UIViewController {
         }
         
         let alertRenameGroup = UIAlertAction(title: "정보 변경", style: .default) { action in
-            self.actionRenameGroup()
+            self.actionEditChannelInfo()
         }
         
         let alertCancle = UIAlertAction(title: "취소", style: .cancel)

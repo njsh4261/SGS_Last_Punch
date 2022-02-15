@@ -32,12 +32,7 @@ class PrivateMessageViewController: MessagesViewController {
     }()
 
     // MARK: - UI
-    private var btnProfile = UIBarButtonItem()
-    private var viewTitle =  UIView()
-    private var lblTitle = UILabel()
-    private var lblSubTitle = UILabel()
-    private var btnViewTitle = UIButton()
-    
+    private var btnProfile = UIBarButtonItem()    
     private var btnAttach = InputBarButtonItem()
     
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, channelId: String) {
@@ -195,7 +190,7 @@ class PrivateMessageViewController: MessagesViewController {
     }
     
     private func attribute() {
-        navigationItem.titleView = viewTitle
+//        navigationItem.titleView = viewTitle
         if senderInfo.senderId != recipientInfo.senderId {
             navigationItem.rightBarButtonItem = btnProfile
             messageInputBar.inputTextView.placeholder = "\(recipientInfo.displayName)에(게) 메시지 보내기"
@@ -206,24 +201,8 @@ class PrivateMessageViewController: MessagesViewController {
         view.backgroundColor = UIColor(named: "snackBackGroundColor3")
         messagesCollectionView.backgroundColor = UIColor(named: "snackBackGroundColor2")
 
-        [lblTitle, lblSubTitle].forEach {
-            $0.backgroundColor = UIColor.clear
-            $0.textAlignment = .center
-            $0.adjustsFontSizeToFitWidth = true
-            $0.textColor = .white
-            $0.sizeToFit()
-        }
-        
-        lblTitle = lblTitle.then {
-            $0.text = recipientInfo.displayName
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
-        }
-        
-        lblSubTitle = lblSubTitle.then {
-            $0.text = "대화 가능"
-            $0.font = UIFont(name: "NotoSansKR-Regular", size: 10)
-        }
-                        
+        updateTitleView(title: recipientInfo.displayName, subtitle: "대화 가능")
+                                
         btnProfile = btnProfile.then {
             $0.title = "프로필"
             $0.style = .plain
@@ -234,30 +213,6 @@ class PrivateMessageViewController: MessagesViewController {
     }
     
     private func layout() {
-        // navigationItem titleView
-        [lblTitle, lblSubTitle, btnViewTitle].forEach {
-            viewTitle.addSubview($0)
-        }
-        
-        [lblTitle, lblSubTitle].forEach {
-            $0.snp.makeConstraints {
-                $0.centerX.equalToSuperview()
-            }
-        }
-        
-        lblTitle.snp.makeConstraints {
-            $0.top.equalToSuperview()
-        }
-
-        lblSubTitle.snp.makeConstraints {
-            $0.top.equalTo(lblTitle.snp.bottom)
-        }
-        
-        btnViewTitle.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(lblTitle)
-            $0.height.equalTo(50)
-        }
     }
 }
 

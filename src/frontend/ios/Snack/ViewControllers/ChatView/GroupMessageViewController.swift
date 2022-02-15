@@ -32,9 +32,9 @@ class GroupMessageViewController: MessagesViewController {
 
     // MARK: - UI
     private var btnTransform = UIBarButtonItem()
-    private var viewTitle =  UIView()
-    private var lblTitle = UILabel()
-    private var lblSubTitle = UILabel()
+//    private var viewTitle =  UIView()
+//    private var lblTitle = UILabel()
+//    private var lblSubTitle = UILabel()
     private var btnViewTitle = UIButton()
     private var btnAttach = InputBarButtonItem()
     
@@ -77,14 +77,6 @@ class GroupMessageViewController: MessagesViewController {
         // MARK: Bind output
         
     }
-    
-//    private func goToProfile() {
-        // 추가 본인 정보를 넣어야함
-//        print(1)
-//        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: senderInfo, recipientInfo: recipientInfo, isChat: false)
-//        viewController.hidesBottomBarWhenPushed = true
-//        self.show(viewController, sender: nil)
-//    }
     
     @objc private func goToProfile() {
         NSLog("Hello, titleWasTapped!")
@@ -234,40 +226,19 @@ class GroupMessageViewController: MessagesViewController {
     }
     
     private func attribute() {
-        navigationItem.titleView = viewTitle
         navigationItem.rightBarButtonItem = btnTransform
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "채팅", style: .plain, target: nil, action: nil)
         view.backgroundColor = UIColor(named: "snackBackGroundColor3")
         messagesCollectionView.backgroundColor = UIColor(named: "snackBackGroundColor2")
-//        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
-//        viewTitle.backgroundColor = .red
-//        btnViewTitle.setBackgroundColor(.red, for: .normal)
-//        btnViewTitle.setTitle("왜 안돼", for: .normal)
-        viewTitle = viewTitle.then {
-//            let width = $0.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
-            $0.frame = CGRect(origin:CGPoint.zero, size:CGSize(width: 150, height: 500))
+        
+        guard let channelName = channel?.name else { return }
+
+        updateTitleView(title: "#\(String(describing: channelName))", subtitle: "\(recipientInfoList.count)명의 멤버 >")
+        
+        btnViewTitle = btnViewTitle.then {
+            $0.frame = navigationItem.titleView!.frame
             let recognizer = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
-            $0.isUserInteractionEnabled = true
             $0.addGestureRecognizer(recognizer)
-        }
-        
-        [lblTitle, lblSubTitle].forEach {
-            $0.backgroundColor = UIColor.clear
-            $0.textAlignment = .center
-            $0.adjustsFontSizeToFitWidth = true
-            $0.textColor = .white
-            $0.sizeToFit()
-        }
-        
-        lblTitle = lblTitle.then {
-            guard let channelName = channel?.name else { return }
-            $0.text = "#\(String(describing: channelName))"
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 15)
-        }
-        
-        lblSubTitle = lblSubTitle.then {
-            $0.text = "\(recipientInfoList.count)명의 멤버 >"
-            $0.font = UIFont(name: "NotoSansKR-Regular", size: 10)
         }
                         
         btnTransform = btnTransform.then {
@@ -276,34 +247,11 @@ class GroupMessageViewController: MessagesViewController {
         }
         
         addPlusButtonToMessageInputBar()
-        
     }
     
     private func layout() {
         // navigationItem titleView
-        [lblTitle, lblSubTitle, btnViewTitle].forEach {
-            viewTitle.addSubview($0)
-        }
-        
-        [lblTitle, lblSubTitle].forEach {
-            $0.snp.makeConstraints {
-                $0.centerX.equalToSuperview()
-            }
-        }
-        
-        lblTitle.snp.makeConstraints {
-            $0.top.equalToSuperview()
-        }
-
-        lblSubTitle.snp.makeConstraints {
-            $0.top.equalTo(lblTitle.snp.bottom)
-        }
-        
-//        btnViewTitle.snp.makeConstraints {
-//            $0.centerX.equalToSuperview()
-//            $0.width.equalTo(150)
-//            $0.height.equalTo(50)
-//        }
+        navigationItem.titleView?.addSubview(btnViewTitle)
     }
 }
 

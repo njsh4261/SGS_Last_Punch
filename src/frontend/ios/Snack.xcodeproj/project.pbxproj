@@ -117,6 +117,7 @@
 		8CCFFA9A27B9EAC2005D4D13 /* PaginationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA9927B9EAC2005D4D13 /* PaginationAction.swift */; };
 		8CCFFAA427BA767B005D4D13 /* UserInvitationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAA327BA767B005D4D13 /* UserInvitationView.xib */; };
 		8CCFFAA927BAA783005D4D13 /* UserSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAA827BAA783005D4D13 /* UserSearchCell.xib */; };
+		8CCFFAAB27BB41AB005D4D13 /* Ex+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAAA27BB41AB005D4D13 /* Ex+UIViewController.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -238,6 +239,7 @@
 		8CCFFA9927B9EAC2005D4D13 /* PaginationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationAction.swift; sourceTree = "<group>"; };
 		8CCFFAA327BA767B005D4D13 /* UserInvitationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInvitationView.xib; sourceTree = "<group>"; };
 		8CCFFAA827BAA783005D4D13 /* UserSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserSearchCell.xib; sourceTree = "<group>"; };
+		8CCFFAAA27BB41AB005D4D13 /* Ex+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+UIViewController.swift"; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -364,6 +366,7 @@
 				8CBD45CA27A71A310056A557 /* Ex+Data.swift */,
 				8CBD45CE27A71A9E0056A557 /* Ex+String.swift */,
 				8CBD45D227A7C2200056A557 /* Ex+Reactive.swift */,
+				8CCFFAAA27BB41AB005D4D13 /* Ex+UIViewController.swift */,
 				8CBD4541279F047F0056A557 /* KeychainWrapper+keys.swift */,
 			);
 			path = Extensions;
@@ -938,6 +941,7 @@
 				8CBD45DD27A865C30056A557 /* MeidaView.swift in Sources */,
 				8CC9E90C27B3B939008BE1EA /* AccountService.swift in Sources */,
 				8CCFFA7727B984A3005D4D13 /* UserSearchCell.swift in Sources */,
+				8CCFFAAB27BB41AB005D4D13 /* Ex+UIViewController.swift in Sources */,
 				8CC9E90E27B3BA01008BE1EA /* AccountModel.swift in Sources */,
 				8C962B6327AEDD4F00A9A1F5 /* User.swift in Sources */,
 				8CC9E8D227B161B1008BE1EA /* CreateWKWebView.swift in Sources */,

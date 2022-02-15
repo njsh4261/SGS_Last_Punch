@@ -149,7 +149,13 @@ class GroupDetailsViewController: UIViewController {
 
     func actionMoreMember() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
+        
+        alert.addAction(UIAlertAction(title: "멤버 추가", style: .default) { action in
+            self.actionAddMembers()
+        })
+        alert.addAction(UIAlertAction(title: "정보 변경", style: .default) { action in
+            self.actionRenameGroup()
+        })
         alert.addAction(UIAlertAction(title: "채널 나가기", style: .destructive) { action in
             self.actionLeaveGroup()
         })

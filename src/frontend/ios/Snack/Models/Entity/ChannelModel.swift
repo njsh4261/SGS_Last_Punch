@@ -23,7 +23,7 @@ struct ChannelModel: Codable {
     let workspace: WorkspaceListCellModel?
     let name: String
     let topic: String?
-    let description: String
+    let description: String?
     let settings: Int
     let createDt: String
     let modifyDt: String

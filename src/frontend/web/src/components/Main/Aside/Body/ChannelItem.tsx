@@ -32,8 +32,7 @@ const ChannelName = styled.section<ChannelNameProps>`
   white-space: nowrap;
   width: 125px;
   color: ${({ isSelected }) => isSelected && 'black'};
-  font-weight: ${({ newMessage, isSelected }) =>
-    (newMessage || isSelected) && 'bolder'};
+  font-weight: ${({ isSelected }) => isSelected && 'bolder'};
   font-style: ${({ newMessage }) => newMessage && 'italic'};
 `;
 

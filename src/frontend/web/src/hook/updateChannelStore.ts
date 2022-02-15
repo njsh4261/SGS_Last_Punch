@@ -35,5 +35,5 @@ export default function updateChannelStoreHook(
         if (targetName) dispatch(selectDM(channelId, targetName));
       }
     }
-  }, [params]);
+  }, [params, memberList]);
 }

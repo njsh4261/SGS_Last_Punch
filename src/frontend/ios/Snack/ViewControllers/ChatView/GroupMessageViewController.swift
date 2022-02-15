@@ -18,6 +18,7 @@ import CoreLocation
 
 class GroupMessageViewController: MessagesViewController {
     // MARK: - Properties
+    private let viewModel: GroupMessageViewModel
     private let disposeBag = DisposeBag()
     let channel: WorkspaceChannelCellModel?
     var messages = [MessageModel]()
@@ -32,16 +33,14 @@ class GroupMessageViewController: MessagesViewController {
 
     // MARK: - UI
     private var btnTransform = UIBarButtonItem()
-//    private var viewTitle =  UIView()
-//    private var lblTitle = UILabel()
-//    private var lblSubTitle = UILabel()
     private var btnViewTitle = UIButton()
     private var btnAttach = InputBarButtonItem()
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfoList: [User], channel: WorkspaceChannelCellModel) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfoList: [User], channel: WorkspaceChannelCellModel, viewModel: GroupMessageViewModel) {
         self.senderInfo = senderInfo
         self.recipientInfoList = recipientInfoList
         self.channel = channel
+        self.viewModel = viewModel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let token: String = KeychainWrapper.standard[.accessToken] else { return }
         NSLog("accessToken: " + token)
@@ -58,6 +57,10 @@ class GroupMessageViewController: MessagesViewController {
         removeOutgoingMessageAvatars()
         attribute()
         layout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.viewModel.viewWillAppear()
     }
     
     func bind(_ viewModel: GroupMessageViewModel) {
@@ -79,7 +82,7 @@ class GroupMessageViewController: MessagesViewController {
     }
     
     @objc private func goToProfile() {
-        let ChannelModel = ChannelModel(id: -1, content: WorkspaceListCellModel(id: 1, name: "워크네임", description: "워크 설명", settings: 1, createDt: "22", modifyDt: "24"), name: "이름", topic: "토픽", description: "설명", settings: 0, createDt: "22년", modifyDt: "23년")
+        let ChannelModel = ChannelModel(id: -1, workspace: WorkspaceListCellModel(id: 1, name: "워크네임", description: "워크 설명", settings: 1, createDt: "22", modifyDt: "24"), name: "이름", topic: "토픽", description: "설명", settings: 0, createDt: "22년", modifyDt: "23년")
         let viewController = GroupDetailsViewController(ChannelModel, senderInfo: senderInfo, memberInfo: recipientInfoList)
         self.show(viewController, sender: nil)
     }

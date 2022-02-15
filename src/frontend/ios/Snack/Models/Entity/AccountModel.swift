@@ -30,6 +30,20 @@ struct AccountModel: Codable {
     let empty: Bool
 }
 
+struct AccountModel2: Codable {
+    let content: [UserModel]?
+    let pageable: Pageable?
+    let last: Bool
+    let totalPages: Int
+    let totalElements: Int
+    let size: Int
+    let number: Int
+    let sort: Sort
+    let numberOfElements: Int
+    let first: Bool
+    let empty: Bool
+}
+
 struct UserModel2: Codable {
     var id: Int
     let email: String

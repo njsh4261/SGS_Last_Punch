@@ -239,7 +239,7 @@
 					]
 				},
 				{
-					"name": "get account of himself/herself",
+					"name": "get account of self",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -292,32 +292,28 @@
 							"_postman_previewlanguage": "json",
 							"header": [
 								{
-									"key": "transfer-encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Vary",
-									"value": "Origin"
-								},
-								{
-									"key": "Vary",
-									"value": "Access-Control-Request-Method"
-								},
-								{
-									"key": "Vary",
-									"value": "Access-Control-Request-Headers"
-								},
-								{
 									"key": "Content-Type",
 									"value": "application/json"
 								},
 								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
 									"key": "Date",
-									"value": "Mon, 07 Feb 2022 04:26:38 GMT"
+									"value": "Tue, 15 Feb 2022 08:21:32 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"account\": {\n            \"id\": 3,\n            \"email\": \"qwer@qwer\",\n            \"name\": \"name\",\n            \"description\": null,\n            \"phone\": null,\n            \"country\": \"kor\",\n            \"language\": \"eng\",\n            \"settings\": 1,\n            \"status\": \"ROLE_ADMIN\",\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\",\n            \"lastMessage\": null\n        }\n    },\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"account\": {\n            \"id\": 1,\n            \"email\": \"1\",\n            \"name\": \"Saitama\",\n            \"description\": null,\n            \"phone\": null,\n            \"country\": \"kor\",\n            \"language\": \"eng\",\n            \"settings\": 1,\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\"\n        }\n    }\n}"
 						}
 					]
 				}
@@ -656,7 +652,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"workspace\": {\n            \"id\": 1,\n            \"name\": \"ws1\",\n            \"description\": null,\n            \"settings\": 0,\n            \"status\": 1,\n            \"createdt\": \"1234-01-01T00:00:00\",\n            \"modifydt\": \"9999-12-31T00:00:00\"\n        }\n    }\n}"
+							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"workspace\": {\n            \"id\": 1,\n            \"name\": \"Heroes\",\n            \"description\": null,\n            \"settings\": 0,\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\",\n            \"owner\": {\n                \"id\": 1,\n                \"email\": \"1\",\n                \"name\": \"Saitama\",\n                \"description\": null,\n                \"phone\": null,\n                \"country\": \"kor\",\n                \"language\": \"eng\",\n                \"settings\": 1,\n                \"createDt\": \"1234-01-01 24:00:00\",\n                \"modifyDt\": \"9999-12-31 24:00:00\"\n            }\n        }\n    }\n}"
 						},
 						{
 							"name": "Fail - 12001 WORKSPACE_NOT_EXIST",
@@ -894,7 +890,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/workspace/1/members",
+							"raw": "http://localhost:8080/workspace/1/members/paging",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -903,7 +899,8 @@
 							"path": [
 								"workspace",
 								"1",
-								"members"
+								"members",
+								"paging"
 							]
 						}
 					},
@@ -1970,7 +1967,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"channel\": {\n            \"id\": 1,\n            \"workspace\": {\n                \"id\": 1,\n                \"name\": \"ws1\",\n                \"description\": null,\n                \"settings\": 0,\n                \"createDt\": \"1234-01-01 24:00:00\",\n                \"modifyDt\": \"9999-12-31 24:00:00\"\n            },\n            \"name\": \"channel1\",\n            \"topic\": \"topic1\",\n            \"description\": \"pagination test for channels in workspace\",\n            \"settings\": 1,\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\"\n        },\n        \"owner\": {\n            \"id\": 3,\n            \"email\": \"qwer@qwer\",\n            \"name\": \"Batman\",\n            \"description\": null,\n            \"phone\": null,\n            \"country\": \"kor\",\n            \"language\": \"eng\",\n            \"settings\": 1,\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\"\n        }\n    }\n}"
+							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"channel\": {\n            \"id\": 1,\n            \"workspace\": {\n                \"id\": 1,\n                \"name\": \"Heroes\",\n                \"description\": null,\n                \"settings\": 0,\n                \"createDt\": \"1234-01-01 24:00:00\",\n                \"modifyDt\": \"9999-12-31 24:00:00\"\n            },\n            \"name\": \"All Heroes\",\n            \"topic\": \"topic1\",\n            \"description\": \"pagination test for channels in workspace\",\n            \"settings\": 1,\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\",\n            \"owner\": {\n                \"id\": 1,\n                \"email\": \"1\",\n                \"name\": \"Saitama\",\n                \"description\": null,\n                \"phone\": null,\n                \"country\": \"kor\",\n                \"language\": \"eng\",\n                \"settings\": 1,\n                \"createDt\": \"1234-01-01 24:00:00\",\n                \"modifyDt\": \"9999-12-31 24:00:00\"\n            }\n        }\n    }\n}"
 						},
 						{
 							"name": "Fail - 12003 CHANNEL_NOT_EXIST",

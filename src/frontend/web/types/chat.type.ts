@@ -10,7 +10,7 @@ export interface ChatMessage {
   channelId: string;
   content: string;
   status: number;
-  createDt: Date;
+  createDt: string;
   modifyDt: Date;
   profileImg?: string;
 }

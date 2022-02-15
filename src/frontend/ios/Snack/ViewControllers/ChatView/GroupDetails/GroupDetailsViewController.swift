@@ -82,7 +82,7 @@ class GroupDetailsViewController: UIViewController {
         if isGroupOwner() {
             actionMoreOwner()
         } else {
-            actionMoreMember()
+            actionRightMoreMember()
         }
     }
 
@@ -167,6 +167,35 @@ class GroupDetailsViewController: UIViewController {
         let alertCancle = UIAlertAction(title: "취소", style: .cancel)
 
         alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alert.addAction(UIAlertAction(title: "채널 나가기", style: .destructive) { action in
+            self.actionLeaveGroup()
+        })
+        alert.addAction(alertCancle)
+
+        present(alert, animated: true)
+    }
+    
+    func actionRightMoreMember() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alertAddMemeber = UIAlertAction(title: "멤버 추가", style: .default) { action in
+            self.actionAddMembers()
+        }
+        
+        let alertRenameGroup = UIAlertAction(title: "정보 변경", style: .default) { action in
+            self.actionRenameGroup()
+        }
+        
+        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
+
+        alertAddMemeber.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alertRenameGroup.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        
+        alert.addAction(alertAddMemeber)
+        alert.addAction(alertRenameGroup)
 
         alert.addAction(UIAlertAction(title: "채널 나가기", style: .destructive) { action in
             self.actionLeaveGroup()

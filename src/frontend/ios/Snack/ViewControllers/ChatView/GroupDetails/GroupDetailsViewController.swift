@@ -239,6 +239,10 @@ extension GroupDetailsViewController: UITableViewDataSource {
             let member = memberInfo![indexPath.row]
             cell.textLabel?.text = member.name
 
+            cell.textLabel?.text = member.name
+            if userId == member.id.description {
+                cell.textLabel?.text! += " (나)"
+            }
             return cell
         }
 

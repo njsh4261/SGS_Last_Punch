@@ -286,7 +286,7 @@ extension GroupDetailsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 
-        if (indexPath.section == 2) {
+        if (indexPath.section == 3) {
             if (isGroupOwner()) {
                 let member = memberInfo![indexPath.row]
                 return userId != member.id.description
@@ -315,11 +315,11 @@ extension GroupDetailsViewController: UITableViewDelegate {
 
         tableView.deselectRow(at: indexPath, animated: true)
 
-        if (indexPath.section == 1) && (indexPath.row == 0) {
+        if (indexPath.section == 2) && (indexPath.row == 0) {
             actionAllMedia()
         }
 
-        if (indexPath.section == 2) {
+        if (indexPath.section == 3) {
             let member = memberInfo![indexPath.row]
             if (userId == member.id.description) {
                 ProgressHUD.showSucceed("당신입니다")
@@ -328,7 +328,7 @@ extension GroupDetailsViewController: UITableViewDelegate {
             }
         }
 
-        if (indexPath.section == 3) && (indexPath.row == 0) {
+        if (indexPath.section == 4) && (indexPath.row == 0) {
             actionMoreMember()
         }
     }

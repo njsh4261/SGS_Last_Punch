@@ -3416,7 +3416,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"accountId\": 8,\r\n    \"workspaceId\": 1\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3424,7 +3424,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/workspace/member",
+							"raw": "http://localhost:8080/workspace/member?accountId=2&workspaceId=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -3433,6 +3433,16 @@
 							"path": [
 								"workspace",
 								"member"
+							],
+							"query": [
+								{
+									"key": "accountId",
+									"value": "2"
+								},
+								{
+									"key": "workspaceId",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -3450,7 +3460,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"accountId\": 8,\r\n    \"workspaceId\": 1\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3458,7 +3468,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/workspace/member",
+									"raw": "http://localhost:8080/workspace/member?accountId=2&workspaceId=2",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3467,6 +3477,16 @@
 									"path": [
 										"workspace",
 										"member"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "2"
+										},
+										{
+											"key": "workspaceId",
+											"value": "2"
+										}
 									]
 								}
 							},
@@ -3484,7 +3504,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 26 Jan 2022 09:55:56 GMT"
+									"value": "Tue, 15 Feb 2022 07:25:49 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -3496,7 +3516,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"code\": \"12000\",\n    \"data\": {}\n}"
 						},
 						{
 							"name": "Fail - 12004 ACCOUNTWORKSPACE_NOT_EXIST",
@@ -3511,7 +3531,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"accountId\": 999,\r\n    \"workspaceId\": 999\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -3519,7 +3539,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/workspace/member",
+									"raw": "http://localhost:8080/workspace/member?accountId=2&workspaceId=2",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -3528,6 +3548,16 @@
 									"path": [
 										"workspace",
 										"member"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "2"
+										},
+										{
+											"key": "workspaceId",
+											"value": "2"
+										}
 									]
 								}
 							},
@@ -3545,7 +3575,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 26 Jan 2022 13:29:19 GMT"
+									"value": "Tue, 15 Feb 2022 07:26:44 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -4139,7 +4169,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"accountId\": 8,\r\n    \"channelId\": 3\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4147,7 +4177,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/channel/member",
+							"raw": "http://localhost:8080/channel/member?accountId=7&channelId=4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -4156,6 +4186,16 @@
 							"path": [
 								"channel",
 								"member"
+							],
+							"query": [
+								{
+									"key": "accountId",
+									"value": "7"
+								},
+								{
+									"key": "channelId",
+									"value": "4"
+								}
 							]
 						}
 					},
@@ -4173,7 +4213,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"accountId\": 8,\r\n    \"channelId\": 3\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4181,7 +4221,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/channel/member",
+									"raw": "http://localhost:8080/channel/member?accountId=7&channelId=4",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -4190,6 +4230,16 @@
 									"path": [
 										"channel",
 										"member"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "7"
+										},
+										{
+											"key": "channelId",
+											"value": "4"
+										}
 									]
 								}
 							},
@@ -4207,7 +4257,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 26 Jan 2022 11:38:10 GMT"
+									"value": "Tue, 15 Feb 2022 07:28:33 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -4219,7 +4269,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"code\": \"12000\",\n    \"data\": {}\n}"
 						},
 						{
 							"name": "Fail - 12006 ACCOUNTCHANNEL_NOT_EXIST",
@@ -4234,7 +4284,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"accountId\": 999,\r\n    \"channelId\": 999\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -4242,7 +4292,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/channel/member",
+									"raw": "http://localhost:8080/channel/member?accountId=7&channelId=4",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -4251,6 +4301,16 @@
 									"path": [
 										"channel",
 										"member"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "7"
+										},
+										{
+											"key": "channelId",
+											"value": "4"
+										}
 									]
 								}
 							},
@@ -4268,7 +4328,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 26 Jan 2022 13:28:38 GMT"
+									"value": "Tue, 15 Feb 2022 07:28:43 GMT"
 								},
 								{
 									"key": "Keep-Alive",

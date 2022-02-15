@@ -66,16 +66,16 @@ public class WorkspaceService{
         return Map.of("workspace", commonService.getWorkspace(id).export());
     }
 
-    public Map<String, Object> getAllMembers(Long id){
-        List<Account.ExportSimpleDto> members = workspaceRepository.getAllMembers(id);
+    public Map<String, Object> getAllMembers(Long workspaceId, Long userId){
+        List<Account.ExportSimpleDto> members = workspaceRepository.getAllMembers(workspaceId);
         List<String> dmList = members.stream().map(
-            exportSimpleDto -> getDMChannelId(id, exportSimpleDto.getId())
+            exportSimpleDto -> getDMChannelId(userId, exportSimpleDto.getId())
         ).collect(Collectors.toList());
         
         Map<String, Message> messages = messageRepository.getRecentDMs(dmList);
         for(Account.ExportSimpleDto member: members){
             member.setLastMessage(
-                messages.getOrDefault(getDMChannelId(id, member.getId()), new Message())
+                messages.getOrDefault(getDMChannelId(userId, member.getId()), new Message())
             );
         }
         

@@ -43,8 +43,12 @@ public class WorkspaceController{
     }
 
     @GetMapping("/{id}/members")
-    public ResponseEntity<Object> getAllMembers(@PathVariable("id") Long id){
-        return Response.ok(ServerCode.WORKSPACE, workspaceService.getAllMembers(id));
+    public ResponseEntity<Object> getAllMembers(
+            @PathVariable("id") Long id, @RequestHeader Map<String, Object> header){
+        return Response.ok(
+                ServerCode.WORKSPACE,
+                workspaceService.getAllMembers(id, Parser.getHeaderId(header))
+        );
     }
 
     @GetMapping("/{id}/members/paging")

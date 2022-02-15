@@ -1,12 +1,9 @@
 package lastpunch.workspace.service;
 
-import java.util.HashMap;
-import java.util.List;
 import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.exception.DBExceptionMapper;
 import lastpunch.workspace.common.type.RoleType;
-import lastpunch.workspace.entity.Account;
 import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.repository.AccountChannelRepository;
 import lastpunch.workspace.repository.channel.ChannelRepository;
@@ -16,6 +13,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service

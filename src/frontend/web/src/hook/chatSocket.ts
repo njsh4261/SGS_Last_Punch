@@ -79,7 +79,6 @@ export default function chatSocketHook(
   };
 
   const sendMessage = (msg: SendMessage) => {
-    console.log('send: ', { msg });
     try {
       if (stomp.current)
         stomp.current.send('/app/chat', {}, JSON.stringify(msg));

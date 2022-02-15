@@ -79,7 +79,9 @@ class GroupMessageViewController: MessagesViewController {
     }
     
     @objc private func goToProfile() {
-        NSLog("Hello, titleWasTapped!")
+        let ChannelModel = ChannelModel(id: -1, content: WorkspaceListCellModel(id: 1, name: "워크네임", description: "워크 설명", settings: 1, createDt: "22", modifyDt: "24"), name: "이름", topic: "토픽", description: "설명", settings: 0, createDt: "22년", modifyDt: "23년")
+        let viewController = GroupDetailsViewController(ChannelModel, senderInfo: senderInfo, memberInfo: recipientInfoList)
+        self.show(viewController, sender: nil)
     }
     
     private func goToNoteList() {

@@ -18,7 +18,7 @@ struct ChannelData: Codable {
 
 struct ChannelModel: Codable {
     var id: Int
-    let content: [WorkspaceListCellModel]?
+    let content: WorkspaceListCellModel?
     let name: String
     let topic: String?
     let description: String

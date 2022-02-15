@@ -118,6 +118,8 @@
 		8CCFFAA427BA767B005D4D13 /* UserInvitationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAA327BA767B005D4D13 /* UserInvitationView.xib */; };
 		8CCFFAA927BAA783005D4D13 /* UserSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAA827BAA783005D4D13 /* UserSearchCell.xib */; };
 		8CCFFAAB27BB41AB005D4D13 /* Ex+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAAA27BB41AB005D4D13 /* Ex+UIViewController.swift */; };
+		8CCFFAAD27BB48CE005D4D13 /* GroupDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAAC27BB48CE005D4D13 /* GroupDetailsViewController.swift */; };
+		8CCFFAB027BB48E3005D4D13 /* GroupDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAAF27BB48E3005D4D13 /* GroupDetailsView.xib */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -240,6 +242,8 @@
 		8CCFFAA327BA767B005D4D13 /* UserInvitationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInvitationView.xib; sourceTree = "<group>"; };
 		8CCFFAA827BAA783005D4D13 /* UserSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserSearchCell.xib; sourceTree = "<group>"; };
 		8CCFFAAA27BB41AB005D4D13 /* Ex+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+UIViewController.swift"; sourceTree = "<group>"; };
+		8CCFFAAC27BB48CE005D4D13 /* GroupDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewController.swift; sourceTree = "<group>"; };
+		8CCFFAAF27BB48E3005D4D13 /* GroupDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupDetailsView.xib; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -517,6 +521,7 @@
 			children = (
 				8CBD45B627A6CF320056A557 /* Profile */,
 				8CC9E8C627B10A28008BE1EA /* Note */,
+				8CCFFAAE27BB48D6005D4D13 /* GroupDetails */,
 				8CC9E8CD27B11BBB008BE1EA /* GroupMessageViewController.swift */,
 				8CC9E8CF27B128C3008BE1EA /* GroupMessageViewModel.swift */,
 				8CBD457727A25E430056A557 /* PrivateMessageViewController.swift */,
@@ -730,6 +735,15 @@
 			path = UserSearchCell;
 			sourceTree = "<group>";
 		};
+		8CCFFAAE27BB48D6005D4D13 /* GroupDetails */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFAAC27BB48CE005D4D13 /* GroupDetailsViewController.swift */,
+				8CCFFAAF27BB48E3005D4D13 /* GroupDetailsView.xib */,
+			);
+			path = GroupDetails;
+			sourceTree = "<group>";
+		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -828,6 +842,7 @@
 				8CCFFA9727B9E98F005D4D13 /* NotoSansKR-Regular.otf in Resources */,
 				8CBD45BE27A70C440056A557 /* EditProfileView.xib in Resources */,
 				8CBD45EA27A8735B0056A557 /* CacheView.xib in Resources */,
+				8CCFFAB027BB48E3005D4D13 /* GroupDetailsView.xib in Resources */,
 				8CBD45E627A869CC0056A557 /* NetworkView.xib in Resources */,
 				8CBD45D727A7F0C80056A557 /* PasswordView.xib in Resources */,
 			);
@@ -955,6 +970,7 @@
 				8CC9E8C527B10A24008BE1EA /* NoteListViewModel.swift in Sources */,
 				8CBD45D527A7EF6D0056A557 /* PasswordView.swift in Sources */,
 				8CC9E8D827B22B4C008BE1EA /* NoteSection.swift in Sources */,
+				8CCFFAAD27BB48CE005D4D13 /* GroupDetailsViewController.swift in Sources */,
 				8CC9E91027B3FDB5008BE1EA /* StompWebsocket.swift in Sources */,
 				8CCFFA8E27B9E98F005D4D13 /* NavigationController.swift in Sources */,
 				8CBD45B827A6CFAB0056A557 /* ProfileViewController.swift in Sources */,

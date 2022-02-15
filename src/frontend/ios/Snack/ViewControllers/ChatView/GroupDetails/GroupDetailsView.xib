@@ -16,7 +16,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GroupDetailsViewController" customModule="Snack" customModuleProvider="target">
             <connections>
+                <outlet property="descriptionCell" destination="Piq-W1-VI9" id="aMq-TY-s7j"/>
                 <outlet property="detailsCell" destination="CgD-am-czd" id="LIO-r0-arB"/>
+                <outlet property="lblDescription" destination="dC6-EL-8AY" id="MHv-Bt-JdC"/>
                 <outlet property="lblFooter1" destination="8Z6-gF-pSt" id="9Zb-Ub-HcS"/>
                 <outlet property="lblFooter2" destination="dub-Oc-NSD" id="x5r-XC-YCm"/>
                 <outlet property="lblName" destination="1ej-XA-OMo" id="Gfs-Ti-PDc"/>
@@ -73,6 +75,29 @@
             </tableViewCellContentView>
             <point key="canvasLocation" x="790" y="-88"/>
         </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Piq-W1-VI9">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Piq-W1-VI9" id="oTV-gH-t00">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="설명" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dC6-EL-8AY">
+                        <rect key="frame" x="16" y="0.0" width="288" height="50.5"/>
+                        <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="dC6-EL-8AY" firstAttribute="leading" secondItem="oTV-gH-t00" secondAttribute="leading" constant="16" id="4ej-Bg-0to"/>
+                    <constraint firstAttribute="bottom" secondItem="dC6-EL-8AY" secondAttribute="bottom" constant="-0.5" id="Bxy-8l-eLe"/>
+                    <constraint firstAttribute="trailing" secondItem="dC6-EL-8AY" secondAttribute="trailing" constant="16" id="XdV-ab-JT4"/>
+                    <constraint firstItem="dC6-EL-8AY" firstAttribute="top" secondItem="oTV-gH-t00" secondAttribute="top" id="tOR-eJ-CPk"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="789" y="7"/>
+        </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="ZgI-Xp-BM3" style="IBUITableViewCellStyleDefault" id="lT3-JP-d98">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
@@ -89,7 +114,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="790" y="8"/>
+            <point key="canvasLocation" x="788" y="105"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="dQR-RK-q4C" style="IBUITableViewCellStyleDefault" id="n3N-1V-IjX">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -107,7 +132,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="790" y="112"/>
+            <point key="canvasLocation" x="788" y="206"/>
         </tableViewCell>
         <view contentMode="scaleToFill" id="AQb-9p-OKj">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -142,7 +167,7 @@
                 <constraint firstItem="8Z6-gF-pSt" firstAttribute="leading" secondItem="AQb-9p-OKj" secondAttribute="leading" constant="20" id="hcg-w2-UZq"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="790" y="217"/>
+            <point key="canvasLocation" x="788" y="303"/>
         </view>
     </objects>
     <resources>

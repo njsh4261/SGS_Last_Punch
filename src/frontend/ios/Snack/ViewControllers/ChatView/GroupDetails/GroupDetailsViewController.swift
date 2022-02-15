@@ -14,6 +14,8 @@ class GroupDetailsViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var detailsCell: UITableViewCell!
     @IBOutlet private var lblName: UILabel!
+    @IBOutlet private var descriptionCell: UITableViewCell!
+    @IBOutlet private var lblDescription: UILabel!
     @IBOutlet private var mediaCell: UITableViewCell!
     @IBOutlet private var leaveCell: UITableViewCell!
     @IBOutlet private var viewFooter: UIView!
@@ -60,7 +62,8 @@ class GroupDetailsViewController: UIViewController {
     func loadGroup() {
         guard let channelInfo = channelInfo, let owner = channelInfo.owner  else { return }
         lblName.text = channelInfo.channel?.name
-
+        lblDescription.text = channelInfo.channel?.description ?? "설정된 주제가 없습니다"
+        
         lblFooter1.text = "생성자 by \(owner.name)(\(owner.email))"
         lblFooter2.text = channelInfo.channel?.createDt
     }
@@ -200,8 +203,9 @@ class GroupDetailsViewController: UIViewController {
 //        navigationController?.popToRootViewController(animated: true)
     }
 
+    // Onwer만의 기능
     func actionDeleteMember(_ indexPath: IndexPath) {
-
+        
     }
 
     func actionAllMedia() {
@@ -228,15 +232,16 @@ class GroupDetailsViewController: UIViewController {
 extension GroupDetailsViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         if (section == 0) { return 1                        }
         if (section == 1) { return 1                        }
-        if (section == 2) { return memberInfo!.count        }
-        if (section == 3) { return isGroupOwner() ? 0 : 1   }
+        if (section == 2) { return 1                        }
+        if (section == 3) { return memberInfo!.count        }
+        if (section == 4) { return isGroupOwner() ? 0 : 1   }
 
         return 0
     }
@@ -244,9 +249,10 @@ extension GroupDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
         if (section == 0) { return nil                      }
-        if (section == 1) { return nil                      }
-        if (section == 2) { return titleForHeaderMembers()  }
-        if (section == 3) { return nil                      }
+        if (section == 1) { return "설명"                    }
+        if (section == 2) { return nil                      }
+        if (section == 3) { return titleForHeaderMembers()  }
+        if (section == 4) { return nil                      }
 
         return nil
     }
@@ -256,12 +262,16 @@ extension GroupDetailsViewController: UITableViewDataSource {
         if (indexPath.section == 0) && (indexPath.row == 0) {
             return detailsCell
         }
-
+        
         if (indexPath.section == 1) && (indexPath.row == 0) {
+            return descriptionCell
+        }
+
+        if (indexPath.section == 2) && (indexPath.row == 0) {
             return mediaCell
         }
 
-        if (indexPath.section == 2) {
+        if (indexPath.section == 3) {
             var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell")
             if (cell == nil) { cell = UITableViewCell(style: .default, reuseIdentifier: "cell") }
             
@@ -274,7 +284,7 @@ extension GroupDetailsViewController: UITableViewDataSource {
             return cell
         }
 
-        if (indexPath.section == 3) && (indexPath.row == 0) {
+        if (indexPath.section == 4) && (indexPath.row == 0) {
             return leaveCell
         }
 

@@ -66,8 +66,8 @@ export default function ModalMain({ type }: Props) {
   const channel = useSelector((state: RootState) => state.channel);
 
   const [selected, setSelected] = useState({
-    info: true,
-    member: false,
+    info: false,
+    member: true,
   });
 
   const selectHandler = (e: React.MouseEvent<HTMLDivElement>) => {

@@ -189,9 +189,8 @@ class GroupDetailsViewController: UIViewController {
 
     // MARK: - Helper methods
     func titleForHeaderMembers() -> String? {
-//        let text = (dbusers.count > 1) ? "MEMBERS" : "MEMBER"
-//        return "\(dbusers.count) \(text)"
-        return "멤버 목록(몇 명)"
+        guard let memberInfo = memberInfo else { return "멤버 목록" }
+        return "멤버 목록(\(memberInfo.count) 명)"
     }
 
     func isGroupOwner() -> Bool {

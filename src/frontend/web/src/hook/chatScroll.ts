@@ -18,14 +18,14 @@ export default function chatScrollHook(
   const isOldMsgAdd = useRef(false);
   const noOldMsg = useRef(false);
 
-  const option = {
+  const oObserverption = {
     threshold: 1,
   };
 
   const getOldChatHandler = async (entries: IntersectionObserverEntry[]) => {
     if (noOldMsg.current) return;
     const [entry] = entries;
-    // 뷰포트에 잡힘, api 호출 중이 아닐 때
+    // 뷰포트에 잡힘
     if (entry.isIntersecting) {
       // 처음 화면에 잡힐 때는 무시 - 화면 렌더링될 때 동작
       if (firstTime.current) {
@@ -60,18 +60,23 @@ export default function chatScrollHook(
     setLoading(false);
   };
 
-  const scrollToBottom = () =>
+  useEffect(() => {
+    firstTime.current = true;
+    noOldMsg.current = false;
+  }, [channelId]);
+
+  // scroll to bottom
+  useEffect(() => {
     endRef.current?.scrollIntoView({
       behavior: 'smooth',
-      block: 'nearest',
     });
-
-  useEffect(() => {
-    if (!isOldMsgAdd.current) scrollToBottom();
   }, [msgList]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(getOldChatHandler, option);
+    const observer = new IntersectionObserver(
+      getOldChatHandler,
+      oObserverption,
+    );
     if (scrollObserverRef.current) observer.observe(scrollObserverRef.current);
 
     return () => {

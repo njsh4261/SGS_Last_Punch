@@ -40,7 +40,9 @@ export default function AsideBody() {
     <Container>
       {modalState.active &&
         (modalState.modalType === 'newChannel' ||
-          modalState.modalType === 'direct message') && (
+          modalState.modalType === 'direct message' ||
+          modalState.modalType === 'invite-channel' ||
+          modalState.modalType === 'invite-workspace') && (
           <Modal type={modalState.modalType} wsId={params.wsId}></Modal>
         )}
       <SecitonType>

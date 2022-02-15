@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Params } from 'react-router-dom';
-import cloneDeep from 'lodash/cloneDeep';
+import { useDispatch, useSelector } from 'react-redux';
 
 import seacrhImage from '../../../icon/search.svg';
 import addPersonImage from '../../../icon/addPerson.svg';
 import { getChannelMember } from '../../../Api/channel';
 import Loading from '../Loading';
 import { getWsMemberAPI } from '../../../Api/workspace';
+import { closeModal, openModal } from '../../../modules/modal';
+import InviteModal from '../InviteModal';
+import { RootState } from '../../../modules';
+import ModalBox from '../ModalBox';
 
 const Container = styled.article`
   border-radius: 6px;
@@ -90,24 +94,26 @@ interface Member {
 }
 
 export default function ModalMember({ type, params }: Props) {
+  const dispatch = useDispatch();
+  const modal = useSelector((state: RootState) => state.modal);
   const [focus, setFocus] = useState(false);
+  // 검색 입력 값 상태
   const [searchValue, setSearchValue] = useState('');
-
-  // 채널 혹은 워크스페이스의 멤버리스트. API로 새로 받아온다
+  // 채널 혹은 워크스페이스의 멤버 리스트. API로 새로 받아온다
   const [memberList, setMemberList] = useState<Member[]>([]);
-
+  // 멤버 검색 결과 리스트
   const [searchList, setSearchList] = useState<Member[]>([]);
 
   const getMemberListHandler = async () => {
     if (type === 'channel') {
       if (params.channelId) {
         const response = await getChannelMember(params.channelId);
-        setMemberList(cloneDeep(response.members.content));
+        setMemberList(response.members.content);
       }
     } else {
       if (params.wsId) {
         const response = await getWsMemberAPI(+params.wsId);
-        setMemberList(cloneDeep(response.members.content));
+        setMemberList(response.members.content);
       }
     }
   };
@@ -125,6 +131,14 @@ export default function ModalMember({ type, params }: Props) {
     setSearchList(searchedList);
   };
 
+  const openInviteModalHandler = () => {
+    if (type === 'channel') {
+      dispatch(openModal('invite-channel'));
+    } else {
+      dispatch(openModal('invite-workspace'));
+    }
+  };
+
   useEffect(() => {
     getMemberListHandler();
   }, []);
@@ -135,6 +149,11 @@ export default function ModalMember({ type, params }: Props) {
         <Loading></Loading>
       ) : (
         <Container>
+          {/* {modal.active && modal.modalType === 'invite-channel' && (
+            <ModalBox>
+              <InviteModal type={type} wsId={params.wsId!}></InviteModal>
+            </ModalBox>
+          )} */}
           <SearchBar focus={focus}>
             <SearchIcon src={seacrhImage}></SearchIcon>
             <Input
@@ -147,7 +166,7 @@ export default function ModalMember({ type, params }: Props) {
           </SearchBar>
           <Layer>
             <ImageIcon src={addPersonImage}></ImageIcon>
-            <div>사용자 추가</div>
+            <div onClick={openInviteModalHandler}>사용자 추가</div>
           </Layer>
           <MemberLayers>
             {searchValue === ''

@@ -61,10 +61,10 @@ public class AccountWorkspaceService{
         }
     }
 
-    public Map<String, Object> delete(Long accountId, Long channelId){
+    public Map<String, Object> delete(Long accountId, Long workspaceId){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
-            Integer deletedRecords = accountWorkspaceRepository.delete(accountId, channelId);
+            Integer deletedRecords = accountWorkspaceRepository.delete(accountId, workspaceId);
             if(deletedRecords <= 0){
                 throw new BusinessException(StatusCode.ACCOUNTWORKSPACE_NOT_EXIST);
             }

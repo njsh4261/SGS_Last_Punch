@@ -32,7 +32,7 @@ public class AccountWorkspaceController{
     @DeleteMapping
     public ResponseEntity<Object> delete(
             @RequestParam(value = "accountId") Long accountId,
-            @RequestParam(value = "channelId") Long channelId){
-        return Response.ok(ServerCode.WORKSPACE, accountWorkspaceService.delete(accountId, channelId));
+            @RequestParam(value = "workspaceId") Long workspaceId){
+        return Response.ok(ServerCode.WORKSPACE, accountWorkspaceService.delete(accountId, workspaceId));
     }
 }

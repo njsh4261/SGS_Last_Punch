@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="NotoSansKR-Bold.otf">
+        <array key="NotoSansKR-Bold 2.otf">
             <string>NotoSansKR-Bold</string>
         </array>
-        <array key="NotoSansKR-Regular 2.otf">
+        <array key="NotoSansKR-Regular.otf">
             <string>NotoSansKR-Regular</string>
         </array>
     </customFonts>
@@ -27,7 +27,7 @@
                 <outlet property="cellProfile" destination="NH3-nC-Etw" id="Smx-fg-3TL"/>
                 <outlet property="cellStatus" destination="wNU-C5-MnA" id="OHh-ua-PPK"/>
                 <outlet property="imageUser" destination="b1o-fd-eKH" id="u6z-Ns-K0J"/>
-                <outlet property="labelName" destination="ftm-da-xuL" id="aaa-Zd-uVZ"/>
+                <outlet property="lblName" destination="ftm-da-xuL" id="aaa-Zd-uVZ"/>
                 <outlet property="lblStatus" destination="tnX-oP-wet" id="0RD-dL-Npb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewHeader" destination="9Oi-fY-zxx" id="fWF-WS-tWV"/>
@@ -221,7 +221,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="계정 탈퇴" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fq3-vD-231">
+                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="워크스페이스 나가기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fq3-vD-231">
                         <rect key="frame" x="16" y="0.0" width="288" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="16"/>

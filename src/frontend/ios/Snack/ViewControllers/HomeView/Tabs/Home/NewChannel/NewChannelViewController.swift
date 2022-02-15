@@ -123,39 +123,6 @@ class NewChannelViewController: UIViewController {
                 }.disposed(by: self.disposeBag)
         }
     }
-    
-    func addAccount(accountId: String) {
-        DispatchQueue.main.async { // 메인스레드에서 동작
-            WorkspaceService.shared.workspaceAccount(method: .post, accessToken: self.accessToken, accountId: accountId, workspaceId: self.workspaceId)
-                .subscribe { event in
-                    switch event {
-                    case .next(let result):
-                        DispatchQueue.main.async { // 메인스레드에서 동작
-                            switch result {
-                            case .success:
-                                ProgressHUD.showSucceed("전송했습니다")
-                                self.actionDismiss()
-                            case .fail(let decodedData):
-                                switch decodedData.code {
-                                case "12001":
-                                    ProgressHUD.showFailed("존재하지 않는 워크스페이스 입니다")
-                                case "12002":
-                                    ProgressHUD.showFailed("Snack 사용자가 아닙니다")
-                                case "12005":
-                                    ProgressHUD.showFailed("이미 워크스페이스 멤버입니다")
-                                default:
-                                    ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
-                                }
-                            default:
-                                ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
-                            }
-                        }
-                    default:
-                        ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
-                    }
-                }.disposed(by: self.disposeBag)
-        }
-    }
 }
 
 // MARK: - UITableView DataSource

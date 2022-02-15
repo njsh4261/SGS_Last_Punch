@@ -15,7 +15,7 @@ class AccountService {
         return ["email" : email]
     }
     func getAccount(method: HTTPMethod, accessToken: String, email: String) -> Observable<NetworkResult<AccountResponseModel>> {
-        let url = APIConstants().accountURL
+        let url = APIConstants().accountURL + "/find"
         let parameters = self.makeParameter(email: email)
                 
         return Observable.create { observer -> Disposable in

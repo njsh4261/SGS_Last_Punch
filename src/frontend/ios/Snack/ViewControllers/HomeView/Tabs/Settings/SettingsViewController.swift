@@ -135,7 +135,11 @@ class SettingsViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "로그아웃", style: .destructive) { action in
             self.logoutUser()
         })
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        
+        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
+        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alert.addAction(alertCancle)
 
         present(alert, animated: true)
     }

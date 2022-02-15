@@ -35,7 +35,7 @@ public class AccountController{
         );
     }
     
-    @PostMapping
+    @PostMapping("/find")
     public ResponseEntity<Object> getAccountsByEmail(
             @RequestBody Account.FindDto accountFindDto,
             @PageableDefault Pageable pageable,

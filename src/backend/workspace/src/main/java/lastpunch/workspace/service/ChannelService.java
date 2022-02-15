@@ -78,4 +78,13 @@ public class ChannelService{
             throw new BusinessException(StatusCode.CHANNEL_NOT_EXIST);
         }
     }
+
+    public Map<String, Object> getByName(Long workspaceId, String name, Pageable pageable){
+        if(workspaceId == null || name == null){
+            throw new BusinessException(StatusCode.INVALID_PARAMETERS);
+        }
+        return Map.of(
+                "channels", channelRepository.findByName(workspaceId, name, pageable)
+        );
+    }
 }

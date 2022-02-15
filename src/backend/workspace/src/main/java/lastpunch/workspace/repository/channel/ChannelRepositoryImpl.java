@@ -19,6 +19,7 @@ import javax.persistence.EntityManager;
 
 import lastpunch.workspace.entity.*;
 import static lastpunch.workspace.entity.QAccount.account;
+import static lastpunch.workspace.entity.QChannel.channel;
 import static lastpunch.workspace.entity.QAccountChannel.accountChannel;
 
 @Repository
@@ -86,5 +87,31 @@ public class ChannelRepositoryImpl implements ChannelRepositoryCustom{
         } catch(NonUniqueResultException e){
             throw new BusinessException(StatusCode.CHANNEL_OWNER_SET_ERROR);
         }
+    }
+
+    @Override
+    public Page<Channel.ExportSimpleDtoImpl> findByName(Long workspaceId, String name, Pageable pageable) {
+        List<Channel.ExportSimpleDtoImpl> results = jpaQueryFactory
+                .select(new QChannel_ExportSimpleDtoImpl(
+                        channel.id, channel.name
+                ))
+                .from(channel)
+                .where(
+                        channel.workspace.id.eq(workspaceId),
+                        channel.name.contains(name)
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long count = jpaQueryFactory.select(channel)
+                .from(channel)
+                .where(
+                        channel.workspace.id.eq(workspaceId),
+                        channel.name.contains(name)
+                )
+                .fetch().size();
+
+        return new PageImpl<>(results, pageable, count);
     }
 }

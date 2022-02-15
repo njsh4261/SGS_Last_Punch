@@ -63,7 +63,10 @@ public class WorkspaceService{
     }
     
     public Map<String, Object> getOne(Long id){
-        return Map.of("workspace", commonService.getWorkspace(id).export());
+        return Map.of(
+                "workspace",
+                commonService.getWorkspace(id).exportWithOwner(workspaceRepository.getOwnerOfWorkspace(id))
+        );
     }
 
     public Map<String, Object> getAllMembers(Long workspaceId, Long userId){

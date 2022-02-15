@@ -20,7 +20,8 @@ public enum StatusCode{
     ROLE_NOT_EXIST(HttpStatus.OK, "12010", "ROLE_NOT_EXIST", "존재하지 않는 역할입니다."),
     CHANNEL_ALREADY_EXIST(HttpStatus.OK, "12011", "CHANNEL_ALREADY_EXIST", "이미 존재하는 채널입니다."),
     CHANNEL_OWNER_SET_ERROR(HttpStatus.OK, "12012", " CHANNEL_OWNER_SET_ERROR", "채널의 소유자가 정상적으로 지정되지 않았습니다."),
-    INVALID_PARAMETERS(HttpStatus.OK, "12013", "INVALID_PARAMETERS", "요청에 필요한 항목이 정상적으로 제공되지 않았습니다.");
+    INVALID_PARAMETERS(HttpStatus.OK, "12013", "INVALID_PARAMETERS", "요청에 필요한 항목이 정상적으로 제공되지 않았습니다."),
+    WORKSPACE_OWNER_SET_ERROR(HttpStatus.OK, "12012", " WORKSPACE_OWNER_SET_ERROR", "워크스페이스의 소유자가 정상적으로 지정되지 않았습니다.");
     
     private HttpStatus status;
     private final String code;

@@ -138,4 +138,33 @@ public class Workspace{
             .modifyDt(modifydt)
             .build();
     }
+
+    @Getter
+    @Builder
+    public static class ExportWithOwnerDto{
+        private Long id;
+        private String name;
+        private String description;
+        private Integer settings;
+
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+        private LocalDateTime createDt;
+
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+        private LocalDateTime modifyDt;
+
+        private Account.ExportDto owner;
+    }
+
+    public ExportWithOwnerDto exportWithOwner(Account.ExportDto account){
+        return ExportWithOwnerDto.builder()
+                .id(id)
+                .name(name)
+                .description(description)
+                .settings(settings)
+                .createDt(createdt)
+                .modifyDt(modifydt)
+                .owner(account)
+                .build();
+    }
 }

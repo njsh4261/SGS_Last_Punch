@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { getOldChat } from '../Api/chat';
 import { ChatMessage } from '../../types/chat.type';
+import { RootState } from '../modules/index';
 
 export default function chatScrollHook(
   channelId: string,
@@ -12,27 +14,23 @@ export default function chatScrollHook(
   const chatBodyRef = useRef(null); // for scrollTo(old message)
   const MESSAGE_HIEHGT = 88; // for scrollTo
   const endRef = useRef<null | HTMLDivElement>(null); // for scorll to end(new message, recent message)
-  const firstTime = useRef(true); // 최초 이벤트 방지
+  const firstTime = useRef(true); // 최초 스크롤링 auto를 위한 상태
   const scrollObserverRef = useRef(null); // intersactionObserver
   const [scrollLoading, setLoading] = useState(false); // loading component
   const isOldMsgAdd = useRef(false);
   const noOldMsg = useRef(false);
+  const modal = useSelector((state: RootState) => state.modal);
 
-  const option = {
+  const oObserverption = {
     threshold: 1,
   };
 
   const getOldChatHandler = async (entries: IntersectionObserverEntry[]) => {
     if (noOldMsg.current) return;
     const [entry] = entries;
-    // 뷰포트에 잡힘, api 호출 중이 아닐 때
-    if (entry.isIntersecting) {
-      // 처음 화면에 잡힐 때는 무시 - 화면 렌더링될 때 동작
-      if (firstTime.current) {
-        firstTime.current = false;
-        return;
-      }
 
+    // 뷰포트에 잡힘
+    if (entry.isIntersecting) {
       const target = entry.target as HTMLElement;
       const chatBodyElement = chatBodyRef.current as any;
       const date = target.dataset.date;
@@ -60,18 +58,30 @@ export default function chatScrollHook(
     setLoading(false);
   };
 
-  const scrollToBottom = () =>
+  const scrollToBottom = (behavior: 'smooth' | 'auto') => {
     endRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
+      behavior,
     });
+  };
 
   useEffect(() => {
-    if (!isOldMsgAdd.current) scrollToBottom();
+    firstTime.current = true;
+    noOldMsg.current = false;
+  }, [channelId, modal, channelId]);
+
+  // scroll to bottom
+  useEffect(() => {
+    if (firstTime.current) {
+      scrollToBottom('auto');
+      firstTime.current = false;
+    } else scrollToBottom('smooth');
   }, [msgList]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(getOldChatHandler, option);
+    const observer = new IntersectionObserver(
+      getOldChatHandler,
+      oObserverption,
+    );
     if (scrollObserverRef.current) observer.observe(scrollObserverRef.current);
 
     return () => {

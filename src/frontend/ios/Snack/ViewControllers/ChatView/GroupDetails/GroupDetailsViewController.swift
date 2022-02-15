@@ -62,7 +62,7 @@ class GroupDetailsViewController: UIViewController {
     func loadGroup() {
         guard let channelInfo = channelInfo, let owner = channelInfo.owner  else { return }
         lblName.text = channelInfo.channel?.name
-        lblDescription.text = channelInfo.channel?.description ?? "설정된 주제가 없습니다"
+        lblDescription.text = channelInfo.channel?.description == "" ? "설정된 주제가 없습니다" : channelInfo.channel?.description
         
         lblFooter1.text = "생성자 by \(owner.name)(\(owner.email))"
         lblFooter2.text = channelInfo.channel?.createDt

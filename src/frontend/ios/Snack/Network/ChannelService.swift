@@ -98,15 +98,14 @@ class ChannelService {
         }
     }
     
-    func editChannel(method: HTTPMethod, accessToken: String, workspaceId: Int, name: String, description: String) -> Observable<NetworkResult<ChannelResponseModel>> {
-        let url = APIConstants().channelURL
-        let parameters = self.makeParameter(workspaceId: workspaceId, name: name, description: description)
+    func editChannel(method: HTTPMethod, accessToken: String, channelId: String, name: String, description: String) -> Observable<NetworkResult<ChannelResponseModel>> {
+        let url = APIConstants().channelURL + "/\(channelId)"
                 
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
             let dataRequest = AF.request(url,
                                          method: method,
-                                         parameters: parameters,
+                                         parameters: ["description": description],
                                          encoding: JSONEncoding.default,
                                          headers: header)
 
@@ -157,7 +156,7 @@ class ChannelService {
         let decoder = JSONDecoder()
         
 //         데이터량이 너무 많음
-//        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
+        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
         
         guard let decodedData = try? decoder.decode(ChannelResponseModel.self, from: data) else {
             return .pathErr

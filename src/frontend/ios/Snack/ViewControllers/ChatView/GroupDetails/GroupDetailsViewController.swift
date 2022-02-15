@@ -142,8 +142,8 @@ class GroupDetailsViewController: UIViewController {
         })
 
         let alertSave = UIAlertAction(title: "저장", style: .destructive) { [self] action in
-            if alert.textFields?[0] != nil {
-                self.actionEditChannelInfo(channelInfo?.channel?.name, channelInfo?.channel?.description)
+            if let name = alert.textFields?[0] {
+                self.actionEditChannelInfo(name.text, alert.textFields?[1].text)
             }
         }
         
@@ -158,13 +158,26 @@ class GroupDetailsViewController: UIViewController {
     }
 
     func actionEditChannelInfo(_ name: String?, _ description: String?) {
-        print("채널 수정")
-//        guard let name = text else { return }
-//        guard (name.count != 0) else { return }
-//
-//        dbgroup.update(name: name)
-//
-//        lblName.text = name
+        ProgressHUD.animationType = .circleSpinFade
+        ProgressHUD.show("변경중..")
+        DispatchQueue.main.async { [self] in // 메인스레드에서 동작
+            ChannelService.shared.editChannel(method: .put, accessToken: accessToken!, channelId: (channelInfo?.channel?.id.description)!, name: name!, description: description!)
+                .subscribe { event in
+                    switch event {
+                    case .next(let result):
+                        switch result {
+                        case .success:
+                            ProgressHUD.showSucceed("변경 되었습니다")
+                            lblName.text = name
+                            lblDescription.text = description
+                        default:
+                            ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                        }
+                    default:
+                        ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                    }
+                }.disposed(by: self.disposeBag)
+        }
     }
 
     func actionDeleteGroup() {

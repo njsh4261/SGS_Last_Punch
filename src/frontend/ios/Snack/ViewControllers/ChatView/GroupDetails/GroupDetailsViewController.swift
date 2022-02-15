@@ -86,6 +86,7 @@ class GroupDetailsViewController: UIViewController {
         }
     }
     
+    // MARK: - Owner actions
     // owner에게 더 보이는 기능
     func actionMoreOwner() {
         
@@ -118,6 +119,105 @@ class GroupDetailsViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    // owner 기능
+    func actionDeleteGroup() {
+        let alert = UIAlertController(title: "채널을 삭제하시겠습니까?", message: "[경고] 멤버에게 알리는 로직이 구현되어 있지 않아 문제를 초래할 수 있습니다", preferredStyle: .alert)
+        let cancle = UIAlertAction(title: "취소", style: .cancel)
+        cancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        let delete = UIAlertAction(title: "삭제", style: .destructive, handler: { action in
+            self.deleteChannel()
+        })
+        alert.addAction(cancle)
+        alert.addAction(delete)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func deleteChannel() {
+        ProgressHUD.animationType = .circleSpinFade
+        ProgressHUD.show("삭제중..")
+        DispatchQueue.main.async { [self] in // 메인스레드에서 동작
+            ChannelService.shared.deleteChannel(method: .delete, accessToken: accessToken!, channelId: (channelInfo?.channel?.id.description)!)
+                .subscribe { event in
+                    switch event {
+                    case .next(let result):
+                        switch result {
+                        case .success:
+                            ProgressHUD.showSucceed("채널이 삭제 되었습니다")
+                            actionDismiss()
+                        default:
+                            ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                        }
+                    default:
+                        ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                    }
+                }.disposed(by: self.disposeBag)
+        }
+    }
+    
+    // Onwer만의 기능
+    func actionDeleteMember(_ indexPath: IndexPath) {
+        self.showWarningAlert(accountId: memberInfo![indexPath.row].id.description, index: indexPath.row)
+    }
+    
+    // 멤버 삭제 전, 경고
+    private func showWarningAlert(accountId: String, index: Int = -1) {
+        let alert = UIAlertController(title: "채널에서 탈퇴시키겠습니까?", message: "[경고] 멤버에게 알리는 로직이 구현되어 있지 않아 문제를 초래할 수 있습니다", preferredStyle: .alert)
+        let cancle = UIAlertAction(title: "취소", style: .cancel)
+        cancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        let delete = UIAlertAction(title: "삭제", style: .destructive, handler: { action in
+            self.deleteMemberInChannel(accountId: accountId, index: index)
+        })
+        alert.addAction(cancle)
+        alert.addAction(delete)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - 멤버 actions
+    // onwer가 아닌 멤버에게 더 보이는 기능
+    func actionMoreMember() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
+        
+        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        
+        alert.addAction(UIAlertAction(title: "채널 나가기", style: .destructive) { action in
+            self.actionLeaveGroup()
+        })
+        alert.addAction(alertCancle)
+        
+        present(alert, animated: true)
+    }
+    
+    func actionRightMoreMember() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alertAddMemeber = UIAlertAction(title: "멤버 추가", style: .default) { action in
+            self.actionAddMembers()
+        }
+        
+        let alertRenameGroup = UIAlertAction(title: "정보 변경", style: .default) { action in
+            self.actionEditChannelInfo()
+        }
+        
+        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
+        
+        alertAddMemeber.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        
+        alertRenameGroup.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        
+        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        
+        alert.addAction(alertAddMemeber)
+        alert.addAction(alertRenameGroup)
+        
+        alert.addAction(UIAlertAction(title: "채널 나가기", style: .destructive) { action in
+            self.actionLeaveGroup()
+        })
+        alert.addAction(alertCancle)
+        
+        present(alert, animated: true)
+    }
+    
+    // MARK: - 모든 사용자 actions
     func actionAddMembers() {
         
         //        let selectUsersView = SelectUsersView()
@@ -125,7 +225,7 @@ class GroupDetailsViewController: UIViewController {
         //        let navController = NavigationController(rootViewController: selectUsersView)
         //        present(navController, animated: true)
     }
-    
+
     func actionEditChannelInfo() {
         let alert = UIAlertController(title: "채널 정보 변경", message: "첫 번째는 이름, 두 번째는 설명입니다", preferredStyle: .alert)
         
@@ -180,111 +280,14 @@ class GroupDetailsViewController: UIViewController {
         }
     }
     
-    // owner 기능
-    func actionDeleteGroup() {
-        let alert = UIAlertController(title: "채널을 삭제하시겠습니까?", message: "[경고] 멤버에게 알리는 로직이 구현되어 있지 않아 문제를 초래할 수 있습니다", preferredStyle: .alert)
-        let cancle = UIAlertAction(title: "취소", style: .cancel)
-        cancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
-        let delete = UIAlertAction(title: "삭제", style: .destructive, handler: { action in
-            self.deleteChannel()
-        })
-        alert.addAction(cancle)
-        alert.addAction(delete)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func deleteChannel() {
-        ProgressHUD.animationType = .circleSpinFade
-        ProgressHUD.show("삭제중..")
-        DispatchQueue.main.async { [self] in // 메인스레드에서 동작
-            ChannelService.shared.deleteChannel(method: .delete, accessToken: accessToken!, channelId: (channelInfo?.channel?.id.description)!)
-                .subscribe { event in
-                    switch event {
-                    case .next(let result):
-                        switch result {
-                        case .success:
-                            ProgressHUD.showSucceed("채널이 삭제 되었습니다")
-                            actionDismiss()
-                        default:
-                            ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
-                        }
-                    default:
-                        ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
-                    }
-                }.disposed(by: self.disposeBag)
-        }
-        
-    }
-    
-    // onwer가 아닌 멤버에게 더 보이는 기능
-    func actionMoreMember() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
-        
-        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
-        
-        alert.addAction(UIAlertAction(title: "채널 나가기", style: .destructive) { action in
-            self.actionLeaveGroup()
-        })
-        alert.addAction(alertCancle)
-        
-        present(alert, animated: true)
-    }
-    
-    func actionRightMoreMember() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let alertAddMemeber = UIAlertAction(title: "멤버 추가", style: .default) { action in
-            self.actionAddMembers()
-        }
-        
-        let alertRenameGroup = UIAlertAction(title: "정보 변경", style: .default) { action in
-            self.actionEditChannelInfo()
-        }
-        
-        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
-        
-        alertAddMemeber.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
-        
-        alertRenameGroup.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
-        
-        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
-        
-        alert.addAction(alertAddMemeber)
-        alert.addAction(alertRenameGroup)
-        
-        alert.addAction(UIAlertAction(title: "채널 나가기", style: .destructive) { action in
-            self.actionLeaveGroup()
-        })
-        alert.addAction(alertCancle)
-        
-        present(alert, animated: true)
-    }
-    
     // 채팅 나가기 - owner가 아닌 멤버만 가능
     func actionLeaveGroup() {
         self.deleteMemberInChannel(accountId: userId!)
     }
     
+    // Root까지 pop
     func actionDismiss() {
         self.navigationController?.popToRootViewController(animated: true)
-    }
-    
-    // Onwer만의 기능
-    func actionDeleteMember(_ indexPath: IndexPath) {
-        self.showWarningAlert(accountId: memberInfo![indexPath.row].id.description, index: indexPath.row)
-    }
-    
-    // 멤버 삭제 전, 경고
-    private func showWarningAlert(accountId: String, index: Int = -1) {
-        let alert = UIAlertController(title: "채널에서 탈퇴시키겠습니까?", message: "[경고] 멤버에게 알리는 로직이 구현되어 있지 않아 문제를 초래할 수 있습니다", preferredStyle: .alert)
-        let cancle = UIAlertAction(title: "취소", style: .cancel)
-        cancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
-        let delete = UIAlertAction(title: "삭제", style: .destructive, handler: { action in
-            self.deleteMemberInChannel(accountId: accountId, index: index)
-        })
-        alert.addAction(cancle)
-        alert.addAction(delete)
-        present(alert, animated: true, completion: nil)
     }
     
     // 멤버 삭제 로직

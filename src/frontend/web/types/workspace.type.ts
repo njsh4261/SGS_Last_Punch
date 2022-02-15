@@ -3,7 +3,8 @@ export interface IWorkspace {
   name: string;
   description: string | null;
   setting: number;
-  status: number;
+  createDt: string;
+  topic: string | null;
 }
 
 export interface ICreateWs {

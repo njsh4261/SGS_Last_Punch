@@ -149,11 +149,6 @@ export default function ModalMember({ type, params }: Props) {
         <Loading></Loading>
       ) : (
         <Container>
-          {/* {modal.active && modal.modalType === 'invite-channel' && (
-            <ModalBox>
-              <InviteModal type={type} wsId={params.wsId!}></InviteModal>
-            </ModalBox>
-          )} */}
           <SearchBar focus={focus}>
             <SearchIcon src={seacrhImage}></SearchIcon>
             <Input

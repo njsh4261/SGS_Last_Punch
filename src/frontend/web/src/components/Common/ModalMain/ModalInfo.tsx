@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../modules';
 import { exitChannelAPI, getChannelInfoAPI } from '../../../Api/channel';
-import { exitWsAPI } from '../../../Api/workspace';
+import { exitWsAPI, getWsInfoAPI } from '../../../Api/workspace';
 import { IChannel } from '../../../../types/channel.type';
-import { Params, useParams } from 'react-router-dom';
+import { IWorkspace } from '../../../../types/workspace.type';
+import { Params } from 'react-router-dom';
 import Loading from '../Loading';
 
 const Container = styled.article`
@@ -52,24 +53,27 @@ interface Props {
 }
 
 export default function ModalInfo({ type, params }: Props) {
+  const [ws, setWs] = useState<IWorkspace | undefined>();
   const [channel, setChannel] = useState<IChannel | undefined>();
   const user = useSelector((state: RootState) => state.user);
 
   const exitHandler = async () => {
     let response;
-    if (type === 'channel') {
-      response = await exitChannelAPI(user.id, +channel!.id);
+    if (type === 'channel' && channel) {
+      response = await exitChannelAPI(user.id, +channel.id);
+    } else if (ws) {
+      response = await exitWsAPI(ws.id, user.id);
     }
-    // else {
-    //   response = await exitWsAPI(wsId, user.id);
-    // }
     console.log({ response });
   };
 
   const getInfoHandler = async () => {
-    if (params.channelId) {
+    if (type === 'channel' && params.channelId) {
       const response = await getChannelInfoAPI(params.channelId);
       setChannel(response.channel);
+    } else if (type === 'workspace' && params.wsId) {
+      const response = await getWsInfoAPI(+params.wsId);
+      setWs(response.workspace);
     }
   };
 
@@ -79,26 +83,34 @@ export default function ModalInfo({ type, params }: Props) {
 
   return (
     <>
-      {!channel ? (
+      {!channel && !ws ? (
         <Loading></Loading>
       ) : (
         <Container>
-          <ItemBox>
-            <ItemL1>
-              <div>주제</div>
-              {/* <ItemL1Edit>편집</ItemL1Edit> */}
-            </ItemL1>
-            <ItemL2>
-              {channel.topic !== '' ? channel.topic : '주제 추가'}
-            </ItemL2>
-          </ItemBox>
+          {type === 'channel' && (
+            <ItemBox>
+              <ItemL1>
+                <div>주제</div>
+                <ItemL1Edit>편집</ItemL1Edit>
+              </ItemL1>
+              <ItemL2>
+                {channel!.topic !== null ? channel!.topic : '주제 추가'}
+              </ItemL2>
+            </ItemBox>
+          )}
           <ItemBox>
             <ItemL1>
               <div>설명</div>
-              {/* <ItemL1Edit>편집</ItemL1Edit> */}
+              <ItemL1Edit>편집</ItemL1Edit>
             </ItemL1>
             <ItemL2>
-              {channel.description !== '' ? channel.description : '설명 추가'}
+              {type === 'channel'
+                ? channel!.description !== null
+                  ? channel!.description
+                  : '설명 추가'
+                : ws!.description !== null
+                ? ws!.description
+                : '설명 추가'}
             </ItemL2>
           </ItemBox>
           <ItemBox>
@@ -106,7 +118,11 @@ export default function ModalInfo({ type, params }: Props) {
               <div>소유자</div>
             </ItemL1>
             <ItemL2>
-              소유자: [소유자이름], 생성 날짜: {channel.createDt.split(' ')[0]}
+              {type === 'channel'
+                ? '소유자: [소유자이름], 생성 날짜: ' +
+                  channel!.createDt.split(' ')[0]
+                : '소유자: [소유자이름], 생성 날짜: ' +
+                  ws!.createDt.split(' ')[0]}
             </ItemL2>
           </ItemBox>
           <ItemBox onClick={exitHandler}>

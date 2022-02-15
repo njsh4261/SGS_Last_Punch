@@ -5,6 +5,8 @@ import ModalBox from '../ModalBox';
 import ModalMember from './ModalMember';
 import ModalInfo from './ModalInfo';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../modules';
 
 const Container = styled.div`
   height: 450px;
@@ -60,6 +62,9 @@ export default function ModalMain({ type }: Props) {
   const NAV_MEMBER = 'nav-member';
 
   const params = useParams();
+  const ws = useSelector((state: RootState) => state.work);
+  const channel = useSelector((state: RootState) => state.channel);
+
   const [selected, setSelected] = useState({
     info: true,
     member: false,
@@ -81,7 +86,7 @@ export default function ModalMain({ type }: Props) {
     <ModalBox>
       <Container>
         <Header>
-          <HeaderH1>channel Name</HeaderH1>
+          <HeaderH1>{type === 'channel' ? channel.name : ws.name}</HeaderH1>
           <NavTab>
             <NavItem
               id={NAV_INFO}

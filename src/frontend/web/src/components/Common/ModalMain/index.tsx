@@ -48,6 +48,7 @@ const NavItem = styled.section<NavItemProps>`
 
 const Body = styled.main<{ bgWhite: boolean }>`
   background-color: ${({ bgWhite }) => (bgWhite ? 'white' : '#f6f6f6')};
+  flex: 1;
 `;
 
 interface Props {

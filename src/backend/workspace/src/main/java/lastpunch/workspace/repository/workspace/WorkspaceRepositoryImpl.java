@@ -1,20 +1,23 @@
 package lastpunch.workspace.repository.workspace;
 
-import static lastpunch.workspace.entity.QAccount.account;
-import static lastpunch.workspace.entity.QAccountWorkspace.accountWorkspace;
-import static lastpunch.workspace.entity.QChannel.channel;
-import static lastpunch.workspace.entity.QWorkspace.workspace;
-
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.List;
-import javax.persistence.EntityManager;
-
+import lastpunch.workspace.common.StatusCode;
+import lastpunch.workspace.common.exception.BusinessException;
+import lastpunch.workspace.common.type.RoleType;
 import lastpunch.workspace.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import java.util.List;
+
+import static lastpunch.workspace.entity.QAccount.account;
+import static lastpunch.workspace.entity.QAccountWorkspace.accountWorkspace;
+import static lastpunch.workspace.entity.QChannel.channel;
+import static lastpunch.workspace.entity.QWorkspace.workspace;
 
 @Repository
 public class WorkspaceRepositoryImpl implements WorkspaceRepositoryCustom{
@@ -125,5 +128,26 @@ public class WorkspaceRepositoryImpl implements WorkspaceRepositoryCustom{
                 .fetch().size();
 
         return new PageImpl<>(results, pageable, count);
+    }
+
+    @Override
+    public Account.ExportDto getOwnerOfWorkspace(Long workspaceId) {
+        List<Account.ExportDto> owner = jpaQueryFactory
+                .select(new QAccount_ExportDto(
+                        account.id, account.email, account.name,
+                        account.description, account.phone, account.country, account.language,
+                        account.settings, account.createdt, account.modifydt
+                ))
+                .from(account)
+                .join(accountWorkspace).on(account.id.eq(accountWorkspace.account.id))
+                .where(
+                        accountWorkspace.workspace.id.eq(workspaceId),
+                        accountWorkspace.role.id.eq(RoleType.OWNER.getId())
+                )
+                .fetch();
+        if(owner.size() != 1){
+            throw new BusinessException(StatusCode.WORKSPACE_OWNER_SET_ERROR);
+        }
+        return owner.get(0);
     }
 }

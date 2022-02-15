@@ -13,4 +13,5 @@ public interface WorkspaceRepositoryCustom{
     List<Account.ExportSimpleDto> getAllMembers(Long id);
     Page<Account.ExportDto> getMembersPaging(Long id, Pageable pageable);
     Page<Channel.ExportDto> getChannelsPaging(Long id, Pageable pageable);
+    Account.ExportDto getOwnerOfWorkspace(Long workspaceId);
 }

@@ -4,7 +4,7 @@
 | Method | URI                             | Description               | Request Body       | Response Body      | etc                    |
 |--------|---------------------------------|---------------------------|--------------------|--------------------|------------------------|
 | GET    | /workspace                      | 사용자 1명의 워크스페이스 목록 조회      | -                  | 워크스페이스 목록          | paging                 |
-| GET    | /workspace/{id}                 | 워크스페이스 1개의 정보 조회          | -                  | 워크스페이스 1개 정보       | -                      |
+| GET    | /workspace/{id}                 | 워크스페이스 1개의 정보 조회          | -                  | 워크스페이스 1개 정보       | 워크스페이스 소유자 정보 포함       |
 | GET    | /workspace/{id}/members         | 워크스페이스 1개의 멤버 전체 조회       | -                  | 멤버 목록              |                        |
 | GET    | /workspace/{id}/members/paging  | 워크스페이스 1개의 멤버 조회 (paging) | -                  | 멤버 목록              | paging                 |
 | GET    | /workspace/{id}/channels        | 워크스페이스 1개의 채널 전체 조회       | -                  | 채널 목록              | 현재 요청한 사용자가 소속된 채널만 조회 |
@@ -21,14 +21,14 @@
 | DELETE | /workspace/member | 워크스페이스에서 멤버 삭제   | AccountWorkspaceDTO | -             | URL parameter: accountId, channelId |
 
 ## 채널 API
-| Method | URI                   | Description              | Request Body     | Response Body | etc    |
-|--------|-----------------------|--------------------------|------------------|---------------|--------|
-| GET    | /channel/{id}         | 채널 1개의 정보 조회             | -                | 채널 1개 정보      | -      |
-| GET    | /channel/{id}/members | 채널 1개의 멤버 조회             | -                | 멤버 목록         | paging |
-| POST   | /channel              | 채널 생성                    | ChannelCreateDTO | 채널 1개 정보      | -      |
-| PUT    | /channel/{id}         | 채널 수정                    | ChannelEditDTO   | -             | -      |
-| DELETE | /channel/{id}         | 채널 삭제                    | -                | -             | -      |
-| POST   | /channel/find         | 채널 이름으로 현재 워크스페이스의 채널 검색 | ChannelFindDTO   | 채널 목록         | paging |
+| Method | URI                   | Description              | Request Body     | Response Body | etc          |
+|--------|-----------------------|--------------------------|------------------|---------------|--------------|
+| GET    | /channel/{id}         | 채널 1개의 정보 조회             | -                | 채널 1개 정보      | 채널 소유자 정보 포함 |
+| GET    | /channel/{id}/members | 채널 1개의 멤버 조회             | -                | 멤버 목록         | paging       |
+| POST   | /channel              | 채널 생성                    | ChannelCreateDTO | 채널 1개 정보      | -            |
+| PUT    | /channel/{id}         | 채널 수정                    | ChannelEditDTO   | -             | -            |
+| DELETE | /channel/{id}         | 채널 삭제                    | -                | -             | -            |
+| POST   | /channel/find         | 채널 이름으로 현재 워크스페이스의 채널 검색 | ChannelFindDTO   | 채널 목록         | paging       |
 
 
 ## 채널-멤버 API

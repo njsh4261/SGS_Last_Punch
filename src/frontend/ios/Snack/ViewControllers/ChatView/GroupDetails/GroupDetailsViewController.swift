@@ -80,7 +80,7 @@ class GroupDetailsViewController: UIViewController {
         }
     }
 
-    //-------------------------------------------------------------------------------------------------------------------------------------------
+    // owner에게 더 보이는 기능
     func actionMoreOwner() {
 
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

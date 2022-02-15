@@ -63,7 +63,7 @@ class GroupDetailsViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
 
-    // MARK: - Database methods
+    // MARK: - Load Data()
     func loadGroup() {
         guard let channelInfo = channelInfo, let owner = channelInfo.owner  else { return }
         lblName.text = channelInfo.channel?.name
@@ -85,7 +85,7 @@ class GroupDetailsViewController: UIViewController {
             actionRightMoreMember()
         }
     }
-
+    
     // owner에게 더 보이는 기능
     func actionMoreOwner() {
 
@@ -205,17 +205,14 @@ class GroupDetailsViewController: UIViewController {
         present(alert, animated: true)
     }
 
+    // 채팅 나가기 - owner가 아닌 멤버만 가능
     func actionLeaveGroup() {
-
-//        DBMembers.update(chatId, GQLAuth.userId(), isActive: false)
-//
-//
-//        NotificationCenter.post(Notifications.CleanupChatView)
-//
-//        navigationController?.popToRootViewController(animated: true)
+        self.deleteMemberInChannel(accountId: userId!)
     }
     
-
+    func actionDismiss() {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
 
     // Onwer만의 기능
     func actionDeleteMember(_ indexPath: IndexPath) {
@@ -246,9 +243,14 @@ class GroupDetailsViewController: UIViewController {
                     case .next(let result):
                         switch result {
                         case .success:
-                            ProgressHUD.showSucceed("탈퇴 되었습니다")
-                            memberInfo?.remove(at: index)
-                            tableView.reloadData()
+                            if isGroupOwner() {
+                                ProgressHUD.showSucceed("탈퇴 되었습니다")
+                                memberInfo?.remove(at: index)
+                                tableView.reloadData()
+                            } else {
+                                ProgressHUD.showSucceed("채널을 나갔습니다")
+                                actionDismiss()
+                            }
                         default:
                             ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
                         }

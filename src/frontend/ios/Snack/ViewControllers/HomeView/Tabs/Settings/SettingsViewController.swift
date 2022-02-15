@@ -143,7 +143,6 @@ class SettingsViewController: UITableViewController {
 
         present(alert, animated: true)
     }
-    
 
     // 유저 정보 로그아웃
     func logoutUser() {

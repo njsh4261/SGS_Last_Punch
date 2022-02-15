@@ -54,7 +54,7 @@ export default function chatSocketHook(
             userId < member.id ? [userId, member.id] : [member.id, userId];
           if (low === high) return;
 
-          stompClient.subscribe(`/topic/${low}-${high}`, (payload) => {
+          stompClient.subscribe(`/topic/channel.${low}-${high}`, (payload) => {
             if (`${low}-${high}` === channelRef.current) {
               const msg = JSON.parse(payload.body);
               setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);

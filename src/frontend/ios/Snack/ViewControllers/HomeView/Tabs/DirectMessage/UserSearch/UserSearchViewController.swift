@@ -95,9 +95,10 @@ extension UserSearchViewController: UITableViewDataSource {
             cell.lblName.text = "사용자가 없습니다"
             return cell
         }
+        let userInfo = userList[indexPath.row]
         
         cell.ivThunbnail.image = UIImage(named: "snack")!
-        cell.lblName.text = userList[indexPath.row].name
+        cell.lblName.text = "\(userInfo.name)(\(userInfo.email))"
 
         return cell
     }

@@ -61,7 +61,7 @@ class GroupDetailsViewController: UIViewController {
         guard let channelInfo = channelInfo, let owner = channelInfo.owner  else { return }
         lblName.text = channelInfo.channel?.name
 
-        lblFooter1.text = "생성자 by \(owner.name)"
+        lblFooter1.text = "생성자 by \(owner.name)(\(owner.email))"
         lblFooter2.text = channelInfo.channel?.createDt
     }
 
@@ -190,7 +190,7 @@ class GroupDetailsViewController: UIViewController {
     // MARK: - Helper methods
     func titleForHeaderMembers() -> String? {
         guard let memberInfo = memberInfo else { return "멤버 목록" }
-        return "멤버 목록(\(memberInfo.count) 명)"
+        return "멤버 목록 \(memberInfo.count) 명"
     }
 
     func isGroupOwner() -> Bool {

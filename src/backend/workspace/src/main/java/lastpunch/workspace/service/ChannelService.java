@@ -37,8 +37,7 @@ public class ChannelService{
     
     public Map<String, Object> getOne(Long id){
         return Map.of(
-            "channel", commonService.getChannel(id).export(),
-            "owner", channelRepository.getOwnerOfChannel(id)
+            "channel", commonService.getChannel(id).exportWithOwner(channelRepository.getOwnerOfChannel(id))
         );
     }
     

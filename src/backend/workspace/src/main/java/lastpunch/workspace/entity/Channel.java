@@ -165,4 +165,37 @@ public class Channel{
         private Long workspaceId;
         private String name;
     }
+
+    @Getter
+    @Builder
+    public static class ExportWithOwnerDto{
+        private Long id;
+        private Workspace.ExportDto workspace;
+        private String name;
+        private String topic;
+        private String description;
+        private Integer settings;
+
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+        private LocalDateTime createDt;
+
+        @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
+        private LocalDateTime modifyDt;
+
+        private Account.ExportDto owner;
+    }
+
+    public ExportWithOwnerDto exportWithOwner(Account.ExportDto account){
+        return ExportWithOwnerDto.builder()
+                .id(id)
+                .workspace(workspace.export())
+                .name(name)
+                .topic(topic)
+                .description(description)
+                .settings(settings)
+                .createDt(createdt)
+                .modifyDt(modifydt)
+                .owner(account)
+                .build();
+    }
 }

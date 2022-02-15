@@ -6,11 +6,20 @@
 //
 
 import UIKit
+import RxSwift
 import ProgressHUD
 import SwiftKeychainWrapper
 
 class GroupDetailsViewController: UIViewController {
+    // MARK: - Properties
+    private let disposeBag = DisposeBag()
+    private var accessToken: String?
+    private var channelInfo: ChannelData?
+    private var userId: String?
+    private var senderInfo: User?
+    private var memberInfo: [UserModel]?
 
+    // MARK: - UI
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var detailsCell: UITableViewCell!
     @IBOutlet private var lblName: UILabel!
@@ -22,15 +31,12 @@ class GroupDetailsViewController: UIViewController {
     @IBOutlet private var lblFooter1: UILabel!
     @IBOutlet private var lblFooter2: UILabel!
 
-    private var channelInfo: ChannelData?
-    private var userId: String?
-    private var senderInfo: User?
-    private var memberInfo: [UserModel]?
     
     init(_ channelInfo: ChannelData, senderInfo: User, memberInfo: [UserModel]) {
         super.init(nibName: nil, bundle: nil)
-        guard let userId: String = KeychainWrapper.standard[.id] else { return }
+        guard let userId: String = KeychainWrapper.standard[.id], let accessToken: String = KeychainWrapper.standard[.accessToken] else { return }
 
+        self.accessToken = accessToken
         self.userId = userId
         self.channelInfo = channelInfo
         self.senderInfo = senderInfo
@@ -148,36 +154,16 @@ class GroupDetailsViewController: UIViewController {
     }
 
     func actionDeleteGroup() {
-
-//        dbgroup.update(isDeleted: true)
-//
-//        NotificationCenter.post(Notifications.CleanupChatView)
-//
-//        navigationController?.popToRootViewController(animated: true)
+        
     }
 
     // onwer가 아닌 멤버에게 더 보이는 기능
     func actionMoreMember() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let alertAddMemeber = UIAlertAction(title: "멤버 추가", style: .default) { action in
-            self.actionAddMembers()
-        }
-        
-        let alertLeaveGroup = UIAlertAction(title: "정보 변경", style: .default) { action in
-            self.actionRenameGroup()
-        }
-        
         let alertCancle = UIAlertAction(title: "취소", style: .cancel)
-
-        alertAddMemeber.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
-
-        alertLeaveGroup.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
 
         alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
 
-        alert.addAction(alertAddMemeber)
-        alert.addAction(alertLeaveGroup)
         alert.addAction(UIAlertAction(title: "채널 나가기", style: .destructive) { action in
             self.actionLeaveGroup()
         })
@@ -195,10 +181,49 @@ class GroupDetailsViewController: UIViewController {
 //
 //        navigationController?.popToRootViewController(animated: true)
     }
+    
+
 
     // Onwer만의 기능
     func actionDeleteMember(_ indexPath: IndexPath) {
-        
+        self.showWarningAlert(accountId: memberInfo![indexPath.row].id.description, index: indexPath.row)
+    }
+    
+    // 멤버 삭제 전, 경고
+    private func showWarningAlert(accountId: String, index: Int = -1) {
+        let alert = UIAlertController(title: "채널에서 탈퇴시키겠습니까?", message: "[경고] 멤버에게 알리는 로직이 구현되어 있지 않아 문제를 초래할 수 있습니다", preferredStyle: .alert)
+        let cancle = UIAlertAction(title: "취소", style: .cancel)
+        cancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        let delete = UIAlertAction(title: "삭제", style: .destructive, handler: { action in
+            self.deleteMemberInChannel(accountId: accountId, index: index)
+        })
+        alert.addAction(cancle)
+        alert.addAction(delete)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // 멤버 삭제 로직
+    func deleteMemberInChannel(accountId: String, index: Int = -1) {
+        ProgressHUD.animationType = .circleSpinFade
+        ProgressHUD.show("탈퇴 처리중..")
+        DispatchQueue.main.async { [self] in // 메인스레드에서 동작
+            ChannelService.shared.deleteMember(method: .delete, accessToken: accessToken!, accountId: accountId, channelId: (channelInfo?.channel?.id.description)!)
+                .subscribe { event in
+                    switch event {
+                    case .next(let result):
+                        switch result {
+                        case .success:
+                            ProgressHUD.showSucceed("탈퇴 되었습니다")
+                            memberInfo?.remove(at: index)
+                            tableView.reloadData()
+                        default:
+                            ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                        }
+                    default:
+                        ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                    }
+                }.disposed(by: self.disposeBag)
+        }
     }
 
     func actionAllMedia() {

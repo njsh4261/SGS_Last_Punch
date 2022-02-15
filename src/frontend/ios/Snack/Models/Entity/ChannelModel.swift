@@ -14,14 +14,16 @@ struct ChannelResponseModel: Codable {
 
 struct ChannelData: Codable {
     let channel: ChannelModel?
+    let owner: UserModel?
+    let members: AccountModel2?
 }
 
 struct ChannelModel: Codable {
     var id: Int
-    let content: WorkspaceListCellModel?
+    let workspace: WorkspaceListCellModel?
     let name: String
     let topic: String?
-    let description: String
+    let description: String?
     let settings: Int
     let createDt: String
     let modifyDt: String

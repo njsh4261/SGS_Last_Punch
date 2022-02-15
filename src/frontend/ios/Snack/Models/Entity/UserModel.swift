@@ -17,7 +17,7 @@ struct UserModel: Codable {
     let country: String
     let language: String
     let settings: Int
-    let status: String
+    let status: String?
     let createDt: String
     let modifyDt: String
 }

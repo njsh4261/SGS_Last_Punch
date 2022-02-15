@@ -17,7 +17,7 @@ class WorkspaceService {
     }
     
     // add
-    private func makeParameter2(accountId : String, workspaceId : String) -> Parameters {
+    private func makeParameter2(accountId : Int, workspaceId : Int) -> Parameters {
         return ["accountId" : accountId,
                 "workspaceId" : workspaceId]
     }
@@ -57,13 +57,39 @@ class WorkspaceService {
     
     func workspaceAccount(method: HTTPMethod, accessToken: String, accountId: String = "", workspaceId: String = "") -> Observable<NetworkResult<WorkspaceResponseModel>> {
         let url = APIConstants().workspaceListURL + "/member"
-        let parameters = self.makeParameter2(accountId: accountId, workspaceId: workspaceId)
+        let parameters = self.makeParameter2(accountId: Int(accountId)!, workspaceId: Int(workspaceId)!)
                 
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
             let dataRequest = AF.request(url,
                                          method: method,
                                          parameters: parameters,
+                                         encoding: JSONEncoding.default,
+                                         headers: header)
+
+            dataRequest.validate().responseData { [self] response in
+                switch response.result {
+                case .success:
+                    guard let statusCode = response.response?.statusCode else {return}
+                    guard let value = response.value else {return}
+                    let networkResult = judgeStatus(by: statusCode, value)
+                    return observer.onNext(networkResult)
+                case .failure:
+                    return observer.onNext(.pathErr)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func deleteWorkspaceAccount(method: HTTPMethod, accessToken: String, accountId: String = "", workspaceId: String = "") -> Observable<NetworkResult<WorkspaceResponseModel>> {
+        let url = APIConstants().workspaceListURL + "/member" + "?accountId=\(accountId)&workspaceId=\(workspaceId)"
+                
+        return Observable.create { observer -> Disposable in
+            let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
+            let dataRequest = AF.request(url,
+                                         method: method,
+                                         parameters: nil,
                                          encoding: JSONEncoding.default,
                                          headers: header)
 

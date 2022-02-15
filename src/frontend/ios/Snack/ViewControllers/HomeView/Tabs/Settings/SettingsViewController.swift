@@ -6,15 +6,22 @@
 //
 
 import UIKit
+import RxSwift
 import ProgressHUD
-import RxDataSources
 import PasscodeKit
+import SwiftKeychainWrapper
 
 class SettingsViewController: UITableViewController {
+    // MARK: - Properties
+    private let disposeBag = DisposeBag()
+    private var userInfo: UserModel?
+    private var accessToken: String = ""
+    private var workspaceId: String = ""
+    
     // MARK: - UI
     @IBOutlet private var viewHeader: UIView!
     @IBOutlet private var imageUser: UIImageView!
-    @IBOutlet private var labelName: UILabel!
+    @IBOutlet private var lblName: UILabel!
     // Section 1
     @IBOutlet private var cellProfile: UITableViewCell!
     @IBOutlet private var cellPassword: UITableViewCell!
@@ -28,16 +35,16 @@ class SettingsViewController: UITableViewController {
     // Section 4
     @IBOutlet private var cellLogout: UITableViewCell!
     @IBOutlet private var cellDeleteUser: UITableViewCell!
-    
-    private var userInfo = User(
-        senderId: "-1",
-        displayName: "김스낵",
-        authorId: "-1",
-        content: ""
-    )
-        
+            
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        guard let accessToken: String = KeychainWrapper.standard[.accessToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
+        if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
+            let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
+            self.userInfo = userInfo!
+        }
+        self.accessToken = accessToken
+        self.workspaceId = workspaceId
         
         tabBarItem.title = "나"
         tabBarItem.image = UIImage(systemName: "person.crop.circle")
@@ -65,7 +72,8 @@ class SettingsViewController: UITableViewController {
     
     // MARK: - Load User
     func loadUser() {
-        labelName.text = "\(userInfo.displayName)"
+        guard let userInfo = userInfo else { return }
+        lblName.text = userInfo.name
         cellPasscode.detailTextLabel?.text = PasscodeKit.enabled() ? "켜짐" : "꺼짐"
         lblStatus.text = "대화 가능"
         tableView.reloadData()
@@ -74,6 +82,8 @@ class SettingsViewController: UITableViewController {
     // MARK: - User actions
     // 프로필 변경
     func actionProfile() {
+        guard let userInfo = userInfo else { return }
+        
         let editProfileView = EditProfileView(userInfo: userInfo)
         let navController = NavigationController(rootViewController: editProfileView)
         navController.isModalInPresentation = true
@@ -125,11 +135,14 @@ class SettingsViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "로그아웃", style: .destructive) { action in
             self.logoutUser()
         })
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        
+        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
+        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alert.addAction(alertCancle)
 
         present(alert, animated: true)
     }
-    
 
     // 유저 정보 로그아웃
     func logoutUser() {
@@ -137,8 +150,26 @@ class SettingsViewController: UITableViewController {
         _ = LogOutViewModel(viewContoller: pvc)
     }
     
-    // test
-    func actionDeleteUser() {
+    // 워크스페이스 나가기
+    func actionWorkspaceOut() {
+        guard let pvc = self.presentingViewController else { return }
+        DispatchQueue.main.async { [self] in // 메인스레드에서 동작
+            WorkspaceService.shared.deleteWorkspaceAccount(method: .delete, accessToken: accessToken, accountId: (userInfo?.id.description)!, workspaceId: workspaceId)
+                .subscribe { event in
+                    switch event {
+                    case .next(let result):
+                        switch result {
+                        case .success:
+                            _ = LogOutViewModel(viewContoller: pvc)
+                        default:
+                            ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                        }
+                    default:
+                        ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                    }
+                }.disposed(by: self.disposeBag)
+
+        }
     }
     
     // MARK: - TableView dataSource
@@ -185,7 +216,7 @@ class SettingsViewController: UITableViewController {
         if (indexPath.section == 2) && (indexPath.row == 0) { actionCache() }
         if (indexPath.section == 2) && (indexPath.row == 1) { actionMedia() }
         if (indexPath.section == 3) && (indexPath.row == 0) { actionLogout() }
-        if (indexPath.section == 3) && (indexPath.row == 1) { actionDeleteUser() }
+        if (indexPath.section == 3) && (indexPath.row == 1) { actionWorkspaceOut() }
     }
 }
 

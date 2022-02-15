@@ -12,7 +12,7 @@ import RxCocoa
 
 class EditProfileView: UIViewController {
     // MARK: - Properties
-    private var userInfo: User?
+    private var userInfo: UserModel?
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
@@ -20,18 +20,16 @@ class EditProfileView: UIViewController {
     @IBOutlet private var imageUser: UIImageView!
     @IBOutlet private var labelInitials: UILabel!
     @IBOutlet private var cellName: UITableViewCell!
-    @IBOutlet private var cellDisplayName: UITableViewCell!
     @IBOutlet private var cellDescription: UITableViewCell!
     @IBOutlet private var cellCountry: UITableViewCell!
     @IBOutlet private var cellPhone: UITableViewCell!
     @IBOutlet private var fieldName: UITextField!
-    @IBOutlet private var fieldDisplayName: UITextField!
     @IBOutlet private var lblPlaceholder: UILabel!
     @IBOutlet private var lblCountry: UILabel!
     @IBOutlet private var fieldDescription: UITextField!
     @IBOutlet private var fieldPhone: UITextField!
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, userInfo: User) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, userInfo: UserModel) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.userInfo = userInfo
     }
@@ -69,12 +67,11 @@ class EditProfileView: UIViewController {
 
     // MARK: - Load User
     func loadUser() {
-        labelInitials.text = userInfo?.displayName.first?.description
-        fieldName.text = userInfo?.displayName
-        fieldDisplayName.text = userInfo?.displayName
-        fieldDescription.text = "설명"
-        lblCountry.text = "대한민국"
-        fieldPhone.text = "010-1234-1234"
+        labelInitials.text = userInfo?.name.first?.description
+        fieldName.text = userInfo?.name
+        fieldDescription.text = userInfo?.description
+        lblCountry.text = userInfo?.language == "kor" ? "대한민국" : "해외"
+        fieldPhone.text = userInfo?.phone
 
         lblPlaceholder.isHidden = (lblCountry.text != "")
     }
@@ -86,12 +83,10 @@ class EditProfileView: UIViewController {
     @objc func actionSave() {
 
         let name = fieldName.text ?? ""
-        let displayName = fieldDisplayName.text ?? ""
         let country = lblCountry.text ?? ""
         let phone = fieldPhone.text ?? ""
 
         if (name.isEmpty)           { ProgressHUD.showFailed("이름은 반드시 작성해야합니다");        return  }
-        if (displayName.isEmpty)    { ProgressHUD.showFailed("닉네임은 반드시 작성해야합니다");       return  }
         if (country.isEmpty)        { ProgressHUD.showFailed("국적은 반드시 작성해야합니다");        return  }
         if (phone.isEmpty)          { ProgressHUD.showFailed("전화번호는 반드시 작성해야합니다");     return   }
 
@@ -156,7 +151,7 @@ extension EditProfileView: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        if (section == 0) { return 4 }
+        if (section == 0) { return 3 }
         if (section == 1) { return 1 }
 
         return 0
@@ -171,9 +166,8 @@ extension EditProfileView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if (indexPath.section == 0) && (indexPath.row == 0) { return cellName           }
-        if (indexPath.section == 0) && (indexPath.row == 1) { return cellDisplayName    }
-        if (indexPath.section == 0) && (indexPath.row == 2) { return cellDescription    }
-        if (indexPath.section == 0) && (indexPath.row == 3) { return cellCountry        }
+        if (indexPath.section == 0) && (indexPath.row == 1) { return cellDescription    }
+        if (indexPath.section == 0) && (indexPath.row == 2) { return cellCountry        }
         if (indexPath.section == 1) && (indexPath.row == 0) { return cellPhone          }
 
         return UITableViewCell()
@@ -196,8 +190,7 @@ extension EditProfileView: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
-        if (textField == fieldName)         { fieldDisplayName.becomeFirstResponder()   }
-        if (textField == fieldDisplayName)  { fieldDisplayName.becomeFirstResponder()   }
+        if (textField == fieldName)         { fieldName.becomeFirstResponder()          }
         if (textField == fieldDescription)  { fieldPhone.becomeFirstResponder()         }
         if (textField == fieldPhone)        { actionSave()                              }
 

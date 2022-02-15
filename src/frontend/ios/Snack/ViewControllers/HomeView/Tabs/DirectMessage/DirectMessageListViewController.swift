@@ -124,8 +124,9 @@ class DirectMessageListViewController: UIViewController {
     }
     
     private func goToInvitation() {
-        let userInvitationVC = NavigationController(rootViewController: UserInvitationViewController())
-        self.present(userInvitationVC, animated: true, completion: nil)
+        let userInvitationVC = UserInvitationViewController()
+        userInvitationVC.email = ""
+        self.present(NavigationController(rootViewController: userInvitationVC), animated: true, completion: nil)
     }
     
     private func setMembers(_ members: [User]) {

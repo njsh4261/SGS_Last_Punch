@@ -20,6 +20,7 @@ class UserInvitationViewController: UIViewController {
     private var workspaceId: String = ""
     private var networkGroup = DispatchGroup()
     private var userList = [UserModel2]()
+    var email: String?
     
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
@@ -32,6 +33,7 @@ class UserInvitationViewController: UIViewController {
     @IBOutlet private var labelFooter1: UILabel!
     @IBOutlet private var labelFooter2: UILabel!
 
+
     override func viewDidLoad() {
         guard let accessToken: String = KeychainWrapper.standard[.accessToken], let userId: String = KeychainWrapper.standard[.id], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
         self.accessToken = accessToken
@@ -41,11 +43,12 @@ class UserInvitationViewController: UIViewController {
         title = "사용자 초대"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(actionDismiss))
         btnSend = UIBarButtonItem(title: "보내기", style: .plain, target: self, action: #selector(actionCreate))
-        btnSend.isEnabled = false
+        btnSend.isEnabled = email == "" ? false : true
         navigationItem.rightBarButtonItem = btnSend
         view.backgroundColor = UIColor(named: "snackBackGroundColor2")
         tableView.tableFooterView = viewFooter
         emailField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        emailField.text = email
     }
     
     @objc func actionDismiss() {

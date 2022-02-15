@@ -75,7 +75,10 @@ class PrivateMessageViewController: MessagesViewController {
     }
     
     private func goToProfile() {
-        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: senderInfo, recipientInfo: recipientInfo, isChat: false)
+        let userModel = UserModel(
+            id: Int(recipientInfo.authorId)!, email: "lastPunch@gmail.com", name: recipientInfo.displayName, description: "안녕하세요", phone: "010-1234-1234", country: "kor", language: "eng", settings: 0, status: "rull", createDt: "2022.02.24", modifyDt: "2022.02.24"
+        )
+        let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: senderInfo, recipientInfo: userModel, isChat: false)
         viewController.hidesBottomBarWhenPushed = true
         self.show(viewController, sender: nil)
     }
@@ -368,8 +371,6 @@ extension PrivateMessageViewController: MessagesDisplayDelegate {
 extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-//        let message = MessageModel(channelId: channelId, text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
-//        insertNewMessage(message)
         StompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channelId, content: text)
         inputBar.inputTextView.text.removeAll()
 

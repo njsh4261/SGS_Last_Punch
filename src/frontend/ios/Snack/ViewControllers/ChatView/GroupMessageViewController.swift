@@ -18,10 +18,12 @@ import CoreLocation
 
 class GroupMessageViewController: MessagesViewController {
     // MARK: - Properties
+    private let viewModel: GroupMessageViewModel
     private let disposeBag = DisposeBag()
     let channel: WorkspaceChannelCellModel?
+    var channelInfo: ChannelData?
     var messages = [MessageModel]()
-    var recipientInfoList: [User]
+    var memberInfo: [UserModel]?
     var senderInfo: User
     private var userInfo: WorkspaceMemberCellModel?
     private(set) lazy var refreshControl: UIRefreshControl = {
@@ -32,16 +34,13 @@ class GroupMessageViewController: MessagesViewController {
 
     // MARK: - UI
     private var btnTransform = UIBarButtonItem()
-//    private var viewTitle =  UIView()
-//    private var lblTitle = UILabel()
-//    private var lblSubTitle = UILabel()
     private var btnViewTitle = UIButton()
     private var btnAttach = InputBarButtonItem()
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfoList: [User], channel: WorkspaceChannelCellModel) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, channel: WorkspaceChannelCellModel, viewModel: GroupMessageViewModel) {
         self.senderInfo = senderInfo
-        self.recipientInfoList = recipientInfoList
         self.channel = channel
+        self.viewModel = viewModel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let token: String = KeychainWrapper.standard[.accessToken] else { return }
         NSLog("accessToken: " + token)
@@ -60,6 +59,10 @@ class GroupMessageViewController: MessagesViewController {
         layout()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.viewModel.viewWillAppear()
+    }
+    
     func bind(_ viewModel: GroupMessageViewModel) {
         // MARK: Bind input
         btnViewTitle.rx.tap
@@ -75,12 +78,17 @@ class GroupMessageViewController: MessagesViewController {
             .disposed(by: disposeBag)
         
         // MARK: Bind output
+        viewModel.output.sokectMessage
+            .bind(onNext: insertNewMessage )
+            .disposed(by: disposeBag)
         
+        viewModel.output.setData
+            .bind(onNext: setData)
+            .disposed(by: disposeBag)
     }
     
-    @objc private func goToProfile() {
-        let ChannelModel = ChannelModel(id: -1, content: WorkspaceListCellModel(id: 1, name: "워크네임", description: "워크 설명", settings: 1, createDt: "22", modifyDt: "24"), name: "이름", topic: "토픽", description: "설명", settings: 0, createDt: "22년", modifyDt: "23년")
-        let viewController = GroupDetailsViewController(ChannelModel, senderInfo: senderInfo, memberInfo: recipientInfoList)
+    @objc private func goToDetails() {
+        let viewController = GroupDetailsViewController(channelInfo!, senderInfo: senderInfo, memberInfo: memberInfo!)
         self.show(viewController, sender: nil)
     }
     
@@ -95,6 +103,15 @@ class GroupMessageViewController: MessagesViewController {
     
     private func goToMessage() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func setData(_ channelInfo: ChannelData, _ memberInfo: [UserModel]) {
+        guard let channelName = channel?.name else { return }
+        updateTitleView(title: "# \(String(describing: channelName))", subtitle: "\(memberInfo.count)명의 멤버 >")
+        navigationItem.titleView?.addSubview(btnViewTitle)
+
+        self.channelInfo = channelInfo
+        self.memberInfo = memberInfo
     }
     
     private func showActionSheet() {
@@ -114,7 +131,7 @@ class GroupMessageViewController: MessagesViewController {
         alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
 
         alertNote.setValue(imageNote, forKey: "image");         alert.addAction(alertNote)
-
+        
         alert.addAction(alertCancle)
 
         present(alert, animated: true)
@@ -235,11 +252,11 @@ class GroupMessageViewController: MessagesViewController {
         
         guard let channelName = channel?.name else { return }
 
-        updateTitleView(title: "#\(String(describing: channelName))", subtitle: "\(recipientInfoList.count)명의 멤버 >")
+        updateTitleView(title: "# \(String(describing: channelName))", subtitle: "명의 멤버 >")
         
         btnViewTitle = btnViewTitle.then {
             $0.frame = navigationItem.titleView!.frame
-            let recognizer = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
+            let recognizer = UITapGestureRecognizer(target: self, action: #selector(goToDetails))
             $0.addGestureRecognizer(recognizer)
         }
                         
@@ -253,7 +270,6 @@ class GroupMessageViewController: MessagesViewController {
     
     private func layout() {
         // navigationItem titleView
-        navigationItem.titleView?.addSubview(btnViewTitle)
     }
 }
 
@@ -409,8 +425,6 @@ extension GroupMessageViewController: MessagesDisplayDelegate {
 extension GroupMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        let message = MessageModel(channelId: channel!.id.description, text: text, user: senderInfo, messageId: UUID().uuidString, date: Date())
-        insertNewMessage(message)
         StompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channel!.id.description, content: text)
         inputBar.inputTextView.text.removeAll()
 

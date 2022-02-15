@@ -101,11 +101,11 @@ struct WorkspaceMemberCellModel: Codable {
 }
 
 struct LastMessage: Codable {
-    let id: Int?
-    let authorId: Int?
+    let id: String?
+    let authorId: String?
     let channelId: String?
     let content: String?
-    let status: String?
+    let status: Int?
     let createDt: String?
     let modifyDt: String?
 }

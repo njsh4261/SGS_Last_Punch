@@ -36,6 +36,18 @@ class UserSearchViewController: UIViewController {
         tableView.dataSource = self
     }
     
+    // cell을 select할 경우, user 초대 화면으로
+    private func goToInvitation(email: String) {
+        guard let pvc = self.presentingViewController else { return }
+
+        let userInvitationVC = UserInvitationViewController()
+        userInvitationVC.email = email
+        
+        dismiss(animated: true) {
+            pvc.present(NavigationController(rootViewController: userInvitationVC), animated: true, completion: nil)
+        }
+    }
+    
     // Text 변화가 있을때 바로 결과
     func actionSearch() {
         guard let email = emailField.text else { return }
@@ -95,11 +107,21 @@ extension UserSearchViewController: UITableViewDataSource {
             cell.lblName.text = "사용자가 없습니다"
             return cell
         }
+        let userInfo = userList[indexPath.row]
         
         cell.ivThunbnail.image = UIImage(named: "snack")!
-        cell.lblName.text = userList[indexPath.row].name
+        cell.lblName.text = "\(userInfo.name)(\(userInfo.email))"
 
         return cell
+    }
+}
+
+// MARK: - UITableView Delegate
+extension UserSearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        goToInvitation(email: userList[indexPath.row].email)
     }
 }
 // MARK: - UITextField Delegate

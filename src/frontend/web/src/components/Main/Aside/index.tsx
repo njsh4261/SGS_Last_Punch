@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import MainAsideFrame from '../../Common/MainAsideFrame';
@@ -7,12 +7,12 @@ import AsideBody from './Body';
 import { RootState } from '../../../modules';
 import ImageButton from '../../Common/ImageButton';
 import ArrowLeftIcon from '../../../icon/arrowLeft.svg';
-import DropdownWorkspace from './DropdownWorkspace';
 import { WorkspaceName } from '../../Common/WorkspaceName';
+import ModalMenuHook from '../../../hook/ModalMenu';
+import ModalMain from '../../Common/ModalMain';
 
-const DropdownBox = styled.div`
+const ModalBox = styled.div`
   display: flex;
-  position: relative;
 `;
 
 interface Props {
@@ -30,19 +30,17 @@ export default function Aside({
   sideToggle,
   sideToggleHandler,
 }: Props) {
-  const [drop, setDrop] = useState(false);
-
-  const dropdownHandler = () => {
-    setDrop((current: boolean) => !current);
-  };
+  const { modal, openModalHandler } = ModalMenuHook({ type: 'workspace' });
 
   return (
     <MainAsideFrame toggle={sideToggle}>
+      {modal.active && modal.modalType === 'workspace' && (
+        <ModalMain type="workspace"></ModalMain>
+      )}
       <AsideHeader onMouseEnter={hoverHandler} onMouseLeave={hoverHandler}>
-        <DropdownBox onClick={dropdownHandler}>
+        <ModalBox onClick={openModalHandler}>
           <WorkspaceName>{ws.name}</WorkspaceName>
-          {drop && <DropdownWorkspace wsId={ws.id}></DropdownWorkspace>}
-        </DropdownBox>
+        </ModalBox>
         {hover && (
           <ImageButton
             imageUrl={ArrowLeftIcon}

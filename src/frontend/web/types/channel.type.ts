@@ -6,6 +6,8 @@ export interface IChannel {
   topic: string;
   status: number;
   settings: number;
+  description: string;
+  createDt: string;
 }
 
 export interface ICreateChannel {

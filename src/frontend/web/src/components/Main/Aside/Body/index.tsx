@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../../modules';
-import Modal from './Modal';
+import Modal from '../../Modal';
 import getChannelsAndMembersHook from '../../../../hook/getChannelsAndMembers';
 import selectChannelHook from '../../../../hook/selectChannel';
 import ToggleList, { Label } from './ToggleList';
@@ -38,9 +38,13 @@ export default function AsideBody() {
 
   return (
     <Container>
-      {modalState.active && (
-        <Modal type={modalState.modalType} wsId={params.wsId}></Modal>
-      )}
+      {modalState.active &&
+        (modalState.modalType === 'newChannel' ||
+          modalState.modalType === 'direct message' ||
+          modalState.modalType === 'invite-channel' ||
+          modalState.modalType === 'invite-workspace') && (
+          <Modal type={modalState.modalType} wsId={params.wsId}></Modal>
+        )}
       <SecitonType>
         <Label>알림</Label>
       </SecitonType>

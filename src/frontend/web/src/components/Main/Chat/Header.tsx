@@ -7,7 +7,9 @@ import expandIcon from '../../../icon/expand.svg';
 import ImageButton from '../../Common/ImageButton';
 import arrowRightIcon from '../../../icon/arrowRight.svg';
 import DropdownSetting from './DropdownSetting';
-import DropdownChannel from './DropdownChannel';
+import ModalMenuHook from '../../../hook/ModalMenu';
+import ModalMain from '../../Common/ModalMain';
+import { RootState } from '../../../modules';
 
 const ChannelHeader = styled.article`
   display: flex;
@@ -24,6 +26,7 @@ const ChannelInfo = styled.section`
   border-radius: 4px;
   &:hover {
     cursor: pointer;
+    background-color: #f6f6f6;
   }
 `;
 const ChannelName = styled.article`
@@ -55,7 +58,7 @@ const ArrowDropDownIcon = styled.article`
   width: 20px;
   height: 20px;
   align-self: center;
-  margin-right: 14px;
+  margin-right: 6px;
   background-image: url(${expandIcon});
   background-repeat: no-repeat;
 `;
@@ -84,24 +87,24 @@ const ChannelTab = styled.div`
 `;
 
 interface Props {
-  channel: any;
+  channel: RootState['channel'];
   sideToggle: boolean;
   sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 const Header = ({ channel, sideToggle, sideToggleHandler }: Props) => {
-  const {
-    drop,
-    channelDrop,
-    dropdownHandler,
-    NAV_BUTTON_ID,
-    NAV_DROPDOWN_ID,
-    CHANNEL_BUTTON_CLASSNAME,
-    CHANNEL_DROPDOWN_ID,
-  } = DropdownHook();
+  const TYPE = 'channel';
+
+  const { drop, dropdownHandler, NAV_BUTTON_ID, NAV_DROPDOWN_ID } =
+    DropdownHook();
+
+  const { modal, openModalHandler } = ModalMenuHook({ type: TYPE });
 
   return (
     <ChannelHeader>
+      {modal.active && modal.modalType === 'channel' && (
+        <ModalMain type={TYPE}></ModalMain>
+      )}
       <ChannelInfo>
         {!sideToggle && (
           <ImageButton
@@ -110,22 +113,9 @@ const Header = ({ channel, sideToggle, sideToggleHandler }: Props) => {
             onClick={sideToggleHandler}
           ></ImageButton>
         )}
-        <ChannelTab
-          className={CHANNEL_BUTTON_CLASSNAME}
-          onClick={dropdownHandler}
-        >
-          <ChannelName className={CHANNEL_BUTTON_CLASSNAME}>
-            {channel.name}
-          </ChannelName>
-          <ArrowDropDownIcon
-            className={CHANNEL_BUTTON_CLASSNAME}
-          ></ArrowDropDownIcon>
-          {channelDrop && (
-            <DropdownChannel
-              channelId={channel.id}
-              id={CHANNEL_DROPDOWN_ID}
-            ></DropdownChannel>
-          )}
+        <ChannelTab onClick={openModalHandler}>
+          <ChannelName>{channel.name}</ChannelName>
+          <ArrowDropDownIcon></ArrowDropDownIcon>
         </ChannelTab>
       </ChannelInfo>
       <NavTab>

@@ -20,7 +20,7 @@ export default async function signinAPI(email: string, pass: string) {
       const { access_token, refresh_token } = data;
       localStorage.setItem(TOKEN.ACCESS, access_token);
       localStorage.setItem(TOKEN.REFRESH, refresh_token);
-      location.href = URL.REDIRECT_HOME;
+      if (URL.REDIRECT_HOME) location.href = URL.REDIRECT_HOME;
     }
 
     // 로그인 실패

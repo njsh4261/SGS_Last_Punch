@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Params, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ModalType } from './Modal';
+import { ModalType } from '../../../../../types/modal.type';
 import { createNoteAPI, getNoteListAPI } from '../../../../Api/note';
 
 export const ItemContainer = styled.section`

@@ -7,6 +7,7 @@
 
 import UIKit
 import ProgressHUD
+import SwiftKeychainWrapper
 
 class GroupDetailsViewController: UIViewController {
 
@@ -19,13 +20,16 @@ class GroupDetailsViewController: UIViewController {
     @IBOutlet private var lblFooter1: UILabel!
     @IBOutlet private var lblFooter2: UILabel!
 
-    private var channelInfo: ChannelModel?
-//    private var observerId: User
+    private var channelInfo: ChannelData?
+    private var userId: String?
     private var senderInfo: User?
-    private var memberInfo: [User]?
+    private var memberInfo: [UserModel]?
     
-    init(_ channelInfo: ChannelModel, senderInfo: User, memberInfo: [User]) {
+    init(_ channelInfo: ChannelData, senderInfo: User, memberInfo: [UserModel]) {
         super.init(nibName: nil, bundle: nil)
+        guard let userId: String = KeychainWrapper.standard[.id] else { return }
+
+        self.userId = userId
         self.channelInfo = channelInfo
         self.senderInfo = senderInfo
         self.memberInfo = memberInfo
@@ -54,11 +58,11 @@ class GroupDetailsViewController: UIViewController {
 
     // MARK: - Database methods
     func loadGroup() {
-        guard let channelInfo = channelInfo else { return }
-        lblName.text = channelInfo.name
+        guard let channelInfo = channelInfo, let owner = channelInfo.owner  else { return }
+        lblName.text = channelInfo.channel?.name
 
-        lblFooter1.text = "생성자 by \(channelInfo.name)"
-        lblFooter2.text = channelInfo.createDt
+        lblFooter1.text = "생성자 by \(owner.name)"
+        lblFooter2.text = channelInfo.channel?.createDt
     }
 
     func loadMembers() {
@@ -172,9 +176,9 @@ class GroupDetailsViewController: UIViewController {
 
     }
 
-    func actionProfile(_ userId: String) {
-
-        let profileView = ProfileViewController(senderInfo: senderInfo!, recipientInfo: (memberInfo?.first)!, isChat: true)
+    func actionProfile(_ userInfo: UserModel) {
+        let user = User(senderId: userInfo.id.description, displayName: userInfo.name, authorId: "", content: "")
+        let profileView = ProfileViewController(senderInfo: senderInfo!, recipientInfo: user, isChat: true)
         navigationController?.pushViewController(profileView, animated: true)
     }
 
@@ -202,7 +206,7 @@ extension GroupDetailsViewController: UITableViewDataSource {
 
         if (section == 0) { return 1                        }
         if (section == 1) { return 1                        }
-        if (section == 2) { return 1                        }
+        if (section == 2) { return memberInfo!.count        }
         if (section == 3) { return isGroupOwner() ? 0 : 1   }
 
         return 0
@@ -231,9 +235,9 @@ extension GroupDetailsViewController: UITableViewDataSource {
         if (indexPath.section == 2) {
             var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell")
             if (cell == nil) { cell = UITableViewCell(style: .default, reuseIdentifier: "cell") }
-
-//            let dbuser = dbusers[indexPath.row]
-//            cell.textLabel?.text = dbuser.fullname
+            
+            let member = memberInfo![indexPath.row]
+            cell.textLabel?.text = member.name
 
             return cell
         }
@@ -248,11 +252,10 @@ extension GroupDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 
         if (indexPath.section == 2) {
-//            if (isGroupOwner()) {
-//                let dbuser = dbusers[indexPath.row]
-//                return (dbuser.objectId != GQLAuth.userId())
-//            }
-            return true
+            if (isGroupOwner()) {
+                let member = memberInfo![indexPath.row]
+                return userId != member.id.description
+            }
         }
 
         return false
@@ -282,12 +285,12 @@ extension GroupDetailsViewController: UITableViewDelegate {
         }
 
         if (indexPath.section == 2) {
-//            let dbuser = dbusers[indexPath.row]
-//            if (dbuser.objectId == GQLAuth.userId()) {
-//                ProgressHUD.showSucceed("This is you.")
-//            } else {
-//                actionProfile(dbuser.objectId)
-//            }
+            let member = memberInfo![indexPath.row]
+            if (userId == member.id.description) {
+                ProgressHUD.showSucceed("당신입니다")
+            } else {
+                actionProfile(member)
+            }
         }
 
         if (indexPath.section == 3) && (indexPath.row == 0) {

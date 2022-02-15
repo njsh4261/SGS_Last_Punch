@@ -22,7 +22,7 @@ class GroupMessageViewModel: ViewModelProtocol {
     struct Output {
         let sokectMessage = PublishRelay<MessageModel>()
         let errorMessage = PublishRelay<String>()
-        let sendData = PublishRelay<(ChannelData, [UserModel])>()
+        let setData = PublishRelay<(ChannelData, [UserModel])>()
     }
     // MARK: - Public properties
     var input = Input()
@@ -65,7 +65,7 @@ class GroupMessageViewModel: ViewModelProtocol {
         
         networkGroup.notify(queue: .main) { [self] in
             guard let channelModel = channelModel, let members = members else { return }
-            output.sendData.accept((channelModel, members))
+            output.setData.accept((channelModel, members))
         }
     }
     

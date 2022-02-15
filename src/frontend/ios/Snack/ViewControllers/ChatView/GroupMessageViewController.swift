@@ -252,7 +252,7 @@ class GroupMessageViewController: MessagesViewController {
         
         guard let channelName = channel?.name else { return }
 
-        updateTitleView(title: "#\(String(describing: channelName))", subtitle: "명의 멤버 >")
+        updateTitleView(title: "# \(String(describing: channelName))", subtitle: "명의 멤버 >")
         
         btnViewTitle = btnViewTitle.then {
             $0.frame = navigationItem.titleView!.frame

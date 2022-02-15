@@ -177,8 +177,7 @@ class GroupDetailsViewController: UIViewController {
     }
 
     func actionProfile(_ userInfo: UserModel) {
-        let user = User(senderId: userInfo.id.description, displayName: userInfo.name, authorId: "", content: "")
-        let profileView = ProfileViewController(senderInfo: senderInfo!, recipientInfo: user, isChat: true)
+        let profileView = ProfileViewController(senderInfo: senderInfo!, recipientInfo: userInfo, isChat: true)
         navigationController?.pushViewController(profileView, animated: true)
     }
 
@@ -237,7 +236,6 @@ extension GroupDetailsViewController: UITableViewDataSource {
             if (cell == nil) { cell = UITableViewCell(style: .default, reuseIdentifier: "cell") }
             
             let member = memberInfo![indexPath.row]
-            cell.textLabel?.text = member.name
 
             cell.textLabel?.text = member.name
             if userId == member.id.description {

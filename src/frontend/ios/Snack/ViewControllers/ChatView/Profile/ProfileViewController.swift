@@ -16,7 +16,7 @@ class ProfileViewController: UIViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
     private let viewModel = ProfileViewModel()
-    private var recipientInfo: User?
+    private var recipientInfo: UserModel?
     private var senderInfo: User?
 
     // MARK: - UI
@@ -45,7 +45,7 @@ class ProfileViewController: UIViewController {
 
     private var isChatEnabled = false
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, isChat: Bool) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: UserModel, isChat: Bool) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.recipientInfo = recipientInfo
         self.senderInfo = senderInfo
@@ -78,9 +78,10 @@ class ProfileViewController: UIViewController {
         // MARK: Bind output
         viewModel.push
             .drive(onNext: { [self] in
-                let channelId = senderInfo!.senderId < recipientInfo!.senderId ? "\(senderInfo!.senderId)-\(recipientInfo!.senderId)" : "\( recipientInfo!.senderId)-\(senderInfo!.senderId)"
-                let viewController = PrivateMessageViewController(senderInfo: senderInfo!, recipientInfo: recipientInfo!, channelId: channelId)
-                let viewModel = PrivateMessageViewModel(senderInfo!)
+                let channelId = senderInfo!.senderId < recipientInfo!.id.description ? "\(senderInfo!.senderId)-\(recipientInfo!.id.description)" : "\( recipientInfo!.id.description)-\(senderInfo!.senderId)"
+                let user = User(senderId: recipientInfo!.id.description, displayName: recipientInfo!.name, authorId: "", content: "")
+                let viewController = PrivateMessageViewController(senderInfo: senderInfo!, recipientInfo: user, channelId: channelId)
+                let viewModel = PrivateMessageViewModel(user)
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)
@@ -143,15 +144,15 @@ class ProfileViewController: UIViewController {
         btnHeaderMobile.isEnabled = true
         btnHeaderMail.isEnabled = true
         
-        lblInitials.text = userInfo.displayName.first?.description
+        lblInitials.text = userInfo.name.first?.description
         
-        lblName.text = userInfo.displayName
+        lblName.text = userInfo.name
         lblDetails.text = "마지막 수정일 : \(Date().toString2())"
         
         cellStatus.detailTextLabel?.text = "대화 가능"
-        cellDescription.detailTextLabel?.text = "설명"
-        cellCountry.detailTextLabel?.text = "대한민구"
-        cellPhone.detailTextLabel?.text = "010-1234-1234"
+        cellDescription.detailTextLabel?.text = userInfo.description ?? "안녕하세요"
+        cellCountry.detailTextLabel?.text = userInfo.country == "kor" ? "대한민국" : "외국"
+        cellPhone.detailTextLabel?.text = userInfo.phone
     }
 }
 

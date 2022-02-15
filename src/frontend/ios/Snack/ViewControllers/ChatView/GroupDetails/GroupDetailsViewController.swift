@@ -51,7 +51,6 @@ class GroupDetailsViewController: UIViewController {
         tableView.tableFooterView = viewFooter
 
         loadGroup()
-        loadMembers()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,12 +65,6 @@ class GroupDetailsViewController: UIViewController {
         
         lblFooter1.text = "생성자 by \(owner.name)(\(owner.email))"
         lblFooter2.text = channelInfo.channel?.createDt
-    }
-
-    func loadMembers() {
-
-        // 멤버 불러오는 API
-        tableView.reloadData()
     }
 
     // MARK: - User actions

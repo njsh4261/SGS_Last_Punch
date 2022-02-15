@@ -23,6 +23,7 @@ import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.repository.Query;
 
 @Entity
 @Table(name = "channel")
@@ -140,8 +141,28 @@ public class Channel{
         );
     }
 
+    // WorkspaceRepository::getAllChannels에서 native query의 결과를 출력하기 위한 인터페이스
     public interface ExportSimpleDto{
         Long getId();
         String getName();
+    }
+
+    // QueryDSL은 QueryProjection 된 Q Class를 요구: implementation class 구현
+    @Getter
+    public static class ExportSimpleDtoImpl implements ExportSimpleDto{
+        Long id;
+        String name;
+
+        @QueryProjection
+        public ExportSimpleDtoImpl(Long id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+    }
+
+    @Getter
+    public static class FindDto{
+        private Long workspaceId;
+        private String name;
     }
 }

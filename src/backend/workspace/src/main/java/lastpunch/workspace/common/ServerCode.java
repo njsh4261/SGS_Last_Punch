@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 
 @AllArgsConstructor
 public enum ServerCode{
-    AUTH(StatusCode.AUTH_OK),
     WORKSPACE(StatusCode.WORKSPACE_OK);
 
     private StatusCode okStatus;

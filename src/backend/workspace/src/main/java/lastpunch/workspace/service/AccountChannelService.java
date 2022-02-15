@@ -61,10 +61,10 @@ public class AccountChannelService{
         }
     }
 
-    public Map<String, Object> delete(Long accountId, Long workspaceId){
+    public Map<String, Object> delete(Long accountId, Long channelId){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
-            Integer deletedRecords = accountChannelRepository.delete(accountId, workspaceId);
+            Integer deletedRecords = accountChannelRepository.delete(accountId, channelId);
             if(deletedRecords <= 0){
                 throw new BusinessException(StatusCode.ACCOUNTCHANNEL_NOT_EXIST);
             }

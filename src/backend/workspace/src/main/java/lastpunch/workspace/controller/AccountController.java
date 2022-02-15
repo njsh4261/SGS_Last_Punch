@@ -35,13 +35,16 @@ public class AccountController{
         );
     }
     
-    @PostMapping
+    @PostMapping("/find")
     public ResponseEntity<Object> getAccountsByEmail(
             @RequestBody Account.FindDto accountFindDto,
-            @PageableDefault Pageable pageable){
+            @PageableDefault Pageable pageable,
+            @RequestHeader Map<String, Object> header){
         return Response.ok(
             ServerCode.WORKSPACE,
-            accountService.getByEmail(accountFindDto.getEmail(), pageable)
+            accountService.getByEmail(
+                accountFindDto.getEmail(), pageable , Parser.getHeaderId(header)
+            )
         );
     }
 }

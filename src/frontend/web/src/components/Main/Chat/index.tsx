@@ -34,7 +34,7 @@ const MessagItemContainer = styled.article<{ me?: boolean }>`
   text-align: ${({ me }) => (me ? 'end' : 'start')};
   white-space: normal;
   word-break: break-all;
-  padding: 8px 20px;
+  padding: 12px 20px;
   &:hover {
     background: #f8f8f8;
   }
@@ -45,8 +45,21 @@ const MessageBox = styled.article`
   flex-direction: column;
 `;
 
+const MessageHeader = styled.div<{ me: boolean }>`
+  display: flex;
+  flex-direction: ${({ me }) => (me ? 'row-reverse' : 'row')};
+  align-items: flex-end;
+`;
+
 const MessageWriter = styled.div`
   font-weight: bold;
+`;
+
+const MessageCreated = styled.div`
+  opacity: 50%;
+  font-weight: 300;
+  font-size: 8px;
+  margin: 0 6px;
 `;
 
 const MessageContent = styled.div`
@@ -117,7 +130,14 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
                 data-date={msg.createDt}
               >
                 <MessageBox>
-                  <MessageWriter>{userDictionary[msg.authorId]}</MessageWriter>
+                  <MessageHeader me={msg.authorId === user.id.toString()}>
+                    <MessageWriter>
+                      {userDictionary[msg.authorId] || '알 수 없음'}
+                    </MessageWriter>
+                    <MessageCreated>
+                      {msg.createDt.split(' ')[1].slice(0, 5)}
+                    </MessageCreated>
+                  </MessageHeader>
                   <MessageContent>{msg.content}</MessageContent>
                 </MessageBox>
               </MessagItemContainer>

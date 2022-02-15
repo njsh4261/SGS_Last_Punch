@@ -91,6 +91,7 @@ interface Member {
 
 export default function ModalMember({ type, params }: Props) {
   const [focus, setFocus] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   // 채널 혹은 워크스페이스의 멤버리스트. API로 새로 받아온다
   const [memberList, setMemberList] = useState<Member[]>([]);
@@ -113,6 +114,7 @@ export default function ModalMember({ type, params }: Props) {
 
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
+    setSearchValue(value);
     if (value === '') {
       setSearchList([]);
       return;
@@ -139,6 +141,7 @@ export default function ModalMember({ type, params }: Props) {
               onFocus={() => setFocus(true)}
               onBlur={() => setFocus(false)}
               onChange={searchHandler}
+              value={searchValue}
               placeholder="멤버 찾기"
             ></Input>
           </SearchBar>
@@ -147,7 +150,7 @@ export default function ModalMember({ type, params }: Props) {
             <div>사용자 추가</div>
           </Layer>
           <MemberLayers>
-            {searchList.length === 0
+            {searchValue === ''
               ? memberList.map((member) => (
                   <Layer key={`member-${member.id}`}>
                     <ImageIcon src={addPersonImage}></ImageIcon>

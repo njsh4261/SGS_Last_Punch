@@ -65,7 +65,7 @@ public class AccountWorkspaceService{
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
             Integer deletedRecords = accountWorkspaceRepository.delete(accountId, workspaceId);
-            if(deletedRecords <= 0){
+            if(deletedRecords == 0){
                 throw new BusinessException(StatusCode.ACCOUNTWORKSPACE_NOT_EXIST);
             }
             return new HashMap<>();

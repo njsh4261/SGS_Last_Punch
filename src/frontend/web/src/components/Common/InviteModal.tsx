@@ -9,7 +9,7 @@ import { closeModal } from '../../modules/modal';
 import { inviteWsAPI } from '../../Api/workspace';
 import { inviteChannelAPI } from '../../Api/channel';
 import { searchMemberAPI } from '../../Api/account';
-import { ModalType } from '../Main/Aside/Body/Modal';
+import { ModalType } from '../../../types/modal.type';
 import { RootState } from '../../modules';
 import { setUserList } from '../../modules/userList';
 

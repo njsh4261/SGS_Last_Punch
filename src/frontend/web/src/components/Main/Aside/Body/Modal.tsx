@@ -3,13 +3,7 @@ import React from 'react';
 import ChannelModal from './ChannelModal';
 import InviteModal from '../../../Common/InviteModal';
 import ModalBox from '../../../Common/ModalBox';
-
-export type ModalType =
-  | 'channel'
-  | 'workspace'
-  | 'direct message'
-  | 'invite-channel'
-  | 'invite-workspace';
+import { ModalType } from '../../../../../types/modal.type';
 
 export default function Modal({
   type,
@@ -20,7 +14,7 @@ export default function Modal({
 }) {
   return (
     <ModalBox>
-      {type === 'channel' ? (
+      {type === 'newChannel' ? (
         <ChannelModal></ChannelModal>
       ) : (
         <InviteModal type={type} wsId={wsId!}></InviteModal>

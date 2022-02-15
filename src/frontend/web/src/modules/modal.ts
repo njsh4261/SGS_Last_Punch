@@ -1,4 +1,4 @@
-import { ModalType } from '../components/Main/Aside/Body/Modal';
+import { ModalType } from '../../types/modal.type';
 
 const OPEN_MODAL = 'modal/open';
 const CLOSE_MODAL = 'modal/close';

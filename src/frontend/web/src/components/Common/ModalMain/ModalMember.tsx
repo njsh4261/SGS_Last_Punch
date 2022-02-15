@@ -68,18 +68,34 @@ const ImageIcon = styled.img`
   margin-right: 8px;
 `;
 
+const MemberName = styled.section`
+  display: inline-block;
+`;
+
+const MemberEmail = styled.section`
+  display: inline-block;
+  opacity: 40%;
+  margin-left: 4px;
+`;
+
 interface Props {
   type: 'channel' | 'workspace';
   params: Params;
+}
+
+interface Member {
+  id: number;
+  name: string;
+  email: string;
 }
 
 export default function ModalMember({ type, params }: Props) {
   const [focus, setFocus] = useState(false);
 
   // 채널 혹은 워크스페이스의 멤버리스트. API로 새로 받아온다
-  const [memberList, setMemberList] = useState<{ id: number; name: string }[]>(
-    [],
-  );
+  const [memberList, setMemberList] = useState<Member[]>([]);
+
+  const [searchList, setSearchList] = useState<Member[]>([]);
 
   const getMemberListHandler = async () => {
     if (type === 'channel') {
@@ -93,6 +109,18 @@ export default function ModalMember({ type, params }: Props) {
         setMemberList(cloneDeep(response.members.content));
       }
     }
+  };
+
+  const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    if (value === '') {
+      setSearchList([]);
+      return;
+    }
+    const searchedList = memberList.filter((member) =>
+      member.name.includes(value),
+    );
+    setSearchList(searchedList);
   };
 
   useEffect(() => {
@@ -110,6 +138,7 @@ export default function ModalMember({ type, params }: Props) {
             <Input
               onFocus={() => setFocus(true)}
               onBlur={() => setFocus(false)}
+              onChange={searchHandler}
               placeholder="멤버 찾기"
             ></Input>
           </SearchBar>
@@ -118,12 +147,21 @@ export default function ModalMember({ type, params }: Props) {
             <div>사용자 추가</div>
           </Layer>
           <MemberLayers>
-            {memberList.map((member) => (
-              <Layer key={`member-${member.id}`}>
-                <ImageIcon src={addPersonImage}></ImageIcon>
-                <div>{member.name}</div>
-              </Layer>
-            ))}
+            {searchList.length === 0
+              ? memberList.map((member) => (
+                  <Layer key={`member-${member.id}`}>
+                    <ImageIcon src={addPersonImage}></ImageIcon>
+                    <MemberName>{member.name}</MemberName>
+                    <MemberEmail>{member.email}</MemberEmail>
+                  </Layer>
+                ))
+              : searchList.map((member) => (
+                  <Layer key={`member-${member.id}`}>
+                    <ImageIcon src={addPersonImage}></ImageIcon>
+                    <MemberName>{member.name}</MemberName>
+                    <MemberEmail>{member.email}</MemberEmail>
+                  </Layer>
+                ))}
           </MemberLayers>
         </Container>
       )}

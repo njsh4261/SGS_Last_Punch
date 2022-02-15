@@ -98,11 +98,13 @@ const Header = ({ channel, sideToggle, sideToggleHandler }: Props) => {
   const { drop, dropdownHandler, NAV_BUTTON_ID, NAV_DROPDOWN_ID } =
     DropdownHook();
 
-  const { modalActive, openModalHandler } = ModalMenuHook({ type: TYPE });
+  const { modal, openModalHandler } = ModalMenuHook({ type: TYPE });
 
   return (
     <ChannelHeader>
-      {modalActive && <ModalMain type={TYPE}></ModalMain>}
+      {modal.active && modal.modalType === 'channel' && (
+        <ModalMain type={TYPE}></ModalMain>
+      )}
       <ChannelInfo>
         {!sideToggle && (
           <ImageButton

@@ -9,11 +9,11 @@ interface Props {
 
 export default function ModalMenuHook({ type }: Props) {
   const disptch = useDispatch();
-  const modalActive = useSelector((state: RootState) => state.modal.active);
+  const modal = useSelector((state: RootState) => state.modal);
 
   const openModalHandler = () => {
     disptch(openModal(type));
   };
 
-  return { modalActive, openModalHandler };
+  return { modal, openModalHandler };
 }

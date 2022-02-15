@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { openModal } from '../../../../modules/modal';
-import { ModalType } from './Modal';
+import { ModalType } from '../../../../../types/modal.type';
 import ChannelItem, { ItemContainer } from './ChannelItem';
 import addIcon from '../../../../icon/add.svg';
 import { ChannelListState } from '../../../../modules/channeList';
@@ -133,7 +133,10 @@ export default function ToggleList({
               ></ChannelItem>
             ),
         )}
-        <ItemContainer data-type={type} onClick={openModalHandler}>
+        <ItemContainer
+          data-type={type === 'channel' ? 'newChannel' : type}
+          onClick={openModalHandler}
+        >
           <Flex>
             <PlusIcon src={addIcon} width="16px" height="16px"></PlusIcon>
             {type === 'channel' ? (

@@ -189,8 +189,7 @@ class GroupDetailsViewController: UIViewController {
     }
 
     func isGroupOwner() -> Bool {
-//        (dbgroup?.ownerId == GQLAuth.userId())
-        return true
+        return userId == channelInfo?.owner?.id.description
     }
 }
 

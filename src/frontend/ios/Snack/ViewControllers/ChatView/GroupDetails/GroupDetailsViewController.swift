@@ -85,16 +85,29 @@ class GroupDetailsViewController: UIViewController {
 
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        alert.addAction(UIAlertAction(title: "멤버 추가", style: .default) { action in
+        let alertAddMemeber = UIAlertAction(title: "멤버 추가", style: .default) { action in
             self.actionAddMembers()
-        })
-        alert.addAction(UIAlertAction(title: "정보 변경", style: .default) { action in
+        }
+        
+        let alertRenameGroup = UIAlertAction(title: "정보 변경", style: .default) { action in
             self.actionRenameGroup()
-        })
+        }
+        
+        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
+
+        alertAddMemeber.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alertRenameGroup.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        
+        alert.addAction(alertAddMemeber)
+        alert.addAction(alertRenameGroup)
         alert.addAction(UIAlertAction(title: "채널 제거", style: .destructive) { action in
             self.actionDeleteGroup()
         })
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        alert.addAction(alertCancle)
 
         present(alert, animated: true)
     }
@@ -147,19 +160,32 @@ class GroupDetailsViewController: UIViewController {
 //        navigationController?.popToRootViewController(animated: true)
     }
 
+    // onwer가 아닌 멤버에게 더 보이는 기능
     func actionMoreMember() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "멤버 추가", style: .default) { action in
+        let alertAddMemeber = UIAlertAction(title: "멤버 추가", style: .default) { action in
             self.actionAddMembers()
-        })
-        alert.addAction(UIAlertAction(title: "정보 변경", style: .default) { action in
+        }
+        
+        let alertLeaveGroup = UIAlertAction(title: "정보 변경", style: .default) { action in
             self.actionRenameGroup()
-        })
+        }
+        
+        let alertCancle = UIAlertAction(title: "취소", style: .cancel)
+
+        alertAddMemeber.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alertLeaveGroup.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+
+        alert.addAction(alertAddMemeber)
+        alert.addAction(alertLeaveGroup)
         alert.addAction(UIAlertAction(title: "채널 나가기", style: .destructive) { action in
             self.actionLeaveGroup()
         })
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        alert.addAction(alertCancle)
 
         present(alert, animated: true)
     }

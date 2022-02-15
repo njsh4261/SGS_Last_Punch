@@ -131,7 +131,7 @@ class GroupMessageViewController: MessagesViewController {
         alertCancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
 
         alertNote.setValue(imageNote, forKey: "image");         alert.addAction(alertNote)
-
+        
         alert.addAction(alertCancle)
 
         present(alert, animated: true)

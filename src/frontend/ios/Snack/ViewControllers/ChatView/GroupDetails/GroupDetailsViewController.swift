@@ -328,8 +328,10 @@ extension GroupDetailsViewController: UITableViewDataSource {
         alert.addAction(UIAlertAction(title: "퇴출", style: .destructive) { action in
             self.actionDeleteMember(indexPath)
         })
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-
+        let cancle = UIAlertAction(title: "취소", style: .cancel)
+        cancle.setValue(UIColor(named: "snackColor")!, forKey: "titleTextColor")
+        
+        alert.addAction(cancle)
         present(alert, animated: true)
     }
 }

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import chatHook from '../../../hook/chat';
 import ChatInput from './Input';
@@ -7,6 +7,7 @@ import Header from './Header';
 import Loading from '../../Common/Loading';
 import chatScrollHook from '../../../hook/chatScroll';
 import { ChatMessage } from '../../../../types/chat.type';
+import cookieImage from '../../../icon/cookie-2.png';
 
 const Container = styled.main`
   flex: 1;
@@ -31,6 +32,7 @@ const MessageListContainer = styled.article`
 
 const MessagItemContainer = styled.article<{ me?: boolean; noHeader: boolean }>`
   display: flex;
+  align-items: center;
   justify-content: ${({ me }) => me && `end`};
   text-align: ${({ me }) => (me ? 'end' : 'start')};
   white-space: normal;
@@ -39,6 +41,19 @@ const MessagItemContainer = styled.article<{ me?: boolean; noHeader: boolean }>`
   &:hover {
     background: #f8f8f8;
   }
+`;
+
+const ProfileImg = styled.div<{ url: any; noHeader: boolean }>`
+  width: 34px;
+  margin-right: 8px;
+  ${({ noHeader, url }) =>
+    !noHeader &&
+    css`
+      height: 34px;
+      border-radius: 4px;
+      background-image: url(${url});
+      background-size: contain;
+    `}
 `;
 
 const MessageBox = styled.article`
@@ -144,6 +159,12 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
                   ref={idx === 0 ? scrollObserverRef : null}
                   data-date={msg.createDt}
                 >
+                  {!isMe(msg) && (
+                    <ProfileImg
+                      url={cookieImage}
+                      noHeader={noHeader}
+                    ></ProfileImg>
+                  )}
                   <MessageBox>
                     {!noHeader && (
                       <MessageHeader me={isMe(msg)}>

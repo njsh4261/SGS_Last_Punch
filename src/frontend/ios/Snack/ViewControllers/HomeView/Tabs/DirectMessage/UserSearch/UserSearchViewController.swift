@@ -30,16 +30,15 @@ class UserSearchViewController: UIViewController {
         self.accessToken = accessToken
         self.userId = userId
         self.workspaceId = workspaceId
-        
-        tableView.register(UserSearchTableViewCell.self, forCellReuseIdentifier: "UserSearchTableViewCell")
+        self.tableView.register(UINib(nibName: "UserSearchCell", bundle: nil), forCellReuseIdentifier: "UserSearchCell")
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
         tableView.tableHeaderView = viewHeader
         tableView.dataSource = self
     }
     
-    @IBAction func actionSearch(_ sender: Any) {
+    // Text 변화가 있을때 바로 결과
+    func actionSearch() {
         guard let email = emailField.text else { return }
-        
         getAccount(email: email)
     }
 
@@ -79,8 +78,8 @@ extension UserSearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        return userList.count
+        if emailField.text!.count == 0 { return 1 }
+        return userList.count == 0 ? 1 : userList.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -90,11 +89,22 @@ extension UserSearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell: UserSearchTableViewCell = tableView.dequeueReusableCell(withIdentifier: "UserSearchTableViewCell", for: indexPath) as! UserSearchTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserSearchCell", for: indexPath) as! UserSearchCell
 
+        if userList.count == 0 || emailField.text!.count == 0 {
+            cell.lblName.text = "사용자가 없습니다"
+            return cell
+        }
+        
         cell.ivThunbnail.image = UIImage(named: "snack")!
         cell.lblName.text = userList[indexPath.row].name
 
         return cell
+    }
+}
+// MARK: - UITextField Delegate
+extension UserSearchViewController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        self.actionSearch()
     }
 }

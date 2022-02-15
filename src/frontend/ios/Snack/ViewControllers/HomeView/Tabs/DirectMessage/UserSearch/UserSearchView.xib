@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -50,33 +49,24 @@
             <rect key="frame" x="0.0" y="0.0" width="346" height="70"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="#  예:기술공유" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Zoj-Bc-At3">
-                    <rect key="frame" x="10" y="22.5" width="211" height="25.5"/>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="찾고자하는 이메일을 입력해주세요" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Zoj-Bc-At3">
+                    <rect key="frame" x="10" y="22.5" width="263" height="25.5"/>
                     <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="16"/>
                     <textInputTraits key="textInputTraits" textContentType="email"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="b4S-nX-Udu"/>
+                    </connections>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1YU-9E-BbH">
-                    <rect key="frame" x="281" y="19.5" width="60" height="31"/>
+                    <rect key="frame" x="281" y="20" width="60" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="dtO-Kd-5Dz"/>
                     </constraints>
                     <color key="tintColor" red="1" green="0.239731902" blue="0.25068120360000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="취소"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="취소"/>
                     <connections>
                         <action selector="actionDismiss:" destination="-1" eventType="touchUpInside" id="mAU-aA-cBT"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXR-1T-Rfz">
-                    <rect key="frame" x="221" y="19.5" width="60" height="31"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="60" id="6J9-47-t1E"/>
-                    </constraints>
-                    <color key="tintColor" red="1" green="0.88318425960000002" blue="0.25068120360000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="검색"/>
-                    <connections>
-                        <action selector="actionSearch:" destination="-1" eventType="touchUpInside" id="Q2P-Pl-kF1"/>
                     </connections>
                 </button>
             </subviews>
@@ -85,59 +75,16 @@
                 <constraint firstItem="Zoj-Bc-At3" firstAttribute="centerY" secondItem="AQb-9p-OKj" secondAttribute="centerY" id="8Cg-gf-pvV"/>
                 <constraint firstAttribute="trailing" secondItem="1YU-9E-BbH" secondAttribute="trailing" constant="5" id="Hzw-3r-cFR"/>
                 <constraint firstItem="1YU-9E-BbH" firstAttribute="centerY" secondItem="AQb-9p-OKj" secondAttribute="centerY" id="KkO-nD-hDy"/>
-                <constraint firstItem="zXR-1T-Rfz" firstAttribute="leading" secondItem="Zoj-Bc-At3" secondAttribute="trailing" id="OWd-ab-r8A"/>
-                <constraint firstItem="zXR-1T-Rfz" firstAttribute="centerY" secondItem="AQb-9p-OKj" secondAttribute="centerY" id="SRA-m7-Qxl"/>
-                <constraint firstItem="1YU-9E-BbH" firstAttribute="leading" secondItem="zXR-1T-Rfz" secondAttribute="trailing" id="m22-Yp-p31"/>
+                <constraint firstItem="1YU-9E-BbH" firstAttribute="leading" secondItem="Zoj-Bc-At3" secondAttribute="trailing" constant="8" symbolic="YES" id="ZVz-nA-Pd3"/>
                 <constraint firstItem="Zoj-Bc-At3" firstAttribute="leading" secondItem="AQb-9p-OKj" secondAttribute="leading" constant="10" id="w9H-Sj-Eo1"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="843.75" y="-79.225352112676063"/>
         </view>
-        <tableViewCell contentMode="scaleToFill" restorationIdentifier="UserSearchTableViewCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserSearchTableViewCell" id="CgD-am-czd" customClass="UserSearchTableViewCell" customModule="Snack" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CgD-am-czd" id="liN-wy-7qj">
-                <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A2d-et-Yn5">
-                        <rect key="frame" x="60" y="14.5" width="290" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="snack" translatesAutoresizingMaskIntoConstraints="NO" id="fLN-Qf-JyE">
-                        <rect key="frame" x="5" y="10" width="50" height="30"/>
-                        <color key="tintColor" systemColor="labelColor"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="30" id="bB5-fl-Vsn"/>
-                            <constraint firstAttribute="width" constant="50" id="jsa-Yf-i05"/>
-                        </constraints>
-                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium"/>
-                    </imageView>
-                </subviews>
-                <constraints>
-                    <constraint firstItem="A2d-et-Yn5" firstAttribute="leading" secondItem="fLN-Qf-JyE" secondAttribute="trailing" constant="5" id="Cky-Ck-yqT"/>
-                    <constraint firstItem="fLN-Qf-JyE" firstAttribute="leading" secondItem="liN-wy-7qj" secondAttribute="leading" constant="5" id="b3I-DG-o3A"/>
-                    <constraint firstItem="A2d-et-Yn5" firstAttribute="centerY" secondItem="liN-wy-7qj" secondAttribute="centerY" id="bFp-Xf-Rya"/>
-                    <constraint firstItem="fLN-Qf-JyE" firstAttribute="centerY" secondItem="liN-wy-7qj" secondAttribute="centerY" id="fyg-07-vMw"/>
-                    <constraint firstAttribute="trailing" secondItem="A2d-et-Yn5" secondAttribute="trailing" id="k2O-wQ-7Ea"/>
-                </constraints>
-            </tableViewCellContentView>
-            <connections>
-                <outlet property="ivThunbnail" destination="fLN-Qf-JyE" id="tJu-Ki-SM0"/>
-                <outlet property="lblName" destination="A2d-et-Yn5" id="0iB-uV-atI"/>
-            </connections>
-            <point key="canvasLocation" x="847.5" y="49.647887323943664"/>
-        </tableViewCell>
     </objects>
     <resources>
-        <image name="snack" width="170.66667175292969" height="170.66667175292969"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

@@ -1,5 +1,5 @@
 //
-//  UserSearchTableViewCell.swift
+//  UserSearchCell.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/02/14.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserSearchTableViewCell: UITableViewCell {
+class UserSearchCell: UITableViewCell {
     
     @IBOutlet weak var ivThunbnail: UIImageView!
     @IBOutlet weak var lblName: UILabel!

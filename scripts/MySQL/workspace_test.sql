@@ -96,7 +96,6 @@ INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (8, 1, 1);
 INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (9, 1, 1);
 INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (10, 1, 1);
 INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (11, 1, 1);
-INSERT INTO accountworkspace (accountId, workspaceId, roleId) VALUES (12, 1, 1);
 
 
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 1, 3);
@@ -111,9 +110,7 @@ INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 8, 3);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 9, 3);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 10, 3);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 11, 3);
-INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 12, 3);
 
-INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (1, 1, 2);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (2, 1, 2);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (3, 1, 2);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (4, 1, 2);
@@ -125,7 +122,6 @@ INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (8, 1, 1);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (9, 1, 1);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (10, 1, 1);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (11, 1, 1);
-INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (12, 1, 1);
 
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (4, 2, 1);
 INSERT INTO accountchannel (accountId, channelId, roleId) VALUES (5, 2, 1);

@@ -24,13 +24,13 @@ class WorkspaceService {
 
     
     func getWorkspace(method: HTTPMethod, accessToken: String, workspaceId: String = "", name: String = "", chennel: String = "", isCreate: Bool = false, isChannels: Bool = false, isMembers: Bool = false, page: Int = 0, cell: deleteCellAction = deleteCellAction(index: -1, workspaceId: "")) -> Observable<NetworkResult<WorkspaceResponseModel>> {
-        var url = APIConstants().workspaceListURL + "/\(workspaceId)" + "?size=15"
+        var url = APIConstants().workspaceListURL + "/\(workspaceId)"
         var parameters: Parameters? = nil
         
         if isCreate { parameters = self.makeParameter(name: name, chennel: chennel) }
         if isChannels { url += "/channels" }
         if isMembers { url += "/members" }
-        if page != 0 { url += "?page=\(page)" }
+        if page != 0 { url += "?size=15&page=0" }
         
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]

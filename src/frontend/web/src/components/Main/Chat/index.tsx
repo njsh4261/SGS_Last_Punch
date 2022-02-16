@@ -8,6 +8,7 @@ import Loading from '../../Common/Loading';
 import chatScrollHook from '../../../hook/chatScroll';
 import { ChatMessage } from '../../../../types/chat.type';
 import cookieImage from '../../../icon/cookie-2.png';
+import './index.scss';
 
 const Container = styled.main`
   flex: 1;
@@ -109,6 +110,8 @@ interface Props {
 
 const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
   let prevAuthorId: string | undefined;
+  const snow = new Array(50).fill(0); // for snow animation
+
   const [
     user,
     channel,
@@ -144,6 +147,9 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
             sideToggleHandler={sideToggleHandler}
             channel={channel}
           />
+          {snow.map((el, index) => (
+            <div key={'snow-' + index} className="snow"></div>
+          ))}
           <MessageListContainer ref={chatBodyRef}>
             <Start>{scrollLoading && <Loading></Loading>}</Start>
             {msgList?.map((msg, idx) => {

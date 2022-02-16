@@ -38,7 +38,7 @@ public class AccountController{
             @RequestHeader Map<String, Object> header){
         return Response.ok(
             accountService.getByEmail(
-                accountFindDto.getEmail(), pageable , Parser.getHeaderId(header)
+                accountFindDto.getEmail(), pageable, Parser.getHeaderId(header)
             )
         );
     }

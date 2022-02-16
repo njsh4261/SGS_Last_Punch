@@ -1,5 +1,6 @@
 package lastpunch.workspace.repository;
 
+import java.util.Optional;
 import lastpunch.workspace.entity.AccountChannel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface AccountChannelRepository extends JpaRepository<AccountChannel, Long>{
+    Optional<AccountChannel> getByAccountidAnd
+    
     @Query(
         value = "INSERT INTO accountchannel (accountid, channelid, roleid) "
             + "VALUES (:accountId, :channelId, :roleId)",

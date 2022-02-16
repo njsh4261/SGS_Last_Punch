@@ -26,7 +26,6 @@ public class AccountChannelService{
     }
 
     public Map<String, Object> add(AccountChannel.Dto accountChannelDto){
-        // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
             if(accountChannelDto.getRoleId() == null){
                 accountChannelDto.setRoleId(RoleType.NORMAL_USER.getId());
@@ -43,7 +42,7 @@ public class AccountChannelService{
         }
     }
 
-    public Map<String, Object> edit(AccountChannel.Dto accountChannelDto){
+    public Map<String, Object> edit(AccountChannel.Dto accountChannelDto, Long requesterId){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
             Integer editedRecords = accountChannelRepository.edit(
@@ -61,7 +60,7 @@ public class AccountChannelService{
         }
     }
 
-    public Map<String, Object> delete(Long accountId, Long channelId){
+    public Map<String, Object> delete(Long accountId, Long channelId, Long requesterId){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
             Integer deletedRecords = accountChannelRepository.delete(accountId, channelId);

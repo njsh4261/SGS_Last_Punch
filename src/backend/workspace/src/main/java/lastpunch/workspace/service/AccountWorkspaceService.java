@@ -43,7 +43,7 @@ public class AccountWorkspaceService{
         }
     }
     
-    public Map<String, Object> edit(AccountWorkspace.Dto accountWorkspaceDto){
+    public Map<String, Object> edit(AccountWorkspace.Dto accountWorkspaceDto, Long requesterId){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
             Integer editedRecords = accountWorkspaceRepository.edit(
@@ -61,7 +61,7 @@ public class AccountWorkspaceService{
         }
     }
 
-    public Map<String, Object> delete(Long accountId, Long workspaceId){
+    public Map<String, Object> delete(Long accountId, Long workspaceId, Long requesterId){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
             Integer deletedRecords = accountWorkspaceRepository.delete(accountId, workspaceId);

@@ -12,6 +12,7 @@ import { RootState } from '../modules';
 import Loading from '../components/Common/Loading';
 import { setChannelListRedux } from '../modules/channeList';
 import getSelfInfoHook from '../hook/getSelfInfo';
+import { setUserList } from '../modules/userList';
 
 const MainLayout = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ export default function Main() {
   const [params, ws] = getWsHook();
   const channelList = useSelector((state: RootState) => state.channelList);
   const memberList = useSelector((state: RootState) => state.userList);
+  const user = useSelector((state: RootState) => state.user);
   const [hover, setHover] = useState(false);
   const [sideToggle, setSideToggle] = useState(true);
 
@@ -41,13 +43,26 @@ export default function Main() {
 
   // 알림이 표시된 채널에 진입시 알림 해제
   useEffect(() => {
-    const index = channelList.findIndex(
-      (el) => el.id.toString() === params.channelId,
-    );
-    const newList = cloneDeep(channelList);
-    if (newList[index]?.alarm) {
-      newList[index] = { ...newList[index], alarm: false };
-      dispatch(setChannelListRedux(newList));
+    if (params.channelId?.split('-')) {
+      // members
+      const [low, high] = params.channelId.split('-');
+      const targetId = user.id === +low ? high : low;
+      const index = memberList.findIndex((el) => el.id.toString() === targetId);
+      const newList = cloneDeep(memberList);
+      if (newList[index]?.alarm) {
+        newList[index] = { ...newList[index], alarm: false };
+        dispatch(setUserList(newList));
+      }
+    } else {
+      // channels
+      const index = channelList.findIndex(
+        (el) => el.id.toString() === params.channelId,
+      );
+      const newList = cloneDeep(channelList);
+      if (newList[index]?.alarm) {
+        newList[index] = { ...newList[index], alarm: false };
+        dispatch(setChannelListRedux(newList));
+      }
     }
   }, [params]);
 

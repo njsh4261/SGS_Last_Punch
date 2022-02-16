@@ -50,6 +50,7 @@ public class Message{
     public static class SendDto{
         private String authorId;
         private String channelId;
+        private String type;
         private String content;
         
         public Message toEntity(){

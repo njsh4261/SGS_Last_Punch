@@ -15,12 +15,12 @@ public class Response {
     public static ResponseEntity<Object> toResponseEntity(String code, HttpStatus status) {
         return new ResponseEntity<>(Map.of("code", code), status);
     }
-    
-    public static ResponseEntity<Object> ok(ServerCode serverCode){
-        return toResponseEntity(serverCode.getOkServerCode(), serverCode.getOkHttpStatus());
-    }
 
-    public static ResponseEntity<Object> ok(ServerCode serverCode, Object data){
-        return toResponseEntity(serverCode.getOkServerCode(), serverCode.getOkHttpStatus(), data);
+    public static ResponseEntity<Object> ok(Object data){
+        return toResponseEntity(
+            StatusCode.WORKSPACE_OK.getCode(),
+            StatusCode.WORKSPACE_OK.getStatus(),
+            data
+        );
     }
 }

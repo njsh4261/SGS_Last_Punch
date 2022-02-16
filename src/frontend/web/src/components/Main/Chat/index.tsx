@@ -5,7 +5,7 @@ import chatHook from '../../../hook/chat';
 import ChatInput from './Input';
 import Header from './Header';
 import Loading from '../../Common/Loading';
-import chatScrollHook from '../../../hook/chatScroll';
+import chatScrollHook from '../../../hook/chat/chatScroll';
 import { ChatMessage } from '../../../../types/chat.type';
 import cookieImage from '../../../icon/cookie-2.png';
 import './index.scss';

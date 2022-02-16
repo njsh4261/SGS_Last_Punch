@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
 
-import { getOldChat } from '../Api/chat';
-import { ChatMessage } from '../../types/chat.type';
-import { RootState } from '../modules/index';
+import { getOldChat } from '../../Api/chat';
+import { ChatMessage } from '../../../types/chat.type';
+import { RootState } from '../../modules/index';
 
 export default function chatScrollHook(
   channelId: string,

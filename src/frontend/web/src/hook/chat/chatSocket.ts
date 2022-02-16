@@ -1,13 +1,13 @@
 import React, { SetStateAction, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Stomp, CompatClient } from '@stomp/stompjs';
-import { TOKEN, URL } from '../constant';
+import { TOKEN, URL } from '../../constant';
 import { useDispatch } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
 
-import { SendMessage, ChatMessage } from '../../types/chat.type';
-import { setChannelListRedux } from '../modules/channeList';
-import { setUserList } from '../modules/userList';
+import { SendMessage, ChatMessage } from '../../../types/chat.type';
+import { setChannelListRedux } from '../../modules/channeList';
+import { setUserList } from '../../modules/userList';
 
 const HOST = URL.HOST;
 

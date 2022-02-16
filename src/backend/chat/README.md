@@ -58,4 +58,4 @@
 ```
 
 ## APIs
-[API 문서 링크](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/docs/API_references/chat_apis.md) 를 참조
+채팅 서버가 제공하는 API의 종류나 API의 사용 방법 및 시나리오는 [API 문서 링크](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/docs/API_references/chat_apis.md) 를 참조

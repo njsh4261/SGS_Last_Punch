@@ -72,9 +72,9 @@ export default function chatScrollHook(
   // scroll to bottom
   useEffect(() => {
     if (firstTime.current) {
-      scrollToBottom('auto');
       firstTime.current = false;
-    } else scrollToBottom('smooth');
+    }
+    scrollToBottom('auto');
   }, [msgList]);
 
   useEffect(() => {

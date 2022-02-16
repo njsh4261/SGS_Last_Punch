@@ -12,7 +12,6 @@ export const ItemContainer = styled.section<{ isSelected?: boolean }>`
   background-color: ${({ theme, isSelected }) =>
     isSelected && theme.color.snackSideHover};
   :hover {
-    color: black;
     cursor: pointer;
   }
 `;

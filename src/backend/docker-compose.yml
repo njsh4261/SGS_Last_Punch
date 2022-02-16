@@ -62,13 +62,14 @@ services:
       - lastpunch-network
 
   gateway:
-    image: sookim1110/gateway3
+    image: njsh4261/gateway
     ports:
       - "8080:8080"
     depends_on:
       - auth-server
       - workspace-server
       - chat-server
+      - presence-server
       - eureka-server
     environment:
       auth.uri: http://auth:8081

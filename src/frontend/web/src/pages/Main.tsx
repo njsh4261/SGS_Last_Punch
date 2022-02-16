@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import cloneDeep from 'lodash/cloneDeep';
+import { useSelector } from 'react-redux';
 
 import getWsHook from '../hook/getWs';
 import updateChannelStoreHook from '../hook/updateChannelStore';
@@ -10,9 +9,8 @@ import NoteMain from '../components/Main/Note';
 import Aside from '../components/Main/Aside';
 import { RootState } from '../modules';
 import Loading from '../components/Common/Loading';
-import { setChannelListRedux } from '../modules/channeList';
 import getSelfInfoHook from '../hook/getSelfInfo';
-import { setUserList } from '../modules/userList';
+import alarmOffHook from '../hook/alarmOff';
 
 const MainLayout = styled.div`
   display: flex;
@@ -20,11 +18,9 @@ const MainLayout = styled.div`
 `;
 
 export default function Main() {
-  const dispatch = useDispatch();
   const [params, ws] = getWsHook();
   const channelList = useSelector((state: RootState) => state.channelList);
   const memberList = useSelector((state: RootState) => state.userList);
-  const user = useSelector((state: RootState) => state.user);
   const [hover, setHover] = useState(false);
   const [sideToggle, setSideToggle] = useState(true);
 
@@ -42,29 +38,7 @@ export default function Main() {
   updateChannelStoreHook(params, memberList);
 
   // 알림이 표시된 채널에 진입시 알림 해제
-  useEffect(() => {
-    if (params.channelId?.split('-')) {
-      // members
-      const [low, high] = params.channelId.split('-');
-      const targetId = user.id === +low ? high : low;
-      const index = memberList.findIndex((el) => el.id.toString() === targetId);
-      const newList = cloneDeep(memberList);
-      if (newList[index]?.alarm) {
-        newList[index] = { ...newList[index], alarm: false };
-        dispatch(setUserList(newList));
-      }
-    } else {
-      // channels
-      const index = channelList.findIndex(
-        (el) => el.id.toString() === params.channelId,
-      );
-      const newList = cloneDeep(channelList);
-      if (newList[index]?.alarm) {
-        newList[index] = { ...newList[index], alarm: false };
-        dispatch(setChannelListRedux(newList));
-      }
-    }
-  }, [params]);
+  alarmOffHook({ params, memberList, channelList });
 
   return (
     <MainLayout>

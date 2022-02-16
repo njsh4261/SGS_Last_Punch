@@ -17,6 +17,22 @@ const Container = styled.main`
   height: 100%;
 `;
 
+const ProfileImg = styled.div<{ url: any; noHeader: boolean }>`
+  width: 34px;
+  margin-right: 8px;
+  font-size: 12px;
+  color: white;
+  cursor: pointer;
+  ${({ noHeader, url }) =>
+    !noHeader &&
+    css`
+      height: 34px;
+      border-radius: 4px;
+      background-image: url(${url});
+      background-size: contain;
+    `}
+`;
+
 const MessageListContainer = styled.article`
   flex: 1;
   max-height: calc(
@@ -31,30 +47,20 @@ const MessageListContainer = styled.article`
   }
 `;
 
-const MessagItemContainer = styled.article<{ me?: boolean; noHeader: boolean }>`
+const MessagItemContainer = styled.article<{ me?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: ${({ me }) => me && `end`};
   text-align: ${({ me }) => (me ? 'end' : 'start')};
   white-space: normal;
   word-break: break-all;
-  padding: ${({ noHeader }) => (noHeader ? '4px 20px' : '8px 20px')};
+  padding: 8px 20px;
   &:hover {
     background: #f8f8f8;
   }
-`;
-
-const ProfileImg = styled.div<{ url: any; noHeader: boolean }>`
-  width: 34px;
-  margin-right: 8px;
-  ${({ noHeader, url }) =>
-    !noHeader &&
-    css`
-      height: 34px;
-      border-radius: 4px;
-      background-image: url(${url});
-      background-size: contain;
-    `}
+  &:hover ${ProfileImg} {
+    color: gray;
+  }
 `;
 
 const MessageBox = styled.article`
@@ -66,7 +72,7 @@ const MessageBox = styled.article`
 const MessageHeader = styled.div<{ me: boolean }>`
   display: flex;
   flex-direction: ${({ me }) => (me ? 'row-reverse' : 'row')};
-  align-items: center;
+  align-items: end;
   margin-bottom: 6px;
 `;
 
@@ -79,6 +85,7 @@ const MessageCreated = styled.div`
   font-weight: 300;
   font-size: 8px;
   margin: 0 6px;
+  padding-bottom: 1px;
 `;
 
 const MessageContent = styled.div`
@@ -161,15 +168,13 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
                 <MessagItemContainer
                   key={`message-${idx}`}
                   me={isMe(msg)}
-                  noHeader={noHeader}
                   ref={idx === 0 ? scrollObserverRef : null}
                   data-date={msg.createDt}
                 >
                   {!isMe(msg) && (
-                    <ProfileImg
-                      url={cookieImage}
-                      noHeader={noHeader}
-                    ></ProfileImg>
+                    <ProfileImg url={cookieImage} noHeader={noHeader}>
+                      {noHeader && msg.createDt.split(' ')[1].slice(0, 5)}
+                    </ProfileImg>
                   )}
                   <MessageBox>
                     {!noHeader && (

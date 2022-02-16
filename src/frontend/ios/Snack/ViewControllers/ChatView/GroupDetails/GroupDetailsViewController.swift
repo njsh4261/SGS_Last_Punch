@@ -17,7 +17,7 @@ class GroupDetailsViewController: UIViewController {
     private var channelInfo: ChannelData?
     private var userId: String?
     private var senderInfo: User?
-    private var memberInfo: [UserModel]?
+    var memberInfo = [UserModel]()
     
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
@@ -57,6 +57,10 @@ class GroupDetailsViewController: UIViewController {
         tableView.tableFooterView = viewFooter
         
         loadGroup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -156,7 +160,7 @@ class GroupDetailsViewController: UIViewController {
     
     // Onwer만의 기능
     func actionDeleteMember(_ indexPath: IndexPath) {
-        self.showWarningAlert(accountId: memberInfo![indexPath.row].id.description, index: indexPath.row)
+        self.showWarningAlert(accountId: memberInfo[indexPath.row].id.description, index: indexPath.row)
     }
     
     // 멤버 삭제 전, 경고
@@ -219,13 +223,16 @@ class GroupDetailsViewController: UIViewController {
     
     // MARK: - 모든 사용자 actions
     func actionAddMembers() {
-        let userSearchVC = NavigationController(rootViewController: UserSearchViewController())
-        self.present(UserSearchViewController(), animated: true, completion: nil)
-
-        //        let selectUsersView = SelectUsersView()
-        //        selectUsersView.delegate = self
-        //        let navController = NavigationController(rootViewController: selectUsersView)
-        //        present(navController, animated: true)
+        guard let channelInfo = channelInfo, let channel = channelInfo.channel else { return }
+        
+        let userSearchVC = UserSearchViewController()
+        userSearchVC.isChannel = true
+        userSearchVC.body = [
+            "channelId": channel.id,
+            "roleId": 1
+        ]
+        
+        self.present(userSearchVC, animated: true, completion: nil)
     }
 
     func actionEditChannelInfo() {
@@ -305,7 +312,7 @@ class GroupDetailsViewController: UIViewController {
                         case .success:
                             if isGroupOwner() {
                                 ProgressHUD.showSucceed("탈퇴 되었습니다")
-                                memberInfo?.remove(at: index)
+                                memberInfo.remove(at: index)
                                 tableView.reloadData()
                             } else {
                                 ProgressHUD.showSucceed("채널을 나갔습니다")
@@ -332,7 +339,6 @@ class GroupDetailsViewController: UIViewController {
     
     // MARK: - Helper methods
     func titleForHeaderMembers() -> String? {
-        guard let memberInfo = memberInfo else { return "멤버 목록" }
         return "멤버 목록 \(memberInfo.count) 명"
     }
     
@@ -353,7 +359,7 @@ extension GroupDetailsViewController: UITableViewDataSource {
         if (section == 0) { return 1                        }
         if (section == 1) { return 1                        }
         if (section == 2) { return 1                        }
-        if (section == 3) { return memberInfo!.count        }
+        if (section == 3) { return memberInfo.count        }
         if (section == 4) { return isGroupOwner() ? 0 : 1   }
         
         return 0
@@ -388,7 +394,7 @@ extension GroupDetailsViewController: UITableViewDataSource {
             var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell")
             if (cell == nil) { cell = UITableViewCell(style: .default, reuseIdentifier: "cell") }
             
-            let member = memberInfo![indexPath.row]
+            let member = memberInfo[indexPath.row]
             
             cell.textLabel?.text = member.name
             if userId == member.id.description {
@@ -408,7 +414,7 @@ extension GroupDetailsViewController: UITableViewDataSource {
         
         if (indexPath.section == 3) {
             if (isGroupOwner()) {
-                let member = memberInfo![indexPath.row]
+                let member = memberInfo[indexPath.row]
                 return userId != member.id.description
             }
         }
@@ -442,7 +448,7 @@ extension GroupDetailsViewController: UITableViewDelegate {
         }
         
         if (indexPath.section == 3) {
-            let member = memberInfo![indexPath.row]
+            let member = memberInfo[indexPath.row]
             if (userId == member.id.description) {
                 ProgressHUD.showSucceed("당신입니다")
             } else {

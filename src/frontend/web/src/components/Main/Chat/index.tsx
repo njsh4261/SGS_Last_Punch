@@ -31,14 +31,14 @@ const MessageListContainer = styled.article`
   }
 `;
 
-const MessagItemContainer = styled.article<{ me?: boolean; noHeader: boolean }>`
+const MessagItemContainer = styled.article<{ me?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: ${({ me }) => me && `end`};
   text-align: ${({ me }) => (me ? 'end' : 'start')};
   white-space: normal;
   word-break: break-all;
-  padding: ${({ noHeader }) => (noHeader ? '4px 20px' : '8px 20px')};
+  padding: 8px 20px;
   &:hover {
     background: #f8f8f8;
   }
@@ -161,7 +161,6 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
                 <MessagItemContainer
                   key={`message-${idx}`}
                   me={isMe(msg)}
-                  noHeader={noHeader}
                   ref={idx === 0 ? scrollObserverRef : null}
                   data-date={msg.createDt}
                 >

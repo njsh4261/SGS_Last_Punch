@@ -85,6 +85,20 @@ class GroupMessageViewController: MessagesViewController {
         viewModel.output.setData
             .bind(onNext: setData)
             .disposed(by: disposeBag)
+        
+        // 최근 메시지 - 30개
+        viewModel.output.resentMessages
+            .bind(onNext: resentMessage)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.errorMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showFailedAlert)
+            .disposed(by: disposeBag)
+    }
+    
+    private func showFailedAlert(_ message: String) {
+        ProgressHUD.showFailed(message)
     }
     
     @objc private func goToDetails() {
@@ -103,6 +117,14 @@ class GroupMessageViewController: MessagesViewController {
     
     private func goToMessage() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    // 최근 메시지 Load
+    private func resentMessage(_ messages: [MessageModel]) {
+        self.messages = messages
+        self.messages.sort()
+        
+        messagesCollectionView.reloadData()
     }
     
     private func setData(_ channelInfo: ChannelData, _ memberInfo: [UserModel]) {

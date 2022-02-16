@@ -72,6 +72,20 @@ class PrivateMessageViewController: MessagesViewController {
         viewModel.output.sokectMessage
             .bind(onNext: insertNewMessage )
             .disposed(by: disposeBag)
+        
+        // 최근 메시지 - 30개
+        viewModel.output.resentMessages
+            .bind(onNext: resentMessage)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.errorMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showFailedAlert)
+            .disposed(by: disposeBag)
+    }
+    
+    private func showFailedAlert(_ message: String) {
+        ProgressHUD.showFailed(message)
     }
     
     private func goToProfile() {
@@ -89,6 +103,14 @@ class PrivateMessageViewController: MessagesViewController {
         
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    // 최근 메시지 Load
+    private func resentMessage(_ messages: [MessageModel]) {
+        self.messages = messages
+        self.messages.sort()
+        
+        messagesCollectionView.reloadData()
     }
     
     @objc func loadMoreMessages() {

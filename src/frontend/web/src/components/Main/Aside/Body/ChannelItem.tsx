@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Params, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -8,7 +8,6 @@ import { createNoteAPI, getNoteListAPI } from '../../../../Api/note';
 export const ItemContainer = styled.section<{ isSelected?: boolean }>`
   padding: 7px 0 7px 26px;
   border-radius: 6px;
-  margin-bottom: 6px;
   background-color: ${({ theme, isSelected }) =>
     isSelected && theme.color.snackSideHover};
   :hover {
@@ -86,6 +85,7 @@ interface Props {
 }
 
 export default function ChannelItem(props: Props) {
+  const NOTE_ICONS = useMemo(() => ['📕', '📙', '📘', '📗', '📓', '📒'], []);
   const { channel, wsId, params, selectHandler, type, isSelected } = props;
 
   const [noteList, setNoteList] = useState<any[]>([]);
@@ -112,6 +112,10 @@ export default function ChannelItem(props: Props) {
   };
 
   const hoverHandler = () => setHover((current) => !current);
+
+  const getRandomNoteIcon = () => {
+    return NOTE_ICONS[Math.floor(Math.random() * NOTE_ICONS.length)];
+  };
 
   useEffect(() => {
     if (isSelected && type === 'channel') getNoteListHandler();
@@ -148,7 +152,7 @@ export default function ChannelItem(props: Props) {
             isSelected={note.id === params.noteId}
             onClick={selectNoteHandler}
           >
-            {note.title}
+            {`${getRandomNoteIcon()} ${note.title}`}
           </NoteItem>
         ))}
     </ItemContainer>

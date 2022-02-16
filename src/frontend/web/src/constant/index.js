@@ -55,6 +55,9 @@ export const RESPONSE = {
   CHAT: {
     SUCCESS: '13000',
   },
+  PRESENCE: {
+    SUCCESS: '14000',
+  },
   NOTE: {
     SUCCESS: '15000',
   },

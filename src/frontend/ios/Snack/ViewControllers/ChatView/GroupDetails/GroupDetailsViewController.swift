@@ -219,7 +219,9 @@ class GroupDetailsViewController: UIViewController {
     
     // MARK: - 모든 사용자 actions
     func actionAddMembers() {
-        
+        let userSearchVC = NavigationController(rootViewController: UserSearchViewController())
+        self.present(UserSearchViewController(), animated: true, completion: nil)
+
         //        let selectUsersView = SelectUsersView()
         //        selectUsersView.delegate = self
         //        let navController = NavigationController(rootViewController: selectUsersView)

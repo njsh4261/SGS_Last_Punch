@@ -121,6 +121,8 @@ extension UserSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
+        // 배열이 비어 있을 경우, action 방지
+        if userList.count == 0 { return }
         goToInvitation(email: userList[indexPath.row].email)
     }
 }

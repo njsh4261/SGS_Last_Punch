@@ -108,6 +108,7 @@ public class AccountChannelService{
             }
             switch(RoleType.toEnum(requesterOptional.get().getRoleId())){
                 case NORMAL_USER:
+                    // NORMAL_USER는 다른 멤버 강퇴 불가
                     if(!Objects.equals(requesterId, accountId)){
                         throw new BusinessException(StatusCode.PERMISSION_DENIED);
                     }
@@ -128,9 +129,8 @@ public class AccountChannelService{
                         throw new BusinessException(StatusCode.CANNOT_EXIT_CHANNEL);
                     }
             }
-            
-            Integer deletedRecords = accountChannelRepository.delete(accountId, channelId);
-            if(deletedRecords <= 0){
+
+            if(accountChannelRepository.delete(accountId, channelId) <= 0){
                 throw new BusinessException(StatusCode.ACCOUNTCHANNEL_NOT_EXIST);
             }
             return new HashMap<>();

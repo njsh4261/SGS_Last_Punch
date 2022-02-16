@@ -4,6 +4,7 @@ export type UserState = {
   id: number;
   name: string;
   lastMessage?: any;
+  alarm?: boolean;
 };
 
 export const setUser = ({ id, name }: UserState) => ({

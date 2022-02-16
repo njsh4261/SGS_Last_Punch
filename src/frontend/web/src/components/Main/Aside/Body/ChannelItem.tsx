@@ -36,6 +36,9 @@ const ChannelName = styled.section<ChannelNameProps>`
   color: ${({ isSelected, newMessage }) =>
     (isSelected || newMessage) && 'black'};
   font-weight: ${({ newMessage }) => newMessage && 'bolder'};
+  :hover {
+    color: black;
+  }
 `;
 
 const ButtonCreateNote = styled.button`

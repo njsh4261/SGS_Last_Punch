@@ -5,11 +5,13 @@ import styled from 'styled-components';
 import { ModalType } from '../../../../../types/modal.type';
 import { createNoteAPI, getNoteListAPI } from '../../../../Api/note';
 
-export const ItemContainer = styled.section`
+export const ItemContainer = styled.section<{ isSelected?: boolean }>`
   padding: 7px 0 7px 26px;
   border-radius: 6px;
+  margin-bottom: 6px;
+  background-color: ${({ theme, isSelected }) =>
+    isSelected && theme.color.snackSideHover};
   :hover {
-    background-color: ${({ theme }) => theme.color.snackSideHover};
     cursor: pointer;
   }
 `;
@@ -31,29 +33,25 @@ const ChannelName = styled.section<ChannelNameProps>`
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 125px;
-  color: ${({ isSelected }) => isSelected && 'black'};
-  font-weight: ${({ isSelected }) => isSelected && 'bolder'};
-  font-style: ${({ newMessage }) => newMessage && 'italic'};
-`;
-
-const PaddingLeft8px = styled.span`
-  padding-left: 8px;
+  color: ${({ isSelected, newMessage }) =>
+    (isSelected || newMessage) && 'black'};
+  font-weight: ${({ newMessage }) => newMessage && 'bolder'};
 `;
 
 const ButtonCreateNote = styled.button`
-  font-size: 16px;
+  font-size: 14px;
   outline: none;
   border: none;
   background: inherit;
-  color: inherit;
+  color: ${({ theme }) => theme.color.snackSideFont};
   padding: 1px 4px 0px 4px;
   border: 1px solid ${({ theme }) => theme.color.snackSideFont};
   border-radius: 4px;
-  margin-right: 5px;
+  margin-right: 10px;
   cursor: pointer;
   :hover {
     color: black;
-    background-color: lightgray;
+    border: 1px solid black;
   }
 `;
 
@@ -63,8 +61,7 @@ const NoteItem = styled.article<{ isSelected: boolean }>`
   outline: none;
   border: none;
   background: inherit;
-  color: ${({ isSelected }) => (isSelected ? 'black' : 'inherit')};
-  font-weight: ${({ isSelected }) => isSelected && 'bolder'};
+  color: ${({ isSelected }) => (!!isSelected ? 'black' : 'inherit')};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -72,7 +69,6 @@ const NoteItem = styled.article<{ isSelected: boolean }>`
   :hover {
     cursor: pointer;
     color: black;
-    font-weight: bolder;
   }
 `;
 
@@ -123,6 +119,7 @@ export default function ChannelItem(props: Props) {
       id={channel.id}
       data-type={type}
       onClick={selectHandler}
+      isSelected={!!isSelected}
       onMouseEnter={hoverHandler}
       onMouseLeave={hoverHandler}
     >
@@ -133,7 +130,7 @@ export default function ChannelItem(props: Props) {
           }
           isSelected={!!isSelected}
         >
-          #<PaddingLeft8px>{channel.name}</PaddingLeft8px>
+          {`# ${channel.name}`}
         </ChannelName>
         {type === 'channel' && isSelected && hover && (
           <ButtonCreateNote onClick={createNoteHandler}>+</ButtonCreateNote>

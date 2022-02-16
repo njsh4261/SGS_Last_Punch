@@ -1,16 +1,23 @@
 package lastpunch.workspace.repository;
 
 import java.util.Optional;
-import lastpunch.workspace.entity.AccountChannel;
-import org.springframework.data.jpa.repository.JpaRepository;
+import lastpunch.workspace.entity.AccountChannel.Dto;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+// ManyToOne 필드들로 인해 JPARepository 제공 query나 QueryDSL를 사용하기 어려움
+// Native query를 통해 검색
 @Repository
-public interface AccountChannelRepository extends JpaRepository<AccountChannel, Long>{
-    Optional<AccountChannel> getByAccountidAnd
+public interface AccountChannelRepository{
+    // (accountId, channelId) tuple은 unique; List가 아닌 Single Item으로 결과를 받음
+    @Query(
+        value = "SELECT accountId, channelId, roleId FROM accountchannel "
+            + "WHERE accountId = :accountId AND channelId = :channelId",
+        nativeQuery = true
+    )
+    Optional<Dto> get(Long accountId, Long channelId);
     
     @Query(
         value = "INSERT INTO accountchannel (accountid, channelid, roleid) "

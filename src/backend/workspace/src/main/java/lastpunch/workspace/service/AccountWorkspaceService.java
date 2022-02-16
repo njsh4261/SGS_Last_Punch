@@ -6,7 +6,7 @@ import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.exception.DBExceptionMapper;
 import lastpunch.workspace.common.type.RoleType;
-import lastpunch.workspace.entity.AccountWorkspace;
+import lastpunch.workspace.entity.AccountWorkspace.DtoImpl;
 import lastpunch.workspace.repository.AccountWorkspaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,16 +25,13 @@ public class AccountWorkspaceService{
         this.dbExceptionMapper = dbExceptionMapper;
     }
     
-    public Map<String, Object> add(AccountWorkspace.Dto accountWorkspaceDto){
+    public Map<String, Object> add(DtoImpl dtoImpl){
         try{
             // TODO: 요청자의 권한에 따라 거부하는 코드 추가
-            if(accountWorkspaceDto.getRoleId() == null){
-                accountWorkspaceDto.setRoleId(RoleType.NORMAL_USER.getId());
-            }
             accountWorkspaceRepository.add(
-                accountWorkspaceDto.getAccountId(),
-                accountWorkspaceDto.getWorkspaceId(),
-                accountWorkspaceDto.getRoleId()
+                dtoImpl.getAccountId(),
+                dtoImpl.getWorkspaceId(),
+                dtoImpl.getRoleId() != null ? dtoImpl.getRoleId() : RoleType.NORMAL_USER.getId()
             );
             return new HashMap<>();
         } catch(DataIntegrityViolationException e){
@@ -43,13 +40,11 @@ public class AccountWorkspaceService{
         }
     }
     
-    public Map<String, Object> edit(AccountWorkspace.Dto accountWorkspaceDto, Long requesterId){
+    public Map<String, Object> edit(DtoImpl dtoImpl, Long requesterId){
         // TODO: 요청자의 권한에 따라 거부하는 코드 추가
         try{
             Integer editedRecords = accountWorkspaceRepository.edit(
-                accountWorkspaceDto.getAccountId(),
-                accountWorkspaceDto.getWorkspaceId(),
-                accountWorkspaceDto.getRoleId()
+                dtoImpl.getAccountId(), dtoImpl.getWorkspaceId(), dtoImpl.getRoleId()
             );
             if(editedRecords <= 0){
                 throw new BusinessException(StatusCode.ACCOUNTWORKSPACE_NOT_EXIST);

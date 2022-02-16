@@ -3,7 +3,7 @@ package lastpunch.workspace.controller;
 import java.util.Map;
 import lastpunch.workspace.common.Parser;
 import lastpunch.workspace.common.Response;
-import lastpunch.workspace.entity.AccountChannel;
+import lastpunch.workspace.entity.AccountChannel.DtoImpl;
 import lastpunch.workspace.service.AccountChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +21,17 @@ public class AccountChannelController{
 
     // 채널에 새로운 멤버를 추가
     @PostMapping
-    public ResponseEntity<Object> add(@RequestBody AccountChannel.Dto accountChannelDto){
-        return Response.ok(accountChannelService.add(accountChannelDto));
+    public ResponseEntity<Object> add(@RequestBody DtoImpl dtoImpl){
+        return Response.ok(accountChannelService.add(dtoImpl));
     }
 
     // 채널 내 멤버의 권한을 변경
     // 권한을 가진 유저가 다른 멤버의 권한을 바꾸거나 채널 소유자가 다른 멤버에게 소유권을 양도할 때 사용
     @PutMapping
     public ResponseEntity<Object> edit(
-            @RequestBody AccountChannel.Dto accountChannelDto,
-            @RequestHeader Map<String, Object> header){
+            @RequestBody DtoImpl dtoImpl, @RequestHeader Map<String, Object> header){
         return Response.ok(
-            accountChannelService.edit(accountChannelDto, Parser.getHeaderId(header))
+            accountChannelService.edit(dtoImpl, Parser.getHeaderId(header))
         );
     }
 

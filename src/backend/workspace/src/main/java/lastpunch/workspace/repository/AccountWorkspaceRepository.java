@@ -1,15 +1,24 @@
 package lastpunch.workspace.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
+import lastpunch.workspace.entity.AccountWorkspace.Dto;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import lastpunch.workspace.entity.AccountWorkspace;
-
+// ManyToOne 필드들로 인해 JPARepository 제공 query나 QueryDSL를 사용하기 어려움
+// Native query를 통해 검색
 @Repository
-public interface AccountWorkspaceRepository extends JpaRepository<AccountWorkspace, Long>{
+public interface AccountWorkspaceRepository{
+    // (accountId, workspaceId) tuple은 unique; List가 아닌 Single Item으로 결과를 받음
+    @Query(
+        value = "SELECT accountId, workspaceId, roleId FROM accountworkspace "
+            + "WHERE accountId = :accountId AND workspaceId = :workspaceId",
+        nativeQuery = true
+    )
+    Optional<Dto> get(Long accountId, Long workspaceId);
+    
     @Query(
         value = "INSERT INTO accountworkspace (accountid, workspaceid, roleid) "
             + "VALUES (:accountId, :workspaceId, :roleId)",

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Stomp, CompatClient } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
@@ -32,7 +32,7 @@ export default function presenceHook({ wsId, memberList }: Props) {
     try {
       const socket = new SockJS(URL.HOST + '/ws/presence');
       const stompClient = Stomp.over(socket);
-      // stompClient.debug= (f) => f;
+      stompClient.debug = (f) => f;
       stompClient.connect({ Authorization: accessToken }, async () => {
         stompClient.subscribe(`topic/workspace.${wsId}`, (payload) => {
           const msg: UpdateMessage = JSON.parse(payload.body);
@@ -45,8 +45,23 @@ export default function presenceHook({ wsId, memberList }: Props) {
           dispatch(setUserList(newList));
         });
         sendMessage('ONLINE');
-        // todo: update memberList
-        const response = await getPresenceAPI(wsId);
+        const presenceList: UpdateMessage[] = await getPresenceAPI(wsId);
+        if (presenceList) {
+          // userId: index in memberList
+          const userDictionary: { [index: string]: number } = {};
+          memberList.map(
+            (member, index) => (userDictionary[member.id] = index),
+          );
+          const newList = cloneDeep(memberList);
+          presenceList.map((presence) => {
+            // dictionray: presence.userId: userStatus
+            const index = userDictionary[presence.userId];
+            newList[index] = { ...newList[index], status: presence.userStatus };
+          });
+          // todo: fix this (socket 연결이 잘안되고 무한 로딩)
+          // check: chatSocket에서 클린업이 동작하는듯
+          // dispatch(setUserList(newList));
+        }
       });
       setStomp(stompClient);
     } catch (e) {
@@ -80,7 +95,9 @@ export default function presenceHook({ wsId, memberList }: Props) {
   };
 
   useEffect(() => {
-    connect();
+    if (memberList.length > 0) {
+      connect();
+    }
     return disconnect;
   }, []);
 }

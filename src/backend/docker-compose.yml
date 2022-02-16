@@ -62,7 +62,7 @@ services:
       - lastpunch-network
 
   gateway:
-    image: njsh4261/gateway
+    image: sookim1110/gateway-domain
     ports:
       - "8080:8080"
     depends_on:

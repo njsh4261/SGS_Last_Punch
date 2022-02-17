@@ -53,7 +53,7 @@ class PrivateMessageViewController: MessagesViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.viewModel.viewWillAppear()
+        messagesCollectionView.reloadData()
     }
     
     func bind(_ viewModel: PrivateMessageViewModel) {
@@ -83,10 +83,6 @@ class PrivateMessageViewController: MessagesViewController {
         viewModel.output.sokectEndTyping
             .debounce(.seconds(6), scheduler: MainScheduler.instance)
             .bind(onNext: setEndTyping)
-            .disposed(by: disposeBag)
-        
-        viewModel.output.setData
-            .bind(onNext: setData)
             .disposed(by: disposeBag)
         
         // 최근 메시지 - 30개
@@ -132,12 +128,6 @@ class PrivateMessageViewController: MessagesViewController {
         self.messages = messages
         self.messages.sort()
         
-        messagesCollectionView.reloadData()
-    }
-    
-    private func setData() {
-        updateTitleView(title: recipientInfo.displayName, subtitle: "상세 보기")
-        navigationItem.titleView?.addSubview(btnViewTitle)
         messagesCollectionView.reloadData()
     }
     
@@ -251,7 +241,8 @@ class PrivateMessageViewController: MessagesViewController {
         messagesCollectionView.backgroundColor = UIColor(named: "snackBackGroundColor2")
 
         updateTitleView(title: recipientInfo.displayName, subtitle: "상세 보기")
-        
+        navigationItem.titleView?.addSubview(btnViewTitle)
+
         btnViewTitle = btnViewTitle.then {
             $0.frame = navigationItem.titleView!.frame
             let recognizer = UITapGestureRecognizer(target: self, action: #selector(goToProfile))

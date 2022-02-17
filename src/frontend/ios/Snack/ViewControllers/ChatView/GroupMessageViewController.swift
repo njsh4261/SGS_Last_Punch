@@ -143,10 +143,6 @@ class GroupMessageViewController: MessagesViewController {
     }
     
     private func setData(_ channelInfo: ChannelData, _ memberInfo: [UserModel]) {
-        guard let channelName = channel?.name else { return }
-        updateTitleView(title: "# \(String(describing: channelName))", subtitle: "\(memberInfo.count)명의 멤버 >")
-        navigationItem.titleView?.addSubview(btnViewTitle)
-
         self.channelInfo = channelInfo
         self.memberInfo = memberInfo
     }
@@ -288,6 +284,7 @@ class GroupMessageViewController: MessagesViewController {
         guard let channelName = channel?.name else { return }
 
         updateTitleView(title: "# \(String(describing: channelName))", subtitle: "명의 멤버 >")
+        navigationItem.titleView?.addSubview(btnViewTitle)
         
         btnViewTitle = btnViewTitle.then {
             $0.frame = navigationItem.titleView!.frame

@@ -5,7 +5,7 @@ export const Container = styled.div<{ left?: boolean }>`
   z-index: 1;
   top: 0;
   transform: translateY(35%);
-  width: 100px;
+  width: 200px;
   font-size: 16px;
   border: 1px solid darkgray;
   border-radius: 8px;
@@ -18,17 +18,19 @@ export const Container = styled.div<{ left?: boolean }>`
           left: 0;
         `
       : css`
-          right: 0; ;
+          right: 0;
         `}
 `;
 
 export const Layer = styled.article<{ color?: string }>`
   border-bottom: 1px solid lightgray;
-  text-align: center;
-  padding: 4px 0;
+  padding: 12px 24px;
   color: ${({ color }) => color};
   :hover {
     cursor: pointer;
     background-color: lightgray;
+  }
+  :last-child {
+    border-bottom: none;
   }
 `;

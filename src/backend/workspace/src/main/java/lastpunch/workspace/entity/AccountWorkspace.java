@@ -32,10 +32,15 @@ public class AccountWorkspace{
     @JoinColumn(name="roleid")
     private Role role;
     
+    public interface Dto{
+        Long getAccountId();
+        Long getWorkspaceId();
+        Long getRoleId();
+    }
+    
     @Getter
-    @Setter
     @Builder
-    public static class Dto {
+    public static class DtoImpl implements Dto{
         private Long accountId;
         private Long workspaceId;
         private Long roleId;

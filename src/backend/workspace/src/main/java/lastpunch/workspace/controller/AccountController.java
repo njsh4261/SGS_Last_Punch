@@ -3,7 +3,6 @@ package lastpunch.workspace.controller;
 import java.util.Map;
 import lastpunch.workspace.common.Parser;
 import lastpunch.workspace.common.Response;
-import lastpunch.workspace.common.ServerCode;
 import lastpunch.workspace.entity.Account;
 import lastpunch.workspace.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +28,7 @@ public class AccountController{
     
     @GetMapping("/self")
     public ResponseEntity<Object> getSelf(@RequestHeader Map<String, Object> header){
-        return Response.ok(
-            ServerCode.WORKSPACE,
-            accountService.getSelf(Parser.getHeaderId(header))
-        );
+        return Response.ok(accountService.getSelf(Parser.getHeaderId(header)));
     }
     
     @PostMapping("/find")
@@ -41,9 +37,8 @@ public class AccountController{
             @PageableDefault Pageable pageable,
             @RequestHeader Map<String, Object> header){
         return Response.ok(
-            ServerCode.WORKSPACE,
             accountService.getByEmail(
-                accountFindDto.getEmail(), pageable , Parser.getHeaderId(header)
+                accountFindDto.getEmail(), pageable, Parser.getHeaderId(header)
             )
         );
     }

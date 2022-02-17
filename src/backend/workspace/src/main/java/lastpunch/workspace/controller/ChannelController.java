@@ -3,12 +3,9 @@ package lastpunch.workspace.controller;
 import java.util.Map;
 import lastpunch.workspace.common.Parser;
 import lastpunch.workspace.common.Response;
-import lastpunch.workspace.common.ServerCode;
-import lastpunch.workspace.entity.Account;
 import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.entity.Channel.CreateDto;
 import lastpunch.workspace.service.ChannelService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -28,14 +25,14 @@ public class ChannelController{
     
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOne(@PathVariable("id") Long id){
-        return Response.ok(ServerCode.WORKSPACE, channelService.getOne(id));
+        return Response.ok(channelService.getOne(id));
     }
     
     @GetMapping("/{id}/members")
     public ResponseEntity<Object> getMembers(
             @PathVariable("id") Long id,
             @PageableDefault(size = PAGE_SIZE_MEMBER) Pageable pageable){
-        return Response.ok(ServerCode.WORKSPACE, channelService.getMembers(id, pageable));
+        return Response.ok(channelService.getMembers(id, pageable));
     }
     
     @PostMapping
@@ -43,7 +40,6 @@ public class ChannelController{
             @RequestHeader Map<String, Object> header,
             @RequestBody CreateDto channelCreateDto){
         return Response.ok(
-            ServerCode.WORKSPACE,
             channelService.create(Parser.getHeaderId(header), channelCreateDto)
         );
     }
@@ -51,12 +47,12 @@ public class ChannelController{
     @PutMapping("/{id}")
     public ResponseEntity<Object> edit(
             @PathVariable("id") Long id, @RequestBody Channel.EditDto editDto){
-        return Response.ok(ServerCode.WORKSPACE, channelService.edit(id, editDto));
+        return Response.ok(channelService.edit(id, editDto));
     }
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id){
-        return Response.ok(ServerCode.WORKSPACE, channelService.delete(id));
+        return Response.ok(channelService.delete(id));
     }
 
     @PostMapping("/find")
@@ -65,8 +61,9 @@ public class ChannelController{
         @PageableDefault Pageable pageable
     ){
         return Response.ok(
-                ServerCode.WORKSPACE,
-                channelService.getByName(channelFindDto.getWorkspaceId(), channelFindDto.getName(), pageable)
+                channelService.getByName(
+                    channelFindDto.getWorkspaceId(), channelFindDto.getName(), pageable
+                )
         );
     }
 }

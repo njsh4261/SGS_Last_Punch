@@ -120,6 +120,8 @@
 		8CCFFAAB27BB41AB005D4D13 /* Ex+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAAA27BB41AB005D4D13 /* Ex+UIViewController.swift */; };
 		8CCFFAAD27BB48CE005D4D13 /* GroupDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAAC27BB48CE005D4D13 /* GroupDetailsViewController.swift */; };
 		8CCFFAB027BB48E3005D4D13 /* GroupDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAAF27BB48E3005D4D13 /* GroupDetailsView.xib */; };
+		8CCFFAB227BD12DB005D4D13 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAB127BD12DB005D4D13 /* ChatService.swift */; };
+		8CCFFAB427BD180C005D4D13 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAB327BD180C005D4D13 /* ChatModel.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -244,6 +246,8 @@
 		8CCFFAAA27BB41AB005D4D13 /* Ex+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+UIViewController.swift"; sourceTree = "<group>"; };
 		8CCFFAAC27BB48CE005D4D13 /* GroupDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewController.swift; sourceTree = "<group>"; };
 		8CCFFAAF27BB48E3005D4D13 /* GroupDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupDetailsView.xib; sourceTree = "<group>"; };
+		8CCFFAB127BD12DB005D4D13 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
+		8CCFFAB327BD180C005D4D13 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -352,6 +356,7 @@
 				8CC9E90B27B3B939008BE1EA /* AccountService.swift */,
 				8CCFFA6D27B964B2005D4D13 /* ChannelService.swift */,
 				8CC9E8C927B10C9D008BE1EA /* NoteService.swift */,
+				8CCFFAB127BD12DB005D4D13 /* ChatService.swift */,
 				8CC9E90F27B3FDB5008BE1EA /* StompWebsocket.swift */,
 				8C68AB1427969D1200C1711E /* NetworkResult.swift */,
 				8CC9E8BE27B10487008BE1EA /* APIConstants.swift */,
@@ -433,6 +438,7 @@
 				8CCFFA6F27B965A8005D4D13 /* ChannelModel.swift */,
 				8CBD459E27A56F0A0056A557 /* MessageModel.swift */,
 				8CC9E8CB27B10CAE008BE1EA /* NoteListCellModel.swift */,
+				8CCFFAB327BD180C005D4D13 /* ChatModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -950,6 +956,7 @@
 				8CCFFA7027B965A8005D4D13 /* ChannelModel.swift in Sources */,
 				8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */,
 				8CC1E79E27ACADA800BFE4D1 /* NewWorkspaceViewModel.swift in Sources */,
+				8CCFFAB427BD180C005D4D13 /* ChatModel.swift in Sources */,
 				8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */,
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
 				8CCFFA8C27B9E98F005D4D13 /* LogOutViewModel.swift in Sources */,
@@ -982,6 +989,7 @@
 				8CCFFA6627B95179005D4D13 /* NewChannelViewController.swift in Sources */,
 				8CBD459F27A56F0A0056A557 /* MessageModel.swift in Sources */,
 				8C962B6027ADAD3100A9A1F5 /* Member.swift in Sources */,
+				8CCFFAB227BD12DB005D4D13 /* ChatService.swift in Sources */,
 				8CC9E8D027B128C3008BE1EA /* GroupMessageViewModel.swift in Sources */,
 				8CC9E8DA27B22BDB008BE1EA /* Note.swift in Sources */,
 				8CBD456C27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift in Sources */,

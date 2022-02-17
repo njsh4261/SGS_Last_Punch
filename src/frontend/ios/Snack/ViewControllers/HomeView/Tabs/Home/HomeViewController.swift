@@ -102,7 +102,7 @@ class HomeViewController: UIViewController {
             .drive(onNext: { [self] (row, section) in
                 // 추가) 본인 user정보를 넣어야함
                 if section == 0 {
-                    let viewModel = GroupMessageViewModel(members!, channel: channels![row])
+                    let viewModel = GroupMessageViewModel(channel: channels![row])
                     let viewController = GroupMessageViewController(senderInfo: userInfo!, channel: channels![row], viewModel: viewModel)
                     viewController.bind(viewModel)
                     viewController.hidesBottomBarWhenPushed = true

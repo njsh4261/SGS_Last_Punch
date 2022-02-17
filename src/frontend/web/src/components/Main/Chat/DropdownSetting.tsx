@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import logout from '../../../util/logout';
@@ -8,6 +8,7 @@ import { Container, Layer } from '../../Common/DropdownComponent';
 import cookieImage from '../../../icon/cookie-2.png';
 import StatusCircle from '../../Common/StatusCircle';
 import { openModal } from '../../../modules/modal';
+import { RootState } from '../../../modules';
 
 const Profile = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ const ProfileStatus = styled.div`
 export default function Dropdown({ id }: { id: string }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
 
   return (
     <Container id={id}>
@@ -52,9 +54,10 @@ export default function Dropdown({ id }: { id: string }) {
         <Profile>
           <ProfileImg src={cookieImage}></ProfileImg>
           <ProfileNameAndStatus>
-            <ProfileName>차효준</ProfileName>
+            <ProfileName>{user.name}</ProfileName>
             <ProfileStatus>
-              <StatusCircle status={'ONLINE'}></StatusCircle>대화 가능
+              <StatusCircle status={user.status || 'OFFLINE'}></StatusCircle>
+              대화 가능
             </ProfileStatus>
           </ProfileNameAndStatus>
         </Profile>

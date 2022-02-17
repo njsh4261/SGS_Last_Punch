@@ -5,8 +5,9 @@ import Swal from 'sweetalert2';
 import ModalBox from '../../Common/ModalBox';
 import { UserStatus } from '../../../../types/presence';
 import StatusCircle from '../../Common/StatusCircle';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '../../../modules/modal';
+import { RootState } from '../../../modules';
 
 const Header = styled.header`
   width: 100%;
@@ -17,7 +18,13 @@ const Header = styled.header`
 
 const Body = styled.main``;
 
-const Status = styled.section`
+const StatusNow = styled.article`
+  display: flex;
+  align-items: center;
+  padding: 10px 28px;
+`;
+
+const StatusItem = styled.section`
   display: flex;
   align-items: center;
   padding: 10px 28px;
@@ -56,7 +63,10 @@ interface Props {
 
 export default function ModalStatus({ sendMessage }: Props) {
   const dispatch = useDispatch();
-  const [statusState, setStatusState] = useState<UserStatus>('ONLINE');
+  const user = useSelector((state: RootState) => state.user);
+  const [statusState, setStatusState] = useState<UserStatus>(
+    user.status || 'OFFLINE',
+  );
   const statusList: UserStatus[] = ['ONLINE', 'BUSY', 'ABSENT', 'OFFLINE'];
 
   const changeHandler = (status: UserStatus) => () => {
@@ -72,12 +82,15 @@ export default function ModalStatus({ sendMessage }: Props) {
     <ModalBox width="320px">
       <Header>상태 설정</Header>
       <Body>
+        <StatusNow>
+          현재상태: <StatusCircle status={statusState}></StatusCircle>
+        </StatusNow>
         <article>
           {statusList.map((status) => (
-            <Status key={status} onClick={changeHandler(status)}>
+            <StatusItem key={status} onClick={changeHandler(status)}>
               <StatusCircle status={status}></StatusCircle>
               {status}
-            </Status>
+            </StatusItem>
           ))}
         </article>
       </Body>

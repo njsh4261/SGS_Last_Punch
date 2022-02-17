@@ -10,6 +10,7 @@ import { UserState } from '../../modules/user';
 import { getPresenceAPI } from '../../Api/presence';
 import { cloneDeep } from 'lodash';
 import { setUserList } from '../../modules/userList';
+import { setUser } from '../../modules/user';
 
 interface Props {
   wsId: string | number;
@@ -34,8 +35,18 @@ export default function presenceHook({ wsId, memberList }: Props) {
       const stompClient = Stomp.over(socket);
       stompClient.debug = (f) => f;
       stompClient.connect({ Authorization: accessToken }, async () => {
-        stompClient.subscribe(`topic/workspace.${wsId}`, (payload) => {
+        stompClient.subscribe(`/topic/workspace.${wsId}`, (payload) => {
           const msg: UpdateMessage = JSON.parse(payload.body);
+          // set status self
+          if (+msg.userId === user.id) {
+            dispatch(
+              setUser({
+                id: +user.id,
+                name: user.name,
+                status: msg.userStatus,
+              }),
+            );
+          }
           // update user state (to memberList)
           const index = memberList.findIndex(
             (member) => member.id === +msg.userId,
@@ -46,6 +57,7 @@ export default function presenceHook({ wsId, memberList }: Props) {
         });
         // online 상태로 업데이트
         sendMessage('ONLINE', stompClient);
+        dispatch(setUser({ id: +user.id, name: user.name, status: 'ONLINE' }));
         // 첫 접속시 유저들의 프리젠스 상태 업데이트
         const presenceList: UpdateMessage[] = await getPresenceAPI(wsId);
         if (presenceList) {

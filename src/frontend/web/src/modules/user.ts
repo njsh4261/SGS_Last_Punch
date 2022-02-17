@@ -9,10 +9,11 @@ export type UserState = {
   status?: UserStatus;
 };
 
-export const setUser = ({ id, name }: UserState) => ({
+export const setUser = ({ id, name, status }: UserState) => ({
   type: SET_USER,
   id,
   name,
+  status,
 });
 
 type UserAction = ReturnType<typeof setUser>;
@@ -31,8 +32,8 @@ export default function user(
       return {
         id: action.id,
         name: action.name,
+        status: action.status,
       };
-      break;
     default:
       return state;
   }

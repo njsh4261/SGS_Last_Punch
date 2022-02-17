@@ -711,6 +711,58 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": \"12001\",\n    \"err\": {\n        \"msg\": \"WORKSPACE_NOT_EXIST\",\n        \"desc\": \"존재하지 않는 워크스페이스입니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12013 WORKSPACE_OWNER_SET_ERROR",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/workspace/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"workspace",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:20:16 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12013\",\n    \"err\": {\n        \"msg\": \"WORKSPACE_OWNER_SET_ERROR\",\n        \"desc\": \"워크스페이스의 소유자가 정상적으로 지정되지 않았습니다.\"\n    }\n}"
 						}
 					]
 				},
@@ -2020,6 +2072,58 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"err\": {\n        \"desc\": \"존재하지 않는 채널입니다.\",\n        \"msg\": \"CHANNEL_NOT_EXIST\"\n    },\n    \"code\": \"12003\"\n}"
+						},
+						{
+							"name": "Fail - 12014 CHANNEL_OWNER_SET_ERROR",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/channel/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"channel",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:21:59 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12014\",\n    \"err\": {\n        \"msg\": \"CHANNEL_OWNER_SET_ERROR\",\n        \"desc\": \"채널의 소유자가 정상적으로 지정되지 않았습니다.\"\n    }\n}"
 						}
 					]
 				},
@@ -2374,7 +2478,7 @@
 							"body": "{\n    \"err\": {\n        \"desc\": \"존재하지 않는 워크스페이스입니다.\",\n        \"msg\": \"WORKSPACE_NOT_EXIST\"\n    },\n    \"code\": \"12001\"\n}"
 						},
 						{
-							"name": "Fail  - 12011 CHANNEL_ALREADY_EXIST",
+							"name": "Fail  - 12012 CHANNEL_ALREADY_EXIST",
 							"originalRequest": {
 								"method": "POST",
 								"header": [
@@ -2436,7 +2540,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12011\",\n    \"err\": {\n        \"msg\": \"CHANNEL_ALREADY_EXIST\",\n        \"desc\": \"이미 존재하는 채널입니다.\"\n    }\n}"
+							"body": "{\n    \"code\": \"12012\",\n    \"err\": {\n        \"msg\": \"CHANNEL_ALREADY_EXIST\",\n        \"desc\": \"이미 존재하는 채널입니다.\"\n    }\n}"
 						}
 					]
 				},
@@ -2840,7 +2944,7 @@
 							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"channels\": {\n            \"content\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"channel1\"\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"channel2\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"channel3\"\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"channel4\"\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"channel5\"\n                },\n                {\n                    \"id\": 6,\n                    \"name\": \"channel6\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageSize\": 10,\n                \"pageNumber\": 0,\n                \"unpaged\": false,\n                \"paged\": true\n            },\n            \"last\": true,\n            \"totalPages\": 1,\n            \"totalElements\": 6,\n            \"size\": 10,\n            \"number\": 0,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"first\": true,\n            \"numberOfElements\": 6,\n            \"empty\": false\n        }\n    }\n}"
 						},
 						{
-							"name": "Fail - 12013 INVALID_PARAMETERS",
+							"name": "Fail - 12009 INVALID_PARAMETERS",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -2892,7 +2996,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12013\",\n    \"err\": {\n        \"msg\": \"INVALID_PARAMETERS\",\n        \"desc\": \"요청에 필요한 항목이 정상적으로 제공되지 않았습니다.\"\n    }\n}"
+							"body": "{\n    \"code\": \"12009\",\n    \"err\": {\n        \"msg\": \"INVALID_PARAMETERS\",\n        \"desc\": \"요청에 필요한 항목이 정상적으로 제공되지 않았습니다.\"\n    }\n}"
 						}
 					]
 				}
@@ -3178,6 +3282,122 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": \"12005\",\n    \"err\": {\n        \"msg\": \"ACCOUNTWORKSPACE_ALREADY_EXIST\",\n        \"desc\": \"유저와 워크스페이스 간 관계가 이미 존재합니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12008 INVALID_USERID",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountId\": 1,\r\n    \"workspaceId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/workspace/member",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"workspace",
+										"member"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:11:30 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12008\",\n    \"err\": {\n        \"msg\": \"INVALID_USERID\",\n        \"desc\": \"사용자 ID가 정상적으로 제공되지 않았습니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountId\": 5,\r\n    \"workspaceId\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/workspace/member",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"workspace",
+										"member"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:12:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12011\",\n    \"err\": {\n        \"msg\": \"PERMISSION_DENIED\",\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다.\"\n    }\n}"
 						}
 					]
 				},
@@ -3397,6 +3617,67 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"err\": {\n        \"desc\": \"존재하지 않는 역할입니다.\",\n        \"msg\": \"ROLE_NOT_EXIST\"\n    },\n    \"code\": \"12010\"\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountId\": 10,\r\n    \"workspaceId\": 1,\r\n    \"roleId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/workspace/member",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"workspace",
+										"member"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:16:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12011\",\n    \"err\": {\n        \"msg\": \"PERMISSION_DENIED\",\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다.\"\n    }\n}"
 						}
 					]
 				},
@@ -3585,6 +3866,223 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": \"12004\",\n    \"err\": {\n        \"msg\": \"ACCOUNTWORKSPACE_NOT_EXIST\",\n        \"desc\": \"존재하지 않는 유저와 워크스페이스 간 관계입니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									},
+									{
+										"key": "userid",
+										"value": "2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/workspace/member?accountId=4&workspaceId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"workspace",
+										"member"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "4"
+										},
+										{
+											"key": "workspaceId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 01:23:16 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"err\": {\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다.\",\n        \"msg\": \"PERMISSION_DENIED\"\n    },\n    \"code\": \"12011\"\n}"
+						},
+						{
+							"name": "Fail - 12008 INVALID_USERID",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/workspace/member?accountId=1&workspaceId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"workspace",
+										"member"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "1"
+										},
+										{
+											"key": "workspaceId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:25:18 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12008\",\n    \"err\": {\n        \"msg\": \"INVALID_USERID\",\n        \"desc\": \"사용자 ID가 정상적으로 제공되지 않았습니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12015 CANNOT_EXIT_WORKSPACE",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									},
+									{
+										"key": "userid",
+										"value": "1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/workspace/member?accountId=1&workspaceId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"workspace",
+										"member"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "1"
+										},
+										{
+											"key": "workspaceId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:26:29 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12015\",\n    \"err\": {\n        \"msg\": \"CANNOT_EXIT_WORKSPACE\",\n        \"desc\": \"워크스페이스의 소유자는 다른 멤버에게 워크스페이스 소유자 권한을 양도한 후 워크스페이스를 나갈 수 있습니다.\"\n    }\n}"
 						}
 					]
 				}
@@ -3931,6 +4429,67 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"err\": {\n        \"desc\": \"존재하지 않는 역할입니다.\",\n        \"msg\": \"ROLE_NOT_EXIST\"\n    },\n    \"code\": \"12010\"\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountId\": 8,\r\n    \"channelId\": 2,\r\n    \"roleId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/channel/member",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"channel",
+										"member"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:24:09 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12011\",\n    \"err\": {\n        \"msg\": \"PERMISSION_DENIED\",\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다.\"\n    }\n}"
 						}
 					]
 				},
@@ -4150,6 +4709,67 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"err\": {\n        \"desc\": \"존재하지 않는 역할입니다.\",\n        \"msg\": \"ROLE_NOT_EXIST\"\n    },\n    \"code\": \"12010\"\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"accountId\": 1,\r\n    \"channelId\": 1,\r\n    \"roleId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/channel/member",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"channel",
+										"member"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:27:26 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12011\",\n    \"err\": {\n        \"msg\": \"PERMISSION_DENIED\",\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다.\"\n    }\n}"
 						}
 					]
 				},
@@ -4338,6 +4958,219 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": \"12006\",\n    \"err\": {\n        \"msg\": \"ACCOUNTCHANNEL_NOT_EXIST\",\n        \"desc\": \"존재하지 않는 유저와 채널 간 관계입니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12008 INVALID_USERID",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/channel/member?accountId=1&channelId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"channel",
+										"member"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "1"
+										},
+										{
+											"key": "channelId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:29:54 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12008\",\n    \"err\": {\n        \"msg\": \"INVALID_USERID\",\n        \"desc\": \"사용자 ID가 정상적으로 제공되지 않았습니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/channel/member?accountId=1&channelId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"channel",
+										"member"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "1"
+										},
+										{
+											"key": "channelId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:28:23 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12011\",\n    \"err\": {\n        \"msg\": \"PERMISSION_DENIED\",\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12016 CANNOT_EXIT_CHANNEL",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/channel/member?accountId=1&channelId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"channel",
+										"member"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "1"
+										},
+										{
+											"key": "channelId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 17 Feb 2022 02:29:23 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12016\",\n    \"err\": {\n        \"msg\": \"CANNOT_EXIT_CHANNEL\",\n        \"desc\": \"채널의 소유자는 다른 멤버에게 채널 소유자 권한을 양도한 후 채널을 나갈 수 있습니다.\"\n    }\n}"
 						}
 					]
 				}

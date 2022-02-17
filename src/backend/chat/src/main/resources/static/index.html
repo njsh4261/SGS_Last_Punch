@@ -18,7 +18,7 @@
   </div>
   <br />
   <div id="conversationDiv">
-    <input type="text" id="content" placeholder="Write a message..."/>
+    <input type="text" id="content" placeholder="Write a chatMessage..."/>
     <button id="sendMessage" onclick="sendMessage();">Send</button>
     <input type="text" id="dateTime" placeholder="Type date"/>
     <button id="getOlder" disabled="disabled" onclick="getOlderMessage();">
@@ -102,7 +102,7 @@
         var response = document.getElementById('response');
         if(typeof(messageOutput.pageable) !== 'undefined'){
             messageOutput.content.reverse().forEach(
-                message => addMessageToList(response, message)
+                chatMessage => addMessageToList(response, chatMessage)
             );
         }
         else{
@@ -110,14 +110,14 @@
         }
     }
 
-    function addMessageToList(list, message){
+    function addMessageToList(list, chatMessage){
         var p = document.createElement('p');
         p.style.wordWrap = 'break-word';
         p.appendChild(
           document.createTextNode(
-            "(authorId: " + message.authorId + "): "
-            + message.content
-            + " (" + message.createDt + " / " + message.modifyDt +")"
+            "(authorId: " + chatMessage.authorId + "): "
+            + chatMessage.content
+            + " (" + chatMessage.createDt + " / " + chatMessage.modifyDt +")"
           )
         );
         list.appendChild(p);

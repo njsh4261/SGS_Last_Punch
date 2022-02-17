@@ -46,7 +46,7 @@
 └── java/lastpunch/chat
     ├── common                        (상수 및 JWT 토큰 인증 코드)
     │   └── jwt                       (소켓 연결 시 JWT 토큰 인증을 위한 패키지)
-    ├── config                        (STOMP, RabbitMQ, MongoDB, CORS, @Async 및 message interceptor 관련 설정)
+    ├── config                        (STOMP, RabbitMQ, MongoDB, CORS, @Async 및 chatMessage interceptor 관련 설정)
     ├── controller                    (메시지 및 REST API 요청 수신)
     ├── entity                        (MongoDB에 저장하는 프리젠스 정보 및 관련 DTO)
     ├── repository
@@ -58,4 +58,4 @@
 ```
 
 ## APIs
-[API 문서 링크](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/docs/API_references/chat_apis.md) 를 참조
+채팅 서버가 제공하는 API의 종류나 API의 사용 방법 및 시나리오는 [API 문서 링크](https://github.com/njsh4261/SGS_Last_Punch/tree/dev/docs/API_references/chat_apis.md) 를 참조

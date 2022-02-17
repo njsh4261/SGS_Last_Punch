@@ -82,6 +82,12 @@ const MemberEmail = styled.section`
   margin-left: 4px;
 `;
 
+const StatusCircleContainer = styled.div`
+  position: relative;
+  right: 16px;
+  top: 8px;
+`;
+
 interface Props {
   type: 'channel' | 'workspace';
   params: Params;
@@ -203,7 +209,9 @@ export default function ModalMember({ type, params }: Props) {
               ? memberList.sort(sortHandler).map((member) => (
                   <Layer key={`member-${member.id}`}>
                     <ImageIcon src={addPersonImage}></ImageIcon>
-                    <StatusCircle status={member.status}></StatusCircle>
+                    <StatusCircleContainer>
+                      <StatusCircle status={member.status}></StatusCircle>
+                    </StatusCircleContainer>
                     <MemberName>{member.name}</MemberName>
                     <MemberEmail>{member.email}</MemberEmail>
                   </Layer>
@@ -211,7 +219,9 @@ export default function ModalMember({ type, params }: Props) {
               : searchList.sort(sortHandler).map((member) => (
                   <Layer key={`member-${member.id}`}>
                     <ImageIcon src={addPersonImage}></ImageIcon>
-                    <StatusCircle status={member.status}></StatusCircle>
+                    <StatusCircleContainer>
+                      <StatusCircle status={member.status}></StatusCircle>
+                    </StatusCircleContainer>
                     <MemberName>{member.name}</MemberName>
                     <MemberEmail>{member.email}</MemberEmail>
                   </Layer>

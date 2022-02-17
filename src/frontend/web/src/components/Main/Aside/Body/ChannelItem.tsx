@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 import { ModalType } from '../../../../../types/modal.type';
 import { createNoteAPI, getNoteListAPI } from '../../../../Api/note';
+import addPerson from '../../../../icon/addPerson.svg';
+import StatusCircle from '../../../Common/StatusCircle';
 
 export const ItemContainer = styled.section<{ isSelected?: boolean }>`
   padding: 7px 0 7px 26px;
@@ -74,6 +76,23 @@ const NoteItem = styled.article<{ isSelected: boolean }>`
   }
 `;
 
+const DMItem = styled.section`
+  display: flex;
+  align-items: center;
+`;
+
+const DMProfileImg = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+`;
+
+const StatusCircleContainer = styled.div`
+  position: relative;
+  right: 12px;
+  top: 4px;
+`;
+
 interface Props {
   channel: any;
   params: Params;
@@ -137,7 +156,16 @@ export default function ChannelItem(props: Props) {
           }
           isSelected={!!isSelected}
         >
-          {`# ${channel.name}`}
+          {type === 'direct message' && (
+            <DMItem>
+              <DMProfileImg src={addPerson}></DMProfileImg>
+              <StatusCircleContainer>
+                <StatusCircle status="ONLINE"></StatusCircle>
+              </StatusCircleContainer>
+              {channel.name}
+            </DMItem>
+          )}
+          {type === 'channel' && `# ${channel.name}`}
         </ChannelName>
         {type === 'channel' && isSelected && hover && (
           <ButtonCreateNote onClick={createNoteHandler}>+</ButtonCreateNote>

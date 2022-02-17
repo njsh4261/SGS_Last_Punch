@@ -33,7 +33,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
     // MARK: - Private properties
     private var workspaces = [WorkspaceListCellModel]()
     private let disposeBag = DisposeBag()
-    private var page = 0
+    private var page = 1
     var cellData: Driver<[WorkspaceListCellModel]>
     
     // MARK: - Init
@@ -70,7 +70,6 @@ class WorkspaceListViewModel: ViewModelProtocol {
                 self.output.paginationLoading.accept(true)
                 
                 DispatchQueue.main.asyncAfter(deadline: when) {
-//                    self.page = self.workspaces.count/5 <= 1 ? 1 : self.workspaces.count/5
                     self.getWorkspaceList(token, page: self.page, method: .get)
                     self.output.paginationLoading.accept(false)
                 }
@@ -99,11 +98,7 @@ class WorkspaceListViewModel: ViewModelProtocol {
                                     self.output.errorMessage.accept("워크스페이스를 찾지 못했습니다")
                                     return
                                 }
-                                if page == 0 {
-                                    self.workspaces = workspaces
-                                } else {
-                                    self.workspaces.append(contentsOf: workspaces)
-                                }
+                                self.workspaces = workspaces
                                 self.output.isHiddenLogo.accept(!self.workspaces.isEmpty)
                                 self.output.workspaceListCellData.onNext(self.workspaces)
                             case .delete:

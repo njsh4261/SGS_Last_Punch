@@ -9,6 +9,7 @@ import UIKit
 import ProgressHUD
 import RxSwift
 import RxCocoa
+import Alamofire
 import SwiftKeychainWrapper
 
 class UserInvitationViewController: UIViewController {
@@ -20,6 +21,8 @@ class UserInvitationViewController: UIViewController {
     private var workspaceId: String = ""
     private var networkGroup = DispatchGroup()
     private var userList = [UserModel2]()
+    var isChannel: Bool = false
+    var body: Parameters?
     var email: String?
     
     // MARK: - UI
@@ -51,10 +54,14 @@ class UserInvitationViewController: UIViewController {
         emailField.text = email
     }
     
-    @objc func actionDismiss() {
+    @objc func actionDismiss(_ isSuccess: Bool = false) {
         guard let pvc = self.presentingViewController else { return }
         pvc.dismiss(animated: true) {
-            pvc.viewWillAppear(true)
+            if self.isChannel && isSuccess {
+                
+            } else {
+                pvc.viewWillAppear(true)
+            }
         }
     }
     
@@ -69,14 +76,24 @@ class UserInvitationViewController: UIViewController {
                 ProgressHUD.showFailed("Snack 사용자가 아닙니다")
             } else if userList.count == 1 {
                 if userList.first!.email == email { // 이메일이 정확히 일치하는 user에게 초대
-                    addAccount(accountId: (userList.first?.id.description)!)
+                    if isChannel {
+                        body!["accountId"] = userList.first?.id
+                        addMember(body: body!)
+                    } else {
+                        addAccount(accountId: (userList.first?.id.description)!)
+                    }
                 } else {
                     ProgressHUD.showFailed("Snack 사용자가 아닙니다")
                 }
             } else { // 여러개가 나올 경우
                 for user in userList {
                     if user.email == email { // 이메일이 정확히 일치하는 user에게 초대
-                        addAccount(accountId: user.id.description)
+                        if isChannel {
+                            body!["accountId"] = userList.first?.id
+                            addMember(body: body!)
+                        } else {
+                            addAccount(accountId: user.id.description)
+                        }
                     }
                 }
             }
@@ -90,7 +107,8 @@ class UserInvitationViewController: UIViewController {
             btnSend.isEnabled = false
         }
     }
-        
+    
+    // user 검색
     func getAccount(email: String) {
         DispatchQueue.main.async { [self] in // 메인스레드에서 동작
             AccountService.shared.getAccount(method: .post, accessToken: accessToken, email: email)
@@ -134,6 +152,29 @@ class UserInvitationViewController: UIViewController {
                                 default:
                                     ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
                                 }
+                            default:
+                                ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                            }
+                        }
+                    default:
+                        ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                    }
+                }.disposed(by: self.disposeBag)
+        }
+    }
+    
+    // 채널에 사용자 추가
+    func addMember(body: Parameters) {
+        DispatchQueue.main.async { // 메인스레드에서 동작
+            ChannelService.shared.addMember(method: .post, accessToken: self.accessToken, body: body)
+                .subscribe { event in
+                    switch event {
+                    case .next(let result):
+                        DispatchQueue.main.async { // 메인스레드에서 동작
+                            switch result {
+                            case .success:
+                                ProgressHUD.showSucceed("초대했습니다")
+                                self.actionDismiss(true)
                             default:
                                 ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
                             }

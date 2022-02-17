@@ -120,12 +120,14 @@ class DirectMessageListViewController: UIViewController {
     
     private func goToUserSearch() {
         let userSearchVC = UserSearchViewController()
+        userSearchVC.isChannel = false
         self.present(userSearchVC, animated: true, completion: nil)
     }
     
     private func goToInvitation() {
         let userInvitationVC = UserInvitationViewController()
         userInvitationVC.email = ""
+        userInvitationVC.isChannel = false
         self.present(NavigationController(rootViewController: userInvitationVC), animated: true, completion: nil)
     }
     

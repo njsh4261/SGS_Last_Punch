@@ -55,14 +55,18 @@ export default function chatSocketHook(
           if (low === high) return;
 
           stompClient.subscribe(`/topic/channel.${low}-${high}`, (payload) => {
+            const msg = JSON.parse(payload.body);
             if (`${low}-${high}` === channelRef.current) {
-              const msg = JSON.parse(payload.body);
               setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
             } else {
-              // alarm on
+              // alarm on & update lastMessage(for rendring)
               const index = memberList.findIndex((el) => el.id === member.id);
               const newList = cloneDeep(memberList);
-              newList[index] = { ...newList[index], alarm: true };
+              newList[index] = {
+                ...newList[index],
+                alarm: true,
+                lastMessage: msg,
+              };
               dispatch(setUserList(newList));
             }
           });

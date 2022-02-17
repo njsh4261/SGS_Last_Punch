@@ -26,16 +26,12 @@ class GroupMessageViewController: MessagesViewController {
     var memberInfo: [UserModel]?
     var senderInfo: User
     private var userInfo: WorkspaceMemberCellModel?
-    private(set) lazy var refreshControl: UIRefreshControl = {
-        let control = UIRefreshControl()
-        control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
-        return control
-    }()
 
     // MARK: - UI
     private var btnTransform = UIBarButtonItem()
     private var btnViewTitle = UIButton()
     private var btnAttach = InputBarButtonItem()
+    private var refreshControl = UIRefreshControl()
     
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, channel: WorkspaceChannelCellModel, viewModel: GroupMessageViewModel) {
         self.senderInfo = senderInfo
@@ -56,7 +52,6 @@ class GroupMessageViewController: MessagesViewController {
         confirmDelegates()
         removeOutgoingMessageAvatars()
         attribute()
-        layout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,6 +80,20 @@ class GroupMessageViewController: MessagesViewController {
         viewModel.output.setData
             .bind(onNext: setData)
             .disposed(by: disposeBag)
+        
+        // 최근 메시지 - 30개
+        viewModel.output.resentMessages
+            .bind(onNext: resentMessage)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.errorMessage
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: showFailedAlert)
+            .disposed(by: disposeBag)
+    }
+    
+    private func showFailedAlert(_ message: String) {
+        ProgressHUD.showFailed(message)
     }
     
     @objc private func goToDetails() {
@@ -103,6 +112,14 @@ class GroupMessageViewController: MessagesViewController {
     
     private func goToMessage() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    // 최근 메시지 Load
+    private func resentMessage(_ messages: [MessageModel]) {
+        self.messages = messages
+        self.messages.sort()
+        
+        messagesCollectionView.reloadData()
     }
     
     private func setData(_ channelInfo: ChannelData, _ memberInfo: [UserModel]) {
@@ -139,18 +156,6 @@ class GroupMessageViewController: MessagesViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
-    
-    @objc func loadMoreMessages() {
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
-//            SampleData.shared.getMessages(count: 20) { messages in
-//                DispatchQueue.main.async {
-//                    self.messages.insert(contentsOf: messages, at: 0)
-//                    self.messagesCollectionView.reloadDataAndKeepOffset()
-//                    self.refreshControl.endRefreshing()
-//                }
-//            }
-        }
     }
     
     // MARK: delegate
@@ -224,7 +229,7 @@ class GroupMessageViewController: MessagesViewController {
 
     func insertMessage(_ message: MessageModel) {
         messages.append(message)
-        // Reload last section to update header/footer labels and insert a new one
+
         messagesCollectionView.performBatchUpdates({
             messagesCollectionView.insertSections([messages.count - 1])
             if messages.count >= 2 {
@@ -267,12 +272,9 @@ class GroupMessageViewController: MessagesViewController {
         
         addPlusButtonToMessageInputBar()
     }
-    
-    private func layout() {
-        // navigationItem titleView
-    }
 }
 
+// MARK: - UIImagePickerController Delegate
 extension GroupMessageViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func showImagePickerControllerActionSheet()  {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

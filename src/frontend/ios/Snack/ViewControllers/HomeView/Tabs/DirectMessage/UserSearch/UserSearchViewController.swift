@@ -9,6 +9,7 @@ import UIKit
 import ProgressHUD
 import RxSwift
 import RxCocoa
+import Alamofire
 import SwiftKeychainWrapper
 
 class UserSearchViewController: UIViewController {
@@ -18,7 +19,9 @@ class UserSearchViewController: UIViewController {
     private var userId: String = ""
     private var workspaceId: String = ""
     private var userList = [UserModel2]()
-    
+    var isChannel: Bool = false
+    var body: Parameters?
+
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var viewHeader: UIView!
@@ -30,6 +33,7 @@ class UserSearchViewController: UIViewController {
         self.accessToken = accessToken
         self.userId = userId
         self.workspaceId = workspaceId
+        
         self.tableView.register(UINib(nibName: "UserSearchCell", bundle: nil), forCellReuseIdentifier: "UserSearchCell")
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
         tableView.tableHeaderView = viewHeader
@@ -42,6 +46,8 @@ class UserSearchViewController: UIViewController {
 
         let userInvitationVC = UserInvitationViewController()
         userInvitationVC.email = email
+        userInvitationVC.isChannel = self.isChannel
+        userInvitationVC.body = self.body
         
         dismiss(animated: true) {
             pvc.present(NavigationController(rootViewController: userInvitationVC), animated: true, completion: nil)
@@ -121,6 +127,8 @@ extension UserSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
+        // 배열이 비어 있을 경우, action 방지
+        if userList.count == 0 { return }
         goToInvitation(email: userList[indexPath.row].email)
     }
 }

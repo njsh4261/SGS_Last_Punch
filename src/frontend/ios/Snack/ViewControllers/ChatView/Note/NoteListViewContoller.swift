@@ -144,7 +144,7 @@ class NoteListViewContoller: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func goToNote(_ noteId: String) {
-        let webView = CreateWKWebView(nibName: nil, bundle: nil, url: "http://localhost:3000/\(workspaceId)/\(channelId)/note/" + noteId)
+        let webView = CreateWKWebView(nibName: nil, bundle: nil, url: APIConstants().webNoteURL + "/\(workspaceId)/\(channelId)/note/" + noteId)
         self.show(webView, sender: nil)
     }
     

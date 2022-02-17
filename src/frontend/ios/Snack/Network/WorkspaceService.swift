@@ -30,7 +30,7 @@ class WorkspaceService {
         if isCreate { parameters = self.makeParameter(name: name, chennel: chennel) }
         if isChannels { url += "/channels" }
         if isMembers { url += "/members" }
-        if page != 0 { url += "?page=\(page)" }
+        if page != 0 { url += "?size=15&page=0" }
         
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]

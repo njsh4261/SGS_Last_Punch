@@ -98,6 +98,33 @@ class ChannelService {
         }
     }
     
+    func addMember(method: HTTPMethod, accessToken: String, body: Parameters) -> Observable<NetworkResult<ChannelResponseModel>> {
+        let url = APIConstants().channelURL + "/member"
+                        
+        return Observable.create { observer -> Disposable in
+            let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
+            let dataRequest = AF.request(url,
+                                         method: method,
+                                         parameters: body,
+                                         encoding: JSONEncoding.default,
+                                         headers: header)
+
+            dataRequest.validate().responseData { [self] response in
+                switch response.result {
+                case .success:
+                    guard let statusCode = response.response?.statusCode else {return}
+                    guard let value = response.value else {return}
+                    let networkResult = judgeStatus(by: statusCode, value)
+                    return observer.onNext(networkResult)
+                case .failure:
+                    return observer.onNext(.pathErr)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+
+    
     func editChannel(method: HTTPMethod, accessToken: String, channelId: String, name: String, description: String) -> Observable<NetworkResult<ChannelResponseModel>> {
         let url = APIConstants().channelURL + "/\(channelId)"
                 

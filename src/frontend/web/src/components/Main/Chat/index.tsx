@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import styled, { css } from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 import chatHook from '../../../hook/chat';
 import ChatInput from './Input';
@@ -9,6 +10,7 @@ import chatScrollHook from '../../../hook/chat/chatScroll';
 import { ChatMessage } from '../../../../types/chat.type';
 import cookieImage from '../../../icon/cookie-2.png';
 import './index.scss';
+import presenceHook from '../../../hook/presence';
 
 const Container = styled.main`
   flex: 1;
@@ -116,6 +118,7 @@ interface Props {
 }
 
 const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
+  const params = useParams();
   let prevAuthorId: string | undefined;
   const snow = new Array(50).fill(0); // for snow animation
 
@@ -129,6 +132,9 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     msgTypingHandler,
     msgSubmitHandler,
   ] = chatHook();
+
+  // presence 소켓 연결 및 유저들의 status 업데이트
+  const sendMessage = presenceHook({ wsId: params.wsId!, memberList });
 
   const userDictionary = useMemo(() => {
     const obj: { [index: string]: string } = {};

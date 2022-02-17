@@ -11,7 +11,6 @@ import { RootState } from '../modules';
 import Loading from '../components/Common/Loading';
 import getSelfInfoHook from '../hook/getSelfInfo';
 import alarmOffHook from '../hook/alarmOff';
-import presenceHook from '../hook/presence';
 
 const MainLayout = styled.div`
   display: flex;
@@ -37,8 +36,6 @@ export default function Main() {
   getSelfInfoHook();
   // url 변경시 파라미터의 채널 id와 그 name을 store에 저장
   updateChannelStoreHook(params, memberList);
-  // presence 소켓 연결 및 유저들의 status 업데이트
-  presenceHook({ wsId: ws.id, memberList });
   // 알림이 표시된 채널에 진입시 알림 해제
   alarmOffHook({ params, memberList, channelList });
 

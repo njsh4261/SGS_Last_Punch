@@ -120,6 +120,8 @@ async function apiHandler(
             );
         }
         return response;
+      } else {
+        console.error('refresh token error - in apiHandler');
       }
     } else {
       // logout();

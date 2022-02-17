@@ -3,7 +3,6 @@ import SockJS from 'sockjs-client';
 import { Stomp, CompatClient } from '@stomp/stompjs';
 import { useDispatch } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
-import { useParams } from 'react-router-dom';
 
 import { SendMessage, ChatMessage } from '../../../types/chat.type';
 import { setChannelListRedux } from '../../modules/channeList';
@@ -14,6 +13,7 @@ const HOST = URL.HOST;
 
 export default function chatSocketHook(
   userId: number,
+  wsId: string,
   channelId: string,
   setMsgList: React.Dispatch<SetStateAction<ChatMessage[]>>,
   channelList: any[],
@@ -21,7 +21,6 @@ export default function chatSocketHook(
 ) {
   const channelRef = useRef(channelId);
   const dispatch = useDispatch();
-  const params = useParams();
   const stomp = useRef<CompatClient | null>(null);
 
   const connect = () => {
@@ -56,9 +55,8 @@ export default function chatSocketHook(
           const [low, high] =
             userId < member.id ? [userId, member.id] : [member.id, userId];
           if (low === high) return;
-
           stompClient.subscribe(
-            `/topic/channel.${params.wsId}-${low}-${high}`,
+            `/topic/channel.${wsId}-${low}-${high}`,
             (payload) => {
               const msg = JSON.parse(payload.body);
               if (`${low}-${high}` === channelRef.current) {

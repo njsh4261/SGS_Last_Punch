@@ -60,6 +60,13 @@ class GroupMessageViewController: MessagesViewController {
     
     func bind(_ viewModel: GroupMessageViewModel) {
         // MARK: Bind input
+        // typing - 5초
+        messageInputBar.inputTextView.rx.text
+            .orEmpty
+            .throttle(.seconds(5), scheduler: MainScheduler.instance)
+            .bind(onNext: textDidChange)
+            .disposed(by: disposeBag)
+                
         btnViewTitle.rx.tap
             .bind(to: viewModel.input.btnTtitleTapped)
             .disposed(by: disposeBag)
@@ -76,6 +83,18 @@ class GroupMessageViewController: MessagesViewController {
         viewModel.output.sokectMessage
             .bind(onNext: insertNewMessage )
             .disposed(by: disposeBag)
+        
+        // typing
+        viewModel.output.sokectTyping
+            .bind(onNext: setTyping)
+            .disposed(by: disposeBag)
+        
+        // End typing
+        viewModel.output.sokectEndTyping
+            .debounce(.seconds(6), scheduler: MainScheduler.instance)
+            .bind(onNext: setEndTyping)
+            .disposed(by: disposeBag)
+
         
         viewModel.output.setData
             .bind(onNext: setData)
@@ -112,6 +131,11 @@ class GroupMessageViewController: MessagesViewController {
     
     private func goToMessage() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    // Typing - text 변화 감지
+    private func textDidChange(_ text: String) {
+        StompWebsocket.shared.sendTyping(authorId: senderInfo.senderId, channelId: channel!.id.description)
     }
     
     // 최근 메시지 Load
@@ -241,6 +265,17 @@ class GroupMessageViewController: MessagesViewController {
             }
         })
     }
+    
+    // 입력 중
+    private func setTyping(_ typing: TypingModel) {
+        updateTitleView(title: "# \(String(describing: channel!.name))", subtitle: "입력중...")
+    }
+    
+    // 입력 끝
+    private func setEndTyping(_ typing: TypingModel) {
+        updateTitleView(title: "# \(String(describing: channel!.name))", subtitle: "\(memberInfo!.count)명의 멤버 >")
+    }
+
     
     func isLastSectionVisible() -> Bool {
         guard !messages.isEmpty else { return false }
@@ -423,15 +458,21 @@ extension GroupMessageViewController: MessagesDisplayDelegate {
     }
 }
 
-// MARK: - InputBarAccessoryView Delegate (검색창에서 send 버튼을 누를 경우 이벤트 처리)
+// MARK: - InputBarAccessoryView Delegate
 extension GroupMessageViewController: InputBarAccessoryViewDelegate {
-    // 본인 정보
+    // 검색창에서 send 버튼을 누를 경우 이벤트 처리
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         StompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channel!.id.description, content: text)
         inputBar.inputTextView.text.removeAll()
 
 //        processInputBar(messageInputBar)
     }
+    
+    // Typing
+//    func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
+        
+//        StompWebsocket.shared.sendTyping(authorId: senderInfo.senderId, channelId: channel!.id.description)
+//    }
 //
 //    func processInputBar(_ inputBar: InputBarAccessoryView) {
 //        let attributedText = inputBar.inputTextView.attributedText!

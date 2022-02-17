@@ -1,8 +1,8 @@
 import React from 'react';
 
-import ChannelModal from './Aside/Body/ChannelModal';
-import InviteModal from '../Common/InviteModal';
-import ModalBox from '../Common/ModalBox';
+import ChannelModal from '../Main/Aside/Body/ChannelModal';
+import InviteModal from './InviteModal';
+import ModalBox from './ModalBox';
 import { ModalType } from '../../../types/modal.type';
 
 export default function Modal({

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import ModalBox from '../ModalBox';
+import ModalBox from '../../Common/ModalBox';
 import ModalMember from './ModalMember';
 import ModalInfo from './ModalInfo';
 import { useParams } from 'react-router-dom';
@@ -57,7 +57,7 @@ interface Props {
   type: 'channel' | 'workspace';
 }
 
-export default function ModalMain({ type }: Props) {
+export default function ModalMenu({ type }: Props) {
   const NAV_INFO = 'nav-info';
   const NAV_MEMBER = 'nav-member';
 

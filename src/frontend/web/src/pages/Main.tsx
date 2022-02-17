@@ -49,24 +49,24 @@ export default function Main() {
         sideToggle={sideToggle}
         sideToggleHandler={sideToggleHandler}
       ></Aside>
-      {
-        (channelList.length > 0 && memberList.length > 0 && params.channelId,
-        user.id !== 0 ? (
-          params.noteId ? (
-            <NoteMain
-              sideToggle={sideToggle}
-              sideToggleHandler={sideToggleHandler}
-            ></NoteMain>
-          ) : (
-            <Chat
-              sideToggle={sideToggle}
-              sideToggleHandler={sideToggleHandler}
-            ></Chat>
-          )
+      {channelList.length > 0 &&
+      memberList.length > 0 &&
+      params.channelId &&
+      user.id !== 0 ? (
+        params.noteId ? (
+          <NoteMain
+            sideToggle={sideToggle}
+            sideToggleHandler={sideToggleHandler}
+          ></NoteMain>
         ) : (
-          <Loading></Loading>
-        ))
-      }
+          <Chat
+            sideToggle={sideToggle}
+            sideToggleHandler={sideToggleHandler}
+          ></Chat>
+        )
+      ) : (
+        <Loading></Loading>
+      )}
     </MainLayout>
   );
 }

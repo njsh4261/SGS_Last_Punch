@@ -6,12 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import seacrhImage from '../../../icon/search.svg';
 import addPersonImage from '../../../icon/addPerson.svg';
 import { getChannelMember } from '../../../Api/channel';
-import Loading from '../Loading';
+import Loading from '../../Common/Loading';
 import { getWsMemberAPI } from '../../../Api/workspace';
 import { openModal } from '../../../modules/modal';
 import { UserStatus } from '../../../../types/presence';
 import { RootState } from '../../../modules';
-import StatusCircle from '../StatusCircle';
+import StatusCircle from '../../Common/StatusCircle';
 
 const Container = styled.article`
   border-radius: 6px;
@@ -82,6 +82,12 @@ const MemberEmail = styled.section`
   margin-left: 4px;
 `;
 
+const StatusCircleContainer = styled.div`
+  position: relative;
+  right: 16px;
+  top: 8px;
+`;
+
 interface Props {
   type: 'channel' | 'workspace';
   params: Params;
@@ -146,6 +152,12 @@ export default function ModalMember({ type, params }: Props) {
     }
   };
 
+  // simple sort handler. only check 'ONLINE'
+  const sortHandler = (a: Member, b: Member) => {
+    if (a.status === 'ONLINE') return -1;
+    else return 1;
+  };
+
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchValue(value);
@@ -194,17 +206,22 @@ export default function ModalMember({ type, params }: Props) {
           </Layer>
           <MemberLayers>
             {searchValue === ''
-              ? memberList.map((member) => (
+              ? memberList.sort(sortHandler).map((member) => (
                   <Layer key={`member-${member.id}`}>
                     <ImageIcon src={addPersonImage}></ImageIcon>
-                    <StatusCircle status={member.status}></StatusCircle>
+                    <StatusCircleContainer>
+                      <StatusCircle status={member.status}></StatusCircle>
+                    </StatusCircleContainer>
                     <MemberName>{member.name}</MemberName>
                     <MemberEmail>{member.email}</MemberEmail>
                   </Layer>
                 ))
-              : searchList.map((member) => (
+              : searchList.sort(sortHandler).map((member) => (
                   <Layer key={`member-${member.id}`}>
                     <ImageIcon src={addPersonImage}></ImageIcon>
+                    <StatusCircleContainer>
+                      <StatusCircle status={member.status}></StatusCircle>
+                    </StatusCircleContainer>
                     <MemberName>{member.name}</MemberName>
                     <MemberEmail>{member.email}</MemberEmail>
                   </Layer>

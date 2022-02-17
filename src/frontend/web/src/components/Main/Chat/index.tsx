@@ -159,6 +159,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
             sideToggle={sideToggle}
             sideToggleHandler={sideToggleHandler}
             channel={channel}
+            sendMessage={sendMessage}
           />
           {snow.map((el, index) => (
             <div key={'snow-' + index} className="snow"></div>

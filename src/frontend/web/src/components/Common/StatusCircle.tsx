@@ -6,10 +6,7 @@ import { UserStatus } from '../../../types/presence';
 const Container = styled.div`
   width: 10px;
   height: 10px;
-  background-color: white;
-  position: relative;
-  right: 14px;
-  top: 10px;
+  background-color: inherit;
 `;
 
 const Circle = styled.div<{ color: string }>`
@@ -30,7 +27,7 @@ export default function StatusCircle({ status }: Props) {
       <Circle
         color={
           status === 'ONLINE'
-            ? 'green'
+            ? '#2AAC76'
             : status === 'BUSY'
             ? 'yellow'
             : status === 'ABSENT'

@@ -8,8 +8,10 @@ import ImageButton from '../../Common/ImageButton';
 import arrowRightIcon from '../../../icon/arrowRight.svg';
 import DropdownSetting from './DropdownSetting';
 import ModalMenuHook from '../../../hook/ModalMenu';
-import ModalMain from '../../Common/ModalMain';
+import ModalMenu from '../Modal';
 import { RootState } from '../../../modules';
+import ModalStatus from '../Modal/ModalStatus';
+import { UserStatus } from '../../../../types/presence';
 
 const ChannelHeader = styled.article`
   display: flex;
@@ -89,10 +91,16 @@ const ChannelTab = styled.div`
 interface Props {
   channel: RootState['channel'];
   sideToggle: boolean;
+  sendMessage: (userStatus: UserStatus) => void;
   sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-const Header = ({ channel, sideToggle, sideToggleHandler }: Props) => {
+const Header = ({
+  channel,
+  sendMessage,
+  sideToggle,
+  sideToggleHandler,
+}: Props) => {
   const TYPE = 'channel';
 
   const { drop, dropdownHandler, NAV_BUTTON_ID, NAV_DROPDOWN_ID } =
@@ -103,7 +111,10 @@ const Header = ({ channel, sideToggle, sideToggleHandler }: Props) => {
   return (
     <ChannelHeader>
       {modal.active && modal.modalType === 'channel' && (
-        <ModalMain type={TYPE}></ModalMain>
+        <ModalMenu type={TYPE}></ModalMenu>
+      )}
+      {modal.active && modal.modalType === 'profile' && (
+        <ModalStatus sendMessage={sendMessage}></ModalStatus>
       )}
       <ChannelInfo>
         {!sideToggle && (
@@ -113,7 +124,11 @@ const Header = ({ channel, sideToggle, sideToggleHandler }: Props) => {
             onClick={sideToggleHandler}
           ></ImageButton>
         )}
-        <ChannelTab onClick={openModalHandler}>
+        <ChannelTab
+          onClick={
+            channel.id.toString().includes('-') ? undefined : openModalHandler
+          }
+        >
           <ChannelName>{channel.name}</ChannelName>
           <ArrowDropDownIcon></ArrowDropDownIcon>
         </ChannelTab>

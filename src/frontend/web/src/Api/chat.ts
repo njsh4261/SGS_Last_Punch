@@ -3,7 +3,6 @@ import apiHandler from './handler';
 
 export const getRecentChat = async (wsId: string, channelId: string) => {
   const endpoint = '/chat/recent';
-  console.log(typeof channelId);
   const body = {
     channelId: channelId.includes('-') ? `${wsId}-${channelId}` : channelId,
   };

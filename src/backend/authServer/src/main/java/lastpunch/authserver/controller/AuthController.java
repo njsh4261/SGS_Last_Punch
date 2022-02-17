@@ -29,7 +29,7 @@ public class AuthController {
         String accessToken = authService.reissue(requestHeader);
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("access_token", accessToken);
-        
+
         return Response.toResponseEntity("11000", HttpStatus.OK, data);
     }
     

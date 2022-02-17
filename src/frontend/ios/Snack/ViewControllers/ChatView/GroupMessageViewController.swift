@@ -135,6 +135,7 @@ class GroupMessageViewController: MessagesViewController {
     
     // Typing - text 변화 감지
     private func textDidChange(_ text: String) {
+        if text.count == 0 { return }
         StompWebsocket.shared.sendTyping(authorId: senderInfo.senderId, channelId: channel!.id.description)
     }
     

@@ -21,6 +21,7 @@ export default function Main() {
   const [params, ws] = getWsHook();
   const channelList = useSelector((state: RootState) => state.channelList);
   const memberList = useSelector((state: RootState) => state.userList);
+  const user = useSelector((state: RootState) => state.user);
   const [hover, setHover] = useState(false);
   const [sideToggle, setSideToggle] = useState(true);
 
@@ -48,21 +49,24 @@ export default function Main() {
         sideToggle={sideToggle}
         sideToggleHandler={sideToggleHandler}
       ></Aside>
-      {channelList.length > 0 && memberList.length > 0 && params.channelId ? (
-        params.noteId ? (
-          <NoteMain
-            sideToggle={sideToggle}
-            sideToggleHandler={sideToggleHandler}
-          ></NoteMain>
+      {
+        (channelList.length > 0 && memberList.length > 0 && params.channelId,
+        user.id !== 0 ? (
+          params.noteId ? (
+            <NoteMain
+              sideToggle={sideToggle}
+              sideToggleHandler={sideToggleHandler}
+            ></NoteMain>
+          ) : (
+            <Chat
+              sideToggle={sideToggle}
+              sideToggleHandler={sideToggleHandler}
+            ></Chat>
+          )
         ) : (
-          <Chat
-            sideToggle={sideToggle}
-            sideToggleHandler={sideToggleHandler}
-          ></Chat>
-        )
-      ) : (
-        <Loading></Loading>
-      )}
+          <Loading></Loading>
+        ))
+      }
     </MainLayout>
   );
 }

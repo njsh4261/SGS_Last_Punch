@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import { useParams } from 'react-router-dom';
 
 import { RootState } from '../../modules';
 import chatSocketHook from './chatSocket';
@@ -19,6 +20,7 @@ export default function chatHook(
   msgTypingHandler: (e: React.ChangeEvent<HTMLInputElement>) => void,
   msgSubmitHandler: () => void,
 ] {
+  const params = useParams();
   const user = useSelector((state: RootState) => state.user);
   const channel = useSelector((state: RootState) => state.channel);
   const [msg, setMsg] = useState<string>('');
@@ -28,6 +30,7 @@ export default function chatHook(
 
   const sendMessage = chatSocketHook(
     user.id,
+    params.wsId!,
     channel.id,
     setMsgList,
     channelList,
@@ -39,9 +42,13 @@ export default function chatHook(
 
   const msgSubmitHandler = () => {
     if (msg !== '') {
+      const channelId = channel.id.toString();
+
       sendMessage({
         authorId: user.id.toString(),
-        channelId: channel.id.toString(),
+        channelId: channelId.includes('-')
+          ? params.wsId + '-' + channel.id.toString()
+          : channel.id.toString(),
         content: msg,
       });
       setMsg('');

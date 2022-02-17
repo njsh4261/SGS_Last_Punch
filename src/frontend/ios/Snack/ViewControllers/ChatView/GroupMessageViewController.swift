@@ -34,9 +34,9 @@ class GroupMessageViewController: MessagesViewController {
     private var refreshControl = UIRefreshControl()
     
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, channel: WorkspaceChannelCellModel, viewModel: GroupMessageViewModel) {
+        self.viewModel = viewModel
         self.senderInfo = senderInfo
         self.channel = channel
-        self.viewModel = viewModel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let token: String = KeychainWrapper.standard[.accessToken] else { return }
         NSLog("accessToken: " + token)
@@ -67,10 +67,6 @@ class GroupMessageViewController: MessagesViewController {
             .bind(onNext: textDidChange)
             .disposed(by: disposeBag)
                 
-        btnViewTitle.rx.tap
-            .bind(to: viewModel.input.btnTtitleTapped)
-            .disposed(by: disposeBag)
-        
         btnAttach.rx.tap
             .subscribe(onNext: showImagePickerControllerActionSheet)
             .disposed(by: disposeBag)
@@ -94,7 +90,6 @@ class GroupMessageViewController: MessagesViewController {
             .debounce(.seconds(6), scheduler: MainScheduler.instance)
             .bind(onNext: setEndTyping)
             .disposed(by: disposeBag)
-
         
         viewModel.output.setData
             .bind(onNext: setData)

@@ -18,6 +18,7 @@ import CoreLocation
 
 class PrivateMessageViewController: MessagesViewController {
     // MARK: - Properties
+    private let viewModel: PrivateMessageViewModel
     private let disposeBag = DisposeBag()
     var channelId: String
     var messages = [MessageModel]()
@@ -25,15 +26,15 @@ class PrivateMessageViewController: MessagesViewController {
     var senderInfo: User
 
     // MARK: - UI
-    private var btnProfile = UIBarButtonItem()    
+    private var btnViewTitle = UIButton()
     private var btnAttach = InputBarButtonItem()
     private var refreshControl = UIRefreshControl()
 
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, channelId: String) {
+    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, channelId: String, viewModel: PrivateMessageViewModel) {
+        self.viewModel = viewModel
         self.channelId = channelId
         self.senderInfo = senderInfo
         self.recipientInfo = recipientInfo
-//        self.channel = channel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let token: String = KeychainWrapper.standard[.accessToken] else { return }
         NSLog("accessToken: " + token)
@@ -51,6 +52,10 @@ class PrivateMessageViewController: MessagesViewController {
         attribute()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.viewModel.viewWillAppear()
+    }
+    
     func bind(_ viewModel: PrivateMessageViewModel) {
         // MARK: Bind input
         // typing - 5초
@@ -62,10 +67,6 @@ class PrivateMessageViewController: MessagesViewController {
 
         btnAttach.rx.tap
             .subscribe(onNext: showImagePickerControllerActionSheet)
-            .disposed(by: disposeBag)
-                
-        btnProfile.rx.tap
-            .bind(onNext: goToProfile)
             .disposed(by: disposeBag)
         
         // MARK: Bind output
@@ -84,6 +85,10 @@ class PrivateMessageViewController: MessagesViewController {
             .bind(onNext: setEndTyping)
             .disposed(by: disposeBag)
         
+        viewModel.output.setData
+            .bind(onNext: setData)
+            .disposed(by: disposeBag)
+        
         // 최근 메시지 - 30개
         viewModel.output.resentMessages
             .bind(onNext: resentMessage)
@@ -99,7 +104,7 @@ class PrivateMessageViewController: MessagesViewController {
         ProgressHUD.showFailed(message)
     }
     
-    private func goToProfile() {
+    @objc private func goToProfile() {
         let userModel = UserModel(
             id: Int(recipientInfo.authorId)!, email: "lastPunch@gmail.com", name: recipientInfo.displayName, description: "안녕하세요", phone: "010-1234-1234", country: "kor", language: "eng", settings: 0, status: "rull", createDt: "2022.02.24", modifyDt: "2022.02.24"
         )
@@ -127,6 +132,12 @@ class PrivateMessageViewController: MessagesViewController {
         self.messages = messages
         self.messages.sort()
         
+        messagesCollectionView.reloadData()
+    }
+    
+    private func setData() {
+        updateTitleView(title: recipientInfo.displayName, subtitle: "상세 보기")
+        navigationItem.titleView?.addSubview(btnViewTitle)
         messagesCollectionView.reloadData()
     }
     
@@ -204,7 +215,7 @@ class PrivateMessageViewController: MessagesViewController {
     
     // 입력 끝
     private func setEndTyping(_ typing: TypingModel) {
-        updateTitleView(title: "# \(recipientInfo.displayName)", subtitle: "대화 가능")
+        updateTitleView(title: "# \(recipientInfo.displayName)", subtitle: "상세 보기")
     }
 
     func insertMessage(_ message: MessageModel) {
@@ -230,9 +241,7 @@ class PrivateMessageViewController: MessagesViewController {
     }
     
     private func attribute() {
-//        navigationItem.titleView = viewTitle
         if senderInfo.senderId != recipientInfo.senderId {
-            navigationItem.rightBarButtonItem = btnProfile
             messageInputBar.inputTextView.placeholder = "\(recipientInfo.displayName)에(게) 메시지 보내기"
         } else {
             messageInputBar.inputTextView.placeholder = "\(recipientInfo.displayName)(나)에(게) 메시지 보내기"
@@ -241,11 +250,12 @@ class PrivateMessageViewController: MessagesViewController {
         view.backgroundColor = UIColor(named: "snackBackGroundColor3")
         messagesCollectionView.backgroundColor = UIColor(named: "snackBackGroundColor2")
 
-        updateTitleView(title: recipientInfo.displayName, subtitle: "대화 가능")
-                                
-        btnProfile = btnProfile.then {
-            $0.title = "프로필"
-            $0.style = .plain
+        updateTitleView(title: recipientInfo.displayName, subtitle: "상세 보기")
+        
+        btnViewTitle = btnViewTitle.then {
+            $0.frame = navigationItem.titleView!.frame
+            let recognizer = UITapGestureRecognizer(target: self, action: #selector(goToProfile))
+            $0.addGestureRecognizer(recognizer)
         }
         
         addPlusButtonToMessageInputBar()

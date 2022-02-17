@@ -23,6 +23,7 @@ class PrivateMessageViewModel: ViewModelProtocol {
         let sokectTyping = PublishRelay<TypingModel>()
         let sokectEndTyping = PublishRelay<TypingModel>()
         let resentMessages = PublishRelay<[MessageModel]>()
+        let setData = PublishRelay<Void>()
         let errorMessage = PublishRelay<String>()
     }
     // MARK: - Public properties
@@ -68,6 +69,11 @@ class PrivateMessageViewModel: ViewModelProtocol {
         
         // recent messages
         getRecent(method: .post, accessToken: accessToken, channelId: channelId!)
+    }
+    
+    func viewWillAppear() {
+        // Title Button - 프로필 상세보기
+        output.setData.accept(())
     }
     
     func getRecent(method: HTTPMethod, accessToken: String, channelId: String) {

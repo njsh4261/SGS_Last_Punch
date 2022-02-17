@@ -1,13 +1,14 @@
 import React, { SetStateAction, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Stomp, CompatClient } from '@stomp/stompjs';
-import { TOKEN, URL } from '../../constant';
 import { useDispatch } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
+import { useParams } from 'react-router-dom';
 
 import { SendMessage, ChatMessage } from '../../../types/chat.type';
 import { setChannelListRedux } from '../../modules/channeList';
 import { setUserList } from '../../modules/userList';
+import { TOKEN, URL } from '../../constant';
 
 const HOST = URL.HOST;
 
@@ -20,6 +21,7 @@ export default function chatSocketHook(
 ) {
   const channelRef = useRef(channelId);
   const dispatch = useDispatch();
+  const params = useParams();
   const stomp = useRef<CompatClient | null>(null);
 
   const connect = () => {
@@ -34,6 +36,7 @@ export default function chatSocketHook(
       const stompClient = Stomp.over(socket);
       stompClient.debug = (f) => f;
       stompClient.connect({ Authorization: accessToken }, () => {
+        // 채널 리스트에 대한 구독
         channelList.map((channel) => {
           stompClient.subscribe(`/topic/channel.${channel.id}`, (payload) => {
             if (channel.id === +channelRef.current) {
@@ -48,28 +51,31 @@ export default function chatSocketHook(
             }
           });
         });
-
+        // 멤버 리스트에 대한 구독
         memberList.map((member) => {
           const [low, high] =
             userId < member.id ? [userId, member.id] : [member.id, userId];
           if (low === high) return;
 
-          stompClient.subscribe(`/topic/channel.${low}-${high}`, (payload) => {
-            const msg = JSON.parse(payload.body);
-            if (`${low}-${high}` === channelRef.current) {
-              setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
-            } else {
-              // alarm on & update lastMessage(for rendring)
-              const index = memberList.findIndex((el) => el.id === member.id);
-              const newList = cloneDeep(memberList);
-              newList[index] = {
-                ...newList[index],
-                alarm: true,
-                lastMessage: msg,
-              };
-              dispatch(setUserList(newList));
-            }
-          });
+          stompClient.subscribe(
+            `/topic/channel.${params.wsId}-${low}-${high}`,
+            (payload) => {
+              const msg = JSON.parse(payload.body);
+              if (`${low}-${high}` === channelRef.current) {
+                setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+              } else {
+                // alarm on & update lastMessage(for rendring)
+                const index = memberList.findIndex((el) => el.id === member.id);
+                const newList = cloneDeep(memberList);
+                newList[index] = {
+                  ...newList[index],
+                  alarm: true,
+                  lastMessage: msg,
+                };
+                dispatch(setUserList(newList));
+              }
+            },
+          );
         });
       });
       stomp.current = stompClient;

@@ -1,6 +1,8 @@
 package lastpunch.chat.controller;
 
 import java.util.Map;
+
+import lastpunch.chat.common.MessageType;
 import lastpunch.chat.entity.ChatMessage.EnterDto;
 import lastpunch.chat.entity.ChatMessage.GetOlderDto;
 import lastpunch.chat.entity.ChatMessage.ReceiveDto;
@@ -32,13 +34,10 @@ public class ChatController{
     @MessageMapping("/chat")
     public void send(ReceiveDto receiveDto){
         logger.info("message received: " + receiveDto);
-        switch(receiveDto.getType()){
-            case TYPING:
-                rabbitMqService.sendTypingStatus(receiveDto.toTypingDto());
-                break;
-            case MESSAGE:
-                rabbitMqService.sendChatMessage(receiveDto.toEntity());
-                break;
+        if (receiveDto.getType() == MessageType.TYPING) {
+            rabbitMqService.sendTypingStatus(receiveDto.toTypingDto());
+        } else {
+            rabbitMqService.sendChatMessage(receiveDto.toEntity());
         }
     }
     

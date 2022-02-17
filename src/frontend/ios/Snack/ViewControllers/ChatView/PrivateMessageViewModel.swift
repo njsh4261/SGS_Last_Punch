@@ -20,6 +20,8 @@ class PrivateMessageViewModel: ViewModelProtocol {
     
     struct Output {
         let sokectMessage = PublishRelay<MessageModel>()
+        let sokectTyping = PublishRelay<TypingModel>()
+        let sokectEndTyping = PublishRelay<TypingModel>()
         let resentMessages = PublishRelay<[MessageModel]>()
         let errorMessage = PublishRelay<String>()
     }
@@ -39,14 +41,14 @@ class PrivateMessageViewModel: ViewModelProtocol {
     // MARK: - Init
     init(_ user: User) {
         self.socketClient = StompClientLib()
-        guard let accessToken: String = KeychainWrapper.standard[.accessToken], let userId: String = KeychainWrapper.standard[.id] else { return }
+        guard let workspaceId: String = KeychainWrapper.standard[.workspaceId], let accessToken: String = KeychainWrapper.standard[.accessToken], let userId: String = KeychainWrapper.standard[.id] else { return }
         if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
             let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
             self.userInfo = userInfo!
         }
 
         self.accessToken = accessToken
-        self.channelId = user.senderId < userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"
+        self.channelId = user.senderId < userId ? "\(workspaceId)-\(user.senderId)-\(userId)" : "\(workspaceId)-\(userId)-\(user.senderId)"
         nameDict["\(user.senderId)"] = user.displayName
         nameDict[userId] = userInfo?.name
         
@@ -56,6 +58,12 @@ class PrivateMessageViewModel: ViewModelProtocol {
                 $0.channelId == self.channelId
             }
             .bind(to: output.sokectMessage)
+            .disposed(by: disposeBag)
+        
+        // typing
+        StompWebsocket.shared.typing
+            .filter {$0.channelId == self.channelId}
+            .bind(to: output.sokectTyping, output.sokectEndTyping)
             .disposed(by: disposeBag)
         
         // recent messages

@@ -38,10 +38,17 @@ struct Message: Codable {
     var id: String?
     var authorId: String
     var channelId: String
-    var content: String
-    var status: Int
-    var createDt: String
-    var modifyDt: String
+    var content: String?
+    var status: Int?
+    var createDt: String?
+    var modifyDt: String?
+    var type: String?
+}
+
+struct TypingModel: Codable {
+    var authorId: String
+    var channelId: String
+    var type: String
 }
 
 struct MessageModel: MessageType {

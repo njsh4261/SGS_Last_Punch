@@ -69,7 +69,7 @@ class GroupDetailsViewController: UIViewController {
     
     // MARK: - Load Data()
     func loadGroup() {
-        guard let channelInfo = channelInfo, let owner = channelInfo.owner  else { return }
+        guard let channelInfo = channelInfo, let owner = channelInfo.channel?.owner  else { return }
         lblName.text = channelInfo.channel?.name
         if channelInfo.channel?.description == nil || channelInfo.channel?.description == "" {
             lblDescription.text = "설정된 주제가 없습니다"
@@ -343,7 +343,7 @@ class GroupDetailsViewController: UIViewController {
     }
     
     func isGroupOwner() -> Bool {
-        return userId == channelInfo?.owner?.id.description
+        return userId == channelInfo?.channel?.owner?.id.description
     }
 }
 

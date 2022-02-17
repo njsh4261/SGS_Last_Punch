@@ -7,6 +7,7 @@ import { ChatMessage } from '../../../types/chat.type';
 import { RootState } from '../../modules/index';
 
 export default function chatScrollHook(
+  wsId: string,
   channelId: string,
   msgList: ChatMessage[],
   setMsgList: React.Dispatch<React.SetStateAction<ChatMessage[]>>,
@@ -45,7 +46,7 @@ export default function chatScrollHook(
       }
 
       setLoading(true);
-      const response = await getOldChat(channelId.toString(), date!);
+      const response = await getOldChat(wsId, channelId.toString(), date!);
       if (response) {
         const current = cloneDeep(msgList);
         const old = cloneDeep(response.content);

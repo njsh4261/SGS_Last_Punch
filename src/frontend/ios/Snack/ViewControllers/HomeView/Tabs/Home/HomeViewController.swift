@@ -111,7 +111,7 @@ class HomeViewController: UIViewController {
                     viewController.hidesBottomBarWhenPushed = true
                     self.show(viewController, sender: nil)
                 } else {
-                    let channelId = userInfo!.senderId < members![row].senderId ? "\(workspaceId!)-\(userInfo!.senderId)-\(members![row].senderId)" : "\(workspaceId!)-\( members![row].senderId)-\(userInfo!.senderId)"
+                    let channelId = userInfo!.senderId < members![row].senderId ? "\(workspaceId!)-\(userInfo!.senderId)-\(members![row].senderId)" : "\(workspaceId!)-\(members![row].senderId)-\(userInfo!.senderId)"
                     let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members![row], channelId: channelId)
                     let viewModel = PrivateMessageViewModel(members![row])
                     viewController.bind(viewModel)

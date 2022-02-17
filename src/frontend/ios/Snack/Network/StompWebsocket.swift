@@ -84,8 +84,7 @@ extension StompWebsocket: StompClientLibDelegate {
 //        print("JSON BODY : \(String(describing: jsonBody))")
 //        print("STRING BODY : \(stringBody ?? "nil")")
         
-//        if let JSONString = String(data: json, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString)
-//        }
+//        if let JSONString = String(data: json, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString)}
         let decoder = JSONDecoder()
         guard let messagePlayload = try? decoder.decode(Message.self, from: json) else { return }
         

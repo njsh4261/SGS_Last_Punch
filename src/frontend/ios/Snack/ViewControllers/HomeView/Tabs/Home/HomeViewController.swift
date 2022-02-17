@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
     private var userInfo: User?
     private var channel: Channel?
     private let HEADER_HEIGHT: Float = 66
+    private var workspaceId: String?
     
     // MARK: - UI
     private var btnSearch = UIButton()
@@ -34,6 +35,8 @@ class HomeViewController: UIViewController {
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle?  = nil, viewModel: HomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        guard let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
+        self.workspaceId = workspaceId
         if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
             let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
             self.userInfo = getUser(userInfo!)
@@ -108,7 +111,7 @@ class HomeViewController: UIViewController {
                     viewController.hidesBottomBarWhenPushed = true
                     self.show(viewController, sender: nil)
                 } else {
-                    let channelId = userInfo!.senderId < members![row].senderId ? "\(userInfo!.senderId)-\(members![row].senderId)" : "\( members![row].senderId)-\(userInfo!.senderId)"
+                    let channelId = userInfo!.senderId < members![row].senderId ? "\(workspaceId!)-\(userInfo!.senderId)-\(members![row].senderId)" : "\(workspaceId!)-\( members![row].senderId)-\(userInfo!.senderId)"
                     let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members![row], channelId: channelId)
                     let viewModel = PrivateMessageViewModel(members![row])
                     viewController.bind(viewModel)

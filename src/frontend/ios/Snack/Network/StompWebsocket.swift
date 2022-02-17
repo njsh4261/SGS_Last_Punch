@@ -41,6 +41,8 @@ class StompWebsocket {
     
     // ViewWillAppear 될때 마다, subscibe
     func subscribe() {
+        guard let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
+
         for channel in channels {
             if chatIdList.contains(channel.id.description) { continue }
             socketClient.subscribe(destination: "/topic/channel." + "\(channel.id.description)")
@@ -50,7 +52,7 @@ class StompWebsocket {
         
         for member in members {
             nameDict["\(member.id.description)"] = member.name
-            let chatId = userId < member.id.description ? "\(userId)-\(member.id.description)" : "\(member.id.description)-\(userId)"
+            let chatId = userId < member.id.description ? "\(workspaceId)-\(userId)-\(member.id.description)" : "\(workspaceId)-\(member.id.description)-\(userId)"
             if chatIdList.contains(chatId) { continue }
             socketClient.subscribe(destination: "/topic/channel." + chatId)
             chatIdList.append(chatId)

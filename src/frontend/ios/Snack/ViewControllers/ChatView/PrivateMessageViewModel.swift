@@ -39,14 +39,14 @@ class PrivateMessageViewModel: ViewModelProtocol {
     // MARK: - Init
     init(_ user: User) {
         self.socketClient = StompClientLib()
-        guard let accessToken: String = KeychainWrapper.standard[.accessToken], let userId: String = KeychainWrapper.standard[.id] else { return }
+        guard let workspaceId: String = KeychainWrapper.standard[.workspaceId], let accessToken: String = KeychainWrapper.standard[.accessToken], let userId: String = KeychainWrapper.standard[.id] else { return }
         if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
             let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
             self.userInfo = userInfo!
         }
 
         self.accessToken = accessToken
-        self.channelId = user.senderId < userId ? "\(user.senderId)-\(userId)" : "\(userId)-\(user.senderId)"
+        self.channelId = user.senderId < userId ? "\(workspaceId)-\(user.senderId)-\(userId)" : "\(workspaceId)-\(userId)-\(user.senderId)"
         nameDict["\(user.senderId)"] = user.displayName
         nameDict[userId] = userInfo?.name
         

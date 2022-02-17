@@ -21,6 +21,8 @@ class GroupMessageViewModel: ViewModelProtocol {
     
     struct Output {
         let sokectMessage = PublishRelay<MessageModel>()
+        let sokectTyping = PublishRelay<TypingModel>()
+        let sokectEndTyping = PublishRelay<TypingModel>()
         let resentMessages = PublishRelay<[MessageModel]>()
         let setData = PublishRelay<(ChannelData, [UserModel])>()
         let errorMessage = PublishRelay<String>()
@@ -52,6 +54,12 @@ class GroupMessageViewModel: ViewModelProtocol {
         StompWebsocket.shared.message
             .filter {$0.channelId == self.channel.id.description}
             .bind(to: output.sokectMessage)
+            .disposed(by: disposeBag)
+        
+        // typing
+        StompWebsocket.shared.typing
+            .filter {$0.channelId == self.channel.id.description}
+            .bind(to: output.sokectTyping, output.sokectEndTyping)
             .disposed(by: disposeBag)
     }
     

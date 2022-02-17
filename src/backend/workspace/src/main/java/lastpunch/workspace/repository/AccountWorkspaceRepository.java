@@ -1,7 +1,10 @@
 package lastpunch.workspace.repository;
 
 import java.util.Optional;
+
+import lastpunch.workspace.entity.AccountWorkspace;
 import lastpunch.workspace.entity.AccountWorkspace.Dto;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -10,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 // ManyToOne 필드들로 인해 JPARepository 제공 query나 QueryDSL를 사용하기 어려움
 // Native query를 통해 검색
 @Repository
-public interface AccountWorkspaceRepository{
+public interface AccountWorkspaceRepository extends JpaRepository<AccountWorkspace, Long> {
     // (accountId, workspaceId) tuple은 unique; List가 아닌 Single Item으로 결과를 받음
     @Query(
         value = "SELECT accountId, workspaceId, roleId FROM accountworkspace "

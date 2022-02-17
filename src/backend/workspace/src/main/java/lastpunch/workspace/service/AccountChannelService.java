@@ -1,9 +1,5 @@
 package lastpunch.workspace.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.exception.DBExceptionMapper;
@@ -14,6 +10,11 @@ import lastpunch.workspace.repository.AccountChannelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class AccountChannelService{
@@ -28,8 +29,13 @@ public class AccountChannelService{
         this.dbExceptionMapper = dbExceptionMapper;
     }
 
-    public Map<String, Object> add(DtoImpl dtoImpl){
+    public Map<String, Object> add(DtoImpl dtoImpl, Long requesterId){
         try{
+            // 요청자가 해당 채널의 멤버가 아니면 새로운 멤버를 추가할 수 없음
+            Optional<Dto> requesterOptional = accountChannelRepository.get(requesterId, dtoImpl.getChannelId());
+            if(requesterOptional.isEmpty()){
+                throw new BusinessException(StatusCode.PERMISSION_DENIED);
+            }
             accountChannelRepository.add(
                 dtoImpl.getAccountId(),
                 dtoImpl.getChannelId(),
@@ -65,15 +71,18 @@ public class AccountChannelService{
                     throw new BusinessException(StatusCode.PERMISSION_DENIED);
                 case ADMIN:
                     if(Objects.equals(dtoImpl.getAccountId(), requesterId)){
-                        if(RoleType.toEnum(dtoImpl.getRoleId()) == RoleType.ADMIN){
+                        if(RoleType.toEnum(dtoImpl.getRoleId()) == RoleType.OWNER){
                             // ADMIN은 본인을 OWNER로 변경할 수 없음
                             throw new BusinessException(StatusCode.PERMISSION_DENIED);
                         }
                     }
                     else{
-                        if(RoleType.toEnum(targetOptional.get().getRoleId()) == RoleType.ADMIN
-                                && RoleType.toEnum(dtoImpl.getRoleId()) == RoleType.NORMAL_USER){
-                            // ADMIN은 다른 ADMIN을 NORMAL_USER로 변경할 수 없음
+                        Long targetRoleId = targetOptional.get().getRoleId();
+                        if((RoleType.toEnum(targetRoleId) != RoleType.NORMAL_USER)
+                                || (RoleType.toEnum(targetRoleId) == RoleType.NORMAL_USER
+                                    && RoleType.toEnum(dtoImpl.getRoleId()) == RoleType.OWNER)
+                        ){
+                            // ADMIN은 다른 ADMIN 혹은 OWNER의 권한을 변경하거나 NORMAL_USER를 OWNER로 설정할 수 없음
                             throw new BusinessException(StatusCode.PERMISSION_DENIED);
                         }
                     }
@@ -82,16 +91,12 @@ public class AccountChannelService{
                     if(!Objects.equals(dtoImpl.getAccountId(), requesterId)
                             && RoleType.toEnum(dtoImpl.getRoleId()) == RoleType.OWNER){
                         // 다른 사용자를 OWNER로 지정하는 경우, 본인을 ADMIN으로 변경
-                        accountChannelRepository.edit(
-                            requesterId, dtoImpl.getChannelId(), RoleType.ADMIN.getId()
-                        );
+                        accountChannelRepository.edit(requesterId, dtoImpl.getChannelId(), RoleType.ADMIN.getId());
                     }
                     break;
             }
             
-            accountChannelRepository.edit(
-                dtoImpl.getAccountId(), dtoImpl.getChannelId(), dtoImpl.getRoleId()
-            );
+            accountChannelRepository.edit(dtoImpl.getAccountId(), dtoImpl.getChannelId(), dtoImpl.getRoleId());
             return new HashMap<>();
         } catch(DataIntegrityViolationException e){
             BusinessException be = dbExceptionMapper.getException(e);

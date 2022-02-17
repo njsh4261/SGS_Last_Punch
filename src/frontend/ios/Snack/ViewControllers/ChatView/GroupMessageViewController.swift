@@ -26,16 +26,12 @@ class GroupMessageViewController: MessagesViewController {
     var memberInfo: [UserModel]?
     var senderInfo: User
     private var userInfo: WorkspaceMemberCellModel?
-    private(set) lazy var refreshControl: UIRefreshControl = {
-        let control = UIRefreshControl()
-        control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
-        return control
-    }()
 
     // MARK: - UI
     private var btnTransform = UIBarButtonItem()
     private var btnViewTitle = UIButton()
     private var btnAttach = InputBarButtonItem()
+    private var refreshControl = UIRefreshControl()
     
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, channel: WorkspaceChannelCellModel, viewModel: GroupMessageViewModel) {
         self.senderInfo = senderInfo
@@ -56,7 +52,6 @@ class GroupMessageViewController: MessagesViewController {
         confirmDelegates()
         removeOutgoingMessageAvatars()
         attribute()
-        layout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -163,18 +158,6 @@ class GroupMessageViewController: MessagesViewController {
         return .lightContent
     }
     
-    @objc func loadMoreMessages() {
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
-//            SampleData.shared.getMessages(count: 20) { messages in
-//                DispatchQueue.main.async {
-//                    self.messages.insert(contentsOf: messages, at: 0)
-//                    self.messagesCollectionView.reloadDataAndKeepOffset()
-//                    self.refreshControl.endRefreshing()
-//                }
-//            }
-        }
-    }
-    
     // MARK: delegate
     private func confirmDelegates() {
         messagesCollectionView.messagesDataSource = self
@@ -246,7 +229,7 @@ class GroupMessageViewController: MessagesViewController {
 
     func insertMessage(_ message: MessageModel) {
         messages.append(message)
-        // Reload last section to update header/footer labels and insert a new one
+
         messagesCollectionView.performBatchUpdates({
             messagesCollectionView.insertSections([messages.count - 1])
             if messages.count >= 2 {
@@ -289,12 +272,9 @@ class GroupMessageViewController: MessagesViewController {
         
         addPlusButtonToMessageInputBar()
     }
-    
-    private func layout() {
-        // navigationItem titleView
-    }
 }
 
+// MARK: - UIImagePickerController Delegate
 extension GroupMessageViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func showImagePickerControllerActionSheet()  {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

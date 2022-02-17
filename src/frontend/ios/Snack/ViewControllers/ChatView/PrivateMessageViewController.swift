@@ -19,22 +19,16 @@ import CoreLocation
 class PrivateMessageViewController: MessagesViewController {
     // MARK: - Properties
     private let disposeBag = DisposeBag()
-//    let channel: Channel?
     var channelId: String
     var messages = [MessageModel]()
     var recipientInfo: User
     var senderInfo: User
-    private var userInfo: WorkspaceMemberCellModel?
-    private(set) lazy var refreshControl: UIRefreshControl = {
-        let control = UIRefreshControl()
-        control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
-        return control
-    }()
 
     // MARK: - UI
     private var btnProfile = UIBarButtonItem()    
     private var btnAttach = InputBarButtonItem()
-    
+    private var refreshControl = UIRefreshControl()
+
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, channelId: String) {
         self.channelId = channelId
         self.senderInfo = senderInfo
@@ -55,7 +49,6 @@ class PrivateMessageViewController: MessagesViewController {
         confirmDelegates()
         removeOutgoingMessageAvatars()
         attribute()
-        layout()
     }
     
     func bind(_ viewModel: PrivateMessageViewModel) {
@@ -111,18 +104,6 @@ class PrivateMessageViewController: MessagesViewController {
         self.messages.sort()
         
         messagesCollectionView.reloadData()
-    }
-    
-    @objc func loadMoreMessages() {
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
-//            SampleData.shared.getMessages(count: 20) { messages in
-//                DispatchQueue.main.async {
-//                    self.messages.insert(contentsOf: messages, at: 0)
-//                    self.messagesCollectionView.reloadDataAndKeepOffset()
-//                    self.refreshControl.endRefreshing()
-//                }
-//            }
-        }
     }
     
     // MARK: delegate
@@ -194,7 +175,7 @@ class PrivateMessageViewController: MessagesViewController {
 
     func insertMessage(_ message: MessageModel) {
         messages.append(message)
-        // Reload last section to update header/footer labels and insert a new one
+
         messagesCollectionView.performBatchUpdates({
             messagesCollectionView.insertSections([messages.count - 1])
             if messages.count >= 2 {
@@ -234,10 +215,6 @@ class PrivateMessageViewController: MessagesViewController {
         }
         
         addPlusButtonToMessageInputBar()
-        
-    }
-    
-    private func layout() {
     }
 }
 

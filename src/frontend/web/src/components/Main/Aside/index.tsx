@@ -9,7 +9,7 @@ import ImageButton from '../../Common/ImageButton';
 import ArrowLeftIcon from '../../../icon/arrowLeft.svg';
 import { WorkspaceName } from '../../Common/WorkspaceName';
 import ModalMenuHook from '../../../hook/ModalMenu';
-import ModalMain from '../ModalMain';
+import ModalMain from '../Modal';
 
 const ModalBox = styled.div`
   display: flex;

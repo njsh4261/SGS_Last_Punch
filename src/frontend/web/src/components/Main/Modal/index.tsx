@@ -57,7 +57,7 @@ interface Props {
   type: 'channel' | 'workspace';
 }
 
-export default function ModalMain({ type }: Props) {
+export default function ModalMenu({ type }: Props) {
   const NAV_INFO = 'nav-info';
   const NAV_MEMBER = 'nav-member';
 

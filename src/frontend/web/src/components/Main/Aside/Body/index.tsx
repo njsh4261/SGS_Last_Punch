@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../../modules';
-import Modal from '../../Modal';
+import Modal from '../../../Common/ModalCreateOrInvite';
 import getChannelsAndMembersHook from '../../../../hook/getChannelsAndMembers';
 import selectChannelHook from '../../../../hook/selectChannel';
 import ToggleList from './ToggleList';

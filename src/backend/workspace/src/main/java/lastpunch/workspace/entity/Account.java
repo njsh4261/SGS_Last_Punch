@@ -131,12 +131,14 @@ public class Account{
     public static class ExportSimpleDto{
         private Long id;
         private String name;
+        private String email;
         private Message lastMessage;
 
         @QueryProjection
-        public ExportSimpleDto(Long id, String name){
+        public ExportSimpleDto(Long id, String name, String email){
             this.id = id;
             this.name = name;
+            this.email = email;
         }
     }
 }

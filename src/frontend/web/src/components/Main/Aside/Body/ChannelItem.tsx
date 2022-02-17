@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { Params, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ModalType } from '../../../../../types/modal.type';
 import { createNoteAPI, getNoteListAPI } from '../../../../Api/note';
 import addPerson from '../../../../icon/addPerson.svg';
+import { RootState } from '../../../../modules';
 import StatusCircle from '../../../Common/StatusCircle';
 
 export const ItemContainer = styled.section<{ isSelected?: boolean }>`
@@ -106,7 +108,7 @@ interface Props {
 export default function ChannelItem(props: Props) {
   const NOTE_ICONS = useMemo(() => ['📕', '📙', '📘', '📗', '📓', '📒'], []);
   const { channel, wsId, params, selectHandler, type, isSelected } = props;
-
+  const memberList = useSelector((state: RootState) => state.userList);
   const [noteList, setNoteList] = useState<any[]>([]);
   const [hover, setHover] = useState(false);
 
@@ -136,6 +138,14 @@ export default function ChannelItem(props: Props) {
     return NOTE_ICONS[Math.floor(Math.random() * NOTE_ICONS.length)];
   };
 
+  const status = useMemo(() => {
+    for (let i = 0; i < memberList.length; i += 1) {
+      if (memberList[i].id.toString() === channel.id.toString()) {
+        return memberList[i].status;
+      }
+    }
+  }, [memberList]);
+
   useEffect(() => {
     if (isSelected && type === 'channel') getNoteListHandler();
   }, [isSelected]);
@@ -160,7 +170,7 @@ export default function ChannelItem(props: Props) {
             <DMItem>
               <DMProfileImg src={addPerson}></DMProfileImg>
               <StatusCircleContainer>
-                <StatusCircle status="ONLINE"></StatusCircle>
+                <StatusCircle status={status || 'OFFLINE'}></StatusCircle>
               </StatusCircleContainer>
               {channel.name}
             </DMItem>

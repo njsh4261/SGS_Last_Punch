@@ -53,6 +53,13 @@ class PrivateMessageViewController: MessagesViewController {
     
     func bind(_ viewModel: PrivateMessageViewModel) {
         // MARK: Bind input
+        // typing - 5초
+        messageInputBar.inputTextView.rx.text
+            .orEmpty
+            .throttle(.seconds(5), scheduler: MainScheduler.instance)
+            .bind(onNext: textDidChange)
+            .disposed(by: disposeBag)
+
         btnAttach.rx.tap
             .subscribe(onNext: showImagePickerControllerActionSheet)
             .disposed(by: disposeBag)
@@ -64,6 +71,17 @@ class PrivateMessageViewController: MessagesViewController {
         // MARK: Bind output
         viewModel.output.sokectMessage
             .bind(onNext: insertNewMessage )
+            .disposed(by: disposeBag)
+        
+        // typing
+        viewModel.output.sokectTyping
+            .bind(onNext: setTyping)
+            .disposed(by: disposeBag)
+        
+        // End typing
+        viewModel.output.sokectEndTyping
+            .debounce(.seconds(6), scheduler: MainScheduler.instance)
+            .bind(onNext: setEndTyping)
             .disposed(by: disposeBag)
         
         // 최근 메시지 - 30개
@@ -96,6 +114,11 @@ class PrivateMessageViewController: MessagesViewController {
         
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    // Typing - text 변화 감지
+    private func textDidChange(_ text: String) {
+        StompWebsocket.shared.sendTyping(authorId: senderInfo.senderId, channelId: channelId)
     }
     
     // 최근 메시지 Load
@@ -172,6 +195,16 @@ class PrivateMessageViewController: MessagesViewController {
         
         messagesCollectionView.reloadData()
     }
+    
+    // 입력 중
+    private func setTyping(_ typing: TypingModel) {
+        updateTitleView(title: "# \(recipientInfo.displayName)", subtitle: "입력중...")
+    }
+    
+    // 입력 끝
+    private func setEndTyping(_ typing: TypingModel) {
+        updateTitleView(title: "# \(recipientInfo.displayName)", subtitle: "대화 가능")
+    }
 
     func insertMessage(_ message: MessageModel) {
         messages.append(message)
@@ -187,7 +220,7 @@ class PrivateMessageViewController: MessagesViewController {
             }
         })
     }
-    
+
     func isLastSectionVisible() -> Bool {
         guard !messages.isEmpty else { return false }
         let lastIndexPath = IndexPath(item: 0, section: messages.count - 1)

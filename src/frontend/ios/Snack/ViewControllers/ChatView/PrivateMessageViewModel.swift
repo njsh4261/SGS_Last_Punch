@@ -20,6 +20,8 @@ class PrivateMessageViewModel: ViewModelProtocol {
     
     struct Output {
         let sokectMessage = PublishRelay<MessageModel>()
+        let sokectTyping = PublishRelay<TypingModel>()
+        let sokectEndTyping = PublishRelay<TypingModel>()
         let resentMessages = PublishRelay<[MessageModel]>()
         let errorMessage = PublishRelay<String>()
     }
@@ -56,6 +58,12 @@ class PrivateMessageViewModel: ViewModelProtocol {
                 $0.channelId == self.channelId
             }
             .bind(to: output.sokectMessage)
+            .disposed(by: disposeBag)
+        
+        // typing
+        StompWebsocket.shared.typing
+            .filter {$0.channelId == self.channelId}
+            .bind(to: output.sokectTyping, output.sokectEndTyping)
             .disposed(by: disposeBag)
         
         // recent messages

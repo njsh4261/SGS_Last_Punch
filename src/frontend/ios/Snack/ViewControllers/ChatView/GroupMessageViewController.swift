@@ -276,7 +276,6 @@ class GroupMessageViewController: MessagesViewController {
         updateTitleView(title: "# \(String(describing: channel!.name))", subtitle: "\(memberInfo!.count)명의 멤버 >")
     }
 
-    
     func isLastSectionVisible() -> Bool {
         guard !messages.isEmpty else { return false }
         let lastIndexPath = IndexPath(item: 0, section: messages.count - 1)

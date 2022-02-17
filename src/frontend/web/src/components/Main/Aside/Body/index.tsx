@@ -6,7 +6,7 @@ import { RootState } from '../../../../modules';
 import Modal from '../../Modal';
 import getChannelsAndMembersHook from '../../../../hook/getChannelsAndMembers';
 import selectChannelHook from '../../../../hook/selectChannel';
-import ToggleList, { Label } from './ToggleList';
+import ToggleList from './ToggleList';
 
 const Container = styled.article`
   padding-top: 8px;
@@ -19,13 +19,6 @@ const Container = styled.article`
   :hover,
   :focus {
     overflow-y: auto;
-  }
-`;
-
-const SecitonType = styled.section`
-  padding: 8px 0px;
-  &:hover {
-    background-color: ${(props) => props.theme.color.snackSideHover};
   }
 `;
 
@@ -45,9 +38,6 @@ export default function AsideBody() {
           modalState.modalType === 'invite-workspace') && (
           <Modal type={modalState.modalType} wsId={params.wsId}></Modal>
         )}
-      <SecitonType>
-        <Label>알림</Label>
-      </SecitonType>
       <ToggleList
         channelList={channelList}
         selectHandler={selectChannelHandler}

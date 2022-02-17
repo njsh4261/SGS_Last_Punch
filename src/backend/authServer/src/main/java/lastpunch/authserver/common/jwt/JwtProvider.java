@@ -3,6 +3,7 @@ package lastpunch.authserver.common.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lastpunch.authserver.entity.Account;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +21,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtProvider implements InitializingBean {
-    private static final long serialVersionUID = 1234567890123456L;
     
     public final static long ACCESS_TOKEN_VALIDATION_SEC = 1000 * 60 * 10; // 10분
     public static final long REFRESH_TOKEN_VALIDATION_SEC = 1000 * 60 * 60 * 24 * 7; // 1주
@@ -35,27 +35,25 @@ public class JwtProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
     
-    public String createToken(Authentication authentication, long validation_sec, Long userId){
-        String authorities = authentication.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(Collectors.joining(","));
+    public String createToken(Account account, Long validation_sec){
+        String authorities = account.getStatus();
         Date expire = new Date((new Date()).getTime() + validation_sec);
         
         return Jwts.builder()
-            .setSubject(authentication.getName())
+            .setSubject(account.getEmail())
             .claim("auth", authorities)
-            .claim("userId",userId)
+            .claim("userId", account.getId())
             .signWith(key, SignatureAlgorithm.HS512)
             .setExpiration(expire)
             .compact();
     }
     
-    public String createAccessToken(Authentication authentication, Long userId){
-        return createToken(authentication, ACCESS_TOKEN_VALIDATION_SEC, userId);
+    public String createAccessToken(Account account){
+        return createToken(account, ACCESS_TOKEN_VALIDATION_SEC);
     }
     
-    public String createRefreshToken(Authentication authentication, Long userId){
-        return createToken(authentication, REFRESH_TOKEN_VALIDATION_SEC, userId);
+    public String createRefreshToken(Account account){
+        return createToken(account, REFRESH_TOKEN_VALIDATION_SEC);
     }
     
     public Claims extractClaims(String token) throws ExpiredJwtException {
@@ -68,24 +66,17 @@ public class JwtProvider implements InitializingBean {
         return claims;
     }
     
-    public Authentication getAuthentication(String token){
-        Claims claims = extractClaims(token);
-        Collection<? extends GrantedAuthority> authorities =
-            Arrays.stream(claims.get("auth").toString().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-        
-        User principal = new User(claims.getSubject(), "", authorities);
-        
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
-    }
-    
     public boolean validateToken(String token){
         Claims claims = extractClaims(token);
         return claims.getExpiration().after(new Date());
     }
     
-    public String getUsername(String token){
+    public Long getUserId (String token){
+        Claims claims = extractClaims(token);
+        return ((Number) claims.get("userId")).longValue();
+    }
+    
+    public String getEmail (String token){
         Claims claims = extractClaims(token);
         return claims.getSubject();
     }

@@ -124,7 +124,11 @@ const Header = ({
             onClick={sideToggleHandler}
           ></ImageButton>
         )}
-        <ChannelTab onClick={openModalHandler}>
+        <ChannelTab
+          onClick={
+            channel.id.toString().includes('-') ? undefined : openModalHandler
+          }
+        >
           <ChannelName>{channel.name}</ChannelName>
           <ArrowDropDownIcon></ArrowDropDownIcon>
         </ChannelTab>

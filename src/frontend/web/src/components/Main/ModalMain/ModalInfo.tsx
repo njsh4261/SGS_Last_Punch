@@ -8,7 +8,7 @@ import { exitWsAPI, getWsInfoAPI } from '../../../Api/workspace';
 import { IChannel } from '../../../../types/channel.type';
 import { IWorkspace } from '../../../../types/workspace.type';
 import { Params } from 'react-router-dom';
-import Loading from '../Loading';
+import Loading from '../../Common/Loading';
 
 const Container = styled.article`
   margin: 18px 28px;

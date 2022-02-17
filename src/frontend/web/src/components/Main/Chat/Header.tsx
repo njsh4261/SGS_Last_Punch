@@ -8,7 +8,7 @@ import ImageButton from '../../Common/ImageButton';
 import arrowRightIcon from '../../../icon/arrowRight.svg';
 import DropdownSetting from './DropdownSetting';
 import ModalMenuHook from '../../../hook/ModalMenu';
-import ModalMain from '../../Common/ModalMain';
+import ModalMain from '../ModalMain';
 import { RootState } from '../../../modules';
 
 const ChannelHeader = styled.article`
@@ -105,6 +105,9 @@ const Header = ({ channel, sideToggle, sideToggleHandler }: Props) => {
       {modal.active && modal.modalType === 'channel' && (
         <ModalMain type={TYPE}></ModalMain>
       )}
+      {/* {modal.active && modal.modalType === 'profile' && (
+        <
+      )} */}
       <ChannelInfo>
         {!sideToggle && (
           <ImageButton

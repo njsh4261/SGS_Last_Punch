@@ -6,12 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import seacrhImage from '../../../icon/search.svg';
 import addPersonImage from '../../../icon/addPerson.svg';
 import { getChannelMember } from '../../../Api/channel';
-import Loading from '../Loading';
+import Loading from '../../Common/Loading';
 import { getWsMemberAPI } from '../../../Api/workspace';
 import { openModal } from '../../../modules/modal';
 import { UserStatus } from '../../../../types/presence';
 import { RootState } from '../../../modules';
-import StatusCircle from '../StatusCircle';
+import StatusCircle from '../../Common/StatusCircle';
 
 const Container = styled.article`
   border-radius: 6px;

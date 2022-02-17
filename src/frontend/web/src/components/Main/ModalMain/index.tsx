@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import ModalBox from '../ModalBox';
+import ModalBox from '../../Common/ModalBox';
 import ModalMember from './ModalMember';
 import ModalInfo from './ModalInfo';
 import { useParams } from 'react-router-dom';

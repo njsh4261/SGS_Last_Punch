@@ -23,7 +23,8 @@ class StompWebsocket {
     var channels = [WorkspaceChannelCellModel]()
     var members = [WorkspaceMemberCellModel]()
     var message = PublishSubject<MessageModel>()
-    
+    var typing = PublishSubject<TypingModel>()
+
     init() {
         self.userId = KeychainWrapper.standard[.id]!
         self.accessToken = KeychainWrapper.standard[.accessToken]!
@@ -61,8 +62,17 @@ class StompWebsocket {
     }
     
     // Publish Message
-    func sendMessage(authorId: String, channelId: String, content: String) {
-        let payloadObject = ["authorId" : authorId, "channelId": channelId, "content": content] as [String : Any]
+    func sendMessage(authorId: String, channelId: String, _ type: String = "MESSAGE", content: String) {
+        let payloadObject = ["authorId" : authorId, "channelId": channelId, "type": type, "content": content] as [String : Any]
+
+        socketClient.sendJSONForDict(
+            dict: payloadObject as AnyObject,
+            toDestination: "/app/chat")
+    }
+    
+    // Publish Typing
+    func sendTyping(authorId: String, channelId: String, _ type: String = "TYPING") {
+        let payloadObject = ["authorId" : authorId, "channelId": channelId, "type": type] as [String : Any]
 
         socketClient.sendJSONForDict(
             dict: payloadObject as AnyObject,
@@ -88,19 +98,28 @@ extension StompWebsocket: StompClientLibDelegate {
         let decoder = JSONDecoder()
         guard let messagePlayload = try? decoder.decode(Message.self, from: json) else { return }
         
-        let newMessage = MessageModel(
-            channelId: messagePlayload.channelId,
-            text: messagePlayload.content,
-            user: User(
-                senderId: messagePlayload.authorId,
-                displayName: nameDict[messagePlayload.authorId]!,
+        if messagePlayload.type == nil {
+            let newMessage = MessageModel(
+                channelId: messagePlayload.channelId,
+                text: messagePlayload.content!,
+                user: User(
+                    senderId: messagePlayload.authorId,
+                    displayName: nameDict[messagePlayload.authorId]!,
+                    authorId: messagePlayload.authorId,
+                    content: messagePlayload.content!
+                ),
+                messageId: messagePlayload.id ?? "",
+                date: messagePlayload.createDt!.toDate() ?? Date()
+            )
+            self.message.onNext(newMessage)
+        } else { // typing
+            let typingInfo = TypingModel(
                 authorId: messagePlayload.authorId,
-                content: messagePlayload.content
-            ),
-            messageId: messagePlayload.id ?? "",
-            date: messagePlayload.createDt.toDate() ?? Date()
-        )
-        self.message.onNext(newMessage)
+                channelId: messagePlayload.channelId,
+                type: messagePlayload.type!
+            )
+            self.typing.onNext(typingInfo)
+        }
     }
     
     func stompClientDidxDisconnect(client: StompClientLib!) {

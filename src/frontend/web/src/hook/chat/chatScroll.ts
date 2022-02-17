@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
 
-import { getOldChat } from '../Api/chat';
-import { ChatMessage } from '../../types/chat.type';
-import { RootState } from '../modules/index';
+import { getOldChat } from '../../Api/chat';
+import { ChatMessage } from '../../../types/chat.type';
+import { RootState } from '../../modules/index';
 
 export default function chatScrollHook(
   channelId: string,
@@ -35,6 +35,10 @@ export default function chatScrollHook(
       const chatBodyElement = chatBodyRef.current as any;
       const date = target.dataset.date;
 
+      // 예외 상황
+      if (!chatBodyElement) {
+        return;
+      }
       // 채팅이 몇개 없을 때 렌더링 방지
       if (chatBodyElement.scrollHeight === chatBodyElement.clientHeight) {
         return;
@@ -72,9 +76,9 @@ export default function chatScrollHook(
   // scroll to bottom
   useEffect(() => {
     if (firstTime.current) {
-      scrollToBottom('auto');
       firstTime.current = false;
-    } else scrollToBottom('smooth');
+    }
+    scrollToBottom('auto');
   }, [msgList]);
 
   useEffect(() => {

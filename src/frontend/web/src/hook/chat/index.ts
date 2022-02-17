@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
-import { RootState } from '../modules';
+import { RootState } from '../../modules';
 import chatSocketHook from './chatSocket';
-import { ChatMessage } from '../../types/chat.type';
-import { getRecentChat } from '../Api/chat';
+import { ChatMessage } from '../../../types/chat.type';
+import { getRecentChat } from '../../Api/chat';
 
 export default function chatHook(): [
   user: RootState['user'],

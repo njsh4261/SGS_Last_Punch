@@ -8,10 +8,10 @@ import addPersonImage from '../../../icon/addPerson.svg';
 import { getChannelMember } from '../../../Api/channel';
 import Loading from '../Loading';
 import { getWsMemberAPI } from '../../../Api/workspace';
-import { closeModal, openModal } from '../../../modules/modal';
-import InviteModal from '../InviteModal';
+import { openModal } from '../../../modules/modal';
+import { UserStatus } from '../../../../types/presence';
 import { RootState } from '../../../modules';
-import ModalBox from '../ModalBox';
+import StatusCircle from '../StatusCircle';
 
 const Container = styled.article`
   border-radius: 6px;
@@ -91,11 +91,11 @@ interface Member {
   id: number;
   name: string;
   email: string;
+  status: UserStatus;
 }
 
 export default function ModalMember({ type, params }: Props) {
   const dispatch = useDispatch();
-  const modal = useSelector((state: RootState) => state.modal);
   const [focus, setFocus] = useState(false);
   // 검색 입력 값 상태
   const [searchValue, setSearchValue] = useState('');
@@ -103,17 +103,45 @@ export default function ModalMember({ type, params }: Props) {
   const [memberList, setMemberList] = useState<Member[]>([]);
   // 멤버 검색 결과 리스트
   const [searchList, setSearchList] = useState<Member[]>([]);
+  // store에 저장된 워크스페이스 멤버 리스트 (상태 값 조회를 위해)
+  const wsMemberListWithStatus = useSelector(
+    (state: RootState) => state.userList,
+  );
+
+  // 응답으로 온 채널의 멤버에 status를 관리하는 리스트를 합친다.
+  const combineStatus = (responseListWithoutStatus: any) => {
+    const combineList = [];
+    for (let i = 0; i < responseListWithoutStatus.length; i += 1) {
+      for (let j = 0; j < wsMemberListWithStatus.length; j += 1) {
+        const withoutStatus = responseListWithoutStatus[i];
+        const withStatus = wsMemberListWithStatus[j];
+        if (withoutStatus.id === withStatus.id) {
+          if (withStatus.status) {
+            combineList.push({
+              ...withoutStatus,
+              status: withStatus.status,
+            });
+          } else {
+            // offline
+            combineList.push({ ...withoutStatus, status: 'OFFLINE' });
+          }
+          break;
+        }
+      }
+    }
+    setMemberList(combineList);
+  };
 
   const getMemberListHandler = async () => {
     if (type === 'channel') {
       if (params.channelId) {
         const response = await getChannelMember(params.channelId);
-        setMemberList(response.members.content);
+        combineStatus(response.members.content);
       }
     } else {
       if (params.wsId) {
         const response = await getWsMemberAPI(+params.wsId);
-        setMemberList(response.members.content);
+        combineStatus(response.members.content);
       }
     }
   };
@@ -169,6 +197,7 @@ export default function ModalMember({ type, params }: Props) {
               ? memberList.map((member) => (
                   <Layer key={`member-${member.id}`}>
                     <ImageIcon src={addPersonImage}></ImageIcon>
+                    <StatusCircle status={member.status}></StatusCircle>
                     <MemberName>{member.name}</MemberName>
                     <MemberEmail>{member.email}</MemberEmail>
                   </Layer>

@@ -1,10 +1,12 @@
 const SET_USER = 'user/set';
+import { UserStatus } from '../../types/presence';
 
 export type UserState = {
   id: number;
   name: string;
   lastMessage?: any;
   alarm?: boolean;
+  status?: UserStatus;
 };
 
 export const setUser = ({ id, name }: UserState) => ({

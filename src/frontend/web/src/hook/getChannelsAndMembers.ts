@@ -15,16 +15,22 @@ export default function getChannelsAndMembersHook(): [params: Params] {
   const params = useParams();
   const dispatch = useDispatch();
 
-  const getChannelsNMembers = async () => {
+  const getChannels = async () => {
     const workspaceId = Number(params.wsId);
     const resChannels = await getChannelsAPI(0, workspaceId);
-    const resMembers = await getMembersAPI(0, workspaceId);
+
     if (resChannels) {
       dispatch(setChannelListRedux(resChannels.channels.content));
       if (!params.channelId) {
         navigate(`/${workspaceId}/${resChannels.channels.content[0].id}`);
       }
     }
+  };
+
+  const getMembers = async () => {
+    const workspaceId = Number(params.wsId);
+    const resMembers = await getMembersAPI(0, workspaceId);
+
     if (resMembers) {
       const serverMembers: any[] = cloneDeep(resMembers.members.content);
       const clientMembers = memberList;
@@ -43,8 +49,12 @@ export default function getChannelsAndMembersHook(): [params: Params] {
   };
 
   useEffect(() => {
-    if (!modalActive) getChannelsNMembers();
+    if (!modalActive) getChannels();
   }, [modalActive]);
+
+  useEffect(() => {
+    getMembers();
+  }, []);
 
   return [params];
 }

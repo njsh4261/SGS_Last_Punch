@@ -57,6 +57,10 @@ class HomeViewController: UIViewController {
     
     func bind(with viewModel: HomeViewModel) {
         // MARK: Bind input
+        btnSearch.rx.tap
+            .subscribe(onNext: goToChannelSearch)
+            .disposed(by: disposeBag)
+        
         btnAddChannel.rx.tap
             .subscribe(onNext: goToNewChannel)
             .disposed(by: disposeBag)
@@ -119,6 +123,11 @@ class HomeViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func goToChannelSearch() {
+        let channelSearchVC = ChannelSearchViewController()
+        self.present(channelSearchVC, animated: true, completion: nil)
     }
     
     private func goToNewChannel() {

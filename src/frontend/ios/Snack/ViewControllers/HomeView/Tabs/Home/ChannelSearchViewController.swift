@@ -33,6 +33,8 @@ class ChannelSearchViewController: UIViewController {
         view.backgroundColor = UIColor(named: "snackBackGroundColor")
         tableView.tableHeaderView = viewHeader
         tableView.dataSource = self
+        
+        getChannel(channel: "")
     }
     
     // Text 변화가 있을때 바로 결과
@@ -50,14 +52,14 @@ class ChannelSearchViewController: UIViewController {
     
     func getChannel(channel: String) {
         DispatchQueue.main.async { [self] in // 메인스레드에서 동작
-            AccountService.shared.getAccount(method: .post, accessToken: accessToken, email: channel)
+            ChannelService.shared.getChannelByName(method: .post, accessToken, workspaceId: self.workspaceId, name: channel)
                 .subscribe { event in
                     switch event {
                     case .next(let result):
                         switch result {
                         case .success(let decodedData):
-                            guard let userModel = decodedData.data?.accounts?.content else { return }
-//                            self.channelList = userModel
+                            guard let channelList = decodedData.data?.channels?.content else { return }
+                            self.channelList = channelList
                             tableView.reloadData()
                         case .fail(let decodedData):
                             ProgressHUD.showFailed(decodedData.err?.desc)
@@ -83,7 +85,7 @@ extension ChannelSearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "내역"
+        return "워크스페이스 내 채널 목록"
     }
 
     
@@ -91,13 +93,9 @@ extension ChannelSearchViewController: UITableViewDataSource {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelSearchCell", for: indexPath) as! ChannelSearchCell
 
-        if channelList.count == 0 || channelField.text!.count == 0 {
-            cell.lblName.text = "사용자가 없습니다"
-            return cell
-        }
         let channelInfo = channelList[indexPath.row]
         
-        cell.lblName.text = "\(channelInfo.name))"
+        cell.lblName.text = "\(channelInfo.name)"
 
         return cell
     }

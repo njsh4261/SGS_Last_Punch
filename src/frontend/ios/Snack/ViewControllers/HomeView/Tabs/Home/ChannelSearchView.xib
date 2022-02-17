@@ -16,8 +16,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChannelSearchViewController" customModule="Snack" customModuleProvider="target">
             <connections>
                 <outlet property="channelField" destination="Zoj-Bc-At3" id="Vu5-2l-3db"/>
-                <outlet property="searchCell" destination="hBo-6w-buo" id="AfL-uh-xw8"/>
                 <outlet property="tableView" destination="i5M-Pr-FkT" id="Ao1-0W-s6v"/>
+                <outlet property="view" destination="gVL-Kb-l2i" id="jhs-41-Yhj"/>
                 <outlet property="viewHeader" destination="AQb-9p-OKj" id="TfP-Ec-TRj"/>
             </connections>
         </placeholder>
@@ -65,7 +65,7 @@
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="취소"/>
                     <connections>
-                        <action selector="actionDismiss:" destination="-1" eventType="touchUpInside" id="mAU-aA-cBT"/>
+                        <action selector="actionDismiss:" destination="-1" eventType="touchUpInside" id="ZWl-rt-Hgd"/>
                     </connections>
                 </button>
             </subviews>
@@ -80,31 +80,6 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="843.75" y="-79.225352112676063"/>
         </view>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="hBo-6w-buo">
-            <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hBo-6w-buo" id="Ldg-Ds-egv">
-                <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="채널 이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ZW-ay-dkJ">
-                        <rect key="frame" x="10" y="14.5" width="340" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                </subviews>
-                <constraints>
-                    <constraint firstAttribute="trailing" secondItem="3ZW-ay-dkJ" secondAttribute="trailing" id="Dkq-Ce-MKT"/>
-                    <constraint firstItem="3ZW-ay-dkJ" firstAttribute="leading" secondItem="Ldg-Ds-egv" secondAttribute="leading" constant="10" id="gVd-dm-s8c"/>
-                    <constraint firstItem="3ZW-ay-dkJ" firstAttribute="centerY" secondItem="Ldg-Ds-egv" secondAttribute="centerY" id="sEQ-Sy-Fc3"/>
-                </constraints>
-            </tableViewCellContentView>
-            <connections>
-                <outlet property="lblName" destination="3ZW-ay-dkJ" id="9En-mF-CQ5"/>
-            </connections>
-            <point key="canvasLocation" x="848" y="32"/>
-        </tableViewCell>
     </objects>
     <resources>
         <systemColor name="groupTableViewBackgroundColor">

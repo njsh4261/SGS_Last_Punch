@@ -15,7 +15,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserSearchViewController" customModule="Snack" customModuleProvider="target">
             <connections>
-                <outlet property="btnSearch" destination="1YU-9E-BbH" id="DOx-tj-OOO"/>
                 <outlet property="emailField" destination="Zoj-Bc-At3" id="0gu-Qf-mj9"/>
                 <outlet property="tableView" destination="i5M-Pr-FkT" id="Ra3-VH-Wtn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="3Dk-uR-1SX"/>

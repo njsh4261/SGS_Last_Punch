@@ -45,6 +45,35 @@ class ChannelService {
         }
     }
     
+    func getChannelByName(method: HTTPMethod, _ accessToken: String, workspaceId: String, name: String) -> Observable<NetworkResult<ChannelResponseModel>> {
+        let url = APIConstants().channelURL + "/find"
+                
+        return Observable.create { observer -> Disposable in
+            let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
+            let dataRequest = AF.request(url,
+                                         method: method,
+                                         parameters: [
+                                            "workspaceId" : workspaceId,
+                                            "name" : name
+                                         ],
+                                         encoding: JSONEncoding.default,
+                                         headers: header)
+
+            dataRequest.validate().responseData { [self] response in
+                switch response.result {
+                case .success:
+                    guard let statusCode = response.response?.statusCode else {return}
+                    guard let value = response.value else {return}
+                    let networkResult = judgeStatus(by: statusCode, value)
+                    return observer.onNext(networkResult)
+                case .failure:
+                    return observer.onNext(.pathErr)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
     func getMember(method: HTTPMethod, _ accessToken: String, channelId: String) -> Observable<NetworkResult<ChannelResponseModel>> {
         let url = APIConstants().channelURL + "/\(channelId)/members"
                 
@@ -208,7 +237,7 @@ class ChannelService {
         let decoder = JSONDecoder()
         
 //         데이터량이 너무 많음
-//        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
+        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
         
         guard let decodedData = try? decoder.decode(ChannelResponseModel.self, from: data) else {
             return .pathErr

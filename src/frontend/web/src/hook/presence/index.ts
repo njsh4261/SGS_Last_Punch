@@ -32,7 +32,7 @@ export default function presenceHook({ wsId, memberList }: Props) {
     try {
       const socket = new SockJS(URL.HOST + '/ws/presence');
       const stompClient = Stomp.over(socket);
-      // stompClient.debug = (f) => f;
+      stompClient.debug = (f) => f;
       stompClient.connect({ Authorization: accessToken }, async () => {
         stompClient.subscribe(`topic/workspace.${wsId}`, (payload) => {
           const msg: UpdateMessage = JSON.parse(payload.body);
@@ -44,7 +44,7 @@ export default function presenceHook({ wsId, memberList }: Props) {
           newList[index] = { ...newList[index], status: msg.userStatus };
           dispatch(setUserList(newList));
         });
-        console.log('send message:');
+        // online 상태로 업데이트
         sendMessage('ONLINE', stompClient);
         // 첫 접속시 유저들의 프리젠스 상태 업데이트
         const presenceList: UpdateMessage[] = await getPresenceAPI(wsId);

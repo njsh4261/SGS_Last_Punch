@@ -20,8 +20,8 @@ public enum StatusCode{
     ROLE_NOT_EXIST(HttpStatus.OK, "12010", "ROLE_NOT_EXIST", "존재하지 않는 역할입니다."),
     PERMISSION_DENIED(HttpStatus.OK, "12011", "PERMISSION_DENIED", "해당 작업을 실행할 권한이 없습니다."),
     CHANNEL_ALREADY_EXIST(HttpStatus.OK, "12012", "CHANNEL_ALREADY_EXIST", "이미 존재하는 채널입니다."),
-    WORKSPACE_OWNER_SET_ERROR(HttpStatus.OK, "12013", " WORKSPACE_OWNER_SET_ERROR", "워크스페이스의 소유자가 정상적으로 지정되지 않았습니다."),
-    CHANNEL_OWNER_SET_ERROR(HttpStatus.OK, "12014", " CHANNEL_OWNER_SET_ERROR", "채널의 소유자가 정상적으로 지정되지 않았습니다."),
+    WORKSPACE_OWNER_SET_ERROR(HttpStatus.OK, "12013", "WORKSPACE_OWNER_SET_ERROR", "워크스페이스의 소유자가 정상적으로 지정되지 않았습니다."),
+    CHANNEL_OWNER_SET_ERROR(HttpStatus.OK, "12014", "CHANNEL_OWNER_SET_ERROR", "채널의 소유자가 정상적으로 지정되지 않았습니다."),
     CANNOT_EXIT_WORKSPACE(HttpStatus.OK, "12015", "CANNOT_EXIT_WORKSPACE", "워크스페이스의 소유자는 다른 멤버에게 워크스페이스 소유자 권한을 양도한 후 워크스페이스를 나갈 수 있습니다."),
     CANNOT_EXIT_CHANNEL(HttpStatus.OK, "12016", "CANNOT_EXIT_CHANNEL", "채널의 소유자는 다른 멤버에게 채널 소유자 권한을 양도한 후 채널을 나갈 수 있습니다.");
     

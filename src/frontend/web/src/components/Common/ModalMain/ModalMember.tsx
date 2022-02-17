@@ -146,6 +146,12 @@ export default function ModalMember({ type, params }: Props) {
     }
   };
 
+  // simple sort handler. only check 'ONLINE'
+  const sortHandler = (a: Member, b: Member) => {
+    if (a.status === 'ONLINE') return -1;
+    else return 1;
+  };
+
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchValue(value);
@@ -194,7 +200,7 @@ export default function ModalMember({ type, params }: Props) {
           </Layer>
           <MemberLayers>
             {searchValue === ''
-              ? memberList.map((member) => (
+              ? memberList.sort(sortHandler).map((member) => (
                   <Layer key={`member-${member.id}`}>
                     <ImageIcon src={addPersonImage}></ImageIcon>
                     <StatusCircle status={member.status}></StatusCircle>
@@ -202,9 +208,10 @@ export default function ModalMember({ type, params }: Props) {
                     <MemberEmail>{member.email}</MemberEmail>
                   </Layer>
                 ))
-              : searchList.map((member) => (
+              : searchList.sort(sortHandler).map((member) => (
                   <Layer key={`member-${member.id}`}>
                     <ImageIcon src={addPersonImage}></ImageIcon>
+                    <StatusCircle status={member.status}></StatusCircle>
                     <MemberName>{member.name}</MemberName>
                     <MemberEmail>{member.email}</MemberEmail>
                   </Layer>

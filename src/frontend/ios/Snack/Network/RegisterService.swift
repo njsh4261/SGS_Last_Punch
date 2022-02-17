@@ -136,12 +136,6 @@ class RegisterService {
         case 200:
             if decodedData.code == "11000" {
                 return .success(decodedData.code)
-            } else if decodedData.code == "11001" { // 이미 가입된 이메일이 있을때
-                return .fail(decodedData.code)
-            } else if decodedData.code == "11003" { // 이메일 인증 코드가 유효하지 않을때
-                return .fail(decodedData.code)
-            } else if decodedData.code == "11004" { // 이메일 인증시 사용했던 데이터가 변조되었을때
-                return .fail(decodedData.code)
             } else {
                 return .serverErr
             }

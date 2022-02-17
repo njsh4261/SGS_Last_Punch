@@ -10,6 +10,7 @@ import Foundation
 struct ChannelResponseModel: Codable {
     let data: ChannelData?
     let code: String
+    let err: Err?
 }
 
 struct ChannelData: Codable {

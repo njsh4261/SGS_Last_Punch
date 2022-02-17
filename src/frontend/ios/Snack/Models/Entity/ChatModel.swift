@@ -10,6 +10,7 @@ import Foundation
 struct ChatResponseModel: Codable {
     let data: ChatData?
     let code: String
+    let err: Err?
 }
 
 struct ChatData: Codable {

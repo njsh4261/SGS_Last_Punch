@@ -10,6 +10,7 @@ import Foundation
 struct NoteResponseModel: Codable {
     let code: String
     let data: NoteData?
+    let err: Err?
 }
 
 struct NoteData: Codable {

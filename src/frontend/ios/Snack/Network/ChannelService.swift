@@ -218,12 +218,6 @@ class ChannelService {
         case 200:
             if decodedData.code == "12000" {
                 return .success(decodedData)
-            } else if decodedData.code == "12001" { // 존재하지 않는 워크스페이스
-                return .fail(decodedData)
-            } else if decodedData.code == "12003" { // 존재하지 않는 채널
-                return .fail(decodedData)
-            } else if decodedData.code == "12011" { // 이미 존재하는 채널
-                return .fail(decodedData)
             } else {
                 return .fail(decodedData)
             }

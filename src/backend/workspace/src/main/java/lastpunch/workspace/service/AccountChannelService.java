@@ -36,10 +36,12 @@ public class AccountChannelService{
             if(requesterOptional.isEmpty()){
                 throw new BusinessException(StatusCode.PERMISSION_DENIED);
             }
+
+            // 채널에 초대된 유저는 NORMAL_USER에서 시작
             accountChannelRepository.add(
                 dtoImpl.getAccountId(),
                 dtoImpl.getChannelId(),
-                dtoImpl.getRoleId() != null ? dtoImpl.getRoleId() : RoleType.NORMAL_USER.getId()
+                RoleType.NORMAL_USER.getId()
             );
             return new HashMap<>();
         } catch(DataIntegrityViolationException e){

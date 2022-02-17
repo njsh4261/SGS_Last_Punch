@@ -4104,7 +4104,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"accountId\": 8,\r\n    \"channelId\": 3,\r\n    \"roleId\": 1\r\n}",
+							"raw": "{\r\n    \"accountId\": 8,\r\n    \"channelId\": 3\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

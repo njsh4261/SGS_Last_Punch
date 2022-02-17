@@ -37,10 +37,11 @@ public class AccountWorkspaceService{
                 throw new BusinessException(StatusCode.PERMISSION_DENIED);
             }
 
+            // 워크스페이스에 초대된 유저는 NORMAL_USER에서 시작
             accountWorkspaceRepository.add(
                 dtoImpl.getAccountId(),
                 dtoImpl.getWorkspaceId(),
-                dtoImpl.getRoleId() != null ? dtoImpl.getRoleId() : RoleType.NORMAL_USER.getId()
+                RoleType.NORMAL_USER.getId()
             );
             return new HashMap<>();
         } catch(DataIntegrityViolationException e){

@@ -14,11 +14,11 @@
 | DELETE | /workspace/{id}                 | 워크스페이스 삭제                 | -                  | -                  | -                      |
 
 ## 워크스페이스-멤버 API
-| Method | URI               | Description      | Request Body        | Response Body | etc                                 |
-|--------|-------------------|------------------|---------------------|---------------|-------------------------------------|
-| POST   | /workspace/member | 워크스페이스에 멤버 추가    | AccountWorkspaceDTO | -             | -                                   |
-| PUT    | /workspace/member | 워크스페이스에 멤버 정보 수정 | AccountWorkspaceDTO | -             | -                                   |
-| DELETE | /workspace/member | 워크스페이스에서 멤버 삭제   | AccountWorkspaceDTO | -             | URL parameter: accountId, channelId |
+| Method | URI               | Description      | Request Body        | Response Body | etc                                   |
+|--------|-------------------|------------------|---------------------|---------------|---------------------------------------|
+| POST   | /workspace/member | 워크스페이스에 멤버 추가    | AccountWorkspaceDTO | -             | -                                     |
+| PUT    | /workspace/member | 워크스페이스에 멤버 정보 수정 | AccountWorkspaceDTO | -             | -                                     |
+| DELETE | /workspace/member | 워크스페이스에서 멤버 삭제   | -                   | -             | URL parameter: accountId, workspaceId |
 
 ## 채널 API
 | Method | URI                   | Description              | Request Body     | Response Body | etc          |
@@ -77,7 +77,8 @@
     "roleId": 1
   }
   ```
-  - 모든 속성 생략 불가
+  - `POST /workspace/member`에서 `roleId` 생략 가능 (`roleId`가 API 결과에 영향을 미치지 않음)
+  - 이외 API에서 모든 속성 생략 불가
 
 
 - ChannelCreateDTO 예시
@@ -120,7 +121,8 @@
       "roleId": 1
   }
   ```
-  - 모든 속성 생략 불가
+  - `POST /channel/member`에서 `roleId` 생략 가능 (`roleId`가 API 결과에 영향을 미치지 않음)
+  - 이외 API에서 모든 속성 생략 불가
 
 - AccountFindDto 예시
   ```
@@ -140,6 +142,7 @@
 ## 워크스페이스 / 채널 권한 시나리오
 - 워크스페이스 / 채널 멤버 테이블에서 권한은 현재 `normal_user`, `admin`, `owner`로 나뉨
 - 요청자가 해당 워크스페이스/채널의 멤버가 아니면 새로운 멤버를 초대할 수 없음
+- 어떤 워크스페이스/채널에 새로운 멤버가 초대되었을 때, 해당 멤버의 권한은 `normal_user`
 - 워크스페이스 / 채널 멤버 수정 API (권한 수정)는 현재 세션의 요청자의 권한에 따라 허용 또는 거부
   - 요청자의 권한이 `normal_user`일 때 API 요청 거부
   - 요청자의 권한이 `admin`인 경우 대상자가 본인이면 `owner`로 변경하려고 하는 경우 거부, 이외 권한으로 변경은 허용

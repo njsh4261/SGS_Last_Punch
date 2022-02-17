@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { useParams } from 'react-router-dom';
 
-import chatHook from '../../../hook/chat';
+import chatHook from '../../../hook/chat/index';
 import ChatInput from './Input';
 import Header from './Header';
 import Loading from '../../Common/Loading';

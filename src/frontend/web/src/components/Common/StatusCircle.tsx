@@ -30,7 +30,7 @@ export default function StatusCircle({ status }: Props) {
       <Circle
         color={
           status === 'ONLINE'
-            ? 'green'
+            ? '#2AAC76'
             : status === 'BUSY'
             ? 'yellow'
             : status === 'ABSENT'

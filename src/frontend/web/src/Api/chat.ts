@@ -3,8 +3,9 @@ import apiHandler from './handler';
 
 export const getRecentChat = async (wsId: string, channelId: string) => {
   const endpoint = '/chat/recent';
+  console.log(typeof channelId);
   const body = {
-    channelId: `${wsId}-${channelId}`,
+    channelId: channelId.includes('-') ? `${wsId}-${channelId}` : channelId,
   };
   const response = await apiHandler(
     'POST',
@@ -22,7 +23,7 @@ export const getOldChat = async (
 ) => {
   const endpoint = '/chat/old';
   const body = {
-    channelId: `${wsId}-${channelId}`,
+    channelId: channelId.includes('-') ? `${wsId}-${channelId}` : channelId,
     dateTime,
   };
   const response = await apiHandler(

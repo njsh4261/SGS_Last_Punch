@@ -56,7 +56,7 @@ export default function chatHook(
   };
 
   const getRecentChatHandler = async () => {
-    const response = await getRecentChat(wsId, channel.id);
+    const response = await getRecentChat(wsId, channel.id.toString());
     if (response) {
       setMsgList(response.content);
     } else {

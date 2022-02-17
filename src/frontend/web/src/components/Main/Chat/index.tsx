@@ -131,7 +131,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     setMsgList,
     msgTypingHandler,
     msgSubmitHandler,
-  ] = chatHook();
+  ] = chatHook(params.wsId!);
 
   // presence 소켓 연결 및 유저들의 status 업데이트
   const sendMessage = presenceHook({ wsId: params.wsId!, memberList });
@@ -143,7 +143,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
   }, [memberList]);
 
   const { scrollObserverRef, scrollLoading, endRef, chatBodyRef } =
-    chatScrollHook(channel.id, msgList, setMsgList);
+    chatScrollHook(params.wsId!, channel.id, msgList, setMsgList);
 
   const isMe = (msg: ChatMessage) => {
     return msg.authorId === user.id.toString();

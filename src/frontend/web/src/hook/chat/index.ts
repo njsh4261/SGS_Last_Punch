@@ -7,7 +7,9 @@ import chatSocketHook from './chatSocket';
 import { ChatMessage } from '../../../types/chat.type';
 import { getRecentChat } from '../../Api/chat';
 
-export default function chatHook(): [
+export default function chatHook(
+  wsId: string,
+): [
   user: RootState['user'],
   channel: RootState['channel'],
   memberList: RootState['userList'],
@@ -47,7 +49,7 @@ export default function chatHook(): [
   };
 
   const getRecentChatHandler = async () => {
-    const response = await getRecentChat(channel.id);
+    const response = await getRecentChat(wsId, channel.id);
     if (response) {
       setMsgList(response.content);
     } else {

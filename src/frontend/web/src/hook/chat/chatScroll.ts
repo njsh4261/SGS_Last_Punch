@@ -35,6 +35,10 @@ export default function chatScrollHook(
       const chatBodyElement = chatBodyRef.current as any;
       const date = target.dataset.date;
 
+      // 예외 상황
+      if (!chatBodyElement) {
+        return;
+      }
       // 채팅이 몇개 없을 때 렌더링 방지
       if (chatBodyElement.scrollHeight === chatBodyElement.clientHeight) {
         return;

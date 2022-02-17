@@ -23,7 +23,7 @@ public class LoginController {
     final private LoginService loginService;
     
     @PostMapping
-    public ResponseEntity<Object> postLogin(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
         LoginResponse loginResponse = loginService.login(loginRequest);
         
         Map<String, Object> data = new HashMap<String, Object>();

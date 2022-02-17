@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtProvider implements InitializingBean {
-    private static final long serialVersionUID = 1234567890123456L;
     
     public final static long ACCESS_TOKEN_VALIDATION_SEC = 1000 * 60 * 10; // 10분
     public static final long REFRESH_TOKEN_VALIDATION_SEC = 1000 * 60 * 60 * 24 * 7; // 1주

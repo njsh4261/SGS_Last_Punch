@@ -26,7 +26,8 @@ MSA 구조의 인증 시스템을 만들기 위해 인증 서버, Spring Cloud G
 - 회원가입, 로그인, 토큰 생성을 담당합니다.
 - /common: 예외처리는 exception 폴더 안의 파일과 GlobalExceptionHandler를 통해 관리합니다. 토큰 생성은 jwt 폴더 안의 JwtProvider를 사용합니다.
 - /controller: LoginController에서 로그인 API를, SignupController에서 회원가입 API를 담당합니다. AuthController에는 이메일 인증, 토큰 재발급 등 기타 모든 API를 담당합니다.
-- /service: LoginService에서 로그인 시 토큰을 발급해주는 로직(login)과 refresh 토큰을 통해 access token을 재발급 받는 로직(reissue), 로그아웃(logout) 하는 로직을 작성하였습니다.
+- /service: LoginService에서 로그인 시 토큰을 발급해주는 로직(login)을 작성하였습니다.
+            AuthService에서 refresh 토큰을 통해 access token을 재발급 받는 로직(reissue), 로그아웃(logout)하는 로직을 작성하였습니다.
             EmailVerifyService에는 이메일 인증(6자리 인증 코드 발급)과 관련된 로직을 작성하였습니다.
 
 [ 게이트웨이 ]

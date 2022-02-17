@@ -59,23 +59,4 @@ public class LoginService {
             throw new BusinessException(ErrorCode.BAD_CREDENTIALS);
         }
     }
-    
-    public String reissue(Map<String, Object> requestHeader){
-        String refreshToken = requestHeader.get("x-auth-token").toString();
-        Authentication authentication = jwtProvider.getAuthentication(refreshToken);
-        String redisToken = redisService.getData("RefreshToken:"+ authentication.getName());
-        if (!refreshToken.equals(redisToken)) {
-            throw new BusinessException(ErrorCode.INVALID_REFRESH_TOKEN);
-        }
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(authentication.getName());
-        Long userId = ((CustomUser)userDetails).getAccount().getId();
-        String newAccessToken = jwtProvider.createAccessToken(authentication, userId);
-        return newAccessToken;
-    }
-    
-    public void logout(Map<String, Object> requestHeader){
-        String refreshToken = requestHeader.get("x-auth-token").toString();
-        Authentication authentication = jwtProvider.getAuthentication(refreshToken);
-        redisService.deleteData("RefreshToken:"+ authentication.getName());
-    }
 }

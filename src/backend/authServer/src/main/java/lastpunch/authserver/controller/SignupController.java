@@ -21,7 +21,7 @@ public class SignupController {
     private final EmailVerifyService emailVerifyService;
 
     @PostMapping
-    public ResponseEntity<Object> postSignup(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<Object> signup(@RequestBody SignupRequest signupRequest) {
         signupService.signup(signupRequest);
         return Response.toResponseEntity("11000", HttpStatus.OK);
     }

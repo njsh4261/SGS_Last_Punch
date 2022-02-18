@@ -166,7 +166,6 @@ class PrivateMessageViewController: MessagesViewController {
         layout?.setMessageIncomingAccessoryViewPosition(.messageBottom)
         layout?.setMessageOutgoingAccessoryViewSize(CGSize(width: 30, height: 30))
         layout?.setMessageOutgoingAccessoryViewPadding(HorizontalEdgeInsets(left: 0, right: 8))
-
     }
     
     private func addPlusButtonToMessageInputBar() {
@@ -317,43 +316,7 @@ extension PrivateMessageViewController : UIImagePickerControllerDelegate, UINavi
 
         present(alert, animated: true)
     }
-//
-//    func showImagePickerController(sourceType: UIImagePickerController.SourceType){
-//        let imgPicker = UIImagePickerController()
-//        imgPicker.delegate = self
-//        imgPicker.allowsEditing = true
-//        imgPicker.sourceType = sourceType
-//        imgPicker.presentationController?.delegate = self
-//        inputAccessoryView?.isHidden = true
-//        getRootViewController()?.present(imgPicker, animated: true, completion: nil)
-//
-//    }
-//
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        if let editedImage = info[  UIImagePickerController.InfoKey.editedImage] as? UIImage {
-//            self.inputPlugins.forEach { _ = $0.handleInput(of: editedImage)}
-//
-//        }
-//        else if let originImage = info[  UIImagePickerController.InfoKey.originalImage] as? UIImage {
-//            self.inputPlugins.forEach { _ = $0.handleInput(of: originImage)}
-//        }
-//        getRootViewController()?.dismiss(animated: true, completion: nil)
-//        inputAccessoryView?.isHidden = false
-//    }
-//
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        getRootViewController()?.dismiss(animated: true, completion: nil)
-//        inputAccessoryView?.isHidden = false
-//    }
-//
-//
-//    func getRootViewController() -> UIViewController? {
-//        return (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController
-//    }
-//
-    
 }
-
 
 // MARK: - Message DataSource (메시지 데이터 정의)
 extension PrivateMessageViewController: MessagesDataSource {

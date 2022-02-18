@@ -102,7 +102,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"accounts\": {\n            \"content\": [\n                {\n                    \"id\": 2,\n                    \"email\": \"asdf@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 5,\n                    \"email\": \"1111@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 6,\n                    \"email\": \"2222@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 7,\n                    \"email\": \"3333@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 8,\n                    \"email\": \"4444@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 9,\n                    \"email\": \"5555@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 10,\n                    \"email\": \"6666@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 11,\n                    \"email\": \"7777@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"unsorted\": true,\n                    \"sorted\": false\n                },\n                \"offset\": 0,\n                \"pageNumber\": 0,\n                \"pageSize\": 10,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"totalElements\": 8,\n            \"totalPages\": 1,\n            \"last\": true,\n            \"size\": 10,\n            \"number\": 0,\n            \"numberOfElements\": 8,\n            \"sort\": {\n                \"empty\": true,\n                \"unsorted\": true,\n                \"sorted\": false\n            },\n            \"first\": true,\n            \"empty\": false\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"accounts\": {\n            \"content\": [\n                {\n                    \"id\": 5,\n                    \"email\": \"1111@asdf\",\n                    \"name\": \"Captain America\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 6,\n                    \"email\": \"2222@asdf\",\n                    \"name\": \"Ironman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 7,\n                    \"email\": \"3333@asdf\",\n                    \"name\": \"Wonder Woman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 8,\n                    \"email\": \"4444@asdf\",\n                    \"name\": \"Deadpool\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 9,\n                    \"email\": \"5555@asdf\",\n                    \"name\": \"Antman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 10,\n                    \"email\": \"6666@asdf\",\n                    \"name\": \"Hawkeye\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 11,\n                    \"email\": \"7777@asdf\",\n                    \"name\": \"Black Widow\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 2,\n                    \"email\": \"asdf@asdf\",\n                    \"name\": \"Superman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageSize\": 10,\n                \"pageNumber\": 0,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"last\": true,\n            \"totalElements\": 8,\n            \"totalPages\": 1,\n            \"size\": 10,\n            \"number\": 0,\n            \"first\": true,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"numberOfElements\": 8,\n            \"empty\": false\n        }\n    },\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Success - Pagination Example",
@@ -125,7 +125,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/account/find?size=5&page=1",
+									"raw": "http://localhost:8080/account/find?size=3&page=1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -138,7 +138,7 @@
 									"query": [
 										{
 											"key": "size",
-											"value": "5"
+											"value": "3"
 										},
 										{
 											"key": "page",
@@ -173,7 +173,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"accounts\": {\n            \"content\": [\n                {\n                    \"id\": 9,\n                    \"email\": \"5555@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 10,\n                    \"email\": \"6666@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 11,\n                    \"email\": \"7777@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"unsorted\": true,\n                    \"sorted\": false\n                },\n                \"offset\": 5,\n                \"pageNumber\": 1,\n                \"pageSize\": 5,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"totalElements\": 8,\n            \"totalPages\": 2,\n            \"last\": true,\n            \"size\": 5,\n            \"number\": 1,\n            \"numberOfElements\": 3,\n            \"sort\": {\n                \"empty\": true,\n                \"unsorted\": true,\n                \"sorted\": false\n            },\n            \"first\": false,\n            \"empty\": false\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"accounts\": {\n            \"content\": [\n                {\n                    \"id\": 8,\n                    \"email\": \"4444@asdf\",\n                    \"name\": \"Deadpool\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 9,\n                    \"email\": \"5555@asdf\",\n                    \"name\": \"Antman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 10,\n                    \"email\": \"6666@asdf\",\n                    \"name\": \"Hawkeye\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 3,\n                \"pageSize\": 3,\n                \"pageNumber\": 1,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"last\": false,\n            \"totalElements\": 8,\n            \"totalPages\": 3,\n            \"size\": 3,\n            \"number\": 1,\n            \"first\": false,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"numberOfElements\": 3,\n            \"empty\": false\n        }\n    },\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Success - List is empty",
@@ -234,7 +234,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"accounts\": {\n            \"content\": [],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"unsorted\": true,\n                    \"sorted\": false\n                },\n                \"offset\": 0,\n                \"pageNumber\": 0,\n                \"pageSize\": 10,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"totalElements\": 0,\n            \"totalPages\": 0,\n            \"last\": true,\n            \"size\": 10,\n            \"number\": 0,\n            \"numberOfElements\": 0,\n            \"sort\": {\n                \"empty\": true,\n                \"unsorted\": true,\n                \"sorted\": false\n            },\n            \"first\": true,\n            \"empty\": true\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"accounts\": {\n            \"content\": [],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageSize\": 10,\n                \"pageNumber\": 0,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"last\": true,\n            \"totalElements\": 0,\n            \"totalPages\": 0,\n            \"size\": 10,\n            \"number\": 0,\n            \"first\": true,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"numberOfElements\": 0,\n            \"empty\": true\n        }\n    },\n    \"code\": \"12000\"\n}"
 						}
 					]
 				},
@@ -313,7 +313,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"account\": {\n            \"id\": 1,\n            \"email\": \"1\",\n            \"name\": \"Saitama\",\n            \"description\": null,\n            \"phone\": null,\n            \"country\": \"kor\",\n            \"language\": \"eng\",\n            \"settings\": 1,\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\"\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"account\": {\n            \"id\": 1,\n            \"email\": \"1\",\n            \"name\": \"Saitama\",\n            \"description\": null,\n            \"phone\": null,\n            \"country\": \"kor\",\n            \"imageNum\": null,\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\"\n        }\n    },\n    \"code\": \"12000\"\n}"
 						}
 					]
 				}
@@ -419,7 +419,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"workspaces\": {\n            \"content\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"ws1\",\n                    \"description\": null,\n                    \"settings\": 0,\n                    \"status\": 1,\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"ws2\",\n                    \"description\": null,\n                    \"settings\": 0,\n                    \"status\": 1,\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"ws3\",\n                    \"description\": null,\n                    \"settings\": 0,\n                    \"status\": 1,\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"ws4\",\n                    \"description\": null,\n                    \"settings\": 0,\n                    \"status\": 1,\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"ws5\",\n                    \"description\": null,\n                    \"settings\": 0,\n                    \"status\": 1,\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageSize\": 5,\n                \"pageNumber\": 0,\n                \"unpaged\": false,\n                \"paged\": true\n            },\n            \"last\": false,\n            \"totalPages\": 2,\n            \"totalElements\": 6,\n            \"size\": 5,\n            \"number\": 0,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"first\": true,\n            \"numberOfElements\": 5,\n            \"empty\": false\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"workspaces\": {\n            \"content\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Heroes\",\n                    \"description\": null,\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"ws2\",\n                    \"description\": null,\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"ws3\",\n                    \"description\": null,\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"ws4\",\n                    \"description\": null,\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"ws5\",\n                    \"description\": null,\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageSize\": 5,\n                \"pageNumber\": 0,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"last\": false,\n            \"totalElements\": 6,\n            \"totalPages\": 2,\n            \"size\": 5,\n            \"number\": 0,\n            \"first\": true,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"numberOfElements\": 5,\n            \"empty\": false\n        }\n    },\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Success - Next page",
@@ -492,7 +492,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"workspaces\": {\n            \"content\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"ws1\",\n                    \"description\": null,\n                    \"settings\": 0,\n                    \"status\": 1,\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"ws2\",\n                    \"description\": null,\n                    \"settings\": 0,\n                    \"status\": 1,\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"ws3\",\n                    \"description\": null,\n                    \"settings\": 0,\n                    \"status\": 1,\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"ws4\",\n                    \"description\": null,\n                    \"settings\": 0,\n                    \"status\": 1,\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"ws5\",\n                    \"description\": null,\n                    \"settings\": 0,\n                    \"status\": 1,\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageSize\": 5,\n                \"pageNumber\": 0,\n                \"unpaged\": false,\n                \"paged\": true\n            },\n            \"last\": false,\n            \"totalPages\": 2,\n            \"totalElements\": 6,\n            \"size\": 5,\n            \"number\": 0,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"first\": true,\n            \"numberOfElements\": 5,\n            \"empty\": false\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"workspaces\": {\n            \"content\": [\n                {\n                    \"id\": 6,\n                    \"name\": \"ws6\",\n                    \"description\": null,\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 5,\n                \"pageSize\": 5,\n                \"pageNumber\": 1,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"last\": true,\n            \"totalElements\": 6,\n            \"totalPages\": 2,\n            \"size\": 5,\n            \"number\": 1,\n            \"first\": false,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"numberOfElements\": 1,\n            \"empty\": false\n        }\n    },\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Success - List is empty (User not exists)",
@@ -567,7 +567,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"workspaces\": {\n            \"content\": [],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageSize\": 5,\n                \"pageNumber\": 0,\n                \"unpaged\": false,\n                \"paged\": true\n            },\n            \"last\": true,\n            \"totalPages\": 0,\n            \"totalElements\": 0,\n            \"size\": 5,\n            \"number\": 0,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"first\": true,\n            \"numberOfElements\": 0,\n            \"empty\": true\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"workspaces\": {\n            \"content\": [],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageSize\": 5,\n                \"pageNumber\": 0,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"last\": true,\n            \"totalElements\": 0,\n            \"totalPages\": 0,\n            \"size\": 5,\n            \"number\": 0,\n            \"first\": true,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"numberOfElements\": 0,\n            \"empty\": true\n        }\n    },\n    \"code\": \"12000\"\n}"
 						}
 					]
 				},
@@ -652,7 +652,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"workspace\": {\n            \"id\": 1,\n            \"name\": \"Heroes\",\n            \"description\": null,\n            \"settings\": 0,\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\",\n            \"owner\": {\n                \"id\": 1,\n                \"email\": \"1\",\n                \"name\": \"Saitama\",\n                \"description\": null,\n                \"phone\": null,\n                \"country\": \"kor\",\n                \"language\": \"eng\",\n                \"settings\": 1,\n                \"createDt\": \"1234-01-01 24:00:00\",\n                \"modifyDt\": \"9999-12-31 24:00:00\"\n            }\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"workspace\": {\n            \"id\": 1,\n            \"name\": \"Heroes\",\n            \"description\": null,\n            \"imageNum\": null,\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\",\n            \"owner\": {\n                \"id\": 1,\n                \"email\": \"1\",\n                \"name\": \"Saitama\",\n                \"description\": null,\n                \"phone\": null,\n                \"country\": \"kor\",\n                \"imageNum\": null,\n                \"createDt\": \"1234-01-01 24:00:00\",\n                \"modifyDt\": \"9999-12-31 24:00:00\"\n            }\n        }\n    },\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Fail - 12001 WORKSPACE_NOT_EXIST",
@@ -858,7 +858,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"members\": [\n            {\n                \"id\": 1,\n                \"name\": \"name\",\n                \"lastMessage\": {\n                    \"id\": null,\n                    \"authorId\": null,\n                    \"channelId\": null,\n                    \"content\": null,\n                    \"status\": null,\n                    \"createDt\": null,\n                    \"modifyDt\": null\n                }\n            },\n            {\n                \"id\": 2,\n                \"name\": \"name\",\n                \"lastMessage\": {\n                    \"id\": null,\n                    \"authorId\": null,\n                    \"channelId\": null,\n                    \"content\": null,\n                    \"status\": null,\n                    \"createDt\": null,\n                    \"modifyDt\": null\n                }\n            },\n            {\n                \"id\": 3,\n                \"name\": \"name\",\n                \"lastMessage\": {\n                    \"id\": null,\n                    \"authorId\": null,\n                    \"channelId\": null,\n                    \"content\": null,\n                    \"status\": null,\n                    \"createDt\": null,\n                    \"modifyDt\": null\n                }\n            },\n            {\n                \"id\": 4,\n                \"name\": \"name\",\n                \"lastMessage\": {\n                    \"id\": null,\n                    \"authorId\": null,\n                    \"channelId\": null,\n                    \"content\": null,\n                    \"status\": null,\n                    \"createDt\": null,\n                    \"modifyDt\": null\n                }\n            },\n            {\n                \"id\": 5,\n                \"name\": \"name\",\n                \"lastMessage\": {\n                    \"id\": null,\n                    \"authorId\": null,\n                    \"channelId\": null,\n                    \"content\": null,\n                    \"status\": null,\n                    \"createDt\": null,\n                    \"modifyDt\": null\n                }\n            }\n        ]\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"members\": {\n            \"content\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Saitama\",\n                    \"email\": \"1\",\n                    \"lastMessage\": {\n                        \"id\": null,\n                        \"authorId\": null,\n                        \"channelId\": null,\n                        \"content\": null,\n                        \"status\": null,\n                        \"createDt\": null,\n                        \"modifyDt\": null\n                    }\n                },\n                {\n                    \"id\": 2,\n                    \"name\": \"Superman\",\n                    \"email\": \"asdf@asdf\",\n                    \"lastMessage\": {\n                        \"id\": null,\n                        \"authorId\": null,\n                        \"channelId\": null,\n                        \"content\": null,\n                        \"status\": null,\n                        \"createDt\": null,\n                        \"modifyDt\": null\n                    }\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Batman\",\n                    \"email\": \"qwer@qwer\",\n                    \"lastMessage\": {\n                        \"id\": null,\n                        \"authorId\": null,\n                        \"channelId\": null,\n                        \"content\": null,\n                        \"status\": null,\n                        \"createDt\": null,\n                        \"modifyDt\": null\n                    }\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"Spider-man\",\n                    \"email\": \"zxcv@zxcv\",\n                    \"lastMessage\": {\n                        \"id\": null,\n                        \"authorId\": null,\n                        \"channelId\": null,\n                        \"content\": null,\n                        \"status\": null,\n                        \"createDt\": null,\n                        \"modifyDt\": null\n                    }\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"Captain America\",\n                    \"email\": \"1111@asdf\",\n                    \"lastMessage\": {\n                        \"id\": null,\n                        \"authorId\": null,\n                        \"channelId\": null,\n                        \"content\": null,\n                        \"status\": null,\n                        \"createDt\": null,\n                        \"modifyDt\": null\n                    }\n                },\n                {\n                    \"id\": 6,\n                    \"name\": \"Ironman\",\n                    \"email\": \"2222@asdf\",\n                    \"lastMessage\": {\n                        \"id\": null,\n                        \"authorId\": null,\n                        \"channelId\": null,\n                        \"content\": null,\n                        \"status\": null,\n                        \"createDt\": null,\n                        \"modifyDt\": null\n                    }\n                },\n                {\n                    \"id\": 7,\n                    \"name\": \"Wonder Woman\",\n                    \"email\": \"3333@asdf\",\n                    \"lastMessage\": {\n                        \"id\": null,\n                        \"authorId\": null,\n                        \"channelId\": null,\n                        \"content\": null,\n                        \"status\": null,\n                        \"createDt\": null,\n                        \"modifyDt\": null\n                    }\n                },\n                {\n                    \"id\": 8,\n                    \"name\": \"Deadpool\",\n                    \"email\": \"4444@asdf\",\n                    \"lastMessage\": {\n                        \"id\": null,\n                        \"authorId\": null,\n                        \"channelId\": null,\n                        \"content\": null,\n                        \"status\": null,\n                        \"createDt\": null,\n                        \"modifyDt\": null\n                    }\n                },\n                {\n                    \"id\": 9,\n                    \"name\": \"Antman\",\n                    \"email\": \"5555@asdf\",\n                    \"lastMessage\": {\n                        \"id\": null,\n                        \"authorId\": null,\n                        \"channelId\": null,\n                        \"content\": null,\n                        \"status\": null,\n                        \"createDt\": null,\n                        \"modifyDt\": null\n                    }\n                },\n                {\n                    \"id\": 10,\n                    \"name\": \"Hawkeye\",\n                    \"email\": \"6666@asdf\",\n                    \"lastMessage\": {\n                        \"id\": null,\n                        \"authorId\": null,\n                        \"channelId\": null,\n                        \"content\": null,\n                        \"status\": null,\n                        \"createDt\": null,\n                        \"modifyDt\": null\n                    }\n                },\n                {\n                    \"id\": 11,\n                    \"name\": \"Black Widow\",\n                    \"email\": \"7777@asdf\",\n                    \"lastMessage\": {\n                        \"id\": null,\n                        \"authorId\": null,\n                        \"channelId\": null,\n                        \"content\": null,\n                        \"status\": null,\n                        \"createDt\": null,\n                        \"modifyDt\": null\n                    }\n                }\n            ]\n        }\n    },\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Success - List is empty (workspace not exists)",
@@ -919,7 +919,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"members\": []\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"members\": {\n            \"content\": []\n        }\n    },\n    \"code\": \"12000\"\n}"
 						}
 					]
 				},
@@ -1017,7 +1017,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"members\": {\n            \"content\": [\n                {\n                    \"id\": 1,\n                    \"email\": \"1\",\n                    \"name\": \"name\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 2,\n                    \"email\": \"asdf@asdf\",\n                    \"name\": \"name\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 3,\n                    \"email\": \"qwer@qwer\",\n                    \"name\": \"name\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 4,\n                    \"email\": \"zxcv@zxcv\",\n                    \"name\": \"name\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 5,\n                    \"email\": \"1111@asdf\",\n                    \"name\": \"name\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageNumber\": 0,\n                \"pageSize\": 10,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"last\": true,\n            \"totalPages\": 1,\n            \"totalElements\": 5,\n            \"size\": 10,\n            \"number\": 0,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"first\": true,\n            \"numberOfElements\": 5,\n            \"empty\": false\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"members\": {\n            \"content\": [\n                {\n                    \"id\": 1,\n                    \"email\": \"1\",\n                    \"name\": \"Saitama\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 2,\n                    \"email\": \"asdf@asdf\",\n                    \"name\": \"Superman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 3,\n                    \"email\": \"qwer@qwer\",\n                    \"name\": \"Batman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 4,\n                    \"email\": \"zxcv@zxcv\",\n                    \"name\": \"Spider-man\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 5,\n                    \"email\": \"1111@asdf\",\n                    \"name\": \"Captain America\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 6,\n                    \"email\": \"2222@asdf\",\n                    \"name\": \"Ironman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 7,\n                    \"email\": \"3333@asdf\",\n                    \"name\": \"Wonder Woman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 8,\n                    \"email\": \"4444@asdf\",\n                    \"name\": \"Deadpool\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 9,\n                    \"email\": \"5555@asdf\",\n                    \"name\": \"Antman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 10,\n                    \"email\": \"6666@asdf\",\n                    \"name\": \"Hawkeye\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageSize\": 10,\n                \"pageNumber\": 0,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"last\": false,\n            \"totalElements\": 11,\n            \"totalPages\": 2,\n            \"size\": 10,\n            \"number\": 0,\n            \"first\": true,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"numberOfElements\": 10,\n            \"empty\": false\n        }\n    },\n    \"code\": \"12000\"\n}"
 						}
 					]
 				},
@@ -1104,76 +1104,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"channels\": {\n            \"content\": [\n                {\n                    \"id\": 1,\n                    \"workspace\": {\n                        \"id\": 1,\n                        \"name\": \"ws1\",\n                        \"description\": null,\n                        \"settings\": 0,\n                        \"status\": 1,\n                        \"createdt\": \"1234-01-01T00:00:00\",\n                        \"modifydt\": \"9999-12-31T00:00:00\"\n                    },\n                    \"name\": \"channel1\",\n                    \"topic\": \"topic1\",\n                    \"description\": \"pagination test for channels in workspace\",\n                    \"settings\": 1,\n                    \"status\": 2,\n                    \"createDt\": \"1234-01-01T00:00:00\",\n                    \"modifyDt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 2,\n                    \"workspace\": {\n                        \"id\": 1,\n                        \"name\": \"ws1\",\n                        \"description\": null,\n                        \"settings\": 0,\n                        \"status\": 1,\n                        \"createdt\": \"1234-01-01T00:00:00\",\n                        \"modifydt\": \"9999-12-31T00:00:00\"\n                    },\n                    \"name\": \"channel2\",\n                    \"topic\": \"topic2\",\n                    \"description\": \"pagination test for channels in workspace\",\n                    \"settings\": 1,\n                    \"status\": 2,\n                    \"createDt\": \"1234-01-01T00:00:00\",\n                    \"modifyDt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 3,\n                    \"workspace\": {\n                        \"id\": 1,\n                        \"name\": \"ws1\",\n                        \"description\": null,\n                        \"settings\": 0,\n                        \"status\": 1,\n                        \"createdt\": \"1234-01-01T00:00:00\",\n                        \"modifydt\": \"9999-12-31T00:00:00\"\n                    },\n                    \"name\": \"channel3\",\n                    \"topic\": \"topic3\",\n                    \"description\": \"pagination test for channels in workspace\",\n                    \"settings\": 1,\n                    \"status\": 2,\n                    \"createDt\": \"1234-01-01T00:00:00\",\n                    \"modifyDt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 4,\n                    \"workspace\": {\n                        \"id\": 1,\n                        \"name\": \"ws1\",\n                        \"description\": null,\n                        \"settings\": 0,\n                        \"status\": 1,\n                        \"createdt\": \"1234-01-01T00:00:00\",\n                        \"modifydt\": \"9999-12-31T00:00:00\"\n                    },\n                    \"name\": \"channel4\",\n                    \"topic\": \"topic4\",\n                    \"description\": \"pagination test for channels in workspace\",\n                    \"settings\": 1,\n                    \"status\": 2,\n                    \"createDt\": \"1234-01-01T00:00:00\",\n                    \"modifyDt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 5,\n                    \"workspace\": {\n                        \"id\": 1,\n                        \"name\": \"ws1\",\n                        \"description\": null,\n                        \"settings\": 0,\n                        \"status\": 1,\n                        \"createdt\": \"1234-01-01T00:00:00\",\n                        \"modifydt\": \"9999-12-31T00:00:00\"\n                    },\n                    \"name\": \"channel5\",\n                    \"topic\": \"topic5\",\n                    \"description\": \"pagination test for channels in workspace\",\n                    \"settings\": 1,\n                    \"status\": 2,\n                    \"createDt\": \"1234-01-01T00:00:00\",\n                    \"modifyDt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 6,\n                    \"workspace\": {\n                        \"id\": 1,\n                        \"name\": \"ws1\",\n                        \"description\": null,\n                        \"settings\": 0,\n                        \"status\": 1,\n                        \"createdt\": \"1234-01-01T00:00:00\",\n                        \"modifydt\": \"9999-12-31T00:00:00\"\n                    },\n                    \"name\": \"channel6\",\n                    \"topic\": \"topic6\",\n                    \"description\": \"pagination test for channels in workspace\",\n                    \"settings\": 1,\n                    \"status\": 2,\n                    \"createDt\": \"1234-01-01T00:00:00\",\n                    \"modifyDt\": \"9999-12-31T00:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageSize\": 10,\n                \"pageNumber\": 0,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"last\": true,\n            \"totalPages\": 1,\n            \"totalElements\": 6,\n            \"size\": 10,\n            \"number\": 0,\n            \"first\": true,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"numberOfElements\": 6,\n            \"empty\": false\n        }\n    }\n}"
-						},
-						{
-							"name": "Success - Next page (page size 5, second page)",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/workspace/1/channels?page=1&size=5",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"workspace",
-										"1",
-										"channels"
-									],
-									"query": [
-										{
-											"key": "page",
-											"value": "1"
-										},
-										{
-											"key": "size",
-											"value": "5"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Vary",
-									"value": "Origin"
-								},
-								{
-									"key": "Vary",
-									"value": "Access-Control-Request-Method"
-								},
-								{
-									"key": "Vary",
-									"value": "Access-Control-Request-Headers"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 21 Jan 2022 06:47:05 GMT"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=60"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"channels\": {\n            \"content\": [\n                {\n                    \"id\": 6,\n                    \"workspace\": {\n                        \"id\": 1,\n                        \"name\": \"ws1\",\n                        \"description\": null,\n                        \"settings\": 0,\n                        \"status\": 1,\n                        \"createdt\": \"1234-01-01T00:00:00\",\n                        \"modifydt\": \"9999-12-31T00:00:00\"\n                    },\n                    \"name\": \"channel6\",\n                    \"topic\": \"topic6\",\n                    \"description\": \"pagination test for channels in workspace\",\n                    \"settings\": 1,\n                    \"status\": 2,\n                    \"createDt\": \"1234-01-01T00:00:00\",\n                    \"modifyDt\": \"9999-12-31T00:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 5,\n                \"pageSize\": 5,\n                \"pageNumber\": 1,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"last\": true,\n            \"totalPages\": 2,\n            \"totalElements\": 6,\n            \"size\": 5,\n            \"number\": 1,\n            \"first\": false,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"numberOfElements\": 1,\n            \"empty\": false\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"channels\": {\n            \"content\": [\n                {\n                    \"name\": \"All Heroes\",\n                    \"id\": 1\n                },\n                {\n                    \"name\": \"Marvel Heroes\",\n                    \"id\": 2\n                },\n                {\n                    \"name\": \"DC Heroes\",\n                    \"id\": 3\n                }\n            ]\n        }\n    },\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Success - List is empty (Workspace not exists or no channels in the workspace)",
@@ -1244,7 +1175,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"channels\": {\n            \"content\": [],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"sorted\": false,\n                    \"unsorted\": true\n                },\n                \"offset\": 0,\n                \"pageSize\": 10,\n                \"pageNumber\": 0,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"last\": true,\n            \"totalPages\": 0,\n            \"totalElements\": 0,\n            \"size\": 10,\n            \"number\": 0,\n            \"first\": true,\n            \"sort\": {\n                \"empty\": true,\n                \"sorted\": false,\n                \"unsorted\": true\n            },\n            \"numberOfElements\": 0,\n            \"empty\": true\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"channels\": {\n            \"content\": []\n        }\n    },\n    \"code\": \"12000\"\n}"
 						}
 					]
 				},
@@ -1351,7 +1282,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"workspace\": {\n            \"id\": 7,\n            \"name\": \"workspaceMake\",\n            \"description\": \"make new workspace\",\n            \"settings\": 0,\n            \"status\": 0,\n            \"createdt\": \"2022-01-21T15:50:39.2685186\",\n            \"modifydt\": \"2022-01-21T15:50:39.2685186\"\n        },\n        \"channel\": {\n            \"id\": 14,\n            \"workspace\": {\n                \"id\": 7,\n                \"name\": \"workspaceMake\",\n                \"description\": \"make new workspace\",\n                \"settings\": 0,\n                \"status\": 0,\n                \"createdt\": \"2022-01-21T15:50:39.2685186\",\n                \"modifydt\": \"2022-01-21T15:50:39.2685186\"\n            },\n            \"name\": \"channelMake\",\n            \"topic\": \"test\",\n            \"description\": \"make new channel\",\n            \"settings\": 0,\n            \"status\": 0,\n            \"createDt\": \"2022-01-21T15:50:39.3693631\",\n            \"modifyDt\": \"2022-01-21T15:50:39.3693631\"\n        }\n    }\n}"
+							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"workspace\": {\n            \"id\": 10,\n            \"name\": \"workspaceMake\",\n            \"description\": \"make new workspace\",\n            \"imageNum\": null,\n            \"createDt\": \"2022-02-18 16:31:28\",\n            \"modifyDt\": \"2022-02-18 16:31:28\"\n        },\n        \"channel\": {\n            \"id\": 15,\n            \"workspace\": {\n                \"id\": 10,\n                \"name\": \"workspaceMake\",\n                \"description\": \"make new workspace\",\n                \"imageNum\": null,\n                \"createDt\": \"2022-02-18 16:31:28\",\n                \"modifyDt\": \"2022-02-18 16:31:28\"\n            },\n            \"name\": \"channelMake\",\n            \"topic\": \"test\",\n            \"description\": \"make new channel\",\n            \"createDt\": \"2022-02-18 16:31:28\",\n            \"modifyDt\": \"2022-02-18 16:31:28\"\n        }\n    }\n}"
 						},
 						{
 							"name": "Success - 12000 with required attributes",
@@ -1423,7 +1354,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"workspace\": {\n            \"id\": 8,\n            \"name\": \"workspaceMake\",\n            \"description\": null,\n            \"settings\": 0,\n            \"status\": 0,\n            \"createdt\": \"2022-01-21T15:52:09.3301933\",\n            \"modifydt\": \"2022-01-21T15:52:09.3301933\"\n        },\n        \"channel\": {\n            \"id\": 15,\n            \"workspace\": {\n                \"id\": 8,\n                \"name\": \"workspaceMake\",\n                \"description\": null,\n                \"settings\": 0,\n                \"status\": 0,\n                \"createdt\": \"2022-01-21T15:52:09.3301933\",\n                \"modifydt\": \"2022-01-21T15:52:09.3301933\"\n            },\n            \"name\": \"channelMake\",\n            \"topic\": null,\n            \"description\": null,\n            \"settings\": 0,\n            \"status\": 0,\n            \"createDt\": \"2022-01-21T15:52:09.3387337\",\n            \"modifyDt\": \"2022-01-21T15:52:09.3387337\"\n        }\n    }\n}"
+							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"workspace\": {\n            \"id\": 11,\n            \"name\": \"workspaceMake\",\n            \"description\": null,\n            \"imageNum\": null,\n            \"createDt\": \"2022-02-18 16:31:54\",\n            \"modifyDt\": \"2022-02-18 16:31:54\"\n        },\n        \"channel\": {\n            \"id\": 16,\n            \"workspace\": {\n                \"id\": 11,\n                \"name\": \"workspaceMake\",\n                \"description\": null,\n                \"imageNum\": null,\n                \"createDt\": \"2022-02-18 16:31:54\",\n                \"modifyDt\": \"2022-02-18 16:31:54\"\n            },\n            \"name\": \"channelMake\",\n            \"topic\": null,\n            \"description\": null,\n            \"createDt\": \"2022-02-18 16:31:54\",\n            \"modifyDt\": \"2022-02-18 16:31:54\"\n        }\n    }\n}"
 						},
 						{
 							"name": "Fail - 12008 INVALID_USERID",
@@ -1513,7 +1444,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"editing\",\r\n    \"description\": \"editing workspace\",\r\n    \"settings\": 12,\r\n    \"status\": 99\r\n}",
+							"raw": "{\r\n    \"name\": \"editing\",\r\n    \"description\": \"editing workspace\",\r\n    \"imageNum\": 123\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1521,7 +1452,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/workspace/1234",
+							"raw": "http://localhost:8080/workspace/9",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1529,7 +1460,7 @@
 							"port": "8080",
 							"path": [
 								"workspace",
-								"1234"
+								"9"
 							]
 						}
 					},
@@ -1541,7 +1472,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"editing\",\r\n    \"description\": \"editing workspace\",\r\n    \"settings\": 12,\r\n    \"status\": 99\r\n}",
+									"raw": "{\r\n    \"name\": \"editing\",\r\n    \"description\": \"editing workspace\",\r\n    \"imageNum\": 123\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1599,7 +1530,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"code\": \"12000\",\n    \"data\": {}\n}"
 						},
 						{
 							"name": "Success - 12000 with some attributes",
@@ -1608,7 +1539,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"description\": \"editing workspace\",\r\n    \"settings\": 12\r\n}",
+									"raw": "{\r\n    \"name\": \"editing\",\r\n    \"description\": \"editing workspace\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1666,7 +1597,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"code\": \"12000\",\n    \"data\": {}\n}"
 						},
 						{
 							"name": "Success - 12000 with no attribute",
@@ -1733,7 +1664,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"code\": \"12000\",\n    \"data\": {}\n}"
 						},
 						{
 							"name": "Fail - 12001 WORKSPACE_NOT_EXIST",
@@ -1801,6 +1732,67 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": \"12001\",\n    \"err\": {\n        \"msg\": \"WORKSPACE_NOT_EXIST\",\n        \"desc\": \"존재하지 않는 워크스페이스입니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"editing123\",\r\n    \"description\": \"editing workspace\",\r\n    \"imageNum\": 123\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/workspace/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"workspace",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 18 Feb 2022 09:12:12 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12011\",\n    \"err\": {\n        \"msg\": \"PERMISSION_DENIED\",\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다\"\n    }\n}"
 						}
 					]
 				},
@@ -1936,6 +1928,63 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": \"12001\",\n    \"err\": {\n        \"msg\": \"WORKSPACE_NOT_EXIST\",\n        \"desc\": \"존재하지 않는 워크스페이스입니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									},
+									{
+										"key": "userid",
+										"value": "11",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8082/workspace/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"workspace",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 18 Feb 2022 09:13:02 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"12011\",\n    \"err\": {\n        \"msg\": \"PERMISSION_DENIED\",\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다\"\n    }\n}"
 						}
 					]
 				}
@@ -2019,7 +2068,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\",\n    \"data\": {\n        \"channel\": {\n            \"id\": 1,\n            \"workspace\": {\n                \"id\": 1,\n                \"name\": \"Heroes\",\n                \"description\": null,\n                \"settings\": 0,\n                \"createDt\": \"1234-01-01 24:00:00\",\n                \"modifyDt\": \"9999-12-31 24:00:00\"\n            },\n            \"name\": \"All Heroes\",\n            \"topic\": \"topic1\",\n            \"description\": \"pagination test for channels in workspace\",\n            \"settings\": 1,\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\",\n            \"owner\": {\n                \"id\": 1,\n                \"email\": \"1\",\n                \"name\": \"Saitama\",\n                \"description\": null,\n                \"phone\": null,\n                \"country\": \"kor\",\n                \"language\": \"eng\",\n                \"settings\": 1,\n                \"createDt\": \"1234-01-01 24:00:00\",\n                \"modifyDt\": \"9999-12-31 24:00:00\"\n            }\n        }\n    }\n}"
+							"body": "{\n    \"data\": {\n        \"channel\": {\n            \"id\": 1,\n            \"workspace\": {\n                \"id\": 1,\n                \"name\": \"Heroes\",\n                \"description\": null,\n                \"imageNum\": null,\n                \"createDt\": \"1234-01-01 24:00:00\",\n                \"modifyDt\": \"9999-12-31 24:00:00\"\n            },\n            \"name\": \"All Heroes\",\n            \"topic\": \"topic1\",\n            \"description\": \"pagination test for channels in workspace\",\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\",\n            \"owner\": {\n                \"id\": 1,\n                \"email\": \"1\",\n                \"name\": \"Saitama\",\n                \"description\": null,\n                \"phone\": null,\n                \"country\": \"kor\",\n                \"imageNum\": null,\n                \"createDt\": \"1234-01-01 24:00:00\",\n                \"modifyDt\": \"9999-12-31 24:00:00\"\n            }\n        }\n    },\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Fail - 12003 CHANNEL_NOT_EXIST",
@@ -2204,7 +2253,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"members\": {\n            \"content\": [\n                {\n                    \"id\": 1,\n                    \"email\": \"asdf@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 2,\n                    \"email\": \"qwer@qwer\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 3,\n                    \"email\": \"zxcv@zxcv\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 4,\n                    \"email\": \"1111@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 5,\n                    \"email\": \"2222@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 6,\n                    \"email\": \"3333@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"unsorted\": true,\n                    \"sorted\": false\n                },\n                \"offset\": 0,\n                \"pageNumber\": 0,\n                \"pageSize\": 10,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"totalElements\": 6,\n            \"totalPages\": 1,\n            \"last\": true,\n            \"size\": 10,\n            \"number\": 0,\n            \"sort\": {\n                \"empty\": true,\n                \"unsorted\": true,\n                \"sorted\": false\n            },\n            \"first\": true,\n            \"numberOfElements\": 6,\n            \"empty\": false\n        }\n    },\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"data\": {\n        \"members\": {\n            \"content\": [\n                {\n                    \"id\": 1,\n                    \"email\": \"1\",\n                    \"name\": \"Saitama\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 2,\n                    \"email\": \"asdf@asdf\",\n                    \"name\": \"Superman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 3,\n                    \"email\": \"qwer@qwer\",\n                    \"name\": \"Batman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 4,\n                    \"email\": \"zxcv@zxcv\",\n                    \"name\": \"Spider-man\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 5,\n                    \"email\": \"1111@asdf\",\n                    \"name\": \"Captain America\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 6,\n                    \"email\": \"2222@asdf\",\n                    \"name\": \"Ironman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 7,\n                    \"email\": \"3333@asdf\",\n                    \"name\": \"Wonder Woman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 8,\n                    \"email\": \"4444@asdf\",\n                    \"name\": \"Deadpool\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 9,\n                    \"email\": \"5555@asdf\",\n                    \"name\": \"Antman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 10,\n                    \"email\": \"6666@asdf\",\n                    \"name\": \"Hawkeye\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"unsorted\": true,\n                    \"sorted\": false\n                },\n                \"offset\": 0,\n                \"pageSize\": 10,\n                \"pageNumber\": 0,\n                \"unpaged\": false,\n                \"paged\": true\n            },\n            \"last\": false,\n            \"totalElements\": 11,\n            \"totalPages\": 2,\n            \"size\": 10,\n            \"number\": 0,\n            \"sort\": {\n                \"empty\": true,\n                \"unsorted\": true,\n                \"sorted\": false\n            },\n            \"first\": true,\n            \"numberOfElements\": 10,\n            \"empty\": false\n        }\n    },\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Success - Pagination Example",
@@ -2267,7 +2316,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"members\": {\n            \"content\": [\n                {\n                    \"id\": 4,\n                    \"email\": \"1111@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 5,\n                    \"email\": \"2222@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                },\n                {\n                    \"id\": 6,\n                    \"email\": \"3333@asdf\",\n                    \"name\": \"name\",\n                    \"displayname\": null,\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"language\": \"eng\",\n                    \"settings\": 1,\n                    \"status\": \"ROLE_ADMIN\",\n                    \"createdt\": \"1234-01-01T00:00:00\",\n                    \"modifydt\": \"9999-12-31T00:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"unsorted\": true,\n                    \"sorted\": false\n                },\n                \"offset\": 3,\n                \"pageNumber\": 1,\n                \"pageSize\": 3,\n                \"paged\": true,\n                \"unpaged\": false\n            },\n            \"totalElements\": 6,\n            \"totalPages\": 2,\n            \"last\": true,\n            \"size\": 3,\n            \"number\": 1,\n            \"sort\": {\n                \"empty\": true,\n                \"unsorted\": true,\n                \"sorted\": false\n            },\n            \"first\": false,\n            \"numberOfElements\": 3,\n            \"empty\": false\n        }\n    },\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"data\": {\n        \"members\": {\n            \"content\": [\n                {\n                    \"id\": 4,\n                    \"email\": \"zxcv@zxcv\",\n                    \"name\": \"Spider-man\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 5,\n                    \"email\": \"1111@asdf\",\n                    \"name\": \"Captain America\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                },\n                {\n                    \"id\": 6,\n                    \"email\": \"2222@asdf\",\n                    \"name\": \"Ironman\",\n                    \"description\": null,\n                    \"phone\": null,\n                    \"country\": \"kor\",\n                    \"imageNum\": null,\n                    \"createDt\": \"1234-01-01 24:00:00\",\n                    \"modifyDt\": \"9999-12-31 24:00:00\"\n                }\n            ],\n            \"pageable\": {\n                \"sort\": {\n                    \"empty\": true,\n                    \"unsorted\": true,\n                    \"sorted\": false\n                },\n                \"offset\": 3,\n                \"pageSize\": 3,\n                \"pageNumber\": 1,\n                \"unpaged\": false,\n                \"paged\": true\n            },\n            \"last\": false,\n            \"totalElements\": 11,\n            \"totalPages\": 4,\n            \"size\": 3,\n            \"number\": 1,\n            \"sort\": {\n                \"empty\": true,\n                \"unsorted\": true,\n                \"sorted\": false\n            },\n            \"first\": false,\n            \"numberOfElements\": 3,\n            \"empty\": false\n        }\n    },\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Success - List is empty (Members not exist)",
@@ -2415,7 +2464,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"channel\": {\n            \"id\": 37,\n            \"workspace\": {\n                \"id\": 6,\n                \"name\": \"ws6\",\n                \"description\": null,\n                \"settings\": 0,\n                \"status\": 1,\n                \"createdt\": \"1234-01-01T00:00:00\",\n                \"modifydt\": \"9999-12-31T00:00:00\"\n            },\n            \"name\": \"new channel\",\n            \"topic\": \"channel test\",\n            \"description\": \"asdf\",\n            \"settings\": 0,\n            \"status\": 0,\n            \"createDt\": \"2022-01-26T20:45:34.6620685\",\n            \"modifyDt\": \"2022-01-26T20:45:34.6620685\"\n        }\n    },\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"data\": {\n        \"channel\": {\n            \"id\": 23,\n            \"workspace\": {\n                \"id\": 6,\n                \"name\": \"ws6\",\n                \"description\": null,\n                \"imageNum\": null,\n                \"createDt\": \"1234-01-01 24:00:00\",\n                \"modifyDt\": \"9999-12-31 24:00:00\"\n            },\n            \"name\": \"new channel\",\n            \"topic\": \"channel test\",\n            \"description\": \"asdf\",\n            \"createDt\": \"2022-02-18 18:32:58\",\n            \"modifyDt\": \"2022-02-18 18:32:58\"\n        }\n    },\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Fail - 12001 WORKSPACE_NOT_EXIST",
@@ -2541,6 +2590,66 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": \"12012\",\n    \"err\": {\n        \"msg\": \"CHANNEL_ALREADY_EXIST\",\n        \"desc\": \"이미 존재하는 채널입니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"workspaceId\": 6,\r\n    \"name\": \"new channel\",\r\n    \"topic\": \"channel test\",\r\n    \"description\": \"asdf\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/channel",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"channel"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 18 Feb 2022 09:33:17 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"err\": {\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다\",\n        \"msg\": \"PERMISSION_DENIED\"\n    },\n    \"code\": \"12011\"\n}"
 						}
 					]
 				},
@@ -2553,11 +2662,16 @@
 								"key": "X-AUTH-TOKEN",
 								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
 								"type": "text"
+							},
+							{
+								"key": "userid",
+								"value": "1",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"topic\": \"channel edit\",\r\n    \"description\": \"zxcv\",\r\n    \"status\": 3\r\n}",
+							"raw": "{\r\n    \"name\": \"edited\",\r\n    \"topic\": \"channel edit\",\r\n    \"description\": \"zxcv\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2565,15 +2679,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/channel/14",
+							"raw": "http://localhost:8082/channel/17",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8082",
 							"path": [
 								"channel",
-								"14"
+								"17"
 							]
 						}
 					},
@@ -2637,7 +2751,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"data\": {},\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Fail - 12003 CHANNEL_NOT_EXIST",
@@ -2699,6 +2813,72 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": \"12003\",\n    \"err\": {\n        \"msg\": \"CHANNEL_NOT_EXIST\",\n        \"desc\": \"존재하지 않는 채널입니다.\"\n    }\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									},
+									{
+										"key": "userid",
+										"value": "11",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"edited\",\r\n    \"topic\": \"channel edit\",\r\n    \"description\": \"zxcv\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/channel/23",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"channel",
+										"23"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 18 Feb 2022 09:34:09 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"err\": {\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다\",\n        \"msg\": \"PERMISSION_DENIED\"\n    },\n    \"code\": \"12011\"\n}"
 						}
 					]
 				},
@@ -2795,7 +2975,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"data\": {},\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Fail - 12003 CHANNEL_NOT_EXIST",
@@ -2856,7 +3036,73 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"12003\",\n    \"err\": {\n        \"msg\": \"CHANNEL_NOT_EXIST\",\n        \"desc\": \"존재하지 않는 채널입니다.\"\n    }\n}"
+							"body": "{\n    \"err\": {\n        \"desc\": \"존재하지 않는 채널입니다\",\n        \"msg\": \"CHANNEL_NOT_EXIST\"\n    },\n    \"code\": \"12003\"\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvaGpza2ltQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ1c2VySWQiOjEyMzQ1Njc4OTEyMzQ1NiwiZXhwIjoxNjQ1ODM4NzMyfQ.4pRFq-gjN2Fppnm_kLNyI-0gjfG-XQtJmb7YMLqhLTmuZhOrpWFZkGhZvjequk1Z_ZDvDvLEHUCLgeRoAN3OXg",
+										"type": "text"
+									},
+									{
+										"key": "userid",
+										"value": "11",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"topic\": \"channel edit\",\r\n    \"description\": \"zxcv\",\r\n    \"status\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/channel/23",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"channel",
+										"23"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 18 Feb 2022 09:35:04 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"err\": {\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다\",\n        \"msg\": \"PERMISSION_DENIED\"\n    },\n    \"code\": \"12011\"\n}"
 						}
 					]
 				},

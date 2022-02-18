@@ -128,6 +128,7 @@
 		8CCFFAC227BE8EBF005D4D13 /* ChannelSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC127BE8EBF005D4D13 /* ChannelSearchCell.xib */; };
 		8CCFFAC427BE975D005D4D13 /* CustomMessagesFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC327BE975D005D4D13 /* CustomMessagesFlowLayout.swift */; };
 		8CCFFAC627BE9793005D4D13 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC527BE9793005D4D13 /* CustomCell.swift */; };
+		8CCFFACA27C023AA005D4D13 /* PresenceWebsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC927C023AA005D4D13 /* PresenceWebsocket.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -260,6 +261,7 @@
 		8CCFFAC127BE8EBF005D4D13 /* ChannelSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelSearchCell.xib; sourceTree = "<group>"; };
 		8CCFFAC327BE975D005D4D13 /* CustomMessagesFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessagesFlowLayout.swift; sourceTree = "<group>"; };
 		8CCFFAC527BE9793005D4D13 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		8CCFFAC927C023AA005D4D13 /* PresenceWebsocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceWebsocket.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -370,6 +372,7 @@
 				8CC9E8C927B10C9D008BE1EA /* NoteService.swift */,
 				8CCFFAB127BD12DB005D4D13 /* ChatService.swift */,
 				8CC9E90F27B3FDB5008BE1EA /* StompWebsocket.swift */,
+				8CCFFAC927C023AA005D4D13 /* PresenceWebsocket.swift */,
 				8C68AB1427969D1200C1711E /* NetworkResult.swift */,
 				8CC9E8BE27B10487008BE1EA /* APIConstants.swift */,
 			);
@@ -987,6 +990,7 @@
 				8CBD459527A3E5600056A557 /* MemberListCell.swift in Sources */,
 				8CBD458B27A3E40B0056A557 /* DirectMessageListViewCell.swift in Sources */,
 				8C962B5B27ADABE400A9A1F5 /* Channel.swift in Sources */,
+				8CCFFACA27C023AA005D4D13 /* PresenceWebsocket.swift in Sources */,
 				8C68AAE1279526C600C1711E /* HomeViewController.swift in Sources */,
 				8CC9E8C327B10A17008BE1EA /* NoteListViewContoller.swift in Sources */,
 				8CCFFAC427BE975D005D4D13 /* CustomMessagesFlowLayout.swift in Sources */,

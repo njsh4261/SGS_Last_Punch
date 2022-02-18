@@ -37,7 +37,7 @@ public class Workspace{
     
     @NotNull
     @Column(columnDefinition = "tinyint")
-    private Integer settings;
+    private Integer imagenum;
     
     @CreatedDate
     @Column(updatable = false)
@@ -56,13 +56,11 @@ public class Workspace{
         private String workspaceDescription;
         private String channelName;
         private String channelTopic;
-        private String channelDescription;
 
         public Workspace toWorkspaceEntity(){
             return Workspace.builder()
                     .name(workspaceName)
                     .description(workspaceDescription)
-                    .settings(0)
                     .createdt(LocalDateTime.now())
                     .modifydt(LocalDateTime.now())
                     .build();
@@ -73,8 +71,6 @@ public class Workspace{
                     .workspace(workspace)
                     .name(channelName)
                     .topic(channelTopic)
-                    .description(channelDescription)
-                    .settings(0)
                     .createdt(LocalDateTime.now())
                     .modifydt(LocalDateTime.now())
                     .build();
@@ -85,8 +81,7 @@ public class Workspace{
     public static class EditDto {
         private String name;
         private String description;
-        private Integer settings;
-        private Integer status; // TODO: converter 문제 해결 시 String으로
+        private Integer imageNum;
         
         public Workspace toEntity(Workspace workspace){
             if(name != null){
@@ -95,8 +90,11 @@ public class Workspace{
             if(description != null){
                 workspace.setDescription(description);
             }
-            if(settings != null){
-                workspace.setSettings(settings);
+            if(imageNum != null){
+                workspace.setImagenum(imageNum);
+            }
+            if(name != null || description != null || imageNum != null){
+                workspace.setModifydt(LocalDateTime.now());
             }
             return workspace;
         }
@@ -108,7 +106,7 @@ public class Workspace{
         private Long id;
         private String name;
         private String description;
-        private Integer settings;
+        private Integer imageNum;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createDt;
@@ -117,12 +115,12 @@ public class Workspace{
         private LocalDateTime modifyDt;
 
         @QueryProjection
-        public ExportDto(Long id, String name, String description, Integer settings,
+        public ExportDto(Long id, String name, String description, Integer imageNum,
                          LocalDateTime createDt, LocalDateTime modifyDt) {
             this.id = id;
             this.name = name;
             this.description = description;
-            this.settings = settings;
+            this.imageNum = imageNum;
             this.createDt = createDt;
             this.modifyDt = modifyDt;
         }
@@ -133,7 +131,7 @@ public class Workspace{
             .id(id)
             .name(name)
             .description(description)
-            .settings(settings)
+            .imageNum(imagenum)
             .createDt(createdt)
             .modifyDt(modifydt)
             .build();
@@ -145,7 +143,7 @@ public class Workspace{
         private Long id;
         private String name;
         private String description;
-        private Integer settings;
+        private Integer imageNum;
 
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createDt;
@@ -161,7 +159,7 @@ public class Workspace{
                 .id(id)
                 .name(name)
                 .description(description)
-                .settings(settings)
+                .imageNum(imagenum)
                 .createDt(createdt)
                 .modifyDt(modifydt)
                 .owner(account)

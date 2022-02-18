@@ -19,8 +19,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
     public ResponseEntity<Object> handleCustomException(
             HttpServletRequest request, HttpServletResponse response, BusinessException e){
         log.error("handleBusinessException", e);
-        final ResponseEntity<Object> errorResponse = ErrorResponse.toResponseEntity(e.getStatusCode());
-        return errorResponse;
+        return ErrorResponse.toResponseEntity(e.getStatusCode());
     }
     
     @ExceptionHandler({ Exception.class })

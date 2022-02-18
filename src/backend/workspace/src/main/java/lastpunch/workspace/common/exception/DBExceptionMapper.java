@@ -14,7 +14,7 @@ public class DBExceptionMapper{
     private final Map<String, BusinessException> foreignKeyExceptionMap;
     private final Map<String, BusinessException> duplicateExceptionMap;
     private final Pattern keyPattern;
-    Logger logger;
+    private final Logger logger;
     
     public DBExceptionMapper(){
         foreignKeyExceptionMap = Map.of(

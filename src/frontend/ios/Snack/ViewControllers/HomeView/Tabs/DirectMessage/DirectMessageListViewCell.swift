@@ -107,9 +107,9 @@ class DirectMessageListViewCell: UITableViewCell {
         }
         
         ivThumbnail.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().inset(13)
             $0.left.equalToSuperview().inset(10)
-            $0.width.height.equalTo(30)
+            $0.width.height.equalTo(36)
         }
         
         lblName.snp.makeConstraints {

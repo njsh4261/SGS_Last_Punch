@@ -210,7 +210,7 @@ class DirectMessageListViewController: UIViewController {
             $0.refreshControl = refreshControl
             $0.tableHeaderView = viewHeader
             $0.clearsContextBeforeDrawing = false
-            $0.separatorStyle = .none
+            $0.separatorStyle = .singleLine
             $0.bouncesZoom = false
             $0.isOpaque = false
             $0.rowHeight = 75

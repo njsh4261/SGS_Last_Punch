@@ -44,7 +44,7 @@ class DirectMessageListCellView: UITableViewCell {
     
     func setData(_ member: User, _ index: Int) {
         chatId = member.senderId > userId ? "\(member.senderId)-\(userId)" : "\(userId)-\(member.senderId)"
-        ivThumbnail.image = index%2 == 0 ? UIImage(named: "snack") : UIImage(named: "snack_solid")
+        ivThumbnail.image = index%2 == 0 ? UIImage(named: "10")?.square(to: 70) : UIImage(named: "13")?.square(to: 70)
         lblDate.text = Date().toString()
 
         if member.senderId == userId {
@@ -72,11 +72,16 @@ class DirectMessageListCellView: UITableViewCell {
             lblLastMessage.font = UIFont(name: "NotoSansKR-Regular", size: 16)
         }
     }
-    
+
     private func attribute() {
         backgroundColor = UIColor(named: "snackButtonColor")
         
-        ivThumbnail.contentMode = .scaleAspectFit
+        ivThumbnail = ivThumbnail.then {
+            $0.contentMode = .scaleAspectFit
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = UIColor.label.cgColor
+            $0.layer.cornerRadius = 4
+        }
         
         lblName = lblName.then {
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)

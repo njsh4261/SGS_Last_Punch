@@ -17,7 +17,7 @@ class EditProfileView: UIViewController {
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var viewHeader: UIView!
-    @IBOutlet private var imageUser: UIImageView!
+    @IBOutlet private var ivUser: UIImageView!
     @IBOutlet private var labelInitials: UILabel!
     @IBOutlet private var cellName: UITableViewCell!
     @IBOutlet private var cellDescription: UITableViewCell!
@@ -123,7 +123,7 @@ class EditProfileView: UIViewController {
     }
     
     func pictureUploaded(image: UIImage, data: Data) {
-        imageUser.image = image.square(to: 70)
+        ivUser.image = image.square(to: 70)
         labelInitials.text = nil
 
         ProgressHUD.dismiss()

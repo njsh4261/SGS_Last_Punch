@@ -31,7 +31,7 @@ class WorkspaceListCell: UITableViewCell {
     
     func setData(_ data: WorkspaceListCellModel, _ index: Int) {
         workspaceId = data.id
-        ivThumbnail.image = index%2 == 0 ? UIImage(named: "snack") : UIImage(named: "snack_solid")
+        ivThumbnail.image = UIImage(named: "1")?.square(to: 70)
         lblName.text = data.name
         lblAddress.text = "고유주소 : \(data.id)"
         
@@ -40,7 +40,13 @@ class WorkspaceListCell: UITableViewCell {
     
     private func attribute() {
         backgroundColor = UIColor(named: "snackBackGroundColor")
-        ivThumbnail.contentMode = .scaleAspectFit
+        
+        ivThumbnail = ivThumbnail.then {
+            $0.contentMode = .scaleAspectFit
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = UIColor.label.cgColor
+            $0.layer.cornerRadius = 4
+        }
         
         lblName = lblName.then {
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)

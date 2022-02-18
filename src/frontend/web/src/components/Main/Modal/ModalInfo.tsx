@@ -107,7 +107,7 @@ export default function ModalInfo({ type, params }: Props) {
             </ItemL1>
             <ItemL2>
               {type === 'channel'
-                ? channel!.description !== null
+                ? channel!.description !== ''
                   ? channel!.description
                   : '설명 추가'
                 : ws!.description !== null

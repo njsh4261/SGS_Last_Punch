@@ -48,7 +48,7 @@
 		8CBD457827A25E430056A557 /* PrivateMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457727A25E430056A557 /* PrivateMessageViewController.swift */; };
 		8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457927A287460056A557 /* Ex+NotificationCenter.swift */; };
 		8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457D27A28AEF0056A557 /* MessageKit.swift */; };
-		8CBD458B27A3E40B0056A557 /* DirectMessageListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD458A27A3E40B0056A557 /* DirectMessageListCellView.swift */; };
+		8CBD458B27A3E40B0056A557 /* DirectMessageListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD458A27A3E40B0056A557 /* DirectMessageListViewCell.swift */; };
 		8CBD458D27A3E42B0056A557 /* DirectMessageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD458C27A3E42B0056A557 /* DirectMessageListViewModel.swift */; };
 		8CBD458F27A3E46B0056A557 /* DirectMessageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD458E27A3E46B0056A557 /* DirectMessageListViewController.swift */; };
 		8CBD459527A3E5600056A557 /* MemberListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD459427A3E55F0056A557 /* MemberListCell.swift */; };
@@ -180,7 +180,7 @@
 		8CBD457727A25E430056A557 /* PrivateMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateMessageViewController.swift; sourceTree = "<group>"; };
 		8CBD457927A287460056A557 /* Ex+NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+NotificationCenter.swift"; sourceTree = "<group>"; };
 		8CBD457D27A28AEF0056A557 /* MessageKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKit.swift; sourceTree = "<group>"; };
-		8CBD458A27A3E40B0056A557 /* DirectMessageListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageListCellView.swift; sourceTree = "<group>"; };
+		8CBD458A27A3E40B0056A557 /* DirectMessageListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageListViewCell.swift; sourceTree = "<group>"; };
 		8CBD458C27A3E42B0056A557 /* DirectMessageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageListViewModel.swift; sourceTree = "<group>"; };
 		8CBD458E27A3E46B0056A557 /* DirectMessageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageListViewController.swift; sourceTree = "<group>"; };
 		8CBD459427A3E55F0056A557 /* MemberListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberListCell.swift; sourceTree = "<group>"; };
@@ -557,7 +557,7 @@
 				8CC9E8FF27B2DACC008BE1EA /* UserInvitation */,
 				8CBD458E27A3E46B0056A557 /* DirectMessageListViewController.swift */,
 				8CBD458C27A3E42B0056A557 /* DirectMessageListViewModel.swift */,
-				8CBD458A27A3E40B0056A557 /* DirectMessageListCellView.swift */,
+				8CBD458A27A3E40B0056A557 /* DirectMessageListViewCell.swift */,
 			);
 			path = DirectMessage;
 			sourceTree = "<group>";
@@ -985,7 +985,7 @@
 				8CC9E8CC27B10CAE008BE1EA /* NoteListCellModel.swift in Sources */,
 				8CBD45E427A869870056A557 /* NetworkView.swift in Sources */,
 				8CBD459527A3E5600056A557 /* MemberListCell.swift in Sources */,
-				8CBD458B27A3E40B0056A557 /* DirectMessageListCellView.swift in Sources */,
+				8CBD458B27A3E40B0056A557 /* DirectMessageListViewCell.swift in Sources */,
 				8C962B5B27ADABE400A9A1F5 /* Channel.swift in Sources */,
 				8C68AAE1279526C600C1711E /* HomeViewController.swift in Sources */,
 				8CC9E8C327B10A17008BE1EA /* NoteListViewContoller.swift in Sources */,

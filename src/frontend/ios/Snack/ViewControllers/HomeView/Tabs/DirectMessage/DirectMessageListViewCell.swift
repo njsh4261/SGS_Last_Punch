@@ -1,5 +1,5 @@
 //
-//  DirectMessageListCellView.swift
+//  DirectMessageListViewCell.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/28.
@@ -12,7 +12,7 @@ import RxCocoa
 import Then
 import SwiftKeychainWrapper
 
-class DirectMessageListCellView: UITableViewCell {
+class DirectMessageListViewCell: UITableViewCell {
     // MARK: - Properties
     var index: Int = 0
     var chatId = ""

@@ -56,6 +56,7 @@ public class Workspace{
         private String workspaceDescription;
         private String channelName;
         private String channelTopic;
+        private String channelDescription;
 
         public Workspace toWorkspaceEntity(){
             return Workspace.builder()
@@ -71,6 +72,7 @@ public class Workspace{
                     .workspace(workspace)
                     .name(channelName)
                     .topic(channelTopic)
+                    .description(channelDescription)
                     .createdt(LocalDateTime.now())
                     .modifydt(LocalDateTime.now())
                     .build();

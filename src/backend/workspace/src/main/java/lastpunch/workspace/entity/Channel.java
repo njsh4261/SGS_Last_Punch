@@ -44,6 +44,7 @@ public class Channel{
     private String name;
     
     private String topic;
+    private String description;
     
     @CreatedDate
     @Column(updatable = false)
@@ -61,12 +62,14 @@ public class Channel{
         private Long workspaceId;
         private String name;
         private String topic;
+        private String description;
 
         public Channel toEntity(Workspace workspace){
             return Channel.builder()
                 .workspace(workspace)
                 .name(name)
                 .topic(topic)
+                .description(description)
                 .createdt(LocalDateTime.now())
                 .modifydt(LocalDateTime.now())
                 .build();
@@ -76,6 +79,7 @@ public class Channel{
     public static class EditDto{
         private String name;
         private String topic;
+        private String description;
         
         public Channel toEntity(Channel channel){
             if(name != null){
@@ -84,7 +88,10 @@ public class Channel{
             if(topic != null){
                 channel.setTopic(topic);
             }
-            if(name != null || topic != null){
+            if(description != null){
+                channel.setDescription(description);
+            }
+            if((name != null) || (topic != null) || (description != null)){
                 channel.setModifydt(LocalDateTime.now());
             }
             return channel;
@@ -97,6 +104,7 @@ public class Channel{
         private final Workspace.ExportDto workspace;
         private final String name;
         private final String topic;
+        private final String description;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private final LocalDateTime createDt;
@@ -105,12 +113,14 @@ public class Channel{
         private final LocalDateTime modifyDt;
 
         @QueryProjection
-        public ExportDto(Long id, Workspace workspace, String name, String topic,
+        public ExportDto(Long id, Workspace workspace, String name,
+                         String topic, String description,
                          LocalDateTime createDt, LocalDateTime modifyDt) {
             this.id = id;
             this.workspace = workspace.export();
             this.name = name;
             this.topic = topic;
+            this.description = description;
             this.createDt = createDt;
             this.modifyDt = modifyDt;
         }
@@ -118,7 +128,7 @@ public class Channel{
     
     public ExportDto export(){
         return new ExportDto(
-            id, workspace, name, topic, createdt, modifydt
+            id, workspace, name, topic, description, createdt, modifydt
         );
     }
 
@@ -154,6 +164,7 @@ public class Channel{
         private Workspace.ExportDto workspace;
         private String name;
         private String topic;
+        private String description;
 
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createDt;
@@ -170,6 +181,7 @@ public class Channel{
                 .workspace(workspace.export())
                 .name(name)
                 .topic(topic)
+                .description(description)
                 .createDt(createdt)
                 .modifyDt(modifydt)
                 .owner(account)

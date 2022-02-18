@@ -13,12 +13,12 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserSearchViewController" customModule="Snack" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChannelSearchViewController" customModule="Snack" customModuleProvider="target">
             <connections>
-                <outlet property="emailField" destination="Zoj-Bc-At3" id="0gu-Qf-mj9"/>
-                <outlet property="tableView" destination="i5M-Pr-FkT" id="Ra3-VH-Wtn"/>
-                <outlet property="view" destination="i5M-Pr-FkT" id="3Dk-uR-1SX"/>
-                <outlet property="viewHeader" destination="AQb-9p-OKj" id="Lzm-PM-FhZ"/>
+                <outlet property="channelField" destination="Zoj-Bc-At3" id="Vu5-2l-3db"/>
+                <outlet property="tableView" destination="i5M-Pr-FkT" id="Ao1-0W-s6v"/>
+                <outlet property="view" destination="gVL-Kb-l2i" id="jhs-41-Yhj"/>
+                <outlet property="viewHeader" destination="AQb-9p-OKj" id="TfP-Ec-TRj"/>
             </connections>
         </placeholder>
         <view contentMode="scaleToFill" id="gVL-Kb-l2i">
@@ -48,7 +48,7 @@
             <rect key="frame" x="0.0" y="0.0" width="346" height="70"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="찾고자하는 이메일을 입력해주세요" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Zoj-Bc-At3">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="찾고자하는 채널명을 입력해주세요" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Zoj-Bc-At3">
                     <rect key="frame" x="10" y="22.5" width="263" height="25.5"/>
                     <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="16"/>
                     <textInputTraits key="textInputTraits" textContentType="email"/>
@@ -65,7 +65,7 @@
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="취소"/>
                     <connections>
-                        <action selector="actionDismiss:" destination="-1" eventType="touchUpInside" id="mAU-aA-cBT"/>
+                        <action selector="actionDismiss:" destination="-1" eventType="touchUpInside" id="ZWl-rt-Hgd"/>
                     </connections>
                 </button>
             </subviews>

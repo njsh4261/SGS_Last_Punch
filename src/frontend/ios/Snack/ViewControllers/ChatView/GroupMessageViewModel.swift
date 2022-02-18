@@ -16,7 +16,6 @@ import StompClientLib
 class GroupMessageViewModel: ViewModelProtocol {
     
     struct Input {
-        let btnTtitleTapped = PublishSubject<Void>()
     }
     
     struct Output {

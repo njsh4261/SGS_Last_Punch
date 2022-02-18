@@ -122,6 +122,12 @@
 		8CCFFAB027BB48E3005D4D13 /* GroupDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAAF27BB48E3005D4D13 /* GroupDetailsView.xib */; };
 		8CCFFAB227BD12DB005D4D13 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAB127BD12DB005D4D13 /* ChatService.swift */; };
 		8CCFFAB427BD180C005D4D13 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAB327BD180C005D4D13 /* ChatModel.swift */; };
+		8CCFFAB727BE8A48005D4D13 /* ChannelSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAB627BE8A47005D4D13 /* ChannelSearchViewController.swift */; };
+		8CCFFABB27BE8B60005D4D13 /* ChannelSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFABA27BE8B60005D4D13 /* ChannelSearchView.xib */; };
+		8CCFFABE27BE8E24005D4D13 /* ChannelSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFABD27BE8E24005D4D13 /* ChannelSearchCell.swift */; };
+		8CCFFAC227BE8EBF005D4D13 /* ChannelSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC127BE8EBF005D4D13 /* ChannelSearchCell.xib */; };
+		8CCFFAC427BE975D005D4D13 /* CustomMessagesFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC327BE975D005D4D13 /* CustomMessagesFlowLayout.swift */; };
+		8CCFFAC627BE9793005D4D13 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC527BE9793005D4D13 /* CustomCell.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -248,6 +254,12 @@
 		8CCFFAAF27BB48E3005D4D13 /* GroupDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupDetailsView.xib; sourceTree = "<group>"; };
 		8CCFFAB127BD12DB005D4D13 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		8CCFFAB327BD180C005D4D13 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
+		8CCFFAB627BE8A47005D4D13 /* ChannelSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSearchViewController.swift; sourceTree = "<group>"; };
+		8CCFFABA27BE8B60005D4D13 /* ChannelSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelSearchView.xib; sourceTree = "<group>"; };
+		8CCFFABD27BE8E24005D4D13 /* ChannelSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSearchCell.swift; sourceTree = "<group>"; };
+		8CCFFAC127BE8EBF005D4D13 /* ChannelSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelSearchCell.xib; sourceTree = "<group>"; };
+		8CCFFAC327BE975D005D4D13 /* CustomMessagesFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessagesFlowLayout.swift; sourceTree = "<group>"; };
+		8CCFFAC527BE9793005D4D13 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -404,8 +416,9 @@
 		8C68AAE5279526E800C1711E /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				8C962B6127AE6A1C00A9A1F5 /* Cell */,
+				8CCFFAB527BE8A18005D4D13 /* ChannelSearch */,
 				8CCFFAA127BA0559005D4D13 /* NewChannel */,
+				8C962B6127AE6A1C00A9A1F5 /* Cell */,
 				8C68AAE0279526C600C1711E /* HomeViewController.swift */,
 				8C68AAE2279526CF00C1711E /* HomeViewModel.swift */,
 			);
@@ -528,11 +541,11 @@
 				8CBD45B627A6CF320056A557 /* Profile */,
 				8CC9E8C627B10A28008BE1EA /* Note */,
 				8CCFFAAE27BB48D6005D4D13 /* GroupDetails */,
+				8CCFFAC727BE97AB005D4D13 /* MessageSource */,
 				8CC9E8CD27B11BBB008BE1EA /* GroupMessageViewController.swift */,
 				8CC9E8CF27B128C3008BE1EA /* GroupMessageViewModel.swift */,
 				8CBD457727A25E430056A557 /* PrivateMessageViewController.swift */,
 				8CBD459927A41B510056A557 /* PrivateMessageViewModel.swift */,
-				8CBD457D27A28AEF0056A557 /* MessageKit.swift */,
 			);
 			path = ChatView;
 			sourceTree = "<group>";
@@ -750,6 +763,43 @@
 			path = GroupDetails;
 			sourceTree = "<group>";
 		};
+		8CCFFAB527BE8A18005D4D13 /* ChannelSearch */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFABC27BE8E0B005D4D13 /* ChannelSearchCell */,
+				8CCFFAB627BE8A47005D4D13 /* ChannelSearchViewController.swift */,
+				8CCFFABA27BE8B60005D4D13 /* ChannelSearchView.xib */,
+			);
+			name = ChannelSearch;
+			sourceTree = "<group>";
+		};
+		8CCFFABC27BE8E0B005D4D13 /* ChannelSearchCell */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFABD27BE8E24005D4D13 /* ChannelSearchCell.swift */,
+				8CCFFAC127BE8EBF005D4D13 /* ChannelSearchCell.xib */,
+			);
+			path = ChannelSearchCell;
+			sourceTree = "<group>";
+		};
+		8CCFFAC727BE97AB005D4D13 /* MessageSource */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFAC827BE9F23005D4D13 /* Layout */,
+				8CCFFAC527BE9793005D4D13 /* CustomCell.swift */,
+				8CBD457D27A28AEF0056A557 /* MessageKit.swift */,
+			);
+			path = MessageSource;
+			sourceTree = "<group>";
+		};
+		8CCFFAC827BE9F23005D4D13 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFAC327BE975D005D4D13 /* CustomMessagesFlowLayout.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -833,6 +883,7 @@
 				8CBD45EF27A874950056A557 /* KeepMediaView.xib in Resources */,
 				8CCFFAA427BA767B005D4D13 /* UserInvitationView.xib in Resources */,
 				8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */,
+				8CCFFABB27BE8B60005D4D13 /* ChannelSearchView.xib in Resources */,
 				8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */,
 				8CCFFA9427B9E98F005D4D13 /* NotoSansKR-Regular 2.otf in Resources */,
 				8CCFFA9527B9E98F005D4D13 /* NotoSansKR-Bold.otf in Resources */,
@@ -841,6 +892,7 @@
 				8CCFFA6C27B9524F005D4D13 /* NewChannelView.xib in Resources */,
 				8CCFFA7927B98CCA005D4D13 /* UserSearchView.xib in Resources */,
 				8C68AB2F2797F62D00C1711E /* SettingsView.xib in Resources */,
+				8CCFFAC227BE8EBF005D4D13 /* ChannelSearchCell.xib in Resources */,
 				8CBD45BC27A6D6B90056A557 /* ProfileView.xib in Resources */,
 				8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */,
 				8CBD45DB27A846C50056A557 /* PasscodeView.xib in Resources */,
@@ -937,6 +989,7 @@
 				8C962B5B27ADABE400A9A1F5 /* Channel.swift in Sources */,
 				8C68AAE1279526C600C1711E /* HomeViewController.swift in Sources */,
 				8CC9E8C327B10A17008BE1EA /* NoteListViewContoller.swift in Sources */,
+				8CCFFAC427BE975D005D4D13 /* CustomMessagesFlowLayout.swift in Sources */,
 				8CC9E8BF27B10487008BE1EA /* APIConstants.swift in Sources */,
 				8CC9E8FC27B2DABF008BE1EA /* UserInvitationViewController.swift in Sources */,
 				8CBD45D927A846500056A557 /* PasscodeView.swift in Sources */,
@@ -951,6 +1004,7 @@
 				8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */,
 				8CC9E8D627B20C8D008BE1EA /* NoteListReusableView.swift in Sources */,
 				8CCFFA9027B9E98F005D4D13 /* Password.swift in Sources */,
+				8CCFFABE27BE8E24005D4D13 /* ChannelSearchCell.swift in Sources */,
 				8CBD458F27A3E46B0056A557 /* DirectMessageListViewController.swift in Sources */,
 				8CBD45ED27A8746E0056A557 /* KeepMediaView.swift in Sources */,
 				8CCFFA7027B965A8005D4D13 /* ChannelModel.swift in Sources */,
@@ -967,6 +1021,7 @@
 				8CC9E90E27B3BA01008BE1EA /* AccountModel.swift in Sources */,
 				8C962B6327AEDD4F00A9A1F5 /* User.swift in Sources */,
 				8CC9E8D227B161B1008BE1EA /* CreateWKWebView.swift in Sources */,
+				8CCFFAB727BE8A48005D4D13 /* ChannelSearchViewController.swift in Sources */,
 				8C68AB2D2797F5E400C1711E /* SettingsViewController.swift in Sources */,
 				8CBD459A27A41B520056A557 /* PrivateMessageViewModel.swift in Sources */,
 				8CBD45322799AEFD0056A557 /* WorkspaceListCell.swift in Sources */,
@@ -974,6 +1029,7 @@
 				8CBD45342799B0E00056A557 /* WorkspaceListCellModel.swift in Sources */,
 				8CBD457527A22A2D0056A557 /* AppConstant.swift in Sources */,
 				8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */,
+				8CCFFAC627BE9793005D4D13 /* CustomCell.swift in Sources */,
 				8CC9E8C527B10A24008BE1EA /* NoteListViewModel.swift in Sources */,
 				8CBD45D527A7EF6D0056A557 /* PasswordView.swift in Sources */,
 				8CC9E8D827B22B4C008BE1EA /* NoteSection.swift in Sources */,

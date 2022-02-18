@@ -122,8 +122,6 @@ class WorkspaceService {
         case 200:
             if decodedData.code == "12000" {
                 return .success(decodedData)
-            } else if decodedData.code == "12001" { // 존재하지 않는 워크스페이스
-                return .fail(decodedData)
             } else {
                 return .fail(decodedData)
             }

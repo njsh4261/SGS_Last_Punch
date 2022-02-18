@@ -173,7 +173,6 @@ export default function ModalMember({ type, params }: Props) {
   };
 
   const openInviteModalHandler = () => {
-    console.log('invite click');
     if (type === 'channel') {
       dispatch(openModal('invite-channel'));
     } else {

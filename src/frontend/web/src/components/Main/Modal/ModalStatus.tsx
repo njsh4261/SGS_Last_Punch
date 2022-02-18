@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Swal from 'sweetalert2';
 
 import ModalBox from '../../Common/ModalBox';
 import { UserStatus } from '../../../../types/presence';

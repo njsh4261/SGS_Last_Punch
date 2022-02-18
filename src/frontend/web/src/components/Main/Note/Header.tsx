@@ -10,6 +10,8 @@ import DropdownSetting from '../Chat/DropdownSetting';
 import arrowRightIcon from '../../../icon/arrowRight.svg';
 import logoIcon from '../../../icon/cookie-2.png';
 import { updateTitleAPI } from '../../../Api/note';
+import { Note } from '../../../../types/note.type';
+import { UserState } from '../../../modules/user';
 
 const Container = styled.header`
   display: flex;
@@ -25,6 +27,7 @@ const HeaderLeft = styled.div`
 
 const NavTab = styled.nav`
   display: flex;
+  align-items: center;
   position: relative;
 `;
 
@@ -46,8 +49,9 @@ const H1 = styled.h1`
   padding-left: 8px;
 `;
 
-const TestContainer = styled.div`
-  margin-top: 50px;
+const Owner = styled.div`
+  margin-right: 10px;
+  font-size: 14px;
 `;
 
 const InvisibleInput = styled.input`
@@ -61,14 +65,14 @@ const InvisibleInput = styled.input`
 interface Props {
   sideToggle: boolean;
   sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
-  owner: any;
-  user: any;
-  note: any;
-  lockNote: any;
-  unlockNote: any;
+  owner: UserState | null;
+  user: UserState;
+  note: Note;
+  lockNote: () => void;
+  unlockNote: () => void;
   title: string;
-  setTitle: any;
-  updateTitle: any;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  updateTitle: () => void;
   TYPING_TIME: number;
 }
 
@@ -126,6 +130,7 @@ export default function Header(props: Props) {
         ></InvisibleInput>
       </HeaderLeft>
       <NavTab>
+        <Owner>{owner && owner.name + '님이 선점 중...'}</Owner>
         <NavButton
           id={NAV_BUTTON_ID}
           src={logoIcon}
@@ -135,17 +140,6 @@ export default function Header(props: Props) {
         ></NavButton>
         {drop && <DropdownSetting id={NAV_DROPDOWN_ID}></DropdownSetting>}
       </NavTab>
-
-      {/* <TestContainer>
-            <div>my: {JSON.stringify(user)}</div>
-            <div>owner: {JSON.stringify(owner)}</div>
-            <div>
-              userList:
-              {userList.map((u: User) => (
-                <div key={u.id}>{JSON.stringify(u)}</div>
-              ))}
-            </div>
-          </TestContainer> */}
     </Container>
   );
 }

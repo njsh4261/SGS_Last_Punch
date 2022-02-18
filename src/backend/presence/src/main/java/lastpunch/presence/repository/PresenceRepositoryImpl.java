@@ -40,10 +40,12 @@ public class PresenceRepositoryImpl implements PresenceRepositoryCustom{
             case DELETE_SESSION:
                 update.pull("sessions", sessionId);
                 break;
-            default:
+            default: //UPDATE_STATUS
+                // 사용자가 하나의 계정으로 여러 세션에서 로그인/로그아웃 하는 것은 사용자의 상태 정보를 바꾸지 않음
+                // 기존에 접속한 세션에서 명시적으로 상태 정보를 바꾸는 경우에만 업데이트
+                update.set("userStatus", UserStatus.toEnum(updateDto.getUserStatus()));
                 break;
         }
-        update.set("userStatus", UserStatus.toEnum(updateDto.getUserStatus()));
         
         mongoTemplate.updateMulti(
             Query.query(

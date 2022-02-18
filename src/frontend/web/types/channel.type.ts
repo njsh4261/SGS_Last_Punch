@@ -8,6 +8,10 @@ export interface IChannel {
   settings: number;
   description: string;
   createDt: string;
+  owner: {
+    id: number;
+    name: string;
+  };
 }
 
 export interface ICreateChannel {

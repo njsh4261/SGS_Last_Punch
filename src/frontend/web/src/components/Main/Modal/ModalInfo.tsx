@@ -70,9 +70,11 @@ export default function ModalInfo({ type, params }: Props) {
   const getInfoHandler = async () => {
     if (type === 'channel' && params.channelId) {
       const response = await getChannelInfoAPI(params.channelId);
+      console.log(response);
       setChannel(response.channel);
     } else if (type === 'workspace' && params.wsId) {
       const response = await getWsInfoAPI(+params.wsId);
+      console.log(response);
       setWs(response.workspace);
     }
   };
@@ -119,9 +121,9 @@ export default function ModalInfo({ type, params }: Props) {
             </ItemL1>
             <ItemL2>
               {type === 'channel'
-                ? '소유자: [소유자이름], 생성 날짜: ' +
-                  channel!.createDt.split(' ')[0]
-                : '소유자: [소유자이름], 생성 날짜: ' +
+                ? `소유자: ${channel?.owner.name}, 생성 날짜: ` +
+                  channel?.createDt.split(' ')[0]
+                : `소유자: ${ws!.owner.name}, 생성 날짜: ` +
                   ws!.createDt.split(' ')[0]}
             </ItemL2>
           </ItemBox>

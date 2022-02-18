@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Stomp, CompatClient } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
@@ -6,7 +6,6 @@ import SockJS from 'sockjs-client';
 import { TOKEN, URL } from '../../constant';
 import { UserStatus, UpdateMessage } from '../../../types/presence';
 import { RootState } from '../../modules';
-import { UserState } from '../../modules/user';
 import { getPresenceAPI } from '../../Api/presence';
 import { setUser } from '../../modules/user';
 import { setPresence } from '../../modules/presence';
@@ -21,6 +20,7 @@ export default function presenceHook({ wsId }: Props) {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const presence = useSelector((state: RootState) => state.presence);
+  const presenceRef = useRef<RootState['presence']>();
 
   const connect = () => {
     const accessToken = localStorage.getItem(TOKEN.ACCESS);
@@ -49,7 +49,12 @@ export default function presenceHook({ wsId }: Props) {
             );
           }
           // update presence store
-          dispatch(setPresence({ ...presence, [msg.userId]: msg.userStatus }));
+          dispatch(
+            setPresence({
+              ...presenceRef.current,
+              [msg.userId]: msg.userStatus,
+            }),
+          );
         });
 
         // 연결 메시지 전송
@@ -109,6 +114,10 @@ export default function presenceHook({ wsId }: Props) {
       console.error(e);
     }
   };
+
+  useEffect(() => {
+    presenceRef.current = presence;
+  }, [presence]);
 
   useEffect(() => {
     connect();

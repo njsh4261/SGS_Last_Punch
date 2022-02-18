@@ -5,6 +5,10 @@ export interface IWorkspace {
   setting: number;
   createDt: string;
   topic: string | null;
+  owner: {
+    id: number;
+    name: string;
+  };
 }
 
 export interface ICreateWs {

@@ -138,12 +138,16 @@ export default function InviteModal({
           response = await inviteWsAPI(+wsId, targetId);
           if (response?.err) {
             Swal.fire(response.err.desc, '', 'error');
+          } else {
+            Swal.fire('워크스페이스에 초대했습니다!', '', 'success');
           }
           break;
         case 'invite-channel':
           response = await inviteChannelAPI(targetId, +params.channelId!, 1);
           if (response?.err) {
             Swal.fire(response.err.desc, '', 'error');
+          } else {
+            Swal.fire('채널에 초대했습니다!', '', 'success');
           }
           break;
         case 'direct message':

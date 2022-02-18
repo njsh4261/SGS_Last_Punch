@@ -12,14 +12,16 @@ const SELECT_DM = '/channel/select/dm';
 type ChannelState = {
   id: string;
   name: string;
+  topic: string;
   loading: boolean;
   error: boolean;
 };
 
-export const selectChannel = (id: string, name = '') => ({
+export const selectChannel = (id: string, name = '', topic = '') => ({
   type: SELECT_CAHNNEL,
   id,
   name,
+  topic,
 });
 
 export const selectDM = (id: string, name: string) => ({
@@ -33,6 +35,7 @@ type ChannelAction = ReturnType<typeof selectChannel>;
 const initChannelState: ChannelState = {
   id: '',
   name: '',
+  topic: '',
   loading: false,
   error: false,
 };
@@ -47,6 +50,7 @@ function* selectChannelSaga(action: ChannelAction) {
       type: SELECT_CHANNEL_SUCCESS,
       id: channel.id,
       name: channel.name,
+      topic: channel.topic,
     });
   } catch (e) {
     yield put({
@@ -78,6 +82,7 @@ export default function channel(
       return {
         id: action.id,
         name: action.name,
+        topic: action.topic,
         loading: false,
         error: false,
       };

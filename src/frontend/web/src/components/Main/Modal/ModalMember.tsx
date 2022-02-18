@@ -154,7 +154,8 @@ export default function ModalMember({ type, params }: Props) {
 
   // simple sort handler. only check 'ONLINE'
   const sortHandler = (a: Member, b: Member) => {
-    if (a.status !== 'OFFLINE') return -1;
+    if (a.status === 'ONLINE') return -1;
+    else if (a.status === 'BUSY' && b.status !== 'ONLINE') return -1;
     return 1;
   };
 

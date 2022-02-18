@@ -56,7 +56,7 @@ export default function Dropdown({ id }: { id: string }) {
           <ProfileNameAndStatus>
             <ProfileName>{user.name}</ProfileName>
             <ProfileStatus>
-              <StatusCircle status={user.status || 'OFFLINE'}></StatusCircle>
+              <StatusCircle status={user.status || 'ONLINE'}></StatusCircle>
               대화 가능
             </ProfileStatus>
           </ProfileNameAndStatus>

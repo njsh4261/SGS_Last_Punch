@@ -35,6 +35,7 @@ export default function presenceHook({ wsId, memberList }: Props) {
       const stompClient = Stomp.over(socket);
       stompClient.debug = (f) => f;
       stompClient.connect({ Authorization: accessToken }, async () => {
+        // status 업데이트
         stompClient.subscribe(`/topic/workspace.${wsId}`, (payload) => {
           const msg: UpdateMessage = JSON.parse(payload.body);
           // set status self
@@ -55,6 +56,7 @@ export default function presenceHook({ wsId, memberList }: Props) {
           newList[index] = { ...newList[index], status: msg.userStatus };
           dispatch(setUserList(newList));
         });
+
         // 연결 메시지 전송
         sendMessage('CONNECT', stompClient);
         dispatch(setUser({ id: +user.id, name: user.name, status: 'ONLINE' }));

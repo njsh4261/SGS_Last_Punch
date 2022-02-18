@@ -65,7 +65,7 @@ export default function ModalStatus({ sendMessage }: Props) {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const [statusState, setStatusState] = useState<UserStatus>(
-    user.status || 'OFFLINE',
+    user.status || 'ONLINE',
   );
   const statusList: UserStatus[] = ['ONLINE', 'BUSY', 'ABSENT', 'OFFLINE'];
 

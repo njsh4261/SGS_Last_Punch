@@ -76,6 +76,7 @@ public class Channel{
         }
     }
     
+    @Getter
     public static class EditDto{
         private String name;
         private String topic;

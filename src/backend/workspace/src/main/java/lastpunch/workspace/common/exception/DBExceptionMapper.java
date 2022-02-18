@@ -25,6 +25,7 @@ public class DBExceptionMapper{
         );
         duplicateExceptionMap = Map.of(
             "channel", new BusinessException(StatusCode.CHANNEL_ALREADY_EXIST),
+            "workspaceId", new BusinessException(StatusCode.CHANNEL_ALREADY_EXIST),
             "accountworkspace", new BusinessException(StatusCode.ACCOUNTWORKSPACE_ALREADY_EXIST),
             "accountchannel", new BusinessException(StatusCode.ACCOUNTCHANNEL_ALREADY_EXIST)
         );
@@ -44,7 +45,10 @@ public class DBExceptionMapper{
                 if(matcher.find()){
                     String key = matcher.group();
                     if(key.contains("Duplicate entry")){
-                        key = key.substring(key.lastIndexOf(" ")+2, key.lastIndexOf("."));
+                        key = key.substring(
+                            key.lastIndexOf(" ")+2,
+                            Math.max(key.lastIndexOf("."), key.lastIndexOf("_"))
+                        );
                         if(duplicateExceptionMap.containsKey(key)){
                             logger.info("[DBExceptionMapper] Duplicate Constraint Exception Found");
                             return duplicateExceptionMap.get(key);

@@ -13,14 +13,12 @@ export const setPresence = (presenceDictionary: PresenceState) => ({
 
 type PresenceAction = ReturnType<typeof setPresence>;
 
-const initialPresence = {
-  0: 'OFFINE',
-};
+const initialPresence: PresenceState = {};
 
 export default function presence(
   state = initialPresence,
   action: PresenceAction,
-) {
+): PresenceState {
   switch (action.type) {
     case SET_PRESENCE:
       return { ...action.presenceDictionary };

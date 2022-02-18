@@ -75,6 +75,10 @@ class HomeViewController: UIViewController {
         tableView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 self?.tableView.deselectRow(at: indexPath, animated: true)
+                if indexPath.section == 0 { // 채널만
+                    let cell = self?.tableView.cellForRow(at: indexPath) as! ChannelListCell
+                    cell.setUnread(false)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -123,6 +127,11 @@ class HomeViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        // 읽지 않음
+        viewModel.output.unreadChannel
+            .bind(onNext: setUnread)
+            .disposed(by: disposeBag)
     }
     
     private func goToChannelSearch() {
@@ -142,6 +151,12 @@ class HomeViewController: UIViewController {
     private func setData(_ users: [User], _ channels: [WorkspaceChannelCellModel]) {
         self.members = users
         self.channels = channels
+    }
+    
+    // 읽지 않음
+    private func setUnread(_ index: Int) {
+        let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as! ChannelListCell
+        cell.setUnread(true)
     }
     
     private func getUser(_ userInfo: UserModel) -> User {

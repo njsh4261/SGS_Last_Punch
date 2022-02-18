@@ -18,7 +18,7 @@ class ChannelListCell: UITableViewCell {
     var chatId: String = "0"
 
     // MARK: - UI
-    private var lblName = UILabel()
+    var lblName = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,11 +41,19 @@ class ChannelListCell: UITableViewCell {
         lblName.text = "#     \(chennel.name)"
     }
     
+    func setUnread(_ isUnread: Bool) {
+        if isUnread {
+            lblName.font = UIFont(name: "NotoSansKR-Bold", size: 16)
+        } else {
+            lblName.font = UIFont(name: "NotoSansKR-Regular", size: 16)
+        }
+    }
+    
     private func attribute() {
         backgroundColor = UIColor(named: "snackButtonColor")
 
         lblName = lblName.then {
-            $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
+            $0.font = UIFont(name: "NotoSansKR-Regular", size: 16)
         }
     }
     

@@ -41,6 +41,7 @@ class ChannelListCell: UITableViewCell {
         lblName.text = "#     \(chennel.name)"
     }
     
+    // 읽지 않음
     func setUnread(_ isUnread: Bool) {
         if isUnread {
             lblName.font = UIFont(name: "NotoSansKR-Bold", size: 16)

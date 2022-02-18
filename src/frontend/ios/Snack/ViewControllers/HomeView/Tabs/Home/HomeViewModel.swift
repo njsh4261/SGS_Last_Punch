@@ -93,21 +93,6 @@ class HomeViewModel: ViewModelProtocol {
             output.sections.accept([channelSection, memberSection])
         }
     }
-//        .filter { _ in
-//            let channelId = $0.channelId
-//            (self.channels?.filter{$0.id.description == channelId}.count)! > 0
-//        }
-
-    // 읽지 않음 표시
-    func unread() {
-        // socket
-        StompWebsocket.shared.message
-            .map { [self] mssage in
-                (channels?.firstIndex(where: {$0.id.description == mssage.channelId}))!
-            }
-            .bind(to: output.unreadChannel)
-            .disposed(by: disposeBag)
-    }
     
     func getWorkspace(method: HTTPMethod, _ token: String, workspaceId: String, isChannels: Bool = false, isMembers: Bool = false) {
         WorkspaceService.shared.getWorkspace(method: .get, accessToken: token, workspaceId: workspaceId, isChannels: isChannels, isMembers: isMembers)

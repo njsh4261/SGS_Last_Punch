@@ -21,6 +21,7 @@ class DirectMessageListViewController: UIViewController {
     private var userInfo: User?
     private var members = [User]()
     private let HEADER_HEIGHT: Float = 66
+    private var workspaceId: String?
     
     // MARK: - UI
     private var btnSearch = UIButton()
@@ -37,6 +38,8 @@ class DirectMessageListViewController: UIViewController {
             let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
             self.userInfo = getUser(userInfo!)
         }
+        guard let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
+        self.workspaceId = workspaceId
 
         bind(with: viewModel)
         attribute()
@@ -75,6 +78,9 @@ class DirectMessageListViewController: UIViewController {
         tableView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 self?.tableView.deselectRow(at: indexPath, animated: true)
+                
+                let cell = self?.tableView.cellForRow(at: indexPath) as! DirectMessageListCellView
+                cell.setUnread(false)
             })
             .disposed(by: disposeBag)
 
@@ -103,13 +109,18 @@ class DirectMessageListViewController: UIViewController {
         viewModel.push
             .drive(onNext: { [self] row in
                 // 추가) 본인 user정보를 넣어야함
-                let channelId = userInfo!.senderId < members[row].senderId ? "\(userInfo!.senderId)-\(members[row].senderId)" : "\( members[row].senderId)-\(userInfo!.senderId)"
+                let channelId = userInfo!.senderId < members[row].senderId ? "\(workspaceId!)-\(userInfo!.senderId)-\(members[row].senderId)" : "\(workspaceId!)-\( members[row].senderId)-\(userInfo!.senderId)"
                 let viewModel = PrivateMessageViewModel(members[row])
                 let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members[row], channelId: channelId, viewModel: viewModel)
                 viewController.hidesBottomBarWhenPushed = true
                 viewController.bind(viewModel)
                 self.show(viewController, sender: nil)
             })
+            .disposed(by: disposeBag)
+        
+        // 읽지 않음
+        viewModel.output.unreadChannel
+            .bind(onNext: setUnread)
             .disposed(by: disposeBag)
 
         viewModel.output.errorMessage
@@ -142,6 +153,12 @@ class DirectMessageListViewController: UIViewController {
             authorId: userInfo.id.description,
             content: userInfo.email
         )
+    }
+    
+    // 읽지 않음
+    private func setUnread(_ index: Int) {
+        let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as! DirectMessageListCellView
+        cell.setUnread(true)
     }
     
     private func showFailedAlert(_ message: String) {

@@ -24,6 +24,7 @@ class PrivateMessageViewController: MessagesViewController {
     var messages = [MessageModel]()
     var recipientInfo: User
     var senderInfo: User
+    private let outgoingAvatarOverlap: CGFloat = 17.5 // 메시지와 겹쳐지는 정도
 
     // MARK: - UI
     private var btnViewTitle = UIButton()
@@ -45,16 +46,15 @@ class PrivateMessageViewController: MessagesViewController {
     }
     
     override func viewDidLoad() {
+        messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: CustomMessagesFlowLayout())
+        messagesCollectionView.register(CustomCell.self)
         super.viewDidLoad()
         
         confirmDelegates()
-        removeOutgoingMessageAvatars()
+        layout()
         attribute()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        messagesCollectionView.reloadData()
-    }
+
     
     func bind(_ viewModel: PrivateMessageViewModel) {
         // MARK: Bind input
@@ -147,12 +147,26 @@ class PrivateMessageViewController: MessagesViewController {
         messagesCollectionView.refreshControl = refreshControl
     }
     
-    private func removeOutgoingMessageAvatars() {
-        guard let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout else { return }
-        layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
-        layout.setMessageOutgoingAvatarSize(.zero)
-        let outgoingLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15))
-        layout.setMessageOutgoingMessageTopLabelAlignment(outgoingLabelAlignment)
+    private func layout() {
+        let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout
+        layout?.sectionInset = UIEdgeInsets(top: 1, left: 8, bottom: 1, right: 8)
+        
+        // Hide the outgoing avatar and adjust the label alignment to line up with the messages
+        layout?.setMessageOutgoingAvatarSize(.zero)
+        layout?.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)))
+        layout?.setMessageOutgoingMessageBottomLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)))
+
+        // 메시지 풍선과 겹치도록 상대방 썸네일 설정
+        layout?.setMessageIncomingMessageTopLabelAlignment(LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(top: 0, left: 18, bottom: outgoingAvatarOverlap, right: 0)))
+        layout?.setMessageIncomingAvatarSize(CGSize(width: 30, height: 30))
+        layout?.setMessageIncomingMessagePadding(UIEdgeInsets(top: -outgoingAvatarOverlap, left: -18, bottom: outgoingAvatarOverlap, right: 18))
+        
+        layout?.setMessageIncomingAccessoryViewSize(CGSize(width: 30, height: 30))
+        layout?.setMessageIncomingAccessoryViewPadding(HorizontalEdgeInsets(left: 8, right: 0))
+        layout?.setMessageIncomingAccessoryViewPosition(.messageBottom)
+        layout?.setMessageOutgoingAccessoryViewSize(CGSize(width: 30, height: 30))
+        layout?.setMessageOutgoingAccessoryViewPadding(HorizontalEdgeInsets(left: 0, right: 8))
+
     }
     
     private func addPlusButtonToMessageInputBar() {
@@ -190,12 +204,21 @@ class PrivateMessageViewController: MessagesViewController {
     }
         
     // MARK: - Helpers
-    // send 버튼이 눌려지면 메시지를 collectionView의 cell에 표출
-    private func insertNewMessage(_ message: MessageModel) {
-        messages.append(message)
-        messages.sort()
-        
-        messagesCollectionView.reloadData()
+    // 5개 섹션마다 타임라인 보이게 하기
+    func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
+        return indexPath.section % 5 == 0 && !isPreviousMessageSameSender(at: indexPath)
+    }
+    
+    // 이전 메시지 같은 사람이 보낸건지 판별
+    func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section - 1 >= 0 else { return false } // 가장 윗부분 확인
+        return messages[indexPath.section].user == messages[indexPath.section - 1].user
+    }
+    
+    // 이후 메시지가 같은 사람이 보낸건지 판별
+    func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard indexPath.section + 1 < messages.count else { return false } // 가장 아래 부분 확인
+        return messages[indexPath.section].user == messages[indexPath.section + 1].user
     }
     
     // 입력 중
@@ -207,20 +230,22 @@ class PrivateMessageViewController: MessagesViewController {
     private func setEndTyping(_ typing: TypingModel) {
         updateTitleView(title: "# \(recipientInfo.displayName)", subtitle: "상세 보기")
     }
-
-    func insertMessage(_ message: MessageModel) {
+    
+    // send 버튼이 눌려지면 메시지를 collectionView의 cell에 표출
+    func insertNewMessage(_ message: MessageModel) {
         messages.append(message)
+        messages.sort()
 
-        messagesCollectionView.performBatchUpdates({
-            messagesCollectionView.insertSections([messages.count - 1])
-            if messages.count >= 2 {
-                messagesCollectionView.reloadSections([messages.count - 2])
-            }
-        }, completion: { [weak self] _ in
-            if self?.isLastSectionVisible() == true {
-                self?.messagesCollectionView.scrollToLastItem(animated: true)
-            }
-        })
+        // 계속 이어서 말하지 못하도록, 섹션을 나눔
+        messagesCollectionView.insertSections([messages.count - 1])
+        if messages.count >= 2 {
+            messagesCollectionView.reloadSections([messages.count - 2])
+        }
+        
+        if self.isLastSectionVisible() {
+            self.messagesCollectionView.scrollToLastItem(animated: true)
+        }
+        messagesCollectionView.reloadData()
     }
 
     func isLastSectionVisible() -> Bool {
@@ -345,7 +370,7 @@ extension PrivateMessageViewController: MessagesDataSource {
     }
     
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        if indexPath.section % 3 == 0 {
+        if isTimeLabelVisible(at: indexPath) {
             return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         }
         return nil
@@ -356,13 +381,16 @@ extension PrivateMessageViewController: MessagesDataSource {
     }
     
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let name = message.sender.displayName
-        return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        if !isPreviousMessageSameSender(at: indexPath) {
+            let name = message.sender.displayName
+            return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        }
+        return nil
     }
     
+    // 아래 시간 형식
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let dateString = message.sentDate.toString2()
-        return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        return nil
     }
     
     func textCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell? {
@@ -372,14 +400,26 @@ extension PrivateMessageViewController: MessagesDataSource {
 
 // MARK: - Message Layout Delegate (셀 관련 높이 값)
 extension PrivateMessageViewController: MessagesLayoutDelegate {
-    // 아래 여백
-    func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        return CGSize(width: 0, height: 8)
+    // 타임라인 보이게 하기
+    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        if isTimeLabelVisible(at: indexPath) {
+            return 18
+        }
+        return 0
     }
     
     // 말풍선 위 이름 나오는 곳의 height
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 20
+        if isFromCurrentSender(message: message) {
+            return !isPreviousMessageSameSender(at: indexPath) ? 20 : 0
+        } else {
+            return !isPreviousMessageSameSender(at: indexPath) ? (20 + outgoingAvatarOverlap) : 0
+        }
+    }
+
+    // 말풍선 위 아래 나오는 곳의 height
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return (!isNextMessageSameSender(at: indexPath) && isFromCurrentSender(message: message)) ? 16 : 0
     }
 }
 
@@ -394,10 +434,44 @@ extension PrivateMessageViewController: MessagesDisplayDelegate {
         return isFromCurrentSender(message: message) ? .label : .label
     }
     
-    // 말풍선의 꼬리 모양 방향
+    // 말풍선의 모양
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        let cornerDirection: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
-        return .bubbleTail(cornerDirection, .curved)
+        var corners: UIRectCorner = []
+        
+        if isFromCurrentSender(message: message) {
+            corners.formUnion(.topLeft)
+            corners.formUnion(.bottomLeft)
+            if !isPreviousMessageSameSender(at: indexPath) {
+                corners.formUnion(.topRight)
+            }
+            if !isNextMessageSameSender(at: indexPath) {
+                corners.formUnion(.bottomRight)
+            }
+        } else {
+            corners.formUnion(.topRight)
+            corners.formUnion(.bottomRight)
+            if !isPreviousMessageSameSender(at: indexPath) {
+                corners.formUnion(.topLeft)
+            }
+            if !isNextMessageSameSender(at: indexPath) {
+                corners.formUnion(.bottomLeft)
+            }
+        }
+        
+        return .custom { view in
+            let radius: CGFloat = 16
+            let path = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+            let mask = CAShapeLayer()
+            mask.path = path.cgPath
+            view.layer.mask = mask
+        }
+    }
+    
+    // 상대방 썸네일 붙어 있는 이미지 제거
+    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        avatarView.isHidden = isNextMessageSameSender(at: indexPath)
+        avatarView.layer.borderWidth = 2
+        avatarView.layer.borderColor = UIColor(named: "snackColor")!.cgColor
     }
 }
 
@@ -407,52 +481,5 @@ extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         StompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channelId, content: text)
         inputBar.inputTextView.text.removeAll()
-
-//        processInputBar(messageInputBar)
     }
-//
-//    func processInputBar(_ inputBar: InputBarAccessoryView) {
-//        let attributedText = inputBar.inputTextView.attributedText!
-//        let range = NSRange(location: 0, length: attributedText.length)
-//        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
-//
-//            let substring = attributedText.attributedSubstring(from: range)
-//            let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
-//            print("Autocompleted: `", substring, "` with context: ", context ?? [])
-//        }
-//
-//        let components = inputBar.inputTextView.components
-//        inputBar.inputTextView.text = String()
-//        inputBar.invalidatePlugins()
-//        // Send button activity animation
-//        inputBar.sendButton.startAnimating()
-//        inputBar.inputTextView.placeholder = "전송중..."
-//        // Resign first responder for iPad split view
-//        inputBar.inputTextView.resignFirstResponder()
-//        DispatchQueue.global(qos: .default).async {
-//            // fake send request task
-//            sleep(1)
-//            DispatchQueue.main.async { [weak self] in
-//                inputBar.sendButton.stopAnimating()
-//                inputBar.inputTextView.placeholder = "\(self?.recipientInfo.displayName ?? "")에(게) 메시지 보내기"
-//                self?.insertMessages(components)
-//                self?.messagesCollectionView.scrollToLastItem(animated: true)
-//            }
-//        }
-//    }
-//
-//    private func insertMessages(_ data: [Any]) {
-//        for component in data {
-//            if let str = component as? String {
-//                let message = MessageModel(text: str, user: senderInfo, messageId: UUID().uuidString, date: Date())
-//                insertMessage(message)
-//            } else if let img = component as? UIImage {
-//                let message = MessageModel(image: img, user: senderInfo, messageId: UUID().uuidString, date: Date())
-//                insertMessage(message)
-//            } else if let location = component as? CLLocation {
-//                let message = MessageModel(location: location, user: senderInfo, messageId: UUID().uuidString, date: Date())
-//                insertMessage(message)
-//            }
-//        }
-//    }
 }

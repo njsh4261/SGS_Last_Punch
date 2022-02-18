@@ -12,6 +12,7 @@ import { openModal } from '../../../modules/modal';
 import { UserStatus } from '../../../../types/presence';
 import { RootState } from '../../../modules';
 import StatusCircle from '../../Common/StatusCircle';
+import { UserState } from '../../../modules/user';
 
 const Container = styled.article`
   border-radius: 6px;
@@ -109,45 +110,30 @@ export default function ModalMember({ type, params }: Props) {
   const [memberList, setMemberList] = useState<Member[]>([]);
   // 멤버 검색 결과 리스트
   const [searchList, setSearchList] = useState<Member[]>([]);
-  // store에 저장된 워크스페이스 멤버 리스트 (상태 값 조회를 위해)
-  const wsMemberListWithStatus = useSelector(
-    (state: RootState) => state.userList,
-  );
+  // 프리젠스 리스트
+  const presence = useSelector((state: RootState) => state.presence);
 
-  // 응답으로 온 채널의 멤버에 status를 관리하는 리스트를 합친다.
-  const combineStatus = (responseListWithoutStatus: any) => {
-    const combineList = [];
-    for (let i = 0; i < responseListWithoutStatus.length; i += 1) {
-      for (let j = 0; j < wsMemberListWithStatus.length; j += 1) {
-        const withoutStatus = responseListWithoutStatus[i];
-        const withStatus = wsMemberListWithStatus[j];
-        if (withoutStatus.id === withStatus.id) {
-          if (withStatus.status) {
-            combineList.push({
-              ...withoutStatus,
-              status: withStatus.status,
-            });
-          } else {
-            // offline
-            combineList.push({ ...withoutStatus, status: 'OFFLINE' });
-          }
-          break;
-        }
-      }
-    }
-    setMemberList(combineList);
+  const setPresenceHandler = (members: any[]) => {
+    const arr: any[] = [];
+    members.map((member: UserState) => {
+      arr.push({
+        ...member,
+        status: presence[member.id.toString()] || 'OFFLINE',
+      });
+    });
+    setMemberList(arr);
   };
 
   const getMemberListHandler = async () => {
     if (type === 'channel') {
       if (params.channelId) {
         const response = await getChannelMember(params.channelId);
-        combineStatus(response.members.content);
+        setPresenceHandler(response.members.content);
       }
     } else {
       if (params.wsId) {
         const response = await getWsMemberAPI(+params.wsId);
-        combineStatus(response.members.content);
+        setPresenceHandler(response.members.content);
       }
     }
   };

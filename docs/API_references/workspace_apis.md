@@ -63,7 +63,7 @@
   {
     "name": "workspaceEdited",
     "description": "editing workspace",
-    "settings": 123
+    "imageNum": 123
   }
   ```
   - 모든 속성 생략 가능 (모두 생략 시 `PUT /workspace/{id}` 통한 변경사항 없음)
@@ -98,8 +98,7 @@
   {
     "name": "edit channel",
     "topic": "test",
-    "description": "qwer",
-    "settings": 12
+    "description": "qwer"
   }
   ```
   - 모든 속성 생략 가능 (모두 생략 시 `PUT /channel/{id}` 통한 변경사항 없음)

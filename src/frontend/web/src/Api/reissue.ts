@@ -1,4 +1,6 @@
 import axios from 'axios';
+import logout from '../util/logout';
+
 import { URL, TOKEN, ENDPOINT, RESPONSE } from '../constant';
 
 export default async function reissueAPI() {
@@ -19,8 +21,10 @@ export default async function reissueAPI() {
       return response.data.code;
     } else if (response.data.code === RESPONSE.TOKEN.INVALID_REFRESH_TOKEN) {
       console.error('invalid refresh token');
+      logout();
     }
   } catch (e) {
+    logout();
     return;
   }
 }

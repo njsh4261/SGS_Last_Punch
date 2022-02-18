@@ -55,8 +55,8 @@ export default function presenceHook({ wsId, memberList }: Props) {
           newList[index] = { ...newList[index], status: msg.userStatus };
           dispatch(setUserList(newList));
         });
-        // online 상태로 업데이트
-        sendMessage('ONLINE', stompClient);
+        // 연결 메시지 전송
+        sendMessage('CONNECT', stompClient);
         dispatch(setUser({ id: +user.id, name: user.name, status: 'ONLINE' }));
         // 첫 접속시 유저들의 프리젠스 상태 업데이트
         const presenceList: UpdateMessage[] = await getPresenceAPI(wsId);

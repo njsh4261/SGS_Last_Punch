@@ -1,7 +1,8 @@
 export interface SendMessage {
   authorId: string;
   channelId: string;
-  content: string;
+  content?: string;
+  type?: 'MESSAGE' | 'TYPING';
 }
 
 export interface ChatMessage {

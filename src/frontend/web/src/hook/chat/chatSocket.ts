@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useRef } from 'react';
+import React, { SetStateAction, useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { Stomp, CompatClient } from '@stomp/stompjs';
 import { useDispatch } from 'react-redux';
@@ -7,7 +7,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { SendMessage, ChatMessage } from '../../../types/chat.type';
 import { setChannelListRedux } from '../../modules/channeList';
 import { setUserList } from '../../modules/userList';
-import { TOKEN, URL } from '../../constant';
+import { TOKEN, URL, CHAT_TYPING_TIME } from '../../constant';
 
 const HOST = URL.HOST;
 
@@ -21,6 +21,7 @@ export default function chatSocketHook(
 ) {
   const channelRef = useRef(channelId);
   const dispatch = useDispatch();
+  const [typingList, setTypingList] = useState(new Set<string[]>());
   const stomp = useRef<CompatClient | null>(null);
 
   const connect = () => {
@@ -40,7 +41,22 @@ export default function chatSocketHook(
           stompClient.subscribe(`/topic/channel.${channel.id}`, (payload) => {
             if (channel.id === +channelRef.current) {
               const msg = JSON.parse(payload.body);
-              setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+              if (msg.type === 'TYPING') {
+                // add typing list & remove
+                setTypingList((prev) => new Set([...prev, msg.authorId]));
+                setTimeout(() => {
+                  setTypingList(
+                    (prev) =>
+                      new Set(
+                        [...prev].filter(
+                          (authorId) => authorId !== msg.authorId,
+                        ),
+                      ),
+                  );
+                }, CHAT_TYPING_TIME);
+              } else {
+                setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+              }
             } else {
               // alarm on
               const index = channelList.findIndex((el) => el.id === channel.id);
@@ -60,7 +76,22 @@ export default function chatSocketHook(
             (payload) => {
               const msg = JSON.parse(payload.body);
               if (`${low}-${high}` === channelRef.current) {
-                setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+                if (msg.type === 'TYPING') {
+                  // add typing list & remove
+                  setTypingList((prev) => new Set([...prev, msg.authorId]));
+                  setTimeout(() => {
+                    setTypingList(
+                      (prev) =>
+                        new Set(
+                          [...prev].filter(
+                            (authorId) => authorId !== msg.authorId,
+                          ),
+                        ),
+                    );
+                  }, CHAT_TYPING_TIME);
+                } else {
+                  setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+                }
               } else {
                 // alarm on & update lastMessage(for rendring)
                 const index = memberList.findIndex((el) => el.id === member.id);
@@ -101,8 +132,9 @@ export default function chatSocketHook(
   }, []);
 
   useEffect(() => {
+    setTypingList(new Set<string[]>());
     channelRef.current = channelId;
   }, [channelId]);
 
-  return sendMessage;
+  return { sendMessage, typingList };
 }

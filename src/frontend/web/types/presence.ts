@@ -1,4 +1,5 @@
 export type UserStatus =
+  | 'CONNECT'
   | 'ONLINE'
   | 'ABSENT'
   | 'BUSY'

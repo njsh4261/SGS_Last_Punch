@@ -67,3 +67,5 @@ export const TOKEN = {
   ACCESS: 'access_token',
   REFRESH: 'refresh_token',
 };
+
+export const CHAT_TYPING_TIME = 5000;

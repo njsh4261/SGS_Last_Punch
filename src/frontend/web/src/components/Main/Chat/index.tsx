@@ -112,6 +112,11 @@ const Start = styled.div`
 
 const End = styled.div``;
 
+const TypingContainer = styled.article`
+  color: darkgray;
+  font-size: 14px;
+`;
+
 interface Props {
   sideToggle: boolean;
   sideToggleHandler: (e: React.MouseEvent<HTMLElement>) => void;
@@ -126,6 +131,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
     user,
     channel,
     memberList,
+    typingList,
     msg,
     msgList,
     setMsgList,
@@ -204,6 +210,17 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
             <End ref={endRef}></End>
           </MessageListContainer>
           <ChatInputLayout toggle={sideToggle}>
+            {typingList.size !== 0 && (
+              <TypingContainer>
+                {Array.from(typingList).map((authorId, index) => (
+                  <span key={'typing' + authorId}>
+                    {userDictionary[authorId]}
+                    {index < typingList.size - 1 ? ', ' : ' '}
+                  </span>
+                ))}
+                입력중...
+              </TypingContainer>
+            )}
             <ChatInput
               channelName={channel.name}
               msg={msg}

@@ -108,7 +108,7 @@ interface Props {
 export default function ChannelItem(props: Props) {
   const NOTE_ICONS = useMemo(() => ['📕', '📙', '📘', '📗', '📓', '📒'], []);
   const { channel, wsId, params, selectHandler, type, isSelected } = props;
-  const memberList = useSelector((state: RootState) => state.userList);
+  const presence = useSelector((state: RootState) => state.presence);
   const [noteList, setNoteList] = useState<any[]>([]);
   const [hover, setHover] = useState(false);
 
@@ -139,12 +139,8 @@ export default function ChannelItem(props: Props) {
   };
 
   const status = useMemo(() => {
-    for (let i = 0; i < memberList.length; i += 1) {
-      if (memberList[i].id.toString() === channel.id.toString()) {
-        return memberList[i].status;
-      }
-    }
-  }, [memberList]);
+    return presence[channel.id.toString()];
+  }, [presence]);
 
   useEffect(() => {
     if (isSelected && type === 'channel') getNoteListHandler();

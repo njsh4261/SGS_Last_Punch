@@ -21,7 +21,7 @@ export default function chatSocketHook(
 ) {
   const channelRef = useRef(channelId);
   const dispatch = useDispatch();
-  const [typingList, setTypingList] = useState(new Set());
+  const [typingList, setTypingList] = useState(new Set<string[]>());
   const stomp = useRef<CompatClient | null>(null);
 
   const connect = () => {
@@ -76,7 +76,22 @@ export default function chatSocketHook(
             (payload) => {
               const msg = JSON.parse(payload.body);
               if (`${low}-${high}` === channelRef.current) {
-                setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+                if (msg.type === 'TYPING') {
+                  // add typing list & remove
+                  setTypingList((prev) => new Set([...prev, msg.authorId]));
+                  setTimeout(() => {
+                    setTypingList(
+                      (prev) =>
+                        new Set(
+                          [...prev].filter(
+                            (authorId) => authorId !== msg.authorId,
+                          ),
+                        ),
+                    );
+                  }, CHAT_TYPING_TIME);
+                } else {
+                  setMsgList((msgList: ChatMessage[]) => [...msgList, msg]);
+                }
               } else {
                 // alarm on & update lastMessage(for rendring)
                 const index = memberList.findIndex((el) => el.id === member.id);
@@ -117,6 +132,7 @@ export default function chatSocketHook(
   }, []);
 
   useEffect(() => {
+    setTypingList(new Set<string[]>());
     channelRef.current = channelId;
   }, [channelId]);
 

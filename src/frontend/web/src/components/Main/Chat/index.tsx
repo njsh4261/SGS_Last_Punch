@@ -214,7 +214,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
               <TypingContainer>
                 {Array.from(typingList).map((authorId, index) => (
                   <span key={'typing' + authorId}>
-                    {authorId}
+                    {userDictionary[authorId]}
                     {index < typingList.size - 1 ? ', ' : ' '}
                   </span>
                 ))}

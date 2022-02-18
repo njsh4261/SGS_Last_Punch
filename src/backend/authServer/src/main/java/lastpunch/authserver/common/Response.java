@@ -1,10 +1,10 @@
 package lastpunch.authserver.common;
 
-import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Response {
     public static ResponseEntity<Object> toResponseEntity(String code, HttpStatus status, Object data) {

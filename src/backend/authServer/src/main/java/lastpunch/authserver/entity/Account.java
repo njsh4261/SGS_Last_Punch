@@ -38,12 +38,6 @@ public class Account {
     private String description;
     private String phone;
     private String country;
-    private String language;
-    private Integer level;
-    private Integer point;
-    
-    @Column(columnDefinition = "tinyint")
-    private Integer settings;
     
     @Convert(converter = StatusConverter.class)
     @Column(columnDefinition = "tinyint")

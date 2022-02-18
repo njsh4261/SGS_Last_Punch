@@ -27,11 +27,7 @@ public class SignupRequest {
             .password(password)
             .name(name)
             .country("kor")
-            .language("eng")
-            .settings(1)
             .status("ROLE_USER")
-            .level(3)
-            .point(123)
             .build();
     }
 }

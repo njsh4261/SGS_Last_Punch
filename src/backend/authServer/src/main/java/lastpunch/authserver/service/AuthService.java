@@ -29,9 +29,8 @@ public class AuthService {
         if (!refreshToken.equals(redisToken)) {
             throw new BusinessException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
-        
-        String newAccessToken = jwtProvider.createAccessToken(account);
-        return newAccessToken;
+
+        return jwtProvider.createAccessToken(account);
     }
     
     public void logout(Map<String, Object> requestHeader){

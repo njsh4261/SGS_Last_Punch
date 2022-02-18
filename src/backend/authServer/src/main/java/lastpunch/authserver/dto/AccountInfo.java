@@ -21,8 +21,6 @@ public class AccountInfo {
     private String description;
     private String phone;
     private String country;
-    private String language;
-    private Integer settings;
     @Convert(converter = StatusConverter.class)
     private String status;
     private LocalDateTime createDt;
@@ -35,8 +33,6 @@ public class AccountInfo {
         this.description = account.getDescription();
         this.phone = account.getPhone();
         this.country = account.getCountry();
-        this.language = account.getLanguage();
-        this.settings = account.getSettings();
         this.status = account.getStatus();
         this.createDt = account.getCreateDt();
         this.modifyDt = account.getModifyDt();

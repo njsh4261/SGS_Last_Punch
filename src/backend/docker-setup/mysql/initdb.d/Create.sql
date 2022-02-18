@@ -6,11 +6,8 @@ CREATE TABLE `account`(
     `description` TEXT NULL,
     `phone` VARCHAR(255) NULL,
     `country` CHAR(255) NOT NULL,
-    `language` CHAR(255) NOT NULL,
-    `settings` TINYINT NOT NULL,
     `status` TINYINT NULL,
-    `level` TINYINT NULL,
-    `point` BIGINT NULL,
+    `imageNum` TINYINT NULL,
     `createDt` DATETIME NOT NULL,
     `modifyDt` DATETIME NOT NULL
 );
@@ -19,7 +16,7 @@ CREATE TABLE `workspace`(
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `description` TEXT NULL,
-    `settings` TINYINT NOT NULL,
+    `imageNum` TINYINT NULL,
     `createDt` DATETIME NOT NULL,
     `modifyDt` DATETIME NOT NULL
 );
@@ -30,7 +27,6 @@ CREATE TABLE `channel`(
     `name` VARCHAR(255) NOT NULL,
     `topic` VARCHAR(255) NULL,
     `description` TEXT NULL,
-    `settings` TINYINT NOT NULL,
     `createDt` DATETIME NOT NULL,
     `modifyDt` DATETIME NOT NULL,
     INDEX (`workspaceId`),
@@ -68,15 +64,3 @@ CREATE TABLE `accountworkspace`(
 ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_workspaceid_foreign` FOREIGN KEY(`workspaceId`) REFERENCES `workspace`(`id`) ON DELETE CASCADE;
 ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_accountid_foreign` FOREIGN KEY(`accountId`) REFERENCES `account`(`id`) ON DELETE CASCADE;
 ALTER TABLE `accountworkspace` ADD CONSTRAINT `accountworkspace_roleid_foreign` FOREIGN KEY(`roleId`) REFERENCES `role`(`id`) ON DELETE CASCADE;
-
-CREATE TABLE `file`(
-    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(255) NOT NULL,
-    `description` BIGINT NULL,
-    `ownerId` BIGINT UNSIGNED NOT NULL,
-    `thumbnail` BINARY(16) NULL,
-    `location` VARCHAR(255) NOT NULL,
-    `createDt` DATETIME NOT NULL,
-    `modifyDt` DATETIME NOT NULL
-);
-ALTER TABLE `file` ADD CONSTRAINT `file_ownerid_foreign` FOREIGN KEY(`ownerId`) REFERENCES `account`(`id`);

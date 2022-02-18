@@ -39,7 +39,7 @@ public class Presence{
         return Presence.builder()
                 .workspaceId(updateDto.getWorkspaceId())
                 .userId(updateDto.getUserId())
-                .userStatus(UserStatus.toEnum(updateDto.getUserStatus()))
+                .userStatus(UserStatus.ONLINE) // 사용자가 서비스에 처음 로그인하는 경우 상태를 ONLINE으로 설정
                 .sessions(List.of(sessionId))
                 .build();
     }

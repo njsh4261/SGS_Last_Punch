@@ -43,9 +43,10 @@ public class MongoService{
         }
         else{
             logger.info("update present information for " + updateDto);
-            // 해당 유저의 상태 정보 업데이트
+            // 해당 유저의 상태 정보 업데이트 (해당 유저의 세션이 재연결된 경우 상태 업데이트를 하지 않음)
             Presence presence = optionalPresence.get();
-            if(presence.getSessions().contains(sessionId)){
+            if(presence.getSessions().contains(sessionId)
+                && (UserStatus.toEnum(updateDto.getUserStatus()) != UserStatus.CONNECT)){
                 presenceRepository.update(updateDto, sessionId, UpdateType.UPDATE_STATUS);
             }
             else{

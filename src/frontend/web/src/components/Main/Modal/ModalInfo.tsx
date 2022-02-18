@@ -64,7 +64,7 @@ export default function ModalInfo({ type, params }: Props) {
     } else if (ws) {
       response = await exitWsAPI(ws.id, user.id);
     }
-    console.log({ response });
+    console.log('exit/modalInfo: ', response);
   };
 
   const getInfoHandler = async () => {

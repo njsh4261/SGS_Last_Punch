@@ -10,26 +10,20 @@ import { Note } from '../../../../types/note.type';
 
 // components
 import EditorFrame from './EditorFrame';
-import ImageButton from '../../Common/ImageButton';
-import DropdownSetting from '../Chat/DropdownSetting';
 import Loading from '../../Common/Loading';
+import Header from './Header';
 
 // hooks
 import noteSetup from '../../../hook/note/noteSetup';
-import DropdownHook from '../../../hook/Dropdown';
 import noteSocketHook from '../../../hook/note/noteSocket';
 import noteOPintervalHook from '../../../hook/note/noteOPinterval';
 
 // API
-import { updateNoteAllAPI, updateTitleAPI } from '../../../Api/note';
+import { updateNoteAllAPI } from '../../../Api/note';
 
 // slate editor function
 import { toggleMark } from './EditorFrame/plugin/mark';
 import { toggleBlock } from './EditorFrame/plugin/block';
-
-// image files
-import arrowRightIcon from '../../../icon/arrowRight.svg';
-import logoIcon from '../../../icon/cookie-2.png';
 
 const TYPING_TIME = 1500;
 const UPDATE_OP_TIME = 1000;
@@ -43,53 +37,6 @@ const Container = styled.article`
   height: 100%;
   overflow-x: hidden;
   padding: 13px 20px;
-`;
-
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  user-select: none;
-`;
-
-const HeaderLeft = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const NavTab = styled.nav`
-  display: flex;
-  position: relative;
-`;
-
-const NavButton = styled.img`
-  cursor: pointer;
-
-  :hover {
-    animation: rotate_image 6s linear infinite;
-  }
-  @keyframes rotate_image {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-`;
-
-const H1 = styled.h1`
-  margin: 0;
-  padding-left: 8px;
-`;
-
-const TestContainer = styled.div`
-  margin-top: 50px;
-`;
-
-const InvisibleInput = styled.input`
-  width: 0;
-  height: 0;
-  padding: 0;
-  margin: 0;
-  border: 0;
 `;
 
 const Body = styled.main`
@@ -123,7 +70,6 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
   const editor = editorRef.current;
   type Timeout = ReturnType<typeof setTimeout>;
   const typing = useRef<Timeout | null>(null);
-  const typingTitle = useRef<Timeout | null>(null);
   const currentValue = useRef<Node[]>(initialValue);
   const opQueue = useRef<any[]>([]);
 
@@ -237,21 +183,6 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
     unlockNote();
   };
 
-  const titleHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (owner === null) {
-      lockNote();
-    } else if (owner.id === user.id) {
-      setTitle(e.target.value);
-
-      if (typingTitle.current) clearTimeout(typingTitle.current);
-      typingTitle.current = setTimeout(async () => {
-        const success = await updateTitleAPI(note!.id, e.target.value);
-        if (success) updateTitle();
-        unlockNote();
-      }, TYPING_TIME);
-    }
-  };
-
   ///////////// Hooks ////////////////
 
   // 노트 소켓 훅
@@ -285,10 +216,6 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
   // 주기마다 op 업데이트
   noteOPintervalHook(opQueue, note, UPDATE_OP_TIME, updateNote);
 
-  // dropdown
-  const { drop, dropdownHandler, NAV_BUTTON_ID, NAV_DROPDOWN_ID } =
-    DropdownHook();
-
   ///////////// Render //////////////////////
   return (
     <>
@@ -296,35 +223,19 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
         <Loading></Loading>
       ) : (
         <Container>
-          <Header>
-            <HeaderLeft>
-              {!sideToggle && (
-                <ImageButton
-                  size="16px"
-                  imageUrl={arrowRightIcon}
-                  onClick={sideToggleHandler}
-                ></ImageButton>
-              )}
-              <label htmlFor="title-input">
-                <H1>{title}</H1>
-              </label>
-              <InvisibleInput
-                id="title-input"
-                value={title}
-                onChange={titleHandler}
-              ></InvisibleInput>
-            </HeaderLeft>
-            <NavTab>
-              <NavButton
-                id={NAV_BUTTON_ID}
-                src={logoIcon}
-                onClick={dropdownHandler}
-                width="26px"
-                height="26px"
-              ></NavButton>
-              {drop && <DropdownSetting id={NAV_DROPDOWN_ID}></DropdownSetting>}
-            </NavTab>
-          </Header>
+          <Header
+            sideToggle={sideToggle}
+            sideToggleHandler={sideToggleHandler}
+            owner={owner}
+            user={user}
+            note={note}
+            lockNote={lockNote}
+            unlockNote={unlockNote}
+            TYPING_TIME={TYPING_TIME}
+            title={title}
+            setTitle={setTitle}
+            updateTitle={updateTitle}
+          ></Header>
           <Body>
             <EditorFrame
               value={value}
@@ -334,16 +245,6 @@ export default function NoteMain({ sideToggle, sideToggleHandler }: Props) {
               readOnly={readOnlyHandler()}
             ></EditorFrame>
           </Body>
-          {/* <TestContainer>
-            <div>my: {JSON.stringify(user)}</div>
-            <div>owner: {JSON.stringify(owner)}</div>
-            <div>
-              userList:
-              {userList.map((u: User) => (
-                <div key={u.id}>{JSON.stringify(u)}</div>
-              ))}
-            </div>
-          </TestContainer> */}
         </Container>
       )}
     </>

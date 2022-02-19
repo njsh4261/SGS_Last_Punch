@@ -143,11 +143,21 @@ class ProfileViewController: UIViewController {
         btnHeaderMessage.isEnabled = isChatEnabled ? true : false
         btnHeaderMobile.isEnabled = true
         btnHeaderMail.isEnabled = true
-        
-        lblInitials.text = userInfo.name.first?.description
+                
+        if userInfo.imageNum != 0 {
+            self.ivUser.image = UIImage(named: "\(userInfo.imageNum ?? 0)")?.square(to: 70)
+            self.ivUser.backgroundColor = .white
+            self.lblInitials.backgroundColor = .clear
+            self.lblInitials.text = nil
+        } else {
+            lblInitials.text = userInfo.name.first?.description
+            self.lblInitials.backgroundColor = UIColor(named: "snackButtonColor")
+            self.ivUser.backgroundColor = .clear
+            self.ivUser.image = nil
+        }
         
         lblName.text = userInfo.name
-        lblDetails.text = "마지막 수정일 : \(Date().toString2())"
+        lblDetails.text = "마지막 수정일 : \(userInfo.modifyDt)"
         
         cellStatus.detailTextLabel?.text = "대화 가능"
         cellDescription.detailTextLabel?.text = userInfo.description ?? "안녕하세요"

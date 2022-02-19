@@ -18,6 +18,7 @@ class WorkspaceListCell: UITableViewCell {
     
     // MARK: - UI
     var ivThumbnail = UIImageView()
+    var lblInitials = UILabel()
     var lblName = UILabel()
     var lblAddress = UILabel()
     var btnCheckBox = UIButton()
@@ -31,7 +32,15 @@ class WorkspaceListCell: UITableViewCell {
     
     func setData(_ data: WorkspaceListCellModel, _ index: Int) {
         workspaceId = data.id
-        ivThumbnail.image = UIImage(named: "1")?.square(to: 70)
+        
+        if data.imageNum != nil {
+            ivThumbnail.image = UIImage(named: "\(data.imageNum!)")?.square(to: 70)
+            lblInitials.text = nil
+        } else {
+            lblInitials.text = data.name.first?.description
+            ivThumbnail.image = nil
+        }
+        
         lblName.text = data.name
         lblAddress.text = "고유주소 : \(data.id)"
         
@@ -47,6 +56,12 @@ class WorkspaceListCell: UITableViewCell {
             $0.layer.borderWidth = 1.0
             $0.layer.borderColor = UIColor.label.cgColor
             $0.layer.cornerRadius = 4
+        }
+        
+        lblInitials = lblInitials.then {
+            $0.font = UIFont(name: "NotoSansKR-Regular", size: 20)
+            $0.textColor = .label
+            $0.textAlignment = .center
         }
         
         lblName = lblName.then {
@@ -67,14 +82,16 @@ class WorkspaceListCell: UITableViewCell {
     }
     
     private func layout() {
-        [ivThumbnail, lblName, lblAddress, btnCheckBox].forEach {
+        [ivThumbnail, lblInitials, lblName, lblAddress, btnCheckBox].forEach {
             contentView.addSubview($0)
         }
         
-        ivThumbnail.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().inset(10)
-            $0.width.height.equalTo(30)
+        [ivThumbnail, lblInitials].forEach {
+            $0.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.left.equalToSuperview().inset(10)
+                $0.width.height.equalTo(30)
+            }
         }
 
         lblName.snp.makeConstraints {

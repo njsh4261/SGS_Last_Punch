@@ -23,6 +23,7 @@ public class AccountInfo {
     private String country;
     @Convert(converter = StatusConverter.class)
     private String status;
+    private final Integer imageNum;
     private LocalDateTime createDt;
     private LocalDateTime modifyDt;
     
@@ -34,6 +35,7 @@ public class AccountInfo {
         this.phone = account.getPhone();
         this.country = account.getCountry();
         this.status = account.getStatus();
+        this.imageNum = account.getImagenum();
         this.createDt = account.getCreateDt();
         this.modifyDt = account.getModifyDt();
     }

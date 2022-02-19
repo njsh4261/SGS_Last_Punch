@@ -43,6 +43,9 @@ public class Account {
     @Column(columnDefinition = "tinyint")
     private String status;
     
+    @Column(columnDefinition = "tinyint")
+    private Integer imagenum;
+    
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createDt;

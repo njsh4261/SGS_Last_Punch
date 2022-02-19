@@ -2,6 +2,7 @@ package lastpunch.authserver.service;
 
 import static lastpunch.authserver.common.jwt.JwtProvider.REFRESH_TOKEN_VALIDATION_SEC;
 
+import java.util.Optional;
 import lastpunch.authserver.common.exception.BusinessException;
 import lastpunch.authserver.common.exception.ErrorCode;
 import lastpunch.authserver.common.jwt.JwtProvider;
@@ -27,8 +28,11 @@ public class LoginService {
     @Transactional
     public LoginResponse login(LoginRequest loginRequest){
         try {
-            Account account = accountRepository.findByEmail(loginRequest.getEmail()).get();
+            Optional<Account> optionalAccount = accountRepository.findByEmail(loginRequest.getEmail());
+            if (optionalAccount.isEmpty())
+                throw new BusinessException(ErrorCode.BAD_CREDENTIALS);
             // password check
+            Account account = optionalAccount.get();
             if (!passwordEncoder.matches(loginRequest.getPassword(), account.getPassword())){
                  throw new BusinessException(ErrorCode.BAD_CREDENTIALS);
             }

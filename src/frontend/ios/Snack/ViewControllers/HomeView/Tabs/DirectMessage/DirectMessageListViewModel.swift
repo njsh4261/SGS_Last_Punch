@@ -111,6 +111,8 @@ class DirectMessageListViewModel: ViewModelProtocol {
             let user = User(
                 senderId: member.id.description,
                 displayName: member.name,
+                email: member.email,
+                imageNum: member.imageNum,
                 authorId: member.lastMessage.id?.description ?? "",
                 content: member.lastMessage.content ?? ""
             )

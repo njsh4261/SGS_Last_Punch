@@ -105,6 +105,8 @@ extension ChatStompWebsocket: StompClientLibDelegate {
                 user: User(
                     senderId: messagePlayload.authorId,
                     displayName: nameDict[messagePlayload.authorId]!,
+                    email: "",
+                    imageNum: 0,
                     authorId: messagePlayload.authorId,
                     content: messagePlayload.content!
                 ),

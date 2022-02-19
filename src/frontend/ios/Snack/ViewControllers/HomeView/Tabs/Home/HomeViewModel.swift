@@ -143,6 +143,8 @@ class HomeViewModel: ViewModelProtocol {
             User(
                 senderId: $0.id.description,
                 displayName: $0.name,
+                email: "",
+                imageNum: 0,
                 authorId: $0.id.description,
                 content: $0.lastMessage.content ?? ""
             )

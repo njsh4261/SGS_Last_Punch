@@ -79,7 +79,7 @@ class ProfileViewController: UIViewController {
         viewModel.push
             .drive(onNext: { [self] in
                 let channelId = senderInfo!.senderId < recipientInfo!.id.description ? "\(senderInfo!.senderId)-\(recipientInfo!.id.description)" : "\( recipientInfo!.id.description)-\(senderInfo!.senderId)"
-                let user = User(senderId: recipientInfo!.id.description, displayName: recipientInfo!.name, authorId: "", content: "")
+                let user = User(senderId: recipientInfo!.id.description, displayName: recipientInfo!.name, email: recipientInfo?.email, imageNum: recipientInfo?.imageNum, authorId: "", content: "")
                 let viewModel = PrivateMessageViewModel(user)
                 let viewController = PrivateMessageViewController(senderInfo: senderInfo!, recipientInfo: user, channelId: channelId, viewModel: viewModel)
                 viewController.hidesBottomBarWhenPushed = true

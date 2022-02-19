@@ -79,12 +79,12 @@ class SettingsViewController: UITableViewController {
         
         if userInfo.imageNum != nil {
             self.ivUser.image = UIImage(named: "\(userInfo.imageNum!)")?.square(to: 70)
-            self.ivUser.backgroundColor = UIColor(named: "snackButtonColor")
+            self.ivUser.backgroundColor = .white
             self.lblInitials.backgroundColor = .clear
             self.lblInitials.text = nil
         } else {
             lblInitials.text = userInfo.name.first?.description
-            self.lblInitials.backgroundColor = .lightGray
+            self.lblInitials.backgroundColor = UIColor(named: "snackButtonColor")
             self.ivUser.backgroundColor = .clear
             self.ivUser.image = nil
         }

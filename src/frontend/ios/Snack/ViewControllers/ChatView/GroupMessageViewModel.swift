@@ -151,6 +151,8 @@ class GroupMessageViewModel: ViewModelProtocol {
                 user: User(
                     senderId: $0.authorId,
                     displayName: nameDict[$0.authorId]!,
+                    email: "",
+                    imageNum: 0,
                     authorId: $0.authorId,
                     content: $0.content
                 ),

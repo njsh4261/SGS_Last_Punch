@@ -19,11 +19,11 @@ class DirectMessageListViewCell: UITableViewCell {
     var userId = ""
 
     // MARK: - UI
-    var ivThumbnail = UIImageView()
-    var lblInitials = UILabel()
-    var lblName = UILabel()
-    var lblLastMessage = UILabel()
-    var lblDate = UILabel()
+    private var ivThumbnail = UIImageView()
+    private var lblInitials = UILabel()
+    private var lblName = UILabel()
+    private var lblLastMessage = UILabel()
+    private var lblDate = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -46,19 +46,13 @@ class DirectMessageListViewCell: UITableViewCell {
     func setData(_ member: User, _ index: Int) {
         chatId = member.senderId > userId ? "\(member.senderId)-\(userId)" : "\(userId)-\(member.senderId)"
         
-        //    if userInfo.imageNum != nil {
-        //        self.ivUser.image = UIImage(named: "\(userInfo.imageNum!)")?.square(to: 70)
-        //        self.ivUser.backgroundColor = UIColor(named: "snackButtonColor")
-        //        self.lblInitials.backgroundColor = .clear
-        //        self.lblInitials.text = nil
-        //    } else {
-        //        lblInitials.text = userInfo.name.first?.description
-        //        self.lblInitials.backgroundColor = .lightGray
-        //        self.ivUser.backgroundColor = .clear
-        //        self.ivUser.image = nil
-        //    }
-        
-        ivThumbnail.image = index%2 == 0 ? UIImage(named: "10")?.square(to: 70) : UIImage(named: "13")?.square(to: 70)        
+        if member.imageNum != nil {
+            ivThumbnail.image = UIImage(named: "\(member.imageNum!)")?.square(to: 70)
+            lblInitials.text = nil
+        } else {
+            lblInitials.text = member.displayName.first?.description
+            ivThumbnail.image = nil
+        }
         
         lblDate.text = Date().toString()
 
@@ -93,15 +87,18 @@ class DirectMessageListViewCell: UITableViewCell {
         
         ivThumbnail = ivThumbnail.then {
             $0.contentMode = .scaleAspectFit
+            $0.backgroundColor = .white
             $0.layer.borderWidth = 1.0
             $0.layer.borderColor = UIColor.label.cgColor
             $0.layer.cornerRadius = 4
         }
         
         lblInitials = lblInitials.then {
-            $0.font = UIFont(name: "NotoSansKR-Regular", size: 20)
-            $0.textColor = .white
-            $0.backgroundColor = .lightGray
+            $0.font = UIFont(name: "NotoSansKR-Regular", size: 16)
+            $0.textColor = .label
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = UIColor.label.cgColor
+            $0.textAlignment = .center
         }
         
         lblName = lblName.then {

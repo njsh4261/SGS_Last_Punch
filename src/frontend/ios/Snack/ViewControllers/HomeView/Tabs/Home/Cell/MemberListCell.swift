@@ -46,10 +46,14 @@ class MemberListCell: UITableViewCell {
 
         if member.imageNum != nil {
             ivThumbnail.image = UIImage(named: "\(member.imageNum!)")?.square(to: 70)
+            ivThumbnail.backgroundColor = .white
             lblInitials.text = nil
+            lblInitials.backgroundColor = .clear
         } else {
             lblInitials.text = member.name.first?.description
+            ivThumbnail.backgroundColor = UIColor(named: "snackButtonColor")
             ivThumbnail.image = nil
+            ivThumbnail.backgroundColor = .clear
         }
 
         lblName.text = member.id == userId ? "\(member.name) (나)" : "\(member.name)"
@@ -60,7 +64,6 @@ class MemberListCell: UITableViewCell {
         
         ivThumbnail = ivThumbnail.then {
             $0.contentMode = .scaleAspectFit
-            $0.backgroundColor = .white
             $0.layer.borderWidth = 1.0
             $0.layer.borderColor = UIColor.label.cgColor
             $0.layer.cornerRadius = 4
@@ -69,6 +72,8 @@ class MemberListCell: UITableViewCell {
         lblInitials = lblInitials.then {
             $0.font = UIFont(name: "NotoSansKR-Regular", size: 16)
             $0.textColor = .label
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = UIColor.label.cgColor
             $0.textAlignment = .center
         }
         

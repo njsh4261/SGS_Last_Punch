@@ -30,6 +30,7 @@ class PrivateMessageViewController: MessagesViewController {
     private var btnViewTitle = UIButton()
     private var btnAttach = InputBarButtonItem()
     private var refreshControl = UIRefreshControl()
+    private var avatarList = [(String, AvatarView)]()
 
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, channelId: String, viewModel: PrivateMessageViewModel) {
         self.viewModel = viewModel
@@ -85,6 +86,10 @@ class PrivateMessageViewController: MessagesViewController {
             .bind(onNext: setEndTyping)
             .disposed(by: disposeBag)
         
+        viewModel.output.sokectPresence
+            .bind(onNext: setPresence)
+            .disposed(by: disposeBag)
+        
         // 최근 메시지 - 30개
         viewModel.output.resentMessages
             .bind(onNext: resentMessage)
@@ -122,6 +127,31 @@ class PrivateMessageViewController: MessagesViewController {
         if text.count == 0 { return }
         ChatStompWebsocket.shared.sendTyping(authorId: senderInfo.senderId, channelId: channelId)
     }
+    
+    private func setPresence(_ presence: PresenceModel) {
+        for avatar in avatarList {
+            if avatar.0 == presence.userId {
+                avatar.1.layer.borderColor = getColorByPresence(presence.userStatus).cgColor
+            }
+        }
+    }
+    
+    // 프리젠스 상태에 따른 색상
+    func getColorByPresence(_ userStatus: String) -> UIColor {
+        switch userStatus {
+        case "ONLINE":
+            return .green
+        case "ABSENT":
+            return .orange
+        case "BUSY":
+            return .red
+        case "OFFLINE":
+            return .gray
+        default:
+            return .black
+        }
+    }
+    
     
     // 최근 메시지 Load
     private func resentMessage(_ messages: [MessageModel]) {
@@ -438,7 +468,8 @@ extension PrivateMessageViewController: MessagesDisplayDelegate {
         avatarView.set(avatar: avatar)
         avatarView.isHidden = isNextMessageSameSender(at: indexPath)
         avatarView.layer.borderWidth = 2
-        avatarView.layer.borderColor = UIColor(named: "snackColor")!.cgColor
+        avatarView.layer.borderColor = PresenceWebsocket.shared.presenceDict[message.sender.senderId]?.cgColor
+        avatarList.append((message.sender.senderId, avatarView))
     }
 }
 

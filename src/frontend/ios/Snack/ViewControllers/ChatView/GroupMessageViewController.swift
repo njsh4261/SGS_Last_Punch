@@ -27,6 +27,7 @@ class GroupMessageViewController: MessagesViewController {
     var senderInfo: User
     private var userInfo: WorkspaceMemberCellModel?
     private let outgoingAvatarOverlap: CGFloat = 17.5 // 메시지와 겹쳐지는 정도
+    private var avatarList = [(String, AvatarView)]()
 
     // MARK: - UI
     private var btnTransform = UIBarButtonItem()
@@ -94,6 +95,10 @@ class GroupMessageViewController: MessagesViewController {
             .bind(onNext: setEndTyping)
             .disposed(by: disposeBag)
         
+        viewModel.output.sokectPresence
+            .bind(onNext: setPresence)
+            .disposed(by: disposeBag)
+        
         viewModel.output.setData
             .bind(onNext: setData)
             .disposed(by: disposeBag)
@@ -135,6 +140,30 @@ class GroupMessageViewController: MessagesViewController {
     private func textDidChange(_ text: String) {
         if text.count == 0 { return }
         ChatStompWebsocket.shared.sendTyping(authorId: senderInfo.senderId, channelId: channel!.id.description)
+    }
+    
+    private func setPresence(_ presence: PresenceModel) {
+        for avatar in avatarList {
+            if avatar.0 == presence.userId {
+                avatar.1.layer.borderColor = getColorByPresence(presence.userStatus).cgColor
+            }
+        }
+    }
+    
+    // 프리젠스 상태에 따른 색상
+    func getColorByPresence(_ userStatus: String) -> UIColor {
+        switch userStatus {
+        case "ONLINE":
+            return .green
+        case "ABSENT":
+            return .orange
+        case "BUSY":
+            return .red
+        case "OFFLINE":
+            return .gray
+        default:
+            return .black
+        }
     }
     
     // 최근 메시지 Load
@@ -493,11 +522,13 @@ extension GroupMessageViewController: MessagesDisplayDelegate {
     
     // 상대방 썸네일 붙어 있는 이미지 제거
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        
         let avatar = ChatStompWebsocket.shared.getAvatarFor(sender: message.sender)
         avatarView.set(avatar: avatar)
         avatarView.isHidden = isNextMessageSameSender(at: indexPath)
         avatarView.layer.borderWidth = 2
-        avatarView.layer.borderColor = UIColor(named: "snackColor")!.cgColor
+        avatarView.layer.borderColor = PresenceWebsocket.shared.presenceDict[message.sender.senderId]?.cgColor
+        avatarList.append((message.sender.senderId, avatarView))
     }
 }
 

@@ -20,8 +20,8 @@ class PresenceWebsocket {
     
     // MARK: - Public properties
     var userId: String = "-1" // 본인
-    var present = PublishSubject<PresenceModel>()
-//    var presenceList: [PresenceModel]?
+    var presence = PublishSubject<PresenceModel>()
+    var presenceDict = [String:UIColor]()
 
     init() {
         self.userId = KeychainWrapper.standard[.id]!
@@ -47,8 +47,6 @@ class PresenceWebsocket {
         
         sendStatus(workspaceId: workspaceId, userId: userId, userStatus: "CONNECT")
         print("Presence Self sendStatus successfully : \(workspaceId)")
-        
-        
     }
     
     // Publish Status
@@ -66,7 +64,7 @@ class PresenceWebsocket {
     }
         
     // Presence 목록
-    func getPresenceList() -> [PresenceModel] {
+    func getPresenceList() {
         DispatchQueue.main.async { [self] in // 메인스레드에서 동작
             PresenceService.shared.getPresenceList(method: .get, accessToken: accessToken, workspaceId: workspaceId)
                 .observe(on: MainScheduler.instance)
@@ -82,6 +80,9 @@ class PresenceWebsocket {
                                 if presence.userId == self.userId {
                                     KeychainWrapper.standard[.status] = presence.userStatus
                                 }
+                                
+                                // 색상 저장
+                                self.presenceDict["\(presence.userId)"] = getColorByPresence(presence.userStatus)
                             }
                         default:
                             break
@@ -91,8 +92,27 @@ class PresenceWebsocket {
                     }
                 }.disposed(by: self.disposeBag)
         }
-        
-        return []
+    }
+    
+    // 프리젠스 상태에 따른 색상
+    func getColorByPresence(_ userStatus: String) -> UIColor {
+        switch userStatus {
+        case "ONLINE":
+            return .green
+        case "ABSENT":
+            return .orange
+        case "BUSY":
+            return .red
+        case "OFFLINE":
+            return .gray
+        default:
+            return .black
+        }
+    }
+    
+    // 상태 업데이트
+    func updatePresence(_ newPresence: PresenceModel) {
+        presenceDict[newPresence.userId] = getColorByPresence(newPresence.userStatus)
     }
 }
 
@@ -109,7 +129,8 @@ extension PresenceWebsocket: StompClientLibDelegate {
         let decoder = JSONDecoder()
         guard let messagePlayload = try? decoder.decode(PresenceModel.self, from: json) else { return }
         
-        self.present.onNext(messagePlayload)
+        updatePresence(messagePlayload)
+        self.presence.onNext(messagePlayload)
     }
     
     func stompClientDidxDisconnect(client: StompClientLib!) {

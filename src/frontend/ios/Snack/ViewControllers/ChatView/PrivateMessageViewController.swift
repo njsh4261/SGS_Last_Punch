@@ -223,11 +223,13 @@ class PrivateMessageViewController: MessagesViewController {
     // 입력 중
     private func setTyping(_ typing: TypingModel) {
         updateTitleView(title: "# \(recipientInfo.displayName)", subtitle: "입력중...")
+        navigationItem.titleView?.addSubview(btnViewTitle)
     }
     
     // 입력 끝
     private func setEndTyping(_ typing: TypingModel) {
         updateTitleView(title: "# \(recipientInfo.displayName)", subtitle: "상세 보기")
+        navigationItem.titleView?.addSubview(btnViewTitle)
     }
     
     // send 버튼이 눌려지면 메시지를 collectionView의 cell에 표출

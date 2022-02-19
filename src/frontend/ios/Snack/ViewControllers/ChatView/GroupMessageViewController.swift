@@ -293,11 +293,13 @@ class GroupMessageViewController: MessagesViewController {
     // 입력 중
     private func setTyping(_ typing: TypingModel) {
         updateTitleView(title: "# \(String(describing: channel!.name))", subtitle: "입력중...")
+        navigationItem.titleView?.addSubview(btnViewTitle)
     }
     
     // 입력 끝
     private func setEndTyping(_ typing: TypingModel) {
         updateTitleView(title: "# \(String(describing: channel!.name))", subtitle: "\(memberInfo!.count)명의 멤버 >")
+        navigationItem.titleView?.addSubview(btnViewTitle)
     }
 
     func isLastSectionVisible() -> Bool {

@@ -159,7 +159,7 @@ class ProfileViewController: UIViewController {
         lblName.text = userInfo.name
         lblDetails.text = "마지막 수정일 : \(userInfo.modifyDt)"
         
-        cellStatus.detailTextLabel?.text = "대화 가능"
+        cellStatus.detailTextLabel?.text = "온라인"
         cellDescription.detailTextLabel?.text = userInfo.description ?? "안녕하세요"
         cellCountry.detailTextLabel?.text = userInfo.country == "kor" ? "대한민국" : "외국"
         cellPhone.detailTextLabel?.text = userInfo.phone

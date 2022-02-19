@@ -26,7 +26,6 @@ struct ChannelModel: Codable {
     let name: String
     let topic: String?
     let description: String?
-    let settings: Int
     let createDt: String
     let modifyDt: String
 }

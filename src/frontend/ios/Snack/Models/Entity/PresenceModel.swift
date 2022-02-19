@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct PresenceModel: Codable {
+    var workspaceId: String
+    var userId: String
+    var userStatus: String
+}

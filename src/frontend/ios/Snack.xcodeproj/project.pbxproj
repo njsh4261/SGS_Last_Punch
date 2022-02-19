@@ -130,6 +130,8 @@
 		8CCFFAC627BE9793005D4D13 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC527BE9793005D4D13 /* CustomCell.swift */; };
 		8CCFFACA27C023AA005D4D13 /* PresenceWebsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC927C023AA005D4D13 /* PresenceWebsocket.swift */; };
 		8CCFFACC27C0C462005D4D13 /* PresenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFACB27C0C462005D4D13 /* PresenceModel.swift */; };
+		8CCFFAD127C0CC30005D4D13 /* StatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD027C0CC30005D4D13 /* StatusCell.swift */; };
+		8CCFFAD327C0CC66005D4D13 /* StatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD227C0CC66005D4D13 /* StatusCell.xib */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -264,6 +266,8 @@
 		8CCFFAC527BE9793005D4D13 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		8CCFFAC927C023AA005D4D13 /* PresenceWebsocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceWebsocket.swift; sourceTree = "<group>"; };
 		8CCFFACB27C0C462005D4D13 /* PresenceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceModel.swift; sourceTree = "<group>"; };
+		8CCFFAD027C0CC30005D4D13 /* StatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCell.swift; sourceTree = "<group>"; };
+		8CCFFAD227C0CC66005D4D13 /* StatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusCell.xib; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -613,6 +617,7 @@
 		8CBD45C127A70C6B0056A557 /* Status */ = {
 			isa = PBXGroup;
 			children = (
+				8CCFFACF27C0CC13005D4D13 /* Cell */,
 				8CBD45F227A887520056A557 /* StatusView.swift */,
 				8CBD45F427A887DE0056A557 /* StatusView.xib */,
 			);
@@ -806,6 +811,15 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
+		8CCFFACF27C0CC13005D4D13 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFAD027C0CC30005D4D13 /* StatusCell.swift */,
+				8CCFFAD227C0CC66005D4D13 /* StatusCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -896,6 +910,7 @@
 				8CCFFAA927BAA783005D4D13 /* UserSearchCell.xib in Resources */,
 				8CBD45E127A868040056A557 /* MediaView.xib in Resources */,
 				8CCFFA6C27B9524F005D4D13 /* NewChannelView.xib in Resources */,
+				8CCFFAD327C0CC66005D4D13 /* StatusCell.xib in Resources */,
 				8CCFFA7927B98CCA005D4D13 /* UserSearchView.xib in Resources */,
 				8C68AB2F2797F62D00C1711E /* SettingsView.xib in Resources */,
 				8CCFFAC227BE8EBF005D4D13 /* ChannelSearchCell.xib in Resources */,
@@ -1056,6 +1071,7 @@
 				8CCFFAB227BD12DB005D4D13 /* ChatService.swift in Sources */,
 				8CC9E8D027B128C3008BE1EA /* GroupMessageViewModel.swift in Sources */,
 				8CC9E8DA27B22BDB008BE1EA /* Note.swift in Sources */,
+				8CCFFAD127C0CC30005D4D13 /* StatusCell.swift in Sources */,
 				8CBD456C27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift in Sources */,
 				8CBD45C527A7172C0056A557 /* Ex+UIImage.swift in Sources */,
 				8C68AACB279117FA00C1711E /* UserModel.swift in Sources */,

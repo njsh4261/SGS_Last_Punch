@@ -14,15 +14,17 @@ class StatusView: UIViewController {
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var cellStatus: UITableViewCell!
     @IBOutlet private var cellClear: UITableViewCell!
 
-    private var statuses: [String] = []
+    private var statuses: [(String, UIColor)] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "상태 설정"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(actionSave))
+        
+        // Cell 등록
+        self.tableView.register(UINib(nibName: "StatusCell", bundle: nil), forCellReuseIdentifier: "StatusCell")
 
         loadStatuses()
     }
@@ -30,18 +32,15 @@ class StatusView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        cellStatus.textLabel?.text = "대화 가능"
+//        cellStatus.textLabel?.text = "온라인"
     }
 
     // MARK: - Load methods
     func loadStatuses() {
-        statuses.append("대화 가능")
-        statuses.append("자리 비움")
-        statuses.append("🗓 미팅중")
-        statuses.append("🚌 출퇴근 중")
-        statuses.append("🤒 병가")
-        statuses.append("🌴 휴가")
-        statuses.append("🏡 원격으로 작업 중")
+        statuses.append(("온라인", .green))
+        statuses.append(("부재중", .orange))
+        statuses.append(("매우 바쁨", .red))
+        statuses.append(("오프라인", .gray))
     }
     
     @objc func actionSave() {
@@ -52,9 +51,12 @@ class StatusView: UIViewController {
 
 
     // MARK: - Helper methods
-    func updateStatus(status: String) {
+    func updateStatus(status: (String, UIColor)) {
 
-        cellStatus.textLabel?.text = status
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StatusCell", for: IndexPath(row: 0, section: 0)) as! StatusCell
+        
+        cell.lblStatus.text = status.0
+        cell.btnStatus.backgroundColor = status.1
         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
     }
 }
@@ -87,13 +89,16 @@ extension StatusView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if (indexPath.section == 0) && (indexPath.row == 0) {
-            return cellStatus
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StatusCell", for: indexPath) as! StatusCell
+            return cell
         }
 
         if (indexPath.section == 1) {
-            var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell")
-            if (cell == nil) { cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell") }
-            cell.textLabel?.text = statuses[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StatusCell", for: indexPath) as! StatusCell
+            
+            cell.lblStatus.text = statuses[indexPath.row].0
+            cell.btnStatus.backgroundColor = statuses[indexPath.row].1
+
             return cell
         }
 
@@ -118,7 +123,7 @@ extension StatusView: UITableViewDelegate {
         }
 
         if (indexPath.section == 2) {
-            updateStatus(status: "대화 가능")
+            updateStatus(status: ("온라인", .green))
         }
     }
 }

@@ -129,6 +129,7 @@
 		8CCFFAC427BE975D005D4D13 /* CustomMessagesFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC327BE975D005D4D13 /* CustomMessagesFlowLayout.swift */; };
 		8CCFFAC627BE9793005D4D13 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC527BE9793005D4D13 /* CustomCell.swift */; };
 		8CCFFACA27C023AA005D4D13 /* PresenceWebsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC927C023AA005D4D13 /* PresenceWebsocket.swift */; };
+		8CCFFACC27C0C462005D4D13 /* PresenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFACB27C0C462005D4D13 /* PresenceModel.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -262,6 +263,7 @@
 		8CCFFAC327BE975D005D4D13 /* CustomMessagesFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessagesFlowLayout.swift; sourceTree = "<group>"; };
 		8CCFFAC527BE9793005D4D13 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		8CCFFAC927C023AA005D4D13 /* PresenceWebsocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceWebsocket.swift; sourceTree = "<group>"; };
+		8CCFFACB27C0C462005D4D13 /* PresenceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceModel.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -455,6 +457,7 @@
 				8CBD459E27A56F0A0056A557 /* MessageModel.swift */,
 				8CC9E8CB27B10CAE008BE1EA /* NoteListCellModel.swift */,
 				8CCFFAB327BD180C005D4D13 /* ChatModel.swift */,
+				8CCFFACB27C0C462005D4D13 /* PresenceModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1017,6 +1020,7 @@
 				8CCFFAB427BD180C005D4D13 /* ChatModel.swift in Sources */,
 				8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */,
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
+				8CCFFACC27C0C462005D4D13 /* PresenceModel.swift in Sources */,
 				8CCFFA8C27B9E98F005D4D13 /* LogOutViewModel.swift in Sources */,
 				8CBD45DD27A865C30056A557 /* MeidaView.swift in Sources */,
 				8CC9E90C27B3B939008BE1EA /* AccountService.swift in Sources */,

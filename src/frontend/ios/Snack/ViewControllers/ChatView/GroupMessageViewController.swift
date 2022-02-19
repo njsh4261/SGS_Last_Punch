@@ -491,6 +491,8 @@ extension GroupMessageViewController: MessagesDisplayDelegate {
     
     // 상대방 썸네일 붙어 있는 이미지 제거
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        let avatar = ChatStompWebsocket.shared.getAvatarFor(sender: message.sender)
+        avatarView.set(avatar: avatar)
         avatarView.isHidden = isNextMessageSameSender(at: indexPath)
         avatarView.layer.borderWidth = 2
         avatarView.layer.borderColor = UIColor(named: "snackColor")!.cgColor

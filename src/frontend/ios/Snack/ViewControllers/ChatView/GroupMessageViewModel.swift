@@ -78,6 +78,8 @@ class GroupMessageViewModel: ViewModelProtocol {
                 nameDict[member.id.description] = member.name
             }
             
+            
+            
             // recent messages
             getRecent(method: .post, accessToken: accessToken, channelId: channel.id.description)
         }

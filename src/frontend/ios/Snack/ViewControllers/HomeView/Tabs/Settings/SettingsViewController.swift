@@ -20,7 +20,8 @@ class SettingsViewController: UITableViewController {
     
     // MARK: - UI
     @IBOutlet private var viewHeader: UIView!
-    @IBOutlet private var imageUser: UIImageView!
+    @IBOutlet private var ivUser: UIImageView!
+    @IBOutlet private var lblInitials: UILabel!
     @IBOutlet private var lblName: UILabel!
     // Section 1
     @IBOutlet private var cellProfile: UITableViewCell!
@@ -74,6 +75,19 @@ class SettingsViewController: UITableViewController {
     // MARK: - Load User
     func loadUser() {
         guard let userInfo = userInfo else { return }
+        
+        if userInfo.imageNum != nil {
+            self.ivUser.image = UIImage(named: "\(userInfo.imageNum!)")?.square(to: 70)
+            self.ivUser.backgroundColor = UIColor(named: "snackButtonColor")
+            self.lblInitials.backgroundColor = .clear
+            self.lblInitials.text = nil
+        } else {
+            lblInitials.text = userInfo.name.first?.description
+            self.lblInitials.backgroundColor = UIColor(named: "snackButtonColor")
+            self.ivUser.backgroundColor = .clear
+            self.ivUser.image = nil
+        }
+        
         lblName.text = userInfo.name
         cellPasscode.detailTextLabel?.text = PasscodeKit.enabled() ? "켜짐" : "꺼짐"
         

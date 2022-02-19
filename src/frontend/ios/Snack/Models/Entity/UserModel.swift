@@ -16,7 +16,7 @@ struct UserModel: Codable {
     let phone: String?
     let country: String
     let status: String?
-    let imageNum: Int?
+    var imageNum: Int?
     let createDt: String
     let modifyDt: String
 }

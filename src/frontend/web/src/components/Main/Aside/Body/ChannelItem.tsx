@@ -5,9 +5,9 @@ import styled from 'styled-components';
 
 import { ModalType } from '../../../../../types/modal.type';
 import { createNoteAPI, getNoteListAPI } from '../../../../Api/note';
-import addPerson from '../../../../icon/addPerson.svg';
 import { RootState } from '../../../../modules';
 import StatusCircle from '../../../Common/StatusCircle';
+import { ProfileImage } from '../../../Common/ProfileImage';
 
 export const ItemContainer = styled.section<{ isSelected?: boolean }>`
   padding: 7px 0 7px 26px;
@@ -81,12 +81,6 @@ const NoteItem = styled.article<{ isSelected: boolean }>`
 const DMItem = styled.section`
   display: flex;
   align-items: center;
-`;
-
-const DMProfileImg = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
 `;
 
 const StatusCircleContainer = styled.div`
@@ -164,7 +158,10 @@ export default function ChannelItem(props: Props) {
         >
           {type === 'direct message' && (
             <DMItem>
-              <DMProfileImg src={addPerson}></DMProfileImg>
+              <ProfileImage
+                imageNum={channel.imageNum}
+                size={'20px'}
+              ></ProfileImage>
               <StatusCircleContainer>
                 <StatusCircle status={status || 'OFFLINE'}></StatusCircle>
               </StatusCircleContainer>

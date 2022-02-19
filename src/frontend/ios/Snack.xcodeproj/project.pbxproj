@@ -133,6 +133,8 @@
 		8CCFFAD127C0CC30005D4D13 /* StatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD027C0CC30005D4D13 /* StatusCell.swift */; };
 		8CCFFAD327C0CC66005D4D13 /* StatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD227C0CC66005D4D13 /* StatusCell.xib */; };
 		8CCFFAD527C0D622005D4D13 /* PresenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD427C0D622005D4D13 /* PresenceService.swift */; };
+		8CCFFAD827C10357005D4D13 /* EditWorkspaceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD727C10357005D4D13 /* EditWorkspaceView.xib */; };
+		8CCFFADA27C1042B005D4D13 /* EditWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD927C1042B005D4D13 /* EditWorkspaceView.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -270,6 +272,8 @@
 		8CCFFAD027C0CC30005D4D13 /* StatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCell.swift; sourceTree = "<group>"; };
 		8CCFFAD227C0CC66005D4D13 /* StatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusCell.xib; sourceTree = "<group>"; };
 		8CCFFAD427C0D622005D4D13 /* PresenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceService.swift; sourceTree = "<group>"; };
+		8CCFFAD727C10357005D4D13 /* EditWorkspaceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditWorkspaceView.xib; sourceTree = "<group>"; };
+		8CCFFAD927C1042B005D4D13 /* EditWorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkspaceView.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -428,6 +432,7 @@
 		8C68AAE5279526E800C1711E /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				8CCFFAD627C10326005D4D13 /* EditWorkspace */,
 				8CCFFAB527BE8A18005D4D13 /* ChannelSearch */,
 				8CCFFAA127BA0559005D4D13 /* NewChannel */,
 				8C962B6127AE6A1C00A9A1F5 /* Cell */,
@@ -823,6 +828,15 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		8CCFFAD627C10326005D4D13 /* EditWorkspace */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFAD927C1042B005D4D13 /* EditWorkspaceView.swift */,
+				8CCFFAD727C10357005D4D13 /* EditWorkspaceView.xib */,
+			);
+			name = EditWorkspace;
+			sourceTree = "<group>";
+		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -904,6 +918,7 @@
 			files = (
 				8CCFFA9627B9E98F005D4D13 /* NotoSansKR-Bold 2.otf in Resources */,
 				8CBD45EF27A874950056A557 /* KeepMediaView.xib in Resources */,
+				8CCFFAD827C10357005D4D13 /* EditWorkspaceView.xib in Resources */,
 				8CCFFAA427BA767B005D4D13 /* UserInvitationView.xib in Resources */,
 				8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */,
 				8CCFFABB27BE8B60005D4D13 /* ChannelSearchView.xib in Resources */,
@@ -1063,6 +1078,7 @@
 				8CCFFAAD27BB48CE005D4D13 /* GroupDetailsViewController.swift in Sources */,
 				8CC9E91027B3FDB5008BE1EA /* ChatStompWebsocket.swift in Sources */,
 				8CCFFA8E27B9E98F005D4D13 /* NavigationController.swift in Sources */,
+				8CCFFADA27C1042B005D4D13 /* EditWorkspaceView.swift in Sources */,
 				8CBD45B827A6CFAB0056A557 /* ProfileViewController.swift in Sources */,
 				8CBD45CB27A71A310056A557 /* Ex+Data.swift in Sources */,
 				8CBD45E827A872300056A557 /* CacheView.swift in Sources */,

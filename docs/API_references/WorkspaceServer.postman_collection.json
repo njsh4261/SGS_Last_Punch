@@ -316,6 +316,303 @@
 							"body": "{\n    \"data\": {\n        \"account\": {\n            \"id\": 1,\n            \"email\": \"1\",\n            \"name\": \"Saitama\",\n            \"description\": null,\n            \"phone\": null,\n            \"country\": \"kor\",\n            \"imageNum\": null,\n            \"createDt\": \"1234-01-01 24:00:00\",\n            \"modifyDt\": \"9999-12-31 24:00:00\"\n        }\n    },\n    \"code\": \"12000\"\n}"
 						}
 					]
+				},
+				{
+					"name": "edit account",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-AUTH-TOKEN",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxd2VyQHF3ZXIiLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJJZCI6MywiZXhwIjoxNjQ0MjA4NDMyfQ.UDNrnkMt4N7Cq1ikfw7AdyzzAYUUV3SK01SCxXQHoyOTFqAgPbFs6i5cHIPxH2Ohw6D5tBysqIeJDnIsWRLe2Q",
+								"type": "text"
+							},
+							{
+								"key": "userid",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"One Punch Man\",\r\n    \"description\": \"edit account information\",\r\n    \"phone\": \"010-8765-4321\",\r\n    \"country\": \"Japan\",\r\n    \"imageNum\": 11\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/account/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success - 12000",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxd2VyQHF3ZXIiLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJJZCI6MywiZXhwIjoxNjQ0MjA4NDMyfQ.UDNrnkMt4N7Cq1ikfw7AdyzzAYUUV3SK01SCxXQHoyOTFqAgPbFs6i5cHIPxH2Ohw6D5tBysqIeJDnIsWRLe2Q",
+										"type": "text"
+									},
+									{
+										"key": "userid",
+										"value": "1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"One Punch Man\",\r\n    \"description\": \"edit account information\",\r\n    \"phone\": \"010-8765-4321\",\r\n    \"country\": \"Japan\",\r\n    \"imageNum\": 11\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/account/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"account",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 19 Feb 2022 11:15:09 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"data\": {},\n    \"code\": \"12000\"\n}"
+						},
+						{
+							"name": "Fail - 12002 ACCOUNT_NOT_EXIST",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxd2VyQHF3ZXIiLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJJZCI6MywiZXhwIjoxNjQ0MjA4NDMyfQ.UDNrnkMt4N7Cq1ikfw7AdyzzAYUUV3SK01SCxXQHoyOTFqAgPbFs6i5cHIPxH2Ohw6D5tBysqIeJDnIsWRLe2Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"One Punch Man\",\r\n    \"description\": \"edit account information\",\r\n    \"phone\": \"010-8765-4321\",\r\n    \"country\": \"Japan\",\r\n    \"imageNum\": 11\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/account/123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"account",
+										"123"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 19 Feb 2022 11:17:04 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"err\": {\n        \"desc\": \"Snack 사용자가 아닙니다\",\n        \"msg\": \"ACCOUNT_NOT_EXIST\"\n    },\n    \"code\": \"12002\"\n}"
+						},
+						{
+							"name": "Fail - 12008 INVALID_USERID",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"One Punch Man\",\r\n    \"description\": \"edit account information\",\r\n    \"phone\": \"010-8765-4321\",\r\n    \"country\": \"Japan\",\r\n    \"imageNum\": 11\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/account/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"account",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 19 Feb 2022 11:14:25 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"err\": {\n        \"desc\": \"사용자 ID가 정상적으로 제공되지 않았습니다\",\n        \"msg\": \"INVALID_USERID\"\n    },\n    \"code\": \"12008\"\n}"
+						},
+						{
+							"name": "Fail - 12011 PERMISSION_DENIED",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-AUTH-TOKEN",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxd2VyQHF3ZXIiLCJhdXRoIjoiUk9MRV9BRE1JTiIsInVzZXJJZCI6MywiZXhwIjoxNjQ0MjA4NDMyfQ.UDNrnkMt4N7Cq1ikfw7AdyzzAYUUV3SK01SCxXQHoyOTFqAgPbFs6i5cHIPxH2Ohw6D5tBysqIeJDnIsWRLe2Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"One Punch Man\",\r\n    \"description\": \"edit account information\",\r\n    \"phone\": \"010-8765-4321\",\r\n    \"country\": \"Japan\",\r\n    \"imageNum\": 11\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/account/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"account",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 19 Feb 2022 11:16:18 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"err\": {\n        \"desc\": \"해당 작업을 실행할 권한이 없습니다\",\n        \"msg\": \"PERMISSION_DENIED\"\n    },\n    \"code\": \"12011\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -2975,7 +3272,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {},\n    \"code\": \"12000\"\n}"
+							"body": "{\n    \"code\": \"12000\"\n}"
 						},
 						{
 							"name": "Fail - 12003 CHANNEL_NOT_EXIST",
@@ -3036,10 +3333,10 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"err\": {\n        \"desc\": \"존재하지 않는 채널입니다\",\n        \"msg\": \"CHANNEL_NOT_EXIST\"\n    },\n    \"code\": \"12003\"\n}"
+							"body": "{\n    \"code\": \"12003\",\n    \"err\": {\n        \"msg\": \"CHANNEL_NOT_EXIST\",\n        \"desc\": \"존재하지 않는 채널입니다.\"\n    }\n}"
 						},
 						{
-							"name": "Fail - 12011 PERMISSION_DENIED",
+							"name": "delete channel",
 							"originalRequest": {
 								"method": "DELETE",
 								"header": [
@@ -3064,12 +3361,12 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/channel/23",
+									"raw": "http://localhost:8082/channel/23",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8080",
+									"port": "8082",
 									"path": [
 										"channel",
 										"23"

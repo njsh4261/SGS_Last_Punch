@@ -77,6 +77,38 @@ public class Account{
     }
     
     @Getter
+    public static class EditDto{
+        private String name;
+        private String description;
+        private String phone;
+        private String country;
+        private Integer imageNum;
+        
+        public Account toEntity(Account account){
+            if(name != null){
+                account.setName(name);
+            }
+            if(description != null){
+                account.setDescription(description);
+            }
+            if(phone != null){
+                account.setPhone(phone);
+            }
+            if(country != null){
+                account.setCountry(country);
+            }
+            if(imageNum != null){
+                account.setImagenum(imageNum);
+            }
+            if((name != null) || (description != null) || (phone != null)
+                || (country != null) || (imageNum != null)){
+                account.setModifydt(LocalDateTime.now());
+            }
+            return account;
+        }
+    }
+    
+    @Getter
     @Builder
     public static class ExportDto{
         private Long id;

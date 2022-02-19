@@ -3,7 +3,7 @@ export interface IWorkspace {
   name: string;
   description: string | null;
   createDt: string;
-  imagNum: number | null;
+  imageNum: number | null;
   owner: {
     id: number;
     name: string;

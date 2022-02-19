@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import SubmitButton from '../../Common/SubmitButton';
-import sampleImage from '../../../icon/sample-workspace.png';
+import sampleImage from '../../../images/22.png';
 import { IWorkspace } from '../../../../types/workspace.type';
 
 const Item = styled.section`
@@ -28,12 +28,16 @@ const ItemInfoLayer = styled.section`
   }
 `;
 
-const WorkSpaceImage = styled.div`
+const WorkSpaceImage = styled.div<{ imageNum: number | null }>`
   width: 75px;
   height: 75px;
-  background-image: url(${sampleImage});
+  background-image: ${({ imageNum }) =>
+    imageNum && `url(${require(`../../../images/${imageNum}.png`)})`};
+  background-size: contain;
   margin-right: 16px;
-  border-radius: 5px;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  overflow: hidden;
 `;
 
 const WorkSpaceInfo = styled.div`
@@ -59,10 +63,10 @@ export default function WsItem({ ws }: { ws: IWorkspace }) {
   return (
     <Item key={ws.id}>
       <ItemInfoLayer>
-        <WorkSpaceImage></WorkSpaceImage>
+        <WorkSpaceImage imageNum={ws.imageNum}></WorkSpaceImage>
         <WorkSpaceInfo>
           <WorkSpaceName>{ws.name}</WorkSpaceName>
-          <WorkSpaceMembers>x명의 멤버</WorkSpaceMembers>
+          <WorkSpaceMembers>{ws.imageNum}명의 멤버</WorkSpaceMembers>
         </WorkSpaceInfo>
       </ItemInfoLayer>
       <SubmitButton

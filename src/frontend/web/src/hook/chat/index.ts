@@ -30,6 +30,7 @@ export default function chatHook(
   const channelList = useSelector((state: RootState) => state.channelList);
   const memberList = useSelector((state: RootState) => state.userList);
   const isTyping = useRef(false);
+  const memberListRef = useRef<RootState['userList']>(); // for presence
 
   const { sendMessage, typingList } = chatSocketHook(
     user.id,
@@ -85,6 +86,10 @@ export default function chatHook(
   useEffect(() => {
     getRecentChatHandler();
   }, [channel]);
+
+  useEffect(() => {
+    memberListRef.current = memberList;
+  }, memberList);
 
   return [
     user,

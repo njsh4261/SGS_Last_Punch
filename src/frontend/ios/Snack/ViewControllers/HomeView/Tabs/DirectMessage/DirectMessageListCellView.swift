@@ -64,6 +64,15 @@ class DirectMessageListCellView: UITableViewCell {
         }
     }
     
+    // 읽지 않음
+    func setUnread(_ isUnread: Bool) {
+        if isUnread {
+            lblLastMessage.font = UIFont(name: "NotoSansKR-Bold", size: 16)
+        } else {
+            lblLastMessage.font = UIFont(name: "NotoSansKR-Regular", size: 16)
+        }
+    }
+    
     private func attribute() {
         backgroundColor = UIColor(named: "snackButtonColor")
         

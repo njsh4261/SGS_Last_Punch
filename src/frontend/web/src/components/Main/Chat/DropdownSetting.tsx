@@ -47,6 +47,7 @@ export default function Dropdown({ id }: { id: string }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
+  const presence = useSelector((state: RootState) => state.presence);
 
   return (
     <Container id={id}>
@@ -56,7 +57,9 @@ export default function Dropdown({ id }: { id: string }) {
           <ProfileNameAndStatus>
             <ProfileName>{user.name}</ProfileName>
             <ProfileStatus>
-              <StatusCircle status={user.status || 'OFFLINE'}></StatusCircle>
+              <StatusCircle
+                status={presence[user.id] || 'ONLINE'}
+              ></StatusCircle>
               대화 가능
             </ProfileStatus>
           </ProfileNameAndStatus>

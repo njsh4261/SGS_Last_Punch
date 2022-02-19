@@ -26,7 +26,6 @@ class UserSearchViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var viewHeader: UIView!
     @IBOutlet private var emailField: UITextField!
-    @IBOutlet private var btnSearch: UIButton!
     
     override func viewDidLoad() {
         guard let accessToken: String = KeychainWrapper.standard[.accessToken], let userId: String = KeychainWrapper.standard[.id], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }

@@ -6,6 +6,7 @@ import work, { workSaga } from './worksapce';
 import user from './user';
 import channelList from './channeList';
 import userList from './userList';
+import presence from './presence';
 
 const rootReducer = combineReducers({
   modal,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   user,
   channelList,
   userList,
+  presence,
 });
 
 export default rootReducer;

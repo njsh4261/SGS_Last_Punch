@@ -57,6 +57,10 @@ class HomeViewController: UIViewController {
     
     func bind(with viewModel: HomeViewModel) {
         // MARK: Bind input
+        btnSearch.rx.tap
+            .subscribe(onNext: goToChannelSearch)
+            .disposed(by: disposeBag)
+        
         btnAddChannel.rx.tap
             .subscribe(onNext: goToNewChannel)
             .disposed(by: disposeBag)
@@ -71,6 +75,10 @@ class HomeViewController: UIViewController {
         tableView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 self?.tableView.deselectRow(at: indexPath, animated: true)
+                if indexPath.section == 0 { // 채널만
+                    let cell = self?.tableView.cellForRow(at: indexPath) as! ChannelListCell
+                    cell.setUnread(false)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -103,23 +111,32 @@ class HomeViewController: UIViewController {
 
         viewModel.push
             .drive(onNext: { [self] (row, section) in
-                // 추가) 본인 user정보를 넣어야함
-                if section == 0 {
+                if section == 0 { // 그룹
                     let viewModel = GroupMessageViewModel(channel: channels![row])
                     let viewController = GroupMessageViewController(senderInfo: userInfo!, channel: channels![row], viewModel: viewModel)
                     viewController.bind(viewModel)
                     viewController.hidesBottomBarWhenPushed = true
                     self.show(viewController, sender: nil)
-                } else {
-                    let channelId = userInfo!.senderId < members![row].senderId ? "\(workspaceId!)-\(userInfo!.senderId)-\(members![row].senderId)" : "\(workspaceId!)-\(members![row].senderId)-\(userInfo!.senderId)"
-                    let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members![row], channelId: channelId)
+                } else { // DM
                     let viewModel = PrivateMessageViewModel(members![row])
+                    let channelId = userInfo!.senderId < members![row].senderId ? "\(workspaceId!)-\(userInfo!.senderId)-\(members![row].senderId)" : "\(workspaceId!)-\(members![row].senderId)-\(userInfo!.senderId)"
+                    let viewController = PrivateMessageViewController(senderInfo: userInfo!, recipientInfo: members![row], channelId: channelId, viewModel: viewModel)
                     viewController.bind(viewModel)
                     viewController.hidesBottomBarWhenPushed = true
                     self.show(viewController, sender: nil)
                 }
             })
             .disposed(by: disposeBag)
+        
+        // 읽지 않음
+        viewModel.output.unreadChannel
+            .bind(onNext: setUnread)
+            .disposed(by: disposeBag)
+    }
+    
+    private func goToChannelSearch() {
+        let channelSearchVC = ChannelSearchViewController()
+        self.present(channelSearchVC, animated: true, completion: nil)
     }
     
     private func goToNewChannel() {
@@ -134,6 +151,12 @@ class HomeViewController: UIViewController {
     private func setData(_ users: [User], _ channels: [WorkspaceChannelCellModel]) {
         self.members = users
         self.channels = channels
+    }
+    
+    // 읽지 않음
+    private func setUnread(_ index: Int) {
+        let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as! ChannelListCell
+        cell.setUnread(true)
     }
     
     private func getUser(_ userInfo: UserModel) -> User {

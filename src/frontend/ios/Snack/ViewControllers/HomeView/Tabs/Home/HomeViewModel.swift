@@ -20,6 +20,7 @@ class HomeViewModel: ViewModelProtocol {
     struct Output {
         let workspaceTitle = PublishRelay<String>()
         let setData = PublishRelay<([User], [WorkspaceChannelCellModel])>()
+        let unreadChannel = PublishRelay<Int>()
         let sections = PublishRelay<[SectionModel<HomeSection.HomeSection, HomeSection.HomeItem>]>()
         let errorMessage = PublishRelay<String>()
     }
@@ -36,8 +37,6 @@ class HomeViewModel: ViewModelProtocol {
     private var workspace: WorkspaceListCellModel?
     private var channels: [WorkspaceChannelCellModel]?
     private var members: [WorkspaceMemberCellModel]?
-//    private let url = URL(string: "ws://\(APIConstants().chatWebsoket)/websocket")!
-//    var socketClient = StompClientLib()
     
     // MARK: - Init
     init(accessToken: String, workspaceId: String) {
@@ -52,6 +51,17 @@ class HomeViewModel: ViewModelProtocol {
             .asDriver(onErrorDriveWith: .empty())
         
         StompWebsocket.shared.registerSockect()
+        
+        // 읽지 않음 표시
+        StompWebsocket.shared.message
+            .filter {
+                !$0.channelId.contains("-")
+            }
+            .map { [self] mssage in
+                (channels?.firstIndex(where: {$0.id.description == mssage.channelId})!)!
+            }
+            .bind(to: output.unreadChannel)
+            .disposed(by: disposeBag)
     }
     
     func viewWillAppear() {

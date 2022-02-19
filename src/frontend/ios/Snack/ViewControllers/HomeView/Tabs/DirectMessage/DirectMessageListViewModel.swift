@@ -20,6 +20,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
     struct Output {
         let memberListCellData = PublishSubject<[User]>()
         let refreshLoading = PublishRelay<Bool>()
+        let unreadChannel = PublishRelay<Int>()
         let goToMessage = PublishRelay<Bool>()
         let errorMessage = PublishRelay<String>()
     }
@@ -33,6 +34,7 @@ class DirectMessageListViewModel: ViewModelProtocol {
     private let disposeBag = DisposeBag()
     private let accessToken: String
     private let workspaceId: String
+    private var members: [String]?
     
     // MARK: - Init
     init(accessToken: String, workspaceId: String) {
@@ -59,6 +61,17 @@ class DirectMessageListViewModel: ViewModelProtocol {
                     self.output.refreshLoading.accept(false)
                 }
             }.disposed(by: disposeBag)
+        
+        // 읽지 않음 표시
+//        StompWebsocket.shared.message
+//            .filter {
+//                $0.channelId.contains("-")
+//            }
+//            .map { [self] mssage in
+//                (members?.firstIndex(where: {$0.id.description == mssage.channelId})!)!
+//            }
+//            .bind(to: output.unreadChannel)
+//            .disposed(by: disposeBag)
     }
     
     func viewWillAppear() {
@@ -104,5 +117,9 @@ class DirectMessageListViewModel: ViewModelProtocol {
             userList.append(user)
         }
         return userList
+    }
+    
+    func getChannelId(members: [WorkspaceMemberCellModel]) -> [String] {
+        return [""]
     }
 }

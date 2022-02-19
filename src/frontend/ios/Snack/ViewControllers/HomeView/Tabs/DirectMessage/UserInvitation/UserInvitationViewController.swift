@@ -142,16 +142,7 @@ class UserInvitationViewController: UIViewController {
                                 ProgressHUD.showSucceed("전송했습니다")
                                 self.actionDismiss()
                             case .fail(let decodedData):
-                                switch decodedData.code {
-                                case "12001":
-                                    ProgressHUD.showFailed("존재하지 않는 워크스페이스 입니다")
-                                case "12002":
-                                    ProgressHUD.showFailed("Snack 사용자가 아닙니다")
-                                case "12005":
-                                    ProgressHUD.showFailed("이미 워크스페이스 멤버입니다")
-                                default:
-                                    ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
-                                }
+                                ProgressHUD.showFailed(decodedData.err?.desc)
                             default:
                                 ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
                             }

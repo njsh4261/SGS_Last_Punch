@@ -140,7 +140,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
   ] = chatHook(params.wsId!);
 
   // presence 소켓 연결 및 유저들의 status 업데이트
-  const sendMessage = presenceHook({ wsId: params.wsId!, memberList });
+  const sendMessage = presenceHook({ wsId: params.wsId! });
 
   const userDictionary = useMemo(() => {
     const obj: { [index: string]: string } = {};

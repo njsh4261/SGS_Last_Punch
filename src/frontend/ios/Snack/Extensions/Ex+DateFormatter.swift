@@ -22,6 +22,13 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    func toString3() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm"
+        formatter.locale = Locale(identifier:"ko_KR")
+        return formatter.string(from: self)
+    }
+    
     func toTimeString() -> String {
         let formatter = DateFormatter()
         

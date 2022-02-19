@@ -55,6 +55,12 @@ const ChannelName = styled.article`
     max-width: 65vw;
   }
 `;
+
+const ChannelTopic = styled.div`
+  opacity: 50%;
+  font-size: 14px;
+`;
+
 const ArrowDropDownIcon = styled.article`
   display: inline-block;
   width: 20px;
@@ -85,6 +91,7 @@ const NavButton = styled.img`
 
 const ChannelTab = styled.div`
   display: flex;
+  align-items: center;
   position: relative;
 `;
 
@@ -130,6 +137,7 @@ const Header = ({
           }
         >
           <ChannelName>{channel.name}</ChannelName>
+          <ChannelTopic>{channel.topic}</ChannelTopic>
           <ArrowDropDownIcon></ArrowDropDownIcon>
         </ChannelTab>
       </ChannelInfo>

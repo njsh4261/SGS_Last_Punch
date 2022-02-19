@@ -35,9 +35,9 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom{
     
             List<ExportDto> results = jpaQueryFactory
                 .select(new QAccount_ExportDto(
-                    account.id, account.email, account.name,
-                    account.description, account.phone, account.country, account.language,
-                    account.settings, account.createdt, account.modifydt
+                    account.id, account.email, account.name, account.description,
+                    account.phone, account.country, account.imagenum,
+                    account.createdt, account.modifydt
                 ))
                 .from(account)
                 .where(

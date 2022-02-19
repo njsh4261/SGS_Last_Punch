@@ -119,6 +119,7 @@ public class AccountChannelService{
                     if(!Objects.equals(requesterId, accountId)){
                         throw new BusinessException(StatusCode.PERMISSION_DENIED);
                     }
+                    break;
                 case ADMIN:
                     // 변경 대상자 권한 조회
                     Optional<Dto> targetOptional = accountChannelRepository.get(accountId, channelId);
@@ -130,11 +131,13 @@ public class AccountChannelService{
                         // ADMIN은 NORMAL_USER만 강퇴 가능
                         throw new BusinessException(StatusCode.PERMISSION_DENIED);
                     }
+                    break;
                 case OWNER:
                     // 채널 소유자는 채널의 소유권을 다른 사용자에게 양도하기 전까지 나갈 수 없음
                     if(Objects.equals(requesterId, accountId)){
                         throw new BusinessException(StatusCode.CANNOT_EXIT_CHANNEL);
                     }
+                    break;
             }
 
             if(accountChannelRepository.delete(accountId, channelId) <= 0){

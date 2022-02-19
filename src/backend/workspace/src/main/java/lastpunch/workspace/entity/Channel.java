@@ -23,7 +23,6 @@ import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.repository.Query;
 
 @Entity
 @Table(name = "channel")
@@ -46,10 +45,6 @@ public class Channel{
     
     private String topic;
     private String description;
-    
-    @NotNull
-    @Column(columnDefinition = "tinyint")
-    private Integer settings;
     
     @CreatedDate
     @Column(updatable = false)
@@ -75,18 +70,17 @@ public class Channel{
                 .name(name)
                 .topic(topic)
                 .description(description)
-                .settings(0)
                 .createdt(LocalDateTime.now())
                 .modifydt(LocalDateTime.now())
                 .build();
         }
     }
     
+    @Getter
     public static class EditDto{
         private String name;
         private String topic;
         private String description;
-        private Integer settings;
         
         public Channel toEntity(Channel channel){
             if(name != null){
@@ -98,8 +92,8 @@ public class Channel{
             if(description != null){
                 channel.setDescription(description);
             }
-            if(settings != null){
-                channel.setSettings(settings);
+            if((name != null) || (topic != null) || (description != null)){
+                channel.setModifydt(LocalDateTime.now());
             }
             return channel;
         }
@@ -107,29 +101,27 @@ public class Channel{
     
     @Getter
     public static class ExportDto{
-        private Long id;
-        private Workspace.ExportDto workspace;
-        private String name;
-        private String topic;
-        private String description;
-        private Integer settings;
+        private final Long id;
+        private final Workspace.ExportDto workspace;
+        private final String name;
+        private final String topic;
+        private final String description;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
-        private LocalDateTime createDt;
+        private final LocalDateTime createDt;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
-        private LocalDateTime modifyDt;
+        private final LocalDateTime modifyDt;
 
         @QueryProjection
         public ExportDto(Long id, Workspace workspace, String name,
-                         String topic, String description, Integer settings,
+                         String topic, String description,
                          LocalDateTime createDt, LocalDateTime modifyDt) {
             this.id = id;
             this.workspace = workspace.export();
             this.name = name;
             this.topic = topic;
             this.description = description;
-            this.settings = settings;
             this.createDt = createDt;
             this.modifyDt = modifyDt;
         }
@@ -137,7 +129,7 @@ public class Channel{
     
     public ExportDto export(){
         return new ExportDto(
-                id, workspace, name, topic, description, settings, createdt, modifydt
+            id, workspace, name, topic, description, createdt, modifydt
         );
     }
 
@@ -174,7 +166,6 @@ public class Channel{
         private String name;
         private String topic;
         private String description;
-        private Integer settings;
 
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createDt;
@@ -192,7 +183,6 @@ public class Channel{
                 .name(name)
                 .topic(topic)
                 .description(description)
-                .settings(settings)
                 .createDt(createdt)
                 .modifyDt(modifydt)
                 .owner(account)

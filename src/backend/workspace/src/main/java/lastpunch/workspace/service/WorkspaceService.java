@@ -1,11 +1,13 @@
 package lastpunch.workspace.service;
 
+import java.util.Optional;
 import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
 import lastpunch.workspace.common.exception.DBExceptionMapper;
 import lastpunch.workspace.common.type.RoleType;
 import lastpunch.workspace.dto.Members;
 import lastpunch.workspace.entity.Account;
+import lastpunch.workspace.entity.AccountWorkspace.Dto;
 import lastpunch.workspace.entity.Channel;
 import lastpunch.workspace.entity.Message;
 import lastpunch.workspace.entity.Workspace;
@@ -119,15 +121,29 @@ public class WorkspaceService{
         }
     }
     
-    public Map<String, Object> edit(Workspace.EditDto editDto, Long id){
-        workspaceRepository.save(editDto.toEntity(commonService.getWorkspace(id)));
-        return new HashMap<>();
+    public Map<String, Object> edit(Workspace.EditDto editDto, Long workspaceId, Long requesterId){
+        // 권한 체크: 워크스페이스의 관리자 혹은 소유자가 아니면 워크스페이스 정보를 변경할 수 없음
+        Optional<Dto> requesterOptional = accountWorkspaceRepository.get(requesterId, workspaceId);
+        if(requesterOptional.isPresent()){
+            if(RoleType.toEnum(requesterOptional.get().getRoleId()).hasPermission()){
+                workspaceRepository.save(editDto.toEntity(commonService.getWorkspace(workspaceId)));
+                return new HashMap<>(); // 비어 있는 map: FE에 일관적인 포맷의 response 전달
+            }
+        }
+        throw new BusinessException(StatusCode.PERMISSION_DENIED);
     }
     
-    public Map<String, Object> delete(Long id){
+    public Map<String, Object> delete(Long workspaceId, Long requesterId){
         try{
-            workspaceRepository.deleteById(id);
-            return new HashMap<>();
+            // 권한 체크: 워크스페이스의 관리자 혹은 소유자가 아니면 워크스페이스를 삭제할 수 없음
+            Optional<Dto> requesterOptional = accountWorkspaceRepository.get(requesterId, workspaceId);
+            if(requesterOptional.isPresent()){
+                if(RoleType.toEnum(requesterOptional.get().getRoleId()).hasPermission()){
+                    workspaceRepository.deleteById(workspaceId);
+                    return new HashMap<>(); // 비어 있는 map: FE에 일관적인 포맷의 response 전달
+                }
+            }
+            throw new BusinessException(StatusCode.PERMISSION_DENIED);
         } catch(EmptyResultDataAccessException e){
             throw new BusinessException(StatusCode.WORKSPACE_NOT_EXIST);
         }

@@ -1,6 +1,7 @@
 package lastpunch.workspace.common.type;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +21,13 @@ public enum RoleType{
     
     public static RoleType toEnum(Long id){
         return map.getOrDefault(id, RoleType.NORMAL_USER);
+    }
+    
+    public boolean hasPermission(){
+        return this.id >= RoleType.ADMIN.getId();
+    }
+    
+    public boolean isOwner(){
+        return Objects.equals(this.id, RoleType.OWNER.getId());
     }
 }

@@ -1,22 +1,21 @@
 package lastpunch.authserver.service;
 
-import java.util.Optional;
-import java.util.Random;
-import javax.mail.Message.RecipientType;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import lastpunch.authserver.common.exception.BusinessException;
 import lastpunch.authserver.common.exception.ErrorCode;
 import lastpunch.authserver.dto.EmailVerifyRequest;
-import lastpunch.authserver.dto.SignupRequest;
 import lastpunch.authserver.entity.Account;
 import lastpunch.authserver.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import javax.mail.Message.RecipientType;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor

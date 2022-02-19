@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/account")
 public class AccountController{
-    private AccountService accountService;
+    private final AccountService accountService;
     
     @Autowired
     public AccountController(AccountService accountService){

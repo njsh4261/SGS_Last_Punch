@@ -119,6 +119,7 @@ public class AccountWorkspaceService{
                     if(!Objects.equals(requesterId, accountId)){
                         throw new BusinessException(StatusCode.PERMISSION_DENIED);
                     }
+                    break;
                 case ADMIN:
                     // 변경 대상자 권한 조회
                     Optional<Dto> targetOptional = accountWorkspaceRepository.get(accountId, workspaceId);
@@ -130,11 +131,13 @@ public class AccountWorkspaceService{
                         // ADMIN은 NORMAL_USER만 강퇴 가능
                         throw new BusinessException(StatusCode.PERMISSION_DENIED);
                     }
+                    break;
                 case OWNER:
                     // 워크스페이스 소유자는 워크스페이스의 소유권을 다른 사용자에게 양도하기 전까지 나갈 수 없음
                     if(Objects.equals(requesterId, accountId)){
                         throw new BusinessException(StatusCode.CANNOT_EXIT_WORKSPACE);
                     }
+                    break;
             }
             if(accountWorkspaceRepository.delete(accountId, workspaceId) <= 0){
                 throw new BusinessException(StatusCode.ACCOUNTWORKSPACE_NOT_EXIST);

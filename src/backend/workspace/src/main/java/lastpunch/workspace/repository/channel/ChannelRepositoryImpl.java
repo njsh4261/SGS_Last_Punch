@@ -38,15 +38,15 @@ public class ChannelRepositoryImpl implements ChannelRepositoryCustom{
     public Page<Account.ExportDto> getMembers(Long id, Pageable pageable) {
         List<Account.ExportDto> results = jpaQueryFactory
                 .select(new QAccount_ExportDto(
-                        account.id, account.email, account.name,
-                        account.description, account.phone, account.country, account.language,
-                        account.settings, account.createdt, account.modifydt
+                    account.id, account.email, account.name, account.description,
+                    account.phone, account.country, account.imagenum,
+                    account.createdt, account.modifydt
                 ))
                 .from(account)
                 .join(account.channels, accountChannel)
                 .where(
-                        account.channels.contains(accountChannel),
-                        accountChannel.channel.id.eq(id)
+                    account.channels.contains(accountChannel),
+                    accountChannel.channel.id.eq(id)
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -58,8 +58,8 @@ public class ChannelRepositoryImpl implements ChannelRepositoryCustom{
                 .from(account)
                 .join(account.channels, accountChannel)
                 .where(
-                        account.channels.contains(accountChannel),
-                        accountChannel.channel.id.eq(id)
+                    account.channels.contains(accountChannel),
+                    accountChannel.channel.id.eq(id)
                 )
                 .fetch().size();
 
@@ -70,9 +70,9 @@ public class ChannelRepositoryImpl implements ChannelRepositoryCustom{
     public ExportDto getOwnerOfChannel(Long channelId){
         List<ExportDto> owner = jpaQueryFactory
             .select(new QAccount_ExportDto(
-                account.id, account.email, account.name,
-                account.description, account.phone, account.country, account.language,
-                account.settings, account.createdt, account.modifydt
+                account.id, account.email, account.name, account.description,
+                account.phone, account.country, account.imagenum,
+                account.createdt, account.modifydt
             ))
             .from(account)
             .join(accountChannel).on(account.id.eq(accountChannel.account.id))
@@ -91,12 +91,12 @@ public class ChannelRepositoryImpl implements ChannelRepositoryCustom{
     public Page<Channel.ExportSimpleDtoImpl> findByName(Long workspaceId, String name, Pageable pageable) {
         List<Channel.ExportSimpleDtoImpl> results = jpaQueryFactory
                 .select(new QChannel_ExportSimpleDtoImpl(
-                        channel.id, channel.name
+                    channel.id, channel.name
                 ))
                 .from(channel)
                 .where(
-                        channel.workspace.id.eq(workspaceId),
-                        channel.name.contains(name)
+                    channel.workspace.id.eq(workspaceId),
+                    channel.name.contains(name)
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -105,8 +105,8 @@ public class ChannelRepositoryImpl implements ChannelRepositoryCustom{
         long count = jpaQueryFactory.select(channel)
                 .from(channel)
                 .where(
-                        channel.workspace.id.eq(workspaceId),
-                        channel.name.contains(name)
+                    channel.workspace.id.eq(workspaceId),
+                    channel.name.contains(name)
                 )
                 .fetch().size();
 

@@ -51,10 +51,10 @@ public class Account{
     private String description;
     private String phone;
     private String country;
-    private String language;
+    private Integer status;
     
     @Column(columnDefinition = "tinyint")
-    private Integer settings;
+    private Integer imagenum;
     
     @CreatedDate
     @Column(updatable = false)
@@ -85,8 +85,7 @@ public class Account{
         private String description;
         private String phone;
         private String country;
-        private String language;
-        private Integer settings;
+        private Integer imageNum;
     
         @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
         private LocalDateTime createDt;
@@ -95,8 +94,8 @@ public class Account{
         private LocalDateTime modifyDt;
 
         @QueryProjection
-        public ExportDto(Long id, String email, String name, String description, String phone,
-                         String country, String language, Integer settings,
+        public ExportDto(Long id, String email, String name, String description,
+                         String phone, String country, Integer imageNum,
                          LocalDateTime createDt, LocalDateTime modifyDt){
             this.id = id;
             this.email = email;
@@ -104,8 +103,7 @@ public class Account{
             this.description = description;
             this.phone = phone;
             this.country = country;
-            this.language = language;
-            this.settings = settings;
+            this.imageNum = imageNum;
             this.createDt = createDt;
             this.modifyDt = modifyDt;
         }
@@ -119,8 +117,7 @@ public class Account{
             .description(description)
             .phone(phone)
             .country(country)
-            .language(language)
-            .settings(settings)
+            .imageNum(imagenum)
             .createDt(createdt)
             .modifyDt(modifydt)
             .build();

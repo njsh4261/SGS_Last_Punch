@@ -46,13 +46,16 @@ public class ChannelController{
     
     @PutMapping("/{id}")
     public ResponseEntity<Object> edit(
-            @PathVariable("id") Long id, @RequestBody Channel.EditDto editDto){
-        return Response.ok(channelService.edit(id, editDto));
+            @PathVariable("id") Long id,
+            @RequestBody Channel.EditDto editDto,
+            @RequestHeader Map<String, Object> header){
+        return Response.ok(channelService.edit(id, editDto, Parser.getHeaderId(header)));
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable("id") Long id){
-        return Response.ok(channelService.delete(id));
+    public ResponseEntity<Object> delete(
+            @PathVariable("id") Long id, @RequestHeader Map<String, Object> header){
+        return Response.ok(channelService.delete(id, Parser.getHeaderId(header)));
     }
 
     @PostMapping("/find")

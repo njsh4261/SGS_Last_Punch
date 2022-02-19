@@ -9,12 +9,16 @@ import UIKit
 import ProgressHUD
 import RxSwift
 import RxCocoa
+import Alamofire
 import SwiftKeychainWrapper
 
 class EditWorkspaceView: UIViewController {
     // MARK: - Properties
+    private let disposeBag = DisposeBag()
     private var worspaceInfo: WorkspaceListCellModel?
     private var selectImage: Int?
+    private var workspaceId: String
+    private var accessToken: String
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
@@ -27,6 +31,9 @@ class EditWorkspaceView: UIViewController {
     @IBOutlet private var fieldDescription: UITextField!
 
     override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
+        self.workspaceId = KeychainWrapper.standard[.workspaceId]!
+        self.accessToken = KeychainWrapper.standard[.accessToken]!
+
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -92,7 +99,9 @@ class EditWorkspaceView: UIViewController {
         }
         
         fieldName.text = worspaceInfo.name
-        fieldDescription.text = worspaceInfo.description ?? "설명이 없습니다"
+        if worspaceInfo.description == nil || worspaceInfo.description == "" {
+            fieldDescription.placeholder = "설명이 없습니다"
+        }
         tableView.reloadData()
     }
 
@@ -103,11 +112,37 @@ class EditWorkspaceView: UIViewController {
     @objc func actionSave() {
 
         let name = fieldName.text ?? ""
+        let description = fieldDescription.text ?? ""
+        let select = selectImage ?? 0
 
         if (name.isEmpty)           { ProgressHUD.showFailed("이름은 반드시 작성해야합니다");        return  }
 
-        ProgressHUD.showSucceed("변경되었습니다")
-        dismiss(animated: true)
+        // 네트워크 로직
+        let body = select == 0 ? ["name": name, "description": description] : ["name": name, "description": description, "imageNum": select]
+        editWorkspace(body: body)
+    }
+    
+    func editWorkspace(body: Parameters) {
+        DispatchQueue.main.async { [self] in // 메인스레드에서 동작
+            WorkspaceService.shared.editWorkspace(method: .put, accessToken: self.accessToken, workspaceId: self.workspaceId, body: body)
+                .subscribe { event in
+                    switch event {
+                    case .next(let result):
+                        switch result {
+                        case .success:
+                            ProgressHUD.showSucceed("변경되었습니다")
+                            self.actionDismiss()
+                        case .fail(let decodedData):
+                            ProgressHUD.showFailed(decodedData.err?.desc)
+                        default:
+                            ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                        }
+                    default:
+                        ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                    }
+                }.disposed(by: self.disposeBag)
+
+        }
     }
     
     @IBAction func actionPhoto(_ sender: Any) {

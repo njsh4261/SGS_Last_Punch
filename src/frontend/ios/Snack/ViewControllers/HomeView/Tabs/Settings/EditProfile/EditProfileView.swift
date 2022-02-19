@@ -13,12 +13,13 @@ import RxCocoa
 class EditProfileView: UIViewController {
     // MARK: - Properties
     private var userInfo: UserModel?
+    private var selectImage: Int?
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var viewHeader: UIView!
     @IBOutlet private var ivUser: UIImageView!
-    @IBOutlet private var labelInitials: UILabel!
+    @IBOutlet private var lblInitials: UILabel!
     @IBOutlet private var cellName: UITableViewCell!
     @IBOutlet private var cellDescription: UITableViewCell!
     @IBOutlet private var cellCountry: UITableViewCell!
@@ -67,7 +68,7 @@ class EditProfileView: UIViewController {
 
     // MARK: - Load User
     func loadUser() {
-        labelInitials.text = userInfo?.name.first?.description
+        lblInitials.text = userInfo?.name.first?.description
         fieldName.text = userInfo?.name
         fieldDescription.text = userInfo?.description
         lblCountry.text = userInfo?.country == "kor" ? "대한민국" : "해외"
@@ -93,17 +94,20 @@ class EditProfileView: UIViewController {
     }
     
     @IBAction func actionPhoto(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-        alert.addAction(UIAlertAction(title: "카메라", style: .default) { action in
-            ImagePicker.cameraPhoto(self, edit: true)
-        })
-        alert.addAction(UIAlertAction(title: "앨범", style: .default) { action in
-            ImagePicker.photoLibrary(self, edit: true)
-        })
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-
-        present(alert, animated: true)
+        let viewController = SelectImageView()
+        let navController = NavigationController(rootViewController: viewController)
+        navController.modalPresentationStyle = .fullScreen
+        
+        viewController.completionHandler = { index, image in
+            self.ivUser.image = image.square(to: 70)
+            self.ivUser.backgroundColor = UIColor(named: "snackButtonColor")
+            self.lblInitials.backgroundColor = .clear
+            self.lblInitials.text = nil
+            self.selectImage = index
+            
+            return (index, image)
+        }
+        self.show(navController, sender: nil)
     }
     
     // MARK: - Upload methods
@@ -122,7 +126,7 @@ class EditProfileView: UIViewController {
     
     func pictureUploaded(image: UIImage, data: Data) {
         ivUser.image = image.square(to: 70)
-        labelInitials.text = nil
+        lblInitials.text = nil
 
         ProgressHUD.dismiss()
     }

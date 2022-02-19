@@ -14,6 +14,7 @@ import SwiftKeychainWrapper
 class EditWorkspaceView: UIViewController {
     // MARK: - Properties
     private var worspaceInfo: WorkspaceListCellModel?
+    private var selectImage: Int?
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
@@ -45,7 +46,15 @@ class EditWorkspaceView: UIViewController {
         gestureRecognizer.cancelsTouchesInView = false
 
         tableView.tableHeaderView = viewHeader
+        
+        // 워크스페이 정보 Load
         loadWorkspace()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -61,7 +70,7 @@ class EditWorkspaceView: UIViewController {
 
     // MARK: - Load Workspace
     func loadWorkspace() {
-        if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
+        if let data = KeychainWrapper.standard.data(forKey: "workspaceInfo") {
             let worspaceInfo = try? PropertyListDecoder().decode(WorkspaceListCellModel.self, from: data)
             self.worspaceInfo = worspaceInfo!
         }
@@ -84,6 +93,7 @@ class EditWorkspaceView: UIViewController {
         
         fieldName.text = worspaceInfo.name
         fieldDescription.text = worspaceInfo.description ?? "설명이 없습니다"
+        tableView.reloadData()
     }
 
     @objc func actionDismiss() {
@@ -101,49 +111,21 @@ class EditWorkspaceView: UIViewController {
     }
     
     @IBAction func actionPhoto(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let viewController = SelectImageView()
+        let navController = NavigationController(rootViewController: viewController)
+        navController.modalPresentationStyle = .fullScreen
 
-        alert.addAction(UIAlertAction(title: "카메라", style: .default) { action in
-            ImagePicker.cameraPhoto(self, edit: true)
-        })
-        alert.addAction(UIAlertAction(title: "앨범", style: .default) { action in
-            ImagePicker.photoLibrary(self, edit: true)
-        })
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-
-        present(alert, animated: true)
-    }
-    
-    // MARK: - Upload methods
-    func uploadPicture(image: UIImage) {
-
-        ProgressHUD.show(nil, interaction: false)
-
-        let squared = image.square(to: 300)
-        if let data = squared.jpegData(compressionQuality: 0.6) {
-            if let _ = Cryptor.encrypt(data: data) {
-                self.pictureUploaded(image: squared, data: data)
-            }
+        viewController.completionHandler = { index, image in
+            self.ivWorkspace.image = image.square(to: 70)
+            self.ivWorkspace.backgroundColor = UIColor(named: "snackButtonColor")
+            self.lblInitials.backgroundColor = .clear
+            self.lblInitials.text = nil
+            self.selectImage = index
+            
+            return (index, image)
         }
-    }
-    
-    func pictureUploaded(image: UIImage, data: Data) {
-        ivWorkspace.image = image.square(to: 70)
-        lblInitials.text = nil
-
-        ProgressHUD.dismiss()
-    }
-}
-
-// MARK: - UIImage PickerController Delegate
-extension EditWorkspaceView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-
-        if let image = info[.editedImage] as? UIImage {
-            uploadPicture(image: image)
-        }
-        picker.dismiss(animated: true)
+        
+        self.show(navController, sender: nil)
     }
 }
 

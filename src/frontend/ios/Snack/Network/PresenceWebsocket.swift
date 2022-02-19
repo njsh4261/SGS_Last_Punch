@@ -119,7 +119,7 @@ extension PresenceWebsocket: StompClientLibDelegate {
         print("Presence Stomp socket is connected")
         
         selfSubscribe() // 본인 구독
-        getPresenceList() // 유저 정보가져오기
+//        getPresenceList() // 유저 정보가져오기
     }
     
     func stompClientDidDisconnect(client: StompClientLib!) {

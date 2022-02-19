@@ -83,7 +83,7 @@ class SettingsViewController: UITableViewController {
             self.lblInitials.text = nil
         } else {
             lblInitials.text = userInfo.name.first?.description
-            self.lblInitials.backgroundColor = UIColor(named: "snackButtonColor")
+            self.lblInitials.backgroundColor = .lightGray
             self.ivUser.backgroundColor = .clear
             self.ivUser.image = nil
         }

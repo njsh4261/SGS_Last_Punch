@@ -84,11 +84,9 @@ class EditProfileView: UIViewController {
 
         let name = fieldName.text ?? ""
         let country = lblCountry.text ?? ""
-        let phone = fieldPhone.text ?? ""
 
         if (name.isEmpty)           { ProgressHUD.showFailed("이름은 반드시 작성해야합니다");        return  }
         if (country.isEmpty)        { ProgressHUD.showFailed("국적은 반드시 작성해야합니다");        return  }
-        if (phone.isEmpty)          { ProgressHUD.showFailed("전화번호는 반드시 작성해야합니다");     return   }
 
         ProgressHUD.showSucceed("변경되었습니다")
         dismiss(animated: true)

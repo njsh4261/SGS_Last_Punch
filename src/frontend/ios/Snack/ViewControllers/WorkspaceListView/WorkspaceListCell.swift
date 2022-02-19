@@ -43,6 +43,7 @@ class WorkspaceListCell: UITableViewCell {
         
         ivThumbnail = ivThumbnail.then {
             $0.contentMode = .scaleAspectFit
+            $0.backgroundColor = .white
             $0.layer.borderWidth = 1.0
             $0.layer.borderColor = UIColor.label.cgColor
             $0.layer.cornerRadius = 4

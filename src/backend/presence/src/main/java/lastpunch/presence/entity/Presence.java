@@ -20,6 +20,7 @@ public class Presence{
     private List<String> sessions;
 
     @Getter
+    @Setter
     @Builder
     public static class UpdateDto{
         private String workspaceId;

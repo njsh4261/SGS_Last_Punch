@@ -1,7 +1,9 @@
 package lastpunch.presence.service;
 
 import lastpunch.presence.common.PresenceConstant;
+import lastpunch.presence.common.UserStatus;
 import lastpunch.presence.entity.Presence;
+import lastpunch.presence.entity.Presence.UpdateDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class RabbitMQService{
     public void updateUserStatus(Presence.UpdateDto updateDto, String sessionId){
         // 메시지를 MongoDB에 저장 및 subscriber에게 메시지 전달
         mongoService.saveOrUpdate(updateDto, sessionId);
+        if(UserStatus.toEnum(updateDto.getUserStatus()) == UserStatus.CONNECT){
+            updateDto.setUserStatus(UserStatus.ONLINE.toString());
+        }
         sendMessage(updateDto);
     }
 

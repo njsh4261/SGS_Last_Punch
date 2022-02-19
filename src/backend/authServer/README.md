@@ -69,6 +69,10 @@ case 3. Access Token, Refresh Token 둘 다 유효하지 않음
 
 <br></br>
 
+## 인증 서버 개선
+1) Spring Security의 기능은 BCryptPasswordEncoder만 사용하도록 리팩토링
+2) BCryptPasswordEncoder의 해시 strength 4로 조정 
+
 ## gateway 추가 설명
 - 라우팅은 GatewayApplication.java 파일에 작성 (Spring Cloud Eureka를 사용해 각 서버들의 주소를 받아 라우팅)
 - `/filter`: 라우팅 하기 전 AccessTokenFilter를 거쳐 access token이 유효한 경우에만 요청한 주소로 라우팅

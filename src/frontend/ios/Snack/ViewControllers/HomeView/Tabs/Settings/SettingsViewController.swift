@@ -201,6 +201,8 @@ class SettingsViewController: UITableViewController {
                         switch result {
                         case .success:
                             _ = LogOutViewModel(viewContoller: pvc)
+                        case .fail(let decodedData):
+                            ProgressHUD.showFailed(decodedData.err?.desc)
                         default:
                             ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
                         }
@@ -208,7 +210,6 @@ class SettingsViewController: UITableViewController {
                         ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
                     }
                 }.disposed(by: self.disposeBag)
-
         }
     }
     

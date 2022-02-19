@@ -31,7 +31,6 @@
                             <constraint firstAttribute="width" constant="25" id="ueE-fD-ir1"/>
                         </constraints>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                        <state key="normal" title="Button"/>
                     </button>
                 </subviews>
                 <constraints>

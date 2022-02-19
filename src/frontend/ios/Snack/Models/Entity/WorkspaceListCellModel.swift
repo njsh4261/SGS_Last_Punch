@@ -75,29 +75,15 @@ struct WorkspaceListCellModel: Codable {
 
 struct WorkspaceChannelCellModel: Codable {
     let id: Int
-//    let workspace: WorkspaceListCellModel?
     var name: String
-//    let topic: String?
-//    let description: String?
-//    let settings: Int?
-//    let createDt: String?
-//    let modifyDt: String?
 }
 
 struct WorkspaceMemberCellModel: Codable {
     let id: Int
-//    let email: String
+    let email: String
     var name: String
-//    let description: String?
-//    let phone: String?
-//    let country: String
-//    let language: String
-//    let settings: Int
-//    let status: Int?
-//    let createDt: String
-//    let modifyDt: String
+    let imageNum: Int?
     let lastMessage: LastMessage
-    
 }
 
 struct LastMessage: Codable {

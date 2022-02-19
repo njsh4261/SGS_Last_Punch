@@ -2,9 +2,8 @@ export interface IWorkspace {
   id: number; // todo: 바뀔수 있음
   name: string;
   description: string | null;
-  setting: number;
   createDt: string;
-  topic: string | null;
+  imageNum: number | null;
   owner: {
     id: number;
     name: string;

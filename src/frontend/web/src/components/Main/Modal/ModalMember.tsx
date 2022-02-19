@@ -13,6 +13,7 @@ import { UserStatus } from '../../../../types/presence';
 import { RootState } from '../../../modules';
 import StatusCircle from '../../Common/StatusCircle';
 import { UserState } from '../../../modules/user';
+import { ProfileImage } from '../../Common/ProfileImage';
 
 const Container = styled.article`
   border-radius: 6px;
@@ -99,6 +100,7 @@ interface Member {
   name: string;
   email: string;
   status: UserStatus;
+  imageNum: number | null;
 }
 
 export default function ModalMember({ type, params }: Props) {
@@ -194,7 +196,7 @@ export default function ModalMember({ type, params }: Props) {
             {searchValue === ''
               ? memberList.sort(sortHandler).map((member) => (
                   <Layer key={`member-${member.id}`}>
-                    <ImageIcon src={addPersonImage}></ImageIcon>
+                    <ProfileImage imageNum={member.imageNum}></ProfileImage>
                     <StatusCircleContainer>
                       <StatusCircle status={member.status}></StatusCircle>
                     </StatusCircleContainer>
@@ -204,7 +206,7 @@ export default function ModalMember({ type, params }: Props) {
                 ))
               : searchList.sort(sortHandler).map((member) => (
                   <Layer key={`member-${member.id}`}>
-                    <ImageIcon src={addPersonImage}></ImageIcon>
+                    <ProfileImage imageNum={member.imageNum}></ProfileImage>
                     <StatusCircleContainer>
                       <StatusCircle status={member.status}></StatusCircle>
                     </StatusCircleContainer>

@@ -7,6 +7,7 @@ export interface IChannel {
   status: number;
   settings: number;
   description: string;
+  imageNum: number | null;
   createDt: string;
   owner: {
     id: number;

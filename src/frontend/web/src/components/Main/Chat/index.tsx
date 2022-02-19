@@ -8,7 +8,6 @@ import Header from './Header';
 import Loading from '../../Common/Loading';
 import chatScrollHook from '../../../hook/chat/chatScroll';
 import { ChatMessage } from '../../../../types/chat.type';
-import cookieImage from '../../../icon/cookie-2.png';
 import './index.scss';
 import presenceHook from '../../../hook/presence';
 
@@ -19,18 +18,23 @@ const Container = styled.main`
   height: 100%;
 `;
 
-const ProfileImg = styled.div<{ url: any; noHeader: boolean }>`
+const ProfileImg = styled.div<{
+  noHeader: boolean;
+  imageNum: number | null;
+}>`
   width: 34px;
   margin-right: 8px;
   font-size: 12px;
   color: white;
   cursor: pointer;
-  ${({ noHeader, url }) =>
+  ${({ noHeader, imageNum }) =>
     !noHeader &&
     css`
       height: 34px;
       border-radius: 4px;
-      background-image: url(${url});
+      background-image: url(${require(`../../../images/${
+        imageNum || 12
+      }.png`)});
       background-size: contain;
     `}
 `;
@@ -143,8 +147,15 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
   const sendMessage = presenceHook({ wsId: params.wsId! });
 
   const userDictionary = useMemo(() => {
-    const obj: { [index: string]: string } = {};
-    memberList.map((member) => (obj[member.id] = member.name));
+    const obj: { [index: string]: { name: string; imageNum: number | null } } =
+      {};
+    memberList.map(
+      (member) =>
+        (obj[member.id] = {
+          name: member.name,
+          imageNum: member.imageNum,
+        }),
+    );
     return obj;
   }, [memberList]);
 
@@ -185,7 +196,10 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
                   data-date={msg.createDt}
                 >
                   {!isMe(msg) && (
-                    <ProfileImg url={cookieImage} noHeader={noHeader}>
+                    <ProfileImg
+                      imageNum={userDictionary[msg.authorId].imageNum}
+                      noHeader={noHeader}
+                    >
                       {noHeader && msg.createDt.split(' ')[1].slice(0, 5)}
                     </ProfileImg>
                   )}
@@ -194,8 +208,8 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
                       <MessageHeader me={isMe(msg)}>
                         <MessageWriter>
                           {isMe(msg)
-                            ? `나 (${userDictionary[msg.authorId]})`
-                            : userDictionary[msg.authorId] || '알 수 없음'}
+                            ? `나 (${userDictionary[msg.authorId].name})`
+                            : userDictionary[msg.authorId].name || '알 수 없음'}
                         </MessageWriter>
                         <MessageCreated>
                           {msg.createDt.split(' ')[1].slice(0, 5)}
@@ -214,7 +228,7 @@ const Chat = ({ sideToggle, sideToggleHandler }: Props) => {
               <TypingContainer>
                 {Array.from(typingList).map((authorId, index) => (
                   <span key={'typing' + authorId}>
-                    {userDictionary[authorId]}
+                    {userDictionary[authorId].name}
                     {index < typingList.size - 1 ? ', ' : ' '}
                   </span>
                 ))}

@@ -13,8 +13,8 @@ export default function getSelfInfoHook() {
     const response = await getSelfInfoAPI();
     if (response) {
       if (response.account) {
-        const { id, name } = response.account;
-        dispatch(setUser({ id, name }));
+        const { id, name, imageNum } = response.account;
+        dispatch(setUser({ id, name, imageNum }));
       } else {
         console.error('fail get self');
       }

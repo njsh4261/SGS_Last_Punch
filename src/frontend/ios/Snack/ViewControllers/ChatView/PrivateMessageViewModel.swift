@@ -22,6 +22,7 @@ class PrivateMessageViewModel: ViewModelProtocol {
         let sokectMessage = PublishRelay<MessageModel>()
         let sokectTyping = PublishRelay<TypingModel>()
         let sokectEndTyping = PublishRelay<TypingModel>()
+        let sokectPresence = PublishRelay<PresenceModel>()
         let resentMessages = PublishRelay<[MessageModel]>()
         let errorMessage = PublishRelay<String>()
     }
@@ -66,6 +67,11 @@ class PrivateMessageViewModel: ViewModelProtocol {
             .bind(to: output.sokectTyping, output.sokectEndTyping)
             .disposed(by: disposeBag)
         
+        // presence
+        PresenceWebsocket.shared.presence
+            .bind(to: output.sokectPresence)
+            .disposed(by: disposeBag)
+        
         // recent messages
         getRecent(method: .post, accessToken: accessToken, channelId: channelId!)
     }
@@ -97,6 +103,8 @@ class PrivateMessageViewModel: ViewModelProtocol {
                 user: User(
                     senderId: $0.authorId,
                     displayName: nameDict[$0.authorId]!,
+                    email: "",
+                    imageNum: 0,
                     authorId: $0.authorId,
                     content: $0.content
                 ),

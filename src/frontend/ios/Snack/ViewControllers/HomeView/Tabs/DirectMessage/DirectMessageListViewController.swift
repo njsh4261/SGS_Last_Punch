@@ -150,6 +150,8 @@ class DirectMessageListViewController: UIViewController {
         return User(
             senderId: userInfo.id.description,
             displayName: userInfo.name,
+            email: userInfo.email,
+            imageNum: userInfo.imageNum,
             authorId: userInfo.id.description,
             content: userInfo.email
         )

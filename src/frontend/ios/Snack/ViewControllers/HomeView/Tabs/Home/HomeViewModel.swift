@@ -134,7 +134,7 @@ class HomeViewModel: ViewModelProtocol {
     
     func getMembers(_ members: [WorkspaceMemberCellModel]) -> [Member] {
         return members.map {
-            Member(id: "\($0.id)", name: "\($0.name)", thumbnail: "")
+            Member(id: "\($0.id)", name: "\($0.name)", email: $0.email, imageNum: $0.imageNum)
         }
     }
     
@@ -143,6 +143,8 @@ class HomeViewModel: ViewModelProtocol {
             User(
                 senderId: $0.id.description,
                 displayName: $0.name,
+                email: "",
+                imageNum: 0,
                 authorId: $0.id.description,
                 content: $0.lastMessage.content ?? ""
             )

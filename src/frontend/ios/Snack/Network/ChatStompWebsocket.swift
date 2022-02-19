@@ -8,6 +8,7 @@
 import StompClientLib
 import SwiftKeychainWrapper
 import RxSwift
+import MessageKit
 
 class ChatStompWebsocket {
     // MARK: - Private properties
@@ -15,6 +16,7 @@ class ChatStompWebsocket {
     private let url = URL(string: "ws://\(APIConstants().chatWebsoket)/websocket")!
     private var socketClient = StompClientLib()
     private var nameDict = [String:String]()
+    private var imageDict = [String:Int]()
     private var accessToken: String
     private var chatIdList = [String]()
     
@@ -53,6 +55,7 @@ class ChatStompWebsocket {
         
         for member in members {
             nameDict["\(member.id.description)"] = member.name
+            imageDict["\(member.id.description)"] = member.imageNum ?? 0
             let chatId = userId < member.id.description ? "\(workspaceId)-\(userId)-\(member.id.description)" : "\(workspaceId)-\(member.id.description)-\(userId)"
             if chatIdList.contains(chatId) { continue }
             socketClient.subscribe(destination: "/topic/channel." + chatId)
@@ -77,6 +80,11 @@ class ChatStompWebsocket {
         socketClient.sendJSONForDict(
             dict: payloadObject as AnyObject,
             toDestination: "/app/chat")
+    }
+    
+    func getAvatarFor(sender: SenderType) -> Avatar {
+        let index = imageDict[sender.senderId]
+        return Avatar(image: UIImage(named: "\(index ?? 11)"), initials: sender.displayName.first!.description)
     }
     
     // Unsubscribe
@@ -105,6 +113,8 @@ extension ChatStompWebsocket: StompClientLibDelegate {
                 user: User(
                     senderId: messagePlayload.authorId,
                     displayName: nameDict[messagePlayload.authorId]!,
+                    email: "",
+                    imageNum: imageDict[messagePlayload.authorId]!,
                     authorId: messagePlayload.authorId,
                     content: messagePlayload.content!
                 ),

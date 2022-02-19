@@ -79,12 +79,12 @@ class SettingsViewController: UITableViewController {
         
         if userInfo.imageNum != nil {
             self.ivUser.image = UIImage(named: "\(userInfo.imageNum!)")?.square(to: 70)
-            self.ivUser.backgroundColor = UIColor(named: "snackButtonColor")
+            self.ivUser.backgroundColor = .white
             self.lblInitials.backgroundColor = .clear
             self.lblInitials.text = nil
         } else {
-            lblInitials.text = userInfo.name.first?.description
-            self.lblInitials.backgroundColor = .lightGray
+            self.lblInitials.text = userInfo.name.first?.description
+            self.lblInitials.backgroundColor = UIColor(named: "snackButtonColor")
             self.ivUser.backgroundColor = .clear
             self.ivUser.image = nil
         }
@@ -201,6 +201,8 @@ class SettingsViewController: UITableViewController {
                         switch result {
                         case .success:
                             _ = LogOutViewModel(viewContoller: pvc)
+                        case .fail(let decodedData):
+                            ProgressHUD.showFailed(decodedData.err?.desc)
                         default:
                             ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
                         }
@@ -208,7 +210,6 @@ class SettingsViewController: UITableViewController {
                         ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
                     }
                 }.disposed(by: self.disposeBag)
-
         }
     }
     

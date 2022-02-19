@@ -21,6 +21,7 @@ class MemberListCell: UITableViewCell {
 
     // MARK: - UI
     private var ivThumbnail = UIImageView()
+    private var lblInitials = UILabel()
     private var lblName = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -42,17 +43,38 @@ class MemberListCell: UITableViewCell {
     
     func setMember(_ member: Member, _ index: Int) {
         chatId = member.id > userId ? "\(member.id)-\(userId)" : "\(userId)-\(member.id)"
-        ivThumbnail.image = index%2 == 0 ? UIImage(named: "10")?.square(to: 70) : UIImage(named: "13")?.square(to: 70)
+
+        if member.imageNum != nil {
+            ivThumbnail.image = UIImage(named: "\(member.imageNum!)")?.square(to: 70)
+            ivThumbnail.backgroundColor = .white
+            lblInitials.text = nil
+            lblInitials.backgroundColor = .clear
+        } else {
+            lblInitials.text = member.name.first?.description
+            ivThumbnail.backgroundColor = UIColor(named: "snackButtonColor")
+            ivThumbnail.image = nil
+            ivThumbnail.backgroundColor = .clear
+        }
+
         lblName.text = member.id == userId ? "\(member.name) (나)" : "\(member.name)"
     }
 
     private func attribute() {
         backgroundColor = UIColor(named: "snackButtonColor")
+        
         ivThumbnail = ivThumbnail.then {
             $0.contentMode = .scaleAspectFit
             $0.layer.borderWidth = 1.0
             $0.layer.borderColor = UIColor.label.cgColor
             $0.layer.cornerRadius = 4
+        }
+        
+        lblInitials = lblInitials.then {
+            $0.font = UIFont(name: "NotoSansKR-Regular", size: 16)
+            $0.textColor = .label
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = UIColor.label.cgColor
+            $0.textAlignment = .center
         }
         
         lblName = lblName.then {
@@ -61,14 +83,16 @@ class MemberListCell: UITableViewCell {
     }
     
     private func layout() {
-        [ivThumbnail, lblName].forEach {
+        [ivThumbnail, lblInitials, lblName].forEach {
             contentView.addSubview($0)
         }
-        
-        ivThumbnail.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().inset(10)
-            $0.width.height.equalTo(25)
+
+        [ivThumbnail, lblInitials].forEach {
+            $0.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.left.equalToSuperview().inset(10)
+                $0.width.height.equalTo(25)
+            }
         }
 
         lblName.snp.makeConstraints {

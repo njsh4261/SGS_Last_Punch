@@ -52,8 +52,7 @@ struct UserModel2: Codable {
     let description: String?
     let phone: String?
     let country: String
-    let language: String
-    let settings: Int
+    let imageNum: Int?
     let createDt: String
     let modifyDt: String
 }

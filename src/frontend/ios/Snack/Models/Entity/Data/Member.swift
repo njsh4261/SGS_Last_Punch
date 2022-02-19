@@ -11,5 +11,6 @@ import UIKit
 struct Member: ModelType {
     let id: String
     let name: String
-    let thumbnail: String?
+    let email: String?
+    let imageNum: Int?
 }

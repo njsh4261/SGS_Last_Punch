@@ -22,6 +22,7 @@ class GroupMessageViewModel: ViewModelProtocol {
         let sokectMessage = PublishRelay<MessageModel>()
         let sokectTyping = PublishRelay<TypingModel>()
         let sokectEndTyping = PublishRelay<TypingModel>()
+        let sokectPresence = PublishRelay<PresenceModel>()
         let resentMessages = PublishRelay<[MessageModel]>()
         let setData = PublishRelay<(ChannelData, [UserModel])>()
         let errorMessage = PublishRelay<String>()
@@ -60,6 +61,11 @@ class GroupMessageViewModel: ViewModelProtocol {
             .filter {$0.channelId == self.channel.id.description}
             .bind(to: output.sokectTyping, output.sokectEndTyping)
             .disposed(by: disposeBag)
+        
+        // presence
+        PresenceWebsocket.shared.presence
+            .bind(to: output.sokectPresence)
+            .disposed(by: disposeBag)
     }
     
     func viewWillAppear() {
@@ -77,7 +83,7 @@ class GroupMessageViewModel: ViewModelProtocol {
             for member in members {
                 nameDict[member.id.description] = member.name
             }
-            
+                        
             // recent messages
             getRecent(method: .post, accessToken: accessToken, channelId: channel.id.description)
         }
@@ -151,6 +157,8 @@ class GroupMessageViewModel: ViewModelProtocol {
                 user: User(
                     senderId: $0.authorId,
                     displayName: nameDict[$0.authorId]!,
+                    email: "",
+                    imageNum: 0,
                     authorId: $0.authorId,
                     content: $0.content
                 ),

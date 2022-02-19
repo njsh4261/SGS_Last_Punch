@@ -30,6 +30,7 @@ class PrivateMessageViewController: MessagesViewController {
     private var btnViewTitle = UIButton()
     private var btnAttach = InputBarButtonItem()
     private var refreshControl = UIRefreshControl()
+    private var avatarList = [(String, AvatarView)]()
 
     init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, senderInfo: User, recipientInfo: User, channelId: String, viewModel: PrivateMessageViewModel) {
         self.viewModel = viewModel
@@ -85,6 +86,10 @@ class PrivateMessageViewController: MessagesViewController {
             .bind(onNext: setEndTyping)
             .disposed(by: disposeBag)
         
+        viewModel.output.sokectPresence
+            .bind(onNext: setPresence)
+            .disposed(by: disposeBag)
+        
         // 최근 메시지 - 30개
         viewModel.output.resentMessages
             .bind(onNext: resentMessage)
@@ -102,7 +107,7 @@ class PrivateMessageViewController: MessagesViewController {
     
     @objc private func goToProfile() {
         let userModel = UserModel(
-            id: Int(recipientInfo.senderId)!, email: "lastPunch@gmail.com", name: recipientInfo.displayName, description: "안녕하세요", phone: "010-1234-1234", country: "kor", status: "rull", imageNum: 11, createDt: "2022.02.24", modifyDt: "2022.02.24"
+            id: Int(recipientInfo.senderId)!, email: recipientInfo.email!, name: recipientInfo.displayName, description: "안녕하세요", phone: "010-1234-1234", country: "kor", status: "rull", imageNum: recipientInfo.imageNum, createDt: "2022.02.24", modifyDt: "2022.02.24"
         )
         let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: senderInfo, recipientInfo: userModel, isChat: false)
         viewController.hidesBottomBarWhenPushed = true
@@ -122,6 +127,31 @@ class PrivateMessageViewController: MessagesViewController {
         if text.count == 0 { return }
         ChatStompWebsocket.shared.sendTyping(authorId: senderInfo.senderId, channelId: channelId)
     }
+    
+    private func setPresence(_ presence: PresenceModel) {
+        for avatar in avatarList {
+            if avatar.0 == presence.userId {
+                avatar.1.layer.borderColor = getColorByPresence(presence.userStatus).cgColor
+            }
+        }
+    }
+    
+    // 프리젠스 상태에 따른 색상
+    func getColorByPresence(_ userStatus: String) -> UIColor {
+        switch userStatus {
+        case "ONLINE":
+            return .green
+        case "ABSENT":
+            return .orange
+        case "BUSY":
+            return .red
+        case "OFFLINE":
+            return .gray
+        default:
+            return .black
+        }
+    }
+    
     
     // 최근 메시지 Load
     private func resentMessage(_ messages: [MessageModel]) {
@@ -223,11 +253,13 @@ class PrivateMessageViewController: MessagesViewController {
     // 입력 중
     private func setTyping(_ typing: TypingModel) {
         updateTitleView(title: "# \(recipientInfo.displayName)", subtitle: "입력중...")
+        navigationItem.titleView?.addSubview(btnViewTitle)
     }
     
     // 입력 끝
     private func setEndTyping(_ typing: TypingModel) {
         updateTitleView(title: "# \(recipientInfo.displayName)", subtitle: "상세 보기")
+        navigationItem.titleView?.addSubview(btnViewTitle)
     }
     
     // send 버튼이 눌려지면 메시지를 collectionView의 cell에 표출
@@ -432,9 +464,12 @@ extension PrivateMessageViewController: MessagesDisplayDelegate {
     
     // 상대방 썸네일 붙어 있는 이미지 제거
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        let avatar = ChatStompWebsocket.shared.getAvatarFor(sender: message.sender)
+        avatarView.set(avatar: avatar)
         avatarView.isHidden = isNextMessageSameSender(at: indexPath)
         avatarView.layer.borderWidth = 2
-        avatarView.layer.borderColor = UIColor(named: "snackColor")!.cgColor
+        avatarView.layer.borderColor = PresenceWebsocket.shared.presenceDict[message.sender.senderId]?.cgColor
+        avatarList.append((message.sender.senderId, avatarView))
     }
 }
 

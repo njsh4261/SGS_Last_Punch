@@ -3,7 +3,6 @@ package lastpunch.workspace.common.type;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import lastpunch.workspace.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

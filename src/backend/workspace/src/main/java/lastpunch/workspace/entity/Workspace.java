@@ -95,7 +95,7 @@ public class Workspace{
             if(imageNum != null){
                 workspace.setImagenum(imageNum);
             }
-            if(name != null || description != null || imageNum != null){
+            if((name != null) || (description != null) || (imageNum != null)){
                 workspace.setModifydt(LocalDateTime.now());
             }
             return workspace;

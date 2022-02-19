@@ -10,7 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +42,16 @@ public class AccountController{
             accountService.getByEmail(
                 accountFindDto.getEmail(), pageable, Parser.getHeaderId(header)
             )
+        );
+    }
+    
+    @PutMapping
+    public ResponseEntity<Object> edit(
+            @RequestBody Account.EditDto editDto,
+            @PathVariable("id") Long id,
+            @RequestHeader Map<String, Object> header){
+        return Response.ok(
+            accountService.edit(editDto, id, Parser.getHeaderId(header))
         );
     }
 }

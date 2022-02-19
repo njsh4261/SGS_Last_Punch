@@ -1,9 +1,12 @@
 package lastpunch.workspace.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import java.util.Objects;
 import lastpunch.workspace.common.StatusCode;
 import lastpunch.workspace.common.exception.BusinessException;
+import lastpunch.workspace.entity.Account;
 import lastpunch.workspace.repository.account.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -34,5 +37,15 @@ public class AccountService{
         return Map.of(
             "accounts", accountRepository.findByEmail(email, pageable, id)
         );
+    }
+    
+    
+    public Map<String, Object> edit(Account.EditDto editDto, Long targetId, Long requesterId){
+        // 본인 외에는 개인정보를 수정할 수 없음
+        if(!Objects.equals(targetId, requesterId)){
+            throw new BusinessException(StatusCode.PERMISSION_DENIED);
+        }
+        accountRepository.save(editDto.toEntity(commonService.getAccount(targetId)));
+        return new HashMap<>(); // 비어 있는 map: FE에 일관적인 포맷의 response 전달
     }
 }

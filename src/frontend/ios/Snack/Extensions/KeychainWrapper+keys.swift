@@ -13,4 +13,5 @@ extension KeychainWrapper.Key {
     static let refreshToken: KeychainWrapper.Key = "refreshToken"
     static let email: KeychainWrapper.Key = "email"
     static let workspaceId: KeychainWrapper.Key = "workspaceId"
+    static let status: KeychainWrapper.Key = "status"
 }

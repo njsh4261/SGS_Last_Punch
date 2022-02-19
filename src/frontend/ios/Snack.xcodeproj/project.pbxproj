@@ -132,6 +132,7 @@
 		8CCFFACC27C0C462005D4D13 /* PresenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFACB27C0C462005D4D13 /* PresenceModel.swift */; };
 		8CCFFAD127C0CC30005D4D13 /* StatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD027C0CC30005D4D13 /* StatusCell.swift */; };
 		8CCFFAD327C0CC66005D4D13 /* StatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD227C0CC66005D4D13 /* StatusCell.xib */; };
+		8CCFFAD527C0D622005D4D13 /* PresenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD427C0D622005D4D13 /* PresenceService.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -268,6 +269,7 @@
 		8CCFFACB27C0C462005D4D13 /* PresenceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceModel.swift; sourceTree = "<group>"; };
 		8CCFFAD027C0CC30005D4D13 /* StatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCell.swift; sourceTree = "<group>"; };
 		8CCFFAD227C0CC66005D4D13 /* StatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusCell.xib; sourceTree = "<group>"; };
+		8CCFFAD427C0D622005D4D13 /* PresenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceService.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -377,6 +379,7 @@
 				8CCFFA6D27B964B2005D4D13 /* ChannelService.swift */,
 				8CC9E8C927B10C9D008BE1EA /* NoteService.swift */,
 				8CCFFAB127BD12DB005D4D13 /* ChatService.swift */,
+				8CCFFAD427C0D622005D4D13 /* PresenceService.swift */,
 				8CC9E90F27B3FDB5008BE1EA /* StompWebsocket.swift */,
 				8CCFFAC927C023AA005D4D13 /* PresenceWebsocket.swift */,
 				8C68AB1427969D1200C1711E /* NetworkResult.swift */,
@@ -1031,6 +1034,7 @@
 				8CBD45ED27A8746E0056A557 /* KeepMediaView.swift in Sources */,
 				8CCFFA7027B965A8005D4D13 /* ChannelModel.swift in Sources */,
 				8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */,
+				8CCFFAD527C0D622005D4D13 /* PresenceService.swift in Sources */,
 				8CC1E79E27ACADA800BFE4D1 /* NewWorkspaceViewModel.swift in Sources */,
 				8CCFFAB427BD180C005D4D13 /* ChatModel.swift in Sources */,
 				8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */,

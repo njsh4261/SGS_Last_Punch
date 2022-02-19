@@ -12,6 +12,7 @@ import RxSwift
 class PresenceWebsocket {
     // MARK: - Private properties
     static let shared = PresenceWebsocket()
+    private let disposeBag = DisposeBag()
     private let url = URL(string: "ws://\(APIConstants().presenceWebsoket)/websocket")!
     private var socketClient = StompClientLib()
     private var accessToken: String
@@ -20,6 +21,7 @@ class PresenceWebsocket {
     // MARK: - Public properties
     var userId: String = "-1" // 본인
     var present = PublishSubject<PresenceModel>()
+    var presenceList: [PresenceModel]?
 
     init() {
         self.userId = KeychainWrapper.standard[.id]!
@@ -60,6 +62,34 @@ class PresenceWebsocket {
     func disconnect() {
         socketClient.disconnect()
     }
+    
+    // Presence 목록
+    func getPresenceList() {
+        DispatchQueue.main.async { [self] in // 메인스레드에서 동작
+            PresenceService.shared.getPresenceList(method: .get, accessToken: accessToken, workspaceId: workspaceId)
+                .observe(on: MainScheduler.instance)
+                .subscribe{ event in
+                    switch event {
+                    case .next(let result):
+                        switch result {
+                        case .success(let descodeData):
+                            self.presenceList = descodeData.data
+                            
+                            // 본인 Status 저장
+                            for presence in presenceList! {
+                                if presence.userId == self.userId {
+                                    KeychainWrapper.standard[.status] = presence.userStatus
+                                }
+                            }
+                        default:
+                            break
+                        }
+                    default:
+                        break
+                    }
+                }.disposed(by: self.disposeBag)
+        }
+    }
 }
 
 //MARK: - StompClientLib Delegate
@@ -76,6 +106,8 @@ extension PresenceWebsocket: StompClientLibDelegate {
         guard let messagePlayload = try? decoder.decode(PresenceModel.self, from: json) else { return }
         
         self.present.onNext(messagePlayload)
+        
+        getPresenceList()
     }
     
     func stompClientDidxDisconnect(client: StompClientLib!) {

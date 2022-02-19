@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct PresenceResponseModel: Codable {
+    let data: [PresenceModel]?
+    let code: String
+    let err: Err?
+}
+
 struct PresenceModel: Codable {
     var workspaceId: String
     var userId: String

@@ -5,20 +5,13 @@ import styled from 'styled-components';
 
 import logout from '../../../util/logout';
 import { Container, Layer } from '../../Common/DropdownComponent';
-import cookieImage from '../../../icon/cookie-2.png';
 import StatusCircle from '../../Common/StatusCircle';
 import { openModal } from '../../../modules/modal';
 import { RootState } from '../../../modules';
+import { ProfileImage } from '../../Common/ProfileImage';
 
 const Profile = styled.div`
   display: flex;
-`;
-
-const ProfileImg = styled.img`
-  border-radius: 4px;
-  width: 36px;
-  height: 36px;
-  margin-right: 12px;
 `;
 
 const ProfileNameAndStatus = styled.div`
@@ -54,7 +47,7 @@ export default function Dropdown({ id }: { id: string }) {
     <Container id={id}>
       <Layer onClick={() => dispatch(openModal('profile'))}>
         <Profile>
-          <ProfileImg src={cookieImage}></ProfileImg>
+          <ProfileImage imageNum={user.imageNum || null}></ProfileImage>
           <ProfileNameAndStatus>
             <ProfileName>{user.name}</ProfileName>
             <ProfileStatus>

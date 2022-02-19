@@ -4,16 +4,18 @@ import { UserStatus } from '../../types/presence';
 export type UserState = {
   id: number;
   name: string;
+  imageNum: number | null;
   lastMessage?: any;
   alarm?: boolean;
   status?: UserStatus;
 };
 
-export const setUser = ({ id, name, status }: UserState) => ({
+export const setUser = ({ id, name, status, imageNum }: UserState) => ({
   type: SET_USER,
   id,
   name,
   status,
+  imageNum,
 });
 
 type UserAction = ReturnType<typeof setUser>;
@@ -21,10 +23,11 @@ type UserAction = ReturnType<typeof setUser>;
 const initialUser = {
   id: 0,
   name: '',
+  imageNum: null,
 };
 
 export default function user(
-  state = initialUser,
+  state: UserState = initialUser,
   action: UserAction,
 ): UserState {
   switch (action.type) {
@@ -33,6 +36,7 @@ export default function user(
         id: action.id,
         name: action.name,
         status: action.status,
+        imageNum: action.imageNum,
       };
     default:
       return state;

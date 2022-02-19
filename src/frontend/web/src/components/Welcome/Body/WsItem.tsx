@@ -32,7 +32,7 @@ const WorkSpaceImage = styled.div<{ imageNum: number | null }>`
   width: 75px;
   height: 75px;
   background-image: ${({ imageNum }) =>
-    imageNum && `url(${require(`../../../images/${imageNum}.png`)})`};
+    `url(${require(`../../../images/${imageNum || 12}.png`)})`};
   background-size: contain;
   margin-right: 16px;
   border-radius: 4px;

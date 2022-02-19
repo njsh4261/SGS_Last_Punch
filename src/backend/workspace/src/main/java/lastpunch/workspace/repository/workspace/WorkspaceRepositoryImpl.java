@@ -60,7 +60,9 @@ public class WorkspaceRepositoryImpl implements WorkspaceRepositoryCustom{
     @Override
     public List<Account.ExportSimpleDto> getAllMembers(Long id) {
         return jpaQueryFactory.select(
-                    new QAccount_ExportSimpleDto(account.id, account.name, account.email)
+                    new QAccount_ExportSimpleDto(
+                        account.id, account.name, account.email, account.imagenum
+                    )
                 )
                 .from(account)
                 .join(account.workspaces, accountWorkspace)

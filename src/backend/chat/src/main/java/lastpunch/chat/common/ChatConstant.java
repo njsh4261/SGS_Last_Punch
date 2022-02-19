@@ -10,4 +10,6 @@ public class ChatConstant{
     public static final String ROUTING_KEY_PATTERN = "channel";
     public static final String ROUTING_KEY_PREFIX = "channel.";
     public static final String AMQ_TOPIC = "amq.topic";
+    
+    public static final Long KOR_TIMEZONE = 9L;
 }

@@ -13,5 +13,5 @@ export interface ChatMessage {
   status: number;
   createDt: string;
   modifyDt: Date;
-  profileImg?: string;
+  imageNum: number | null;
 }

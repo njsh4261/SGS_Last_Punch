@@ -38,16 +38,6 @@ export default function presenceHook({ wsId }: Props) {
         stompClient.subscribe(`/topic/workspace.${wsId}`, (payload) => {
           const msg: UpdateMessage = JSON.parse(payload.body);
 
-          // set status self
-          if (+msg.userId === user.id) {
-            dispatch(
-              setUser({
-                id: +user.id,
-                name: user.name,
-                status: msg.userStatus,
-              }),
-            );
-          }
           // update presence store
           dispatch(
             setPresence({
@@ -56,12 +46,6 @@ export default function presenceHook({ wsId }: Props) {
             }),
           );
         });
-
-        // 연결 메시지 전송
-        sendMessage('CONNECT', stompClient);
-
-        // user module의 status online으로 업데이트
-        dispatch(setUser({ id: +user.id, name: user.name, status: 'ONLINE' }));
 
         // 첫 접속시 유저들의 프리젠스 상태 업데이트
         const presenceList: UpdateMessage[] = await getPresenceAPI(wsId);
@@ -72,7 +56,12 @@ export default function presenceHook({ wsId }: Props) {
             dictionary[presence.userId] = presence.userStatus;
           });
           dispatch(setPresence(dictionary));
+        } else {
+          console.error('fail get presence');
         }
+
+        // 연결 메시지 전송
+        sendMessage('CONNECT', stompClient);
       });
       setStomp(stompClient);
     } catch (e) {

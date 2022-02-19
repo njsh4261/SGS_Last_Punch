@@ -63,8 +63,9 @@ interface Props {
 export default function ModalStatus({ sendMessage }: Props) {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
+  const presence = useSelector((state: RootState) => state.presence);
   const [statusState, setStatusState] = useState<UserStatus>(
-    user.status || 'ONLINE',
+    presence[user.id] || 'ONLINE',
   );
   const statusList: UserStatus[] = ['ONLINE', 'BUSY', 'ABSENT', 'OFFLINE'];
 

@@ -2,6 +2,7 @@ package lastpunch.chat.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
+import lastpunch.chat.common.ChatConstant;
 import lastpunch.chat.common.MessageType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -63,8 +64,8 @@ public class ChatMessage{
                 .channelId(channelId)
                 .content(content)
                 .status(0)
-                .createDt(LocalDateTime.now())
-                .modifyDt(LocalDateTime.now())
+                .createDt(LocalDateTime.now().plusHours(ChatConstant.KOR_TIMEZONE))
+                .modifyDt(LocalDateTime.now().plusHours(ChatConstant.KOR_TIMEZONE))
                 .build();
         }
         

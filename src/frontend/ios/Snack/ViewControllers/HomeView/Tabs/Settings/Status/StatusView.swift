@@ -27,7 +27,6 @@ class StatusView: UIViewController {
         super.viewDidLoad()
         self.userId = KeychainWrapper.standard[.id]!
         self.workspaceId = KeychainWrapper.standard[.workspaceId]!
-        self.status = KeychainWrapper.standard[.status]!
         
         title = "상태 설정"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(actionSave))
@@ -40,6 +39,7 @@ class StatusView: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.status = KeychainWrapper.standard[.status]!
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "StatusCell", for: IndexPath(row: 0, section: 0)) as! StatusCell
         
@@ -65,6 +65,11 @@ class StatusView: UIViewController {
         case .some(_):
             dismiss(animated: true, completion: nil)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let pvc = self.presentingViewController else { return }
+        pvc.viewWillAppear(true)
     }
 
     // MARK: - Load methods

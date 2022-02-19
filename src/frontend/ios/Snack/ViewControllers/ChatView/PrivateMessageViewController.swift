@@ -102,7 +102,7 @@ class PrivateMessageViewController: MessagesViewController {
     
     @objc private func goToProfile() {
         let userModel = UserModel(
-            id: Int(recipientInfo.senderId)!, email: "lastPunch@gmail.com", name: recipientInfo.displayName, description: "안녕하세요", phone: "010-1234-1234", country: "kor", language: "eng", settings: 0, status: "rull", createDt: "2022.02.24", modifyDt: "2022.02.24"
+            id: Int(recipientInfo.senderId)!, email: "lastPunch@gmail.com", name: recipientInfo.displayName, description: "안녕하세요", phone: "010-1234-1234", country: "kor", status: "rull", imageNum: 11, createDt: "2022.02.24", modifyDt: "2022.02.24"
         )
         let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: senderInfo, recipientInfo: userModel, isChat: false)
         viewController.hidesBottomBarWhenPushed = true

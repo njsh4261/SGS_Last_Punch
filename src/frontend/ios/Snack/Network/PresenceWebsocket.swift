@@ -21,7 +21,7 @@ class PresenceWebsocket {
     // MARK: - Public properties
     var userId: String = "-1" // 본인
     var present = PublishSubject<PresenceModel>()
-    var presenceList: [PresenceModel]?
+//    var presenceList: [PresenceModel]?
 
     init() {
         self.userId = KeychainWrapper.standard[.id]!
@@ -64,7 +64,7 @@ class PresenceWebsocket {
     }
     
     // Presence 목록
-    func getPresenceList() {
+    func getPresenceList() -> [PresenceModel] {
         DispatchQueue.main.async { [self] in // 메인스레드에서 동작
             PresenceService.shared.getPresenceList(method: .get, accessToken: accessToken, workspaceId: workspaceId)
                 .observe(on: MainScheduler.instance)
@@ -73,10 +73,10 @@ class PresenceWebsocket {
                     case .next(let result):
                         switch result {
                         case .success(let descodeData):
-                            self.presenceList = descodeData.data
+                            let presenceList = descodeData.data!
                             
                             // 본인 Status 저장
-                            for presence in presenceList! {
+                            for presence in presenceList {
                                 if presence.userId == self.userId {
                                     KeychainWrapper.standard[.status] = presence.userStatus
                                 }
@@ -89,6 +89,8 @@ class PresenceWebsocket {
                     }
                 }.disposed(by: self.disposeBag)
         }
+        
+        return []
     }
 }
 
@@ -106,8 +108,6 @@ extension PresenceWebsocket: StompClientLibDelegate {
         guard let messagePlayload = try? decoder.decode(PresenceModel.self, from: json) else { return }
         
         self.present.onNext(messagePlayload)
-        
-        getPresenceList()
     }
     
     func stompClientDidxDisconnect(client: StompClientLib!) {
@@ -119,6 +119,7 @@ extension PresenceWebsocket: StompClientLibDelegate {
         print("Presence Stomp socket is connected")
         
         selfSubscribe() // 본인 구독
+        getPresenceList() // 유저 정보가져오기
     }
     
     func stompClientDidDisconnect(client: StompClientLib!) {

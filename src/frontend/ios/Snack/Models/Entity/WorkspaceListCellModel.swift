@@ -68,7 +68,7 @@ struct WorkspaceListCellModel: Codable {
     let id: Int
     let name: String
     var description: String? = ""
-    let settings: Int
+    let imageNum: Int?
     let createDt: String
     let modifyDt: String
 }

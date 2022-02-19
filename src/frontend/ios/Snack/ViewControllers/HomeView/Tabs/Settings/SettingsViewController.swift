@@ -27,8 +27,6 @@ class SettingsViewController: UITableViewController {
     @IBOutlet private var cellPassword: UITableViewCell!
     @IBOutlet private var cellPasscode: UITableViewCell!
     // Section 2
-    @IBOutlet private var cellStatus: UITableViewCell!
-    @IBOutlet private var lblStatus: UILabel!
     // Section 3
     @IBOutlet private var cellCache: UITableViewCell!
     @IBOutlet private var cellMedia: UITableViewCell!
@@ -38,7 +36,7 @@ class SettingsViewController: UITableViewController {
             
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        guard let accessToken: String = KeychainWrapper.standard[.accessToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId] else { return }
+        guard let accessToken: String = KeychainWrapper.standard[.accessToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId]else { return }
         if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
             let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
             self.userInfo = userInfo!
@@ -60,6 +58,9 @@ class SettingsViewController: UITableViewController {
         title = "나"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "나", style: .plain, target: nil, action: nil)
 
+        // Cell 등록
+        self.tableView.register(UINib(nibName: "StatusCell", bundle: nil), forCellReuseIdentifier: "StatusCell")
+        
         tableView.tableHeaderView = viewHeader
     }
     
@@ -75,8 +76,33 @@ class SettingsViewController: UITableViewController {
         guard let userInfo = userInfo else { return }
         lblName.text = userInfo.name
         cellPasscode.detailTextLabel?.text = PasscodeKit.enabled() ? "켜짐" : "꺼짐"
-        lblStatus.text = "대화 가능"
+        
+        setStatus()
+        
         tableView.reloadData()
+    }
+    
+    func setStatus() {
+        let status: String = KeychainWrapper.standard[.status]!
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StatusCell", for: IndexPath(row: 0, section: 1)) as! StatusCell
+        
+        switch status {
+        case "ONLINE":
+            cell.lblStatus.text = "온라인"
+            cell.btnStatus.backgroundColor = .green
+        case "ABSENT":
+            cell.lblStatus.text = "자리 비움"
+            cell.btnStatus.backgroundColor = .orange
+        case "BUSY":
+            cell.lblStatus.text = "매우 바쁨"
+            cell.btnStatus.backgroundColor = .red
+        case "OFFLINE":
+            cell.lblStatus.text = "오프라인"
+            cell.btnStatus.backgroundColor = .gray
+        default:
+            ProgressHUD.showFailed("상태 설정에 문제가 생겼습니다")
+        }
     }
     
     // MARK: - User actions
@@ -111,6 +137,7 @@ class SettingsViewController: UITableViewController {
     func actionStatus() {
         let statusView = StatusView()
         let navController = NavigationController(rootViewController: statusView)
+        navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true)
     }
     
@@ -195,7 +222,10 @@ class SettingsViewController: UITableViewController {
         if (indexPath.section == 0) && (indexPath.row == 0) { return cellProfile }
         if (indexPath.section == 0) && (indexPath.row == 1) { return cellPassword }
         if (indexPath.section == 0) && (indexPath.row == 2) { return cellPasscode }
-        if (indexPath.section == 1) && (indexPath.row == 0) { return cellStatus }
+        if (indexPath.section == 1) && (indexPath.row == 0) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StatusCell", for: indexPath) as! StatusCell
+            return cell
+        }
         if (indexPath.section == 2) && (indexPath.row == 0) { return cellCache }
         if (indexPath.section == 2) && (indexPath.row == 1) { return cellMedia }
         if (indexPath.section == 3) && (indexPath.row == 0) { return cellLogout }

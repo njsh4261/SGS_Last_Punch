@@ -70,7 +70,7 @@ class EditProfileView: UIViewController {
         labelInitials.text = userInfo?.name.first?.description
         fieldName.text = userInfo?.name
         fieldDescription.text = userInfo?.description
-        lblCountry.text = userInfo?.language == "kor" ? "대한민국" : "해외"
+        lblCountry.text = userInfo?.country == "kor" ? "대한민국" : "해외"
         fieldPhone.text = userInfo?.phone
 
         lblPlaceholder.isHidden = (lblCountry.text != "")

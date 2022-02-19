@@ -12,8 +12,8 @@ struct UserModel: Codable {
     var id: Int
     let email: String
     var name: String
-    let description: String?
-    let phone: String?
+    var description: String?
+    var phone: String?
     let country: String
     let status: String?
     var imageNum: Int?

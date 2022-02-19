@@ -106,7 +106,6 @@ class WorkspaceService {
             return Disposables.create()
         }
     }
-
     
     func deleteWorkspaceAccount(method: HTTPMethod, accessToken: String, accountId: String = "", workspaceId: String = "") -> Observable<NetworkResult<WorkspaceResponseModel>> {
         let url = APIConstants().workspaceListURL + "/member" + "?accountId=\(accountId)&workspaceId=\(workspaceId)"

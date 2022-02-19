@@ -38,10 +38,6 @@ class SettingsViewController: UITableViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         guard let accessToken: String = KeychainWrapper.standard[.accessToken], let workspaceId: String = KeychainWrapper.standard[.workspaceId]else { return }
-        if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
-            let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
-            self.userInfo = userInfo!
-        }
         self.accessToken = accessToken
         self.workspaceId = workspaceId
         
@@ -74,6 +70,11 @@ class SettingsViewController: UITableViewController {
     
     // MARK: - Load User
     func loadUser() {
+        if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
+            let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
+            self.userInfo = userInfo!
+        }
+
         guard let userInfo = userInfo else { return }
         
         if userInfo.imageNum != nil {
@@ -122,9 +123,7 @@ class SettingsViewController: UITableViewController {
     // MARK: - User actions
     // 프로필 변경
     func actionProfile() {
-        guard let userInfo = userInfo else { return }
-        
-        let editProfileView = EditProfileView(userInfo: userInfo)
+        let editProfileView = EditProfileView()
         let navController = NavigationController(rootViewController: editProfileView)
         navController.isModalInPresentation = true
         navController.modalPresentationStyle = .fullScreen

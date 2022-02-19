@@ -41,6 +41,33 @@ class AccountService {
         }
     }
     
+    // 계정 수정
+    func editAcctount(method: HTTPMethod, accessToken: String, userId: String, body: Parameters) -> Observable<NetworkResult<AccountResponseModel>> {
+        let url = APIConstants().accountURL + "/\(userId)"
+                
+        return Observable.create { observer -> Disposable in
+            let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
+            let dataRequest = AF.request(url,
+                                         method: method,
+                                         parameters: body,
+                                         encoding: JSONEncoding.default,
+                                         headers: header)
+
+            dataRequest.validate().responseData { [self] response in
+                switch response.result {
+                case .success:
+                    guard let statusCode = response.response?.statusCode else {return}
+                    guard let value = response.value else {return}
+                    let networkResult = judgeStatus(by: statusCode, value)
+                    return observer.onNext(networkResult)
+                case .failure:
+                    return observer.onNext(.pathErr)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
     private func judgeStatus(by statusCode: Int, _ data: Data) -> NetworkResult<AccountResponseModel> {
         let decoder = JSONDecoder()
         

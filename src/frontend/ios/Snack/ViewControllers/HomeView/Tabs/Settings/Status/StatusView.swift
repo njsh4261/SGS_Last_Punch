@@ -29,6 +29,8 @@ class StatusView: UIViewController {
         self.workspaceId = KeychainWrapper.standard[.workspaceId]!
         
         title = "상태 설정"
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(actionDismiss))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(actionSave))
         
         // Cell 등록
@@ -67,11 +69,6 @@ class StatusView: UIViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        guard let pvc = self.presentingViewController else { return }
-        pvc.viewWillAppear(true)
-    }
-
     // MARK: - Load methods
     func loadStatuses() {
         statuses.append((1, "온라인", .green))
@@ -80,6 +77,11 @@ class StatusView: UIViewController {
         statuses.append((4, "오프라인", .gray))
     }
     
+    // MARK: - User actions
+    @objc func actionDismiss() {
+        dismiss(animated: true)
+    }
+
     @objc func actionSave() {
         guard let workspaceId = workspaceId, let userId = userId else { return }
         

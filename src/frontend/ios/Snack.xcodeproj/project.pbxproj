@@ -422,8 +422,6 @@
 			children = (
 				8C68AAE5279526E800C1711E /* Home */,
 				8CBD458727A3E2E20056A557 /* DirectMessage */,
-				8CBD459227A3E4A10056A557 /* Notice */,
-				8CBD459327A3E4A90056A557 /* Search */,
 				8C68AAE92795281D00C1711E /* Settings */,
 			);
 			path = Tabs;
@@ -432,7 +430,6 @@
 		8C68AAE5279526E800C1711E /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				8CCFFADB27C11A9A005D4D13 /* SelectImage */,
 				8CCFFAD627C10326005D4D13 /* EditWorkspace */,
 				8CCFFAB527BE8A18005D4D13 /* ChannelSearch */,
 				8CCFFAA127BA0559005D4D13 /* NewChannel */,
@@ -579,20 +576,6 @@
 				8CBD458A27A3E40B0056A557 /* DirectMessageListViewCell.swift */,
 			);
 			path = DirectMessage;
-			sourceTree = "<group>";
-		};
-		8CBD459227A3E4A10056A557 /* Notice */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Notice;
-			sourceTree = "<group>";
-		};
-		8CBD459327A3E4A90056A557 /* Search */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Search;
 			sourceTree = "<group>";
 		};
 		8CBD45B627A6CF320056A557 /* Profile */ = {
@@ -836,14 +819,6 @@
 				8CCFFAD727C10357005D4D13 /* EditWorkspaceView.xib */,
 			);
 			name = EditWorkspace;
-			sourceTree = "<group>";
-		};
-		8CCFFADB27C11A9A005D4D13 /* SelectImage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = SelectImage;
-			path = Home;
 			sourceTree = "<group>";
 		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {

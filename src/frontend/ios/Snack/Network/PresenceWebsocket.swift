@@ -19,6 +19,7 @@ class PresenceWebsocket {
     
     // MARK: - Public properties
     var userId: String = "-1" // 본인
+    var present = PublishSubject<PresenceModel>()
 
     init() {
         self.userId = KeychainWrapper.standard[.id]!
@@ -35,8 +36,19 @@ class PresenceWebsocket {
         )
         print("Presence Sokect is connected successfully")
     }
+
+    // 본인 구독
+    func selfSubscribe() {
+        let url = "/topic/workspace." + workspaceId
+        socketClient.subscribe(destination: url)
+        print("Presence Self Subscribe successfully : \(workspaceId)")
+        
+        sendStatus(workspaceId: workspaceId, userId: userId, userStatus: "CONNECT")
+        print("Presence Self sendStatus successfully : \(workspaceId)")
     }
     
+    // Publish Status
+    func sendStatus(workspaceId: String, userId: String, userStatus: String) {
         let payloadObject = ["workspaceId" : workspaceId, "userId": userId, "userStatus": userStatus] as [String : Any]
 
         socketClient.sendJSONForDict(
@@ -63,6 +75,7 @@ extension PresenceWebsocket: StompClientLibDelegate {
         let decoder = JSONDecoder()
         guard let messagePlayload = try? decoder.decode(PresenceModel.self, from: json) else { return }
         
+        self.present.onNext(messagePlayload)
     }
     
     func stompClientDidxDisconnect(client: StompClientLib!) {

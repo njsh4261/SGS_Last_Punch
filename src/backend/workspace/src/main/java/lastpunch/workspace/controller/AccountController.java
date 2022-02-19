@@ -45,7 +45,7 @@ public class AccountController{
         );
     }
     
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<Object> edit(
             @RequestBody Account.EditDto editDto,
             @PathVariable("id") Long id,

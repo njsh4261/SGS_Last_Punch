@@ -50,11 +50,11 @@ class HomeViewModel: ViewModelProtocol {
             }
             .asDriver(onErrorDriveWith: .empty())
         
-        StompWebsocket.shared.registerSockect()
+        ChatStompWebsocket.shared.registerSockect()
         PresenceWebsocket.shared.registerSockect()
                 
         // 읽지 않음 표시
-        StompWebsocket.shared.message
+        ChatStompWebsocket.shared.message
             .filter {
                 !$0.channelId.contains("-")
             }
@@ -87,11 +87,11 @@ class HomeViewModel: ViewModelProtocol {
             let channelSection = HomeSection.Model(model: .chennel, items: channelItems)
             let memberSection = HomeSection.Model(model: .member, items: memberItems)
     
-            StompWebsocket.shared.channels = channels
-            StompWebsocket.shared.members = members
+            ChatStompWebsocket.shared.channels = channels
+            ChatStompWebsocket.shared.members = members
             
             // websocket 구독
-            StompWebsocket.shared.subscribe()
+            ChatStompWebsocket.shared.subscribe()
             
             output.workspaceTitle.accept(workspace.name)
             output.sections.accept([channelSection, memberSection])

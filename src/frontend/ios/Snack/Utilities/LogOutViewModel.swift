@@ -22,7 +22,7 @@ class LogOutViewModel {
         ProgressHUD.show(nil, interaction: false)
         logOutService(viewContoller: viewContoller, token: token)
         PasscodeKit.remove()
-        StompWebsocket.shared.disconnect()
+        ChatStompWebsocket.shared.disconnect()
     }
     
     // keyChain 정보 삭제

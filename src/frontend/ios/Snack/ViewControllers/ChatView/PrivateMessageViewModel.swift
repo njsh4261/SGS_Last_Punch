@@ -53,7 +53,7 @@ class PrivateMessageViewModel: ViewModelProtocol {
         nameDict[userId] = userInfo?.name
         
         // socket
-        StompWebsocket.shared.message
+        ChatStompWebsocket.shared.message
             .filter {
                 $0.channelId == self.channelId
             }
@@ -61,7 +61,7 @@ class PrivateMessageViewModel: ViewModelProtocol {
             .disposed(by: disposeBag)
         
         // typing
-        StompWebsocket.shared.typing
+        ChatStompWebsocket.shared.typing
             .filter {$0.channelId == self.channelId}
             .bind(to: output.sokectTyping, output.sokectEndTyping)
             .disposed(by: disposeBag)

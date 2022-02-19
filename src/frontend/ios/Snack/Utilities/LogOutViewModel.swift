@@ -23,6 +23,7 @@ class LogOutViewModel {
         logOutService(viewContoller: viewContoller, token: token)
         PasscodeKit.remove()
         ChatStompWebsocket.shared.disconnect()
+        PresenceWebsocket.shared.disconnect()
     }
     
     // keyChain 정보 삭제

@@ -18,7 +18,8 @@ class ChannelListCell: UITableViewCell {
     var chatId: String = "0"
 
     // MARK: - UI
-    var lblName = UILabel()
+    private var lblName = UILabel()
+    private var btnUnread = UIButton()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -45,8 +46,10 @@ class ChannelListCell: UITableViewCell {
     func setUnread(_ isUnread: Bool) {
         if isUnread {
             lblName.font = UIFont(name: "NotoSansKR-Bold", size: 16)
+            btnUnread.backgroundColor = UIColor(named: "snackColor")
         } else {
             lblName.font = UIFont(name: "NotoSansKR-Regular", size: 16)
+            btnUnread.backgroundColor = .clear
         }
     }
     
@@ -56,14 +59,27 @@ class ChannelListCell: UITableViewCell {
         lblName = lblName.then {
             $0.font = UIFont(name: "NotoSansKR-Regular", size: 16)
         }
+        
+        btnUnread = btnUnread.then {
+            $0.layer.cornerRadius = 10
+        }
     }
     
     private func layout() {
-        contentView.addSubview(lblName)
+        [lblName, btnUnread].forEach {
+            contentView.addSubview($0)
+        }
         
         lblName.snp.makeConstraints {
             $0.left.equalToSuperview().inset(20)
+            $0.right.equalTo(btnUnread.snp.left).offset(-10)
             $0.centerY.equalToSuperview()
+        }
+        
+        btnUnread.snp.makeConstraints {
+            $0.right.equalToSuperview().inset(20)
+            $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(20)
         }
     }
 }

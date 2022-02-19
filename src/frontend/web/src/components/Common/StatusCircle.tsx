@@ -14,7 +14,7 @@ const Circle = styled.div<{ color: string }>`
   height: 10px;
   border-radius: 10px;
   background-color: ${({ color }) => color};
-  border: 1px solid lightgray;
+  border: 1px solid #f6f6f6;
 `;
 
 interface Props {
@@ -29,7 +29,7 @@ export default function StatusCircle({ status }: Props) {
           status === 'ONLINE'
             ? '#2AAC76'
             : status === 'BUSY'
-            ? 'yellow'
+            ? 'orange'
             : status === 'ABSENT'
             ? 'red'
             : 'gray'

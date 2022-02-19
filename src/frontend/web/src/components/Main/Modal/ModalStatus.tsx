@@ -21,6 +21,11 @@ const StatusNow = styled.article`
   display: flex;
   align-items: center;
   padding: 10px 28px;
+  margin-bottom: 12px;
+
+  & > * {
+    margin-left: 6px;
+  }
 `;
 
 const StatusItem = styled.section`
@@ -83,13 +88,19 @@ export default function ModalStatus({ sendMessage }: Props) {
       <Header>상태 설정</Header>
       <Body>
         <StatusNow>
-          현재상태: <StatusCircle status={statusState}></StatusCircle>
+          현재 <StatusCircle status={statusState}></StatusCircle>
         </StatusNow>
         <article>
           {statusList.map((status) => (
             <StatusItem key={status} onClick={changeHandler(status)}>
               <StatusCircle status={status}></StatusCircle>
-              {status}
+              {status === 'ONLINE'
+                ? '온라인'
+                : status === 'BUSY'
+                ? '업무 중'
+                : status === 'ABSENT'
+                ? '자리 비움'
+                : '오프라인'}
             </StatusItem>
           ))}
         </article>

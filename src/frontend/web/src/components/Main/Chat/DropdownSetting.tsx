@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -48,6 +48,7 @@ export default function Dropdown({ id }: { id: string }) {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const presence = useSelector((state: RootState) => state.presence);
+  const status = useMemo(() => presence[user.id], [user, presence]);
 
   return (
     <Container id={id}>
@@ -57,10 +58,14 @@ export default function Dropdown({ id }: { id: string }) {
           <ProfileNameAndStatus>
             <ProfileName>{user.name}</ProfileName>
             <ProfileStatus>
-              <StatusCircle
-                status={presence[user.id] || 'ONLINE'}
-              ></StatusCircle>
-              대화 가능
+              <StatusCircle status={status || 'ONLINE'}></StatusCircle>
+              {status === 'ONLINE'
+                ? '온라인'
+                : status === 'BUSY'
+                ? '업무 중'
+                : status === 'ABSENT'
+                ? '자리 비움'
+                : '오프라인'}
             </ProfileStatus>
           </ProfileNameAndStatus>
         </Profile>

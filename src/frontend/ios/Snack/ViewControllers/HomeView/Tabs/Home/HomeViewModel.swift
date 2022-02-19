@@ -52,7 +52,7 @@ class HomeViewModel: ViewModelProtocol {
         
         StompWebsocket.shared.registerSockect()
         PresenceWebsocket.shared.registerSockect()
-        
+                
         // 읽지 않음 표시
         StompWebsocket.shared.message
             .filter {
@@ -89,11 +89,9 @@ class HomeViewModel: ViewModelProtocol {
     
             StompWebsocket.shared.channels = channels
             StompWebsocket.shared.members = members
-            PresenceWebsocket.shared.members = members
             
             // websocket 구독
             StompWebsocket.shared.subscribe()
-            PresenceWebsocket.shared.subscribe()
             
             output.workspaceTitle.accept(workspace.name)
             output.sections.accept([channelSection, memberSection])

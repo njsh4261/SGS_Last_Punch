@@ -237,8 +237,7 @@ class GroupDetailsViewController: UIViewController {
         let userSearchVC = UserSearchViewController()
         userSearchVC.isChannel = true
         userSearchVC.body = [
-            "channelId": channel.id,
-            "roleId": 1
+            "channelId": channel.id
         ]
         
         self.present(userSearchVC, animated: true, completion: nil)

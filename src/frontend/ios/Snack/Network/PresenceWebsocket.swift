@@ -14,15 +14,11 @@ class PresenceWebsocket {
     static let shared = PresenceWebsocket()
     private let url = URL(string: "ws://\(APIConstants().presenceWebsoket)/websocket")!
     private var socketClient = StompClientLib()
-    private var presenceDict = [String:String]()
     private var accessToken: String
     private var workspaceId: String
-    private var userIdList = [String]()
     
     // MARK: - Public properties
     var userId: String = "-1" // 본인
-    var members = [WorkspaceMemberCellModel]()
-//    var message = PublishSubject<MessageModel>()
 
     init() {
         self.userId = KeychainWrapper.standard[.id]!
@@ -39,19 +35,8 @@ class PresenceWebsocket {
         )
         print("Presence Sokect is connected successfully")
     }
-    
-    // ViewWillAppear 될때 마다, subscibe
-    func subscribe() {
-        for member in members {
-            if userIdList.contains(member.id.description) { continue }
-            socketClient.subscribe(destination: "/topic/workspace." + member.id.description)
-            userIdList.append(member.id.description)
-            print("Presence Subscribe successfully : \(member.id.description)")
-        }
     }
     
-    // Publish Message
-    func sendMessage(workspaceId: String, userId: String, userStatus: String) {
         let payloadObject = ["workspaceId" : workspaceId, "userId": userId, "userStatus": userStatus] as [String : Any]
 
         socketClient.sendJSONForDict(
@@ -74,9 +59,10 @@ extension PresenceWebsocket: StompClientLibDelegate {
 //        print("JSON BODY : \(String(describing: jsonBody))")
 //        print("STRING BODY : \(stringBody ?? "nil")")
         
-        if let JSONString = String(data: json, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString)}
+//        if let JSONString = String(data: json, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString)}
         let decoder = JSONDecoder()
-//        guard let messagePlayload = try? decoder.decode(Message.self, from: json) else { return }
+        guard let messagePlayload = try? decoder.decode(PresenceModel.self, from: json) else { return }
+        
     }
     
     func stompClientDidxDisconnect(client: StompClientLib!) {
@@ -86,6 +72,8 @@ extension PresenceWebsocket: StompClientLibDelegate {
     // 연결 후, Subscribe Topic
     func stompClientDidConnect(client: StompClientLib!) {
         print("Presence Stomp socket is connected")
+        
+        selfSubscribe() // 본인 구독
     }
     
     func stompClientDidDisconnect(client: StompClientLib!) {

@@ -74,7 +74,7 @@ public class MongoService{
                 Presence.UpdateDto.builder()
                     .workspaceId(presence.getWorkspaceId())
                     .userId(presence.getUserId())
-                    .userStatus(UserStatus.DISCONNECT.toString())
+                    .userStatus(UserStatus.OFFLINE.toString())
                     .build()
             );
         }

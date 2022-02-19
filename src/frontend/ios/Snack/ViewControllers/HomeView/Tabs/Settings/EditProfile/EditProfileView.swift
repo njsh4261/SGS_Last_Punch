@@ -9,16 +9,21 @@ import UIKit
 import ProgressHUD
 import RxSwift
 import RxCocoa
+import Alamofire
+import SwiftKeychainWrapper
 
 class EditProfileView: UIViewController {
     // MARK: - Properties
+    private let disposeBag = DisposeBag()
     private var userInfo: UserModel?
+    private var selectImage: Int?
+    private var accessToken: String?
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var viewHeader: UIView!
-    @IBOutlet private var imageUser: UIImageView!
-    @IBOutlet private var labelInitials: UILabel!
+    @IBOutlet private var ivUser: UIImageView!
+    @IBOutlet private var lblInitials: UILabel!
     @IBOutlet private var cellName: UITableViewCell!
     @IBOutlet private var cellDescription: UITableViewCell!
     @IBOutlet private var cellCountry: UITableViewCell!
@@ -29,9 +34,9 @@ class EditProfileView: UIViewController {
     @IBOutlet private var fieldDescription: UITextField!
     @IBOutlet private var fieldPhone: UITextField!
     
-    init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil, userInfo: UserModel) {
+    override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        self.userInfo = userInfo
+        self.accessToken = KeychainWrapper.standard[.accessToken]!
     }
 
     
@@ -54,6 +59,12 @@ class EditProfileView: UIViewController {
         loadUser()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
@@ -67,13 +78,35 @@ class EditProfileView: UIViewController {
 
     // MARK: - Load User
     func loadUser() {
-        labelInitials.text = userInfo?.name.first?.description
-        fieldName.text = userInfo?.name
-        fieldDescription.text = userInfo?.description
-        lblCountry.text = userInfo?.language == "kor" ? "대한민국" : "해외"
-        fieldPhone.text = userInfo?.phone
+        if let data = KeychainWrapper.standard.data(forKey: "userInfo") {
+            let userInfo = try? PropertyListDecoder().decode(UserModel.self, from: data)
+            self.userInfo = userInfo
+        }
+        
+        guard let userInfo = userInfo else {
+            return
+        }
+
+        if userInfo.imageNum != nil {
+            self.ivUser.image = UIImage(named: "\(userInfo.imageNum!)")?.square(to: 70)
+            self.ivUser.backgroundColor = UIColor(named: "snackButtonColor")
+            self.lblInitials.backgroundColor = .clear
+            self.lblInitials.text = nil
+        } else {
+            lblInitials.text = userInfo.name.first?.description
+            self.lblInitials.backgroundColor = .lightGray
+            self.ivUser.backgroundColor = .clear
+            self.ivUser.image = nil
+        }
+        
+        fieldName.text = userInfo.name
+        fieldDescription.text = userInfo.description
+        lblCountry.text = userInfo.country == "kor" ? "대한민국" : "해외"
+        fieldPhone.text = userInfo.phone
 
         lblPlaceholder.isHidden = (lblCountry.text != "")
+        
+        tableView.reloadData()
     }
 
     @objc func actionDismiss() {
@@ -81,67 +114,69 @@ class EditProfileView: UIViewController {
     }
     
     @objc func actionSave() {
-
+        
         let name = fieldName.text ?? ""
-        let country = lblCountry.text ?? ""
+        let description = fieldDescription.text ?? ""
         let phone = fieldPhone.text ?? ""
+        let select = selectImage ?? 0
 
         if (name.isEmpty)           { ProgressHUD.showFailed("이름은 반드시 작성해야합니다");        return  }
-        if (country.isEmpty)        { ProgressHUD.showFailed("국적은 반드시 작성해야합니다");        return  }
-        if (phone.isEmpty)          { ProgressHUD.showFailed("전화번호는 반드시 작성해야합니다");     return   }
 
-        ProgressHUD.showSucceed("변경되었습니다")
-        dismiss(animated: true)
+        let body = select == 0 ? ["name": name, "description": description, "phone": phone] : ["name": name, "description": description, "phone": phone, "imageNum": select]
+        editAccount(body: body)
+    }
+    
+    func editAccount(body: Parameters) {
+        DispatchQueue.main.async { [self] in // 메인스레드에서 동작
+            AccountService.shared.editAcctount(method: .put, accessToken: self.accessToken!, userId: (userInfo?.id.description)!, body: body)
+                .subscribe { event in
+                    switch event {
+                    case .next(let result):
+                        switch result {
+                        case .success:
+                            ProgressHUD.showSucceed("변경되었습니다")
+                            setAccount(body: body)
+                            self.actionDismiss()
+                        case .fail(let decodedData):
+                            ProgressHUD.showFailed(decodedData.err?.desc)
+                        default:
+                            ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                        }
+                    default:
+                        ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
+                    }
+                }.disposed(by: self.disposeBag)
+        }
+    }
+    
+    func setAccount(body: Parameters) {
+        var userInfo = userInfo
+        
+        userInfo?.name = body["name"] as! String
+        userInfo?.description = body["description"] as? String
+        userInfo?.phone = body["phone"] as? String
+        userInfo?.imageNum = selectImage
+        
+        KeychainWrapper.standard.set(try! PropertyListEncoder().encode(userInfo), forKey: "userInfo")
     }
     
     @IBAction func actionPhoto(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-        alert.addAction(UIAlertAction(title: "카메라", style: .default) { action in
-            ImagePicker.cameraPhoto(self, edit: true)
-        })
-        alert.addAction(UIAlertAction(title: "앨범", style: .default) { action in
-            ImagePicker.photoLibrary(self, edit: true)
-        })
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-
-        present(alert, animated: true)
-    }
-    
-    // MARK: - Upload methods
-    func uploadPicture(image: UIImage) {
-
-        ProgressHUD.show(nil, interaction: false)
-
-        let squared = image.square(to: 300)
-        if let data = squared.jpegData(compressionQuality: 0.6) {
-            if let _ = Cryptor.encrypt(data: data) {
-                self.pictureUploaded(image: squared, data: data)
-
-            }
+        let viewController = SelectImageView()
+        let navController = NavigationController(rootViewController: viewController)
+        navController.modalPresentationStyle = .fullScreen
+        
+        viewController.completionHandler = { index, image in
+            self.ivUser.image = image.square(to: 70)
+            self.ivUser.backgroundColor = UIColor(named: "snackButtonColor")
+            self.lblInitials.backgroundColor = .clear
+            self.lblInitials.text = nil
+            self.selectImage = index
+            
+            return (index, image)
         }
-    }
-    
-    func pictureUploaded(image: UIImage, data: Data) {
-        imageUser.image = image.square(to: 70)
-        labelInitials.text = nil
-
-        ProgressHUD.dismiss()
+        self.show(navController, sender: nil)
     }
 }
-
-// MARK: - UIImage PickerController Delegate
-extension EditProfileView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-
-        if let image = info[.editedImage] as? UIImage {
-            uploadPicture(image: image)
-        }
-        picker.dismiss(animated: true)
-    }
-}
-
 // MARK: - UITableView DataSource
 extension EditProfileView: UITableViewDataSource {
 

@@ -22,9 +22,9 @@
                 <outlet property="fieldDescription" destination="G0J-cp-GJT" id="4p8-ZB-ksl"/>
                 <outlet property="fieldName" destination="cmp-jB-JV2" id="x8c-Ff-WHn"/>
                 <outlet property="fieldPhone" destination="4QE-xe-WjA" id="O4d-QT-Cm7"/>
-                <outlet property="imageUser" destination="b1o-fd-eKH" id="u6z-Ns-K0J"/>
-                <outlet property="labelInitials" destination="rPB-HI-Qez" id="fCo-P5-i3d"/>
+                <outlet property="ivUser" destination="b1o-fd-eKH" id="u6z-Ns-K0J"/>
                 <outlet property="lblCountry" destination="MsO-bg-jYA" id="c4g-Jo-Dmk"/>
+                <outlet property="lblInitials" destination="rPB-HI-Qez" id="0a6-oc-t60"/>
                 <outlet property="lblPlaceholder" destination="vqx-46-sQj" id="g7c-B0-JnD"/>
                 <outlet property="tableView" destination="i5M-Pr-FkT" id="pjh-16-MnO"/>
                 <outlet property="view" destination="S2O-W4-sD9" id="dNh-OH-rct"/>
@@ -71,13 +71,13 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rPB-HI-Qez">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="김" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rPB-HI-Qez">
                     <rect key="frame" x="125" y="15" width="70" height="70"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="70" id="cgq-zY-ZxY"/>
                         <constraint firstAttribute="height" constant="70" id="lKW-CX-bqP"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="27"/>
+                    <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="35"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>

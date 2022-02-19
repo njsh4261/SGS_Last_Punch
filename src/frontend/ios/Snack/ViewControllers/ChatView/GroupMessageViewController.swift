@@ -134,7 +134,7 @@ class GroupMessageViewController: MessagesViewController {
     // Typing - text 변화 감지
     private func textDidChange(_ text: String) {
         if text.count == 0 { return }
-        StompWebsocket.shared.sendTyping(authorId: senderInfo.senderId, channelId: channel!.id.description)
+        ChatStompWebsocket.shared.sendTyping(authorId: senderInfo.senderId, channelId: channel!.id.description)
     }
     
     // 최근 메시지 Load
@@ -501,7 +501,7 @@ extension GroupMessageViewController: MessagesDisplayDelegate {
 extension GroupMessageViewController: InputBarAccessoryViewDelegate {
     // 검색창에서 send 버튼을 누를 경우 이벤트 처리
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        StompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channel!.id.description, content: text)
+        ChatStompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channel!.id.description, content: text)
         inputBar.inputTextView.text.removeAll()
     }
 }

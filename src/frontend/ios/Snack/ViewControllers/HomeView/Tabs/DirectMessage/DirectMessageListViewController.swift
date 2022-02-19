@@ -79,7 +79,7 @@ class DirectMessageListViewController: UIViewController {
             .subscribe(onNext: { [weak self] indexPath in
                 self?.tableView.deselectRow(at: indexPath, animated: true)
                 
-                let cell = self?.tableView.cellForRow(at: indexPath) as! DirectMessageListCellView
+                let cell = self?.tableView.cellForRow(at: indexPath) as! DirectMessageListViewCell
                 cell.setUnread(false)
             })
             .disposed(by: disposeBag)
@@ -89,7 +89,7 @@ class DirectMessageListViewController: UIViewController {
             .asDriver(onErrorJustReturn: [])
             .drive(tableView.rx.items) { tableView, row, data in
                 let index = IndexPath(row: row, section: 0)
-                let cell = tableView.dequeueReusableCell(withIdentifier: "DirectMessageListViewCell", for: index) as! DirectMessageListCellView
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DirectMessageListViewCell", for: index) as! DirectMessageListViewCell
                 
                 cell.setData(data, row)
                 return cell
@@ -157,7 +157,7 @@ class DirectMessageListViewController: UIViewController {
     
     // 읽지 않음
     private func setUnread(_ index: Int) {
-        let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as! DirectMessageListCellView
+        let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as! DirectMessageListViewCell
         cell.setUnread(true)
     }
     
@@ -206,11 +206,11 @@ class DirectMessageListViewController: UIViewController {
         
         tableView = tableView.then {
             $0.backgroundColor = UIColor(named: "snackBackGroundColor2")
-            $0.register(DirectMessageListCellView.self, forCellReuseIdentifier: "DirectMessageListViewCell")
+            $0.register(DirectMessageListViewCell.self, forCellReuseIdentifier: "DirectMessageListViewCell")
             $0.refreshControl = refreshControl
             $0.tableHeaderView = viewHeader
             $0.clearsContextBeforeDrawing = false
-            $0.separatorStyle = .none
+            $0.separatorStyle = .singleLine
             $0.bouncesZoom = false
             $0.isOpaque = false
             $0.rowHeight = 75

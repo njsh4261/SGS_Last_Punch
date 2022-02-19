@@ -7,54 +7,115 @@
 
 import UIKit
 import ProgressHUD
+import SwiftKeychainWrapper
 
 class StatusView: UIViewController {
     // MARK: - Properties
-    private var userInfo: User?
+    private var userId: String?
+    private var workspaceId: String?
+    private var status: String?
+    private var curStatus: (Int, String, UIColor)?
+
+    private var selectSatus: Int = 1
+    private var statuses: [(Int, String, UIColor)] = []
 
     // MARK: - UI
     @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var cellStatus: UITableViewCell!
     @IBOutlet private var cellClear: UITableViewCell!
-
-    private var statuses: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.userId = KeychainWrapper.standard[.id]!
+        self.workspaceId = KeychainWrapper.standard[.workspaceId]!
+        
         title = "상태 설정"
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(actionDismiss))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(actionSave))
+        
+        // Cell 등록
+        self.tableView.register(UINib(nibName: "StatusCell", bundle: nil), forCellReuseIdentifier: "StatusCell")
 
         loadStatuses()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        cellStatus.textLabel?.text = "대화 가능"
-    }
-
-    // MARK: - Load methods
-    func loadStatuses() {
-        statuses.append("대화 가능")
-        statuses.append("자리 비움")
-        statuses.append("🗓 미팅중")
-        statuses.append("🚌 출퇴근 중")
-        statuses.append("🤒 병가")
-        statuses.append("🌴 휴가")
-        statuses.append("🏡 원격으로 작업 중")
+        self.status = KeychainWrapper.standard[.status]!
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StatusCell", for: IndexPath(row: 0, section: 0)) as! StatusCell
+        
+        switch status {
+        case "ONLINE":
+            cell.lblStatus.text = "온라인"
+            cell.btnStatus.backgroundColor = .green
+            curStatus = (1, "온라인", .green)
+        case "ABSENT":
+            cell.lblStatus.text = "자리 비움"
+            cell.btnStatus.backgroundColor = .orange
+            curStatus = (2, "자리 비움", .orange)
+        case "BUSY":
+            cell.lblStatus.text = "매우 바쁨"
+            cell.btnStatus.backgroundColor = .red
+            curStatus = (3, "매우 바쁨", .red)
+        case "OFFLINE":
+            cell.lblStatus.text = "오프라인"
+            cell.btnStatus.backgroundColor = .gray
+            curStatus = (4, "오프라인", .gray)
+        case .none:
+            dismiss(animated: true, completion: nil)
+        case .some(_):
+            dismiss(animated: true, completion: nil)
+        }
     }
     
+    // MARK: - Load methods
+    func loadStatuses() {
+        statuses.append((1, "온라인", .green))
+        statuses.append((2, "자리 비움", .orange))
+        statuses.append((3, "매우 바쁨", .red))
+        statuses.append((4, "오프라인", .gray))
+    }
+    
+    // MARK: - User actions
+    @objc func actionDismiss() {
+        dismiss(animated: true)
+    }
+
     @objc func actionSave() {
-        // 네트워크 로직이 필요합니다.
+        guard let workspaceId = workspaceId, let userId = userId else { return }
+        
+        switch selectSatus {
+        case 1:
+            PresenceWebsocket.shared.sendStatus(workspaceId: workspaceId, userId: userId, userStatus: "ONLINE")
+            KeychainWrapper.standard[.status] = "ONLINE"
+        case 2:
+            PresenceWebsocket.shared.sendStatus(workspaceId: workspaceId, userId: userId, userStatus: "ABSENT")
+            KeychainWrapper.standard[.status] = "ABSENT"
+        case 3:
+            PresenceWebsocket.shared.sendStatus(workspaceId: workspaceId, userId: userId, userStatus: "BUSY")
+            KeychainWrapper.standard[.status] = "BUSY"
+        case 4:
+            PresenceWebsocket.shared.sendStatus(workspaceId: workspaceId, userId: userId, userStatus: "OFFLINE")
+            KeychainWrapper.standard[.status] = "OFFLINE"
+        default:
+            ProgressHUD.showFailed("죄송합니다 선택에 문제가 생겼습니다")
+            return
+        }
+        
         ProgressHUD.showSucceed("변경되었습니다")
         dismiss(animated: true)
     }
 
 
     // MARK: - Helper methods
-    func updateStatus(status: String) {
+    func updateStatus(status: (Int, String, UIColor)) {
 
-        cellStatus.textLabel?.text = status
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StatusCell", for: IndexPath(row: 0, section: 0)) as! StatusCell
+        
+        selectSatus = status.0
+        cell.lblStatus.text = status.1
+        cell.btnStatus.backgroundColor = status.2
         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
     }
 }
@@ -87,13 +148,16 @@ extension StatusView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if (indexPath.section == 0) && (indexPath.row == 0) {
-            return cellStatus
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StatusCell", for: indexPath) as! StatusCell
+            return cell
         }
 
         if (indexPath.section == 1) {
-            var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "cell")
-            if (cell == nil) { cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell") }
-            cell.textLabel?.text = statuses[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StatusCell", for: indexPath) as! StatusCell
+            
+            cell.lblStatus.text = statuses[indexPath.row].1
+            cell.btnStatus.backgroundColor = statuses[indexPath.row].2
+
             return cell
         }
 
@@ -118,7 +182,7 @@ extension StatusView: UITableViewDelegate {
         }
 
         if (indexPath.section == 2) {
-            updateStatus(status: "대화 가능")
+            updateStatus(status: curStatus!)
         }
     }
 }

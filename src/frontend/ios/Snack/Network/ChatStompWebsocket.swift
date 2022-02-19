@@ -1,5 +1,5 @@
 //
-//  StompWebsocket.swift
+//  ChatStompWebsocket.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/02/09.
@@ -9,9 +9,9 @@ import StompClientLib
 import SwiftKeychainWrapper
 import RxSwift
 
-class StompWebsocket {
+class ChatStompWebsocket {
     // MARK: - Private properties
-    static let shared = StompWebsocket()
+    static let shared = ChatStompWebsocket()
     private let url = URL(string: "ws://\(APIConstants().chatWebsoket)/websocket")!
     private var socketClient = StompClientLib()
     private var nameDict = [String:String]()
@@ -86,7 +86,7 @@ class StompWebsocket {
 }
 
 //MARK: - StompClientLib Delegate
-extension StompWebsocket: StompClientLibDelegate {
+extension ChatStompWebsocket: StompClientLibDelegate {
     func stompClient(client: StompClientLib!, didReceiveMessageWithJSONBody jsonBody: AnyObject?, akaStringBody stringBody: String?, withHeader header: [String : String]?, withDestination destination: String) {
         guard let json = stringBody!.data(using: .utf8) else { return }
 //        print("DESTINATION : \(destination)")
@@ -128,7 +128,7 @@ extension StompWebsocket: StompClientLibDelegate {
 //        client.reconnect(request: NSURLRequest(url: url as URL), delegate: self)
     }
     
-    // 연결 후, Subscribe Topic
+    // 연결 후, 
     func stompClientDidConnect(client: StompClientLib!) {
         print("Stomp socket is connected")
     }

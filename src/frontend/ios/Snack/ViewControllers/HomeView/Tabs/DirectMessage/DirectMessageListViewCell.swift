@@ -1,5 +1,5 @@
 //
-//  DirectMessageListCellView.swift
+//  DirectMessageListViewCell.swift
 //  Snack
 //
 //  Created by ghyeongkim-MN on 2022/01/28.
@@ -12,7 +12,7 @@ import RxCocoa
 import Then
 import SwiftKeychainWrapper
 
-class DirectMessageListCellView: UITableViewCell {
+class DirectMessageListViewCell: UITableViewCell {
     // MARK: - Properties
     var index: Int = 0
     var chatId = ""
@@ -20,6 +20,7 @@ class DirectMessageListCellView: UITableViewCell {
 
     // MARK: - UI
     var ivThumbnail = UIImageView()
+    var lblInitials = UILabel()
     var lblName = UILabel()
     var lblLastMessage = UILabel()
     var lblDate = UILabel()
@@ -44,7 +45,21 @@ class DirectMessageListCellView: UITableViewCell {
     
     func setData(_ member: User, _ index: Int) {
         chatId = member.senderId > userId ? "\(member.senderId)-\(userId)" : "\(userId)-\(member.senderId)"
-        ivThumbnail.image = index%2 == 0 ? UIImage(named: "snack") : UIImage(named: "snack_solid")
+        
+        //    if userInfo.imageNum != nil {
+        //        self.ivUser.image = UIImage(named: "\(userInfo.imageNum!)")?.square(to: 70)
+        //        self.ivUser.backgroundColor = UIColor(named: "snackButtonColor")
+        //        self.lblInitials.backgroundColor = .clear
+        //        self.lblInitials.text = nil
+        //    } else {
+        //        lblInitials.text = userInfo.name.first?.description
+        //        self.lblInitials.backgroundColor = .lightGray
+        //        self.ivUser.backgroundColor = .clear
+        //        self.ivUser.image = nil
+        //    }
+        
+        ivThumbnail.image = index%2 == 0 ? UIImage(named: "10")?.square(to: 70) : UIImage(named: "13")?.square(to: 70)        
+        
         lblDate.text = Date().toString()
 
         if member.senderId == userId {
@@ -63,7 +78,7 @@ class DirectMessageListCellView: UITableViewCell {
             }
         }
     }
-    
+        
     // 읽지 않음
     func setUnread(_ isUnread: Bool) {
         if isUnread {
@@ -72,11 +87,22 @@ class DirectMessageListCellView: UITableViewCell {
             lblLastMessage.font = UIFont(name: "NotoSansKR-Regular", size: 16)
         }
     }
-    
+
     private func attribute() {
         backgroundColor = UIColor(named: "snackButtonColor")
         
-        ivThumbnail.contentMode = .scaleAspectFit
+        ivThumbnail = ivThumbnail.then {
+            $0.contentMode = .scaleAspectFit
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = UIColor.label.cgColor
+            $0.layer.cornerRadius = 4
+        }
+        
+        lblInitials = lblInitials.then {
+            $0.font = UIFont(name: "NotoSansKR-Regular", size: 20)
+            $0.textColor = .white
+            $0.backgroundColor = .lightGray
+        }
         
         lblName = lblName.then {
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
@@ -97,14 +123,16 @@ class DirectMessageListCellView: UITableViewCell {
     }
     
     private func layout() {
-        [ivThumbnail, lblName, lblLastMessage, lblDate].forEach {
+        [ivThumbnail, lblInitials, lblName, lblLastMessage, lblDate].forEach {
             contentView.addSubview($0)
         }
         
-        ivThumbnail.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.left.equalToSuperview().inset(10)
-            $0.width.height.equalTo(30)
+        [ivThumbnail, lblInitials].forEach {
+            $0.snp.makeConstraints {
+                $0.top.equalToSuperview().inset(13)
+                $0.left.equalToSuperview().inset(10)
+                $0.width.height.equalTo(36)
+            }
         }
         
         lblName.snp.makeConstraints {

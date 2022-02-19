@@ -42,14 +42,19 @@ class MemberListCell: UITableViewCell {
     
     func setMember(_ member: Member, _ index: Int) {
         chatId = member.id > userId ? "\(member.id)-\(userId)" : "\(userId)-\(member.id)"
-        ivThumbnail.image = index%2 == 0 ? UIImage(named: "snack") : UIImage(named: "snack_solid")
+        ivThumbnail.image = index%2 == 0 ? UIImage(named: "10")?.square(to: 70) : UIImage(named: "13")?.square(to: 70)
         lblName.text = member.id == userId ? "\(member.name) (나)" : "\(member.name)"
     }
 
     private func attribute() {
         backgroundColor = UIColor(named: "snackButtonColor")
-        ivThumbnail.contentMode = .scaleAspectFit
-
+        ivThumbnail = ivThumbnail.then {
+            $0.contentMode = .scaleAspectFit
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = UIColor.label.cgColor
+            $0.layer.cornerRadius = 4
+        }
+        
         lblName = lblName.then {
             $0.font = UIFont(name: "NotoSansKR-Bold", size: 16)
         }

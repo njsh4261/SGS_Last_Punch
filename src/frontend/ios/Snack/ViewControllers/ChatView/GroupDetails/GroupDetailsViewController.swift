@@ -23,6 +23,8 @@ class GroupDetailsViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var detailsCell: UITableViewCell!
     @IBOutlet private var lblName: UILabel!
+    @IBOutlet private var topicCell: UITableViewCell!
+    @IBOutlet private var lblTopic: UILabel!
     @IBOutlet private var descriptionCell: UITableViewCell!
     @IBOutlet private var lblDescription: UILabel!
     @IBOutlet private var mediaCell: UITableViewCell!
@@ -71,8 +73,15 @@ class GroupDetailsViewController: UIViewController {
     func loadGroup() {
         guard let channelInfo = channelInfo, let owner = channelInfo.channel?.owner  else { return }
         lblName.text = channelInfo.channel?.name
+        
+        if channelInfo.channel?.topic == nil || channelInfo.channel?.topic == "" {
+            lblTopic.text = "주제가 없습니다"
+        } else {
+            lblTopic.text = channelInfo.channel?.topic
+        }
+        
         if channelInfo.channel?.description == nil || channelInfo.channel?.description == "" {
-            lblDescription.text = "설정된 주제가 없습니다"
+            lblDescription.text = "설명이 없습니다"
         } else {
             lblDescription.text = channelInfo.channel?.description
         }
@@ -228,8 +237,7 @@ class GroupDetailsViewController: UIViewController {
         let userSearchVC = UserSearchViewController()
         userSearchVC.isChannel = true
         userSearchVC.body = [
-            "channelId": channel.id,
-            "roleId": 1
+            "channelId": channel.id
         ]
         
         self.present(userSearchVC, animated: true, completion: nil)
@@ -245,6 +253,12 @@ class GroupDetailsViewController: UIViewController {
         })
         
         alert.addTextField(configurationHandler: { [self] textField in
+            textField.text = channelInfo?.channel?.topic
+            textField.placeholder = "채널 주제"
+            textField.autocapitalizationType = .words
+        })
+        
+        alert.addTextField(configurationHandler: { [self] textField in
             textField.text = channelInfo?.channel?.description
             textField.placeholder = "채널 설명"
             textField.autocapitalizationType = .words
@@ -252,7 +266,7 @@ class GroupDetailsViewController: UIViewController {
         
         let alertSave = UIAlertAction(title: "저장", style: .destructive) { [self] action in
             if let name = alert.textFields?[0] {
-                self.actionEditChannelInfo(name.text, alert.textFields?[1].text)
+                self.actionEditChannelInfo(name.text, alert.textFields?[1].text, alert.textFields?[2].text)
             }
         }
         
@@ -266,11 +280,11 @@ class GroupDetailsViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    func actionEditChannelInfo(_ name: String?, _ description: String?) {
+    func actionEditChannelInfo(_ name: String?, _ topic: String?, _ description: String?) {
         ProgressHUD.animationType = .circleSpinFade
         ProgressHUD.show("변경중..")
         DispatchQueue.main.async { [self] in // 메인스레드에서 동작
-            ChannelService.shared.editChannel(method: .put, accessToken: accessToken!, channelId: (channelInfo?.channel?.id.description)!, name: name!, description: description!)
+            ChannelService.shared.editChannel(method: .put, accessToken: accessToken!, channelId: (channelInfo?.channel?.id.description)!, name: name!, topic: topic!, description: description!)
                 .subscribe { event in
                     switch event {
                     case .next(let result):
@@ -278,6 +292,7 @@ class GroupDetailsViewController: UIViewController {
                         case .success:
                             ProgressHUD.showSucceed("변경 되었습니다")
                             lblName.text = name
+                            lblTopic.text = topic
                             lblDescription.text = description
                         default:
                             ProgressHUD.showFailed("죄송합니다\n일시적인 문제가 발생했습니다")
@@ -357,7 +372,7 @@ extension GroupDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if (section == 0) { return 1                        }
-        if (section == 1) { return 1                        }
+        if (section == 1) { return 2                        }
         if (section == 2) { return 1                        }
         if (section == 3) { return memberInfo.count        }
         if (section == 4) { return isGroupOwner() ? 0 : 1   }
@@ -368,7 +383,7 @@ extension GroupDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         if (section == 0) { return nil                      }
-        if (section == 1) { return "설명"                    }
+        if (section == 1) { return "주제 및 설명"              }
         if (section == 2) { return nil                      }
         if (section == 3) { return titleForHeaderMembers()  }
         if (section == 4) { return nil                      }
@@ -383,6 +398,10 @@ extension GroupDetailsViewController: UITableViewDataSource {
         }
         
         if (indexPath.section == 1) && (indexPath.row == 0) {
+            return topicCell
+        }
+        
+        if (indexPath.section == 1) && (indexPath.row == 1) {
             return descriptionCell
         }
         

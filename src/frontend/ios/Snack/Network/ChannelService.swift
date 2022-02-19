@@ -19,6 +19,14 @@ class ChannelService {
         ]
     }
     
+    private func makeParameter2(name: String, topic: String, description: String) -> Parameters {
+        return [
+            "name": name,
+            "topic" : topic,
+            "description" : description
+        ]
+    }
+    
     func getChannel(method: HTTPMethod, _ accessToken: String, channelId: String) -> Observable<NetworkResult<ChannelResponseModel>> {
         let url = APIConstants().channelURL + "/\(channelId)"
                 
@@ -154,14 +162,15 @@ class ChannelService {
     }
 
     
-    func editChannel(method: HTTPMethod, accessToken: String, channelId: String, name: String, description: String) -> Observable<NetworkResult<ChannelResponseModel>> {
+    func editChannel(method: HTTPMethod, accessToken: String, channelId: String, name: String, topic: String, description: String) -> Observable<NetworkResult<ChannelResponseModel>> {
         let url = APIConstants().channelURL + "/\(channelId)"
+        let param = self.makeParameter2(name: name, topic: topic, description: description)
                 
         return Observable.create { observer -> Disposable in
             let header : HTTPHeaders = ["X-AUTH-TOKEN": accessToken]
             let dataRequest = AF.request(url,
                                          method: method,
-                                         parameters: ["description": description],
+                                         parameters: param,
                                          encoding: JSONEncoding.default,
                                          headers: header)
 
@@ -237,7 +246,7 @@ class ChannelService {
         let decoder = JSONDecoder()
         
 //         데이터량이 너무 많음
-        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
+//        if let JSONString = String(data: data, encoding: String.Encoding.utf8) { NSLog("Nework Response JSON : " + JSONString) }
         
         guard let decodedData = try? decoder.decode(ChannelResponseModel.self, from: data) else {
             return .pathErr

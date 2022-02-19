@@ -50,13 +50,13 @@ class GroupMessageViewModel: ViewModelProtocol {
         self.userId = userId
         
         // socket
-        StompWebsocket.shared.message
+        ChatStompWebsocket.shared.message
             .filter {$0.channelId == self.channel.id.description}
             .bind(to: output.sokectMessage)
             .disposed(by: disposeBag)
         
         // typing
-        StompWebsocket.shared.typing
+        ChatStompWebsocket.shared.typing
             .filter {$0.channelId == self.channel.id.description}
             .bind(to: output.sokectTyping, output.sokectEndTyping)
             .disposed(by: disposeBag)

@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="NotoSansKR-Regular 2.otf">
+        <array key="NotoSansKR-Regular.otf">
             <string>NotoSansKR-Regular</string>
         </array>
     </customFonts>
@@ -16,7 +16,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StatusView">
             <connections>
                 <outlet property="cellClear" destination="5JN-b9-aHs" id="5ea-0K-WWq"/>
-                <outlet property="cellStatus" destination="DHG-0n-HeZ" id="r9B-eR-Qbj"/>
                 <outlet property="tableView" destination="i5M-Pr-FkT" id="VfD-fa-afX"/>
                 <outlet property="view" destination="FSe-cX-OWH" id="fvM-OA-ZHv"/>
             </connections>
@@ -44,23 +43,6 @@
             </constraints>
             <point key="canvasLocation" x="11" y="54"/>
         </view>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Bhw-DW-ODH" style="IBUITableViewCellStyleDefault" id="DHG-0n-HeZ">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DHG-0n-HeZ" id="W1D-EU-pu1">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bhw-DW-ODH">
-                        <rect key="frame" x="16" y="0.0" width="288" height="50"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="16"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                </subviews>
-            </tableViewCellContentView>
-            <point key="canvasLocation" x="683" y="-205"/>
-        </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="mnA-jW-dcZ" style="IBUITableViewCellStyleDefault" id="5JN-b9-aHs">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>

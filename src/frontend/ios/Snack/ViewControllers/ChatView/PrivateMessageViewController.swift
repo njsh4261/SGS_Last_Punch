@@ -102,7 +102,7 @@ class PrivateMessageViewController: MessagesViewController {
     
     @objc private func goToProfile() {
         let userModel = UserModel(
-            id: Int(recipientInfo.authorId)!, email: "lastPunch@gmail.com", name: recipientInfo.displayName, description: "안녕하세요", phone: "010-1234-1234", country: "kor", language: "eng", settings: 0, status: "rull", createDt: "2022.02.24", modifyDt: "2022.02.24"
+            id: Int(recipientInfo.senderId)!, email: "lastPunch@gmail.com", name: recipientInfo.displayName, description: "안녕하세요", phone: "010-1234-1234", country: "kor", status: "rull", imageNum: 11, createDt: "2022.02.24", modifyDt: "2022.02.24"
         )
         let viewController = ProfileViewController(nibName: "ProfileView", bundle: nil, senderInfo: senderInfo, recipientInfo: userModel, isChat: false)
         viewController.hidesBottomBarWhenPushed = true
@@ -120,7 +120,7 @@ class PrivateMessageViewController: MessagesViewController {
     // Typing - text 변화 감지
     private func textDidChange(_ text: String) {
         if text.count == 0 { return }
-        StompWebsocket.shared.sendTyping(authorId: senderInfo.senderId, channelId: channelId)
+        ChatStompWebsocket.shared.sendTyping(authorId: senderInfo.senderId, channelId: channelId)
     }
     
     // 최근 메시지 Load
@@ -442,7 +442,7 @@ extension PrivateMessageViewController: MessagesDisplayDelegate {
 extension PrivateMessageViewController: InputBarAccessoryViewDelegate {
     // 본인 정보
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        StompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channelId, content: text)
+        ChatStompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channelId, content: text)
         inputBar.inputTextView.text.removeAll()
     }
 }

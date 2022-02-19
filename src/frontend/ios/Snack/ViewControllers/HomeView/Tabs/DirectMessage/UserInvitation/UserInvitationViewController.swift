@@ -78,6 +78,7 @@ class UserInvitationViewController: UIViewController {
                 if userList.first!.email == email { // 이메일이 정확히 일치하는 user에게 초대
                     if isChannel {
                         body!["accountId"] = userList.first?.id
+                        body!["roleId"] = 1 // 일반 사용자 등급(1,2,3)
                         addMember(body: body!)
                     } else {
                         addAccount(accountId: (userList.first?.id.description)!)
@@ -89,7 +90,7 @@ class UserInvitationViewController: UIViewController {
                 for user in userList {
                     if user.email == email { // 이메일이 정확히 일치하는 user에게 초대
                         if isChannel {
-                            body!["accountId"] = userList.first?.id
+                            body!["roleId"] = 1 // 일반 사용자 등급(1,2,3)
                             addMember(body: body!)
                         } else {
                             addAccount(accountId: user.id.description)

@@ -22,9 +22,11 @@
                 <outlet property="lblFooter1" destination="8Z6-gF-pSt" id="9Zb-Ub-HcS"/>
                 <outlet property="lblFooter2" destination="dub-Oc-NSD" id="x5r-XC-YCm"/>
                 <outlet property="lblName" destination="1ej-XA-OMo" id="Gfs-Ti-PDc"/>
+                <outlet property="lblTopic" destination="tjl-e2-J3a" id="cW8-LB-e5X"/>
                 <outlet property="leaveCell" destination="n3N-1V-IjX" id="2cf-dx-pXc"/>
                 <outlet property="mediaCell" destination="lT3-JP-d98" id="TRP-0m-s3Z"/>
                 <outlet property="tableView" destination="i5M-Pr-FkT" id="weZ-oE-e2N"/>
+                <outlet property="topicCell" destination="YB6-by-oiZ" id="4SU-at-aGN"/>
                 <outlet property="view" destination="gVL-Kb-l2i" id="2i0-s5-LbV"/>
                 <outlet property="viewFooter" destination="AQb-9p-OKj" id="P55-AH-74X"/>
             </connections>
@@ -52,6 +54,29 @@
             </constraints>
             <point key="canvasLocation" x="103" y="185"/>
         </view>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="YB6-by-oiZ">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YB6-by-oiZ" id="Nqo-Rq-Mfh">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="주제" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tjl-e2-J3a">
+                        <rect key="frame" x="16" y="0.0" width="288" height="50.5"/>
+                        <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="tjl-e2-J3a" secondAttribute="bottom" constant="-0.5" id="0hi-DT-iO2"/>
+                    <constraint firstItem="tjl-e2-J3a" firstAttribute="top" secondItem="Nqo-Rq-Mfh" secondAttribute="top" id="Xrs-dh-add"/>
+                    <constraint firstItem="tjl-e2-J3a" firstAttribute="leading" secondItem="Nqo-Rq-Mfh" secondAttribute="leading" constant="16" id="cPT-lU-sJY"/>
+                    <constraint firstAttribute="trailing" secondItem="tjl-e2-J3a" secondAttribute="trailing" constant="16" id="wCx-TP-yEi"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="789" y="19"/>
+        </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="CgD-am-czd">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
@@ -96,7 +121,7 @@
                     <constraint firstItem="dC6-EL-8AY" firstAttribute="top" secondItem="oTV-gH-t00" secondAttribute="top" id="tOR-eJ-CPk"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="789" y="7"/>
+            <point key="canvasLocation" x="789" y="111"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="ZgI-Xp-BM3" style="IBUITableViewCellStyleDefault" id="lT3-JP-d98">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -114,7 +139,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="788" y="105"/>
+            <point key="canvasLocation" x="788" y="204"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="dQR-RK-q4C" style="IBUITableViewCellStyleDefault" id="n3N-1V-IjX">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -132,7 +157,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="788" y="206"/>
+            <point key="canvasLocation" x="788" y="304"/>
         </tableViewCell>
         <view contentMode="scaleToFill" id="AQb-9p-OKj">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -167,7 +192,7 @@
                 <constraint firstItem="8Z6-gF-pSt" firstAttribute="leading" secondItem="AQb-9p-OKj" secondAttribute="leading" constant="20" id="hcg-w2-UZq"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="788" y="303"/>
+            <point key="canvasLocation" x="789" y="399"/>
         </view>
     </objects>
     <resources>

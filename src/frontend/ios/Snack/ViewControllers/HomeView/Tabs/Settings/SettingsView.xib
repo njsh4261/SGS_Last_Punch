@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,10 +26,9 @@
                 <outlet property="cellPasscode" destination="fHv-Et-8cy" id="rEe-Hr-T9A"/>
                 <outlet property="cellPassword" destination="5Ge-vf-v3w" id="usc-7L-JJN"/>
                 <outlet property="cellProfile" destination="NH3-nC-Etw" id="Smx-fg-3TL"/>
-                <outlet property="cellStatus" destination="wNU-C5-MnA" id="OHh-ua-PPK"/>
-                <outlet property="imageUser" destination="b1o-fd-eKH" id="u6z-Ns-K0J"/>
+                <outlet property="ivUser" destination="b1o-fd-eKH" id="u6z-Ns-K0J"/>
+                <outlet property="lblInitials" destination="lGt-o9-ZzY" id="rNU-Kz-vfb"/>
                 <outlet property="lblName" destination="ftm-da-xuL" id="aaa-Zd-uVZ"/>
-                <outlet property="lblStatus" destination="tnX-oP-wet" id="0RD-dL-Npb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewHeader" destination="9Oi-fY-zxx" id="fWF-WS-tWV"/>
             </connections>
@@ -46,9 +46,9 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="snack" translatesAutoresizingMaskIntoConstraints="NO" id="b1o-fd-eKH">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b1o-fd-eKH">
                     <rect key="frame" x="125" y="15" width="70" height="70"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="70" id="7pa-HE-Vbo"/>
                         <constraint firstAttribute="height" constant="70" id="pB1-uu-azU"/>
@@ -68,13 +68,26 @@
                     <fontDescription key="fontDescription" name="NotoSansKR-Bold" family="Noto Sans KR" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="김" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGt-o9-ZzY">
+                    <rect key="frame" x="125" y="15" width="70" height="70"/>
+                    <color key="backgroundColor" name="snackButtonColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="5S7-Z9-i4O"/>
+                        <constraint firstAttribute="height" constant="70" id="Mx8-wC-Ral"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <constraints>
                 <constraint firstItem="b1o-fd-eKH" firstAttribute="centerX" secondItem="9Oi-fY-zxx" secondAttribute="centerX" id="0yz-Rg-eUB"/>
                 <constraint firstItem="b1o-fd-eKH" firstAttribute="top" secondItem="9Oi-fY-zxx" secondAttribute="top" constant="15" id="HmK-Y8-CqA"/>
                 <constraint firstAttribute="trailing" secondItem="ftm-da-xuL" secondAttribute="trailing" id="Tpb-3v-9hJ"/>
                 <constraint firstItem="ftm-da-xuL" firstAttribute="leading" secondItem="9Oi-fY-zxx" secondAttribute="leading" id="UsH-7y-grz"/>
+                <constraint firstItem="lGt-o9-ZzY" firstAttribute="top" secondItem="9Oi-fY-zxx" secondAttribute="top" constant="15" id="gNv-Mb-k0e"/>
                 <constraint firstItem="ftm-da-xuL" firstAttribute="top" secondItem="9Oi-fY-zxx" secondAttribute="top" constant="95" id="pcU-HK-yDj"/>
+                <constraint firstItem="lGt-o9-ZzY" firstAttribute="centerX" secondItem="9Oi-fY-zxx" secondAttribute="centerX" id="puk-u0-BMj"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -141,24 +154,6 @@
                 </subviews>
             </tableViewCellContentView>
             <point key="canvasLocation" x="741" y="145"/>
-        </tableViewCell>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="tnX-oP-wet" style="IBUITableViewCellStyleDefault" id="wNU-C5-MnA">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wNU-C5-MnA" id="N9u-hC-9c0">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="상태 표시" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tnX-oP-wet">
-                        <rect key="frame" x="16" y="0.0" width="288" height="50"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="NotoSansKR-Regular" family="Noto Sans KR" pointSize="16"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                </subviews>
-            </tableViewCellContentView>
-            <point key="canvasLocation" x="741" y="236"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="csv-Pj-3aW" style="IBUITableViewCellStyleDefault" id="DjV-hq-RP0">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -234,7 +229,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="snack" width="170.66667175292969" height="170.66667175292969"/>
+        <namedColor name="snackButtonColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

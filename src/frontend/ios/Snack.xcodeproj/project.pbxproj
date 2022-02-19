@@ -48,7 +48,7 @@
 		8CBD457827A25E430056A557 /* PrivateMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457727A25E430056A557 /* PrivateMessageViewController.swift */; };
 		8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457927A287460056A557 /* Ex+NotificationCenter.swift */; };
 		8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD457D27A28AEF0056A557 /* MessageKit.swift */; };
-		8CBD458B27A3E40B0056A557 /* DirectMessageListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD458A27A3E40B0056A557 /* DirectMessageListCellView.swift */; };
+		8CBD458B27A3E40B0056A557 /* DirectMessageListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD458A27A3E40B0056A557 /* DirectMessageListViewCell.swift */; };
 		8CBD458D27A3E42B0056A557 /* DirectMessageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD458C27A3E42B0056A557 /* DirectMessageListViewModel.swift */; };
 		8CBD458F27A3E46B0056A557 /* DirectMessageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD458E27A3E46B0056A557 /* DirectMessageListViewController.swift */; };
 		8CBD459527A3E5600056A557 /* MemberListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBD459427A3E55F0056A557 /* MemberListCell.swift */; };
@@ -94,7 +94,7 @@
 		8CC9E8FC27B2DABF008BE1EA /* UserInvitationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E8FB27B2DABF008BE1EA /* UserInvitationViewController.swift */; };
 		8CC9E90C27B3B939008BE1EA /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90B27B3B939008BE1EA /* AccountService.swift */; };
 		8CC9E90E27B3BA01008BE1EA /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90D27B3BA01008BE1EA /* AccountModel.swift */; };
-		8CC9E91027B3FDB5008BE1EA /* StompWebsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90F27B3FDB5008BE1EA /* StompWebsocket.swift */; };
+		8CC9E91027B3FDB5008BE1EA /* ChatStompWebsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9E90F27B3FDB5008BE1EA /* ChatStompWebsocket.swift */; };
 		8CCFFA6627B95179005D4D13 /* NewChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA6527B95179005D4D13 /* NewChannelViewController.swift */; };
 		8CCFFA6C27B9524F005D4D13 /* NewChannelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFA6B27B9524F005D4D13 /* NewChannelView.xib */; };
 		8CCFFA6E27B964B2005D4D13 /* ChannelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFA6D27B964B2005D4D13 /* ChannelService.swift */; };
@@ -128,6 +128,17 @@
 		8CCFFAC227BE8EBF005D4D13 /* ChannelSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC127BE8EBF005D4D13 /* ChannelSearchCell.xib */; };
 		8CCFFAC427BE975D005D4D13 /* CustomMessagesFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC327BE975D005D4D13 /* CustomMessagesFlowLayout.swift */; };
 		8CCFFAC627BE9793005D4D13 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC527BE9793005D4D13 /* CustomCell.swift */; };
+		8CCFFACA27C023AA005D4D13 /* PresenceWebsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAC927C023AA005D4D13 /* PresenceWebsocket.swift */; };
+		8CCFFACC27C0C462005D4D13 /* PresenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFACB27C0C462005D4D13 /* PresenceModel.swift */; };
+		8CCFFAD127C0CC30005D4D13 /* StatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD027C0CC30005D4D13 /* StatusCell.swift */; };
+		8CCFFAD327C0CC66005D4D13 /* StatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD227C0CC66005D4D13 /* StatusCell.xib */; };
+		8CCFFAD527C0D622005D4D13 /* PresenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD427C0D622005D4D13 /* PresenceService.swift */; };
+		8CCFFAD827C10357005D4D13 /* EditWorkspaceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD727C10357005D4D13 /* EditWorkspaceView.xib */; };
+		8CCFFADA27C1042B005D4D13 /* EditWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAD927C1042B005D4D13 /* EditWorkspaceView.swift */; };
+		8CCFFADE27C11BDC005D4D13 /* SelectImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFADD27C11BDC005D4D13 /* SelectImageView.swift */; };
+		8CCFFAE227C11E71005D4D13 /* SelectImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAE127C11E70005D4D13 /* SelectImageView.xib */; };
+		8CCFFAE627C12094005D4D13 /* SelectImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAE427C12093005D4D13 /* SelectImageCell.xib */; };
+		8CCFFAE827C120AE005D4D13 /* SelectImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAE727C120AE005D4D13 /* SelectImageCell.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -180,7 +191,7 @@
 		8CBD457727A25E430056A557 /* PrivateMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateMessageViewController.swift; sourceTree = "<group>"; };
 		8CBD457927A287460056A557 /* Ex+NotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+NotificationCenter.swift"; sourceTree = "<group>"; };
 		8CBD457D27A28AEF0056A557 /* MessageKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKit.swift; sourceTree = "<group>"; };
-		8CBD458A27A3E40B0056A557 /* DirectMessageListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageListCellView.swift; sourceTree = "<group>"; };
+		8CBD458A27A3E40B0056A557 /* DirectMessageListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageListViewCell.swift; sourceTree = "<group>"; };
 		8CBD458C27A3E42B0056A557 /* DirectMessageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageListViewModel.swift; sourceTree = "<group>"; };
 		8CBD458E27A3E46B0056A557 /* DirectMessageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageListViewController.swift; sourceTree = "<group>"; };
 		8CBD459427A3E55F0056A557 /* MemberListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberListCell.swift; sourceTree = "<group>"; };
@@ -226,7 +237,7 @@
 		8CC9E8FB27B2DABF008BE1EA /* UserInvitationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInvitationViewController.swift; sourceTree = "<group>"; };
 		8CC9E90B27B3B939008BE1EA /* AccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		8CC9E90D27B3BA01008BE1EA /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
-		8CC9E90F27B3FDB5008BE1EA /* StompWebsocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StompWebsocket.swift; sourceTree = "<group>"; };
+		8CC9E90F27B3FDB5008BE1EA /* ChatStompWebsocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStompWebsocket.swift; sourceTree = "<group>"; };
 		8CCFFA6527B95179005D4D13 /* NewChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChannelViewController.swift; sourceTree = "<group>"; };
 		8CCFFA6B27B9524F005D4D13 /* NewChannelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewChannelView.xib; sourceTree = "<group>"; };
 		8CCFFA6D27B964B2005D4D13 /* ChannelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelService.swift; sourceTree = "<group>"; };
@@ -260,6 +271,17 @@
 		8CCFFAC127BE8EBF005D4D13 /* ChannelSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChannelSearchCell.xib; sourceTree = "<group>"; };
 		8CCFFAC327BE975D005D4D13 /* CustomMessagesFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessagesFlowLayout.swift; sourceTree = "<group>"; };
 		8CCFFAC527BE9793005D4D13 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		8CCFFAC927C023AA005D4D13 /* PresenceWebsocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceWebsocket.swift; sourceTree = "<group>"; };
+		8CCFFACB27C0C462005D4D13 /* PresenceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceModel.swift; sourceTree = "<group>"; };
+		8CCFFAD027C0CC30005D4D13 /* StatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCell.swift; sourceTree = "<group>"; };
+		8CCFFAD227C0CC66005D4D13 /* StatusCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusCell.xib; sourceTree = "<group>"; };
+		8CCFFAD427C0D622005D4D13 /* PresenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceService.swift; sourceTree = "<group>"; };
+		8CCFFAD727C10357005D4D13 /* EditWorkspaceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditWorkspaceView.xib; sourceTree = "<group>"; };
+		8CCFFAD927C1042B005D4D13 /* EditWorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkspaceView.swift; sourceTree = "<group>"; };
+		8CCFFADD27C11BDC005D4D13 /* SelectImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageView.swift; sourceTree = "<group>"; };
+		8CCFFAE127C11E70005D4D13 /* SelectImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectImageView.xib; sourceTree = "<group>"; };
+		8CCFFAE427C12093005D4D13 /* SelectImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectImageCell.xib; sourceTree = "<group>"; };
+		8CCFFAE727C120AE005D4D13 /* SelectImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageCell.swift; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -369,7 +391,9 @@
 				8CCFFA6D27B964B2005D4D13 /* ChannelService.swift */,
 				8CC9E8C927B10C9D008BE1EA /* NoteService.swift */,
 				8CCFFAB127BD12DB005D4D13 /* ChatService.swift */,
-				8CC9E90F27B3FDB5008BE1EA /* StompWebsocket.swift */,
+				8CCFFAD427C0D622005D4D13 /* PresenceService.swift */,
+				8CC9E90F27B3FDB5008BE1EA /* ChatStompWebsocket.swift */,
+				8CCFFAC927C023AA005D4D13 /* PresenceWebsocket.swift */,
 				8C68AB1427969D1200C1711E /* NetworkResult.swift */,
 				8CC9E8BE27B10487008BE1EA /* APIConstants.swift */,
 			);
@@ -404,10 +428,9 @@
 		8C68AADD2795269100C1711E /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
+				8CCFFADC27C11BC7005D4D13 /* SelectImage */,
 				8C68AAE5279526E800C1711E /* Home */,
 				8CBD458727A3E2E20056A557 /* DirectMessage */,
-				8CBD459227A3E4A10056A557 /* Notice */,
-				8CBD459327A3E4A90056A557 /* Search */,
 				8C68AAE92795281D00C1711E /* Settings */,
 			);
 			path = Tabs;
@@ -416,6 +439,7 @@
 		8C68AAE5279526E800C1711E /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				8CCFFAD627C10326005D4D13 /* EditWorkspace */,
 				8CCFFAB527BE8A18005D4D13 /* ChannelSearch */,
 				8CCFFAA127BA0559005D4D13 /* NewChannel */,
 				8C962B6127AE6A1C00A9A1F5 /* Cell */,
@@ -452,6 +476,7 @@
 				8CBD459E27A56F0A0056A557 /* MessageModel.swift */,
 				8CC9E8CB27B10CAE008BE1EA /* NoteListCellModel.swift */,
 				8CCFFAB327BD180C005D4D13 /* ChatModel.swift */,
+				8CCFFACB27C0C462005D4D13 /* PresenceModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -557,23 +582,9 @@
 				8CC9E8FF27B2DACC008BE1EA /* UserInvitation */,
 				8CBD458E27A3E46B0056A557 /* DirectMessageListViewController.swift */,
 				8CBD458C27A3E42B0056A557 /* DirectMessageListViewModel.swift */,
-				8CBD458A27A3E40B0056A557 /* DirectMessageListCellView.swift */,
+				8CBD458A27A3E40B0056A557 /* DirectMessageListViewCell.swift */,
 			);
 			path = DirectMessage;
-			sourceTree = "<group>";
-		};
-		8CBD459227A3E4A10056A557 /* Notice */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Notice;
-			sourceTree = "<group>";
-		};
-		8CBD459327A3E4A90056A557 /* Search */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Search;
 			sourceTree = "<group>";
 		};
 		8CBD45B627A6CF320056A557 /* Profile */ = {
@@ -607,6 +618,7 @@
 		8CBD45C127A70C6B0056A557 /* Status */ = {
 			isa = PBXGroup;
 			children = (
+				8CCFFACF27C0CC13005D4D13 /* Cell */,
 				8CBD45F227A887520056A557 /* StatusView.swift */,
 				8CBD45F427A887DE0056A557 /* StatusView.xib */,
 			);
@@ -800,6 +812,35 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
+		8CCFFACF27C0CC13005D4D13 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFAD027C0CC30005D4D13 /* StatusCell.swift */,
+				8CCFFAD227C0CC66005D4D13 /* StatusCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		8CCFFAD627C10326005D4D13 /* EditWorkspace */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFAD927C1042B005D4D13 /* EditWorkspaceView.swift */,
+				8CCFFAD727C10357005D4D13 /* EditWorkspaceView.xib */,
+			);
+			name = EditWorkspace;
+			sourceTree = "<group>";
+		};
+		8CCFFADC27C11BC7005D4D13 /* SelectImage */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFFAE727C120AE005D4D13 /* SelectImageCell.swift */,
+				8CCFFAE427C12093005D4D13 /* SelectImageCell.xib */,
+				8CCFFADD27C11BDC005D4D13 /* SelectImageView.swift */,
+				8CCFFAE127C11E70005D4D13 /* SelectImageView.xib */,
+			);
+			path = SelectImage;
+			sourceTree = "<group>";
+		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -881,8 +922,11 @@
 			files = (
 				8CCFFA9627B9E98F005D4D13 /* NotoSansKR-Bold 2.otf in Resources */,
 				8CBD45EF27A874950056A557 /* KeepMediaView.xib in Resources */,
+				8CCFFAD827C10357005D4D13 /* EditWorkspaceView.xib in Resources */,
 				8CCFFAA427BA767B005D4D13 /* UserInvitationView.xib in Resources */,
 				8C33C4F4277BF06200294445 /* LaunchScreen.storyboard in Resources */,
+				8CCFFAE227C11E71005D4D13 /* SelectImageView.xib in Resources */,
+				8CCFFAE627C12094005D4D13 /* SelectImageCell.xib in Resources */,
 				8CCFFABB27BE8B60005D4D13 /* ChannelSearchView.xib in Resources */,
 				8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */,
 				8CCFFA9427B9E98F005D4D13 /* NotoSansKR-Regular 2.otf in Resources */,
@@ -890,6 +934,7 @@
 				8CCFFAA927BAA783005D4D13 /* UserSearchCell.xib in Resources */,
 				8CBD45E127A868040056A557 /* MediaView.xib in Resources */,
 				8CCFFA6C27B9524F005D4D13 /* NewChannelView.xib in Resources */,
+				8CCFFAD327C0CC66005D4D13 /* StatusCell.xib in Resources */,
 				8CCFFA7927B98CCA005D4D13 /* UserSearchView.xib in Resources */,
 				8C68AB2F2797F62D00C1711E /* SettingsView.xib in Resources */,
 				8CCFFAC227BE8EBF005D4D13 /* ChannelSearchCell.xib in Resources */,
@@ -985,8 +1030,9 @@
 				8CC9E8CC27B10CAE008BE1EA /* NoteListCellModel.swift in Sources */,
 				8CBD45E427A869870056A557 /* NetworkView.swift in Sources */,
 				8CBD459527A3E5600056A557 /* MemberListCell.swift in Sources */,
-				8CBD458B27A3E40B0056A557 /* DirectMessageListCellView.swift in Sources */,
+				8CBD458B27A3E40B0056A557 /* DirectMessageListViewCell.swift in Sources */,
 				8C962B5B27ADABE400A9A1F5 /* Channel.swift in Sources */,
+				8CCFFACA27C023AA005D4D13 /* PresenceWebsocket.swift in Sources */,
 				8C68AAE1279526C600C1711E /* HomeViewController.swift in Sources */,
 				8CC9E8C327B10A17008BE1EA /* NoteListViewContoller.swift in Sources */,
 				8CCFFAC427BE975D005D4D13 /* CustomMessagesFlowLayout.swift in Sources */,
@@ -1009,10 +1055,13 @@
 				8CBD45ED27A8746E0056A557 /* KeepMediaView.swift in Sources */,
 				8CCFFA7027B965A8005D4D13 /* ChannelModel.swift in Sources */,
 				8CBD457E27A28AEF0056A557 /* MessageKit.swift in Sources */,
+				8CCFFAD527C0D622005D4D13 /* PresenceService.swift in Sources */,
 				8CC1E79E27ACADA800BFE4D1 /* NewWorkspaceViewModel.swift in Sources */,
 				8CCFFAB427BD180C005D4D13 /* ChatModel.swift in Sources */,
 				8C68AAD92791AF3300C1711E /* RegisterViewModel.swift in Sources */,
+				8CCFFAE827C120AE005D4D13 /* SelectImageCell.swift in Sources */,
 				8C68AAC327909BC200C1711E /* LoginViewController.swift in Sources */,
+				8CCFFACC27C0C462005D4D13 /* PresenceModel.swift in Sources */,
 				8CCFFA8C27B9E98F005D4D13 /* LogOutViewModel.swift in Sources */,
 				8CBD45DD27A865C30056A557 /* MeidaView.swift in Sources */,
 				8CC9E90C27B3B939008BE1EA /* AccountService.swift in Sources */,
@@ -1034,8 +1083,10 @@
 				8CBD45D527A7EF6D0056A557 /* PasswordView.swift in Sources */,
 				8CC9E8D827B22B4C008BE1EA /* NoteSection.swift in Sources */,
 				8CCFFAAD27BB48CE005D4D13 /* GroupDetailsViewController.swift in Sources */,
-				8CC9E91027B3FDB5008BE1EA /* StompWebsocket.swift in Sources */,
+				8CCFFADE27C11BDC005D4D13 /* SelectImageView.swift in Sources */,
+				8CC9E91027B3FDB5008BE1EA /* ChatStompWebsocket.swift in Sources */,
 				8CCFFA8E27B9E98F005D4D13 /* NavigationController.swift in Sources */,
+				8CCFFADA27C1042B005D4D13 /* EditWorkspaceView.swift in Sources */,
 				8CBD45B827A6CFAB0056A557 /* ProfileViewController.swift in Sources */,
 				8CBD45CB27A71A310056A557 /* Ex+Data.swift in Sources */,
 				8CBD45E827A872300056A557 /* CacheView.swift in Sources */,
@@ -1048,6 +1099,7 @@
 				8CCFFAB227BD12DB005D4D13 /* ChatService.swift in Sources */,
 				8CC9E8D027B128C3008BE1EA /* GroupMessageViewModel.swift in Sources */,
 				8CC9E8DA27B22BDB008BE1EA /* Note.swift in Sources */,
+				8CCFFAD127C0CC30005D4D13 /* StatusCell.swift in Sources */,
 				8CBD456C27A18E3A0056A557 /* SearchURLWorkspaceViewController.swift in Sources */,
 				8CBD45C527A7172C0056A557 /* Ex+UIImage.swift in Sources */,
 				8C68AACB279117FA00C1711E /* UserModel.swift in Sources */,

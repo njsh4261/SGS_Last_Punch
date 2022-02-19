@@ -12,12 +12,11 @@ struct UserModel: Codable {
     var id: Int
     let email: String
     var name: String
-    let description: String?
-    let phone: String?
+    var description: String?
+    var phone: String?
     let country: String
-    let language: String
-    let settings: Int
     let status: String?
+    var imageNum: Int?
     let createDt: String
     let modifyDt: String
 }

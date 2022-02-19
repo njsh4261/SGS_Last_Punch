@@ -432,6 +432,7 @@
 		8C68AAE5279526E800C1711E /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				8CCFFADB27C11A9A005D4D13 /* SelectImage */,
 				8CCFFAD627C10326005D4D13 /* EditWorkspace */,
 				8CCFFAB527BE8A18005D4D13 /* ChannelSearch */,
 				8CCFFAA127BA0559005D4D13 /* NewChannel */,
@@ -835,6 +836,14 @@
 				8CCFFAD727C10357005D4D13 /* EditWorkspaceView.xib */,
 			);
 			name = EditWorkspace;
+			sourceTree = "<group>";
+		};
+		8CCFFADB27C11A9A005D4D13 /* SelectImage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = SelectImage;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		A552636F1460E7A24E654777 /* Frameworks */ = {

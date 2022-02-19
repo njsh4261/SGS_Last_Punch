@@ -27,6 +27,9 @@ class HomeViewController: UIViewController {
     private var workspaceId: String?
     
     // MARK: - UI
+    private var viewTitle = UIView()
+    private var lblTitle = UILabel()
+    private var btnViewTitle = UIButton()
     private var btnSearch = UIButton()
     private var tableView = UITableView()
     private var viewHeader = UIView()
@@ -134,6 +137,13 @@ class HomeViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
+    @objc private func goToDetails() {
+        let viewController = EditWorkspaceView()
+        let navController = NavigationController(rootViewController: viewController)
+        navController.modalPresentationStyle = .fullScreen
+        self.show(navController, sender: nil)
+    }
+    
     private func goToChannelSearch() {
         let channelSearchVC = ChannelSearchViewController()
         self.present(channelSearchVC, animated: true, completion: nil)
@@ -144,8 +154,9 @@ class HomeViewController: UIViewController {
         self.present(newChannelVC, animated: true, completion: nil)
     }
     
+    // Title 재설정
     private func setTitle(_ title: String) {
-        self.navigationItem.title = title
+        self.lblTitle.text = title
     }
     
     private func setData(_ users: [User], _ channels: [WorkspaceChannelCellModel]) {
@@ -182,14 +193,29 @@ class HomeViewController: UIViewController {
     }
     
     private func attribute() {
-        title = "Workspace명"
         tabBarItem.image = UIImage(systemName: "house")
         tabBarItem.selectedImage = UIImage(systemName: "house.fill")
+        navigationItem.titleView = viewTitle
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "홈", style: .plain, target: nil, action: nil)
         tabBarItem.title = "홈"
         
         [view, tableView].forEach {
             $0.backgroundColor = UIColor(named: "snackBackGroundColor2")
+        }
+        
+        viewTitle = viewTitle.then {
+            $0.addSubview(lblTitle)
+            $0.addSubview(btnViewTitle)
+            lblTitle.text = "워크스페이스 명"
+            lblTitle.textColor = .white
+            lblTitle.font = UIFont(name: "NotoSansKR-Bold", size: 17)
+            $0.frame = CGRect(x: 0, y: 0, width: lblTitle.frame.size.width, height: 30)
+        }
+        
+        btnViewTitle = btnViewTitle.then {
+            $0.frame = navigationItem.titleView!.frame
+            let recognizer = UITapGestureRecognizer(target: self, action: #selector(goToDetails))
+            $0.addGestureRecognizer(recognizer)
         }
         
         btnSearch = btnSearch.then {
@@ -242,8 +268,14 @@ class HomeViewController: UIViewController {
     }
     
     private func layout() {
-        [btnSearch, tableView].forEach {
+        [viewTitle, btnSearch, tableView].forEach {
             view.addSubview($0)
+        }
+        
+        [lblTitle, btnViewTitle].forEach {
+            $0.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
         }
 
         btnSearch.snp.makeConstraints {

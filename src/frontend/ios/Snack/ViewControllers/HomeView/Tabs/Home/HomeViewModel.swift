@@ -108,6 +108,7 @@ class HomeViewModel: ViewModelProtocol {
                     case .success(let descodeData):
                         if descodeData.data?.workspace != nil {
                             self.workspace = descodeData.data?.workspace
+                            KeychainWrapper.standard.set(try! PropertyListEncoder().encode(descodeData.data?.workspace), forKey: "workspaceInfo")
                         }
                         if descodeData.data?.channels != nil {
                             self.channels = descodeData.data?.channels?.content

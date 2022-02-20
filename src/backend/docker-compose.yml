@@ -53,6 +53,7 @@ services:
       MYSQL_ROOT_HOST: '%'
       TZ: Asia/Seoul
     volumes:
+      - ./docker-setup/mysql/conf.d:/etc/mysql/conf.d
       - ./docker-setup/mysql/initdb.d:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
@@ -119,7 +120,7 @@ services:
   chat-server:
     image: njsh4261/chat-server
     ports:
-      - "8083:8083"
+      - "8100"
     environment:
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
       spring.data.mongodb.uri: mongodb://mongodb:27017/lastpunch

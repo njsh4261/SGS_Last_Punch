@@ -31,14 +31,14 @@ INSERT INTO account (email, password, name, country, status, createDt, modifyDt)
     VALUES ('7777@asdf', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'Black Widow', 'kor', 2, '1234-01-01', '9999-12-31');
 INSERT INTO account (id, email, password, name, country, status, createDt, modifyDt)
     VALUES (123456789123456, 'test@test', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', 'Big Integer Man', 'kor', 2, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, status, imageNum, createDt, modifyDt)
-    VALUES ('geonhyeong.dev@gmail.com', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', '김건형', 'kor', 2, 21, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, status, imageNum, createDt, modifyDt)
-    VALUES ('ohjskim@gmail.com', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', '김지수', 'kor', 2, 23, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, status, imageNum, createDt, modifyDt)
-    VALUES ('chahtk@gmail.com', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', '차효준', 'kor', 2, 22, '1234-01-01', '9999-12-31');
-INSERT INTO account (email, password, name, country, status, imageNum, createDt, modifyDt)
-    VALUES ('njsh4261@gmail.com', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', '김지효', 'kor', 2, 24, '1234-01-01', '9999-12-31');
+INSERT INTO account (id, email, password, name, country, status, imageNum, createDt, modifyDt)
+    VALUES (13, 'geonhyeong.dev@gmail.com', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', '김건형', 'kor', 2, 21, '1234-01-01', '9999-12-31');
+INSERT INTO account (id, email, password, name, country, status, imageNum, createDt, modifyDt)
+    VALUES (14, 'ohjskim@gmail.com', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', '김지수', 'kor', 2, 23, '1234-01-01', '9999-12-31');
+INSERT INTO account (id, email, password, name, country, status, imageNum, createDt, modifyDt)
+    VALUES (15, 'chahtk@gmail.com', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', '차효준', 'kor', 2, 22, '1234-01-01', '9999-12-31');
+INSERT INTO account (id, email, password, name, country, status, imageNum, createDt, modifyDt)
+    VALUES (16, 'njsh4261@gmail.com', '$2a$10$BkGjbK/UK9NiwgWEvYdRoedRDPhP1Nhh/ttog4eI8eBdvq3CCXhJC', '김지효', 'kor', 2, 24, '1234-01-01', '9999-12-31');
 
 
 

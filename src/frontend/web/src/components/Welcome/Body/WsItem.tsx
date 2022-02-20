@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import SubmitButton from '../../Common/SubmitButton';
@@ -59,6 +59,7 @@ const WorkSpaceMembers = styled.section`
 export default function WsItem({ ws }: { ws: IWorkspace }) {
   const navigate = useNavigate();
   const submitHandler = () => navigate('/' + ws.id);
+  const memberCount = useMemo(() => Math.floor(Math.random() * 950 + 50), []);
 
   return (
     <Item key={ws.id}>
@@ -66,7 +67,7 @@ export default function WsItem({ ws }: { ws: IWorkspace }) {
         <WorkSpaceImage imageNum={ws.imageNum}></WorkSpaceImage>
         <WorkSpaceInfo>
           <WorkSpaceName>{ws.name}</WorkSpaceName>
-          <WorkSpaceMembers>{ws.imageNum}명의 멤버</WorkSpaceMembers>
+          <WorkSpaceMembers>{memberCount}명의 멤버</WorkSpaceMembers>
         </WorkSpaceInfo>
       </ItemInfoLayer>
       <SubmitButton

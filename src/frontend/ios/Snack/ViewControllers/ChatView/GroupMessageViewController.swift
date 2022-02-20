@@ -581,8 +581,6 @@ extension GroupMessageViewController: AutocompleteManagerDataSource {
             fatalError("알수 없는 에러 발생")
         }
         
-        
-        
         let users = ChatStompWebsocket.shared.nameDict
         let id = session.completion?.context?["id"] as? String
         let user = users.filter { return $0.key == id }.first

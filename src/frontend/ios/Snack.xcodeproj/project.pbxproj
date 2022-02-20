@@ -139,6 +139,7 @@
 		8CCFFAE227C11E71005D4D13 /* SelectImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAE127C11E70005D4D13 /* SelectImageView.xib */; };
 		8CCFFAE627C12094005D4D13 /* SelectImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAE427C12093005D4D13 /* SelectImageCell.xib */; };
 		8CCFFAE827C120AE005D4D13 /* SelectImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAE727C120AE005D4D13 /* SelectImageCell.swift */; };
+		8CCFFAEA27C2174C005D4D13 /* Ex+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAE927C2174A005D4D13 /* Ex+UIColor.swift */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -282,6 +283,7 @@
 		8CCFFAE127C11E70005D4D13 /* SelectImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectImageView.xib; sourceTree = "<group>"; };
 		8CCFFAE427C12093005D4D13 /* SelectImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectImageCell.xib; sourceTree = "<group>"; };
 		8CCFFAE727C120AE005D4D13 /* SelectImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageCell.swift; sourceTree = "<group>"; };
+		8CCFFAE927C2174A005D4D13 /* Ex+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+UIColor.swift"; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -412,6 +414,7 @@
 				8CBD45CE27A71A9E0056A557 /* Ex+String.swift */,
 				8CBD45D227A7C2200056A557 /* Ex+Reactive.swift */,
 				8CCFFAAA27BB41AB005D4D13 /* Ex+UIViewController.swift */,
+				8CCFFAE927C2174A005D4D13 /* Ex+UIColor.swift */,
 				8CBD4541279F047F0056A557 /* KeychainWrapper+keys.swift */,
 			);
 			path = Extensions;
@@ -1077,6 +1080,7 @@
 				8CBD452F2799A2C10056A557 /* WorkspaceListViewModel.swift in Sources */,
 				8CBD45342799B0E00056A557 /* WorkspaceListCellModel.swift in Sources */,
 				8CBD457527A22A2D0056A557 /* AppConstant.swift in Sources */,
+				8CCFFAEA27C2174C005D4D13 /* Ex+UIColor.swift in Sources */,
 				8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */,
 				8CCFFAC627BE9793005D4D13 /* CustomCell.swift in Sources */,
 				8CC9E8C527B10A24008BE1EA /* NoteListViewModel.swift in Sources */,

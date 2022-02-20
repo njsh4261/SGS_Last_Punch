@@ -15,7 +15,7 @@ class ChatStompWebsocket {
     static let shared = ChatStompWebsocket()
     private let url = URL(string: "ws://\(APIConstants().chatWebsoket)/websocket")!
     private var socketClient = StompClientLib()
-    private var nameDict = [String:String]()
+    var nameDict = [String:String]()
     private var imageDict = [String:Int]()
     private var accessToken: String
     private var chatIdList = [String]()

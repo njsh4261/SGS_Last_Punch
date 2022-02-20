@@ -25,9 +25,16 @@ class GroupMessageViewController: MessagesViewController {
     var messages = [MessageModel]()
     var memberInfo: [UserModel]?
     var senderInfo: User
-    private var userInfo: WorkspaceMemberCellModel?
     private let outgoingAvatarOverlap: CGFloat = 17.5 // 메시지와 겹쳐지는 정도
     private var avatarList = [(String, AvatarView)]()
+    
+    // InputBarAccessoryView에서 자동 완성을 관리하는 개체
+    lazy var autocompleteManager: AutocompleteManager = { [unowned self] in
+        let manager = AutocompleteManager(for: self.messageInputBar.inputTextView)
+        manager.delegate = self
+        manager.dataSource = self
+        return manager
+    }()
 
     // MARK: - UI
     private var btnTransform = UIBarButtonItem()
@@ -52,7 +59,7 @@ class GroupMessageViewController: MessagesViewController {
         messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: CustomMessagesFlowLayout())
         messagesCollectionView.register(CustomCell.self)
         super.viewDidLoad()
-        
+                
         confirmDelegates()
         layout()
         attribute()
@@ -211,6 +218,13 @@ class GroupMessageViewController: MessagesViewController {
     
     // MARK: delegate
     private func confirmDelegates() {
+        // 자동 완성 Manager
+        autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: UIColor.primaryColor, .backgroundColor: UIColor.primaryColor.withAlphaComponent(0.3)])
+        autocompleteManager.maxSpaceCountDuringCompletion = 1 // 공백으로 자동 완성 허용
+        
+        // Set plugins
+        messageInputBar.inputPlugins = [autocompleteManager]
+        
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
@@ -538,5 +552,86 @@ extension GroupMessageViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         ChatStompWebsocket.shared.sendMessage(authorId: senderInfo.senderId, channelId: channel!.id.description, content: text)
         inputBar.inputTextView.text.removeAll()
+    }
+}
+
+// MARK: - AutocompleteManager DataSource
+extension GroupMessageViewController: AutocompleteManagerDataSource {
+
+    func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: String) -> [AutocompleteCompletion] {
+
+        if prefix == "@" {
+            return ChatStompWebsocket.shared.nameDict
+                .filter { user in // 채널에 속해 있지 않는 사용자 && 본인 제외
+                    let first = memberInfo?.firstIndex(where: {$0.id.description == user.key}) == nil ? false : true
+                    let second = user.key != senderInfo.senderId
+                    return first && second
+                }
+                .map { user in
+                    return AutocompleteCompletion(text: user.value,
+                                                  context: ["id" : user.key])
+                }
+        }
+        return []
+    }
+
+    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell {
+
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
+            fatalError("알수 없는 에러 발생")
+        }
+        
+        
+        
+        let users = ChatStompWebsocket.shared.nameDict
+        let id = session.completion?.context?["id"] as? String
+        let user = users.filter { return $0.key == id }.first
+        
+        let userSenderType = User(senderId: user!.key, displayName: user!.value, email: "", imageNum: 0, authorId: "", content: "")
+        cell.imageView?.image = ChatStompWebsocket.shared.getAvatarFor(sender: userSenderType).image
+        cell.imageViewEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        cell.imageView?.layer.cornerRadius = 14
+        cell.imageView?.layer.borderColor = PresenceWebsocket.shared.presenceDict[user!.key]?.cgColor
+        cell.imageView?.layer.borderWidth = 1
+        cell.imageView?.clipsToBounds = true
+        cell.textLabel?.attributedText = manager.attributedText(matching: session, fontSize: 15)
+        return cell
+    }
+
+    // MARK: - AutocompleteManagerDelegate
+
+    func autocompleteManager(_ manager: AutocompleteManager, shouldBecomeVisible: Bool) {
+        setAutocompleteManager(active: shouldBecomeVisible)
+    }
+
+    // Optional
+    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: String, at range: NSRange) -> Bool {
+        return true
+    }
+
+    // Optional
+    func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: String) -> Bool {
+        return true
+    }
+
+    // Optional
+    func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: String, with text: String) -> Bool {
+        return true
+    }
+}
+
+// MARK: - AutocompleteManager Delegate Helper
+extension GroupMessageViewController: AutocompleteManagerDelegate {
+
+    func setAutocompleteManager(active: Bool) {
+        let topStackView = messageInputBar.topStackView
+        if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
+            topStackView.insertArrangedSubview(autocompleteManager.tableView, at: topStackView.arrangedSubviews.count)
+            topStackView.layoutIfNeeded()
+        } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
+            topStackView.removeArrangedSubview(autocompleteManager.tableView)
+            topStackView.layoutIfNeeded()
+        }
+        messageInputBar.invalidateIntrinsicContentSize()
     }
 }

@@ -96,11 +96,21 @@ export default function chatSocketHook(
                 // alarm on & update lastMessage(for rendring)
                 const index = memberList.findIndex((el) => el.id === member.id);
                 const newList = cloneDeep(memberList);
-                newList[index] = {
-                  ...newList[index],
-                  alarm: true,
-                  lastMessage: msg,
-                };
+                if (msg.type === 'TYPING') {
+                  newList[index] = {
+                    ...newList[index],
+                    alarm: true,
+                    lastMessage: {
+                      createDt: true,
+                    },
+                  };
+                } else {
+                  newList[index] = {
+                    ...newList[index],
+                    alarm: true,
+                    lastMessage: msg,
+                  };
+                }
                 dispatch(setUserList(newList));
               }
             },

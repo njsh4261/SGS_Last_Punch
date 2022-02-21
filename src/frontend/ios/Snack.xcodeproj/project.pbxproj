@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C19E4102786B35B0086F374 /* GoogleService-Info.plist */; };
 		8C33C4E8277BF06100294445 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C33C4E7277BF06100294445 /* AppDelegate.swift */; };
 		8C33C4EA277BF06100294445 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C33C4E9277BF06100294445 /* SceneDelegate.swift */; };
 		8C33C4F1277BF06200294445 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C33C4F0277BF06200294445 /* Assets.xcassets */; };
@@ -139,6 +138,8 @@
 		8CCFFAE227C11E71005D4D13 /* SelectImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAE127C11E70005D4D13 /* SelectImageView.xib */; };
 		8CCFFAE627C12094005D4D13 /* SelectImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAE427C12093005D4D13 /* SelectImageCell.xib */; };
 		8CCFFAE827C120AE005D4D13 /* SelectImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAE727C120AE005D4D13 /* SelectImageCell.swift */; };
+		8CCFFAEA27C2174C005D4D13 /* Ex+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CCFFAE927C2174A005D4D13 /* Ex+UIColor.swift */; };
+		8CCFFAEE27C294FC005D4D13 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8CCFFAED27C294FB005D4D13 /* GoogleService-Info.plist */; };
 		9E5ADB5C51058AF83477731C /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B5C789142A2C6B28D343DE /* Pods_Snack.framework */; };
 		EE3B36D910288C06FC5383FD /* Pods_Snack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD7615966730183AC1D70B3 /* Pods_Snack.framework */; };
 /* End PBXBuildFile section */
@@ -147,7 +148,6 @@
 		0349F0237A28CF144982DE22 /* Pods-Snack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.release.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.release.xcconfig"; sourceTree = "<group>"; };
 		19B5C789142A2C6B28D343DE /* Pods_Snack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Snack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BD7615966730183AC1D70B3 /* Pods_Snack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Snack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8C19E4102786B35B0086F374 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8C19E412278B23FB0086F374 /* Snack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Snack.entitlements; sourceTree = "<group>"; };
 		8C33C4E4277BF06100294445 /* Snack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C33C4E7277BF06100294445 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -282,6 +282,8 @@
 		8CCFFAE127C11E70005D4D13 /* SelectImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectImageView.xib; sourceTree = "<group>"; };
 		8CCFFAE427C12093005D4D13 /* SelectImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectImageCell.xib; sourceTree = "<group>"; };
 		8CCFFAE727C120AE005D4D13 /* SelectImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageCell.swift; sourceTree = "<group>"; };
+		8CCFFAE927C2174A005D4D13 /* Ex+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ex+UIColor.swift"; sourceTree = "<group>"; };
+		8CCFFAED27C294FB005D4D13 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F19F7FAD89A199A756B7E6F1 /* Pods-Snack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Snack.debug.xcconfig"; path = "Target Support Files/Pods-Snack/Pods-Snack.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -347,8 +349,8 @@
 				8C845299278C272C001A81FD /* ViewControllers */,
 				8C33C4F0277BF06200294445 /* Assets.xcassets */,
 				8C33C4F2277BF06200294445 /* LaunchScreen.storyboard */,
+				8CCFFAED27C294FB005D4D13 /* GoogleService-Info.plist */,
 				8C33C4F5277BF06200294445 /* Info.plist */,
-				8C19E4102786B35B0086F374 /* GoogleService-Info.plist */,
 			);
 			path = Snack;
 			sourceTree = "<group>";
@@ -412,6 +414,7 @@
 				8CBD45CE27A71A9E0056A557 /* Ex+String.swift */,
 				8CBD45D227A7C2200056A557 /* Ex+Reactive.swift */,
 				8CCFFAAA27BB41AB005D4D13 /* Ex+UIViewController.swift */,
+				8CCFFAE927C2174A005D4D13 /* Ex+UIColor.swift */,
 				8CBD4541279F047F0056A557 /* KeychainWrapper+keys.swift */,
 			);
 			path = Extensions;
@@ -933,13 +936,13 @@
 				8CCFFA9527B9E98F005D4D13 /* NotoSansKR-Bold.otf in Resources */,
 				8CCFFAA927BAA783005D4D13 /* UserSearchCell.xib in Resources */,
 				8CBD45E127A868040056A557 /* MediaView.xib in Resources */,
+				8CCFFAEE27C294FC005D4D13 /* GoogleService-Info.plist in Resources */,
 				8CCFFA6C27B9524F005D4D13 /* NewChannelView.xib in Resources */,
 				8CCFFAD327C0CC66005D4D13 /* StatusCell.xib in Resources */,
 				8CCFFA7927B98CCA005D4D13 /* UserSearchView.xib in Resources */,
 				8C68AB2F2797F62D00C1711E /* SettingsView.xib in Resources */,
 				8CCFFAC227BE8EBF005D4D13 /* ChannelSearchCell.xib in Resources */,
 				8CBD45BC27A6D6B90056A557 /* ProfileView.xib in Resources */,
-				8C19E4112786B35B0086F374 /* GoogleService-Info.plist in Resources */,
 				8CBD45DB27A846C50056A557 /* PasscodeView.xib in Resources */,
 				8CBD45F527A887DE0056A557 /* StatusView.xib in Resources */,
 				8CCFFA9727B9E98F005D4D13 /* NotoSansKR-Regular.otf in Resources */,
@@ -1077,6 +1080,7 @@
 				8CBD452F2799A2C10056A557 /* WorkspaceListViewModel.swift in Sources */,
 				8CBD45342799B0E00056A557 /* WorkspaceListCellModel.swift in Sources */,
 				8CBD457527A22A2D0056A557 /* AppConstant.swift in Sources */,
+				8CCFFAEA27C2174C005D4D13 /* Ex+UIColor.swift in Sources */,
 				8CBD457A27A287460056A557 /* Ex+NotificationCenter.swift in Sources */,
 				8CCFFAC627BE9793005D4D13 /* CustomCell.swift in Sources */,
 				8CC9E8C527B10A24008BE1EA /* NoteListViewModel.swift in Sources */,

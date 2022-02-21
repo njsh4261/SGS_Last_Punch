@@ -23,35 +23,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
         
-//        homeView = HomeViewController()
-//        DMView = DirectMessageListViewController()
-//        profileView = ProfileViewController(nibName: "ProfileView", bundle: nil)
-//
-//        let navController0 = NavigationController(rootViewController: homeView)
-//        let navController1 = NavigationController(rootViewController: DMView)
-//        let navController4 = NavigationController(rootViewController: profileView)
-//
-//        tabBarController = UITabBarController()
-//        tabBarController.viewControllers = [navController0, navController1, navController4]
-//        tabBarController.tabBar.isTranslucent = false
-//        tabBarController.tabBar.tintColor = UIColor(named: "snackColor")
-//        tabBarController.modalPresentationStyle = .fullScreen
-//        tabBarController.selectedIndex = App.DefaultTab
-//
-//        if #available(iOS 15.0, *) {
-//            let appearance = UITabBarAppearance()
-//            appearance.configureWithOpaqueBackground()
-//            tabBarController.tabBar.standardAppearance = appearance
-//            tabBarController.tabBar.scrollEdgeAppearance = appearance
-//        }
-        
         welcomeViewController = WelcomeViewController()
         self.window?.rootViewController = welcomeViewController
-//        self.window?.rootViewController = tabBarController
 
         self.window?.makeKeyAndVisible()
                 
-        // UITableView padding
         if #available(iOS 15.0, *) {
             UITableView.appearance().sectionHeaderTopPadding = 0
         }

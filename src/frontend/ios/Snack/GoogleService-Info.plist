@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>924104551448-m51odpnfsto6b0u6o7tvrm3hhnqaha8h.apps.googleusercontent.com</string>
+	<string>846788994519-nrlpmv0almm1tm22pccp2peirvbodug3.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.924104551448-m51odpnfsto6b0u6o7tvrm3hhnqaha8h</string>
+	<string>com.googleusercontent.apps.846788994519-nrlpmv0almm1tm22pccp2peirvbodug3</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCSLeisstzoT4rL_zVqBdcN5aTBSa10s18</string>
+	<string>AIzaSyBkymqCheNsALVa_kC7x0J4_D5r9F6qEmc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>924104551448</string>
+	<string>846788994519</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>Geon-Hyeong-KIM.Snack</string>
 	<key>PROJECT_ID</key>
-	<string>snack-30222</string>
+	<string>snack-20432</string>
 	<key>STORAGE_BUCKET</key>
-	<string>snack-30222.appspot.com</string>
+	<string>snack-20432.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:924104551448:ios:e2142c32ea6c3daa36676d</string>
+	<string>1:846788994519:ios:85fa00d3cc59824da21792</string>
 </dict>
 </plist>

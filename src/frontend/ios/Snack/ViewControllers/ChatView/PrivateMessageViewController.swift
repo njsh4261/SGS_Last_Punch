@@ -142,9 +142,9 @@ class PrivateMessageViewController: MessagesViewController {
         case "ONLINE":
             return .green
         case "ABSENT":
-            return .orange
-        case "BUSY":
             return .red
+        case "BUSY":
+            return .orange
         case "OFFLINE":
             return .gray
         default:

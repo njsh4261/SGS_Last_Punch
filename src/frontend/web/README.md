@@ -97,15 +97,16 @@
 
 ### 메인 페이지 & 채팅
 
-|![유저초대](https://user-images.githubusercontent.com/44664867/153591700-641e26c7-8faf-4b02-8d08-430f50d85f4e.gif)|구현중|구현중|
+|![유저초대](https://user-images.githubusercontent.com/44664867/153591700-641e26c7-8faf-4b02-8d08-430f50d85f4e.gif)|![image]()|![image](https://user-images.githubusercontent.com/44664867/155121065-c08ed786-a250-4dd8-b167-51e3ccfec134.png)|
 |---|---|---|
 |초대|나가기|멤버 보기|
 |유저 검색 후 워크스페이스/채널에 초대|워크스페이스/채널에서 나가기|워크스페이스/채널에 참가한 멤버 상태 보기|
 
-|![homelogout](https://user-images.githubusercontent.com/44664867/153592206-4a5aaa93-3499-404b-b0f7-901c4d4df11c.gif)|구현예정|![chatting](https://user-images.githubusercontent.com/44664867/153592212-0684d281-36af-422c-b72a-59f2ac252bb3.gif)|
+|![homelogout](https://user-images.githubusercontent.com/44664867/153592206-4a5aaa93-3499-404b-b0f7-901c4d4df11c.gif)|![프리젠스변경](https://user-images.githubusercontent.com/44664867/155121523-e3d73506-691e-4c56-af28-75dfe2568856.gif)
+|![chatting](https://user-images.githubusercontent.com/44664867/153592212-0684d281-36af-422c-b72a-59f2ac252bb3.gif)|
 |---|---|---|
 |웰컴페이지 이동, 로그아웃|프로필|채팅|
-|쿠키를 눌러 웰컴페이지로 이동하거나 로그아웃|프로필 정보 모달(구현 예정)|채팅 기능(UI 수정중)|
+|쿠키를 눌러 웰컴페이지로 이동하거나 로그아웃|프로필 정보 모달(프리젠스 변경)|채팅 기능(UI 수정중)|
 
 <br>
 

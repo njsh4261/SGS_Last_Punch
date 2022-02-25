@@ -9,32 +9,55 @@ Spring Boot로 서버를 구축하고 Amazon AWS로 운영하고 있는 RxSwift�
 
 ## 🏃 Installation
 > 현재 Sever URL을 담고 있는 파일(APIConstants.swift)이 보안을 위해 올라가 있지 않습니다. 이 부분은 고정IP를 새로 생성하는 방향으로 팀원들과 의논중입니다.
-1. Pod Install
-```
-  pod 'RxSwift', '6.2.0'
-  pod 'RxCocoa', '6.2.0'
-  pod 'RxDataSources', '~> 5.0'
 
-  pod 'SnapKit', '~> 5.0.0'
-  pod 'Then'
+<br/>
 
-  pod 'Alamofire', '~> 5.5'
-  pod 'StompClientLib'
+## 🛠 Stack
 
-  pod 'MessageKit'
-  pod 'SwiftKeychainWrapper'
-  pod 'ProgressHUD'
-  pod 'PasscodeKit'
+>  RxSwift, RxCocoa, RxDataSources
 
-  pod 'Firebase/Analytics'
-  pod 'Firebase/Messaging'
-```
-```
-<테스트 계정 정보>
-일반 사용자
-  id: test@gmail.com
-  pw: 1234
-```
+RxSwift는 코드를 새로운 데이터에 반응하며 순차적으로 처리하게 함으로써 비동기 프로그래밍을 쉽게 도움
+
+RxCocoa는 애플 환경의 애플리케이션을 제작하기 위한 도구들을 모아 놓은 Cocoa Framework를 Rx와 합친 기능을 제공
+
+RxDataSources는 TableView 및 CollectionView를 더 Rx답게 사용
+
+> SnapKit, Then
+
+SnapKit은 짧은 코드로 autolayout을 표현할 수 있도록 도와주는 프레임워크
+
+Then은 주로 프로퍼티(UI Components 포함)를 초기화 할 때 많이 사용, SnapKit과 함께 사용해서 UI 요소의 생성 및 초기화 작업
+
+> Alamofire
+
+Alamofire는 Swift에서 Http 통신을 하기 위해 이용되는 라이브러리
+
+
+> StompClientLib
+
+StompClientLib는 웹소켓, 그중에서도 Stomp(토픽을 Subscribe하고 있는 클라이언트에게 메시지를 전달하고 특정 토픽에 메시지를 Publish할 수 있도록 하는 프로토콜)을 사용하여 실시간 채팅을 구현
+
+> MessageKit
+
+MessageKit는 사용자 정의 가능한 채팅 UI 및 채팅 프로세스를 제공
+
+> SwiftKeychainWrapper
+
+SwiftKeychainWrapper는 사용법은 UserDefaults를 사용하는 것과 유사하게 사용하면서, 모든 키가 서비스 이름이라는 앱의 공통 식별자에 연결됩니다. 기본적으로 기본 Bundle Identifier를 사용
+
+> ProgressHUD
+
+ProgressHUD는 커스터마이징 되어진 ActivityIndicator를 보다 손쉽게 사용
+
+> PasscodeKit
+
+PasscodeKit는 페이스 아이디 및 암호를 설정할 수 있도록 도와주는 라이브러리
+
+> Firebase
+
+Firebase의 FCM을 이용한 Push Server 처리
+
+
 <br/>
 
 ## 📱 ScreenShots
@@ -45,9 +68,9 @@ Spring Boot로 서버를 구축하고 Amazon AWS로 운영하고 있는 RxSwift�
 회원가입 / 로그인
 </Blockquote>
 
-| ![register](./image/1.png) | ![login](./image/) |  |  |
-| :-: | :-: | :-: | :-: |
-| 회원가입 페이지 | 일반유저 로그인 |  |  |
+| ![welcome](./image/welcome.png) | ![register](./image/register.png) | ![login](./image/login.png) |
+| :-: | :-: | :-: |
+| 초기화면 | 회원가입 페이지 | 일반유저 로그인 |  |
 
 ###  1) 회원가입
 - 이메일 형식 판별
@@ -79,9 +102,9 @@ Spring Boot로 서버를 구축하고 Amazon AWS로 운영하고 있는 RxSwift�
 웰컴 - 워크스페이스 관련 기능 수행
 </Blockquote>
 
-| ![workspaceList](./image/admin.gif) | ![workspaceList](./image/admin.gif) | ![workspaceList](./image/admin.gif) | ![urlWorkspace](./image/autoLogin.gif) |
-| :-: | :-: | :-: | :-: |
-| 빈 워크스페이스 | 워크스페이스 선택 | 워크스페이스 추가 접속 | 워크스페이스 URL 접속 |
+| ![workspaceListEmpty](./image/workspaceListEmpty.png) | ![workspaceListSelect](./image/workspaceListSelect.png) | ![workspaceListAdd](./image/workspaceListAdd.png) |
+| :-: | :-: | :-: |
+| 빈 워크스페이스 | 워크스페이스 선택 | 워크스페이스 추가 접속 |
 
 ###  3) 워크스페이스 선택/추가/고유주소로 접속
 - 입장할 수 있는 워크스페이스가 없을경우, Snack 이미지 버튼을 통한 새 워크스페이스 생성 유도
@@ -104,11 +127,11 @@ Spring Boot로 서버를 구축하고 Amazon AWS로 운영하고 있는 RxSwift�
 홈
 </Blockquote>
 
-| ![home](./image/blockedUser.gif) | ![showChannel](./image/addMemo.gif) | ![showDM](./image/editAccount.gif) | 구연중 |
+| ![homeTab](./image/homeTab.png) | ![showChannel](./image/showChannel.png) | ![showDM](./image/showDM.png) | ![addChannel](./image/addChannel.png) |
 | :-: | :-: | :-: | :-: |
-| 홈 탭 | 채널 입장 | DM 입장 | 채널 추가 및 사용자 초대 |
-| ![groupChat](./image/blockedUser.gif) | ![channelSettings](./image/addMemo.gif) | | |
-| 그룹 채팅 | 채널 설정 |  |  |
+| 홈 탭 | 채널 입장(그룹채팅) | DM 입장 | 채널 추가 |
+| ![channelSettings](./image/channelSettings.png) | | | |
+| 채널 설정 |  |  |  |
 
 ### 4) 홈탭 및 그룹 채팅
 - 홈 - 채널 및 DM Section으로 목록 제공
@@ -130,7 +153,7 @@ Spring Boot로 서버를 구축하고 Amazon AWS로 운영하고 있는 RxSwift�
 노트
 </Blockquote>
 
-| ![addNote](./image/blockedUser.gif) | ![note](./image/addMemo.gif) | ![deleteNote](./image/editAccount.gif) | |
+| ![addNote](./image/addNote.png) | ![note](./image/note.png) | ![deleteNote](./image/deleteNote.png) | |
 | :-: | :-: | :-: | :-: |
 | 노트 생성 | 노트 | 노트 삭제 |  |
 
@@ -143,11 +166,11 @@ Spring Boot로 서버를 구축하고 Amazon AWS로 운영하고 있는 RxSwift�
 DM
 </Blockquote>
 
-| ![DM](./image/blockedUser.gif) | ![showDM](./image/addMemo.gif) | 구연중 | ![userInvitation](./image/tapGesture.gif) |
+| ![DM](./image/DM.png) | ![showDM](./image/showDM.png) | ![searchUser](./image/searchUser.png) | ![userInvitation](./image/userInvitation.png) |
 | :-: | :-: | :-: | :-: |
-| DM 탭 | DM 입장 | 사용자 검색 | 사용자 초대 |
-| ![privateChat](./image/blockedUser.gif) | ![profile](./image/addMemo.gif) | ![callmail](./image/editAccount.gif) |  |
-| DM 채팅 | 프로필 | 전화, 메일 |  |
+| DM 탭 | DM 입장(DM 채팅) | 사용자 검색 | 사용자 초대 |
+| ![profile](./image/profile.png) | | |  |
+| 프로필 |  |  |  |
 
 ### 6) DM(Direct Message)탭 및 1:1 채팅
 - DM - 사용자 목록 제공
@@ -166,10 +189,10 @@ DM
 나 (설정)
 </Blockquote>
 
-| ![settings](./image/blockedUser.gif) | ![accountEdting](./image/addMemo.gif) | ![passwordEditing](./image/editAccount.gif) | ![passcode](./image/tapGesture.gif) |
+| ![settings](./image/settings.png) | ![editProfile](./image/editProfile.png) | ![editPassword](./image/editPassword.png) | ![passcode](./image/passcode.png) |
 | :-: | :-: | :-: | :-: |
 | 나 탭 | 프로필 수정 | 비밀번호 수정 | 패스코드 설정 |
-| ![presence](./image/blockedUser.gif) | ![cashe](./image/addMemo.gif) | ![media](./image/editAccount.gif) | |
+| ![presence](./image/presence.png) | ![cashe](./image/cashe.png) | ![media](./image/media.png) | |
 | 상태 변경 | 캐쉬 설정 | 미디어 관리 | |
 
 ### 7) 나(설정)탭
@@ -181,17 +204,6 @@ DM
   - 미디어 관리 - 저장된 모든 사진 관리
 
 <br/>
-
-<!-- ## 📚 Library
-- RxSwift, RxCocoa, RxDataSources
-- SnapKit, Then
-- Alamofire
-- StompClientLib
-- MessageKit
-- SwiftKeychainWrapper
-- ProgressHUD
-- PasscodeKit
-- Firebase -->
 
 ## 🛠 Architecture
 ### iOS 구조
